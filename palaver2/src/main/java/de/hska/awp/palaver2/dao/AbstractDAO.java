@@ -3,7 +3,6 @@
  *
  * created at 28.11.2012 09:12:11  by Sebastian Walz
  *
- * Copyright (c) 2012 SEEBURGER AG, Germany. All Rights Reserved.
  */
 package de.hska.awp.palaver2.dao;
 
@@ -29,7 +28,7 @@ public abstract class AbstractDAO
 	}
 	
 	@SuppressWarnings("resource")
-	public synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
+	protected synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
 	{
 		openConnection();
 
@@ -55,7 +54,7 @@ public abstract class AbstractDAO
 		return cache.getOriginal();
 	}
 	
-	public synchronized void put(String querry) throws ConnectException, DAOException 
+	protected synchronized void put(String querry) throws ConnectException, DAOException 
 	{
 		openConnection();
 
