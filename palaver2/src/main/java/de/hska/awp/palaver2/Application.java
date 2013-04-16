@@ -27,7 +27,7 @@ public class Application extends UI
         layout.setMargin(true);
         setContent(layout);
         
-        Button button = new Button("Click Me");
+        Button button = new Button("Datenbank Test");
         button.addClickListener(new Button.ClickListener() 
         {
             public void buttonClick(ClickEvent event) 
@@ -38,7 +38,7 @@ public class Application extends UI
 					ResultSet set = dao.get("SELECT 1");
 					while(set.next())
 					{
-						layout.addComponent(new Label(set.getString(1)));
+						layout.addComponent(new Label("Erfolg: " + set.getString(1)));
 					}
 				} catch (ConnectException e)
 				{
