@@ -7,11 +7,12 @@
  */
 package de.hska.awp.palaver2.dao;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.sun.rowset.*;
+
+import de.hska.awp.palaver2.util.IConstants;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -25,20 +26,6 @@ public class DAO
 	{
 		super();
 		conn = new Connector();
-	}
-	
-	public synchronized void setConnection(Connection connection) throws SQLException
-	{
-		if (connection != null)
-		{
-			conn.setConnection(connection);
-			statement = conn.getStmt();
-		}
-	}
-	
-	public synchronized Connection getConnection()
-	{
-		return conn.getConnection();
 	}
 	
 	@SuppressWarnings("resource")
@@ -88,9 +75,8 @@ public class DAO
 	
 	private void openConnection() throws ConnectException
 	{
-//		conn.connect(MessageFormat.format(IConstants.URL, properties.getHost(), properties.getPort(), 
-//				properties.getDbname(), properties.getUsername(), properties.getPassowrd()));
-//		statement = conn.getStmt();
+		conn.connect(IConstants.DB_CONNECTION_URL);
+		statement = conn.getStmt();
 	}
 	
 	private void closeConnection() throws ConnectException, DAOException
