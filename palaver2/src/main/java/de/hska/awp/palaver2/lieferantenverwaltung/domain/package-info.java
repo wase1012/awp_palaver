@@ -3,4 +3,4 @@
  * 16.04.2013 15:07:03
  */
 
-package de.hska.awp.palaver2.lieferantenverwaltung;
+package de.hska.awp.palaver2.lieferantenverwaltung.domain;
