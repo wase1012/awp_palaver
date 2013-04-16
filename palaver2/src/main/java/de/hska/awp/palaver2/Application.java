@@ -11,7 +11,7 @@ import com.vaadin.ui.VerticalLayout;
  * The Application's "main" class
  */
 @SuppressWarnings("serial")
-public class MyVaadinUI extends UI
+public class Application extends UI
 {
 
     @Override
