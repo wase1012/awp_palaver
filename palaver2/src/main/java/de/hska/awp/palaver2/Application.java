@@ -10,8 +10,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver2.dao.ArtikelDAO;
 import de.hska.awp.palaver2.dao.ConnectException;
-import de.hska.awp.palaver2.dao.DAO;
 import de.hska.awp.palaver2.dao.DAOException;
 
 /**
@@ -32,7 +32,7 @@ public class Application extends UI
         {
             public void buttonClick(ClickEvent event) 
             {
-                DAO dao = new DAO();
+                ArtikelDAO dao = ArtikelDAO.getInstance();
                 try
 				{
 					ResultSet set = dao.get("SELECT 1");
