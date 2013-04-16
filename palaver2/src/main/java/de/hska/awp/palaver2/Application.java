@@ -40,18 +40,18 @@ public class Application extends UI
 					{
 						layout.addComponent(new Label("Erfolg: " + set.getString(1)));
 					}
-				} catch (ConnectException e)
+				} 
+                catch (ConnectException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DAOException e)
+					layout.addComponent(new Label(e.toString()));
+				} 
+                catch (DAOException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e)
+                	layout.addComponent(new Label(e.toString()));
+				} 
+                catch (SQLException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+                	layout.addComponent(new Label(e.toString()));
 				}
             }
         });
