@@ -16,13 +16,13 @@ import de.hska.awp.palaver2.util.IConstants;
 
 import javax.sql.rowset.CachedRowSet;
 
-public class DAO
+public abstract class AbstractDAO
 {
 	private Connector 				conn;
 	
 	private Statement 				statement;
 	
-	public DAO()
+	public AbstractDAO()
 	{
 		super();
 		conn = new Connector();
