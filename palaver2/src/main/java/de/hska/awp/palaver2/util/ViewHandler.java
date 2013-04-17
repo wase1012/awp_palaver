@@ -3,7 +3,6 @@
  */
 package de.hska.awp.palaver2.util;
 
-import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.gui.layout.DefaultView;
