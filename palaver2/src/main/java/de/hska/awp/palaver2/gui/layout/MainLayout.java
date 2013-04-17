@@ -27,6 +27,8 @@ public class MainLayout extends VerticalLayout
 	{
 		super();
 		
+		this.setSizeFull();
+		
 		header.setWidth("100%");
 		header.setHeight("80px");
 		
@@ -41,7 +43,7 @@ public class MainLayout extends VerticalLayout
 		this.addComponent(menu);
 	}
 	
-	public MainLayout getInstance()
+	public static MainLayout getInstance()
 	{
 		if (instance == null)
 		{
