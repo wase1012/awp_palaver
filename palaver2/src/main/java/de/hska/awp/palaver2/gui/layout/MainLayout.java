@@ -12,6 +12,8 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+
 /**
  * @author Sebastian
  *
@@ -34,7 +36,7 @@ public class MainLayout extends VerticalLayout implements Command
 		header.setWidth("100%");
 		header.setHeight("100px");
 		
-		Image logo = new Image("", new ThemeResource("../img/Logo.jpg"));
+		Image logo = new Image("", new ThemeResource("../img/cafe_palaver_Logo.png"));
 		header.addComponent(logo);
 		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
 		
@@ -45,12 +47,15 @@ public class MainLayout extends VerticalLayout implements Command
 		
 		this.addComponent(menu);
 		
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
+//		VerticalLayout content = new VerticalLayout();
+//		content.setSizeFull();
+//		
+//		this.addComponent(content);
+//		
+//		this.setExpandRatio(content, 1);
 		
-		this.addComponent(content);
-		
-		this.setExpandRatio(content, 1);
+		this.addComponent(new ArtikelErstellen());
+		this.setExpandRatio(this.getComponent(2), 1);
 	}
 	
 	public static MainLayout getInstance()

@@ -39,7 +39,7 @@ public class Application extends UI
     protected void init(VaadinRequest request) 
     {
         final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
+//        layout.setMargin(true);
         layout.setSizeFull();
         setContent(layout);
         
