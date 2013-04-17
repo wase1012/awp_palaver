@@ -13,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian
@@ -43,19 +44,20 @@ public class MainLayout extends VerticalLayout implements Command
 		this.addComponent(header);
 		
 		menu.setWidth("100%");
-		menu.addItem("Artikel", this);
+		MenuItem artikelItem = menu.addItem("Artikel", null);
+		artikelItem.addItem("Artikel anlegen", this);
 		
 		this.addComponent(menu);
 		
-//		VerticalLayout content = new VerticalLayout();
-//		content.setSizeFull();
-//		
-//		this.addComponent(content);
-//		
-//		this.setExpandRatio(content, 1);
+		VerticalLayout content = new VerticalLayout();
+		content.setSizeFull();
 		
-		this.addComponent(new ArtikelErstellen());
-		this.setExpandRatio(this.getComponent(2), 1);
+		this.addComponent(content);
+		
+		this.setExpandRatio(content, 1);
+		
+//		this.addComponent(new ArtikelErstellen());
+//		this.setExpandRatio(this.getComponent(2), 1);
 	}
 	
 	public static MainLayout getInstance()
@@ -70,6 +72,9 @@ public class MainLayout extends VerticalLayout implements Command
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		
+		if (selectedItem.getText().equals("Artikel anlegen"))
+		{
+			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+		}
 	}
 }

@@ -38,10 +38,9 @@ public class ViewHandler
 		{
 			if (view != null)
 			{
-				VerticalLayout newView = view.newInstance();
 				MainLayout.getInstance().removeComponent(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1));
-				MainLayout.getInstance().addComponent(newView);
-				MainLayout.getInstance().setExpandRatio(newView, 1);
+				MainLayout.getInstance().addComponent(view.newInstance());
+				MainLayout.getInstance().setExpandRatio(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1), 1);
 			}
 		} 
 		catch (InstantiationException e)
