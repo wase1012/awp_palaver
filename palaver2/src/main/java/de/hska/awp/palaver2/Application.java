@@ -1,17 +1,9 @@
 package de.hska.awp.palaver2;
 
-import java.sql.SQLException;
-
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.dao.ConnectException;
-import de.hska.awp.palaver2.dao.DAOException;
-import de.hska.awp.palaver2.dao.SystemDAO;
 import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**

@@ -37,7 +37,7 @@ public class MainLayout extends VerticalLayout implements Command
 		header.setWidth("100%");
 		header.setHeight("100px");
 		
-		Image logo = new Image("", new ThemeResource("../img/cafe_palaver_Logo.png"));
+		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
 		header.addComponent(logo);
 		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
 		
