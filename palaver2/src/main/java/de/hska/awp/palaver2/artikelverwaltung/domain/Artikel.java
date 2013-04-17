@@ -5,14 +5,15 @@
 package de.hska.awp.palaver2.artikelverwaltung.domain;
 
 import de.hska.awp.palaver2.bean.Bean;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 public class Artikel implements Bean
 {
 	private Long			id;
 	private String			name;
 	private float			preis;
-//	private Lieferant		lieferant
-//	private Mengeneinheit	mengeneinheit		
+	private Lieferant		lieferant;
+//	private Mengeneinheit	mengeneinheit;		
 	private Boolean			bio;		
 //	private Kategorie		kategorie;
 	private String			artikelnummer;
@@ -195,6 +196,18 @@ public class Artikel implements Bean
 	public void setBestellgroesse(float bestellgroesse)
 	{
 		this.bestellgroesse = bestellgroesse;
+	}
+
+
+	public Lieferant getLieferant()
+	{
+		return lieferant;
+	}
+
+
+	public void setLieferant(Lieferant lieferant)
+	{
+		this.lieferant = lieferant;
 	}
 
 }
