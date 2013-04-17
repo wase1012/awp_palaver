@@ -1,6 +1,5 @@
 package de.hska.awp.palaver2;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.vaadin.server.VaadinRequest;
@@ -10,9 +9,9 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.dao.ArtikelDAO;
 import de.hska.awp.palaver2.dao.ConnectException;
 import de.hska.awp.palaver2.dao.DAOException;
+import de.hska.awp.palaver2.dao.SystemDAO;
 
 /**
  * The Application's "main" class
@@ -20,7 +19,22 @@ import de.hska.awp.palaver2.dao.DAOException;
 @SuppressWarnings("serial")
 public class Application extends UI
 {
-    @Override
+    private static Application instance = null;
+    
+    /**
+     * Zugriff auf "MAIN" Klasse und Session
+     * @return Application
+     */
+    public static Application getInstance()
+    {
+    	if (instance == null)
+    	{
+    		instance = new Application();
+    	}
+    	return instance;
+    }
+	
+	@Override
     protected void init(VaadinRequest request) 
     {
         final VerticalLayout layout = new VerticalLayout();
@@ -32,14 +46,10 @@ public class Application extends UI
         {
             public void buttonClick(ClickEvent event) 
             {
-                ArtikelDAO dao = ArtikelDAO.getInstance();
+                SystemDAO dao = SystemDAO.getInstance();
                 try
 				{
-					ResultSet set = dao.get("SELECT 1");
-					while(set.next())
-					{
-						layout.addComponent(new Label("Erfolg: " + set.getString(1)));
-					}
+					layout.addComponent(new Label("Erfolg: " + dao.testConnection()));
 				} 
                 catch (ConnectException e)
 				{

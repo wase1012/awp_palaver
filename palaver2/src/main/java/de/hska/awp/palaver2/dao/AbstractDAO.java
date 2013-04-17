@@ -28,7 +28,7 @@ public abstract class AbstractDAO
 	}
 	
 	@SuppressWarnings("resource")
-	public synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
+	protected synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
 	{
 		openConnection();
 
@@ -54,7 +54,7 @@ public abstract class AbstractDAO
 		return cache.getOriginal();
 	}
 	
-	public synchronized void put(String querry) throws ConnectException, DAOException 
+	protected synchronized void put(String querry) throws ConnectException, DAOException 
 	{
 		openConnection();
 

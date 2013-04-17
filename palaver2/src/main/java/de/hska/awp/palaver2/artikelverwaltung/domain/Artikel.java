@@ -21,6 +21,23 @@ public class Artikel implements Bean
 	private Integer			durchschnitt;
 	private float			bestellgroesse;
 	
+	public Artikel(Long id, String name, float preis, Boolean bio,
+			String artikelnummer, Boolean standard, Boolean grundbedarf,
+			Integer durchschnitt, float bestellgroesse)
+	{
+		super();
+		this.id = id;
+		this.name = name;
+		this.preis = preis;
+		this.bio = bio;
+		this.artikelnummer = artikelnummer;
+		this.standard = standard;
+		this.grundbedarf = grundbedarf;
+		this.durchschnitt = durchschnitt;
+		this.bestellgroesse = bestellgroesse;
+	}
+
+
 	@Override
 	public Long getId()
 	{
