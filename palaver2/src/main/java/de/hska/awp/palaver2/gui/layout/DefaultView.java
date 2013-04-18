@@ -4,6 +4,9 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -17,5 +20,9 @@ public class DefaultView extends VerticalLayout
 	{
 		super();
 		this.setSizeFull();
+		
+		Image content = new Image(null, new ThemeResource("../img/palaverschild.jpeg"));
+		this.addComponent(content);
+		this.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 	}
 }

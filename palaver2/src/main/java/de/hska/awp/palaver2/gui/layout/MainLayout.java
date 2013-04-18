@@ -3,6 +3,8 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import com.vaadin.event.MouseEvents.ClickEvent;
+import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
@@ -13,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -40,12 +43,20 @@ public class MainLayout extends VerticalLayout implements Command
 		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
 		header.addComponent(logo);
 		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
+		logo.addClickListener(new ClickListener()
+		{
+			@Override
+			public void click(ClickEvent event)
+			{
+				ViewHandler.getInstance().switchView(DefaultView.class);
+			}
+		});
 		
 		this.addComponent(header);
 		
 		menu.setWidth("100%");
-		MenuItem artikelItem = menu.addItem("Artikel", null);
-		artikelItem.addItem("Artikel anlegen", this);
+		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
+		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
 		
 		this.addComponent(menu);
 		
@@ -72,7 +83,7 @@ public class MainLayout extends VerticalLayout implements Command
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		if (selectedItem.getText().equals("Artikel anlegen"))
+		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
 		{
 			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
 		}
