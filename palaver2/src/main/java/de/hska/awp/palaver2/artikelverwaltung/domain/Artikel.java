@@ -15,7 +15,7 @@ public class Artikel implements Bean
 	private Lieferant		lieferant;
 	private Mengeneinheit	mengeneinheit;		
 	private Boolean			bio;		
-//	private Kategorie		kategorie;
+	private Kategorie		kategorie;
 	private String			artikelnummer;
 	private Boolean			standard;
 	private Boolean			grundbedarf;
@@ -31,6 +31,41 @@ public class Artikel implements Bean
 		this.name = name;
 		this.preis = preis;
 		this.bio = bio;
+		this.artikelnummer = artikelnummer;
+		this.standard = standard;
+		this.grundbedarf = grundbedarf;
+		this.durchschnitt = durchschnitt;
+		this.bestellgroesse = bestellgroesse;
+	}
+
+
+	/**
+	 * @param id
+	 * @param name
+	 * @param preis
+	 * @param lieferant
+	 * @param mengeneinheit
+	 * @param bio
+	 * @param kategorie
+	 * @param artikelnummer
+	 * @param standard
+	 * @param grundbedarf
+	 * @param durchschnitt
+	 * @param bestellgroesse
+	 */
+	public Artikel(Long id, String name, float preis, Lieferant lieferant,
+			Mengeneinheit mengeneinheit, Boolean bio, Kategorie kategorie,
+			String artikelnummer, Boolean standard, Boolean grundbedarf,
+			Integer durchschnitt, float bestellgroesse)
+	{
+		super();
+		this.id = id;
+		this.name = name;
+		this.preis = preis;
+		this.lieferant = lieferant;
+		this.mengeneinheit = mengeneinheit;
+		this.bio = bio;
+		this.kategorie = kategorie;
 		this.artikelnummer = artikelnummer;
 		this.standard = standard;
 		this.grundbedarf = grundbedarf;
@@ -226,6 +261,152 @@ public class Artikel implements Bean
 	public void setMengeneinheit(Mengeneinheit mengeneinheit)
 	{
 		this.mengeneinheit = mengeneinheit;
+	}
+
+
+	/**
+	 * @return the kategorie
+	 */
+	public Kategorie getKategorie()
+	{
+		return kategorie;
+	}
+
+
+	/**
+	 * @param kategorie the kategorie to set
+	 */
+	public void setKategorie(Kategorie kategorie)
+	{
+		this.kategorie = kategorie;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "Artikel [id=" + id + ", name=" + name + ", preis=" + preis
+				+ ", lieferant=" + lieferant + ", mengeneinheit="
+				+ mengeneinheit + ", bio=" + bio + ", kategorie=" + kategorie
+				+ ", artikelnummer=" + artikelnummer + ", standard=" + standard
+				+ ", grundbedarf=" + grundbedarf + ", durchschnitt="
+				+ durchschnitt + ", bestellgroesse=" + bestellgroesse + "]";
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((artikelnummer == null) ? 0 : artikelnummer.hashCode());
+		result = prime * result + Float.floatToIntBits(bestellgroesse);
+		result = prime * result + ((bio == null) ? 0 : bio.hashCode());
+		result = prime * result
+				+ ((durchschnitt == null) ? 0 : durchschnitt.hashCode());
+		result = prime * result
+				+ ((grundbedarf == null) ? 0 : grundbedarf.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((kategorie == null) ? 0 : kategorie.hashCode());
+		result = prime * result
+				+ ((lieferant == null) ? 0 : lieferant.hashCode());
+		result = prime * result
+				+ ((mengeneinheit == null) ? 0 : mengeneinheit.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + Float.floatToIntBits(preis);
+		result = prime * result
+				+ ((standard == null) ? 0 : standard.hashCode());
+		return result;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Artikel other = (Artikel) obj;
+		if (artikelnummer == null)
+		{
+			if (other.artikelnummer != null)
+				return false;
+		} else if (!artikelnummer.equals(other.artikelnummer))
+			return false;
+		if (Float.floatToIntBits(bestellgroesse) != Float
+				.floatToIntBits(other.bestellgroesse))
+			return false;
+		if (bio == null)
+		{
+			if (other.bio != null)
+				return false;
+		} else if (!bio.equals(other.bio))
+			return false;
+		if (durchschnitt == null)
+		{
+			if (other.durchschnitt != null)
+				return false;
+		} else if (!durchschnitt.equals(other.durchschnitt))
+			return false;
+		if (grundbedarf == null)
+		{
+			if (other.grundbedarf != null)
+				return false;
+		} else if (!grundbedarf.equals(other.grundbedarf))
+			return false;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (kategorie == null)
+		{
+			if (other.kategorie != null)
+				return false;
+		} else if (!kategorie.equals(other.kategorie))
+			return false;
+		if (lieferant == null)
+		{
+			if (other.lieferant != null)
+				return false;
+		} else if (!lieferant.equals(other.lieferant))
+			return false;
+		if (mengeneinheit == null)
+		{
+			if (other.mengeneinheit != null)
+				return false;
+		} else if (!mengeneinheit.equals(other.mengeneinheit))
+			return false;
+		if (name == null)
+		{
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (Float.floatToIntBits(preis) != Float.floatToIntBits(other.preis))
+			return false;
+		if (standard == null)
+		{
+			if (other.standard != null)
+				return false;
+		} else if (!standard.equals(other.standard))
+			return false;
+		return true;
 	}
 
 }
