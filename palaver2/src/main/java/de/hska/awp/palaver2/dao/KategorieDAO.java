@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-
+ 
 /**
  * @author Mihail Boehm
  * @datum 18.04.2013
