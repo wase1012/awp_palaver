@@ -58,13 +58,13 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
 		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
 		
+		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
+		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
+		
 		this.addComponent(menu);
 		
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		
+		DefaultView content = new DefaultView();
 		this.addComponent(content);
-		
 		this.setExpandRatio(content, 1);
 		
 //		this.addComponent(new ArtikelErstellen());
