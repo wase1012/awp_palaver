@@ -11,6 +11,7 @@ public class Kategorie {
 	private Long  id;	
 	private String name;
 
+	
 	/**
 	 * @return the id
 	 */
