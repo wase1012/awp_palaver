@@ -15,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -92,6 +93,10 @@ public class MainLayout extends VerticalLayout implements Command
 		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
 		{
 			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+		}
+		if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW))
+		{
+			ViewHandler.getInstance().switchView(LieferantErstellen.class);
 		}
 	}
 }
