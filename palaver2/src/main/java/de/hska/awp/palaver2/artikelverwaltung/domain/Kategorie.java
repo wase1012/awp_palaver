@@ -1,19 +1,20 @@
 package de.hska.awp.palaver2.artikelverwaltung.domain;
 
+import de.hska.awp.palaver2.bean.Bean;
+
 /**
  * @author Mihail Boehm
  * @datum 18.04.2013
  * @class Kategorie
  * @version 1.0
  */
-public class Kategorie {
-	
-
-	private Long  id;	
+public class Kategorie implements Bean {
+	private Long id;
 	private String name;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param id
 	 * @param name
 	 */
@@ -38,12 +39,13 @@ public class Kategorie {
 	}
 
 	/**
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -83,5 +85,4 @@ public class Kategorie {
 		return true;
 	}
 
-	
 }
