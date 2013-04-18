@@ -1,3 +1,10 @@
+/**
+ * 
+Jan Lauinger
+*
+18.04.2013
+*
+ */
 package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 public enum GeschmackType {
