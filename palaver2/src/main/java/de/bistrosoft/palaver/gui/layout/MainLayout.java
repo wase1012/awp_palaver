@@ -64,6 +64,10 @@ public class MainLayout extends VerticalLayout implements Command
 //		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_AENDERN, this);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_LOESCHEN, this);
 		
 //		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		
@@ -89,7 +93,7 @@ public class MainLayout extends VerticalLayout implements Command
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
+		if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
 		{
 			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
 		}

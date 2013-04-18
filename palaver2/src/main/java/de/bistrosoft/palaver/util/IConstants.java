@@ -19,7 +19,9 @@ public interface IConstants
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	
 	public final String		MENU_REZEPT_HEADLINE = "Rezept";
-	public final String		MENU_REZEPT_NEU = "Rezept anlegen";
-	public final String 	MENU_REZEPT_ANZEIGEN = "Rezept anzeigen";
+	public final String		MENU_REZEPT_NEU = "Anlegen";
+	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
+	public final String 	MENU_REZEPT_AENDERN = "Ändern";
+	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
 }
 
