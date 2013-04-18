@@ -12,6 +12,8 @@ public enum ArtType {
 	HAUPTGERICHT,
 	KUCHEN,
 	SALAT,
+	DESSERT,
+	PASTA,
 	SUPPE;
 		
 
