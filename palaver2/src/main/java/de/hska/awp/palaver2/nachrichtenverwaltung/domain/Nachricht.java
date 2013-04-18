@@ -14,22 +14,28 @@ public class Nachricht implements Bean {
 		this.id = id;
 		this.nachricht = nachricht;
 	}
-	
-	
-	public Long getId() {
-		return id;
-	}
-	
-	
+
+	/**
+	 * @return the nachricht
+	 */
 	public String getNachricht() {
 		return nachricht;
 	}
-	
-	
+
+	/**
+	 * @param nachricht the nachricht to set
+	 */
 	public void setNachricht(String nachricht) {
 		this.nachricht = nachricht;
-		
 	}
-	
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+
 	
 }
