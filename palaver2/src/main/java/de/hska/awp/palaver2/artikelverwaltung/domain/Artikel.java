@@ -13,7 +13,7 @@ public class Artikel implements Bean
 	private String			name;
 	private float			preis;
 	private Lieferant		lieferant;
-//	private Mengeneinheit	mengeneinheit;		
+	private Mengeneinheit	mengeneinheit;		
 	private Boolean			bio;		
 //	private Kategorie		kategorie;
 	private String			artikelnummer;
@@ -208,6 +208,24 @@ public class Artikel implements Bean
 	public void setLieferant(Lieferant lieferant)
 	{
 		this.lieferant = lieferant;
+	}
+
+
+	/**
+	 * @return the mengeneinheit
+	 */
+	public Mengeneinheit getMengeneinheit()
+	{
+		return mengeneinheit;
+	}
+
+
+	/**
+	 * @param mengeneinheit the mengeneinheit to set
+	 */
+	public void setMengeneinheit(Mengeneinheit mengeneinheit)
+	{
+		this.mengeneinheit = mengeneinheit;
 	}
 
 }
