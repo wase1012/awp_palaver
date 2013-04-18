@@ -10,6 +10,10 @@ public interface IConstants
 	
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";
 	public final String		MENU_ARTIKEL_NEU = "Artikel anlegen";
+	public final String		MENU_ARTIKEL_ANZEIGEN = "Alle Artikel";
 	public final String		MENU_LIEFERANT_HEADLINE = "Lieferant";
 	public final String		MENU_LIEFERANT_NEW = "Lieferant anlegen";
+	public final String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
+	public final String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
+	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 }

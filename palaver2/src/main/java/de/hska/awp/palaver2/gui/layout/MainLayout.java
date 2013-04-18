@@ -57,9 +57,15 @@ public class MainLayout extends VerticalLayout implements Command
 		menu.setWidth("100%");
 		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
 		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
+		artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
 		
 		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
+		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
+		
+		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
+		
+		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		
 		this.addComponent(menu);
 		
