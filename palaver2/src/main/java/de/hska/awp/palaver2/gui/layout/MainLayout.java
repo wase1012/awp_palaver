@@ -90,13 +90,17 @@ public class MainLayout extends VerticalLayout implements Command
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
+		switch (selectedItem.getText())
 		{
-			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW))
-		{
-			ViewHandler.getInstance().switchView(LieferantErstellen.class);
+			case IConstants.MENU_ARTIKEL_NEU:
+				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+			break;
+			case IConstants.MENU_LIEFERANT_NEW:
+				ViewHandler.getInstance().switchView(LieferantErstellen.class);
+			break;
+			default: 
+				ViewHandler.getInstance().switchView(DefaultView.class);
+			break;
 		}
 	}
 }

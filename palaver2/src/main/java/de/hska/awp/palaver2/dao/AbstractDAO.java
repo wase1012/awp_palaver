@@ -27,7 +27,7 @@ public abstract class AbstractDAO
 		conn = new Connector();
 	}
 	
-	@SuppressWarnings("resource")
+	@SuppressWarnings({ "resource", "restriction" })
 	protected synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
 	{
 		openConnection();
