@@ -30,7 +30,7 @@ public class Kategorie implements Bean {
 	public Long getId() {
 		return id;
 	}
-
+ 
 	/**
 	 * @return the name
 	 */
