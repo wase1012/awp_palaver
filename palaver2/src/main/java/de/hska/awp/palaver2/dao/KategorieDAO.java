@@ -5,10 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.openmbean.TabularType;
-
-import com.vaadin.ui.AbstractSelect.TargetItemIs;
-
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 
 /**
@@ -20,7 +16,6 @@ public class KategorieDAO extends AbstractDAO {
 
 	private static KategorieDAO instance = null;
 	private final static String TABLE = "kategorie";
-
 	private final static String GET_ALL_KATEGORIES = "SELECT * FROM " + TABLE;
 
 	/**
@@ -45,7 +40,7 @@ public class KategorieDAO extends AbstractDAO {
 
 	/**
 	 * @author Mihail Boehm
-	 * @return alle Kategorie zurück
+	 * @return KategorieListe
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
