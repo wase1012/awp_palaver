@@ -6,11 +6,15 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
+import com.vaadin.client.ui.Action;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.Align;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -23,22 +27,9 @@ public class RezeptAnlegen extends VerticalLayout{
 	private VerticalLayout	box = new VerticalLayout();
 	
 	private TextField bezeichnung = new TextField("Bezeichnung");
-	private TextField kommentar = new TextField("Kommentar");
 	private TextField portion = new TextField("Portion");
 
-	
-//	private CheckBox exotisch = new CheckBox("exotisch");
-//	private CheckBox klassisch = new CheckBox("klassisch");
-//	private CheckBox deftig = new CheckBox("deftig");
-//	private CheckBox mediterran = new CheckBox("mediterran");
-	
-//	private CheckBox beilage = new CheckBox("Beilage");
-//	private CheckBox hauptgericht = new CheckBox("Hauptgericht");
-//	private CheckBox kuchen = new CheckBox("Kuchen");
-//	private CheckBox salat = new CheckBox("Salat");
-//	private CheckBox dessert = new CheckBox("Dessert");
-//	private CheckBox pasta = new CheckBox("Pasta");
-//	private CheckBox suppe = new CheckBox("Suppe");
+	private TextArea kommentar = new TextArea("Kommentar");
 	
 	private CheckBox herd = new CheckBox("Herd");
 	private CheckBox konvektomat = new CheckBox("Konvektomat");
@@ -49,7 +40,9 @@ public class RezeptAnlegen extends VerticalLayout{
 	
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
+	private Button zutatenhinzufuegen = new Button("Zutaten hinzufügen");
 	
+	private Table zutaten = new Table("Zutaten");
 	
 	public RezeptAnlegen()
 	{
@@ -63,18 +56,15 @@ public class RezeptAnlegen extends VerticalLayout{
 		charakteristika.setWidth("100%");
 		
 		box.setWidth("300px");
-//		box.setHeight("100%");
 		box.setSpacing(true);
-		
+			
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		box.addComponent(bezeichnung);
 		box.addComponent(portion);
-		box.addComponent(kommentar);
 		box.addComponent(geschmack);
 		box.addComponent(art);
-		
 		
 		HorizontalLayout subBox = new HorizontalLayout();
 		subBox.setWidth("100%");
@@ -82,24 +72,39 @@ public class RezeptAnlegen extends VerticalLayout{
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
 
-		
-//		HorizontalLayout subBox2 = new HorizontalLayout();
-//		subBox2.setWidth("100%");
-//		box.addComponent(subBox2);
-//		subBox2.addComponent(dessert);
-//		subBox2.addComponent(pasta);
-//		subBox2.addComponent(suppe);
+		box.addComponent(kommentar);
 		
 		
-		
+		box.addComponent(zutaten);
+			
 		HorizontalLayout control = new HorizontalLayout();
-//		control.setWidth("100%");
 		control.setSpacing(true);
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
+		control.addComponent(zutatenhinzufuegen);
+		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		
+		//Test anfang
+//		  zutaten = new Table();
+	   zutaten.addContainerProperty("Bezeichnug", String.class, null);
+	   zutaten.addContainerProperty("Menge", Integer.class, null);
+	   zutaten.addContainerProperty("Mengeneinheit", String.class, null);
+	   zutaten.addContainerProperty("Typ", String.class, null);
+
+	   zutaten.addItem(new Object[] {
+		   "Hackfleisch", 3500, "g", "Hauptzutat" }, new Integer(1));
+	   zutaten.addItem(new Object[] {
+			   "Tomaten", 10, "st", "Hauptzutat" }, new Integer(2));
+	   zutaten.addItem(new Object[] {
+			   "Käse", 1000, "g", "Hauptzutat" }, new Integer(3));
+	   zutaten.addItem(new Object[] {
+			   "Salz", 3, "g", "Standard" }, new Integer(4));
+	   
+	   
+	   //Test ende
 	}
 
 }

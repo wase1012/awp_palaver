@@ -19,12 +19,13 @@ public class Rezept implements Bean {
 	private String kommentar;
 	private int portion;
 	private Mengeneinheit mengeneinheit;
+	private int menge;
 	private ZubereitungType zubereitung;
 	private Boolean charakteristika;
 
 	public Rezept(Long id, String bezeichnung, ArtType art,
 			GeschmackType geschmack, Artikel artikel, String kommentar,
-			int portion, Mengeneinheit mengeneinheit,
+			int portion,int menge, Mengeneinheit mengeneinheit,
 			ZubereitungType zubereitung, Boolean charakteristika) {
 		super();
 		this.id = id;
@@ -35,8 +36,17 @@ public class Rezept implements Bean {
 		this.kommentar = kommentar;
 		this.portion = portion;
 		this.mengeneinheit = mengeneinheit;
+		this.menge = menge;
 		this.zubereitung = zubereitung;
 		this.charakteristika = charakteristika;
+	}
+
+	public int getMenge() {
+		return menge;
+	}
+
+	public void setMenge(int menge) {
+		this.menge = menge;
 	}
 
 	public Long getId() {
@@ -123,6 +133,7 @@ public class Rezept implements Bean {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((art == null) ? 0 : art.hashCode());
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result
 				+ ((bezeichnung == null) ? 0 : bezeichnung.hashCode());
@@ -133,6 +144,7 @@ public class Rezept implements Bean {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kommentar == null) ? 0 : kommentar.hashCode());
+		result = prime * result + menge;
 		result = prime * result
 				+ ((mengeneinheit == null) ? 0 : mengeneinheit.hashCode());
 		result = prime * result + portion;
@@ -150,6 +162,8 @@ public class Rezept implements Bean {
 		if (getClass() != obj.getClass())
 			return false;
 		Rezept other = (Rezept) obj;
+		if (art != other.art)
+			return false;
 		if (artikel == null) {
 			if (other.artikel != null)
 				return false;
@@ -176,6 +190,8 @@ public class Rezept implements Bean {
 			if (other.kommentar != null)
 				return false;
 		} else if (!kommentar.equals(other.kommentar))
+			return false;
+		if (menge != other.menge)
 			return false;
 		if (mengeneinheit == null) {
 			if (other.mengeneinheit != null)
