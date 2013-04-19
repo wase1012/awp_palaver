@@ -71,8 +71,8 @@ public class KategorieDAO extends AbstractDAO {
 	 */
 	public void createNewKategorie(Kategorie kategorie)
 			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES("
-				+ kategorie.getName() + ")";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
+				+ kategorie.getName() + "')";
 		this.put(INSERT_QUERY);
 	}
 
@@ -86,8 +86,8 @@ public class KategorieDAO extends AbstractDAO {
 	 */
 	public void updateKategorie(Kategorie kategorie) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name="
-				+ kategorie.getName() + " WHERE id=" + kategorie.getId()
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='"
+				+ kategorie.getName() + "' WHERE id=" + kategorie.getId()
 				+ "";
 		this.put(UPDATE_QUERY);
 	}

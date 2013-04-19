@@ -4,19 +4,29 @@ import de.hska.awp.palaver2.bean.Bean;
 
 /**
  * @author Mihail Boehm
+ * @class Kategorie 
  * @datum 18.04.2013
- * @class Kategorie
- * @version 1.0
+ * @version 1.0 
+ * 			DomainKlass mit getter+setter, hashCode, equals, toString
+ *          erstellen
  */
 public class Kategorie implements Bean {
 	private Long id;
 	private String name;
 
 	/**
-	 * Constructor
+	 * Konstruktor
+	 */
+	public Kategorie() {
+		super();
+	}
+
+	/**
+	 * Konstruktor
 	 * 
 	 * @param id
 	 * @param name
+	 *            Kategoriename
 	 */
 	public Kategorie(Long id, String name) {
 		super();
@@ -30,7 +40,7 @@ public class Kategorie implements Bean {
 	public Long getId() {
 		return id;
 	}
- 
+
 	/**
 	 * @return the name
 	 */
