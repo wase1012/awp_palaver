@@ -17,7 +17,13 @@ public class Ansprechpartner implements Bean{
 	private String telefon;
 	private String fax;
 	
+	
+	public Ansprechpartner() {
+		super();
+	}
+
 	/**
+	 * @param id
 	 * @param name
 	 * @param telefon
 	 * @param fax

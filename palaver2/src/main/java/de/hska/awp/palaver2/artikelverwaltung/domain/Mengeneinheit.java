@@ -17,7 +17,13 @@ public class Mengeneinheit implements Bean{
 	private String kurz;
 	
 	
-	
+	/**
+	 * Konstruktor
+	 */
+	public Mengeneinheit() {
+		super();
+	}
+
 	/**
 	 * @param id
 	 * @param name
