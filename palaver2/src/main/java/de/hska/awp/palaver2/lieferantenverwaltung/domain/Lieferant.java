@@ -76,13 +76,6 @@ public class Lieferant implements Bean {
 	}
 
 	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	/**
 	 * @return the name
 	 */
 	public String getName() {
