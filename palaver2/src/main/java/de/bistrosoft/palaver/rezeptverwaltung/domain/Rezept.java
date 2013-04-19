@@ -19,13 +19,13 @@ public class Rezept implements Bean {
 	private String kommentar;
 	private int portion;
 	private Mengeneinheit mengeneinheit;
-	private int menge;
+	private Float menge;
 	private ZubereitungType zubereitung;
 	private Boolean charakteristika;
 
 	public Rezept(Long id, String bezeichnung, ArtType art,
 			GeschmackType geschmack, Artikel artikel, String kommentar,
-			int portion,int menge, Mengeneinheit mengeneinheit,
+			int portion,Float menge, Mengeneinheit mengeneinheit,
 			ZubereitungType zubereitung, Boolean charakteristika) {
 		super();
 		this.id = id;
@@ -41,11 +41,11 @@ public class Rezept implements Bean {
 		this.charakteristika = charakteristika;
 	}
 
-	public int getMenge() {
+	public Float getMenge() {
 		return menge;
 	}
 
-	public void setMenge(int menge) {
+	public void setMenge(Float menge) {
 		this.menge = menge;
 	}
 
@@ -144,7 +144,7 @@ public class Rezept implements Bean {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kommentar == null) ? 0 : kommentar.hashCode());
-		result = prime * result + menge;
+		result = prime * result + ((menge == null) ? 0 : menge.hashCode());
 		result = prime * result
 				+ ((mengeneinheit == null) ? 0 : mengeneinheit.hashCode());
 		result = prime * result + portion;
@@ -191,7 +191,10 @@ public class Rezept implements Bean {
 				return false;
 		} else if (!kommentar.equals(other.kommentar))
 			return false;
-		if (menge != other.menge)
+		if (menge == null) {
+			if (other.menge != null)
+				return false;
+		} else if (!menge.equals(other.menge))
 			return false;
 		if (mengeneinheit == null) {
 			if (other.mengeneinheit != null)
@@ -207,11 +210,12 @@ public class Rezept implements Bean {
 
 	@Override
 	public String toString() {
-		return "Rezept [id=" + id + ", bezeichnung=" + bezeichnung
-				+ ", geschmack=" + geschmack + ", artikel=" + artikel
+		return "Rezept [id=" + id + ", bezeichnung=" + bezeichnung + ", art="
+				+ art + ", geschmack=" + geschmack + ", artikel=" + artikel
 				+ ", kommentar=" + kommentar + ", portion=" + portion
-				+ ", mengeneinheit=" + mengeneinheit + ", zubereitung="
-				+ zubereitung + ", charakteristika=" + charakteristika + "]";
+				+ ", mengeneinheit=" + mengeneinheit + ", menge=" + menge
+				+ ", zubereitung=" + zubereitung + ", charakteristika="
+				+ charakteristika + "]";
 	}
 
 }
