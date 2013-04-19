@@ -67,7 +67,6 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
-		
 		this.addComponent(menu);
 		
 		DefaultView content = new DefaultView();
