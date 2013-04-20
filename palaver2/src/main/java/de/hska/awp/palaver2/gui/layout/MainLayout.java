@@ -14,6 +14,7 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import de.bistrosoft.palaver.gui.view.Menuplan;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
@@ -73,6 +74,8 @@ public class MainLayout extends VerticalLayout implements Command
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_LOESCHEN, this);
 		
+		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
+		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		
 		this.addComponent(menu);
@@ -108,6 +111,10 @@ public class MainLayout extends VerticalLayout implements Command
 		if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
 		{
 			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+		}
+		if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
+		{
+			ViewHandler.getInstance().switchView(Menuplan.class);
 		}
 	}
 }
