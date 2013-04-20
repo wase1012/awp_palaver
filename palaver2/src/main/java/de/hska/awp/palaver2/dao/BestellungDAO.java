@@ -46,16 +46,15 @@ public class BestellungDAO extends AbstractDAO {
 		return instance;
 	}
 	
-//	public List<Bestellung> getAllBestellungen() throws ConnectException, 
-//	DAOException, SQLException {
-//		List<Bestellung> list = new ArrayList<Bestellung>();
-//		ResultSet set = get(GET_ALL_BESTELLUNGEN);
-//		while (set.next()) {
-//		list.add(new Bestellung(set.getLong("id"), set.getDate("datum"), 
-//				 (set.getLieferant(List<Lieferant>))));
-//	}
-//			return list;
-//}
+	public List<Bestellung> getAllBestellungen() throws ConnectException, 
+	DAOException, SQLException {
+		List<Bestellung> list = new ArrayList<Bestellung>();
+		ResultSet set = get(GET_ALL_BESTELLUNGEN);
+		while (set.next()) {
+		list.add(new Bestellung(set.getLong("id"), set.getDate("datum"), null));
+	}
+			return list;
+}
 	/**
  * Creates the new bestellung.
  *
