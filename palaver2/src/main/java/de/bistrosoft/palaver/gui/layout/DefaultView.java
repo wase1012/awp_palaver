@@ -9,10 +9,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * @author Sebastian
- *
- */
+
 @SuppressWarnings("serial")
 public class DefaultView extends VerticalLayout
 {
