@@ -51,4 +51,6 @@
     <inherits name="de.bistrosoft.palaver.AppWidgetSet" />
 
     <inherits name="de.hska.awp.palaver2.AppWidgetSet" />
+
+    <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 </module>
