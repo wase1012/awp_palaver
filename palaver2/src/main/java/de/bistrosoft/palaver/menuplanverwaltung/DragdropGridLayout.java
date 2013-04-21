@@ -1,5 +1,12 @@
 package de.bistrosoft.palaver.menuplanverwaltung;
 
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickListener;
@@ -9,6 +16,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+
+import de.bistrosoft.palaver.util.CalendarWeek;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -37,7 +46,6 @@ public class DragdropGridLayout extends CustomComponent{
     int height = ROWS*100;
     layout.setWidth(width+"px");
     layout.setHeight(height+"px");
-//    layout.addStyleName("gridLayoutBorders");
    
     // Only allow dropping in the center of the grid layout cell
     layout.setComponentHorizontalDropRatio(0);
@@ -50,15 +58,31 @@ public class DragdropGridLayout extends CustomComponent{
     layout.setDragMode(LayoutDragMode.CLONE);
 
     // Enable dropping components
-    layout.setDropHandler(new DefaultGridLayoutDropHandler());
+    layout.setDropHandler(new MenueplanGridDropHandler());
     
     // Limit dragging to only buttons
     layout.setDragFilter(new DragFilter() {      
     public boolean isDraggable(Component component) {  
-    	return component instanceof Label;
+    	return component instanceof MenueComponent;
         }
             });
-   
+    //Fülle Datumszeile
+    for (int col = 0; col < COLUMNS; col++) {
+    	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
+    	GregorianCalendar date = dates.get(col);
+    	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
+
+    	String strDate = date.get(Calendar.DAY_OF_MONTH) + "." + 
+    						date.get(Calendar.MONTH) + "." + 
+    						date.get(Calendar.YEAR);
+    	
+    	Label lbTmp = new Label(strDay +"\r\n"+strDate);
+    	lbTmp.setWidth("140px");
+		layout.addComponent(lbTmp,col,0);	
+        layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
+    }
+    
+    //Füge ADD Buttons ein
     for (int row = 2; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
                 Button btn = new Button("ADD");
@@ -66,10 +90,9 @@ public class DragdropGridLayout extends CustomComponent{
 					
 					@Override
 					public void buttonClick(ClickEvent event) {
-						
+						Button tmp = event.getButton();
 						for (int row = 0; row < ROWS; row++) {
 					        for (int col = 0; col < COLUMNS; col++) {
-					        	Button tmp = event.getButton();
 					        	if(tmp.equals(layout.getComponent(col, row))) {
 					        		layout.removeComponent(tmp);
 					        		
@@ -77,10 +100,10 @@ public class DragdropGridLayout extends CustomComponent{
 					        		UI.getCurrent().addWindow(window);
 					        		window.setModal(true);
 					        		
-					        		Label lbTmp = new Label("Pommes mit Schnitzel");
-					        		lbTmp.setWidth("140px");
-					        		layout.addComponent(lbTmp,col,row);	
-					                layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
+					        		MenueComponent menue = new MenueComponent("Pommes mit Schnitzel");
+					        		menue.setWidth("140px");
+					        		layout.addComponent(menue,col,row);
+					        		layout.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
 					        	}
 					        }
 						}

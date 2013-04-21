@@ -12,7 +12,8 @@ public class Menuplan extends VerticalLayout{
 	public Menuplan()
 	{
 		super();
-		this.setSizeFull();
+//		this.setSizeFull();
+		this.setWidth("750px");
 		this.setMargin(true);
 		
 		this.addComponent(box);
