@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="awpPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<!-- Palaver Team 2-->
+		<class>de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner</class>
+		<class>de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant</class>
+		<class>de.hska.awp.palaver2.artikelverwaltung.domain.Artikel</class>
+		<class>de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie</class>
+		<class>de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit</class>
+		<class>de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung</class>
+		<class>de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition</class>
+		<class>de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachrichten</class>
+		
+		<!-- Palaver Team 1-->
+		
+		<class>de.hska.awp.palaver2.dienstplanverwaltung.domain.Schichtplan</class>
+		<class>de.hska.awp.palaver2.menueplanverwaltung.domain.Menue</class>
+		<class>de.hska.awp.palaver2.menueplanverwaltung.domain.Menueplan</class>
+		<class>de.hska.awp.palaver2.menueplanverwaltung.domain.MenueplanId</class>
+		<class>de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter</class>
+		<class>de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.Rezept</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.Rezeptart</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.Rezepteigenschaften</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikel</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikelId</class>
+		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.Zutatenkategorie</class>
+		
+		<validation-mode>NONE</validation-mode>
+
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:1433/palaver"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="admin"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+		
+			<!-- Keine proprietaeren Erweiterungen von HQL nutzen -->
+			<property name="hibernate.query.jpaql_strict_compliance" value="true"/>
+	
+			<!-- In der Log-Datei die SQL-Anweisungen lesbarer rausschreiben -->
+			<property name="hibernate.format_sql" value="true"/>
+
+			<!-- In der Log-Datei auch Kommentare zu den generierten SQL-Anweisungen hinzufuegen -->
+			<property name="hibernate.use_sql_comments" value="true"/>
+			
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+			<property name="hibernate.connection.pool_size" value="1"/>
+		    
+		</properties>		
+		
+	</persistence-unit>
+</persistence>
