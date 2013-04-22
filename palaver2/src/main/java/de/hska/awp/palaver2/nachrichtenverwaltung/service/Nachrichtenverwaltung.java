@@ -2,8 +2,7 @@ package de.hska.awp.palaver2.nachrichtenverwaltung.service;
 
 
 import java.io.Serializable;
-
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.NachrichtenverwaltungDao;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
@@ -30,18 +29,20 @@ public class Nachrichtenverwaltung implements Serializable {
 		return nachricht;
 	}
 	
+	public List<Nachricht> findAllNachricht() {
+		final List<Nachricht> nachrichten = dao.findAllNachricht();
+		return nachrichten;
+	}
+	
 	public Nachricht createNachricht(Nachricht nachricht) {
 		
 		if(nachricht == null) {
 			return null;
 		}
+			
+		nachricht = (Nachricht) dao.create(nachricht);
 		
-		final Nachricht n = new Nachricht();
-		n.setNachricht(nachricht.getNachricht());
-		n.setMitarbeiterBySenderFk(nachricht.getMitarbeiterBySenderFk());
-		n.setMitarbeiterByEmpfaengerFk(nachricht.getMitarbeiterByEmpfaengerFk());
-		
-		return n;
+		return nachricht;
 	}
 	
 	public void deleteNachricht(Nachricht nachricht) {
