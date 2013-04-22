@@ -5,7 +5,9 @@
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
 import java.io.Serializable;
+import java.util.List;
 
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
@@ -20,6 +22,32 @@ public class Lieferantenverwaltung implements Serializable {
 	private static final long serialVersionUID = -5676269878706221454L;
 
 	private LieferantenverwaltungDao dao;
+	
+	public List<Ansprechpartner> findAllAnsprechpartner() {
+		final List<Ansprechpartner> aplist = dao.findAllAnsprechpartner();
+		return aplist;
+	}
+	
+	public List<Ansprechpartner> findAnsprechpartnerByName(String name) {
+		final List<Ansprechpartner> aplist = dao.findAnsprechpartnerByName(name);
+		return aplist;
+	}
+
+	public Ansprechpartner findAnsprechpartnerById(Long id) {
+		final Ansprechpartner ap = dao.findAnsprechpartnerById(id);
+		return ap;
+	}
+	
+	public Ansprechpartner createAnsprechpartner(Ansprechpartner ap) {
+		
+		if (ap == null) {
+			return ap;
+		}
+		
+		ap = (Ansprechpartner) dao.create(ap);
+		
+		return ap;
+	}
 	
 	public Lieferant createLieferant(Lieferant lieferant) {
 		

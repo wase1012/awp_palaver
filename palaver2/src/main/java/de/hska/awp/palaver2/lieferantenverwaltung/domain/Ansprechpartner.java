@@ -24,7 +24,9 @@ import javax.persistence.Table;
 		@NamedQuery(name = Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, query = "SELECT k FROM Ansprechpartner k WHERE k.name = :"
 				+ Ansprechpartner.PARAM_NAME),
 		@NamedQuery(name = Ansprechpartner.FIND_ANSPRECHPARTNER_BY_ID, query = "Select k FROM Ansprechpartner k WHERE k.id = :"
-				+ Ansprechpartner.PARAM_ID) })
+				+ Ansprechpartner.PARAM_ID),
+		@NamedQuery(name = Ansprechpartner.FIND_ALL_ANSPRECHPARTNER, query = "Select k FROM Ansprechpartner k")
+})
 public class Ansprechpartner implements java.io.Serializable {
 
 	/**
@@ -38,6 +40,7 @@ public class Ansprechpartner implements java.io.Serializable {
 			+ "findAnsprechpartnerByName";
 	public static final String FIND_ANSPRECHPARTNER_BY_ID = PREFIX
 			+ "findAnsprechpartnerById";
+	public static final String FIND_ALL_ANSPRECHPARTNER = PREFIX + "findAllAnsprechpartner";
 	public static final String PARAM_NAME = "name";
 	public static final String PARAM_ID = "id";
 

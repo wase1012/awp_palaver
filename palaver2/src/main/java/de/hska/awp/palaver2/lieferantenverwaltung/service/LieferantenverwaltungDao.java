@@ -4,6 +4,10 @@
  */
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
+import java.util.List;
+
+import static de.hska.awp.palaver2.util.Dao.QueryParameter.with;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.util.Dao;
 
 /**
@@ -11,7 +15,35 @@ import de.hska.awp.palaver2.util.Dao;
  *
  */
 public class LieferantenverwaltungDao extends Dao {
+	
 		private static final long serialVersionUID = -6166455307123578665L;
 
+		public List<Ansprechpartner> findAllAnsprechpartner() {
+			
+			List<Ansprechpartner> aplist = null;
+					
+			aplist = find(Ansprechpartner.class, Ansprechpartner.FIND_ALL_ANSPRECHPARTNER);
+				
+			return aplist;
+		}
+		
+		public List<Ansprechpartner> findAnsprechpartnerByName(String name) {
+			
+			List<Ansprechpartner> aplist = null;
+			
+			aplist = find(Ansprechpartner.class, Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, with(Ansprechpartner.PARAM_NAME, name).build());
+			
+			return aplist;
+		}
+
+
+		public Ansprechpartner findAnsprechpartnerById(Long id) {
+			
+			Ansprechpartner ap = null;
+			
+			ap = find(Ansprechpartner.class, id);
+		
+			return ap;
+		}
 		
 }
