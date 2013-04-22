@@ -6,8 +6,9 @@ package de.hska.awp.palaver2.util;
 
 public interface IConstants
 {
+	//1433
+	//3306
 	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
-	
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";
 	public final String		MENU_ARTIKEL_NEU = "Artikel anlegen";
 	public final String		MENU_ARTIKEL_ANZEIGEN = "Alle Artikel";
@@ -16,4 +17,5 @@ public interface IConstants
 	public final String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
 	public final String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
+	
 }

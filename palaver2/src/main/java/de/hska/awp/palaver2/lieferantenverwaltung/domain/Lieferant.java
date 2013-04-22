@@ -31,9 +31,11 @@ public class Lieferant implements Bean {
 	private String fax;
 	private List<Ansprechpartner> ansprechpartner;
 	
-	
+		
+	public Lieferant() {
+		super();
+	}
 
-	
 	/**
 	 * @param id
 	 * @param name
@@ -43,11 +45,9 @@ public class Lieferant implements Bean {
 	 * @param email
 	 * @param telefon
 	 * @param fax
-	 * @param ansprechpartner
 	 */
 	public Lieferant(Long id, String name, String strasse, String plz,
-			String ort, String email, String telefon, String fax,
-			List<Ansprechpartner> ansprechpartner) {
+			String ort, String email, String telefon, String fax) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,7 +57,6 @@ public class Lieferant implements Bean {
 		this.email = email;
 		this.telefon = telefon;
 		this.fax = fax;
-		this.ansprechpartner = ansprechpartner;
 	}
 
 	

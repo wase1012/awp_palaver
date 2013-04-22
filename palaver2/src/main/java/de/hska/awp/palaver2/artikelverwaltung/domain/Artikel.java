@@ -22,6 +22,12 @@ public class Artikel implements Bean
 	private Integer			durchschnitt;
 	private float			bestellgroesse;
 	
+	
+	
+	public Artikel() {
+		super();
+	}
+
 	public Artikel(Long id, String name, float preis, Boolean bio,
 			String artikelnummer, Boolean standard, Boolean grundbedarf,
 			Integer durchschnitt, float bestellgroesse)
