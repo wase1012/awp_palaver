@@ -26,9 +26,21 @@ public class Nachricht implements java.io.Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1291141882464373163L;
+	
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sender_fk", nullable = false)
 	private Mitarbeiter mitarbeiterBySenderFk;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "empfaenger_fk", nullable = false)
 	private Mitarbeiter mitarbeiterByEmpfaengerFk;
+	
+	@Column(name = "nachricht", length = 300)
 	private String nachricht;
 
 	public Nachricht() {
@@ -47,9 +59,7 @@ public class Nachricht implements java.io.Serializable {
 		this.nachricht = nachricht;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+
 	public Long getId() {
 		return this.id;
 	}
@@ -58,8 +68,6 @@ public class Nachricht implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sender_fk", nullable = false)
 	public Mitarbeiter getMitarbeiterBySenderFk() {
 		return this.mitarbeiterBySenderFk;
 	}
@@ -68,8 +76,6 @@ public class Nachricht implements java.io.Serializable {
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "empfaenger_fk", nullable = false)
 	public Mitarbeiter getMitarbeiterByEmpfaengerFk() {
 		return this.mitarbeiterByEmpfaengerFk;
 	}
@@ -79,7 +85,6 @@ public class Nachricht implements java.io.Serializable {
 		this.mitarbeiterByEmpfaengerFk = mitarbeiterByEmpfaengerFk;
 	}
 
-	@Column(name = "nachricht", length = 300)
 	public String getNachricht() {
 		return this.nachricht;
 	}
