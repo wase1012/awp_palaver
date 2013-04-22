@@ -2,7 +2,6 @@ package de.hska.awp.palaver2.testklassen.domain;
 
 import org.junit.Test;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.util.AbstractTest;
