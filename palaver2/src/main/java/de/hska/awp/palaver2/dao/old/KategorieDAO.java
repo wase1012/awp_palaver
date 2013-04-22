@@ -46,15 +46,15 @@ public class KategorieDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 18.04.2013
 	 */
-	public List<Kategorie> getAllKategories() throws ConnectException,
-			DAOException, SQLException {
-		List<Kategorie> list = new ArrayList<Kategorie>();
-		ResultSet set = get(GET_ALL_KATEGORIES);
-		while (set.next()) {
-			list.add(new Kategorie(set.getLong("id"), set.getString("name")));
-		}
-		return list;
-	}
+//	public List<Kategorie> getAllKategories() throws ConnectException,
+//			DAOException, SQLException {
+//		List<Kategorie> list = new ArrayList<Kategorie>();
+//		ResultSet set = get(GET_ALL_KATEGORIES);
+//		while (set.next()) {
+//			list.add(new Kategorie(set.getLong("id"), set.getString("name")));
+//		}
+//		return list;
+//	}
 
 	/**
 	 * @author Mihail Boehm

@@ -30,26 +30,26 @@ public class ArtikelDAO extends AbstractDAO
 		return instance;
 	}
 	
-	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException
-	{
-		List<Artikel> list = new ArrayList<Artikel>();
-		
-		ResultSet set = get(GET_ALL_ARTIKLES);
-		
-		while(set.next())
-		{
-			list.add(new Artikel(set.getLong("id"),
-								set.getString("name"),
-								set.getFloat("preis"),
-								set.getBoolean("bio"),
-								set.getString("artikelnummer"),
-								set.getBoolean("standard"),
-								set.getBoolean("grundbedarf"),
-								set.getInt("durchschnitt"),
-								set.getFloat("bestellgroesse")
-								));
-		}
-		
-		return list;
-	}
+//	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException
+//	{
+//		List<Artikel> list = new ArrayList<Artikel>();
+//		
+//		ResultSet set = get(GET_ALL_ARTIKLES);
+//		
+//		while(set.next())
+//		{
+//			list.add(new Artikel(set.getLong("id"),
+//								set.getString("name"),
+//								set.getFloat("preis"),
+//								set.getBoolean("bio"),
+//								set.getString("artikelnummer"),
+//								set.getBoolean("standard"),
+//								set.getBoolean("grundbedarf"),
+//								set.getInt("durchschnitt"),
+//								set.getFloat("bestellgroesse")
+//								));
+//		}
+//		
+//		return list;
+//	}
 }

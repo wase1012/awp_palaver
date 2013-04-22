@@ -46,17 +46,17 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public List<Ansprechpartner> getAllAnsprechpartner()
-			throws ConnectException, DAOException, SQLException {
-		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
-		ResultSet set = get(GET_ALL_ANSPRECHPARTNER);
-		while (set.next()) {
-			list.add(new Ansprechpartner(set.getLong("id"), set
-					.getString("name"), set.getString("telefon"), set
-					.getString("fax")));
-		}
-		return list;
-	}
+//	public List<Ansprechpartner> getAllAnsprechpartner()
+//			throws ConnectException, DAOException, SQLException {
+//		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
+//		ResultSet set = get(GET_ALL_ANSPRECHPARTNER);
+//		while (set.next()) {
+//			list.add(new Ansprechpartner(set.getLong("id"), set
+//					.getString("name"), set.getString("telefon"), set
+//					.getString("fax")));
+//		}
+//		return list;
+//	}
 
 	/**
 	 * @author Mihail Boehm

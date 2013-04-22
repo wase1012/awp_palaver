@@ -47,16 +47,16 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public List<Mengeneinheit> getAllMengeneinheiten() throws ConnectException,
-			DAOException, SQLException {
-		List<Mengeneinheit> list = new ArrayList<Mengeneinheit>();
-		ResultSet set = get(GET_ALL_MENGENEINHEITEN);
-		while (set.next()) {
-			list.add(new Mengeneinheit(set.getLong("id"),
-					set.getString("name"), set.getString("kurz")));
-		}
-		return list;
-	}
+//	public List<Mengeneinheit> getAllMengeneinheiten() throws ConnectException,
+//			DAOException, SQLException {
+//		List<Mengeneinheit> list = new ArrayList<Mengeneinheit>();
+//		ResultSet set = get(GET_ALL_MENGENEINHEITEN);
+//		while (set.next()) {
+//			list.add(new Mengeneinheit(set.getLong("id"),
+//					set.getString("name"), set.getString("kurz")));
+//		}
+//		return list;
+//	}
 
 	/**
 	 * @author Mihail Boehm
