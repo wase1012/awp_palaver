@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 
 import org.junit.Test;
 
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.AbstractTest;
 	  
 public class AnsprechpartnerTest extends AbstractTest  { 
