@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,12 +25,29 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
  */
 @Entity
 @Table(name = "lieferant", catalog = "palaver")
+@NamedQueries({
+	@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_NAME, query = "SELECT k FROM Lieferant k WHERE k.name = :"
+			+ Ansprechpartner.PARAM_NAME),
+	@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_ID, query = "Select k FROM Lieferant k WHERE k.id = :"
+			+ Ansprechpartner.PARAM_ID),
+	@NamedQuery(name = Lieferant.FIND_ALL_LIEFERANT, query = "Select k FROM Lieferant k")
+})
 public class Lieferant implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 509321793481530142L;
+	
+	private static final String PREFIX = "Lieferant.";
+
+	public static final String FIND_LIEFERANT_BY_NAME = PREFIX
+			+ "findLieferantByName";
+	public static final String FIND_LIEFERANT_BY_ID = PREFIX
+			+ "findLieferantById";
+	public static final String FIND_ALL_LIEFERANT = PREFIX + "findAllLieferant";
+	public static final String PARAM_NAME = "name";
+	public static final String PARAM_ID = "id";
 
 	private Long id;
 	private String name;

@@ -49,6 +49,42 @@ public class Lieferantenverwaltung implements Serializable {
 		return ap;
 	}
 	
+	public Ansprechpartner updateAnsprechpartner(Ansprechpartner ap) {
+		
+		if (ap == null) {
+			return null;
+		}
+
+		ap = (Ansprechpartner) dao.update(ap);
+		return ap;
+	}
+
+	/**
+	 */
+	public void deleteAnsprechpartner(Ansprechpartner ap) {
+		
+		if (ap == null) {
+			return;
+		}
+
+		dao.delete(ap);
+	}
+	
+	public List<Lieferant> findAllLieferant() {
+		final List<Lieferant> lieferantlist = dao.findAllLieferant();
+		return lieferantlist;
+	}
+	
+	public List<Lieferant> findLieferantByName(String name) {
+		final List<Lieferant> lieferantlist = dao.findLieferantByName(name);
+		return lieferantlist;
+	}
+
+	public Lieferant findLieferantById(Long id) {
+		final Lieferant lieferant = dao.findLieferantById(id);
+		return lieferant;
+	}
+	
 	public Lieferant createLieferant(Lieferant lieferant) {
 		
 		if (lieferant == null) {
@@ -60,5 +96,14 @@ public class Lieferantenverwaltung implements Serializable {
 		return lieferant;
 	}
 	
+	public Lieferant updateLieferant(Lieferant lieferant) {
+		
+		if (lieferant == null) {
+			return null;
+		}
+
+		lieferant = (Lieferant) dao.update(lieferant);
+		return lieferant;
+	}
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import static de.hska.awp.palaver2.util.Dao.QueryParameter.with;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Dao;
 
 /**
@@ -46,4 +47,31 @@ public class LieferantenverwaltungDao extends Dao {
 			return ap;
 		}
 		
+		public List<Lieferant> findAllLieferant() {
+			
+			List<Lieferant> lieferantlist = null;
+					
+			lieferantlist = find(Lieferant.class, Lieferant.FIND_ALL_LIEFERANT);
+				
+			return lieferantlist;
+		}
+		
+		public List<Lieferant> findLieferantByName(String name) {
+			
+			List<Lieferant> lieferantlist = null;
+			
+			lieferantlist = find(Lieferant.class, Lieferant.FIND_LIEFERANT_BY_NAME, with(Lieferant.PARAM_NAME, name).build());
+			
+			return lieferantlist;
+		}
+
+
+		public Lieferant findLieferantById(Long id) {
+			
+			Lieferant lieferant = null;
+			
+			lieferant = find(Lieferant.class, id);
+		
+			return lieferant;
+		}
 }
