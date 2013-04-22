@@ -7,12 +7,18 @@ package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import de.hska.awp.palaver2.bean.Bean;
 
 /**
  * @author bach1014
  *
  */
+
+@Entity
+@Table(name = "lieferant")
 public class Lieferant implements Bean {
 
 	private Long id;
