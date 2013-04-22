@@ -20,27 +20,27 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
  */
 @Entity
 @Table(name = "nachrichten", catalog = "palaver")
-public class Nachrichten implements java.io.Serializable {
+public class Nachricht implements java.io.Serializable {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1291141882464373163L;
-	private Integer id;
+	private Long id;
 	private Mitarbeiter mitarbeiterBySenderFk;
 	private Mitarbeiter mitarbeiterByEmpfaengerFk;
 	private String nachricht;
 
-	public Nachrichten() {
+	public Nachricht() {
 	}
 
-	public Nachrichten(Mitarbeiter mitarbeiterBySenderFk,
+	public Nachricht(Mitarbeiter mitarbeiterBySenderFk,
 			Mitarbeiter mitarbeiterByEmpfaengerFk) {
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
 		this.mitarbeiterByEmpfaengerFk = mitarbeiterByEmpfaengerFk;
 	}
 
-	public Nachrichten(Mitarbeiter mitarbeiterBySenderFk,
+	public Nachricht(Mitarbeiter mitarbeiterBySenderFk,
 			Mitarbeiter mitarbeiterByEmpfaengerFk, String nachricht) {
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
 		this.mitarbeiterByEmpfaengerFk = mitarbeiterByEmpfaengerFk;
@@ -50,11 +50,11 @@ public class Nachrichten implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
