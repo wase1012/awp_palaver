@@ -18,6 +18,7 @@ public class Lieferantenverwaltung {
 			return lieferant;
 		}
 	
+		
 		//TODO Überprüfung, ob es den Lieferanten schon gibt, notfalls exceptions werfen	
 		//lieferant = (Lieferant) em.persist(lieferant);
 		
