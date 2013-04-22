@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.lieferantenverwaltung.domain;
+package de.hska.awp.palaver2.testklassen.domain;
 
 
 	

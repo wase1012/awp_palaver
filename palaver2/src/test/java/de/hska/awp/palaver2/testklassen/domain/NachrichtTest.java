@@ -5,4 +5,4 @@
  * @author PhilippT
  *
  */
-package de.hska.awp.palaver2.nachrichtenverwaltung.domain;
+package de.hska.awp.palaver2.testklassen.domain;
