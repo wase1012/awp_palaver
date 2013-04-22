@@ -1,5 +1,5 @@
 /**
- * 
+ * Sebastian Walz
  */
 package de.hska.awp.palaver2.gui.layout;
 
