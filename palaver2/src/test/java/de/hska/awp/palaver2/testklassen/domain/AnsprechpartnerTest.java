@@ -19,19 +19,26 @@ public class AnsprechpartnerTest extends AbstractTest  {
 	 
 	 
 	    @Test
-	    public void emptyTest() {
+	    public void findAnsprechpartnerByName() {
 	    	
 	    	final String name = "Max Mustermann";
 
-			// When
 			final TypedQuery<Ansprechpartner> query = em.createNamedQuery(
 					Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, Ansprechpartner.class);
 			query.setParameter(Ansprechpartner.PARAM_NAME, name);
 			final List<Ansprechpartner> kunden = query.getResultList();
 
-			// Then
 			assertThat(kunden.isEmpty(), is(false));
-			System.out.print(kunden);
+	    }
+	    
+	    @Test
+	    public void findAnsprechpartnerById() {
+	    	
+	    	final Long id = Long.valueOf("1");
+
+			Ansprechpartner ap = em.find(Ansprechpartner.class, id);
+
+			assertThat(ap.getId(), is(id));
 	    }
 	    
 	    @Test
@@ -46,6 +53,25 @@ public class AnsprechpartnerTest extends AbstractTest  {
 	    	ap.setLieferant(lieferant);
 	    	
 	    	em.persist(ap);
+	    	em.getTransaction().commit();
+	    }
+	    
+	    @Test
+	    public void deleteAnsprechpartner() {
+	    	
+	    	
+	    	String name = "Testname";
+	    	
+	    	final TypedQuery<Ansprechpartner> query = em.createNamedQuery(
+					Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, Ansprechpartner.class);
+			query.setParameter(Ansprechpartner.PARAM_NAME, name);
+			final List<Ansprechpartner> aplist = query.getResultList();
+	    	
+	    	for(int i = 0; i < aplist.size(); i++){
+	    		Ansprechpartner ap = aplist.get(i);
+	    		em.remove(ap);
+		    	
+	    	}
 	    	em.getTransaction().commit();
 	    }
 	} 

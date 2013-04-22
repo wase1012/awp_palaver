@@ -36,7 +36,9 @@ public class AbstractTest {
     @Before
     public void transbegin() {
     
-    	em.getTransaction().begin();
+    	if(em.getTransaction().isActive() == false){
+    		em.getTransaction().begin();
+    	}
     }
     
     @AfterClass
