@@ -61,6 +61,10 @@ public class Bestellung implements java.io.Serializable {
 		return this.id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lieferant_fk", nullable = false)
 	public Lieferant getLieferant() {
