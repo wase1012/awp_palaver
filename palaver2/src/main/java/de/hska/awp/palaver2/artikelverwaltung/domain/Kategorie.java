@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "kategorie", catalog = "palaver", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "name")})
+		@UniqueConstraint(columnNames = "id")})
 @NamedQueries({
 	@NamedQuery(name = Kategorie.FIND_KATEGORIE_BY_NAME, query = "SELECT k FROM Kategorie k WHERE k.name = :"
 			+ Kategorie.PARAM_NAME),
