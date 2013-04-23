@@ -23,8 +23,8 @@ public interface IConstants
 	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
 	public final String 	MENU_REZEPT_AENDERN = "Ändern";
 	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
-	public final String 	MENU_MENUEPLAN_HEADLINE = "Menüplan";
-//	public final String 	MENU_MENUEPLAN = "Anzeigen";
+	public final String 	MENU_MENUPLAN_HEADLINE = "Menüplan";
+	public final String 	MENU_MENUPLAN = "Anzeigen";
 
 }
 

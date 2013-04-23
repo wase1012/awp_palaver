@@ -16,6 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
+import de.bistrosoft.palaver.gui.view.Menuplan;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout;
 import de.bistrosoft.palaver.util.IConstants;
@@ -71,8 +72,8 @@ public class MainLayout extends VerticalLayout implements Command
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
 		
-		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUEPLAN_HEADLINE, null);
-//		menueplanItem.addItem(IConstants.MENU_MENUEPLAN, this);
+		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, null);
+//		menueplanItem.addItem(IConstants.MENU_MENUPLAN, this);
 
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
@@ -98,26 +99,25 @@ public class MainLayout extends VerticalLayout implements Command
 	}
 
 	@Override
-	public void menuSelected(MenuItem selectedItem)
-	{
-		switch (selectedItem.getText())
-		{
-			case IConstants.MENU_ARTIKEL_NEU:
-				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-			break;
-			case IConstants.MENU_LIEFERANT_NEW:
-				ViewHandler.getInstance().switchView(LieferantErstellen.class);
-			break;
-			case IConstants.MENU_REZEPT_NEU:
-				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
-			break;
-//			case IConstants.MENU_MENUEPLAN_HEADLINE:
-//				ViewHandler.getInstance().(DragdropGridLayout.class);
-//
-//			break;
-			default: 
-				ViewHandler.getInstance().switchView(DefaultView.class);
-			break;
-		}
+	  public void menuSelected(MenuItem selectedItem)
+	  {
+	    if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
+	    {
+	      ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+	    }
+	    if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW))
+	    {
+	      ViewHandler.getInstance().switchView(LieferantErstellen.class);
+	    }
+	    if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
+	    {
+	      ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+	    }
+	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE));
+//	    {
+//	      ViewHandler.getInstance().switchView(de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout.class);
+//	    }
+	  }
+	 
 	}
-}
+
