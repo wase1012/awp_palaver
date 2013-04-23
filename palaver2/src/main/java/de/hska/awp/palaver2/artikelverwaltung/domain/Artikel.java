@@ -12,15 +12,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 @Entity
 @Table(name = "artikel", catalog = "palaver")
+@NamedQueries({
+	@NamedQuery(name = Artikel.FIND_ALL_ARTIKLES, query = "SELECT a FROM Artikel a")
+})
 public class Artikel implements java.io.Serializable 
 {
 	private static final long 		serialVersionUID = 6557876739298794189L;
+	
+	private static final String 	PREFIX = "Artikel.";
+	public static final String		FIND_ALL_ARTIKLES = PREFIX + "findAllArtikel";
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -107,6 +115,11 @@ public class Artikel implements java.io.Serializable
 	public Integer getId() 
 	{
 		return this.id;
+	}
+
+	public void setId(Integer id) 
+	{
+		this.id = id;
 	}
 
 	public Mengeneinheit getMengeneinheit() 

@@ -88,6 +88,14 @@ public class Ansprechpartner implements java.io.Serializable {
 
 	/**
 	 * 
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * 
 	 * @return
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -39,6 +39,11 @@ public class Kategorie implements java.io.Serializable
 		return this.id;
 	}
 
+	public void setId(Integer id) 
+	{
+		this.id = id;
+	}
+
 	public String getName() 
 	{
 		return this.name;

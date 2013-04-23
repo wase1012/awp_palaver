@@ -80,6 +80,10 @@ public class Mengeneinheit implements java.io.Serializable {
 	public Long getId() {
 		return this.id;
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Column(name = "name", unique = true, length = 45)
 	public String getName() {

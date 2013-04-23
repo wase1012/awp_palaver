@@ -47,6 +47,10 @@ public class Bestellposition implements java.io.Serializable {
 		return this.id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artikel_fk", nullable = false)
 	public Artikel getArtikel() {

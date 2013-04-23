@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import org.junit.Test;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.util.AbstractTest;
 
@@ -33,6 +34,12 @@ public class NachrichtTest extends AbstractTest {
 		assertThat(nachricht.getId(), is(id));
     }
 	
+    @Test
+    public void findAllNachricht() {
+    	
+    	
+    }
+    
 	@Test
 	public void createNachrichten() {
 		
@@ -43,9 +50,9 @@ public class NachrichtTest extends AbstractTest {
     	Mitarbeiter sender = em.find(Mitarbeiter.class, sid);
     	n.setMitarbeiterBySenderFk(sender);
     	
-    	Long eid = Long.valueOf(2);   	
-    	Mitarbeiter empfaenger = em.find(Mitarbeiter.class, eid);
-		n.setMitarbeiterByEmpfaengerFk(empfaenger);    	
+    	Long eid = Long.valueOf(1);   	
+    	Rollen empfaenger = em.find(Rollen.class, eid);
+		n.setEmpfaengerRolle(empfaenger);    	
     	
     	em.persist(n);
     	em.getTransaction().commit();
@@ -70,5 +77,4 @@ public class NachrichtTest extends AbstractTest {
     	em.getTransaction().commit();
     }
 			
-	
 }
