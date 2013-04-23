@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.menuplanverwaltung;
 
+import com.google.gwt.user.client.ui.DialogBox;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.MouseEventDetails;
@@ -15,6 +16,7 @@ import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTransferable;
 import fi.jasoft.dragdroplayouts.drophandlers.AbstractDefaultLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
+
 
 @SuppressWarnings("serial")
 public class MenueplanGridDropHandler extends
@@ -69,7 +71,11 @@ public class MenueplanGridDropHandler extends
         Integer destColumn = details.getOverColumn();
         Component destComp = details.getOverComponent();
         
-        if (!(destRow<2)) {
+//        if (destComp.getClass()==MenueComponent.class){
+//        	
+//        }
+        
+        if (!(destRow<2) && (sourceComp!=destComp)) {
         	layout.removeComponent(sourceComp);
             layout.removeComponent(destComp);
             layout.addComponent(sourceComp,destColumn,destRow);

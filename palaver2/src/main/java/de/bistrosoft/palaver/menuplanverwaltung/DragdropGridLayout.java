@@ -67,8 +67,8 @@ public class DragdropGridLayout extends CustomComponent{
         }
             });
     //Fülle Datumszeile
+    ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
     for (int col = 0; col < COLUMNS; col++) {
-    	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
     	GregorianCalendar date = dates.get(col);
     	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
 

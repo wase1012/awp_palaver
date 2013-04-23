@@ -42,7 +42,6 @@ import java.util.Locale;
             	cal.setTime(tmp);
         		cal.add(Calendar.DAY_OF_YEAR, i);
         		dates.add(cal);
-        		System.out.println(cal.getTime());
         	}
         	return dates;
         }

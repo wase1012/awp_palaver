@@ -23,21 +23,8 @@ public class MenueComponent extends CustomComponent{
 		hlProp.addComponent(cbVeg);
 		vl.addComponent(hlProp);
 		Button btDelete = new Button("Löschen");
-//		btDelete.addClickListener(new ClickListener() {
-//			
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				Button btTmp = event.getButton();
-//				for (int row = 0; row < ROWS; row++) {
-//			        for (int col = 0; col < COLUMNS; col++) {
-//			        	if(tmp.equals(layout.getComponent(col, row))) {
-//			        		layout.removeComponent(tmp);
-//				
-//			}
-//		});
+
 		vl.addComponent(btDelete);
-		
-		
 	}
 	
 	
