@@ -22,7 +22,8 @@ import javax.persistence.TypedQuery;
  */
 public class Dao implements Serializable {
 	private static final long serialVersionUID = -7246779329244314242L;
-
+	
+	
 	@PersistenceContext
 	protected transient EntityManager em;
 
