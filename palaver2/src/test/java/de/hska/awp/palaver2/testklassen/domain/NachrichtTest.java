@@ -1,7 +1,11 @@
 package de.hska.awp.palaver2.testklassen.domain;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.util.AbstractTest;
@@ -15,6 +19,16 @@ public class NachrichtTest extends AbstractTest {
 	
 
 	private static final String test_nachricht = "Ich bin die Testnachricht";	
+	
+    @Test
+    public void findNachrichtById() {
+    	
+    	final Long id = Long.valueOf("1");
+
+		Nachricht nachricht = em.find(Nachricht.class, id);
+
+		assertThat(nachricht.getId(), is(id));
+    }
 	
 	@Test
 	public void createNachrichten() {
