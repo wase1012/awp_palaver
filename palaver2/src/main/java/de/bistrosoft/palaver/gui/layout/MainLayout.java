@@ -16,6 +16,8 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
+import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
@@ -64,6 +66,15 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
+		
+		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+		
+		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUEPLAN_HEADLINE, null);
+//		menueplanItem.addItem(IConstants.MENU_MENUEPLAN, this);
+
+		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
@@ -97,6 +108,13 @@ public class MainLayout extends VerticalLayout implements Command
 			case IConstants.MENU_LIEFERANT_NEW:
 				ViewHandler.getInstance().switchView(LieferantErstellen.class);
 			break;
+			case IConstants.MENU_REZEPT_NEU:
+				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+			break;
+//			case IConstants.MENU_MENUEPLAN_HEADLINE:
+//				ViewHandler.getInstance().(DragdropGridLayout.class);
+//
+//			break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;
