@@ -42,8 +42,6 @@ public class Mitarbeiter implements java.io.Serializable {
 	private String austrittsdatum;
 	private Set<Schichtplan> schichtplans = new HashSet<Schichtplan>(0);
 	private Set<Menue> menues = new HashSet<Menue>(0);
-	private Set<Nachricht> nachrichtensForEmpfaengerFk = new HashSet<Nachricht>(
-			0);
 	private Set<Nachricht> nachrichtensForSenderFk = new HashSet<Nachricht>(
 			0);
 	private Set<Rollen> rollens = new HashSet<Rollen>(0);
@@ -59,7 +57,6 @@ public class Mitarbeiter implements java.io.Serializable {
 	public Mitarbeiter(String name, String vorname, String email,
 			String passwort, String eintrittsdatum, String austrittsdatum,
 			Set<Schichtplan> schichtplans, Set<Menue> menues,
-			Set<Nachricht> nachrichtensForEmpfaengerFk,
 			Set<Nachricht> nachrichtensForSenderFk, Set<Rollen> rollens) {
 		this.name = name;
 		this.vorname = vorname;
@@ -69,7 +66,6 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.austrittsdatum = austrittsdatum;
 		this.schichtplans = schichtplans;
 		this.menues = menues;
-		this.nachrichtensForEmpfaengerFk = nachrichtensForEmpfaengerFk;
 		this.nachrichtensForSenderFk = nachrichtensForSenderFk;
 		this.rollens = rollens;
 	}
@@ -155,16 +151,6 @@ public class Mitarbeiter implements java.io.Serializable {
 
 	public void setMenues(Set<Menue> menues) {
 		this.menues = menues;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiterByEmpfaengerFk")
-	public Set<Nachricht> getNachrichtensForEmpfaengerFk() {
-		return this.nachrichtensForEmpfaengerFk;
-	}
-
-	public void setNachrichtensForEmpfaengerFk(
-			Set<Nachricht> nachrichtensForEmpfaengerFk) {
-		this.nachrichtensForEmpfaengerFk = nachrichtensForEmpfaengerFk;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiterBySenderFk")
