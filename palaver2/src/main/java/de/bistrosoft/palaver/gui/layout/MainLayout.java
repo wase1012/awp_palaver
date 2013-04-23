@@ -72,9 +72,7 @@ public class MainLayout extends VerticalLayout implements Command
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
 		
-		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, null);
-//		menueplanItem.addItem(IConstants.MENU_MENUPLAN, this);
-
+		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
@@ -114,9 +112,9 @@ public class MainLayout extends VerticalLayout implements Command
 	      ViewHandler.getInstance().switchView(RezeptAnlegen.class);
 	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE));
-//	    {
-//	      ViewHandler.getInstance().switchView(de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout.class);
-//	    }
+	    {
+	      ViewHandler.getInstance().switchView(Menuplan.class);
+	    }
 	  }
 	 
 	}
