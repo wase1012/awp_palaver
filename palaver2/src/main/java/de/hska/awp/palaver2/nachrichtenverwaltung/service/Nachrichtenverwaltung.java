@@ -31,6 +31,11 @@ public class Nachrichtenverwaltung implements Serializable {
 	
 	public List<Nachricht> findAllNachricht() {
 		final List<Nachricht> nachrichten = dao.findAllNachricht();
+		
+		if(nachrichten==null) {
+			return null;
+		}
+		
 		return nachrichten;
 	}
 	
