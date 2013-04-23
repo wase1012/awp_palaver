@@ -83,7 +83,7 @@ public class Kategorie implements java.io.Serializable {
 	 * 
 	 * @return KategorieName
 	 */
-	@Column(name = "name", unique = true, length = 45)
+	@Column(name = "name", unique = false, length = 45)
 	public String getName() {
 		return this.name;
 	}
