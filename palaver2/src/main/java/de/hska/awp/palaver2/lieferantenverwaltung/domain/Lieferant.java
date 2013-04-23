@@ -111,14 +111,6 @@ public class Lieferant implements java.io.Serializable {
 
 	/**
 	 * 
-	 * @param id
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * 
 	 * @return
 	 */
 	@Column(name = "name", nullable = false, length = 45)
