@@ -16,9 +16,8 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
-import de.bistrosoft.palaver.gui.view.Menuplan;
+import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
-import de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
@@ -113,7 +112,7 @@ public class MainLayout extends VerticalLayout implements Command
 	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE));
 	    {
-	      ViewHandler.getInstance().switchView(Menuplan.class);
+	      ViewHandler.getInstance().switchView(Menueplan.class);
 	    }
 	  }
 	 

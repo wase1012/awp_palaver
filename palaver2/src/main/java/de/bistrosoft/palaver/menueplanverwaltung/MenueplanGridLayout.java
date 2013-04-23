@@ -25,12 +25,12 @@ import fi.jasoft.dragdroplayouts.drophandlers.DefaultGridLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
 @SuppressWarnings("serial")
-public class DragdropGridLayout extends CustomComponent{
+public class MenueplanGridLayout extends CustomComponent{
 
     private static final int ROWS = 8;
     private static final int COLUMNS = 5;
    
-    public DragdropGridLayout() {
+    public MenueplanGridLayout() {
     setCaption("Grid layout");
     setSizeFull();
 
