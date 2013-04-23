@@ -12,12 +12,12 @@
         <init-param>
             <description>Vaadin UI to display</description>
             <param-name>UI</param-name>
-            <param-value>de.hska.awp.palaver2.Application</param-value>
+            <param-value>de.bistrosoft.palaver.Application</param-value>
         </init-param>
                 <init-param>
             <description>Application widgetset</description>
             <param-name>widgetset</param-name>
-            <param-value>de.hska.awp.palaver2.AppWidgetSet</param-value>
+            <param-value>de.bistrosoft.palaver.AppWidgetSet</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
