@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -25,12 +27,34 @@ import de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikel;
 @Table(name = "mengeneinheit", catalog = "palaver", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "name"),
 		@UniqueConstraint(columnNames = "kurz") })
+@NamedQueries({
+	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_KURZ, query = "SELECT k FROM Mengeneinheit k WHERE k.kurz = :"
+			+ Mengeneinheit.PARAM_KURZ),
+	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_NAME, query = "SELECT k FROM Mengeneinheit k WHERE k.name = :"
+			+ Mengeneinheit.PARAM_NAME),
+	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_ID, query = "Select k FROM Mengeneinheit k WHERE k.id = :"
+			+ Mengeneinheit.PARAM_ID),
+	@NamedQuery(name = Mengeneinheit.FIND_ALL_MENGENEINHEIT, query = "Select k FROM Mengeneinheit k")
+})
 public class Mengeneinheit implements java.io.Serializable {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 5210068506937506344L;
+
+	private static final String PREFIX = "Mengeneinheit.";
+
+	public static final String FIND_MENGENEINHEIT_BY_NAME = PREFIX
+			+ "findMengeneinheitByName";
+	public static final String FIND_MENGENEINHEIT_BY_ID = PREFIX
+			+ "findMengeneinheitById";
+	public static final String FIND_MENGENEINHEIT_BY_KURZ = PREFIX
+			+ "findMengeneinheitByKurz";
+	public static final String FIND_ALL_MENGENEINHEIT = PREFIX + "findAllMengeneinheit";
+	public static final String PARAM_NAME = "name";
+	public static final String PARAM_ID = "id";
+	public static final String PARAM_KURZ = "kurz";
 	
 	private Long id;
 	private String name;
