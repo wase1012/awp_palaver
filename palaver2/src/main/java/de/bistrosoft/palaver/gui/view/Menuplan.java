@@ -3,7 +3,7 @@ package de.bistrosoft.palaver.gui.view;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.menuplanverwaltung.DragdropGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.DragdropGridLayout;
 
 public class Menuplan extends VerticalLayout{
 

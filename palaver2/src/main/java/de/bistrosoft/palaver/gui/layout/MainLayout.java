@@ -1,6 +1,5 @@
 /**
- * Michael Marschall
- * 18.04.2013 21:24:55
+ * Sebastian Walz
  */
 package de.bistrosoft.palaver.gui.layout;
 
@@ -12,14 +11,18 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
+import de.bistrosoft.palaver.gui.view.LieferantErstellen;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
-
+/**
+ * @author Sebastian
+ *
+ */
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command
 {
@@ -53,24 +56,17 @@ public class MainLayout extends VerticalLayout implements Command
 		this.addComponent(header);
 		
 		menu.setWidth("100%");
-//		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
-//		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
-//		artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
-//		
-//		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
-//		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
-//		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
-//		
-//		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
+		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
+		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
+		artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
 		
-		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_AENDERN, this);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_LOESCHEN, this);
+		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
+		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
+		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
-//		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
+		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
+		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		this.addComponent(menu);
 		
 		DefaultView content = new DefaultView();
@@ -93,9 +89,17 @@ public class MainLayout extends VerticalLayout implements Command
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
+		switch (selectedItem.getText())
 		{
-			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+			case IConstants.MENU_ARTIKEL_NEU:
+				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+			break;
+			case IConstants.MENU_LIEFERANT_NEW:
+				ViewHandler.getInstance().switchView(LieferantErstellen.class);
+			break;
+			default: 
+				ViewHandler.getInstance().switchView(DefaultView.class);
+			break;
 		}
 	}
 }
