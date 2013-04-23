@@ -15,9 +15,16 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.AbstractTest;
 	  
+/**
+ * @author bach1014
+ * Testklasse fuer den Ansprechpartner
+ */
 public class AnsprechpartnerTest extends AbstractTest  { 
 	 
-	 
+		/**
+		 * Testmethode findAnsprechpartnerByName
+		 * Suche nach einen Ansprechpartner ueber einen Namen
+		 */
 	    @Test
 	    public void findAnsprechpartnerByName() {
 	    	
@@ -26,11 +33,15 @@ public class AnsprechpartnerTest extends AbstractTest  {
 			final TypedQuery<Ansprechpartner> query = em.createNamedQuery(
 					Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, Ansprechpartner.class);
 			query.setParameter(Ansprechpartner.PARAM_NAME, name);
-			final List<Ansprechpartner> kunden = query.getResultList();
+			final List<Ansprechpartner> aplist = query.getResultList();
 
-			assertThat(kunden.isEmpty(), is(false));
+			assertThat(aplist.isEmpty(), is(false));
 	    }
 	    
+	    /**
+		 * Testmethode findAnsprechpartnerById
+		 * Suche nach einen Ansprechpartner ueber eine ID
+		 */
 	    @Test
 	    public void findAnsprechpartnerById() {
 	    	
@@ -41,6 +52,10 @@ public class AnsprechpartnerTest extends AbstractTest  {
 			assertThat(ap.getId(), is(id));
 	    }
 	    
+	    /**
+		 * Testmethode createAnsprechpartner
+		 * Erzeugen eines Ansprechpartners in der Datenbank
+		 */
 	    @Test
 	    public void createAnsprechpartner() {
 	    	
@@ -56,6 +71,10 @@ public class AnsprechpartnerTest extends AbstractTest  {
 	    	em.getTransaction().commit();
 	    }
 	    
+	    /**
+		 * Testmethode deleteAnsprechpartner
+		 * Loeschen eines Ansprechpartners in der Datenbank
+		 */
 	    @Test
 	    public void deleteAnsprechpartner() {
 	    	
