@@ -54,19 +54,19 @@ public class MengeneinheitTest extends AbstractTest {
 	    }
 	    
 	    /**
-		 * Testmethode createMengeneinheit
-		 * Erzeugen einer Mengeneinheit in der Datenbank
+		 * Testmethode updateMengeneinheit
+		 * Update des Namens einer Mengeneinheit in der Datenbank
 		 */
 	    @Test
-	    public void createMengeneinheit() {
+	    public void updateMengeneinheit() {
 	    	
-	    	Mengeneinheit me = new Mengeneinheit();
-	    	me.setName("Tonnen");
-	    	me.setKurz("T");
+	    	final Long id = Long.valueOf("1");
+	    	Mengeneinheit me = em.find(Mengeneinheit.class, id);
 	    	
-	    	em.persist(me);
+	    	String name = me.getName();
+	    	me.setName(name = name + "update");
+	    	em.merge(me);
 	    	em.getTransaction().commit();
 	    }
-	    
 }
 
