@@ -16,6 +16,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 
 import de.bistrosoft.palaver.util.CalendarWeek;
 
@@ -29,7 +30,7 @@ public class MenueplanGridLayout extends CustomComponent{
 
     private static final int ROWS = 8;
     private static final int COLUMNS = 5;
-   
+       
     public MenueplanGridLayout() {
     setCaption("Grid layout");
     setSizeFull();
@@ -80,6 +81,21 @@ public class MenueplanGridLayout extends CustomComponent{
     	lbTmp.setWidth("140px");
 		layout.addComponent(lbTmp,col,0);	
         layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
+    }
+    
+    //Fülle Zeile für Köche
+    for (int col = 0; col < COLUMNS; col++) {
+    	VerticalLayout vl = new VerticalLayout();
+    	ComboBox Koch1 = new ComboBox();
+        ComboBox Koch2 = new ComboBox();	
+    	Koch1.setWidth("140px");
+    	Koch1.addItem("Test");
+    	Koch2.setWidth("140px");
+    	Koch2.addItem("Test");
+    	vl.addComponent(Koch1);
+    	vl.addComponent(Koch2);
+    	layout.addComponent(vl,col,1);	
+        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
     }
     
     //Füge ADD Buttons ein
