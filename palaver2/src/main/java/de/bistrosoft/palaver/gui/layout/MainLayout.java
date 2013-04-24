@@ -66,12 +66,11 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
-		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
 		
-		MenuItem menueplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
+		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
@@ -110,10 +109,12 @@ public class MainLayout extends VerticalLayout implements Command
 	    {
 	      ViewHandler.getInstance().switchView(RezeptAnlegen.class);
 	    }
-	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE));
+	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 	    {
 	      ViewHandler.getInstance().switchView(Menueplan.class);
 	    }
+	    
+
 	  }
 	 
 	}
