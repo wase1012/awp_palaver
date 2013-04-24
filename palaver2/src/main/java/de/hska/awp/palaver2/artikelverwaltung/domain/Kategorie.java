@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "kategorie", catalog = "palaver", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "id")})
+		@UniqueConstraint(columnNames = "name")})
 @NamedQueries({
 	@NamedQuery(name = Kategorie.FIND_KATEGORIE_BY_NAME, query = "SELECT k FROM Kategorie k WHERE k.name = :"
 			+ Kategorie.PARAM_NAME),
@@ -25,14 +25,9 @@ import javax.persistence.Table;
 	@NamedQuery(name = Kategorie.FIND_ALL_KATEGORIE, query = "Select k FROM Kategorie k")
 })
 public class Kategorie implements java.io.Serializable {
-	private static final long serialVersionUID = -4647006694762094910L;
+	private static final long serialVersionUID = -4647006694762094989L;
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
-
-	@Column(name = "name", nullable = false, length = 45)
 	private String name;
 
 	private static final String PREFIX = "Kategorie.";
