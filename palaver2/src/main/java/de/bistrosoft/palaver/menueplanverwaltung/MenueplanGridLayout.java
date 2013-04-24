@@ -85,6 +85,7 @@ public class MenueplanGridLayout extends CustomComponent{
     //Füge ADD Buttons ein
     for (int row = 2; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
+        	if(layout.getComponent(col, row)==null);
                 Button btn = new Button("ADD");
                 btn.addClickListener(new ClickListener() {
 					
@@ -107,7 +108,6 @@ public class MenueplanGridLayout extends CustomComponent{
 					        	}
 					        }
 						}
-						
 					}
 				});
                 

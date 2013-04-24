@@ -5,6 +5,7 @@ import com.vaadin.server.Sizeable;
 import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.ui.AbsoluteLayout.ComponentPosition;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
@@ -49,6 +50,7 @@ public class MenueplanGridDropHandler extends
         LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
                 .getTransferable();
                 
+        //Finde Quellkomponente, Quellzeile, Quellspalte
         Component sourceComp = transferable.getComponent();
         Integer sourceRow =-1;
         Integer sourceColumn=-1;
@@ -65,23 +67,42 @@ public class MenueplanGridDropHandler extends
 	        }
         }
         
+        //Finde Zielkomponente, Zielzeile, Zielspalte
         Integer destRow = details.getOverRow();
         Integer destColumn = details.getOverColumn();
         Component destComp = details.getOverComponent();
         
-        if (!(destRow<2)) {
+        Boolean isDoDND = true;
+        Boolean isSwitch = true;
+        
+        //Prüfe, dass Komponente nicht in die ersten zwei Zeilen gedropped wird
+        //Prüfe, dass Zielkomponente ungleich Quelkomponente ist
+        if (!(destRow<2) && (destComp!=sourceComp) && isDoDND) {
+        	//Lösche Ziel- und Quellkomponente
         	layout.removeComponent(sourceComp);
             layout.removeComponent(destComp);
+            //Füge Quellkomponente wieder ein
             layout.addComponent(sourceComp,destColumn,destRow);
             layout.setComponentAlignment(sourceComp, dropAlignment);
             
+            //Wenn Zielkomponente vorhanden füge diese ein
             if (destComp!=null){
-            	layout.addComponent(destComp, sourceColumn, sourceRow);
-            	layout.setComponentAlignment(destComp, dropAlignment);
+            	if(isSwitch){
+            		layout.addComponent(destComp, sourceColumn, sourceRow);
+                	layout.setComponentAlignment(destComp, dropAlignment);
+            	}
+            	else {
+            		Button btAdd = new Button();
+            		layout.addComponent(btAdd, sourceColumn, sourceRow);
+                	layout.setComponentAlignment(btAdd, dropAlignment);
+            	}
+            	
             }
         }
     }
 
+    
+    
     @Override
     protected void handleDropFromLayout(DragAndDropEvent event) {
         LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
@@ -111,7 +132,7 @@ public class MenueplanGridDropHandler extends
 
                 return;
             }
-
+            
         } else {
 
             // Check that we are not dragging an outer layout into an inner
@@ -136,7 +157,6 @@ public class MenueplanGridDropHandler extends
         addComponent(event, comp, column, row);
     }
 
-    @SuppressWarnings("deprecation")
 	protected void addComponent(DragAndDropEvent event, Component component,
             int column, int row) {
     }
