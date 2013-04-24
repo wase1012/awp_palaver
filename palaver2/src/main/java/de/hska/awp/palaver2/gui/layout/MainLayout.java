@@ -17,6 +17,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
+import de.hska.awp.palaver2.gui.view.TestView;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -99,9 +100,9 @@ public class MainLayout extends VerticalLayout implements Command
 				ViewHandler.getInstance().switchView(LieferantErstellen.class);
 			break;
 			case IConstants.MENU_ARTIKEL_ANZEIGEN:
-				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+				ViewHandler.getInstance().switchView(TestView.class);
 			default: 
-				ViewHandler.getInstance().switchView(DefaultView.class);
+				ViewHandler.getInstance().switchView(TestView.class);
 			break;
 		}
 	}
