@@ -21,7 +21,9 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 @Entity
 @Table(name = "artikel", catalog = "palaver")
 @NamedQueries({
-	@NamedQuery(name = Artikel.FIND_ALL_ARTIKLES, query = "SELECT a FROM Artikel a")
+	@NamedQuery(name = Artikel.FIND_ALL_ARTIKLES, query = "SELECT a FROM Artikel a"),
+	@NamedQuery(name = Artikel.FIND_ARTIKLE_BY_ID, query = "SELECT a FROM Artikel a WHERE a.id = :"
+	+ Artikel.PARAM_ID)
 })
 public class Artikel implements java.io.Serializable 
 {
@@ -29,11 +31,13 @@ public class Artikel implements java.io.Serializable
 	
 	private static final String 	PREFIX = "Artikel.";
 	public static final String		FIND_ALL_ARTIKLES = PREFIX + "findAllArtikel";
+	public static final String		FIND_ARTIKLE_BY_ID = PREFIX + "findArtikelById";
+	public static final String PARAM_ID = "id";
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mengeneinheit_fk", nullable = false)
@@ -112,12 +116,12 @@ public class Artikel implements java.io.Serializable
 		this.lebensmittel = lebensmittel;
 	}
 
-	public Integer getId() 
+	public Long getId() 
 	{
 		return this.id;
 	}
 
-	public void setId(Integer id) 
+	public void setId(Long id) 
 	{
 		this.id = id;
 	}

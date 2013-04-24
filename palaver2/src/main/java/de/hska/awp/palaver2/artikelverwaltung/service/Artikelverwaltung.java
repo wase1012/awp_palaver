@@ -36,4 +36,23 @@ public class Artikelverwaltung extends Dao
 		
 		return result;
 	}
+	
+	public Artikel getArtikelById(Long id)
+	{
+		Artikel result = null;
+		
+		result = find(Artikel.class, id);
+		
+		return result;
+	}
+	
+	public Artikel createArtikel(Artikel artikel)
+	{
+		return (artikel == null) ? artikel : create(artikel);
+	}
+	
+	public Artikel updateArtikel(Artikel artikel)
+	{
+		return (artikel == null) ? artikel : update(artikel);
+	}
 }
