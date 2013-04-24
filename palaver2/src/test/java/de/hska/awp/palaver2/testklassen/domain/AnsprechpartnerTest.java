@@ -28,7 +28,7 @@ public class AnsprechpartnerTest extends AbstractTest  {
 	    @Test
 	    public void findAnsprechpartnerByName() {
 	    	
-	    	final String name = "Max Mustermann";
+	    	final String name = "Armin Maier";
 
 			final TypedQuery<Ansprechpartner> query = em.createNamedQuery(
 					Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, Ansprechpartner.class);
