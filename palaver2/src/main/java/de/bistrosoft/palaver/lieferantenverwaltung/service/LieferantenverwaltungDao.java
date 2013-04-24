@@ -32,9 +32,9 @@ public class LieferantenverwaltungDao extends Dao {
 
 		List<Ansprechpartner> aplist = null;
 
-		aplist = find(Ansprechpartner.class,
-				Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME,
-				with(Ansprechpartner.PARAM_NAME, name).build());
+//		aplist = find(Ansprechpartner.class,
+//				Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME,
+//				with(Ansprechpartner.PARAM_NAME, name).build());
 
 		return aplist;
 	}
@@ -61,8 +61,8 @@ public class LieferantenverwaltungDao extends Dao {
 
 		List<Lieferant> lieferantlist = null;
 
-		lieferantlist = find(Lieferant.class, Lieferant.FIND_LIEFERANT_BY_NAME,
-				with(Lieferant.PARAM_NAME, name).build());
+//		lieferantlist = find(Lieferant.class, Lieferant.FIND_LIEFERANT_BY_NAME,
+//				with(Lieferant.PARAM_NAME, name).build());
 
 		return lieferantlist;
 	}

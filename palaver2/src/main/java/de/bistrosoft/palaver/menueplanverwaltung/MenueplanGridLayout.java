@@ -16,6 +16,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 
 import de.bistrosoft.palaver.util.CalendarWeek;
 
@@ -28,8 +29,8 @@ import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 public class MenueplanGridLayout extends CustomComponent{
 
     private static final int ROWS = 8;
-    private static final int COLUMNS = 5;
-   
+    private static final int COLUMNS = 6;
+       
     public MenueplanGridLayout() {
     setCaption("Grid layout");
     setSizeFull();
@@ -66,10 +67,27 @@ public class MenueplanGridLayout extends CustomComponent{
     	return component instanceof MenueComponent;
         }
             });
+    
+    //Fülle Überschriftenspalte
+    Label[] arlbUeb = {new Label("Datum"),
+    					new Label("Köche"),
+    					new Label("Hauptgericht 1"),
+    					new Label("Hauptgericht 2"),
+    					new Label("Vegetarisches Gericht"),
+    					new Label("Pastagericht"),
+    					new Label("Salat / Suppe"),
+    					new Label("Dessert")};
+    for (int i = 0; i < arlbUeb.length; i++) {
+    	arlbUeb[i].setWidth("150px");
+    	layout.addComponent(arlbUeb[i],0,i);
+    	layout.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
+    }
+        
     //Fülle Datumszeile
-    for (int col = 0; col < COLUMNS; col++) {
-    	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
-    	GregorianCalendar date = dates.get(col);
+
+	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
+    for (int col = 1; col < COLUMNS; col++) {
+    	GregorianCalendar date = dates.get(col-1);
     	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
 
     	String strDate = date.get(Calendar.DAY_OF_MONTH) + "." + 
@@ -82,11 +100,26 @@ public class MenueplanGridLayout extends CustomComponent{
         layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
     }
     
+    //Fülle Zeile für Köche
+    for (int col = 1; col < COLUMNS; col++) {
+    	VerticalLayout vl = new VerticalLayout();
+    	ComboBox koch1 = new ComboBox();
+        ComboBox koch2 = new ComboBox();
+    	koch1.setWidth("140px");
+    	koch1.addItem("Test");
+    	koch2.setWidth("140px");
+    	koch2.addItem("Test");
+    	vl.addComponent(koch1);
+    	vl.addComponent(koch2);
+    	layout.addComponent(vl,col,1);	
+        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
+    }
+    
     //Füge ADD Buttons ein
     for (int row = 2; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-        	if(layout.getComponent(col, row)==null);
-                Button btn = new Button("ADD");
+        	if(layout.getComponent(col, row)==null) {
+        		Button btn = new Button("ADD");
                 btn.addClickListener(new ClickListener() {
 					
 					@Override
@@ -104,7 +137,7 @@ public class MenueplanGridLayout extends CustomComponent{
 					        		MenueComponent menue = new MenueComponent("Pommes mit Schnitzel");
 					        		menue.setWidth("140px");
 					        		layout.addComponent(menue,col,row);
-					        		layout.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
+					        		layout.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);				
 					        	}
 					        }
 						}
@@ -113,6 +146,8 @@ public class MenueplanGridLayout extends CustomComponent{
                 
                 layout.addComponent(btn, col, row);
                 layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+        	}
+                
         }
     }
 }

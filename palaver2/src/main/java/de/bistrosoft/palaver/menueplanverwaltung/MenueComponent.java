@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
+import java.util.ArrayList;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
@@ -16,33 +18,31 @@ public class MenueComponent extends CustomComponent{
 	public MenueComponent(String text){
 		VerticalLayout vl = new VerticalLayout();
 		setCompositionRoot(vl);
+		
 		Label lbText = new Label(text);
 		vl.addComponent(lbText);
+		
 		HorizontalLayout hlProp = new HorizontalLayout();
-		CheckBox cbVeg = new CheckBox("Veg");
-		hlProp.addComponent(cbVeg);
+		
+		//Testdaten
+		ArrayList<String> eigenschaften = new ArrayList<>();
+		eigenschaften.add("W");
+		eigenschaften.add("V");
+		eigenschaften.add("S");
+		eigenschaften.add("D");
+		//
+		
+		for(int i=1;i<eigenschaften.size();++i){
+			CheckBox cbTmp = new CheckBox(eigenschaften.get(i));
+			cbTmp.setEnabled(true);
+//			cbTmp.set
+			hlProp.addComponent(cbTmp);
+		}
 		vl.addComponent(hlProp);
+		
 		Button btDelete = new Button("Löschen");
-//		btDelete.addClickListener(new ClickListener() {
-//			
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				Button btTmp = event.getButton();
-//				for (int row = 0; row < ROWS; row++) {
-//			        for (int col = 0; col < COLUMNS; col++) {
-//			        	if(tmp.equals(layout.getComponent(col, row))) {
-//			        		layout.removeComponent(tmp);
-//				
-//			}
-//		});
 		vl.addComponent(btDelete);
 		
 		
 	}
-	
-	
-	
-	
-	
-
 }
