@@ -45,47 +45,36 @@ public class Ansprechpartner implements java.io.Serializable {
 	public static final String PARAM_ID = "id";
 
 	private Long id;
-
 	private Lieferant lieferant;
-
 	private String name;
-
 	private String telefon;
-
+	private String handy;
 	private String fax;
 
-	/**
-	 * 
-	 */
 	public Ansprechpartner() {
 	}
 
-	/**
-	 * Constructor with
-	 * @param lieferant
-	 * @param name
-	 * @param telefon
-	 * @param fax
-	 */
+	public Ansprechpartner(Lieferant lieferant, String name) {
+		this.lieferant = lieferant;
+		this.name = name;
+	}
+
 	public Ansprechpartner(Lieferant lieferant, String name, String telefon,
-			String fax) {
+			String handy, String fax) {
 		this.lieferant = lieferant;
 		this.name = name;
 		this.telefon = telefon;
+		this.handy = handy;
 		this.fax = fax;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
-
+	
 	/**
 	 * 
 	 * @param id
@@ -145,6 +134,15 @@ public class Ansprechpartner implements java.io.Serializable {
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
+	
+	@Column(name = "handy", length = 45)
+	public String getHandy() {
+		return this.handy;
+	}
+
+	public void setHandy(String handy) {
+		this.handy = handy;
+	}
 
 	/**
 	 * 
@@ -203,14 +201,14 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	/**
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Ansprechpartner [id=" + id + ", lieferant=" + lieferant
-				+ ", name=" + name + ", telefon=" + telefon + ", fax=" + fax
-				+ "]";
+		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon="
+				+ telefon + ", handy=" + handy + ", fax=" + fax + "]";
 	}
+
+	
 
 }

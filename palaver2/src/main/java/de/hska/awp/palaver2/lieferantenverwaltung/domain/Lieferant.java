@@ -49,6 +49,8 @@ public class Lieferant implements java.io.Serializable {
 
 	private Long id;
 	private String name;
+	private String kundennummer;
+	private String bezeichnung;
 	private String strasse;
 	private String plz;
 	private String ort;
@@ -67,24 +69,13 @@ public class Lieferant implements java.io.Serializable {
 		this.name = name;
 	}
 
-	/**
-	 * Konstruktor mit nachfolgenden Parameter
-	 * @param name
-	 * @param strasse
-	 * @param plz
-	 * @param ort
-	 * @param email
-	 * @param telefon
-	 * @param fax
-	 * @param ansprechpartners
-	 * @param bestellungs
-	 * @param artikels
-	 */
-	public Lieferant(String name, String strasse, String plz, String ort,
-			String email, String telefon, String fax,
-			Set<Ansprechpartner> ansprechpartners, Set<Bestellung> bestellungs,
-			Set<Artikel> artikels) {
+	public Lieferant(String name, String kundennummer, String bezeichnung,
+			String strasse, String plz, String ort, String email,
+			String telefon, String fax, Set<Ansprechpartner> ansprechpartners,
+			Set<Bestellung> bestellungs, Set<Artikel> artikels) {
 		this.name = name;
+		this.kundennummer = kundennummer;
+		this.bezeichnung = bezeichnung;
 		this.strasse = strasse;
 		this.plz = plz;
 		this.ort = ort;
@@ -116,6 +107,24 @@ public class Lieferant implements java.io.Serializable {
 		this.name = name;
 	}
 
+	@Column(name = "kundennummer", length = 45)
+	public String getKundennummer() {
+		return this.kundennummer;
+	}
+
+	public void setKundennummer(String kundennummer) {
+		this.kundennummer = kundennummer;
+	}
+
+	@Column(name = "bezeichnung", length = 45)
+	public String getBezeichnung() {
+		return this.bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
+	
 	@Column(name = "strasse", length = 45)
 	public String getStrasse() {
 		return this.strasse;
@@ -228,11 +237,17 @@ public class Lieferant implements java.io.Serializable {
 		return true;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Lieferant [id=" + id + ", name=" + name + ", strasse="
+		return "Lieferant [id=" + id + ", name=" + name + ", kundennummer="
+				+ kundennummer + ", bezeichnung=" + bezeichnung + ", strasse="
 				+ strasse + ", plz=" + plz + ", ort=" + ort + ", email="
 				+ email + ", telefon=" + telefon + ", fax=" + fax + "]";
 	}
+
+	
 
 }
