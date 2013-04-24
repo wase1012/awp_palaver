@@ -2,10 +2,10 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="awpPersistenceUnit"
-		transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="awpPersistenceUnit">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<non-jta-data-source>java:/comp/env/jdbc/palaverDB</non-jta-data-source>
+		
+		<non-jta-data-source>java:comp/env/jdbc/palaverDB</non-jta-data-source>
 
 		<!-- Palaver Team 2 -->
 		<class>de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner</class>
@@ -32,8 +32,6 @@
 		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikelId</class>
 		<class>de.hska.awp.palaver2.rezeptverwaltung.domain.Zutatenkategorie</class>
 
-		<validation-mode>NONE</validation-mode>
-
 		<properties>
 			<!-- 
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:1433/palaver" />
@@ -42,21 +40,25 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/palaverDB"/>
-			 -->
-			<!-- Keine proprietaeren Erweiterungen von HQL nutzen -->
+			 
+
 			<property name="hibernate.query.jpaql_strict_compliance"
 				value="true" />
 
-			<!-- In der Log-Datei die SQL-Anweisungen lesbarer rausschreiben -->
 			<property name="hibernate.format_sql" value="true" />
 
-			<!-- In der Log-Datei auch Kommentare zu den generierten SQL-Anweisungen 
-				hinzufuegen -->
 			<property name="hibernate.use_sql_comments" value="true" />
 
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 			<property name="hibernate.connection.pool_size" value="1" />
-
+			
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
+       		<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/palaverDB"/>
+       		-->
+       		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+        	<property name="connection.autocommit" value="false"/>
+        	<property name="hibernate.hbm2ddl.auto" value="create"/>
+        	<property name="hibernate.show_sql" value="true"/>
 		</properties>
 
 	</persistence-unit>
