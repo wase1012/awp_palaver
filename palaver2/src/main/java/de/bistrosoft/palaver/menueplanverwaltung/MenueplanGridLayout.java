@@ -53,6 +53,7 @@ public class MenueplanGridLayout extends CustomComponent{
     layout.setComponentVerticalDropRatio(0);
 
     outer.addComponent(layout);
+    outer.setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
     outer.setExpandRatio(layout, 1);
 
     // Enable dragging components
