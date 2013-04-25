@@ -2,6 +2,8 @@ package de.bistrosoft.palaver.menueplanverwaltung;
 
 import java.util.ArrayList;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
@@ -9,6 +11,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -41,6 +44,28 @@ public class MenueComponent extends CustomComponent{
 		vl.addComponent(hlProp);
 		
 		Button btDelete = new Button("Löschen");
+		
+		btDelete.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Button tmp = event.getButton();
+				
+				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:", "Wollen Sie das Menü wirklich aus dem Plan löschen?",
+				        "Ja", "Nein", new ConfirmDialog.Listener() {
+
+				            public void onClose(ConfirmDialog dialog) {
+				                if (dialog.isConfirmed()) {
+				                    // Confirmed to continue
+				                    //feedback(dialog.isConfirmed());
+				                } else {
+				                    // User did not confirm
+				                }
+				            }
+				        });	
+			        }
+		});
+		
 		vl.addComponent(btDelete);
 		
 		

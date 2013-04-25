@@ -1,12 +1,6 @@
-/**
- * 
- * Jan Lauinger
- * 18.04.2013 - 21:21:58
- *
- */
-package de.bistrosoft.palaver.gui.view;
 
-//import org.vaadin.kim.filterabletwincolselect.FilterableTwinColSelect;
+ 
+package de.bistrosoft.palaver.gui.view;
 
 import com.vaadin.client.ui.Action;
 import com.vaadin.ui.Alignment;
@@ -18,25 +12,29 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * @author Jan Lauinger
- *
- */
-public class RezeptAnlegen extends VerticalLayout{
+
+public class RezeptAnzeigen extends VerticalLayout{
+	
+	
 	
 	private VerticalLayout	box = new VerticalLayout();
-	
-	private TextField bezeichnung = new TextField("Bezeichnung");
-	private TextField rezeptersteller = new TextField("Rezeptersteller"); 
+	 
+	//ueberschrift = new Label("Rezept Anzeige");
+  // ueberschrift.setContentMode(ContentMode.HTML);
+ 
+	private TextField bezeichnung = new TextField("Bezeichnung");     
+	private TextField rezeptersteller = new TextField("Rezeptersteller");  
 	private TextField portion = new TextField("Portion");	
+	
+	// variabel gestalten? da man neue einfuegen kann
 	private CheckBox herd = new CheckBox("Herd");
-	private CheckBox konvektomat = new CheckBox("Konvektomat");	
-	private ComboBox art = new ComboBox("Rezeptart");
-	private ComboBox geschmack = new ComboBox("Geschmack");
-//private FilterableTwinColSelect fussnoten = new FilterableTwinColSelect();
+	private CheckBox konvektomat = new CheckBox("Konvektomat");
+	
+	private TextField art = new TextField("Rezeptart");
+	private TextField geschmack = new TextField("Geschmack");
+	private Table fussnoten = new Table("Fussnoten");
 	private TextArea kommentar = new TextArea("Kommentar");
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
@@ -44,18 +42,39 @@ public class RezeptAnlegen extends VerticalLayout{
 	
 	private Table zutaten = new Table("Zutaten");
 	
-	public RezeptAnlegen()
+	public RezeptAnzeigen()
 	{
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
 		
 		bezeichnung.setWidth("100%");
+		bezeichnung.setImmediate(true);
+		bezeichnung.setInputPrompt("Lasangne");
+		rezeptersteller.setWidth("100%");
+		rezeptersteller.setImmediate(true);
+		rezeptersteller.setInputPrompt("Koch1");
 		kommentar.setWidth("100%");
+		kommentar.setImmediate(true);
+		kommentar.setInputPrompt("blablablabla");
 		portion.setWidth("100%");
 		portion.setImmediate(true);
 		portion.setInputPrompt("30");
+		geschmack.setWidth("100%");
+		geschmack.setImmediate(true);
+		geschmack.setInputPrompt("klassisch");
+		art.setWidth("100%");
+		art.setImmediate(true);
+		art.setInputPrompt("Hauptgericht");
+		herd.setWidth("100%");
+		herd.setImmediate(true);
+		herd.setValue(true);
+		konvektomat.setWidth("100%");
+		konvektomat.setImmediate(true);
+		konvektomat.setValue(true);
+		fussnoten.setSizeFull();
 		
+		fussnoten.setImmediate(true);
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
@@ -74,20 +93,16 @@ public class RezeptAnlegen extends VerticalLayout{
 		box.addComponent(subBox);
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
-
-//		box.addComponent(fussnoten);
-//		fussnoten.addItem(1);
-//        fussnoten.setItemCaption(1, "Rindfleisch ");
-//        fussnoten.addItem(2);
-//        fussnoten.setItemCaption(2, "ohne Zwiebel");
-//        fussnoten.addItem(3);
-//        fussnoten.setItemCaption(3, "Tomaten");
-//        fussnoten.addItem(4);
-//        fussnoten.setItemCaption(4, "vegetarisch");
-//        fussnoten.addItem(5);
-//        fussnoten.setItemCaption(5, "vegan");
-//        fussnoten.addItem(6);
-//        fussnoten.setItemCaption(6, "Nuesse");
+		subBox.setImmediate(true);
+		
+		
+		box.addComponent(fussnoten);
+		 fussnoten.addContainerProperty("Bezeichnug", String.class, null);
+		 fussnoten.addItem(new Object[] {
+				   "Rindfleisch"}, new Integer(1));
+		 fussnoten.addItem(new Object[] {
+				   "Tomaten"}, new Integer(2));
+		 
 		box.addComponent(kommentar);
 		
 		
@@ -119,7 +134,8 @@ public class RezeptAnlegen extends VerticalLayout{
 	   zutaten.addItem(new Object[] {
 			   "Salz", 3, "g", "Standard" }, new Integer(4));
 	   
-	   
+	   herd.setImmediate(true);
+		konvektomat.setImmediate(true);
 	   //Test ende
 	}
 

@@ -18,6 +18,7 @@ import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
 import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
@@ -108,6 +109,10 @@ public class MainLayout extends VerticalLayout implements Command
 	    if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
 	    {
 	      ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+	    }
+	    if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN))
+		    {
+		      ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
 	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 	    {
