@@ -121,23 +121,22 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.artikels = artikels;
 	}
 
-	
-	
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((artikels == null) ? 0 : artikels.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((kurz == null) ? 0 : kurz.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime
+				* result
+				+ ((rezeptHasArtikels == null) ? 0 : rezeptHasArtikels
+						.hashCode());
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -147,26 +146,39 @@ public class Mengeneinheit implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Mengeneinheit other = (Mengeneinheit) obj;
+		if (artikels == null) {
+			if (other.artikels != null)
+				return false;
+		} else if (!artikels.equals(other.artikels))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (kurz == null) {
+			if (other.kurz != null)
+				return false;
+		} else if (!kurz.equals(other.kurz))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (rezeptHasArtikels == null) {
+			if (other.rezeptHasArtikels != null)
+				return false;
+		} else if (!rezeptHasArtikels.equals(other.rezeptHasArtikels))
+			return false;
 		return true;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Mengeneinheit [id=" + id + ", name=" + name + ", kurz=" + kurz
-				+ "]";
+				+ ", rezeptHasArtikels=" + rezeptHasArtikels + ", artikels="
+				+ artikels + "]";
 	}
 
 }

@@ -1,9 +1,8 @@
 package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
-// Generated 21.04.2013 16:08:42 by Hibernate Tools 3.4.0.CR1
+// Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -24,14 +23,9 @@ import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
 @Table(name = "rezept_has_artikel", catalog = "palaver")
 public class RezeptHasArtikel implements java.io.Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -4850668343074296124L;
 	private RezeptHasArtikelId id;
 	private Artikel artikel;
 	private Mengeneinheit mengeneinheit;
-	private Zutatenkategorie zutatenkategorie;
 	private Rezept rezept;
 	private BigDecimal menge;
 
@@ -39,20 +33,18 @@ public class RezeptHasArtikel implements java.io.Serializable {
 	}
 
 	public RezeptHasArtikel(RezeptHasArtikelId id, Artikel artikel,
-			Mengeneinheit mengeneinheit, Zutatenkategorie zutatenkategorie,
-			Rezept rezept, BigDecimal menge) {
+			Mengeneinheit mengeneinheit, Rezept rezept, BigDecimal menge) {
 		this.id = id;
 		this.artikel = artikel;
 		this.mengeneinheit = mengeneinheit;
-		this.zutatenkategorie = zutatenkategorie;
 		this.rezept = rezept;
 		this.menge = menge;
 	}
 
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "rezeptId", column = @Column(name = "rezept_id", nullable = false)),
-			@AttributeOverride(name = "artikelId", column = @Column(name = "artikel_id", nullable = false)) })
+			@AttributeOverride(name = "rezeptFk", column = @Column(name = "rezept_fk", nullable = false)),
+			@AttributeOverride(name = "artikelFk", column = @Column(name = "artikel_fk", nullable = false)) })
 	public RezeptHasArtikelId getId() {
 		return this.id;
 	}
@@ -62,7 +54,7 @@ public class RezeptHasArtikel implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artikel_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "artikel_fk", nullable = false, insertable = false, updatable = false)
 	public Artikel getArtikel() {
 		return this.artikel;
 	}
@@ -82,17 +74,7 @@ public class RezeptHasArtikel implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zutatenkategorie", nullable = false)
-	public Zutatenkategorie getZutatenkategorie() {
-		return this.zutatenkategorie;
-	}
-
-	public void setZutatenkategorie(Zutatenkategorie zutatenkategorie) {
-		this.zutatenkategorie = zutatenkategorie;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rezept_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "rezept_fk", nullable = false, insertable = false, updatable = false)
 	public Rezept getRezept() {
 		return this.rezept;
 	}
@@ -108,6 +90,63 @@ public class RezeptHasArtikel implements java.io.Serializable {
 
 	public void setMenge(BigDecimal menge) {
 		this.menge = menge;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((menge == null) ? 0 : menge.hashCode());
+		result = prime * result
+				+ ((mengeneinheit == null) ? 0 : mengeneinheit.hashCode());
+		result = prime * result + ((rezept == null) ? 0 : rezept.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RezeptHasArtikel other = (RezeptHasArtikel) obj;
+		if (artikel == null) {
+			if (other.artikel != null)
+				return false;
+		} else if (!artikel.equals(other.artikel))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (menge == null) {
+			if (other.menge != null)
+				return false;
+		} else if (!menge.equals(other.menge))
+			return false;
+		if (mengeneinheit == null) {
+			if (other.mengeneinheit != null)
+				return false;
+		} else if (!mengeneinheit.equals(other.mengeneinheit))
+			return false;
+		if (rezept == null) {
+			if (other.rezept != null)
+				return false;
+		} else if (!rezept.equals(other.rezept))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RezeptHasArtikel [id=" + id + ", artikel=" + artikel
+				+ ", mengeneinheit=" + mengeneinheit + ", rezept=" + rezept
+				+ ", menge=" + menge + "]";
 	}
 
 }

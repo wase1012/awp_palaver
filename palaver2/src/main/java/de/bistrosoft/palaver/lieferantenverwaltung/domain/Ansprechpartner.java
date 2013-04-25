@@ -45,40 +45,29 @@ public class Ansprechpartner implements java.io.Serializable {
 	public static final String PARAM_ID = "id";
 
 	private Long id;
-
 	private Lieferant lieferant;
-
 	private String name;
-
 	private String telefon;
-
+	private String handy;
 	private String fax;
 
-	/**
-	 * 
-	 */
 	public Ansprechpartner() {
 	}
 
-	/**
-	 * Constructor with
-	 * @param lieferant
-	 * @param name
-	 * @param telefon
-	 * @param fax
-	 */
+	public Ansprechpartner(Lieferant lieferant, String name) {
+		this.lieferant = lieferant;
+		this.name = name;
+	}
+
 	public Ansprechpartner(Lieferant lieferant, String name, String telefon,
-			String fax) {
+			String handy, String fax) {
 		this.lieferant = lieferant;
 		this.name = name;
 		this.telefon = telefon;
+		this.handy = handy;
 		this.fax = fax;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -86,100 +75,77 @@ public class Ansprechpartner implements java.io.Serializable {
 		return this.id;
 	}
 
-	/**
-	 * 
-	 * @param id
-	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lieferant_fk", nullable = false)
 	public Lieferant getLieferant() {
 		return this.lieferant;
 	}
 
-	/**
-	 * 
-	 * @param lieferant
-	 */
 	public void setLieferant(Lieferant lieferant) {
 		this.lieferant = lieferant;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
 		return this.name;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	@Column(name = "telefon", length = 45)
 	public String getTelefon() {
 		return this.telefon;
 	}
 
-	/**
-	 * 
-	 * @param telefon
-	 */
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+	@Column(name = "handy", length = 45)
+	public String getHandy() {
+		return this.handy;
+	}
+
+	public void setHandy(String handy) {
+		this.handy = handy;
+	}
+
 	@Column(name = "fax", length = 45)
 	public String getFax() {
 		return this.fax;
 	}
 
-	/**
-	 * 
-	 * @param fax
-	 */
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
 
-	
-	
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public String toString() {
+		return "Ansprechpartner [id=" + id + ", lieferant=" + lieferant
+				+ ", name=" + name + ", telefon=" + telefon + ", handy="
+				+ handy + ", fax=" + fax + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
+		result = prime * result + ((handy == null) ? 0 : handy.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((lieferant == null) ? 0 : lieferant.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((telefon == null) ? 0 : telefon.hashCode());
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -189,28 +155,36 @@ public class Ansprechpartner implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Ansprechpartner other = (Ansprechpartner) obj;
+		if (fax == null) {
+			if (other.fax != null)
+				return false;
+		} else if (!fax.equals(other.fax))
+			return false;
+		if (handy == null) {
+			if (other.handy != null)
+				return false;
+		} else if (!handy.equals(other.handy))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (lieferant == null) {
+			if (other.lieferant != null)
+				return false;
+		} else if (!lieferant.equals(other.lieferant))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (telefon == null) {
+			if (other.telefon != null)
+				return false;
+		} else if (!telefon.equals(other.telefon))
+			return false;
 		return true;
 	}
-
-	/**
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Ansprechpartner [id=" + id + ", lieferant=" + lieferant
-				+ ", name=" + name + ", telefon=" + telefon + ", fax=" + fax
-				+ "]";
-	}
-
 }

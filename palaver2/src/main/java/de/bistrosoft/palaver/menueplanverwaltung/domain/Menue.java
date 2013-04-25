@@ -30,11 +30,9 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 @Table(name = "menue", catalog = "palaver", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Menue implements java.io.Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -489234749011441338L;
-	private Integer id;
+
+	private static final long serialVersionUID = -7681594013401705670L;
+	private Long id;
 	private Mitarbeiter mitarbeiter;
 	private String name;
 	private Set<Rezept> rezepts = new HashSet<Rezept>(0);
@@ -59,11 +57,11 @@ public class Menue implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -105,4 +103,63 @@ public class Menue implements java.io.Serializable {
 		this.menueplans = menueplans;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((menueplans == null) ? 0 : menueplans.hashCode());
+		result = prime * result
+				+ ((mitarbeiter == null) ? 0 : mitarbeiter.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((rezepts == null) ? 0 : rezepts.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Menue other = (Menue) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (menueplans == null) {
+			if (other.menueplans != null)
+				return false;
+		} else if (!menueplans.equals(other.menueplans))
+			return false;
+		if (mitarbeiter == null) {
+			if (other.mitarbeiter != null)
+				return false;
+		} else if (!mitarbeiter.equals(other.mitarbeiter))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (rezepts == null) {
+			if (other.rezepts != null)
+				return false;
+		} else if (!rezepts.equals(other.rezepts))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Menue [id=" + id + ", mitarbeiter=" + mitarbeiter + ", name="
+				+ name + ", rezepts=" + rezepts + ", menueplans=" + menueplans
+				+ "]";
+	}
+
 }
+
