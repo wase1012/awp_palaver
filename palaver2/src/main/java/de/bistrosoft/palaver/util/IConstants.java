@@ -7,7 +7,7 @@ package de.bistrosoft.palaver.util;
 
 public interface IConstants
 {
-	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 	
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";
 	public final String		MENU_ARTIKEL_NEU = "Artikel anlegen";
