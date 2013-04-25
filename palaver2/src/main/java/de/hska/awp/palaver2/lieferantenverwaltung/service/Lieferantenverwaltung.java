@@ -23,6 +23,22 @@ public class Lieferantenverwaltung implements Serializable {
 
 	private LieferantenverwaltungDao dao;
 	
+	private static Lieferantenverwaltung instance = null;
+	
+	private Lieferantenverwaltung()
+	{
+		super();
+	}
+	
+	public Lieferantenverwaltung getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new Lieferantenverwaltung();
+		}
+		return instance;
+	}
+	
 	public List<Ansprechpartner> findAllAnsprechpartner() {
 		final List<Ansprechpartner> aplist = dao.findAllAnsprechpartner();
 		return aplist;
