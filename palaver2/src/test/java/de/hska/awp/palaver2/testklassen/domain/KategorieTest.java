@@ -39,6 +39,7 @@ public class KategorieTest extends AbstractTest {
 		assertThat(kategorie.getId(), is(ID));
 	}
 
+	
 	/**
 	 * Testmethode updateKategorie Update des Namens einer Kategorie in der
 	 * Datenbank
