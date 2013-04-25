@@ -4,6 +4,8 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import java.util.List;
 import javax.persistence.TypedQuery;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.util.AbstractTest;
@@ -21,13 +23,12 @@ public class KategorieTest extends AbstractTest {
 	 * Testmethode findKategorieByName Suche nach einer Kategorie ueber einen
 	 * Namen
 	 */
+	@Ignore
 	@Test
 	public void findKategorieByName() {
-		final TypedQuery<Kategorie> query = em.createNamedQuery(
-				Kategorie.FIND_KATEGORIE_BY_NAME, Kategorie.class);
-		query.setParameter(Kategorie.PARAM_NAME, NAME);
-		final List<Kategorie> list = query.getResultList();
-		assertThat(list.isEmpty(), is(false));
+		
+		kategorie = em.find(Kategorie.class, NAME);
+		assertThat(kategorie.getName(), is(NAME));
 	}
 	
 	/**

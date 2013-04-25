@@ -33,7 +33,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = -590239735735958622L;
-	private Long mitarbeiternummer;
+	private Long id;
 	private String name;
 	private String vorname;
 	private String email;
@@ -72,13 +72,13 @@ public class Mitarbeiter implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "mitarbeiternummer", unique = true, nullable = false)
-	public Long getMitarbeiternummer() {
-		return this.mitarbeiternummer;
+	@Column(name = "id", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setMitarbeiternummer(Long mitarbeiternummer) {
-		this.mitarbeiternummer = mitarbeiternummer;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Column(name = "name", nullable = false, length = 45)
