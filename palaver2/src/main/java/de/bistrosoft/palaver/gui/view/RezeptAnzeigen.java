@@ -25,16 +25,16 @@ public class RezeptAnzeigen extends VerticalLayout{
   // ueberschrift.setContentMode(ContentMode.HTML);
  
 	private TextField bezeichnung = new TextField("Bezeichnung");     
-	
+	private TextField rezeptersteller = new TextField("Rezeptersteller");  
 	private TextField portion = new TextField("Portion");	
 	
 	// variabel gestalten? da man neue einfuegen kann
 	private CheckBox herd = new CheckBox("Herd");
 	private CheckBox konvektomat = new CheckBox("Konvektomat");
 	
-	private ComboBox art = new ComboBox("Art");
-	private ComboBox geschmack = new ComboBox("Geschmack");
-	private ComboBox charakteristika = new ComboBox("Charakteristika");
+	private TextField art = new TextField("Rezeptart");
+	private TextField geschmack = new TextField("Geschmack");
+	private Table fussnoten = new Table("Fussnoten");
 	private TextArea kommentar = new TextArea("Kommentar");
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
@@ -51,10 +51,30 @@ public class RezeptAnzeigen extends VerticalLayout{
 		bezeichnung.setWidth("100%");
 		bezeichnung.setImmediate(true);
 		bezeichnung.setInputPrompt("Lasangne");
-		
+		rezeptersteller.setWidth("100%");
+		rezeptersteller.setImmediate(true);
+		rezeptersteller.setInputPrompt("Koch1");
 		kommentar.setWidth("100%");
+		kommentar.setImmediate(true);
+		kommentar.setInputPrompt("blablablabla");
 		portion.setWidth("100%");
-		charakteristika.setWidth("100%");
+		portion.setImmediate(true);
+		portion.setInputPrompt("30");
+		geschmack.setWidth("100%");
+		geschmack.setImmediate(true);
+		geschmack.setInputPrompt("klassisch");
+		art.setWidth("100%");
+		art.setImmediate(true);
+		art.setInputPrompt("Hauptgericht");
+		herd.setWidth("100%");
+		herd.setImmediate(true);
+		herd.setValue(true);
+		konvektomat.setWidth("100%");
+		konvektomat.setImmediate(true);
+		konvektomat.setValue(true);
+		fussnoten.setSizeFull();
+		
+		fussnoten.setImmediate(true);
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
@@ -63,6 +83,7 @@ public class RezeptAnzeigen extends VerticalLayout{
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		box.addComponent(bezeichnung);
+		box.addComponent(rezeptersteller);
 		box.addComponent(portion);
 		box.addComponent(geschmack);
 		box.addComponent(art);
@@ -72,7 +93,16 @@ public class RezeptAnzeigen extends VerticalLayout{
 		box.addComponent(subBox);
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
-
+		subBox.setImmediate(true);
+		
+		
+		box.addComponent(fussnoten);
+		 fussnoten.addContainerProperty("Bezeichnug", String.class, null);
+		 fussnoten.addItem(new Object[] {
+				   "Rindfleisch"}, new Integer(1));
+		 fussnoten.addItem(new Object[] {
+				   "Tomaten"}, new Integer(2));
+		 
 		box.addComponent(kommentar);
 		
 		
@@ -104,7 +134,8 @@ public class RezeptAnzeigen extends VerticalLayout{
 	   zutaten.addItem(new Object[] {
 			   "Salz", 3, "g", "Standard" }, new Integer(4));
 	   
-	   
+	   herd.setImmediate(true);
+		konvektomat.setImmediate(true);
 	   //Test ende
 	}
 

@@ -6,6 +6,8 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
+//import org.vaadin.kim.filterabletwincolselect.FilterableTwinColSelect;
+
 import com.vaadin.client.ui.Action;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,6 +18,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -27,17 +30,14 @@ public class RezeptAnlegen extends VerticalLayout{
 	private VerticalLayout	box = new VerticalLayout();
 	
 	private TextField bezeichnung = new TextField("Bezeichnung");
-	private TextField portion = new TextField("Portion");
-
-	private TextArea kommentar = new TextArea("Kommentar");
-	
+	private TextField rezeptersteller = new TextField("Rezeptersteller"); 
+	private TextField portion = new TextField("Portion");	
 	private CheckBox herd = new CheckBox("Herd");
-	private CheckBox konvektomat = new CheckBox("Konvektomat");
-	
-	private ComboBox art = new ComboBox("Art");
+	private CheckBox konvektomat = new CheckBox("Konvektomat");	
+	private ComboBox art = new ComboBox("Rezeptart");
 	private ComboBox geschmack = new ComboBox("Geschmack");
-	private ComboBox charakteristika = new ComboBox("Charakteristika");
-	
+//private FilterableTwinColSelect fussnoten = new FilterableTwinColSelect();
+	private TextArea kommentar = new TextArea("Kommentar");
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button zutatenhinzufuegen = new Button("Zutaten hinzufügen");
@@ -53,7 +53,9 @@ public class RezeptAnlegen extends VerticalLayout{
 		bezeichnung.setWidth("100%");
 		kommentar.setWidth("100%");
 		portion.setWidth("100%");
-		charakteristika.setWidth("100%");
+		portion.setImmediate(true);
+		portion.setInputPrompt("30");
+		
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
@@ -62,6 +64,7 @@ public class RezeptAnlegen extends VerticalLayout{
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		box.addComponent(bezeichnung);
+		box.addComponent(rezeptersteller);
 		box.addComponent(portion);
 		box.addComponent(geschmack);
 		box.addComponent(art);
@@ -72,6 +75,19 @@ public class RezeptAnlegen extends VerticalLayout{
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
 
+//		box.addComponent(fussnoten);
+//		fussnoten.addItem(1);
+//        fussnoten.setItemCaption(1, "Rindfleisch ");
+//        fussnoten.addItem(2);
+//        fussnoten.setItemCaption(2, "ohne Zwiebel");
+//        fussnoten.addItem(3);
+//        fussnoten.setItemCaption(3, "Tomaten");
+//        fussnoten.addItem(4);
+//        fussnoten.setItemCaption(4, "vegetarisch");
+//        fussnoten.addItem(5);
+//        fussnoten.setItemCaption(5, "vegan");
+//        fussnoten.addItem(6);
+//        fussnoten.setItemCaption(6, "Nuesse");
 		box.addComponent(kommentar);
 		
 		
