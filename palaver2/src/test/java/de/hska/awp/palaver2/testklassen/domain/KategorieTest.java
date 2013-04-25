@@ -39,12 +39,12 @@ public class KategorieTest extends AbstractTest {
 		assertThat(kategorie.getId(), is(ID));
 	}
 
-	/**
+		/**
 	 * Testmethode updateKategorie Update des Namens einer Kategorie in der
 	 * Datenbank
 	 */
 	@Test
-	public void updateMengeneinheit() {
+	public void updateKategorie() {
 		kategorie = em.find(Kategorie.class, ID);
 		String name = kategorie.getName();
 		kategorie.setName(name = name + "Update");
