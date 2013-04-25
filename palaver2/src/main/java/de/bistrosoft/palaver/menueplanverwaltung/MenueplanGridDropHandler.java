@@ -8,12 +8,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
-import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTransferable;
 import fi.jasoft.dragdroplayouts.drophandlers.AbstractDefaultLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
@@ -77,7 +74,7 @@ public class MenueplanGridDropHandler extends
         
         //Prüfe, dass Komponente nicht in die ersten zwei Zeilen gedropped wird
         //Prüfe, dass Zielkomponente ungleich Quelkomponente ist
-        if (!(destRow<2) && (destComp!=sourceComp) && isDoDND) {
+        if (!(destRow<2) && !(destColumn<1) && (destComp!=sourceComp) && isDoDND) {
         	//Lösche Ziel- und Quellkomponente
         	layout.removeComponent(sourceComp);
             layout.removeComponent(destComp);
@@ -101,9 +98,8 @@ public class MenueplanGridDropHandler extends
         }
     }
 
-    
-    
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected void handleDropFromLayout(DragAndDropEvent event) {
         LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
                 .getTransferable();
