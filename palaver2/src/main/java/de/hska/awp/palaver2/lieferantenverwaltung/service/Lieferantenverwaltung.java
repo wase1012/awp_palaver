@@ -30,7 +30,7 @@ public class Lieferantenverwaltung implements Serializable {
 		super();
 	}
 	
-	public Lieferantenverwaltung getInstance()
+	public static Lieferantenverwaltung getInstance()
 	{
 		if (instance == null)
 		{
