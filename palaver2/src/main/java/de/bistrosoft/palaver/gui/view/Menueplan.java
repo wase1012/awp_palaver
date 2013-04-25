@@ -55,8 +55,8 @@ public class Menueplan extends VerticalLayout{
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				box.replaceComponent(shownMenueplan, nextMenueplan);
-				shownMenueplan=nextMenueplan;
+				box.replaceComponent(shownMenueplan, prevMenueplan);
+				shownMenueplan=prevMenueplan;
 			}
 		});
 		
@@ -65,8 +65,8 @@ public class Menueplan extends VerticalLayout{
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				box.replaceComponent(shownMenueplan, prevMenueplan);
-				shownMenueplan=prevMenueplan; 
+				box.replaceComponent(shownMenueplan, nextMenueplan);
+				shownMenueplan=nextMenueplan; 
 			}
 		});
 		hlChangeWeek.addComponent(btPrevWeek);
@@ -76,9 +76,10 @@ public class Menueplan extends VerticalLayout{
 		/////////////
 		
 		
-		
 		box.addComponent(curMenueplan);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
+//		this.setComponentAlignment(hlChangeWeek, Alignment.MIDDLE_CENTER);
+		
 	}
 	
 	public static void switchMenueplan(){
