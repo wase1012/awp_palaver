@@ -74,7 +74,7 @@ public class MenueplanGridDropHandler extends
         
         //Prüfe, dass Komponente nicht in die ersten zwei Zeilen gedropped wird
         //Prüfe, dass Zielkomponente ungleich Quelkomponente ist
-        if (!(destRow<2) && (destComp!=sourceComp) && isDoDND) {
+        if (!(destRow<2) && !(destColumn<1) && (destComp!=sourceComp) && isDoDND) {
         	//Lösche Ziel- und Quellkomponente
         	layout.removeComponent(sourceComp);
             layout.removeComponent(destComp);
