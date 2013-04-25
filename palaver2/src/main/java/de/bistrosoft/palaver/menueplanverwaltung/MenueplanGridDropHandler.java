@@ -7,12 +7,9 @@ import com.vaadin.ui.AbsoluteLayout.ComponentPosition;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
-import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTransferable;
 import fi.jasoft.dragdroplayouts.drophandlers.AbstractDefaultLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
@@ -82,7 +79,8 @@ public class MenueplanGridDropHandler extends
         }
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected void handleDropFromLayout(DragAndDropEvent event) {
         LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
                 .getTransferable();
@@ -136,8 +134,7 @@ public class MenueplanGridDropHandler extends
         addComponent(event, comp, column, row);
     }
 
-    @SuppressWarnings("deprecation")
-	protected void addComponent(DragAndDropEvent event, Component component,
+    protected void addComponent(DragAndDropEvent event, Component component,
             int column, int row) {
     }
 }

@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +21,6 @@ import de.bistrosoft.palaver.util.CalendarWeek;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultGridLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
 @SuppressWarnings("serial")
@@ -128,14 +126,12 @@ public class MenueplanGridLayout extends CustomComponent{
 					        	if(tmp.equals(layout.getComponent(col, row))) {
 					        		layout.removeComponent(tmp);
 					        		
-					        		WinSelectMenue window = new WinSelectMenue();
+					        		WinSelectMenue window = new WinSelectMenue(layout, tmp, row, col);
 					        		UI.getCurrent().addWindow(window);
 					        		window.setModal(true);
+					        		window.setWidth("50%");
+					        		window.setHeight("50%");
 					        		
-					        		MenueComponent menue = new MenueComponent("Pommes mit Schnitzel");
-					        		menue.setWidth("140px");
-					        		layout.addComponent(menue,col,row);
-					        		layout.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
 					        	}
 					        }
 						}
