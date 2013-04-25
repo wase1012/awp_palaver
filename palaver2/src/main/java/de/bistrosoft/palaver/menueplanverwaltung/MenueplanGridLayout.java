@@ -51,6 +51,7 @@ public class MenueplanGridLayout extends CustomComponent{
     layout.setComponentVerticalDropRatio(0);
 
     outer.addComponent(layout);
+    outer.setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
     outer.setExpandRatio(layout, 1);
 
     // Enable dragging components
@@ -82,8 +83,9 @@ public class MenueplanGridLayout extends CustomComponent{
     }
         
     //Fülle Datumszeile
+
+	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
     for (int col = 1; col < COLUMNS; col++) {
-    	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
     	GregorianCalendar date = dates.get(col-1);
     	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
 
@@ -114,8 +116,9 @@ public class MenueplanGridLayout extends CustomComponent{
     
     //Füge ADD Buttons ein
     for (int row = 2; row < ROWS; row++) {
-        for (int col = 1; col < COLUMNS; col++) {
-                Button btn = new Button("ADD");
+        for (int col = 0; col < COLUMNS; col++) {
+        	if(layout.getComponent(col, row)==null) {
+        		Button btn = new Button("ADD");
                 btn.addClickListener(new ClickListener() {
 					
 					@Override
@@ -135,12 +138,13 @@ public class MenueplanGridLayout extends CustomComponent{
 					        	}
 					        }
 						}
-						
 					}
 				});
                 
                 layout.addComponent(btn, col, row);
                 layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+        	}
+                
         }
     }
 }
