@@ -4,6 +4,7 @@ package de.hska.awp.palaver2.nachrichtenverwaltung.service;
 import java.io.Serializable;
 import java.util.List;
 
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.NachrichtenverwaltungDao;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
@@ -27,6 +28,18 @@ public class Nachrichtenverwaltung implements Serializable {
 		}
 		
 		return nachricht;
+	}
+	
+	public List<Nachricht> findNachrichtByRolle(Rollen rolle) {
+		if(rolle == null) {
+			return null;
+		}
+		
+		List<Nachricht> nachrichten = null;
+		nachrichten = dao.findNachrichtByRolle(Nachricht.class, rolle);
+		
+		return nachrichten;
+		
 	}
 	
 	public List<Nachricht> findAllNachricht() {
