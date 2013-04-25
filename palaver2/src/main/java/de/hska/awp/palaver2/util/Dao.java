@@ -12,7 +12,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -26,6 +28,16 @@ public class Dao implements Serializable {
 	
 	@PersistenceContext
 	protected transient EntityManager em;
+	
+	protected static EntityManagerFactory emf;
+	
+	public Dao()
+	{
+		super();
+		
+		emf = Persistence.createEntityManagerFactory("awpPersistenceUnit");
+        em = emf.createEntityManager();
+	}
 
 	public <T> T find(Class<T> clazz, Object id) {
 		final T result = em.find(clazz, id);
