@@ -8,6 +8,7 @@ import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.util.Dao;
+import static de.hska.awp.palaver2.util.Dao.QueryParameter.with;
 
 @SuppressWarnings("serial")
 public class Artikelverwaltung extends Dao
@@ -42,6 +43,16 @@ public class Artikelverwaltung extends Dao
 		Artikel result = null;
 		
 		result = find(Artikel.class, id);
+		
+		return result;
+	}
+	
+	public List<Artikel> getArtikelByName(String name)
+	{
+		List<Artikel> result = null;
+		
+		result = find(Artikel.class, Artikel.FIND_ARTIKLE_BY_NAME, 
+				with(Artikel.PARAM_NAME, name).build());
 		
 		return result;
 	}

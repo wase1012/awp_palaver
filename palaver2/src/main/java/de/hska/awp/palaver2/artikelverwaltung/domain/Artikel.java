@@ -23,16 +23,20 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 @NamedQueries({
 	@NamedQuery(name = Artikel.FIND_ALL_ARTIKLES, query = "SELECT a FROM Artikel a"),
 	@NamedQuery(name = Artikel.FIND_ARTIKLE_BY_ID, query = "SELECT a FROM Artikel a WHERE a.id = :"
-	+ Artikel.PARAM_ID)
+	+ Artikel.PARAM_ID),
+	@NamedQuery(name = Artikel.FIND_ARTIKLE_BY_NAME, query = "SELECT a FROM Artikel a WHERE a.name like :"
+	+ Artikel.PARAM_NAME)
 })
 public class Artikel implements java.io.Serializable 
 {
 	private static final long 		serialVersionUID = 6557876739298794189L;
 	
 	private static final String 	PREFIX = "Artikel.";
-	public static final String		FIND_ALL_ARTIKLES = PREFIX + "findAllArtikel";
-	public static final String		FIND_ARTIKLE_BY_ID = PREFIX + "findArtikelById";
-	public static final String PARAM_ID = "id";
+	public static final String		FIND_ALL_ARTIKLES 		= PREFIX + "findAllArtikel";
+	public static final String		FIND_ARTIKLE_BY_ID 		= PREFIX + "findArtikelById";
+	public static final String		FIND_ARTIKLE_BY_NAME 	= PREFIX + "findArtikelByName";
+	public static final String 		PARAM_ID 				= "id";
+	public static final String 		PARAM_NAME 				= "name";
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

@@ -64,6 +64,11 @@
 			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
+   			<groupId>org.vaadin.addons</groupId>
+   			<artifactId>filteringtable</artifactId>
+   			<version>0.8.4.v7</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.4</version>
@@ -114,7 +119,7 @@
         <testFailureIgnore>true</testFailureIgnore>
         <skipTests>true</skipTests>
         -->
-        <skipTests>true</skipTests>
+        <skipTests>false</skipTests>
     </configuration>
       </plugin>
 			<plugin>
