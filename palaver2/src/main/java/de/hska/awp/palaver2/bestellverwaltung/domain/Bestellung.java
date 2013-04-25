@@ -23,8 +23,8 @@ import javax.persistence.TemporalType;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * 
  * @author Elena W
+ * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder
  * 
  */
 @Entity
@@ -55,22 +55,12 @@ public class Bestellung implements java.io.Serializable {
 	public Bestellung() {
 	}
 
-	/**
-	 * Constructor with	 
-	 * @param lieferant
-	 * @param datum 
-	 */
 	public Bestellung(Lieferant lieferant, Date datum) {
 		this.lieferant = lieferant;
 		this.datum = datum;
 	}
 
-	/**
-	 * Constructor with	
-	 * @param lieferant 
-	 * @param datum 
-	 * @param bestellpositions
-	 */
+	
 	public Bestellung(Lieferant lieferant, Date datum,
 			Set<Bestellposition> bestellpositions) {
 		this.lieferant = lieferant;
@@ -78,9 +68,7 @@ public class Bestellung implements java.io.Serializable {
 		this.bestellpositions = bestellpositions;
 	}
 
-	/**
-	 * @return 
-	 */
+	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -88,56 +76,39 @@ public class Bestellung implements java.io.Serializable {
 		return this.id;
 	}
 
-	/**
-	 * @return 
-	 */
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lieferant_fk", nullable = false)
 	public Lieferant getLieferant() {
 		return this.lieferant;
 	}
 
-	/**
-	 * @param lieferant 
-	 */
 	public void setLieferant(Lieferant lieferant) {
 		this.lieferant = lieferant;
 	}
 
-	/**
-	 * @return 
-	 */
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "datum", nullable = false, length = 19)
 	public Date getDatum() {
 		return this.datum;
 	}
 
-	/**
-	 * @param datum 
-	 */
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
 
-	/**
-	 * @return 
-	 */
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bestellung")
 	public Set<Bestellposition> getBestellpositions() {
 		return this.bestellpositions;
 	}
 
-	/**
-	 * @param bestellpositions 
-	 */
 	public void setBestellpositions(Set<Bestellposition> bestellpositions) {
 		this.bestellpositions = bestellpositions;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -149,9 +120,7 @@ public class Bestellung implements java.io.Serializable {
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
