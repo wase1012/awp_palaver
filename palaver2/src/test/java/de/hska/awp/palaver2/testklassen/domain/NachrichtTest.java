@@ -33,12 +33,6 @@ public class NachrichtTest extends AbstractTest {
 
 		assertThat(nachricht.getId(), is(id));
     }
-	
-    @Test
-    public void findAllNachricht() {
-    	
-    	
-    }
     
 	@Test
 	public void createNachrichten() {
