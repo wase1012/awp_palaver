@@ -19,6 +19,22 @@ public class Nachrichtenverwaltung implements Serializable {
 	
 	private NachrichtenverwaltungDao dao;
 	
+	private static Nachrichtenverwaltung 	instance = null;
+	
+	private Nachrichtenverwaltung()
+	{
+		super();
+	}
+	
+	public static Nachrichtenverwaltung getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new Nachrichtenverwaltung();
+		}
+		return instance;
+	}
+	
 	public Nachricht findNachrichtById(Long id) {
 		
 		final Nachricht nachricht = dao.find(Nachricht.class, id);
