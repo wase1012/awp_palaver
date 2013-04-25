@@ -44,7 +44,7 @@ public class KategorieTest extends AbstractTest {
 	 * Datenbank
 	 */
 	@Test
-	public void updateMengeneinheit() {
+	public void updateKategorie() {
 		kategorie = em.find(Kategorie.class, ID);
 		String name = kategorie.getName();
 		kategorie.setName(name = name + "Update");
