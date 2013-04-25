@@ -79,5 +79,15 @@ import java.util.Locale;
         public int getWeekOfYear() {
             return weekOfYear;
         }
+
+		public static Week getCurrentWeek() {
+			Week week= new Week();
+			Calendar cal = new GregorianCalendar();
+			Date curDate = new Date();
+        	cal.setTime(curDate);
+        	week.setWeek(cal.get(Calendar.WEEK_OF_YEAR));
+        	week.setYear(cal.get(Calendar.YEAR));
+        	return week;
+		}
     }
 //}

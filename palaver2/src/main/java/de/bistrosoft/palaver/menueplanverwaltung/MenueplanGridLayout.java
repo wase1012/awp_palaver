@@ -29,14 +29,14 @@ public class MenueplanGridLayout extends CustomComponent{
     private static final int ROWS = 8;
     private static final int COLUMNS = 6;
        
-    public MenueplanGridLayout() {
-    setCaption("Grid layout");
+    public MenueplanGridLayout(int week, int year) {
+    setCaption("Kalenderwoche: " + week +"/"+year);
     setSizeFull();
 
     VerticalLayout outer = new VerticalLayout();
     outer.setSizeFull();
-    Label lbl = new Label ("sfd");
-    outer.addComponent(lbl);
+//    Label lbl = new Label ("sfd");
+//    outer.addComponent(lbl);
     setCompositionRoot(outer);
 
     // Create a drag and droppable grid layout
@@ -84,7 +84,7 @@ public class MenueplanGridLayout extends CustomComponent{
         
     //Fülle Datumszeile
 
-	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(new Date());
+	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week, year);
     for (int col = 1; col < COLUMNS; col++) {
     	GregorianCalendar date = dates.get(col-1);
     	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
