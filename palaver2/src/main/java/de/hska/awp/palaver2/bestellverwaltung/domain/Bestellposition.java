@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+
 
 
 /**
@@ -20,9 +23,22 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
  */
 @Entity
 @Table(name = "bestellposition", catalog = "palaver")
-public class Bestellposition implements java.io.Serializable {
+
+@NamedQueries({
+	@NamedQuery(name = Bestellposition.FIND_BESTELLPOSITION_BY_ID, query = "Select k FROM Bestellposition k WHERE k.id = :"
+			+ Bestellposition.PARAM_ID),
+	@NamedQuery(name = Bestellposition.FIND_ALL_BESTELLPOSITION, query = "Select k FROM Bestellposition k")
+			})
+	
+	
+	public class Bestellposition implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3160765850839739452L;	
+	private static final String PREFIX = "Bestellposition.";
+	public static final String FIND_BESTELLPOSITION_BY_ID = PREFIX
+			+ "findBestellpositionById";
+	public static final String FIND_ALL_BESTELLPOSITION = PREFIX + "findAllBestellposition";
+	public static final String PARAM_ID = "id";
 
 	private Long id;
 	private Artikel artikel;
