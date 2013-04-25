@@ -62,6 +62,15 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 		return this.id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artikel_fk", nullable = false)
 	public Artikel getArtikel() {

@@ -46,6 +46,14 @@ public class Bestellung implements java.io.Serializable {
 	public static final String PARAM_ID = "id";
 	
 	private Long id;
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
 	private Lieferant lieferant;
 	private Date datum;
 	
