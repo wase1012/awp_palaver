@@ -1,32 +1,12 @@
 package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  * 
  * @author bach1014
  *
  */
-@Entity
-@Table(name = "ansprechpartner", catalog = "palaver")
-@NamedQueries({
-		@NamedQuery(name = Ansprechpartner.FIND_ANSPRECHPARTNER_BY_NAME, query = "SELECT k FROM Ansprechpartner k WHERE k.name = :"
-				+ Ansprechpartner.PARAM_NAME),
-		@NamedQuery(name = Ansprechpartner.FIND_ANSPRECHPARTNER_BY_ID, query = "Select k FROM Ansprechpartner k WHERE k.id = :"
-				+ Ansprechpartner.PARAM_ID),
-		@NamedQuery(name = Ansprechpartner.FIND_ALL_ANSPRECHPARTNER, query = "Select k FROM Ansprechpartner k")
-})
+
 public class Ansprechpartner implements java.io.Serializable {
 
 	/**
@@ -68,9 +48,6 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.fax = fax;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -87,8 +64,6 @@ public class Ansprechpartner implements java.io.Serializable {
 	 * 
 	 * @return
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lieferant_fk", nullable = false)
 	public Lieferant getLieferant() {
 		return this.lieferant;
 	}
@@ -105,7 +80,6 @@ public class Ansprechpartner implements java.io.Serializable {
 	 * 
 	 * @return
 	 */
-	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
 		return this.name;
 	}
@@ -122,7 +96,6 @@ public class Ansprechpartner implements java.io.Serializable {
 	 * 
 	 * @return
 	 */
-	@Column(name = "telefon", length = 45)
 	public String getTelefon() {
 		return this.telefon;
 	}
@@ -135,7 +108,6 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.telefon = telefon;
 	}
 	
-	@Column(name = "handy", length = 45)
 	public String getHandy() {
 		return this.handy;
 	}
@@ -148,7 +120,6 @@ public class Ansprechpartner implements java.io.Serializable {
 	 * 
 	 * @return
 	 */
-	@Column(name = "fax", length = 45)
 	public String getFax() {
 		return this.fax;
 	}

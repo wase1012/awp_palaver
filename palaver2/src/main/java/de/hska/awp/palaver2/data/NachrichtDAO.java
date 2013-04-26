@@ -2,10 +2,12 @@ package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
@@ -19,22 +21,14 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 public class NachrichtDAO extends AbstractDAO {
 	
 	private static final String		TABLE = "nachrichten";
-	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachricht";
-	private static final String		WERTE = "(nachricht, sender_fk, empf_rolle_fk)";
-	private static NachrichtDAO 	instance = null;
-	
-	private NachrichtDAO()
+	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
+	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
+	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
+	private static final String		CREATE_NACHRICHT = "INSERT INTO Nachrichten (`id`,`nachricht`,`sender_fk`,`empf_rolle_fk`)VALUES({0})";
+
+	public NachrichtDAO()
 	{
 		super();
-	}
-	
-	public static NachrichtDAO getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new NachrichtDAO();
-		}
-		return instance;
 	}
 	
 	public Nachricht getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
@@ -43,8 +37,7 @@ public class NachrichtDAO extends AbstractDAO {
 			return null;
 		}
 		Nachricht nachricht = null;
-		String GET_NACHRICHT_BY_ID = "SELECT FROM"+ TABLE + "WHERE id ='" + id + "'";
-		ResultSet set = get(GET_NACHRICHT_BY_ID);
+		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_ID, id));
 
 		while (set.next()) {
 			nachricht = new Nachricht(set.getLong("id"), 
@@ -63,9 +56,8 @@ public class NachrichtDAO extends AbstractDAO {
 			return null;
 		}
 		List<Nachricht> list = new ArrayList<Nachricht>();
-		String GET_NACHRICHT_BY_Rolle = "SELECT FROM"+ TABLE + "WHERE empf_rolle_fk ='" + rolle + "'";
 		
-		ResultSet set = get(GET_NACHRICHT_BY_Rolle);
+		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle));
 
 		while(set.next())
 		{
@@ -87,8 +79,8 @@ public class NachrichtDAO extends AbstractDAO {
 		{
 			list.add(new Nachricht(set.getLong("id"),
 								set.getString("nachricht"),
-								((Nachricht) set).getMitarbeiterBySenderFk(),
-								((Nachricht) set).getEmpfaengerRolle()
+								new Mitarbeiter(),
+								new Rollen()
 								));
 		}
 		return list;
@@ -101,10 +93,8 @@ public class NachrichtDAO extends AbstractDAO {
 			throw new NullPointerException("keine Nachricht übergeben");
 		}
 
-		String INSERT_QUERY = "INSERT INTO " + TABLE + WERTE + " VALUES('"
-				+ nachricht.getNachricht() + "', '" + nachricht.getMitarbeiterBySenderFk() + "', '" 
-				+ nachricht.getEmpfaengerRolle() + "')";
-		this.put(INSERT_QUERY);
+		put(MessageFormat.format(CREATE_NACHRICHT, nachricht.getId() + "," + nachricht.getNachricht() + "," + 
+									nachricht.getMitarbeiterBySenderFk() + "," + nachricht.getEmpfaengerRolle()));
 
 	}
 	
