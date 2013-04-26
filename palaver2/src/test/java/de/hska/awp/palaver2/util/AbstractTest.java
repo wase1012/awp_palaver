@@ -4,46 +4,62 @@
  */
 package de.hska.awp.palaver2.util;
 
-import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Logger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import com.mysql.jdbc.Driver;
+
 /**
  * @author bach1014
  *
  */
-public class AbstractTest {
-
-	protected static EntityManagerFactory emf;
-	 
-	protected static EntityManager em;
+public class AbstractTest
+{	
+    protected static Connection connection;
     
-    @BeforeClass
-    public static void initEmfAndEm() {
-    	Logger.getLogger("org").setLevel(Level.ALL);
-    	
-    	 emf = Persistence.createEntityManagerFactory("awpPersistenceUnit");
-         em = emf.createEntityManager();
+    protected static Statement stmt;
+    
+    protected static Logger log = Logger.getLogger("TestLog");
+	
+	@BeforeClass
+    public static void initEmfAndEm() 
+    {	
+    	try
+		{
+			connection = new Driver().connect(IConstants.DB_CONNECTION_URL, new Properties());
+			stmt = connection.createStatement();
+		} 
+    	catch (SQLException e)
+		{
+    		log.severe(e.toString());
+		}
     }
 	
     @Before
-    public void transbegin() {
-    
-    	if(em.getTransaction().isActive() == false){
-    		em.getTransaction().begin();
-    	}
+    public void transbegin() 
+    {
+    	
     }
     
     @AfterClass
-    public static void cleanup() {
-        em.close();
+    public static void cleanup() 
+    {
+    	try
+		{
+			stmt.close();
+			connection.close();
+		} 
+    	catch (SQLException e)
+		{
+			log.severe(e.toString());
+		}	
     }
 	
 }
