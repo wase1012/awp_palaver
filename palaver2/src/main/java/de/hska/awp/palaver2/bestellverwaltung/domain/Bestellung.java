@@ -1,24 +1,8 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
@@ -27,13 +11,6 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder
  * 
  */
-@Entity
-@Table(name = "bestellung", catalog = "palaver")
-@NamedQueries({
-	@NamedQuery(name = Bestellung.FIND_BESTELLUNG_BY_ID, query = "Select k FROM Bestellung k WHERE k.id = :"
-			+ Bestellung.PARAM_ID),
-	@NamedQuery(name = Bestellung.FIND_ALL_BESTELLUNG, query = "Select k FROM Bestellung k")
-})
 
 public class Bestellung implements java.io.Serializable {
 	
@@ -76,17 +53,10 @@ public class Bestellung implements java.io.Serializable {
 		this.bestellpositions = bestellpositions;
 	}
 
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
 
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lieferant_fk", nullable = false)
 	public Lieferant getLieferant() {
 		return this.lieferant;
 	}
@@ -95,9 +65,6 @@ public class Bestellung implements java.io.Serializable {
 		this.lieferant = lieferant;
 	}
 
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "datum", nullable = false, length = 19)
 	public Date getDatum() {
 		return this.datum;
 	}
@@ -106,8 +73,6 @@ public class Bestellung implements java.io.Serializable {
 		this.datum = datum;
 	}
 
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bestellung")
 	public Set<Bestellposition> getBestellpositions() {
 		return this.bestellpositions;
 	}

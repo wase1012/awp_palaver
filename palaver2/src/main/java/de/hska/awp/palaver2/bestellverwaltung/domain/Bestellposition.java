@@ -1,18 +1,5 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
 
@@ -21,24 +8,10 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
  * @author Elena W
  * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank wieder
  */
-@Entity
-@Table(name = "bestellposition", catalog = "palaver")
-
-@NamedQueries({
-	@NamedQuery(name = Bestellposition.FIND_BESTELLPOSITION_BY_ID, query = "Select k FROM Bestellposition k WHERE k.id = :"
-			+ Bestellposition.PARAM_ID),
-	@NamedQuery(name = Bestellposition.FIND_ALL_BESTELLPOSITION, query = "Select k FROM Bestellposition k")
-			})
 	
-	
-	public class Bestellposition implements java.io.Serializable {
+public class Bestellposition implements java.io.Serializable {
 
-	private static final long serialVersionUID = -3160765850839739452L;	
-	private static final String PREFIX = "Bestellposition.";
-	public static final String FIND_BESTELLPOSITION_BY_ID = PREFIX
-			+ "findBestellpositionById";
-	public static final String FIND_ALL_BESTELLPOSITION = PREFIX + "findAllBestellposition";
-	public static final String PARAM_ID = "id";
+	private static final long serialVersionUID = 1291141881234373163L;
 
 	private Long id;
 	private Artikel artikel;
@@ -55,9 +28,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 		this.menge = menge;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -70,9 +40,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 		this.id = id;
 	}
 
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artikel_fk", nullable = false)
 	public Artikel getArtikel() {
 		return this.artikel;
 	}
@@ -82,9 +49,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 		this.artikel = artikel;
 	}
 
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bestellung_fk", nullable = false)
 	public Bestellung getBestellung() {
 		return this.bestellung;
 	}
@@ -94,7 +58,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 		this.bestellung = bestellung;
 	}
 
-	@Column(name = "menge", nullable = false)
 	public int getMenge() {
 		return this.menge;
 	}
