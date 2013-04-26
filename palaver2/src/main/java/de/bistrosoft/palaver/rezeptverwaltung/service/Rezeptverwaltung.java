@@ -16,7 +16,7 @@ public class Rezeptverwaltung implements Serializable {
 
 	private static final long serialVersionUID = 2805858224490570505L;
 
-	private RezeptverwaltungDao dao;
+	private Rezeptverwaltung dao;
 
 	public List<Rezept> findAllRezept() {
 		final List<Rezept> rlist = dao.findAllRezept();
@@ -38,7 +38,7 @@ public class Rezeptverwaltung implements Serializable {
 			return rzpt;
 		}
 
-		rzpt = (Rezept) dao.create(rzpt);
+		rzpt = (Rezept) dao.createRezept(rzpt);
 
 		return rzpt;
 	}
@@ -48,7 +48,7 @@ public class Rezeptverwaltung implements Serializable {
 			return null;
 		}
 
-		rzpt = (Rezept) dao.update(rzpt);
+		rzpt = (Rezept) dao.updateRezept(rzpt);
 		return rzpt;
 	}
 
@@ -57,7 +57,7 @@ public class Rezeptverwaltung implements Serializable {
 			return;
 		}
 
-		dao.delete(rzpt);
+		dao.deleteRezept(rzpt);
 	}
 
 }
