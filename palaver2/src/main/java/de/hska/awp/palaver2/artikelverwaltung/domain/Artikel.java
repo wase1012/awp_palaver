@@ -3,30 +3,9 @@
  */
 package de.hska.awp.palaver2.artikelverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
-@Entity
-@Table(name = "artikel", catalog = "palaver")
-@NamedQueries({
-	@NamedQuery(name = Artikel.FIND_ALL_ARTIKLES, query = "SELECT a FROM Artikel a"),
-	@NamedQuery(name = Artikel.FIND_ARTIKLE_BY_ID, query = "SELECT a FROM Artikel a WHERE a.id = :"
-	+ Artikel.PARAM_ID),
-	@NamedQuery(name = Artikel.FIND_ARTIKLE_BY_NAME, query = "SELECT a FROM Artikel a WHERE a.name like :"
-	+ Artikel.PARAM_NAME)
-})
+
 public class Artikel implements java.io.Serializable 
 {
 	private static final long 		serialVersionUID = 6557876739298794189L;
@@ -38,48 +17,20 @@ public class Artikel implements java.io.Serializable
 	public static final String 		PARAM_ID 				= "id";
 	public static final String 		PARAM_NAME 				= "name";
 	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mengeneinheit_fk", nullable = false)
 	private Mengeneinheit mengeneinheit;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "kategorie_fk", nullable = false)
 	private Kategorie kategorie;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lieferant_fk", nullable = false)
 	private Lieferant lieferant;
-	
-	@Column(name = "artikelnr", length = 45)
 	private String artikelnr;
-	
-	@Column(name = "name", nullable = false, length = 45)
 	private String name;
-	
-	@Column(name = "bestellgroesse", precision = 22, scale = 0)
 	private Double bestellgroesse;
-	
-	@Column(name = "preis", precision = 12, scale = 0)
 	private Float preis;
-	
-	@Column(name = "bio", nullable = false)
 	private boolean bio;
-	
-	@Column(name = "standard", nullable = false)
 	private boolean standard;
-	
-	@Column(name = "grundbedarf", nullable = false)
 	private boolean grundbedarf;
-	
-	@Column(name = "durchschnitt")
 	private Integer durchschnitt;
-	
-	@Column(name = "lebensmittel", nullable = false)
 	private boolean lebensmittel;
 
 	public Artikel() 

@@ -1,20 +1,7 @@
 package de.hska.awp.palaver2.artikelverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikel;
 
@@ -23,19 +10,7 @@ import de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikel;
  * @author bach1014
  *
  */
-@Entity
-@Table(name = "mengeneinheit", catalog = "palaver", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "name"),
-		@UniqueConstraint(columnNames = "kurz") })
-@NamedQueries({
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_KURZ, query = "SELECT k FROM Mengeneinheit k WHERE k.kurz = :"
-			+ Mengeneinheit.PARAM_KURZ),
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_NAME, query = "SELECT k FROM Mengeneinheit k WHERE k.name = :"
-			+ Mengeneinheit.PARAM_NAME),
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_ID, query = "Select k FROM Mengeneinheit k WHERE k.id = :"
-			+ Mengeneinheit.PARAM_ID),
-	@NamedQuery(name = Mengeneinheit.FIND_ALL_MENGENEINHEIT, query = "Select k FROM Mengeneinheit k")
-})
+
 public class Mengeneinheit implements java.io.Serializable {
 
 	/**
@@ -74,9 +49,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.artikels = artikels;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -85,7 +57,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "name", unique = true, length = 45)
 	public String getName() {
 		return this.name;
 	}
@@ -94,7 +65,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "kurz", unique = true, length = 5)
 	public String getKurz() {
 		return this.kurz;
 	}
@@ -103,7 +73,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.kurz = kurz;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mengeneinheit")
 	public Set<RezeptHasArtikel> getRezeptHasArtikels() {
 		return this.rezeptHasArtikels;
 	}
@@ -112,7 +81,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.rezeptHasArtikels = rezeptHasArtikels;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mengeneinheit")
 	public Set<Artikel> getArtikels() {
 		return this.artikels;
 	}
