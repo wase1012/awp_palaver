@@ -38,7 +38,7 @@ public class ArtikelDAO extends AbstractDAO
 								new Mengeneinheit(),
 								new Kategorie(),
 								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
-								set.getString("artikelnummer"),
+								set.getString("artikelnr"),
 								set.getString("name"),
 								set.getDouble("bestellgroesse"),
 								set.getFloat("preis"),
@@ -46,7 +46,7 @@ public class ArtikelDAO extends AbstractDAO
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("")
+								set.getBoolean("lebensmittel")
 								));
 		}
 		
@@ -73,7 +73,7 @@ public class ArtikelDAO extends AbstractDAO
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("")
+								set.getBoolean("lebensmittel")
 								);
 		}
 		
@@ -100,7 +100,7 @@ public class ArtikelDAO extends AbstractDAO
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("")
+								set.getBoolean("lebensmittel")
 								));
 		}
 		
