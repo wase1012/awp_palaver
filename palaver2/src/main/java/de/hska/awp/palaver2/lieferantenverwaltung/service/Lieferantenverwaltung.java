@@ -1,5 +1,5 @@
 /**
- * Created by bach1014
+ * Created by Christian Barth
  * 17.04.2013 - 14:54:02
  */
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
@@ -13,8 +13,10 @@ import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * @author bach1014
+ * Die Klasse ermöglicht die Verwaltung der Lieferanten und stellt für die GUI
+ * Methoden bereit.
  * 
+ * @author bach1014
  */
 public class Lieferantenverwaltung extends LieferantDAO {
 
@@ -31,7 +33,14 @@ public class Lieferantenverwaltung extends LieferantDAO {
 		return instance;
 	}
 
-	public List<Lieferant> findAllLieferanten() throws ConnectException,
+	/**
+	 * Die Methode liefert alle Lieferanten zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public List<Lieferant> getAllLieferanten() throws ConnectException,
 			DAOException, SQLException {
 
 		List<Lieferant> result = null;
@@ -41,7 +50,15 @@ public class Lieferantenverwaltung extends LieferantDAO {
 		return result;
 	}
 
-	public List<Lieferant> findLieferantenByName(String name)
+	/**
+	 * Die Methode liefert einen oder mehrere Lieferanten anhand des Parameter
+	 * name zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public List<Lieferant> getLieferantenByName(String name)
 			throws ConnectException, DAOException, SQLException {
 
 		List<Lieferant> result = null;
@@ -51,18 +68,39 @@ public class Lieferantenverwaltung extends LieferantDAO {
 		return result;
 	}
 
-	public Lieferant findLieferantById(Long id) throws ConnectException,
+	/**
+	 * Die Methode liefert einen Lieferanten anhand des Parameter id zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public Lieferant getLieferantById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Lieferant lieferant = super.getLieferantById(id);
 		return lieferant;
 	}
 
+	/**
+	 * Die Methode erzeugt einen Lieferant.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	public void createLieferant(Lieferant lieferant) throws ConnectException,
 			DAOException, SQLException {
 
 		super.createLieferant(lieferant);
 	}
 
+	/**
+	 * Die Methode aktualisiert einen Lieferant.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	public void updateLieferant(Lieferant lieferant) throws ConnectException,
 			DAOException, SQLException {
 

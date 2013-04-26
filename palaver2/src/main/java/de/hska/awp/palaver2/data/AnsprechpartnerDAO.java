@@ -13,7 +13,7 @@ import java.util.List;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 
 /**
- * Klasse AnsprechpartnerDAO Die Klasse stellt für den Ansprechpartner alle
+ * Klasse AnsprechpartnerDAO. Die Klasse stellt für den Ansprechpartner alle
  * notwendigen Methoden bereit um auf die Datenbank zuzugreifen.
  * 
  * @author Christian Barth

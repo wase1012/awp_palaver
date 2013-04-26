@@ -1,5 +1,5 @@
 /**
- * Created by bach1014
+ * Created by Christian Barth
  * 23.04.2013 - 11:27:25
  */
 package de.hska.awp.palaver2.testklassen.domain;
@@ -19,8 +19,9 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.AbstractTest;
 
 /**
- * @author bach1014
- * Testklasse fuer den Lieferant
+ * Testklasse für die Lieferanten
+ * @author Christian Barth
+ *
  */
 public class LieferantTest extends AbstractTest{
 	
@@ -31,7 +32,12 @@ public class LieferantTest extends AbstractTest{
 	
 		private LieferantDAO dao = new LieferantDAO();
 		
-
+		/**
+		 * Die Testmethode liefert alle Lieferanten aus der Datenbank zurück.
+		 * @throws SQLException 
+		 * @throws DAOException 
+		 * @throws ConnectException
+		 */
 		@Test
 		public void getLieferanten()
 		{
@@ -50,14 +56,13 @@ public class LieferantTest extends AbstractTest{
 		}
 		
 		/**
-		 * Testmethode findLieferantenByName
-		 * Suche nach einen Lieferanten ueber einen Namen
+		 * Die Testmethode sucht nach einen Lieferanten anhand eines Namen.
 		 * @throws SQLException 
 		 * @throws DAOException 
 		 * @throws ConnectException 
 		 */
 		@Test
-	    public void findLieferantByName() throws ConnectException, DAOException, SQLException {
+	    public void getLieferantByName() throws ConnectException, DAOException, SQLException {
 			
 			Boolean exception = false;
 			List<Lieferant> liefantlist = null;
@@ -74,14 +79,13 @@ public class LieferantTest extends AbstractTest{
 	    }
 	    
 	 	/**
-		 * Testmethode findLieferantById
-		 * Suche nach einen Lieferant ueber eine Id
+		 * Die Testmethode sucht nach einen Lieferant anhand einer Id
 	 	 * @throws SQLException 
 	 	 * @throws DAOException 
 	 	 * @throws ConnectException 
 		 */
 	    @Test
-	    public void findLieferantById() throws ConnectException, DAOException, SQLException {
+	    public void getLieferantById() throws ConnectException, DAOException, SQLException {
 
 	    	Lieferant lieferant = dao.getLieferantById(ID);
 
@@ -89,13 +93,11 @@ public class LieferantTest extends AbstractTest{
 	    }
 	    
 	    /**
-		 * Testmethode createLieferant
-		 * Erzeugen eines Lieferants in der Datenbank
+		 * Die Testmethode erzeugt ein Lieferant in der Datenbank.
 	     * @throws SQLException 
 	     * @throws DAOException 
 	     * @throws ConnectException 
 		 */
-
 	    @Test
 	    public void createLieferant() throws ConnectException, DAOException, SQLException {
 	    	
@@ -106,6 +108,12 @@ public class LieferantTest extends AbstractTest{
 	    	
 	    }
 	    
+	    /**
+		 * Die Testmethode aktualisiert ein Lieferant in der Datenbank.
+	     * @throws SQLException 
+	     * @throws DAOException 
+	     * @throws ConnectException 
+		 */
 	    @Test
 	    public void updateLieferant() throws ConnectException, DAOException, SQLException {
 	    	

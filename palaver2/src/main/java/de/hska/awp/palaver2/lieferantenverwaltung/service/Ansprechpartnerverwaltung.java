@@ -16,7 +16,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
  * Die Klasse ermöglicht die Verwaltung der Ansprechpartner und stellt für die
  * GUI Methoden bereit.
  * 
- * @author bach1014
+ * @author Christian Barth
  * 
  */
 public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {

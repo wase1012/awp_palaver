@@ -1,14 +1,15 @@
+/**
+ * Created by Christian Barth
+ * 26.04.2013 - 09:32:35
+ */
 package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 
 /**
- * @author bach1014 Die Klasse Lieferant spiegelt den Lieferant aus der
- *         Datenbank wieder
+ * Klasse Lieferant 
+ * @author Christian Barth
  */
 public class Lieferant implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 509321793481530142L;
 
 	private Long id;
@@ -124,9 +125,6 @@ public class Lieferant implements java.io.Serializable {
 		this.fax = fax;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Lieferant [id=" + id + ", name=" + name + ", kundennummer="
