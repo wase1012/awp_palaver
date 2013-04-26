@@ -2,7 +2,6 @@ package de.bistrosoft.palaver.menueplanverwaltung;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -68,7 +67,8 @@ public class MenueplanGridLayout extends CustomComponent{
             });
     
     //Fülle Überschriftenspalte
-    Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDatum</font></pre>", Label.CONTENT_XHTML),
+    @SuppressWarnings("deprecation")
+	Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDatum</font></pre>", Label.CONTENT_XHTML),
     					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nKöche</font></pre>", Label.CONTENT_XHTML),
     					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 1</font></pre>", Label.CONTENT_XHTML),
     					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 2</font></pre>", Label.CONTENT_XHTML),
@@ -128,7 +128,6 @@ public class MenueplanGridLayout extends CustomComponent{
 						for (int row = 0; row < ROWS; row++) {
 					        for (int col = 0; col < COLUMNS; col++) {
 					        	if(tmp.equals(layout.getComponent(col, row))) {
-					        		layout.removeComponent(tmp);
 					        		
 					        		WinSelectMenue window = new WinSelectMenue(layout, tmp, row, col);
 					        		UI.getCurrent().addWindow(window);
