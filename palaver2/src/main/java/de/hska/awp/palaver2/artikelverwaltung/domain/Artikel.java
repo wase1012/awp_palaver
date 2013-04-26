@@ -31,6 +31,40 @@ public class Artikel implements java.io.Serializable
 	}
 
 	/**
+	 * @param mengeneinheit
+	 * @param kategorie
+	 * @param lieferant
+	 * @param artikelnr
+	 * @param name
+	 * @param bestellgroesse
+	 * @param preis
+	 * @param bio
+	 * @param standard
+	 * @param grundbedarf
+	 * @param durchschnitt
+	 * @param lebensmittel
+	 */
+	public Artikel(Mengeneinheit mengeneinheit, Kategorie kategorie,
+			Lieferant lieferant, String artikelnr, String name,
+			Double bestellgroesse, Float preis, boolean bio, boolean standard,
+			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel)
+	{
+		super();
+		this.mengeneinheit = mengeneinheit;
+		this.kategorie = kategorie;
+		this.lieferant = lieferant;
+		this.artikelnr = artikelnr;
+		this.name = name;
+		this.bestellgroesse = bestellgroesse;
+		this.preis = preis;
+		this.bio = bio;
+		this.standard = standard;
+		this.grundbedarf = grundbedarf;
+		this.durchschnitt = durchschnitt;
+		this.lebensmittel = lebensmittel;
+	}
+
+	/**
 	 * @param id
 	 * @param mengeneinheit
 	 * @param kategorie

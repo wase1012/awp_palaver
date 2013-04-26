@@ -2,8 +2,12 @@ package de.hska.awp.palaver2.nachrichtenverwaltung.service;
 
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 
+import de.hska.awp.palaver2.dao.old.ConnectException;
+import de.hska.awp.palaver2.dao.old.DAOException;
+import de.hska.awp.palaver2.dao.old.NachrichtDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.NachrichtenverwaltungDao;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
@@ -17,7 +21,7 @@ public class Nachrichtenverwaltung implements Serializable {
 	
 	private static final long serialVersionUID = -5520738420154763865L;
 	
-	private NachrichtenverwaltungDao dao;
+	private NachrichtDAO dao;
 	
 	private static Nachrichtenverwaltung 	instance = null;
 	
@@ -35,9 +39,9 @@ public class Nachrichtenverwaltung implements Serializable {
 		return instance;
 	}
 	
-	public Nachricht findNachrichtById(Long id) {
+	public Nachricht findNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
 		
-		final Nachricht nachricht = dao.find(Nachricht.class, id);
+		final Nachricht nachricht = dao.getNachrichtById(id);
 		
 		if(nachricht==null) {
 			return null;
@@ -46,20 +50,20 @@ public class Nachrichtenverwaltung implements Serializable {
 		return nachricht;
 	}
 	
-	public List<Nachricht> findNachrichtByRolle(Rollen rolle) {
+	public List<Nachricht> findNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
 		if(rolle == null) {
 			return null;
 		}
 		
 		List<Nachricht> nachrichten = null;
-		nachrichten = dao.findNachrichtByRolle(Nachricht.class, rolle);
+		nachrichten = dao.getNachrichtByRolle(rolle);
 		
 		return nachrichten;
 		
 	}
 	
-	public List<Nachricht> findAllNachricht() {
-		final List<Nachricht> nachrichten = dao.findAllNachricht();
+	public List<Nachricht> findAllNachricht() throws ConnectException, DAOException, SQLException {
+		final List<Nachricht> nachrichten = dao.getAllNachricht();
 		
 		if(nachrichten==null) {
 			return null;
@@ -68,18 +72,18 @@ public class Nachrichtenverwaltung implements Serializable {
 		return nachrichten;
 	}
 	
-	public Nachricht createNachricht(Nachricht nachricht) {
+	public Nachricht createNachricht(Nachricht nachricht) throws ConnectException, DAOException, SQLException {
 		
 		if(nachricht == null) {
 			return null;
 		}
 			
-		nachricht = (Nachricht) dao.create(nachricht);
+		nachricht = (Nachricht) dao.createNachricht(nachricht);
 		
 		return nachricht;
 	}
 	
-	public void deleteNachricht(Nachricht nachricht) {
+	public void deleteNachricht(Nachricht nachricht) throws ConnectException, DAOException, SQLException {
 		
 		if(nachricht == null) {
 			return;
@@ -91,7 +95,7 @@ public class Nachrichtenverwaltung implements Serializable {
 			return;
 		}
 		
-		dao.delete(nachricht);
+		dao.deleteNachricht(nachricht);
 		
 	}
 
