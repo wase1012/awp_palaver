@@ -2,7 +2,7 @@
  * Created by bach1014
  * 26.04.2013 - 08:32:35
  */
-package de.hska.awp.palaver2.dao.old;
+package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

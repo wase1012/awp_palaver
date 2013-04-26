@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.dao.old;
+package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -9,54 +9,49 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 public class Artikel implements java.io.Serializable 
 {
 	private static final long 		serialVersionUID = 6557876739298794189L;
-	
-	private static final String 	PREFIX = "Artikel.";
-	public static final String		FIND_ALL_ARTIKLES 		= PREFIX + "findAllArtikel";
-	public static final String		FIND_ARTIKLE_BY_ID 		= PREFIX + "findArtikelById";
-	public static final String		FIND_ARTIKLE_BY_NAME 	= PREFIX + "findArtikelByName";
-	public static final String 		PARAM_ID 				= "id";
-	public static final String 		PARAM_NAME 				= "name";
-	
 
 	private Long id;
 	
-	private Mengeneinheit mengeneinheit;
-	private Kategorie kategorie;
-	private Lieferant lieferant;
-	private String artikelnr;
-	private String name;
-	private Double bestellgroesse;
-	private Float preis;
-	private boolean bio;
-	private boolean standard;
-	private boolean grundbedarf;
-	private Integer durchschnitt;
-	private boolean lebensmittel;
+	private Mengeneinheit 	mengeneinheit;
+	private Kategorie 		kategorie;
+	private Lieferant 		lieferant;
+	private String 			artikelnr;
+	private String 			name;
+	private Double 			bestellgroesse;
+	private Float 			preis;
+	private boolean 		bio;
+	private boolean 		standard;
+	private boolean 		grundbedarf;
+	private Integer 		durchschnitt;
+	private boolean 		lebensmittel;
 
 	public Artikel() 
 	{
 		super();
 	}
 
-	public Artikel(Mengeneinheit mengeneinheit, Kategorie kategorie,
-			Lieferant lieferant, String name, boolean bio, boolean standard,
-			boolean grundbedarf, boolean lebensmittel) 
-	{
-		this.mengeneinheit = mengeneinheit;
-		this.kategorie = kategorie;
-		this.lieferant = lieferant;
-		this.name = name;
-		this.bio = bio;
-		this.standard = standard;
-		this.grundbedarf = grundbedarf;
-		this.lebensmittel = lebensmittel;
-	}
-
-	public Artikel(Mengeneinheit mengeneinheit, Kategorie kategorie,
+	/**
+	 * @param id
+	 * @param mengeneinheit
+	 * @param kategorie
+	 * @param lieferant
+	 * @param artikelnr
+	 * @param name
+	 * @param bestellgroesse
+	 * @param preis
+	 * @param bio
+	 * @param standard
+	 * @param grundbedarf
+	 * @param durchschnitt
+	 * @param lebensmittel
+	 */
+	public Artikel(Long id, Mengeneinheit mengeneinheit, Kategorie kategorie,
 			Lieferant lieferant, String artikelnr, String name,
 			Double bestellgroesse, Float preis, boolean bio, boolean standard,
-			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel) 
+			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel)
 	{
+		super();
+		this.id = id;
 		this.mengeneinheit = mengeneinheit;
 		this.kategorie = kategorie;
 		this.lieferant = lieferant;

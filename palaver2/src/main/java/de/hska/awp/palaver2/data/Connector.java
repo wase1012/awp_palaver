@@ -1,16 +1,18 @@
-package de.hska.awp.palaver2.dao.old;
+package de.hska.awp.palaver2.data;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.mysql.jdbc.Driver;
 
 public class Connector 
 {
-	public static Integer classid = 11;
-
 	private Statement stmt;
 
 	private Connection connection;
@@ -42,17 +44,26 @@ public class Connector
 		this.stmt = connection.createStatement();
 	}
 
-	public void connect(String url) throws ConnectException 
+	public void connect() throws ConnectException 
 	{
 		try 
 		{
 			// Create a connection to the database
-		    connection = new Driver().connect(url, new Properties());
-		    stmt = connection.createStatement();
+//		    connection = new Driver().connect(url, new Properties());
+			
+			InitialContext cxt = new InitialContext();
+			
+			DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/palaverDB" );
+			
+			stmt = ds.getConnection().createStatement();
 		} 
 		catch (SQLException e) 
 		{
-		    throw new ConnectException("Connection failed. URL: " + url);
+		    throw new ConnectException("Connection failed.");
+		} 
+		catch (NamingException e)
+		{
+			throw new ConnectException("Connection failed at Java Naming.");
 		}
 	}
 
