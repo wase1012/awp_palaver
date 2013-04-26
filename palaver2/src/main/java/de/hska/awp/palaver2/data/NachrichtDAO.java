@@ -20,12 +20,12 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 public class NachrichtDAO extends AbstractDAO {
 	
-	private static final String		TABLE = "nachrichten";
 	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
 	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
 	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
 	private static final String		CREATE_NACHRICHT = "INSERT INTO Nachrichten (`id`,`nachricht`,`sender_fk`,`empf_rolle_fk`)VALUES({0})";
-
+	private static final String		DELETE_NACHRICHT = "DELETE FROM Nachrichten WHERE id = {0}";
+	
 	public NachrichtDAO()
 	{
 		super();
@@ -42,8 +42,8 @@ public class NachrichtDAO extends AbstractDAO {
 		while (set.next()) {
 			nachricht = new Nachricht(set.getLong("id"), 
 							set.getString("nachricht"),
-							((Nachricht) set).getMitarbeiterBySenderFk(),
-							((Nachricht) set).getEmpfaengerRolle()
+							new Mitarbeiter(),
+							new Rollen()
 							);
 		}
 		return nachricht;
@@ -63,8 +63,8 @@ public class NachrichtDAO extends AbstractDAO {
 		{
 			list.add(new Nachricht(set.getLong("id"),
 								set.getString("nachricht"),
-								((Nachricht) set).getMitarbeiterBySenderFk(),
-								((Nachricht) set).getEmpfaengerRolle()
+								new Mitarbeiter(),
+								new Rollen()
 								));
 		}
 		return list;
@@ -98,13 +98,12 @@ public class NachrichtDAO extends AbstractDAO {
 
 	}
 	
-	public void deleteNachricht(Nachricht nachricht) 
+	public void deleteNachricht(Long id) 
 			throws ConnectException, DAOException, SQLException {
 		
-		if(nachricht == null) {
+		if(id == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
 		}		
-		String DELETE_NACHRICHT = "DELETE FROM" + TABLE + "WHERE id ='" + nachricht.getId() + "'";
-		this.put(DELETE_NACHRICHT);
+		put(MessageFormat.format(DELETE_NACHRICHT, id));
 	}
 }

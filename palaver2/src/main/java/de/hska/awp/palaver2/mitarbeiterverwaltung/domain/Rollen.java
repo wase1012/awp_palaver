@@ -22,7 +22,8 @@ public class Rollen implements java.io.Serializable {
 	public Rollen() {
 	}
 
-	public Rollen(String name) {
+	public Rollen(Long id,String name) {
+		this.id = id;
 		this.name = name;
 	}
 
