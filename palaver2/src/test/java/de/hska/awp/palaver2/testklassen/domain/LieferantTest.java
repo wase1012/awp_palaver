@@ -36,16 +36,16 @@ public class LieferantTest extends AbstractTest{
 		public void getLieferanten()
 		{
 			Boolean exception = false;
-			List<Lieferant> list = null;
+			List<Lieferant> liefantlist = null;
 			try
 			{
-				list = dao.getAllLieferanten();
+				liefantlist = dao.getAllLieferanten();
 			} 
 			catch (ConnectException | DAOException | SQLException e)
 			{
 				exception = true;
 			}
-			assertThat(list.isEmpty(), is(false));
+			assertThat(liefantlist.isEmpty(), is(false));
 			assertThat(exception, is(false));
 		}
 		
@@ -111,7 +111,7 @@ public class LieferantTest extends AbstractTest{
 	    	
 	    	Lieferant lieferant = dao.getLieferantById(ID);
 	    	lieferant.setKundennummer(KUNDENNUMMER);
-	    	dao.createLieferant(lieferant);
+	    	dao.updateLieferant(lieferant);
 	    	
 	    }
 	    
