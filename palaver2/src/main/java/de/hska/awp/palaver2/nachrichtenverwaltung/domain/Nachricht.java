@@ -1,6 +1,6 @@
 package de.hska.awp.palaver2.nachrichtenverwaltung.domain;
 
-// Generated 21.04.2013 16:08:42 by PhilippT Tools 3.4.0.CR1
+// Generated 21.04.2013 16:08:42 by PhilippT 
 
 
 
@@ -18,23 +18,9 @@ public class Nachricht implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1291141882464373163L;
 	
-	private static final String PREFIX = "Nachricht.";
-	public static final String FIND_Nachricht_BY_ID = PREFIX + "findNachrichtById";
-	public static final String FIND_Nachricht_BY_ROLLE_ID = PREFIX + "findNachrichtByRolle";
-	public static final String FIND_ALL_Nachricht = PREFIX + "findAllNachricht";
-	public static final String PARAM_ID = "id";
-	public static final String PARAM_ROLLE = "empfaengerRolle";
-	
-
 	private Long id;
-
-
 	private Mitarbeiter mitarbeiterBySenderFk;
-	
-
 	private Rollen empfaengerRolle;
-	
-
 	private String nachricht;
 
 	public Nachricht() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 
@@ -42,9 +43,40 @@ public class NachrichtDAO extends AbstractDAO {
 			return null;
 		}
 		Nachricht nachricht = null;
-		String SELECT_QUERY = "SELECT FROM"+ TABLE + "WHERE id =" + id;
-		this.put(SELECT_QUERY);
+		String GET_NACHRICHT_BY_ID = "SELECT FROM"+ TABLE + "WHERE id ='" + id + "'";
+		ResultSet set = get(GET_NACHRICHT_BY_ID);
+
+		while (set.next()) {
+			nachricht = new Nachricht(set.getLong("id"), 
+							set.getString("nachricht"),
+							((Nachricht) set).getMitarbeiterBySenderFk(),
+							((Nachricht) set).getEmpfaengerRolle()
+							);
+		}
 		return nachricht;
+		 
+	}
+	
+	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
+		
+		if(rolle ==null) {
+			return null;
+		}
+		List<Nachricht> list = new ArrayList<Nachricht>();
+		String GET_NACHRICHT_BY_Rolle = "SELECT FROM"+ TABLE + "WHERE empf_rolle_fk ='" + rolle + "'";
+		
+		ResultSet set = get(GET_NACHRICHT_BY_Rolle);
+
+		while(set.next())
+		{
+			list.add(new Nachricht(set.getLong("id"),
+								set.getString("nachricht"),
+								((Nachricht) set).getMitarbeiterBySenderFk(),
+								((Nachricht) set).getEmpfaengerRolle()
+								));
+		}
+		return list;
+		 
 	}
 	
 	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException
@@ -68,10 +100,12 @@ public class NachrichtDAO extends AbstractDAO {
 		if(nachricht == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
 		}
+
 		String INSERT_QUERY = "INSERT INTO " + TABLE + WERTE + " VALUES('"
 				+ nachricht.getNachricht() + "', '" + nachricht.getMitarbeiterBySenderFk() + "', '" 
 				+ nachricht.getEmpfaengerRolle() + "')";
 		this.put(INSERT_QUERY);
+
 	}
 	
 	public void deleteNachricht(Nachricht nachricht) 
@@ -80,7 +114,7 @@ public class NachrichtDAO extends AbstractDAO {
 		if(nachricht == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
 		}		
-		String DELETE_QUERY = "DELETE FROM" + TABLE + "WHERE id =" + nachricht.getId();
-		this.put(DELETE_QUERY);
+		String DELETE_NACHRICHT = "DELETE FROM" + TABLE + "WHERE id ='" + nachricht.getId() + "'";
+		this.put(DELETE_NACHRICHT);
 	}
 }
