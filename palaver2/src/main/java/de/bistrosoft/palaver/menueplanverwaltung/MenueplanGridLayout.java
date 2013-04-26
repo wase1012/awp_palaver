@@ -68,16 +68,17 @@ public class MenueplanGridLayout extends CustomComponent{
             });
     
     //Fülle Überschriftenspalte
-    Label[] arlbUeb = {new Label("Datum"),
-    					new Label("Köche"),
-    					new Label("Hauptgericht 1"),
-    					new Label("Hauptgericht 2"),
-    					new Label("Vegetarisches Gericht"),
-    					new Label("Pastagericht"),
-    					new Label("Salat / Suppe"),
-    					new Label("Dessert")};
+    Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDatum</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nKöche</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 1</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 2</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nVegetarisches Gericht</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nPastagericht</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nSalat / Suppe</font></pre>", Label.CONTENT_XHTML),
+    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDessert</font></pre>", Label.CONTENT_XHTML)};
     for (int i = 0; i < arlbUeb.length; i++) {
     	arlbUeb[i].setWidth("150px");
+    	arlbUeb[i].setHeight("100px");
     	layout.addComponent(arlbUeb[i],0,i);
     	layout.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
     }
