@@ -35,7 +35,7 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM "+ TABLE;
 
 	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM "+ TABLE+" WHERE "+ID+"= {0}";
-	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM lieferant where name= '{0}'";
+	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM lieferant WHERE name= '{0}'";
 //	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM "+ TABLE+" WHERE "+ NAME +"='{0}'";
 
 	public LieferantDAO() {
@@ -75,7 +75,6 @@ public class LieferantDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_NAME, name));
-
 		while (set.next()) {
 			list.add(new Lieferant(set.getLong(ID), 
 					set.getString(NAME),

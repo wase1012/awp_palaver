@@ -87,32 +87,32 @@ public class LieferantTest extends AbstractTest{
 
 			assertThat(lieferant.getId(), is(ID));
 	    }
-//	    
-//	    /**
-//		 * Testmethode createLieferant
-//		 * Erzeugen eines Lieferants in der Datenbank
-//	     * @throws SQLException 
-//	     * @throws DAOException 
-//	     * @throws ConnectException 
-//		 */
-//
-//	    @Test
-//	    public void createLieferant() throws ConnectException, DAOException, SQLException {
-//	    	
-//	    	Lieferant lieferant = new Lieferant();
-//	    	lieferant.setName("Testlieferant");
-//	    	lieferant.setTelefon("0175/55667788");
-//	    	dao.createLieferant(lieferant);
-//	    	
-//	    }
-//	    
-//	    @Test
-//	    public void updateLieferant() throws ConnectException, DAOException, SQLException {
-//	    	
-//	    	Lieferant lieferant = dao.getLieferantById(ID);
-//	    	lieferant.setKundennummer(KUNDENNUMMER);
-//	    	dao.createLieferant(lieferant);
-//	    	
-//	    }
+	    
+	    /**
+		 * Testmethode createLieferant
+		 * Erzeugen eines Lieferants in der Datenbank
+	     * @throws SQLException 
+	     * @throws DAOException 
+	     * @throws ConnectException 
+		 */
+
+	    @Test
+	    public void createLieferant() throws ConnectException, DAOException, SQLException {
+	    	
+	    	Lieferant lieferant = new Lieferant();
+	    	lieferant.setName("Testlieferant");
+	    	lieferant.setTelefon("0175/55667788");
+	    	dao.createLieferant(lieferant);
+	    	
+	    }
+	    
+	    @Test
+	    public void updateLieferant() throws ConnectException, DAOException, SQLException {
+	    	
+	    	Lieferant lieferant = dao.getLieferantById(ID);
+	    	lieferant.setKundennummer(KUNDENNUMMER);
+	    	dao.createLieferant(lieferant);
+	    	
+	    }
 	    
 }
