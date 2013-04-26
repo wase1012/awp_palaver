@@ -6,16 +6,12 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
-//import org.vaadin.kim.filterabletwincolselect.FilterableTwinColSelect;
-
-import com.vaadin.client.ui.Action;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
@@ -36,7 +32,7 @@ public class RezeptAnlegen extends VerticalLayout{
 	private CheckBox konvektomat = new CheckBox("Konvektomat");	
 	private ComboBox art = new ComboBox("Rezeptart");
 	private ComboBox geschmack = new ComboBox("Geschmack");
-//private FilterableTwinColSelect fussnoten = new FilterableTwinColSelect();
+private TwinColSelect fussnoten = new TwinColSelect();
 	private TextArea kommentar = new TextArea("Kommentar");
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
@@ -53,8 +49,8 @@ public class RezeptAnlegen extends VerticalLayout{
 		bezeichnung.setWidth("100%");
 		kommentar.setWidth("100%");
 		portion.setWidth("100%");
-		portion.setImmediate(true);
-		portion.setInputPrompt("30");
+		portion.setReadOnly(true);
+		portion.setValue("30");
 		
 		
 		box.setWidth("300px");
@@ -75,19 +71,22 @@ public class RezeptAnlegen extends VerticalLayout{
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
 
-//		box.addComponent(fussnoten);
-//		fussnoten.addItem(1);
-//        fussnoten.setItemCaption(1, "Rindfleisch ");
-//        fussnoten.addItem(2);
-//        fussnoten.setItemCaption(2, "ohne Zwiebel");
-//        fussnoten.addItem(3);
-//        fussnoten.setItemCaption(3, "Tomaten");
-//        fussnoten.addItem(4);
-//        fussnoten.setItemCaption(4, "vegetarisch");
-//        fussnoten.addItem(5);
-//        fussnoten.setItemCaption(5, "vegan");
-//        fussnoten.addItem(6);
-//        fussnoten.setItemCaption(6, "Nuesse");
+		box.addComponent(fussnoten);
+		fussnoten.setLeftColumnCaption("Auswahl an Fussnoten");
+		fussnoten.setRightColumnCaption("Fussnoten fuer das neue Rezept");
+		
+		
+		fussnoten.addItem("1");
+       fussnoten.setItemCaption(1, "Rindfleisch ");
+       fussnoten.addItem(2);
+       fussnoten.setItemCaption(2, "ohne Zwiebel");        fussnoten.addItem(3);
+       fussnoten.setItemCaption(3, "Tomaten");
+       fussnoten.addItem(4);
+       fussnoten.setItemCaption(4, "vegetarisch");
+        fussnoten.addItem(5);
+        fussnoten.setItemCaption(5, "vegan");
+        fussnoten.addItem(6);
+       fussnoten.setItemCaption(6, "Nuesse");
 		box.addComponent(kommentar);
 		
 		
