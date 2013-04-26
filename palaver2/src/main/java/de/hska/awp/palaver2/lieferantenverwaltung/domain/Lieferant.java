@@ -1,51 +1,15 @@
 package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-
-/** 
- * @author bach1014
- * Die Klasse Lieferant spiegelt den Lieferant aus der Datenbank wieder
+/**
+ * @author bach1014 Die Klasse Lieferant spiegelt den Lieferant aus der
+ *         Datenbank wieder
  */
-@Entity
-@Table(name = "lieferant", catalog = "palaver")
-@NamedQueries({
-		@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_NAME, query = "SELECT k FROM Lieferant k WHERE k.name = :"
-				+ Ansprechpartner.PARAM_NAME),
-		@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_ID, query = "Select k FROM Lieferant k WHERE k.id = :"
-				+ Ansprechpartner.PARAM_ID),
-		@NamedQuery(name = Lieferant.FIND_ALL_LIEFERANT, query = "Select k FROM Lieferant k") })
 public class Lieferant implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 509321793481530142L;
-
-	private static final String PREFIX = "Lieferant.";
-
-	public static final String FIND_LIEFERANT_BY_NAME = PREFIX
-			+ "findLieferantByName";
-	public static final String FIND_LIEFERANT_BY_ID = PREFIX
-			+ "findLieferantById";
-	public static final String FIND_ALL_LIEFERANT = PREFIX + "findAllLieferant";
-	public static final String PARAM_NAME = "name";
-	public static final String PARAM_ID = "id";
 
 	private Long id;
 	private String name;
@@ -57,10 +21,6 @@ public class Lieferant implements java.io.Serializable {
 	private String email;
 	private String telefon;
 	private String fax;
-	private Set<Ansprechpartner> ansprechpartners = new HashSet<Ansprechpartner>(
-			0);
-	private Set<Bestellung> bestellungs = new HashSet<Bestellung>(0);
-	private Set<Artikel> artikels = new HashSet<Artikel>(0);
 
 	public Lieferant() {
 	}
@@ -69,10 +29,10 @@ public class Lieferant implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Lieferant(String name, String kundennummer, String bezeichnung,
-			String strasse, String plz, String ort, String email,
-			String telefon, String fax, Set<Ansprechpartner> ansprechpartners,
-			Set<Bestellung> bestellungs, Set<Artikel> artikels) {
+	public Lieferant(Long id, String name, String kundennummer,
+			String bezeichnung, String strasse, String plz, String ort,
+			String email, String telefon, String fax) {
+		this.id = id;
 		this.name = name;
 		this.kundennummer = kundennummer;
 		this.bezeichnung = bezeichnung;
@@ -82,14 +42,8 @@ public class Lieferant implements java.io.Serializable {
 		this.email = email;
 		this.telefon = telefon;
 		this.fax = fax;
-		this.ansprechpartners = ansprechpartners;
-		this.bestellungs = bestellungs;
-		this.artikels = artikels;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -98,7 +52,6 @@ public class Lieferant implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "name", nullable = false, length = 45)
 	public String getName() {
 		return this.name;
 	}
@@ -107,7 +60,6 @@ public class Lieferant implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "kundennummer", length = 45)
 	public String getKundennummer() {
 		return this.kundennummer;
 	}
@@ -116,7 +68,6 @@ public class Lieferant implements java.io.Serializable {
 		this.kundennummer = kundennummer;
 	}
 
-	@Column(name = "bezeichnung", length = 45)
 	public String getBezeichnung() {
 		return this.bezeichnung;
 	}
@@ -124,8 +75,7 @@ public class Lieferant implements java.io.Serializable {
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
-	
-	@Column(name = "strasse", length = 45)
+
 	public String getStrasse() {
 		return this.strasse;
 	}
@@ -134,7 +84,6 @@ public class Lieferant implements java.io.Serializable {
 		this.strasse = strasse;
 	}
 
-	@Column(name = "plz", length = 45)
 	public String getPlz() {
 		return this.plz;
 	}
@@ -143,7 +92,6 @@ public class Lieferant implements java.io.Serializable {
 		this.plz = plz;
 	}
 
-	@Column(name = "ort", length = 45)
 	public String getOrt() {
 		return this.ort;
 	}
@@ -152,7 +100,6 @@ public class Lieferant implements java.io.Serializable {
 		this.ort = ort;
 	}
 
-	@Column(name = "email", length = 45)
 	public String getEmail() {
 		return this.email;
 	}
@@ -161,7 +108,6 @@ public class Lieferant implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "telefon", length = 45)
 	public String getTelefon() {
 		return this.telefon;
 	}
@@ -170,40 +116,12 @@ public class Lieferant implements java.io.Serializable {
 		this.telefon = telefon;
 	}
 
-	@Column(name = "fax", length = 45)
 	public String getFax() {
 		return this.fax;
 	}
 
 	public void setFax(String fax) {
 		this.fax = fax;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lieferant")
-	public Set<Ansprechpartner> getAnsprechpartners() {
-		return this.ansprechpartners;
-	}
-
-	public void setAnsprechpartners(Set<Ansprechpartner> ansprechpartners) {
-		this.ansprechpartners = ansprechpartners;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lieferant")
-	public Set<Bestellung> getBestellungs() {
-		return this.bestellungs;
-	}
-
-	public void setBestellungs(Set<Bestellung> bestellungs) {
-		this.bestellungs = bestellungs;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lieferant")
-	public Set<Artikel> getArtikels() {
-		return this.artikels;
-	}
-
-	public void setArtikels(Set<Artikel> artikels) {
-		this.artikels = artikels;
 	}
 
 	@Override
@@ -247,7 +165,5 @@ public class Lieferant implements java.io.Serializable {
 				+ strasse + ", plz=" + plz + ", ort=" + ort + ", email="
 				+ email + ", telefon=" + telefon + ", fax=" + fax + "]";
 	}
-
-	
 
 }
