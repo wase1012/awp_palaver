@@ -29,7 +29,7 @@ public class LieferantTest extends AbstractTest{
 		public static Long ID = Long.valueOf("1");
 		public static String KUNDENNUMMER = "666666";
 	
-		LieferantDAO dao;
+		private LieferantDAO dao = new LieferantDAO();
 		
 
 		@Test
@@ -49,44 +49,44 @@ public class LieferantTest extends AbstractTest{
 			assertThat(exception, is(false));
 		}
 		
-//		/**
-//		 * Testmethode findLieferantenByName
-//		 * Suche nach einen Lieferanten ueber einen Namen
-//		 * @throws SQLException 
-//		 * @throws DAOException 
-//		 * @throws ConnectException 
-//		 */
-//		@Test
-//	    public void findLieferantByName() throws ConnectException, DAOException, SQLException {
-//			
-//			Boolean exception = false;
-//			List<Lieferant> liefantlist = null;
-//			try
-//			{
-//	    	liefantlist = dao.getLieferantenByName(NAME);
-//			} 
-//			catch (ConnectException | DAOException | SQLException e)
-//			{
-//				exception = true;
-//			}
-//			assertThat(liefantlist.isEmpty(), is(false));
-//			assertThat(exception, is(false));
-//	    }
-//	    
-//	 	/**
-//		 * Testmethode findLieferantById
-//		 * Suche nach einen Lieferant ueber eine Id
-//	 	 * @throws SQLException 
-//	 	 * @throws DAOException 
-//	 	 * @throws ConnectException 
-//		 */
-//	    @Test
-//	    public void findLieferantById() throws ConnectException, DAOException, SQLException {
-//
-//	    	Lieferant lieferant = dao.getLieferantById(ID);
-//
-//			assertThat(lieferant.getId(), is(ID));
-//	    }
+		/**
+		 * Testmethode findLieferantenByName
+		 * Suche nach einen Lieferanten ueber einen Namen
+		 * @throws SQLException 
+		 * @throws DAOException 
+		 * @throws ConnectException 
+		 */
+		@Test
+	    public void findLieferantByName() throws ConnectException, DAOException, SQLException {
+			
+			Boolean exception = false;
+			List<Lieferant> liefantlist = null;
+			try
+			{
+	    	liefantlist = dao.getLieferantenByName(NAME);
+			} 
+			catch (ConnectException | DAOException | SQLException e)
+			{
+				exception = true;
+			}
+			assertThat(liefantlist.isEmpty(), is(false));
+			assertThat(exception, is(false));
+	    }
+	    
+	 	/**
+		 * Testmethode findLieferantById
+		 * Suche nach einen Lieferant ueber eine Id
+	 	 * @throws SQLException 
+	 	 * @throws DAOException 
+	 	 * @throws ConnectException 
+		 */
+	    @Test
+	    public void findLieferantById() throws ConnectException, DAOException, SQLException {
+
+	    	Lieferant lieferant = dao.getLieferantById(ID);
+
+			assertThat(lieferant.getId(), is(ID));
+	    }
 //	    
 //	    /**
 //		 * Testmethode createLieferant

@@ -6,6 +6,7 @@ package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,13 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String TELEFON = "telefon";
 	private final static String FAX = "fax";
 
-	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM TABLE";
+	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM "+ TABLE;
 
-	protected LieferantDAO() {
+	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM "+ TABLE+" WHERE "+ID+"= {0}";
+	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM lieferant where name= '{0}'";
+//	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM "+ TABLE+" WHERE "+ NAME +"='{0}'";
+
+	public LieferantDAO() {
 		super();
 	}
 
@@ -69,18 +74,19 @@ public class LieferantDAO extends AbstractDAO {
 	public List<Lieferant> getLieferantenByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
-
-		String GET_LIEFERANTEN_BY_NAME = "SELECT * FROM " + TABLE + " WHERE "
-				+ NAME + " LIKE " + "'%" + name + "%'";
-		ResultSet set = get(GET_LIEFERANTEN_BY_NAME);
+		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_NAME, name));
 
 		while (set.next()) {
-			list.add(new Lieferant(set.getLong(ID), set.getString(NAME),
+			list.add(new Lieferant(set.getLong(ID), 
+					set.getString(NAME),
 					set.getString(KUNDENNUMMER),
-					set.getString(BEZEICHNUNG), set.getString(STRASSE), set
-							.getString(PLZ), set.getString(ORT), set
-							.getString(EMAIL), set.getString(TELEFON), set
-							.getString(FAX)));
+					set.getString(BEZEICHNUNG), 
+					set.getString(STRASSE), 
+					set.getString(PLZ), 
+					set.getString(ORT), 
+					set.getString(EMAIL), 
+					set.getString(TELEFON), 
+					set.getString(FAX)));
 		}
 
 		return list;
@@ -90,9 +96,7 @@ public class LieferantDAO extends AbstractDAO {
 			DAOException, SQLException {
 
 		Lieferant lieferant = null;
-		String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID
-				+ "='" + id + "'";
-		ResultSet set = get(GET_LIEFERANT_BY_ID);
+		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
 
 		while (set.next()) {
 			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
