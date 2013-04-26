@@ -33,7 +33,7 @@ public class LieferantDAO extends AbstractDAO {
 
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM TABLE";
 
-	private LieferantDAO() {
+	protected LieferantDAO() {
 		super();
 	}
 
@@ -51,12 +51,16 @@ public class LieferantDAO extends AbstractDAO {
 		ResultSet set = get(GET_ALL_LIEFERANTEN);
 
 		while (set.next()) {
-			list.add(new Lieferant(set.getLong(ID), set.getString(NAME),
+			list.add(new Lieferant(set.getLong(ID), 
+					set.getString(NAME),
 					set.getString(KUNDENNUMMER),
-					set.getString(BEZEICHNUNG), set.getString(STRASSE), set
-							.getString(PLZ), set.getString(ORT), set
-							.getString(EMAIL), set.getString(TELEFON), set
-							.getString(FAX)));
+					set.getString(BEZEICHNUNG), 
+					set.getString(STRASSE), 
+					set.getString(PLZ), 
+					set.getString(ORT), 
+					set.getString(EMAIL), 
+					set.getString(TELEFON), 
+					set.getString(FAX)));
 		}
 
 		return list;
@@ -102,7 +106,7 @@ public class LieferantDAO extends AbstractDAO {
 		return lieferant;
 	}
 
-	public void createNewLieferant(Lieferant lieferant)
+	public void createLieferant(Lieferant lieferant)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ
