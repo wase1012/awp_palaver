@@ -1,0 +1,3 @@
+id; name; vorname; email; passwort; eintrittsdatum; austrittsdatum
+1;Mustermann;Max;Max@Mustermann.mm;musterwort;22.04.2012;
+2;Musterfrau;Maxi;Maxi@Musterfrau.mm;wortmuster;04.04.2013;

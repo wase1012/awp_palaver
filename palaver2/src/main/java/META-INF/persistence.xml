@@ -22,10 +22,16 @@
 		<class>de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Rollen</class>
 		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept</class>
 		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart</class>
-		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Rezepteigenschaften</class>
 		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel</class>
 		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikelId</class>
-		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Zutatenkategorie</class>
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote</class>
+	<!--<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikelId</class> -->
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack</class>
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung</class>
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung</class>
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasFussnote</class>
+		<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasFussnoteId</class>
+	<!--<class>de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikelId</class>  -->
 
 		<validation-mode>NONE</validation-mode>
 

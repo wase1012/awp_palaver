@@ -1,6 +1,6 @@
 package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
-// Generated 21.04.2013 16:08:42 by Hibernate Tools 3.4.0.CR1
+// Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,36 +12,39 @@ import javax.persistence.Embeddable;
 public class RezeptHasArtikelId implements java.io.Serializable {
 
 	/**
-	 *
+	 * 
 	 */
-	private static final long serialVersionUID = -1386638252211019358L;
-	private int rezeptId;
-	private int artikelId;
+	private static final long serialVersionUID = -6342617785477300931L;
+	/**
+	 * 
+	 */
+	private int rezeptFk;
+	private int artikelFk;
 
 	public RezeptHasArtikelId() {
 	}
 
-	public RezeptHasArtikelId(int rezeptId, int artikelId) {
-		this.rezeptId = rezeptId;
-		this.artikelId = artikelId;
+	public RezeptHasArtikelId(int rezeptFk, int artikelFk) {
+		this.rezeptFk = rezeptFk;
+		this.artikelFk = artikelFk;
 	}
 
-	@Column(name = "rezept_id", nullable = false)
-	public int getRezeptId() {
-		return this.rezeptId;
+	@Column(name = "rezept_fk", nullable = false)
+	public int getRezeptFk() {
+		return this.rezeptFk;
 	}
 
-	public void setRezeptId(int rezeptId) {
-		this.rezeptId = rezeptId;
+	public void setRezeptFk(int rezeptFk) {
+		this.rezeptFk = rezeptFk;
 	}
 
-	@Column(name = "artikel_id", nullable = false)
-	public int getArtikelId() {
-		return this.artikelId;
+	@Column(name = "artikel_fk", nullable = false)
+	public int getArtikelFk() {
+		return this.artikelFk;
 	}
 
-	public void setArtikelId(int artikelId) {
-		this.artikelId = artikelId;
+	public void setArtikelFk(int artikelFk) {
+		this.artikelFk = artikelFk;
 	}
 
 	public boolean equals(Object other) {
@@ -53,16 +56,22 @@ public class RezeptHasArtikelId implements java.io.Serializable {
 			return false;
 		RezeptHasArtikelId castOther = (RezeptHasArtikelId) other;
 
-		return (this.getRezeptId() == castOther.getRezeptId())
-				&& (this.getArtikelId() == castOther.getArtikelId());
+		return (this.getRezeptFk() == castOther.getRezeptFk())
+				&& (this.getArtikelFk() == castOther.getArtikelFk());
 	}
 
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result + this.getRezeptId();
-		result = 37 * result + this.getArtikelId();
+		result = 37 * result + this.getRezeptFk();
+		result = 37 * result + this.getArtikelFk();
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "RezeptHasArtikelId [rezeptFk=" + rezeptFk + ", artikelFk="
+				+ artikelFk + "]";
 	}
 
 }

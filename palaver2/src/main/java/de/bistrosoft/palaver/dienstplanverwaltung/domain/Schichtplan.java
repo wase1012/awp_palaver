@@ -26,11 +26,9 @@ import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 @Table(name = "schichtplan", catalog = "palaver")
 public class Schichtplan implements java.io.Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -6839620055148237060L;
-	private Integer id;
+
+	private static final long serialVersionUID = 7884823856426157040L;
+	private Long id;
 	private Mitarbeiter mitarbeiter;
 	private Date datum;
 	private Date arbeitsbeginn;
@@ -50,11 +48,11 @@ public class Schichtplan implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -96,6 +94,65 @@ public class Schichtplan implements java.io.Serializable {
 
 	public void setErbeitsende(Date erbeitsende) {
 		this.erbeitsende = erbeitsende;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((arbeitsbeginn == null) ? 0 : arbeitsbeginn.hashCode());
+		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
+		result = prime * result
+				+ ((erbeitsende == null) ? 0 : erbeitsende.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((mitarbeiter == null) ? 0 : mitarbeiter.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Schichtplan other = (Schichtplan) obj;
+		if (arbeitsbeginn == null) {
+			if (other.arbeitsbeginn != null)
+				return false;
+		} else if (!arbeitsbeginn.equals(other.arbeitsbeginn))
+			return false;
+		if (datum == null) {
+			if (other.datum != null)
+				return false;
+		} else if (!datum.equals(other.datum))
+			return false;
+		if (erbeitsende == null) {
+			if (other.erbeitsende != null)
+				return false;
+		} else if (!erbeitsende.equals(other.erbeitsende))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (mitarbeiter == null) {
+			if (other.mitarbeiter != null)
+				return false;
+		} else if (!mitarbeiter.equals(other.mitarbeiter))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Schichtplan [id=" + id + ", mitarbeiter=" + mitarbeiter
+				+ ", datum=" + datum + ", arbeitsbeginn=" + arbeitsbeginn
+				+ ", erbeitsende=" + erbeitsende + "]";
 	}
 
 }

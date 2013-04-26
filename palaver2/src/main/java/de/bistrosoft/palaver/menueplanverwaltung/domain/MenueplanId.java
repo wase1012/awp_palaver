@@ -3,6 +3,7 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 // Generated 21.04.2013 16:08:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -13,9 +14,9 @@ import javax.persistence.Embeddable;
 public class MenueplanId implements java.io.Serializable {
 
 	/**
-	 *
+	 * 
 	 */
-	private static final long serialVersionUID = -1052982117801211000L;
+	private static final long serialVersionUID = -453261092839458017L;
 	private Date datum;
 	private int position;
 
@@ -68,5 +69,4 @@ public class MenueplanId implements java.io.Serializable {
 		result = 37 * result + this.getPosition();
 		return result;
 	}
-
 }
