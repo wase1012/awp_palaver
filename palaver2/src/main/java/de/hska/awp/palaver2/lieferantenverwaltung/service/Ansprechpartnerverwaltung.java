@@ -1,3 +1,7 @@
+/**
+ * Created by Christian Barth
+ * 26.04.2013 - 09:32:35
+ */
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
 import java.sql.SQLException;
@@ -8,69 +12,115 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 
-public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO{
-	
+/**
+ * Die Klasse ermöglicht die Verwaltung der Ansprechpartner und stellt für die
+ * GUI Methoden bereit.
+ * 
+ * @author bach1014
+ * 
+ */
+public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
+
 	private static Ansprechpartnerverwaltung instance = null;
-	
-	private Ansprechpartnerverwaltung()
-	{
+
+	private Ansprechpartnerverwaltung() {
 		super();
 	}
-	
-	public static Ansprechpartnerverwaltung getInstance()
-	{
-		if (instance == null)
-		{
+
+	public static Ansprechpartnerverwaltung getInstance() {
+		if (instance == null) {
 			instance = new Ansprechpartnerverwaltung();
 		}
 		return instance;
 	}
 
-	public List<Ansprechpartner> getAllAnsprechpartner() throws ConnectException, DAOException, SQLException {
-		
+	/**
+	 * Die Methode liefert alle Ansprechpartner zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public List<Ansprechpartner> getAllAnsprechpartner()
+			throws ConnectException, DAOException, SQLException {
+
 		List<Ansprechpartner> result = null;
-		
+
 		result = super.getAllAnsprechpartner();
-		
+
 		return result;
 	}
-	
-	public Ansprechpartner getAnsprechpartnerById(Long id) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode liefert einen Ansprechpartner anhand des Parameter id zurück.
+	 * 
+	 * @param id
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public Ansprechpartner getAnsprechpartnerById(Long id)
+			throws ConnectException, DAOException, SQLException {
 		Ansprechpartner result = null;
-		
+
 		result = super.getAnsprechpartnerById(id);
-		
+
 		return result;
 	}
-	
-	public List<Ansprechpartner> getAnsprechpartnerByName(String name) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode liefert einen oder mehrere Ansprechpartner anhand des
+	 * Parameter name zurück.
+	 * 
+	 * @param name
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public List<Ansprechpartner> getAnsprechpartnerByName(String name)
+			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> result = null;
-		
+
 		result = super.getAnsprechpartnerByName(name);
-		
+
 		return result;
 	}
-	
-	public void createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode erzeugt einen Ansprechpartner.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void createAnsprechpartner(Ansprechpartner ansprechpartner)
+			throws ConnectException, DAOException, SQLException {
 		super.createAnsprechpartner(ansprechpartner);
 	}
-	
-	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode aktualisiert einen Ansprechpartner.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void updateAnsprechpartner(Ansprechpartner ansprechpartner)
+			throws ConnectException, DAOException, SQLException {
 		super.updateAnsprechpartner(ansprechpartner);
 	}
 
 	/**
-	 * @throws SQLException 
-	 * @throws DAOException 
-	 * @throws ConnectException 
+	 * Die Methode löscht einen Ansprechpartner.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
 	 */
-	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException, SQLException {
-	
+	public void deleteAnsprechpartner(Long id) throws ConnectException,
+			DAOException, SQLException {
+
 		super.deleteAnsprechpartner(id);
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /**
- * Created by bach1014
+ * Created by Christian Barth
  * 26.04.2013 - 08:32:35
  */
 package de.hska.awp.palaver2.data;
@@ -13,7 +13,7 @@ import java.util.List;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * @author bach1014
+ * @author Christian Barth
  * 
  */
 public class LieferantDAO extends AbstractDAO {

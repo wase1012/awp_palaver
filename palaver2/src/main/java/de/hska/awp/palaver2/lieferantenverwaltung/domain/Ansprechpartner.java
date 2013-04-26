@@ -1,19 +1,19 @@
+/**
+ * Created by Christian Barth
+ * 26.04.2013 - 09:32:35
+ */
 package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 
-
 /**
+ * Klasse Ansprechpartner
  * 
- * @author bach1014
- *
+ * @author Christian Barth
+ * 
  */
-
 public class Ansprechpartner implements java.io.Serializable {
 
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 4524105542736585477L;
+
 	private Long id;
 	private String name;
 	private String telefon;
@@ -29,8 +29,8 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Ansprechpartner(Long id, String name, String telefon,
-			String handy, String fax, Lieferant lieferant) {
+	public Ansprechpartner(Long id, String name, String telefon, String handy,
+			String fax, Lieferant lieferant) {
 		this.id = id;
 		this.name = name;
 		this.telefon = telefon;
@@ -42,7 +42,7 @@ public class Ansprechpartner implements java.io.Serializable {
 	public Long getId() {
 		return this.id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -70,7 +70,7 @@ public class Ansprechpartner implements java.io.Serializable {
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
-	
+
 	public String getHandy() {
 		return this.handy;
 	}
@@ -92,7 +92,5 @@ public class Ansprechpartner implements java.io.Serializable {
 		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon="
 				+ telefon + ", handy=" + handy + ", fax=" + fax + "]";
 	}
-
-	
 
 }
