@@ -96,4 +96,15 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.austrittsdatum = austrittsdatum;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Mitarbeiter [id=" + id + ", name=" + name + ", vorname="
+				+ vorname + ", email=" + email + ", passwort=" + passwort
+				+ ", eintrittsdatum=" + eintrittsdatum + ", austrittsdatum="
+				+ austrittsdatum + "]";
+	}
+
 }

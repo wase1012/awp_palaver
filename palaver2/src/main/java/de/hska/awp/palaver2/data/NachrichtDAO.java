@@ -23,7 +23,7 @@ public class NachrichtDAO extends AbstractDAO {
 	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
 	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
 	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
-	private static final String		CREATE_NACHRICHT = "INSERT INTO Nachrichten (`id`,`nachricht`,`sender_fk`,`empf_rolle_fk`)VALUES({0})";
+	private static final String		CREATE_NACHRICHT = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values({0})";
 	private static final String		DELETE_NACHRICHT = "DELETE FROM Nachrichten WHERE id = {0}";
 	
 	public NachrichtDAO()
@@ -91,10 +91,16 @@ public class NachrichtDAO extends AbstractDAO {
 		
 		if(nachricht == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
+		
 		}
 
-		put(MessageFormat.format(CREATE_NACHRICHT, nachricht.getId() + "," + nachricht.getNachricht() + "," + 
-									nachricht.getMitarbeiterBySenderFk() + "," + nachricht.getEmpfaengerRolle()));
+//		put(CREATE_NACHRICHT + nachricht.getNachricht() + "," + 
+//									nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId());
+		
+		String anlegen = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
+							+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
+		System.out.print(anlegen);
+		put(anlegen); 
 
 	}
 	

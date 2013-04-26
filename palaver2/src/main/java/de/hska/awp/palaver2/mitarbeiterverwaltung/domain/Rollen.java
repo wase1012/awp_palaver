@@ -56,4 +56,12 @@ public class Rollen implements java.io.Serializable {
 		this.mitarbeiters = mitarbeiters;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Rollen [id=" + id + ", name=" + name + "]";
+	}
+
 }
