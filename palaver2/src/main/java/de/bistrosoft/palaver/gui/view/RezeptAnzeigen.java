@@ -17,10 +17,13 @@ import com.vaadin.ui.VerticalLayout;
 
 public class RezeptAnzeigen extends VerticalLayout{
 	
+	private HorizontalLayout oben = new HorizontalLayout();
 	
+	private HorizontalLayout unten = new HorizontalLayout();
 	
-	private VerticalLayout	box = new VerticalLayout();
-	 
+	private VerticalLayout	links = new VerticalLayout();
+	private VerticalLayout	rechts = new VerticalLayout();
+	private VerticalLayout	mitte = new VerticalLayout();
 	//ueberschrift = new Label("Rezept Anzeige");
   // ueberschrift.setContentMode(ContentMode.HTML);
  
@@ -49,69 +52,84 @@ public class RezeptAnzeigen extends VerticalLayout{
 		this.setMargin(true);
 		
 		bezeichnung.setWidth("100%");
-		bezeichnung.setImmediate(true);
-		bezeichnung.setInputPrompt("Lasangne");
+	
+		bezeichnung.setValue("Lasangne");
+		bezeichnung.setReadOnly(true);
 		rezeptersteller.setWidth("100%");
-		rezeptersteller.setImmediate(true);
-		rezeptersteller.setInputPrompt("Koch1");
+		rezeptersteller.setValue("Koch1");
+		rezeptersteller.setReadOnly(true);		
 		kommentar.setWidth("100%");
-		kommentar.setImmediate(true);
-		kommentar.setInputPrompt("blablablabla");
+		kommentar.setValue("blablablabla");
+		kommentar.setReadOnly(true);		
 		portion.setWidth("100%");
-		portion.setImmediate(true);
-		portion.setInputPrompt("30");
+		portion.setValue("30");
+		portion.setReadOnly(true);		
 		geschmack.setWidth("100%");
-		geschmack.setImmediate(true);
-		geschmack.setInputPrompt("klassisch");
+		geschmack.setValue("klassisch");
+		geschmack.setReadOnly(true);		
 		art.setWidth("100%");
-		art.setImmediate(true);
-		art.setInputPrompt("Hauptgericht");
+		art.setValue("Hauptgericht");
+		art.setReadOnly(true);		
 		herd.setWidth("100%");
-		herd.setImmediate(true);
 		herd.setValue(true);
+		herd.setReadOnly(true);		
 		konvektomat.setWidth("100%");
-		konvektomat.setImmediate(true);
 		konvektomat.setValue(true);
+		konvektomat.setReadOnly(true);		
 		fussnoten.setSizeFull();
 		
 		fussnoten.setImmediate(true);
 		
-		box.setWidth("300px");
-		box.setSpacing(true);
-			
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		//oben.setWidth("100%");
+		oben.setSpacing(true);
+		links.setWidth("300px");
+		mitte.setWidth("300px");
+		rechts.setWidth("300px");
+		unten.setWidth("300px");	
+		unten.setSpacing(true);
+		 unten.setHeight(100.0f, Unit.PERCENTAGE);
+		this.addComponent(oben);
+		this.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
 		
-		box.addComponent(bezeichnung);
-		box.addComponent(rezeptersteller);
-		box.addComponent(portion);
-		box.addComponent(geschmack);
-		box.addComponent(art);
+		
+		
+		
+		//oben.setHeight("100%");
+		oben.addComponent(links);
+		oben.addComponent(mitte);
+		oben.addComponent(rechts);
+		
+		
+		links.addComponent(bezeichnung);
+		links.addComponent(rezeptersteller);
+		links.addComponent(portion);
+		links.addComponent(geschmack);
+		links.addComponent(art);
 		
 		HorizontalLayout subBox = new HorizontalLayout();
 		subBox.setWidth("100%");
-		box.addComponent(subBox);
+		links.addComponent(subBox);
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
 		subBox.setImmediate(true);
 		
 		
-		box.addComponent(fussnoten);
+		mitte.addComponent(fussnoten);
 		 fussnoten.addContainerProperty("Bezeichnug", String.class, null);
 		 fussnoten.addItem(new Object[] {
 				   "Rindfleisch"}, new Integer(1));
 		 fussnoten.addItem(new Object[] {
 				   "Tomaten"}, new Integer(2));
 		 
-		box.addComponent(kommentar);
 		
+		 mitte.addComponent(unten);
 		
-		box.addComponent(zutaten);
+		rechts.addComponent(zutaten);
 			
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		rechts.addComponent(control);
+		rechts.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
 		control.addComponent(zutatenhinzufuegen);
 		
@@ -134,9 +152,10 @@ public class RezeptAnzeigen extends VerticalLayout{
 	   zutaten.addItem(new Object[] {
 			   "Salz", 3, "g", "Standard" }, new Integer(4));
 	   
-	   herd.setImmediate(true);
-		konvektomat.setImmediate(true);
+	   
 	   //Test ende
+		
+		unten.addComponent(kommentar);
 	}
 
 }
