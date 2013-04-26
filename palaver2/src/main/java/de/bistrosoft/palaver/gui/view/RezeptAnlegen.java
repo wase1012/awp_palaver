@@ -49,9 +49,8 @@ private TwinColSelect fussnoten = new TwinColSelect();
 		bezeichnung.setWidth("100%");
 		kommentar.setWidth("100%");
 		portion.setWidth("100%");
-		portion.setReadOnly(true);
 		portion.setValue("30");
-		
+		portion.setReadOnly(true);
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
