@@ -1,5 +1,9 @@
 package de.bistrosoft.palaver.gui.view;
 
+//import org.vaadin.virkki.carousel.HorizontalCarousel;
+//import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
+//import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -78,7 +82,16 @@ public class Menueplan extends VerticalLayout{
 		
 		box.addComponent(curMenueplan);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
-//		this.setComponentAlignment(hlChangeWeek, Alignment.MIDDLE_CENTER);
+		
+		
+//		HorizontalCarousel carousel = new HorizontalCarousel();
+//		carousel.setArrowKeysMode(ArrowKeysMode.FOCUS);
+//		carousel.setLoadMode(CarouselLoadMode.LAZY);
+//		carousel.setTransitionDuration(500);
+//		carousel.addComponent(prevMenueplan);
+//		carousel.addComponent(curMenueplan);
+//		carousel.addComponent(nextMenueplan);
+//		box.addComponent(carousel);
 		
 	}
 	
