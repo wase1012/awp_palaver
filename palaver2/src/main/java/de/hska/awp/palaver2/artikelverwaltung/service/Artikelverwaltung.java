@@ -5,7 +5,6 @@
 package de.hska.awp.palaver2.artikelverwaltung.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -38,5 +37,33 @@ public class Artikelverwaltung extends ArtikelDAO
 		result = super.getAllArtikel();
 		
 		return result;
+	}
+	
+	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException
+	{
+		Artikel result = null;
+		
+		result = super.getArtikelById(id);
+		
+		return result;
+	}
+	
+	public List<Artikel> getArtikelByName(String name) throws ConnectException, DAOException, SQLException
+	{
+		List<Artikel> result = null;
+		
+		result = super.getArtikelByName(name);
+		
+		return result;
+	}
+	
+	public void createArtikel(Artikel artikel) throws ConnectException, DAOException
+	{
+		super.createArtikel(artikel);
+	}
+	
+	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
+	{
+		super.updateArtikel(artikel);
 	}
 }

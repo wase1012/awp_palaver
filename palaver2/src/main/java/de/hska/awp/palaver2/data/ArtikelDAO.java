@@ -12,13 +12,14 @@ import java.util.List;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 public class ArtikelDAO extends AbstractDAO
 {	
 	private final static String			GET_ALL_ARTIKLES = "SELECT * FROM artikel";
 	private final static String			GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String			GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name = '{0}'";
+	private final static String			PUT_ARTIKEL = "INSERT INTO artikel(`id`,`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`)VALUES({0})";
+	private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `id` = {0},`artikelnr` = {1},`name` = {2},`bestellgroesse` = {3},`mengeneinheit_fk` = {4},`preis` = {5},`lieferant_fk` = {6},`bio` = {7},`kategorie_fk` = {8},`standard` = {9},`grundbedarf` = {10},`durchschnitt` = {11},`lebensmittel` = {12}WHERE id = {13}";
 	
 	public ArtikelDAO()
 	{
@@ -104,5 +105,33 @@ public class ArtikelDAO extends AbstractDAO
 		}
 		
 		return list;
+	}
+	
+	public void createArtikel(Artikel artikel) throws ConnectException, DAOException
+	{
+		put(MessageFormat.format(PUT_ARTIKEL,
+				artikel.getId() + ",'" + artikel.getArtikelnr() + "','" + artikel.getName() + "'," 
+				+ artikel.getBestellgroesse() + "," + artikel.getMengeneinheit().getId() + "," 
+				+ artikel.getPreis() + "," + artikel.getLieferant().getId() + ",'" + artikel.isBio() 
+				+ "'," + artikel.getKategorie().getId() + ",'" + artikel.isStandard() + "','"
+				+ artikel.isGrundbedarf() + "'," + artikel.getDurchschnitt() + ",'" + artikel.isLebensmittel() +"'"));
+	}
+	
+	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
+	{
+		put(MessageFormat.format(UPDATE_ARTIKEL, 
+								artikel.getId(),
+								"'" + artikel.getArtikelnr() + "'",
+								"'" + artikel.getName() + "'",
+								artikel.getBestellgroesse(),
+								artikel.getMengeneinheit().getId(),
+								artikel.getPreis(),
+								artikel.getLieferant().getId(),
+								"'" + artikel.isBio() + "'",
+								artikel.getKategorie().getId(),
+								"'" + artikel.isStandard() + "'",
+								"'" + artikel.isGrundbedarf() + "'",
+								artikel.getDurchschnitt(),
+								"'" + artikel.isLebensmittel() + "'"));
 	}
 }
