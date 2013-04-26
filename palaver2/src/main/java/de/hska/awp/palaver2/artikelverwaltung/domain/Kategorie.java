@@ -1,15 +1,15 @@
 /**
  *  Created by Sebastian Walz
+ *  Edit by Mihail Boehm
  */
 package de.hska.awp.palaver2.artikelverwaltung.domain;
-
-
 
 public class Kategorie implements java.io.Serializable {
 	private static final long serialVersionUID = -4647006694762094989L;
 
 	private Long id;
 	private String name;
+
 	/**
 	 * Standardkonstruktor
 	 */
@@ -20,15 +20,18 @@ public class Kategorie implements java.io.Serializable {
 	/**
 	 * Konstruktor
 	 * 
+	 * @param id
+	 *            KategorieId
 	 * @param name
-	 *            Kategoriename
+	 *            KategorieName
 	 */
-	public Kategorie(String name) {
+	public Kategorie(Long id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
 	/**
-	 * getId + setId
+	 * getId
 	 * 
 	 * @return KategorieId
 	 */
@@ -37,16 +40,12 @@ public class Kategorie implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	/**
 	 * getName + setName
 	 * 
 	 * @return KategorieName
 	 */
-	
+
 	public String getName() {
 		return this.name;
 	}
@@ -99,5 +98,5 @@ public class Kategorie implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

@@ -14,6 +14,9 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
  */
 public class KategorieDAO extends AbstractDAO {
 
+	private final static String ID = "id";
+	private final static String NAME = "name";
+
 	private static KategorieDAO instance = null;
 	private final static String TABLE = "kategorie";
 	private final static String GET_ALL_KATEGORIES = "SELECT * FROM " + TABLE;
@@ -46,15 +49,15 @@ public class KategorieDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 18.04.2013
 	 */
-//	public List<Kategorie> getAllKategories() throws ConnectException,
-//			DAOException, SQLException {
-//		List<Kategorie> list = new ArrayList<Kategorie>();
-//		ResultSet set = get(GET_ALL_KATEGORIES);
-//		while (set.next()) {
-//			list.add(new Kategorie(set.getLong("id"), set.getString("name")));
-//		}
-//		return list;
-//	}
+	public List<Kategorie> getAllKategories() throws ConnectException,
+			DAOException, SQLException {
+		List<Kategorie> list = new ArrayList<Kategorie>();
+		ResultSet set = get(GET_ALL_KATEGORIES);
+		while (set.next()) {
+			list.add(new Kategorie(set.getLong(ID), set.getString(NAME)));
+		}
+		return list;
+	}
 
 	/**
 	 * @author Mihail Boehm
@@ -82,8 +85,7 @@ public class KategorieDAO extends AbstractDAO {
 	public void updateKategorie(Kategorie kategorie) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='"
-				+ kategorie.getName() + "' WHERE id=" + kategorie.getId()
-				+ "";
+				+ kategorie.getName() + "' WHERE id=" + kategorie.getId() + "";
 		this.put(UPDATE_QUERY);
 	}
 }
