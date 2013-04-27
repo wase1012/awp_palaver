@@ -99,7 +99,6 @@ public class NachrichtDAO extends AbstractDAO {
 		
 		String anlegen = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
 							+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
-		System.out.print(anlegen);
 		put(anlegen); 
 
 	}
