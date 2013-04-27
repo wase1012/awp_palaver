@@ -1,5 +1,5 @@
 /**
- * 
+ * Created by Sebastian Walz
  */
 package de.hska.awp.palaver2.util;
 

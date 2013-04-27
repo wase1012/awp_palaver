@@ -100,9 +100,10 @@ public class MainLayout extends VerticalLayout implements Command
 				ViewHandler.getInstance().switchView(LieferantErstellen.class);
 			break;
 			case IConstants.MENU_ARTIKEL_ANZEIGEN:
-				ViewHandler.getInstance().switchView(TestView.class);
+				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+			break;
 			default: 
-				ViewHandler.getInstance().switchView(TestView.class);
+				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;
 		}
 	}
