@@ -53,6 +53,40 @@ public class ArtikelTest extends AbstractTest
 	}
 	
 	@Test
+	public void getArtikelByGrundbedarf()
+	{
+		Boolean exception = false;
+		List<Artikel> list = null;
+		try
+		{
+			list = artikelDao.getArtikelByGrundbedarf();
+		} 
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(list.isEmpty(), is(false));
+		assertThat(exception, is(false));
+	}
+	
+	@Test
+	public void getArtikelByStandardbedarf()
+	{
+		Boolean exception = false;
+		List<Artikel> list = null;
+		try
+		{
+			list = artikelDao.getArtikelByStandardbedarf();
+		} 
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(list.isEmpty(), is(false));
+		assertThat(exception, is(false));
+	}
+	
+	@Test
 	public void createArtikel() throws ConnectException, DAOException
 	{
 		Mengeneinheit mengeneinheit = new Mengeneinheit();
