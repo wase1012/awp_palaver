@@ -13,6 +13,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 
@@ -77,14 +78,24 @@ public class MenueplanGridLayout extends CustomComponent{
     					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nSalat / Suppe</font></pre>", Label.CONTENT_XHTML),
     					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDessert</font></pre>", Label.CONTENT_XHTML)};
     for (int i = 0; i < arlbUeb.length; i++) {
-    	arlbUeb[i].setWidth("150px");
-    	arlbUeb[i].setHeight("100px");
-    	layout.addComponent(arlbUeb[i],0,i);
-    	layout.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
+    	HorizontalLayout hl = new HorizontalLayout();
+    	VerticalLayout vl = new VerticalLayout();
+    	@SuppressWarnings("deprecation")
+		Label horizLinie = new Label ("<pre><div style=\"width:150px;height:1px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+    	vl.addComponent(arlbUeb[i]);
+    	vl.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
+      	vl.addComponent(horizLinie);
+        vl.setComponentAlignment(horizLinie, Alignment.BOTTOM_CENTER);
+    	vl.setWidth("150px");
+    	vl.setHeight("100px");
+    	@SuppressWarnings("deprecation")
+		Label vertLinie = new Label ("<pre><div style=\"width:1px;height:100px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+    	hl.addComponent(vl);
+    	hl.addComponent(vertLinie);
+    	layout.addComponent(hl,0,i);
     }
         
     //Fülle Datumszeile
-
 	ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week, year);
     for (int col = 1; col < COLUMNS; col++) {
     	GregorianCalendar date = dates.get(col-1);
@@ -96,23 +107,58 @@ public class MenueplanGridLayout extends CustomComponent{
     	
     	Label lbTmp = new Label(strDay +"\r\n"+strDate);
     	lbTmp.setWidth("140px");
-		layout.addComponent(lbTmp,col,0);	
-        layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
+    	
+    	HorizontalLayout hl = new HorizontalLayout();
+    	VerticalLayout vl = new VerticalLayout();
+    	@SuppressWarnings("deprecation")
+		Label horizLinie = new Label ("<pre><div style=\"width:150px;height:1px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+    	Label platzhalter = new Label ("");
+    	vl.addComponent(platzhalter);
+    	vl.addComponent(lbTmp);
+    	vl.addComponent(horizLinie);
+    	vl.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
+    	vl.setComponentAlignment(horizLinie, Alignment.BOTTOM_CENTER);
+    	vl.setWidth("150px");
+    	vl.setHeight("100px");
+    	@SuppressWarnings("deprecation")
+		Label vertLinie = new Label ("<pre><div style=\"width:1px;height:100px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+    	hl.addComponent(vl);
+    	if (col < COLUMNS-1){
+    		hl.addComponent(vertLinie);
+    	}
+    	layout.addComponent(hl,col,0);
     }
     
     //Fülle Zeile für Köche
     for (int col = 1; col < COLUMNS; col++) {
+    	HorizontalLayout hl = new HorizontalLayout();
     	VerticalLayout vl = new VerticalLayout();
     	ComboBox koch1 = new ComboBox();
         ComboBox koch2 = new ComboBox();
-    	koch1.setWidth("140px");
+        @SuppressWarnings("deprecation")
+		Label horizLinie = new Label ("<pre><div style=\"width:150px;height:1px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+        Label platzhalter = new Label ("");
+        koch1.setWidth("140px");
     	koch1.addItem("Test");
     	koch2.setWidth("140px");
     	koch2.addItem("Test");
+    	vl.addComponent(platzhalter);
     	vl.addComponent(koch1);
     	vl.addComponent(koch2);
-    	layout.addComponent(vl,col,1);	
-        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
+    	vl.addComponent(horizLinie);
+    	vl.setComponentAlignment(platzhalter, Alignment.MIDDLE_CENTER);
+    	vl.setComponentAlignment(koch1, Alignment.MIDDLE_CENTER);
+    	vl.setComponentAlignment(koch2, Alignment.MIDDLE_CENTER);
+    	vl.setComponentAlignment(horizLinie, Alignment.BOTTOM_CENTER);
+    	vl.setWidth("150px");
+    	vl.setHeight("100px");
+    	@SuppressWarnings("deprecation")
+		Label vertLinie = new Label ("<pre><div style=\"width:1px;height:100px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+    	hl.addComponent(vl);
+    	if (col < COLUMNS-1){
+    		hl.addComponent(vertLinie);
+    	}
+    	layout.addComponent(hl,col,1);
     }
     
     //Füge ADD Buttons ein
@@ -140,8 +186,26 @@ public class MenueplanGridLayout extends CustomComponent{
 					}
 				});
                 
-                layout.addComponent(btn, col, row);
-                layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+                HorizontalLayout hl = new HorizontalLayout();
+                VerticalLayout vl = new VerticalLayout();
+            	@SuppressWarnings("deprecation")
+        		Label horizLinie = new Label ("<pre><div style=\"width:150px;height:1px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+            	Label platzhalter = new Label ("");
+            	vl.addComponent(platzhalter);
+            	vl.addComponent(btn);
+            	vl.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+            	vl.addComponent(horizLinie);
+                vl.setComponentAlignment(horizLinie, Alignment.BOTTOM_CENTER);
+            	vl.setWidth("150px");
+            	vl.setHeight("100px");
+            	@SuppressWarnings("deprecation")
+        		Label vertLinie = new Label ("<pre><div style=\"width:1px;height:100px;background-color:black;\"></div></pre>", Label.CONTENT_XHTML);
+            	hl.addComponent(vl);
+            	if (col < COLUMNS-1){
+            		hl.addComponent(vertLinie);
+            	}
+            	layout.addComponent(hl,col,row);
+ 
         	}
                 
         }
