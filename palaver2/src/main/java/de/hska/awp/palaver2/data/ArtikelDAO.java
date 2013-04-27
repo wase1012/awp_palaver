@@ -38,8 +38,8 @@ public class ArtikelDAO extends AbstractDAO
 		{
 			list.add(new Artikel(set.getLong("id"),
 								new Mengeneinheit(),
-								new Kategorie(),
-								new Lieferant(),
+								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
+								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
 								set.getString("name"),
 								set.getDouble("bestellgroesse"),
@@ -65,7 +65,7 @@ public class ArtikelDAO extends AbstractDAO
 		{
 			result = new Artikel(set.getLong("id"),
 								new Mengeneinheit(),
-								new Kategorie(),
+								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
 								set.getString("name"),
@@ -92,7 +92,7 @@ public class ArtikelDAO extends AbstractDAO
 		{
 			list.add(new Artikel(set.getLong("id"),
 								new Mengeneinheit(),
-								new Kategorie(),
+								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
 								set.getString("name"),

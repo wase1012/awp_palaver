@@ -125,12 +125,10 @@ public class Lieferant implements java.io.Serializable {
 		this.fax = fax;
 	}
 
+	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
-		return "Lieferant [id=" + id + ", name=" + name + ", kundennummer="
-				+ kundennummer + ", bezeichnung=" + bezeichnung + ", strasse="
-				+ strasse + ", plz=" + plz + ", ort=" + ort + ", email="
-				+ email + ", telefon=" + telefon + ", fax=" + fax + "]";
+		return name;
 	}
 
 }

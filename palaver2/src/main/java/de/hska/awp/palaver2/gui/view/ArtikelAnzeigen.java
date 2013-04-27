@@ -41,6 +41,8 @@ public class ArtikelAnzeigen extends VerticalLayout
 		{
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
+			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "bestellgroesse"});
+			table.sort(new Object[] {"name"}, new boolean[] {true});
 		} 
 		catch (IllegalArgumentException | ConnectException | DAOException
 				| SQLException e)

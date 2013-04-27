@@ -57,9 +57,10 @@ public class Kategorie implements java.io.Serializable {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
-		return "Kategorie [id=" + id + ", name=" + name + "]";
+		return name;
 	}
 
 	/**

@@ -45,10 +45,10 @@ public class Mengeneinheit implements java.io.Serializable {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
-		return "Mengeneinheit [id=" + id + ", name=" + name + ", kurz=" + kurz
-				+ "]";
+		return name;
 	}
 
 	/**
