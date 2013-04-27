@@ -31,11 +31,10 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	private final static String LIEFERANT_FK = "lieferant_fk";
 	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM "
 			+ TABLE;
-
 	private static final String GET_ANSPRECHPARTNER_BY_ID = "SELECT * FROM "
 			+ TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM "
-			+ TABLE + " WHERE name= '";
+			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
 	private static final String DELETE_NACHRICHT = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
 
@@ -90,7 +89,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 
-		ResultSet set = get(GET_ANSPRECHPARTNER_BY_NAME + name + "'");
+		ResultSet set = get(GET_ANSPRECHPARTNER_BY_NAME + name + "%'");
 
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),
