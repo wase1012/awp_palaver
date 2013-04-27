@@ -18,18 +18,6 @@ public class Mengeneinheit implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 5210068506937506344L;
 
-	private static final String PREFIX = "Mengeneinheit.";
-
-	public static final String FIND_MENGENEINHEIT_BY_NAME = PREFIX
-			+ "findMengeneinheitByName";
-	public static final String FIND_MENGENEINHEIT_BY_ID = PREFIX
-			+ "findMengeneinheitById";
-	public static final String FIND_MENGENEINHEIT_BY_KURZ = PREFIX
-			+ "findMengeneinheitByKurz";
-	public static final String FIND_ALL_MENGENEINHEIT = PREFIX + "findAllMengeneinheit";
-	public static final String PARAM_NAME = "name";
-	public static final String PARAM_ID = "id";
-	public static final String PARAM_KURZ = "kurz";
 	
 	private Long id;
 	private String name;
@@ -41,12 +29,11 @@ public class Mengeneinheit implements java.io.Serializable {
 	public Mengeneinheit() {
 	}
 
-	public Mengeneinheit(String name, String kurz,
-			Set<RezeptHasArtikel> rezeptHasArtikels, Set<Artikel> artikels) {
+	public Mengeneinheit(Long id, String name, String kurz) {
+		this.id = id;
 		this.name = name;
 		this.kurz = kurz;
-		this.rezeptHasArtikels = rezeptHasArtikels;
-		this.artikels = artikels;
+		
 	}
 
 	public Long getId() {
