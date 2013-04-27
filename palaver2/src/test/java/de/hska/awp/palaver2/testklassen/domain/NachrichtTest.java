@@ -93,7 +93,7 @@ public class NachrichtTest  {
     @Test
     public void deleteNachricht() throws ConnectException, DAOException, SQLException {
     	
-    	Long id = Long.valueOf(3);
+    	Long id = Long.valueOf(2);
     	Nachricht nachricht = new Nachricht();
     	nachricht = ndao.getNachrichtById(id);
     	
