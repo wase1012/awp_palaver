@@ -1,47 +1,29 @@
 package de.hska.awp.palaver2.artikelverwaltung.domain;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import de.hska.awp.palaver2.rezeptverwaltung.domain.RezeptHasArtikel;
-
 /**
- * 
  * @author bach1014
- *
+ * @edit Mihail Boehm 27.04.2013
  */
 
 public class Mengeneinheit implements java.io.Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 5210068506937506344L;
 
-	
 	private Long id;
 	private String name;
 	private String kurz;
-	private Set<RezeptHasArtikel> rezeptHasArtikels = new HashSet<RezeptHasArtikel>(
-			0);
-	private Set<Artikel> artikels = new HashSet<Artikel>(0);
 
 	public Mengeneinheit() {
+		super();
 	}
 
 	public Mengeneinheit(Long id, String name, String kurz) {
 		this.id = id;
 		this.name = name;
 		this.kurz = kurz;
-		
 	}
 
 	public Long getId() {
 		return this.id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -60,24 +42,15 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.kurz = kurz;
 	}
 
-	public Set<RezeptHasArtikel> getRezeptHasArtikels() {
-		return this.rezeptHasArtikels;
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Mengeneinheit [id=" + id + ", name=" + name + ", kurz=" + kurz
+				+ "]";
 	}
 
-	public void setRezeptHasArtikels(Set<RezeptHasArtikel> rezeptHasArtikels) {
-		this.rezeptHasArtikels = rezeptHasArtikels;
-	}
-
-	public Set<Artikel> getArtikels() {
-		return this.artikels;
-	}
-
-	public void setArtikels(Set<Artikel> artikels) {
-		this.artikels = artikels;
-	}
-
-	
-	
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -86,6 +59,7 @@ public class Mengeneinheit implements java.io.Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((kurz == null) ? 0 : kurz.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -107,6 +81,11 @@ public class Mengeneinheit implements java.io.Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (kurz == null) {
+			if (other.kurz != null)
+				return false;
+		} else if (!kurz.equals(other.kurz))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -114,14 +93,4 @@ public class Mengeneinheit implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Mengeneinheit [id=" + id + ", name=" + name + ", kurz=" + kurz
-				+ "]";
-	}
-
 }
