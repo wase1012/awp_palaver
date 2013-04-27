@@ -73,8 +73,8 @@ public class MengeneinheitTest extends AbstractTest {
 	    @Test
 	    public void createMengeneinheit() throws ConnectException, DAOException, SQLException {	    	
 	    	Mengeneinheit me  = new Mengeneinheit();
-	    	me.setName(NAME + "_new");
-	    	me.setKurz(KURZ + "_new");
+	    	me.setName("Berge");
+	    	me.setKurz("bg");
 	    	mdao.createNewMengeneinheit(me);
 	    	
 	    }

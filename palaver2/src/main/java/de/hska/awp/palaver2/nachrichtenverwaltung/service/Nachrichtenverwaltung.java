@@ -58,7 +58,8 @@ public class Nachrichtenverwaltung extends NachrichtDAO {
 		
 	}
 	
-	public List<Nachricht> findAllNachricht() throws ConnectException, DAOException, SQLException {
+	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException {
+		
 		final List<Nachricht> nachrichten = super.getAllNachricht();
 		
 		if(nachrichten==null) {
