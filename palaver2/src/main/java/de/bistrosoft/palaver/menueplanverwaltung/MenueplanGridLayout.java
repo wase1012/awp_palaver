@@ -128,7 +128,6 @@ public class MenueplanGridLayout extends CustomComponent{
 						for (int row = 0; row < ROWS; row++) {
 					        for (int col = 0; col < COLUMNS; col++) {
 					        	if(tmp.equals(layout.getComponent(col, row))) {
-					        		
 					        		WinSelectMenue window = new WinSelectMenue(layout, tmp, row, col);
 					        		UI.getCurrent().addWindow(window);
 					        		window.setModal(true);

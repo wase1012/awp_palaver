@@ -134,17 +134,17 @@ public class WinSelectMenue extends Window {
 			return true;
 		}
 	}
-
+	
 	private void initOKButton() {
 	ok.addClickListener(new ClickListener() {
 		public void buttonClick(ClickEvent event) {
 			String titel = textfields.get(0).getValue();
-			MenueComponent menue = new MenueComponent(titel);
 			menueGrid.removeComponent(destComp);
+			MenueComponent menue = new MenueComponent(titel, menueGrid, destRow, destCol);
+//			menueGrid.removeComponent(destComp);
 			menueGrid.addComponent(menue, destCol, destRow);
 			menueGrid.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
 			subwindow.close();
-			
 		}
 	});
 	}
