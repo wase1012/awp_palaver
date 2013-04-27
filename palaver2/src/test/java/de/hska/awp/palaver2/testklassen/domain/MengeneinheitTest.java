@@ -31,7 +31,9 @@ public class MengeneinheitTest extends AbstractTest {
 		 */
 	
 	private MengeneinheitDAO mdao = new MengeneinheitDAO();
-	private String name = "Kilogramm";
+	private String NAME = "Kilogramm";
+	private String KURZ = "Kg";
+	final Long ID = Long.valueOf("3");
 	
 	
 	@Test
@@ -42,7 +44,7 @@ public class MengeneinheitTest extends AbstractTest {
 		
 		try
 		{
-    	list = mdao.getMengeneinheitByName(name);
+    	list = mdao.getMengeneinheitByName(NAME);
 		} 
 		catch (ConnectException | DAOException | SQLException e)
 		{
@@ -58,25 +60,21 @@ public class MengeneinheitTest extends AbstractTest {
 		 */
 	    @Test
 	    public void findMengeneinheitById() {
-	    	
-	    	final Long id = Long.valueOf("1");
-	    	
 	    	Mengeneinheit me;
 			try {
-				me = mdao.getMengeneinheitById(id);
+				me = mdao.getMengeneinheitById(ID);
 			} catch (ConnectException | DAOException | SQLException e) {
 				throw new NullPointerException();
 			}
 
-			assertThat(me.getId(), is(id));
+			assertThat(me.getId(), is(ID));
 	    }
 	    
 	    @Test
-	    public void createMengeneinheit() throws ConnectException, DAOException, SQLException {
-	    	
+	    public void createMengeneinheit() throws ConnectException, DAOException, SQLException {	    	
 	    	Mengeneinheit me  = new Mengeneinheit();
-	    	me.setName("Steine");
-	    	me.setKurz("Sn");
+	    	me.setName(NAME + "_new");
+	    	me.setKurz(KURZ + "_new");
 	    	mdao.createNewMengeneinheit(me);
 	    	
 	    }
@@ -90,10 +88,8 @@ public class MengeneinheitTest extends AbstractTest {
 		 */
 	    @Test
 	    public void updateMengeneinheit() throws ConnectException, DAOException, SQLException {
-	    	
-	    	final Long id = Long.valueOf("11");	    	
-	    	Mengeneinheit me = mdao.getMengeneinheitById(id);
-	    	me.setName("Stones");
+   	    	Mengeneinheit me = mdao.getMengeneinheitById(ID);
+	    	me.setName(NAME + "_update");
 	    	mdao.updateMengeneinheit(me);
 	    }
 }
