@@ -18,6 +18,8 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.gui.layout.DefaultView;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 /*
  * @Author PhilippT
@@ -30,8 +32,9 @@ public class MengeneinheitErstellen extends VerticalLayout {
 	
 	private TextField		name = new TextField("Name");
 	private TextField		kurz = new TextField("Kurz");
-	private String nameText;
-	private String kurzText;
+	private String			nameText;
+	private String			kurzText;
+	private TextField		laenge = new TextField("Länge");
 	
 	private Button			speichern = new Button("Speichern");
 	private Button			verwerfen = new Button("Verwerfen");
@@ -63,26 +66,26 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		name.setImmediate(true);
 		name.setInputPrompt(nameText);
 		name.setMaxLength(15);
-		updateCaption(0);
-		
-        name.addTextChangeListener(new TextChangeListener() {
-            @Override
-            public void textChange(final TextChangeEvent event) {
-                updateCaption(event.getText().length());
-            }
-        });
+//		updateCaption(0);
+//		
+//        name.addTextChangeListener(new TextChangeListener() {
+//            @Override
+//            public void textChange(final TextChangeEvent event) {
+//                updateCaption(event.getText().length());
+//            }
+//        });
 		
 		kurz.setImmediate(true);
 		kurz.setInputPrompt(kurzText);
 		kurz.setMaxLength(4);
-		updateCaption(0);
-		
-        kurz.addTextChangeListener(new TextChangeListener() {
-            @Override
-            public void textChange(final TextChangeEvent event) {
-                updateCaption(event.getText().length());
-            }
-        });
+//		updateCaption(0);
+//		
+//        kurz.addTextChangeListener(new TextChangeListener() {
+//            @Override
+//            public void textChange(final TextChangeEvent event) {
+//                updateCaption(event.getText().length());
+//            }
+//        });
 		
         
 		speichern.addClickListener(new ClickListener()
@@ -97,18 +100,22 @@ public class MengeneinheitErstellen extends VerticalLayout {
 				} catch (ConnectException | DAOException | SQLException e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben"+ nameText + kurzText);
 				}
+				ViewHandler.getInstance().switchView(DefaultView.class);
+				/*
+				 * später ersetzten durch suche mit der angelegten mengeneinheit
+				 */
 			}
 		});
-	}	
-	
-    private void updateCaption(final int textLength) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(String.valueOf(textLength));
-        if (name.getMaxLength() >= 0) {
-            builder.append("/").append(name.getMaxLength());
-        }
-        builder.append(" characters");
-        name.setCaption(builder.toString());
+//	}	
+//	
+//    private void updateCaption(final int textLength) {
+//        final StringBuilder builder = new StringBuilder();
+//        builder.append(String.valueOf(textLength));
+//        if (laenge.getMaxLength() >= 0) {
+//            builder.append("/").append(laenge.getMaxLength());
+//        }
+//        builder.append(" characters");
+//        name.setCaption(builder.toString());
     
  
 
