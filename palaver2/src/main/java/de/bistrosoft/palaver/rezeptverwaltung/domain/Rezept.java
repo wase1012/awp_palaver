@@ -59,10 +59,8 @@ public class Rezept implements java.io.Serializable {
 	private String kommentar;
 	private int portion;
 	private Set<Menue> menues = new HashSet<Menue>(0);
-	private Set<RezeptHasFussnote> rezeptHasFussnotes = new HashSet<RezeptHasFussnote>(
-			0);
-	private Set<RezeptHasArtikel> rezeptHasArtikels = new HashSet<RezeptHasArtikel>(
-			0);
+	private Set<RezeptHasFussnote> rezeptHasFussnotes = new HashSet<RezeptHasFussnote>(0);
+	private Set<RezeptHasArtikel> rezeptHasArtikels = new HashSet<RezeptHasArtikel>(0);
 	private RezeptHasZubereitung rezeptHasZubereitung;
 
 	public Rezept() {

@@ -31,11 +31,13 @@ public class Rezeptart implements java.io.Serializable {
 	public Rezeptart() {
 	}
 
-	public Rezeptart(String name) {
+	public Rezeptart(Long id, String name) {
+		this.id =id;
 		this.name = name;
 	}
 
-	public Rezeptart(String name, Set<Rezept> rezepts) {
+	public Rezeptart(Long id, String name, Set<Rezept> rezepts) {
+		this.id = id;
 		this.name = name;
 		this.rezepts = rezepts;
 	}
