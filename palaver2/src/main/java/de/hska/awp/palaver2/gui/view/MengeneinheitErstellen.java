@@ -118,6 +118,8 @@ public class MengeneinheitErstellen extends VerticalLayout {
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());
+
+                nameText = valueString;
             }
         });
         
@@ -126,6 +128,7 @@ public class MengeneinheitErstellen extends VerticalLayout {
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());
+                kurzText = valueString;
             }
         });
 	}
