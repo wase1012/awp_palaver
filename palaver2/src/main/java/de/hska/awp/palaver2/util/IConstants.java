@@ -21,5 +21,6 @@ public interface IConstants
 	public final String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
 	public final String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
 	public final String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten";
+	public final String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
 	
 }

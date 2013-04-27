@@ -11,6 +11,7 @@ import de.hska.awp.palaver2.data.MengeneinheitDAO;
 public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 
 	private static Mengeneinheitverwaltung		instance = null;
+	private MengeneinheitDAO dao;
 	
 	private Mengeneinheitverwaltung()
 	{
@@ -55,7 +56,7 @@ public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 	
 	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException
 	{
-		super.createNewMengeneinheit(mengeneinheit);
+		dao.createNewMengeneinheit(mengeneinheit);
 	}
 	
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException

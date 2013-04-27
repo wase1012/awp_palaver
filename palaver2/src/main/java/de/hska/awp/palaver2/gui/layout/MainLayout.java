@@ -17,6 +17,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
+import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.TestView;
 import de.hska.awp.palaver2.util.IConstants;
@@ -70,6 +71,7 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
+		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		this.addComponent(menu);
 		
@@ -104,9 +106,12 @@ public class MainLayout extends VerticalLayout implements Command
 			case IConstants.MENU_ARTIKEL_ANZEIGEN:
 				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
 			break;
+			case IConstants.MENU_MENGENEINHEIT_NEU:
+				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
+			break;
 			case IConstants.MENU_MENGENEINHEIT_ANZEIGEN:
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
-				break;
+			break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;

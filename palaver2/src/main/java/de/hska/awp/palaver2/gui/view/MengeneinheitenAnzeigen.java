@@ -11,6 +11,10 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 
+/*
+ * @Author PhilippT
+ */
+
 @SuppressWarnings("serial")
 public class MengeneinheitenAnzeigen extends VerticalLayout {
 	
