@@ -2,10 +2,12 @@ package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Mihail Boehm
@@ -18,8 +20,11 @@ public class KategorieDAO extends AbstractDAO {
 	private final static String NAME = "name";
 
 	private static KategorieDAO instance = null;
+	Kategorie kategorie;
 	private final static String TABLE = "kategorie";
 	private final static String GET_ALL_KATEGORIES = "SELECT * FROM " + TABLE;
+	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM " + TABLE
+			+ " WHERE " + ID + "= {0}";
 
 	/**
 	 * Konstruktor
@@ -27,7 +32,7 @@ public class KategorieDAO extends AbstractDAO {
 	 * @author Mihail Boehm
 	 * @datum 18.04.2013
 	 */
-	private KategorieDAO() {
+	public KategorieDAO() {
 		super();
 	}
 
@@ -57,6 +62,24 @@ public class KategorieDAO extends AbstractDAO {
 			list.add(new Kategorie(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
+	}
+
+	/**
+	 * @author Mihail Boehm
+	 * @param id
+	 * @return kategorie (id + name)
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @datum 27.04.2013
+	 */
+	public Kategorie getKategorieById(Long id) throws ConnectException,
+			DAOException, SQLException {
+		ResultSet set = get(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
+		while (set.next()) {
+			kategorie = new Kategorie(set.getLong(ID), set.getString(NAME));
+		}
+		return kategorie;
 	}
 
 	/**
