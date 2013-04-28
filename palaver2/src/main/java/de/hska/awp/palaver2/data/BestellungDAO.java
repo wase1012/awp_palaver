@@ -1,12 +1,11 @@
-/*
- * Elena Weiss
- */
 package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 
 
@@ -14,30 +13,33 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * The Class BestellungDAO.
+ * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
+ * Methoden bereit um auf die Datenbank zuzugreifen.
+ * 
+ * @author Elena W
+ * 
  */
 public class BestellungDAO extends AbstractDAO {
 
-	/** The instance. */
 	private static BestellungDAO instance = null;
-	
-	/** The Constant TABLE. */
 	private final static String TABLE = "bestellung";
-	
-	/** The Constant GET_ALL_BESTELLUNGEN. */
 	private final static String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE;
+	private static final String PREFIX = "Bestellung.";
+	public static final String FIND_BESTELLUNG_BY_ID = PREFIX
+			+ "findBestellungById";
+	public static final String ID = "id";
+	private final static String LIEFERANT_FK = "lieferant_fk";
+	 Date datumAktuell = new Date();
+     SimpleDateFormat myDateFormat = new SimpleDateFormat("dd.MM.yyyy (hh.mm");
+     String datum = myDateFormat.format(datumAktuell)+ " Uhr)";
+   
 
-	/**
-	 * Instantiates a new bestellung dao.
-	 */
 	private BestellungDAO() {
 		super();
 	}
 	
 	/**
-	 * Gets the single instance of BestellungDAO.
-	 *
-	 * @return single instance of BestellungDAO
+	 * @return instance 
 	 */
 	public static BestellungDAO getInstance() {
 		if (instance == null) {
@@ -46,42 +48,52 @@ public class BestellungDAO extends AbstractDAO {
 		return instance;
 	}
 	
-//	public List<Bestellung> getAllBestellungen() throws ConnectException, 
-//	DAOException, SQLException {
-//		List<Bestellung> list = new ArrayList<Bestellung>();
-//		ResultSet set = get(GET_ALL_BESTELLUNGEN);
-//		while (set.next()) {
-//		list.add(new Bestellung(set.getLong("id"), set.getDate("datum"), null));
-//	}
-//			return list;
-//}
 	/**
- * Creates the new bestellung.
+	 * Die Methode getAllBestellungen liefert alle in der Datenbank befindlichen
+	 * Bestellungen zurück.
+	 * 
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public List<Bestellung> getAllBestellungen() throws ConnectException, 
+	DAOException, SQLException {
+		List<Bestellung> list = new ArrayList<Bestellung>();
+		ResultSet set = get(GET_ALL_BESTELLUNGEN);
+		while (set.next()) {
+		list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance().getLieferantById(
+				set.getLong(LIEFERANT_FK)), set.getDate(datum)));
+	}
+			return list;
+}
+	/**
+ * Die Methode erzeugt einen Lieferant in der Datenbank.
  *
- * @param bestellung the bestellung
- * @throws ConnectException the connect exception
- * @throws DAOException the dAO exception
- * @throws SQLException the sQL exception
+ * @param bestellung
+ * @throws ConnectException 
+ * @throws DAOException 
+ * @throws SQLException 
  */
 public void createNewBestellung(Bestellung bestellung) throws ConnectException, 
 	DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(datum, lieferant) VALUES('"
-				+ bestellung.getDatum() + bestellung.getLieferant() + "')";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(lieferant, datum) VALUES('"
+				+ bestellung.getLieferant() + bestellung.getDatum() +  "')";
 		this.put(INSERT_QUERY);
 	}
 	
 	/**
-	 * Update bestellung.
+	  * Die Methode aktualisiert einen Lieferant in der Datenbank.
 	 *
-	 * @param bestellung the bestellung
-	 * @throws ConnectException the connect exception
-	 * @throws DAOException the dAO exception
-	 * @throws SQLException the sQL exception
+	 * @param bestellung 
+	 * @throws ConnectException 
+	 * @throws DAOException 
+	 * @throws SQLException 
 	 */
 	public void updateBestellung(Bestellung bestellung) throws ConnectException, 
 	DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET datum='"
-		+ bestellung.getDatum()+ "', lieferant='"+ bestellung.getLieferant()
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET lieferant='" 
+		+ bestellung.getLieferant()+ "', datum='"+ bestellung.getDatum()
 		+ "' WHERE id=" + bestellung.getId() + "";
 		this.put(UPDATE_QUERY);
 	}
