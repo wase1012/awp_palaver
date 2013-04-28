@@ -2,6 +2,7 @@ package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class BestellungDAO extends AbstractDAO {
      String datum = myDateFormat.format(datumAktuell)+ " Uhr)";
    
 
-	private BestellungDAO() {
+	public BestellungDAO() {
 		super();
 	}
 	
@@ -67,8 +68,32 @@ public class BestellungDAO extends AbstractDAO {
 	}
 			return list;
 }
+	
 	/**
- * Die Methode erzeugt einen Lieferant in der Datenbank.
+	 * Die Methode getLieferantById liefert ein Ergebnisse zurück bei der Suche
+	 * nach einem Lieferant in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public Bestellung findBestellungById(Long id) throws ConnectException,
+			DAOException, SQLException {
+
+		Bestellung bestellung = null;
+		ResultSet set = get(MessageFormat.format(FIND_BESTELLUNG_BY_ID, id));
+
+		while (set.next()) {
+			bestellung = new Bestellung(set.getLong(ID), LieferantDAO.getInstance().getLieferantById(
+					set.getLong(LIEFERANT_FK)), set.getDate(datum));
+		}
+
+		return bestellung;
+	}
+	/**
+ * Die Methode erzeugt eine BEstellung in der Datenbank.
  *
  * @param bestellung
  * @throws ConnectException 
@@ -77,13 +102,13 @@ public class BestellungDAO extends AbstractDAO {
  */
 public void createNewBestellung(Bestellung bestellung) throws ConnectException, 
 	DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(lieferant, datum) VALUES('"
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(lieferant_fk, datum) VALUES('"
 				+ bestellung.getLieferant() + bestellung.getDatum() +  "')";
 		this.put(INSERT_QUERY);
 	}
 	
 	/**
-	  * Die Methode aktualisiert einen Lieferant in der Datenbank.
+	  * Die Methode aktualisiert eine Bestellung in der Datenbank.
 	 *
 	 * @param bestellung 
 	 * @throws ConnectException 
