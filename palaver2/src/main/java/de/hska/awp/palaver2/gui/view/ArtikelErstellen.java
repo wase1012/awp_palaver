@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -114,6 +115,8 @@ public class ArtikelErstellen extends VerticalLayout
 		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		speichern.setIcon(new ThemeResource("img/save.ico"));
+		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 		
 		grundbedarf.addValueChangeListener(new ValueChangeListener() 
 		{

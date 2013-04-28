@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -38,6 +39,7 @@ public class ArtikelAnzeigen extends VerticalLayout
 		this.setMargin(true);
 		
 		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
+		showFilter.setIcon(new ThemeResource("img/filter.ico"));
 		
 		table = new FilterTable();
 		table.setSizeFull();
@@ -74,11 +76,13 @@ public class ArtikelAnzeigen extends VerticalLayout
 					table.setFilterBarVisible(false);
 					table.resetFilters();
 					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
+					showFilter.setIcon(new ThemeResource("img/filter.ico"));
 				}
 				else
 				{
 					table.setFilterBarVisible(true);
 					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
+					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
 				}
 			}
 		});
