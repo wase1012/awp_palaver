@@ -9,48 +9,25 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 /**
  * @author Elena W
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder
- * 
  */
 
 public class Bestellung implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -4115989551813492575L;
 
-	private static final String PREFIX = "Bestellung.";
-	public static final String FIND_BESTELLUNG_BY_ID = PREFIX
-			+ "findBestellungById";
-	public static final String FIND_ALL_BESTELLUNG = PREFIX + "findAllBestellung";
-	public static final String PARAM_ID = "id";
+
 	
 	private Long id;
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
 	private Lieferant lieferant;
-	private Date datum;
+	private Date datum;	
 	
-	private Set<Bestellposition> bestellpositions = new HashSet<Bestellposition>(
-			0);
-
 	public Bestellung() {
 	}
 
-	public Bestellung(Lieferant lieferant, Date datum) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum) {
+		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
-	}
-
-	
-	public Bestellung(Lieferant lieferant, Date datum,
-			Set<Bestellposition> bestellpositions) {
-		this.lieferant = lieferant;
-		this.datum = datum;
-		this.bestellpositions = bestellpositions;
 	}
 
 	public Long getId() {
@@ -73,15 +50,6 @@ public class Bestellung implements java.io.Serializable {
 		this.datum = datum;
 	}
 
-	public Set<Bestellposition> getBestellpositions() {
-		return this.bestellpositions;
-	}
-
-	public void setBestellpositions(Set<Bestellposition> bestellpositions) {
-		this.bestellpositions = bestellpositions;
-	}
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
