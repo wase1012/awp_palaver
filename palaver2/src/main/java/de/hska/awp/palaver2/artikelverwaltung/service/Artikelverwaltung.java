@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.KategorieDAO;
 
 public class Artikelverwaltung extends ArtikelDAO
 {
@@ -65,5 +68,21 @@ public class Artikelverwaltung extends ArtikelDAO
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
 		super.updateArtikel(artikel);
+	}
+	
+	public List<Kategorie> getAllKategorien() throws ConnectException, DAOException, SQLException
+	{
+		List<Kategorie> result = null;
+		
+		result = KategorieDAO.getInstance().getAllKategories();
+		
+		return result;
+	}
+	
+	public List<Mengeneinheit> getAllMengeneinheiten()
+	{
+		List<Mengeneinheit> result = null;
+		
+		return result;
 	}
 }

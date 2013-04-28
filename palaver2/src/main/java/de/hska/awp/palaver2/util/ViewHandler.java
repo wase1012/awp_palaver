@@ -48,4 +48,9 @@ public class ViewHandler
 			MainLayout.getInstance().setExpandRatio(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1), 1);
 		} 
 	}
+	
+	public void returnToDefault()
+	{
+		switchView(DefaultView.class);
+	}
 }

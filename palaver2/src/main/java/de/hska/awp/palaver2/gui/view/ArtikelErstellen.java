@@ -11,16 +11,26 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.MengeneinheitDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian
@@ -112,6 +122,45 @@ public class ArtikelErstellen extends VerticalLayout
             	durchschnitt.setEnabled(!durchschnitt.isEnabled());
             }
         });
+		speichern.addClickListener(new ClickListener()
+		{			
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				final Window dialog = new Window("Speichern");
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				
+				Label message = new Label("Artikel gespeichert");
+				
+				Button okButton = new Button("OK");
+				
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+				
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+				
+				UI.getCurrent().addWindow(dialog);
+				
+				okButton.addClickListener(new ClickListener()
+				{	
+					@Override
+					public void buttonClick(ClickEvent event)
+					{
+						UI.getCurrent().removeWindow(dialog);
+						ViewHandler.getInstance().returnToDefault();
+					}
+				});
+			}
+		});
 		load();
 	}
 	
@@ -123,6 +172,11 @@ public class ArtikelErstellen extends VerticalLayout
 			for (Lieferant e : lieferanten)
 			{
 				lieferant.addItem(e);
+			}
+			List<Kategorie> kategorien = Artikelverwaltung.getInstance().getAllKategorien();
+			for (Kategorie e : kategorien)
+			{
+				kategorie.addItem(e);
 			}
 		} 
 		catch (ConnectException | DAOException | SQLException e)
