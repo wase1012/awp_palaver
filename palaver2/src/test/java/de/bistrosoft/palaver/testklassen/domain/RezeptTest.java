@@ -11,7 +11,7 @@ import org.junit.Test;
 import de.bistrosoft.palaver.lieferantenverwaltung.domain.Ansprechpartner;
 import de.bistrosoft.palaver.lieferantenverwaltung.domain.Lieferant;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.util.AbstractTest;
+import de.bistrosoft.palaver.test.util.*;
 
 /**
  * @author Michael Marschall

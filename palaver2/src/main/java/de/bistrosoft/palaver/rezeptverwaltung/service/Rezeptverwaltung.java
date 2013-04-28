@@ -4,60 +4,101 @@
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.RezeptDAO;
+import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 /**
  * @author Michael Marschall
  * 
  */
-public class Rezeptverwaltung implements Serializable {
+//public class Rezeptverwaltung implements Serializable {
+public class Rezeptverwaltung extends RezeptDAO {
 
-	private static final long serialVersionUID = 2805858224490570505L;
+//	private static final long serialVersionUID = 2805858224490570505L;
 
-	private Rezeptverwaltung dao;
+//	private Rezeptverwaltung dao;
 
-	public List<Rezept> findAllRezept() {
-		final List<Rezept> rlist = dao.findAllRezept();
-		return rlist;
+	private static Rezeptverwaltung instance = null;
+
+	private Rezeptverwaltung() {
+		super();
 	}
 
-	public List<Rezept> findRezeptByName(String name) {
-		final List<Rezept> rlist = dao.findRezeptByName(name);
-		return rlist;
-	}
-
-	public Rezept findRezeptById(Long id) {
-		final Rezept rzpt = dao.findRezeptById(id);
-		return rzpt;
-	}
-
-	public Rezept createRezept(Rezept rzpt) {
-		if (rzpt == null) {
-			return rzpt;
+	public static Rezeptverwaltung getInstance() {
+		if (instance == null) {
+			instance = new Rezeptverwaltung();
 		}
-
-		rzpt = (Rezept) dao.createRezept(rzpt);
-
-		return rzpt;
+		return instance;
 	}
 
-	public Rezept updateRezept(Rezept rzpt) {
-		if (rzpt == null) {
-			return null;
-		}
+	public List<Rezept> getAllRezepts() throws ConnectException, DAOException,
+			SQLException {
+		List<Rezept> result = null;
 
-		rzpt = (Rezept) dao.updateRezept(rzpt);
-		return rzpt;
+		result = super.getAllRezepts();
+
+		return result;
 	}
 
-	public void deleteRezept(Rezept rzpt) {
-		if (rzpt == null) {
-			return;
-		}
+//	public Rezept getRezeptById(Long id) throws ConnectException,
+//			DAOException, SQLException {
+//		Rezept result = null;
+//
+//		result = super.getRezeptById(id);
+//
+//		return result;
+//	}
+//
+//	public List<Rezept> getRezeptByName(String name) throws ConnectException,
+//			DAOException, SQLException {
+//		List<Rezept> result = null;
+//
+//		result = super.getRezeptByName(name);
+//
+//		return result;
+//	}
+//
+//	public void createRezept(Rezept rezept) throws ConnectException,
+//			DAOException {
+//		super.createRezept(rezept);
+//	}
+//
+//	public void updateRezept(Rezept rezept) throws ConnectException,
+//			DAOException {
+//		super.updateRezept(rezept);
+//	}
 
-		dao.deleteRezept(rzpt);
-	}
+	/**
+	 * public List<Rezept> findAllRezept() { final List<Rezept> rlist =
+	 * dao.findAllRezept(); return rlist; }
+	 * 
+	 * public List<Rezept> findRezeptByName(String name) { final List<Rezept>
+	 * rlist = dao.findRezeptByName(name); return rlist; }
+	 * 
+	 * public Rezept findRezeptById(Long id) { final Rezept rzpt =
+	 * dao.findRezeptById(id); return rzpt; }
+	 * 
+	 * public Rezept createRezept(Rezept rzpt) { if (rzpt == null) { return
+	 * rzpt; }
+	 * 
+	 * rzpt = (Rezept) dao.createRezept(rzpt);
+	 * 
+	 * return rzpt; }
+	 * 
+	 * public Rezept updateRezept(Rezept rzpt) { if (rzpt == null) { return
+	 * null; }
+	 * 
+	 * rzpt = (Rezept) dao.updateRezept(rzpt); return rzpt; }
+	 * 
+	 * public void deleteRezept(Rezept rzpt) { if (rzpt == null) { return; }
+	 * 
+	 * dao.deleteRezept(rzpt); }
+	 */
 
 }

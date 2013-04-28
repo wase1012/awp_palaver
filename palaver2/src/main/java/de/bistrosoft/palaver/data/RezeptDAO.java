@@ -32,26 +32,39 @@ public class RezeptDAO extends AbstractDAO {
 	public RezeptDAO() {
 		super();
 	}
+
+
 	
+	public List<Rezept> getAllRezepts() throws ConnectException, DAOException, SQLException {
+		List<Rezept> list = new ArrayList<Rezept>();
+		ResultSet set = get (GET_ALL_REZEPTS);
+		
+		while(set.next()){
+			list.add(new Rezept(new Rezeptart(),
+					set.getString("name"),
+					set.getInt("portion")
+					));
+		}
+		return list;
+	}
 //	public List<Rezept> getAllRezepts() throws ConnectException, DAOException, SQLException {
 //		List<Rezept> list = new ArrayList<Rezept>();
 //		ResultSet set = get (GET_ALL_REZEPTS);
 //		
 //		while(set.next()){
 //			list.add(new Rezept(set.getLong("id"),
-//					GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk")),
-//					ZubereitungDAO.getInstance().getZubereitungById(set.getLong("zubereitung_fk")),
+//					new Geschmack(),
+//					new Rezeptart(),
 //					new Mitarbeiter(),
 //					set.getString("name"),
 //					set.getString("kommentar"),
 //					set.getInt("portion"),
-//					new Menue(),
 //					new RezeptHasFussnote(),
 //					new RezeptHasArtikel(),
-//					new RezeptHasZubereitung()
+//					new RezeptHasZubereitung(),
+//					new Menue()
 //					));
 //		}
 //		return list;
 //	}
-	
 }
