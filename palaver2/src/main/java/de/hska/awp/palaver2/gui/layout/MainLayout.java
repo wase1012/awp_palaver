@@ -3,12 +3,9 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
-import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.event.MouseEvents.ClickListener;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Alignment;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.VerticalLayout;
@@ -19,7 +16,6 @@ import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
-import de.hska.awp.palaver2.gui.view.TestView;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -36,6 +32,7 @@ public class MainLayout extends VerticalLayout implements Command
 	
 	private MenuBar					menu = new MenuBar();
 	
+	@SuppressWarnings("deprecation")
 	private MainLayout()
 	{
 		super();
@@ -44,14 +41,25 @@ public class MainLayout extends VerticalLayout implements Command
 		
 		header.setWidth("100%");
 		header.setHeight("100px");
+		header.setStyleName("palaver-header");
 		
-		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
-		header.addComponent(logo);
-		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
-		logo.addClickListener(new ClickListener()
+//		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
+//		header.addComponent(logo);
+//		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
+//		logo.addClickListener(new ClickListener()
+//		{
+//			@Override
+//			public void click(ClickEvent event)
+//			{
+//				ViewHandler.getInstance().switchView(DefaultView.class);
+//			}
+//		});
+		
+		header.addListener(new LayoutClickListener()
 		{
+			
 			@Override
-			public void click(ClickEvent event)
+			public void layoutClick(LayoutClickEvent event)
 			{
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			}
