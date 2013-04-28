@@ -26,41 +26,50 @@ public class MenueComponent extends CustomComponent{
 	int destCol;
 	DDGridLayout menueGrid;
 	Button btn = new Button("ADD");
+	Button btDelete = new Button("Löschen");
 	
-	public MenueComponent(String text,DDGridLayout nMenueGrid,int nDestRow, int nDestCol){
+	// Konstruktor für Menükomponente 
+	public MenueComponent(String text, DDGridLayout nMenueGrid, int nDestRow, int nDestCol){
 		destCol = nDestCol;
 		destRow = nDestRow;
 		menueGrid = nMenueGrid;
 		
+		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
 		setCompositionRoot(vl);
 		
+		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
 		Label lbText = new Label(text);
 		vl.addComponent(lbText);
 		
+		// Horizontales Layout erstellen
 		HorizontalLayout hlProp = new HorizontalLayout();
 		
-		//Testdaten
+		//Testdaten für Eigenschaften
 		ArrayList<String> eigenschaften = new ArrayList<>();
 		eigenschaften.add("W");
 		eigenschaften.add("V");
 		eigenschaften.add("S");
 		eigenschaften.add("D");
 		
+		// Für jede Eigenschaft eine Checkbox erstellen
 		for(int i=1;i<eigenschaften.size();++i){
 			CheckBox cbTmp = new CheckBox(eigenschaften.get(i));
 			cbTmp.setEnabled(true);
-//			cbTmp.set
 			hlProp.addComponent(cbTmp);
 		}
+		// Horizontales Layout dem vertikalen Layout zufügen
 		vl.addComponent(hlProp);
 		
-		Button btDelete = new Button("Löschen");
+		//Clicklistener für den ADD Button
 		btn.addClickListener(new ClickListener() {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
+				// Derzeitige Menükomponente entfernen
 				menueGrid.removeComponent(btn);
+				
+				// Window zum hinzufügen eines Menüs in den Menüplan 
 				WinSelectMenue window = new WinSelectMenue(menueGrid, destComp, destRow, destCol);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
@@ -70,17 +79,22 @@ public class MenueComponent extends CustomComponent{
 			}
 		});
 		
+		// ClickListener für den Löschbutton
 		btDelete.addClickListener(new ClickListener() {
 			
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				
+				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
 				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:", "Wollen Sie das Menü wirklich aus dem Plan löschen?",
 				        "Ja", "Nein", new ConfirmDialog.Listener() {
 
 				            public void onClose(ConfirmDialog dialog) {
 				                if (dialog.isConfirmed()) {
+				                	//aktuelle Menükomponente löschen
 				                	menueGrid.removeComponent(destCol, destRow);
+				                	
+				                	//Löschbutton hinzufügen
 				                	menueGrid.addComponent(btn, destCol, destRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 				                }

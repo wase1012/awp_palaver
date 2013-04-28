@@ -27,15 +27,17 @@ import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
 public class WinSelectMenue extends Window {
+	
 	Window subwindow = this;
-	private Table contactList = new Table();
+	
+	private Table menueList = new Table();
 	private TextField searchField = new TextField();
-	private Button addNewContactButton = new Button("Neu");
+	private ArrayList<TextField> textfields = new ArrayList<>();
+	private Button addNewmenueButton = new Button("Neu");
 	private Button ok = new Button("Auswählen");
 	private FormLayout editorLayout = new FormLayout();
 	private FieldGroup editorFields = new FieldGroup();
-
-	private ArrayList<TextField> textfields = new ArrayList<>();
+	
 	private static final String MENU = "Menübezeichnung";
 	private static final String[] fieldNames = new String[] { MENU, "Portionenanzahl", "Eigentümer" };
 	
@@ -44,41 +46,56 @@ public class WinSelectMenue extends Window {
 	int destCol;
 	DDGridLayout menueGrid;
 
-	IndexedContainer contactContainer = createDummyDatasource();
+	IndexedContainer menueContainer = createDummyDatasource();
 
+	// Konstruktor 
 	public WinSelectMenue(DDGridLayout nMenueGrid,Component nDestComp,int nDestRow, int nDestCol) {
 		menueGrid = nMenueGrid;
 		destComp=nDestComp;
 		destCol = nDestCol;
 		destRow = nDestRow;
+		
 		initLayout();
-		initContactList();
+		initMenueList();
 		initEditor();
 		initSearch();
-		initAddRemoveButtons();
 		initOKButton();
 	}
 	
+	// Layout festlegen
 	private void initLayout() {
 
+		//SplitPanel erstellen
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		setContent(splitPanel);
 
+		// Horizontales und vertikales Layout anlegen
+		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
 		VerticalLayout leftLayout = new VerticalLayout();
+		
+		// Splitpanel die Layouts zufügen
 		splitPanel.addComponent(leftLayout);
 		splitPanel.addComponent(editorLayout);
-		leftLayout.addComponent(contactList);
-		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+		
+		// Der linken Seite Tabelle hinzufügen und Layout für Suchfeld und "Neu" Button
+		leftLayout.addComponent(menueList);
 		leftLayout.addComponent(bottomLeftLayout);
+		
+		// Suchfeld und "Neu" Button hinzufügen
 		bottomLeftLayout.addComponent(searchField);
-		bottomLeftLayout.addComponent(addNewContactButton);
+		bottomLeftLayout.addComponent(addNewmenueButton);
 
+		// Linke Seite Höhe und Breite auf 100% setzen
 		leftLayout.setSizeFull();
 
-		leftLayout.setExpandRatio(contactList, 1);
-		contactList.setSizeFull();
+		// Kontaktliste soll gesamten Platz verwenden
+		leftLayout.setExpandRatio(menueList, 1);
+		menueList.setSizeFull();
 
+		// "bottomleftlayout" soll gesamte Breite verwenden
 		bottomLeftLayout.setWidth("100%");
+		
+		// Suchfeld soll verfügbare Breite verwenden
 		searchField.setWidth("100%");
 		bottomLeftLayout.setExpandRatio(searchField, 1);
 
@@ -86,12 +103,19 @@ public class WinSelectMenue extends Window {
 		editorLayout.setVisible(false);
 	}
 
+	// Rechte Seite 
 	private void initEditor() {
 
+		// Für jeden Feldnamen 
 		for (String fieldName : fieldNames) {
 			
+			// soll ein Textfeld erstellt werden
 			TextField field = new TextField(fieldName);
+			
+			// Inhalt des Feldes in Array speichern
 			textfields.add(field);
+			
+			// dem EditorLayout das Textfeld hinzufügen
 			editorLayout.addComponent(field);
 			field.setWidth("100%");
 
@@ -99,29 +123,40 @@ public class WinSelectMenue extends Window {
 		}
 
 		editorFields.setBuffered(false);
+		
+		// Auswahl Button hinzufügen
 		editorLayout.addComponent(ok);
 	}
 
+	// Suchfeld 
 	private void initSearch() {
 
+		// Info im Suchfeld setzen
 		searchField.setInputPrompt("Menü suchen");
 
+		// TextChangeEvent wird ausgelöst, wenn bei der Eingabe eine Pause ist
 		searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
 
+		// ChangeListener hinzufügen
 		searchField.addTextChangeListener(new TextChangeListener() {
 				public void textChange(final TextChangeEvent event) {
 
-					contactContainer.removeAllContainerFilters();
-					contactContainer.addContainerFilter(new ContactFilter(event
+					// Alle Filter entfernen
+					menueContainer.removeAllContainerFilters();
+					// Nur den eingegeben Filter hinzufügen
+					menueContainer.addContainerFilter(new MenueFilter(event
 							.getText()));
 				}
 		});
 	}
 
-	private class ContactFilter implements Filter {
+	// Klasse für MenueFilter
+	private class MenueFilter implements Filter {
 		private String needle;
 
-		public ContactFilter(String needle) {
+		// Konstruktor für Menuefilter
+		public MenueFilter(String needle) {
+			// string in Kleinbuchstaben
 			this.needle = needle.toLowerCase();
 		}
 
@@ -134,66 +169,69 @@ public class WinSelectMenue extends Window {
 			return true;
 		}
 	}
-	
+
+	// Clicklistener für Auswahl Button
 	private void initOKButton() {
-	ok.addClickListener(new ClickListener() {
-		public void buttonClick(ClickEvent event) {
-			String titel = textfields.get(0).getValue();
-			menueGrid.removeComponent(destComp);
-			MenueComponent menue = new MenueComponent(titel, menueGrid, destRow, destCol);
-//			menueGrid.removeComponent(destComp);
-			menueGrid.addComponent(menue, destCol, destRow);
-			menueGrid.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
-			subwindow.close();
+		ok.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				// Menübezeichnung des ausgewählten Menüs
+				String titel = textfields.get(0).getValue();
+				
+				// Aktuelle Menükomponente aus Plan löschen
+				menueGrid.removeComponent(destComp);
+				
+				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+				MenueComponent menue = new MenueComponent(titel, menueGrid, destRow, destCol);
+				menueGrid.addComponent(menue, destCol, destRow);
+				menueGrid.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
+				
+				// Window schließen
+				subwindow.close();
 		}
 	});
 	}
-	
-	private void initAddRemoveButtons() {
-		addNewContactButton.addClickListener(new ClickListener() {
-			@SuppressWarnings("unchecked")
-			public void buttonClick(ClickEvent event) {
 
-				contactContainer.removeAllContainerFilters();
-				Object contactId = contactContainer.addItemAt(0);
+	private void initMenueList() {
+		// Container für Menüliste festlegen
+		menueList.setContainerDataSource(menueContainer);
+		
+		// Spaltenbezeichnung angeben
+		menueList.setVisibleColumns(new String[] { MENU });
+		menueList.setSelectable(true);
+		menueList.setImmediate(true);
 
-				contactList.getContainerProperty(contactId, MENU).setValue(
-						"New");
-
-				contactList.select(contactId);
-			}
-		});
-	}
-
-	private void initContactList() {
-		contactList.setContainerDataSource(contactContainer);
-		contactList.setVisibleColumns(new String[] { MENU });
-		contactList.setSelectable(true);
-		contactList.setImmediate(true);
-
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
+		//Changelistener hinzufügen
+		menueList.addValueChangeListener(new Property.ValueChangeListener() {
 			public void valueChange(ValueChangeEvent event) {
-				Object contactId = contactList.getValue();
+				// Angeklicktes Objekt 
+				Object menueId = menueList.getValue();
 
-				if (contactId != null)
-					editorFields.setItemDataSource(contactList
-							.getItem(contactId));
+				// Falls Objekt nicht null ist
+				if (menueId != null)
+					
+					// auf der rechten Seite anzeigen
+					editorFields.setItemDataSource(menueList
+							.getItem(menueId));
 
-				editorLayout.setVisible(contactId != null);
+				editorLayout.setVisible(menueId != null);
 			}
 		});
 	}
 
+	// Beispieldaten für die Menüliste
 	@SuppressWarnings("unchecked")
 	private static IndexedContainer createDummyDatasource() {
 		IndexedContainer ic = new IndexedContainer();
 
+		// Neue Eigenschaft für jeden Feldnamen hinzufügen
 		for (String p : fieldNames) {
 			ic.addContainerProperty(p, String.class, "");
 		}
 
+		// Testdaten
 		String[] fnames = { "Kartoffelauflauf", "Bolognese", "Hackbraten", "Salat"};
 
+		// für jedes Objekt id anlegen und Menübezeichnung zuordnen
 		int s = fnames.length;
 		for (int i = 0; i < s; i++) {
 			Object id = ic.addItem();
