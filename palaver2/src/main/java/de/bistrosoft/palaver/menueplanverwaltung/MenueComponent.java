@@ -66,11 +66,9 @@ public class MenueComponent extends CustomComponent{
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Derzeitige Menükomponente entfernen
-				menueGrid.removeComponent(btn);
 				
 				// Window zum hinzufügen eines Menüs in den Menüplan 
-				WinSelectMenue window = new WinSelectMenue(menueGrid, destComp, destRow, destCol);
+				WinSelectMenue window = new WinSelectMenue(menueGrid, btn, destRow, destCol);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
         		window.setWidth("50%");
