@@ -4,6 +4,9 @@
  */
 package de.hska.awp.palaver2.gui.view;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
@@ -13,6 +16,11 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 
 /**
  * @author Sebastian
@@ -104,6 +112,23 @@ public class ArtikelErstellen extends VerticalLayout
             	durchschnitt.setEnabled(!durchschnitt.isEnabled());
             }
         });
+		load();
+	}
+	
+	public void load()
+	{
+		try
+		{
+			List<Lieferant> lieferanten = Lieferantenverwaltung.getInstance().getAllLieferanten();
+			for (Lieferant e : lieferanten)
+			{
+				lieferant.addItem(e);
+			}
+		} 
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
 
