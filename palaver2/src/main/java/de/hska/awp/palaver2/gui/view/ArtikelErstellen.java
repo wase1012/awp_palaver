@@ -25,6 +25,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
@@ -177,6 +178,11 @@ public class ArtikelErstellen extends VerticalLayout
 			for (Kategorie e : kategorien)
 			{
 				kategorie.addItem(e);
+			}
+			List<Mengeneinheit> mengen = Mengeneinheitverwaltung.getInstance().getAllMengeneinheit();
+			for (Mengeneinheit e : mengen)
+			{
+				mengeneinheit.addItem(e);
 			}
 		} 
 		catch (ConnectException | DAOException | SQLException e)

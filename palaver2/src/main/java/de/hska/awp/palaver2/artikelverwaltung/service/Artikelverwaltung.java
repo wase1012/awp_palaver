@@ -14,6 +14,7 @@ import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.KategorieDAO;
+import de.hska.awp.palaver2.data.MengeneinheitDAO;
 
 public class Artikelverwaltung extends ArtikelDAO
 {
@@ -75,13 +76,6 @@ public class Artikelverwaltung extends ArtikelDAO
 		List<Kategorie> result = null;
 		
 		result = KategorieDAO.getInstance().getAllKategories();
-		
-		return result;
-	}
-	
-	public List<Mengeneinheit> getAllMengeneinheiten()
-	{
-		List<Mengeneinheit> result = null;
 		
 		return result;
 	}
