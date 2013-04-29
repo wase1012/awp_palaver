@@ -1,9 +1,60 @@
 @import url(../reindeer/legacy-styles.css);
 
 .palaver-header {
-	background: #ffffff url('img/Logo_links.jpg') no-repeat left top;
+	background: #ffffff url('img/header_links.jpg') no-repeat left top;
 }
 
-.v-app {
-	background: #DDFFAA;
+.v-window-contents {
+	background: #eeeeee;
+}
+
+
+.v-button {
+	height: 26px;
+	padding: 0 0 0 20px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-image: url(img/button/left.png);
+	background-position: left top;
+	border: none;
+	cursor: default;
+}
+
+.v-button-wrap {
+	display: block;
+    height: 22px;
+    padding: 4px 20px 0px 0px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-image: url(img/button/right.png);
+}
+
+.v-button-caption {
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.v-button:focus {
+    background-image: url(img/button/left-focus.png);
+    outline: none;
+}
+
+.v-button:focus .v-button-wrap {
+    background-image: url(img/button/right-focus.png);
+    outline: none;
+}
+
+.v-button:active,
+.v-button.v-pressed {
+    background-image: url(img/button/left-pressed.png);
+    outline: none;
+}
+
+.v-button:active .v-button-wrap,
+.v-button.v-pressed .v-button-wrap {
+    background-image: url(img/button/right-pressed.png);
+    outline: none;
 }
