@@ -20,6 +20,7 @@ import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
+import de.bistrosoft.palaver.gui.view.RezeptSuchen;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
@@ -71,6 +72,7 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+		rezeptItem.addItem("Suchen", this);
 		
 		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
 		
@@ -114,6 +116,10 @@ public class MainLayout extends VerticalLayout implements Command
 	    if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN))
 		    {
 		      ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+		    }
+		if (selectedItem.getText().equals("Suchen"))
+			    {
+			      ViewHandler.getInstance().switchView(RezeptSuchen.class);
 	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 	    {
