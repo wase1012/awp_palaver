@@ -18,47 +18,52 @@ import com.vaadin.ui.VerticalLayout;
 
 public class RezeptAnzeigen extends VerticalLayout{
 	
+	//Layouts
 	private HorizontalLayout oben = new HorizontalLayout();
-	
 	private HorizontalLayout unten = new HorizontalLayout();
-	
 	private VerticalLayout	links = new VerticalLayout();
 	private VerticalLayout	rechts = new VerticalLayout();
 	private VerticalLayout	mitte = new VerticalLayout();
 	private VerticalLayout verticalunten = new VerticalLayout();
-	
+	//Ueberschriften
 	private Label uBezeichnung = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Bezeichnung</font><b></pre>", Label.CONTENT_XHTML);
-  
- 
-	private TextField bezeichnung = new TextField(); 
 	private Label uRezeptersteller = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptersteller</font><b></pre>", Label.CONTENT_XHTML);
-	private TextField rezeptersteller = new TextField();  
 	private Label uPortion = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Portion</font><b></pre>", Label.CONTENT_XHTML);
-	private TextField portion = new TextField();	
-	
-	
 	private Label uBelegung = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Resourcenbelegung</font><b></pre>", Label.CONTENT_XHTML);
+	private Label uArt = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>", Label.CONTENT_XHTML);
+	private Label uGeschmack = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack</font><b></pre>", Label.CONTENT_XHTML);
+	private Label uKommentar = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>", Label.CONTENT_XHTML);
+	private Label uFussnoten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnoten</font><b></pre>", Label.CONTENT_XHTML);
+	private Label uZutaten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>", Label.CONTENT_XHTML);
+	 //Textfelder
+	private TextField bezeichnung = new TextField(); 
+	private TextField rezeptersteller = new TextField();  
+	private TextField portion = new TextField();	
+	private TextField art = new TextField();
+	private TextField geschmack = new TextField();
+	//Checkboxen
 	private CheckBox herd = new CheckBox("Herd");
 	private CheckBox konvektomat = new CheckBox("Konvektomat");
-	private Label uArt = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>", Label.CONTENT_XHTML);
-	private TextField art = new TextField();
-	private Label uGeschmack = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack</font><b></pre>", Label.CONTENT_XHTML);
-	private TextField geschmack = new TextField();
-	private Label uFussnoten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnoten</font><b></pre>", Label.CONTENT_XHTML);
+	//Tabellen
 	private Table fussnoten = new Table();
-	private Label uKommentar = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>", Label.CONTENT_XHTML);
-	private TextArea kommentar = new TextArea();
-	private Button aendern = new Button("Rezept bearbeiten");
-	
-	private Label uZutaten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>", Label.CONTENT_XHTML);
 	private Table zutaten = new Table();
+	//Textarea
+	private TextArea kommentar = new TextArea();
+	//Button
+	private Button aendern = new Button("Rezept bearbeiten");
 	
 	public RezeptAnzeigen()
 	{
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
+		this.addComponent(oben);
+		this.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
 		
+		HorizontalLayout subBox = new HorizontalLayout();
+		HorizontalLayout control = new HorizontalLayout();
+		
+		//Eigenschaften anpassen
 		bezeichnung.setWidth("100%");	
 		bezeichnung.setValue("Lasangne");
 		bezeichnung.setReadOnly(true);
@@ -83,11 +88,10 @@ public class RezeptAnzeigen extends VerticalLayout{
 		konvektomat.setWidth("100%");
 		konvektomat.setValue(true);
 		konvektomat.setReadOnly(true);		
-		fussnoten.setSizeFull();
-		
+		fussnoten.setSizeFull();		
 		fussnoten.setImmediate(true);
 		
-		//oben.setWidth("100%");
+		
 		oben.setSpacing(true);
 		links.setWidth("300px");
 		links.setSpacing(true);
@@ -98,13 +102,11 @@ public class RezeptAnzeigen extends VerticalLayout{
 		unten.setWidth("100%");	
 		unten.setSpacing(true);
 		unten.setHeight(100.0f, Unit.PERCENTAGE);
-		this.addComponent(oben);
-		this.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
+		subBox.setWidth("100%");
+		subBox.setImmediate(true);
+		control.setSpacing(true);
 		
-		
-		
-		
-		//oben.setHeight("100%");
+		//Komponenten zufuegen
 		oben.addComponent(links);
 		oben.addComponent(mitte);
 		oben.addComponent(rechts);
@@ -119,25 +121,18 @@ public class RezeptAnzeigen extends VerticalLayout{
 		links.addComponent(uArt);
 		links.addComponent(art);
 		links.addComponent(uBelegung);
-		
-		HorizontalLayout subBox = new HorizontalLayout();
-		subBox.setWidth("100%");
 		links.addComponent(subBox);
-		
-		
 		subBox.addComponent(herd);
 		subBox.addComponent(konvektomat);
-		subBox.setImmediate(true);
-		
-		HorizontalLayout control = new HorizontalLayout();
-		control.setSpacing(true);
 		links.addComponent(control);
 		links.setComponentAlignment(control, Alignment.MIDDLE_LEFT);
 		control.addComponent(aendern);
-	
-		
-		mitte.addComponent(uFussnoten);
+	    mitte.addComponent(uFussnoten);
 		mitte.addComponent(fussnoten);
+		mitte.addComponent(unten);
+		rechts.addComponent(uZutaten);
+	    rechts.addComponent(zutaten);
+		
 		 fussnoten.addContainerProperty("Bezeichnug", String.class, null);
 		 fussnoten.addItem(new Object[] {
 				   "Rindfleisch"}, new Integer(1));
@@ -145,10 +140,7 @@ public class RezeptAnzeigen extends VerticalLayout{
 				   "Tomaten"}, new Integer(2));
 		 
 		
-		 mitte.addComponent(unten);
 		
-		rechts.addComponent(uZutaten);
-		rechts.addComponent(zutaten);
 			
 		
 		
