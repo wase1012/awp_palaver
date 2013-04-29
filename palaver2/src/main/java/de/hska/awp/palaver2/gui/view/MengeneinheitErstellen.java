@@ -4,8 +4,7 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -34,7 +33,6 @@ public class MengeneinheitErstellen extends VerticalLayout {
 	private TextField		kurz = new TextField("Kurz");
 	private String			nameText;
 	private String			kurzText;
-	private TextField		laenge = new TextField("Länge");
 	
 	private Button			speichern = new Button("Speichern");
 	private Button			verwerfen = new Button("Verwerfen");
@@ -45,48 +43,31 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		this.setSizeFull();
 		this.setMargin(true);
 		
-		name.setWidth("20%");
-		kurz.setWidth("20%");
+		name.setWidth("100%");
+		kurz.setWidth("100%");
 
 		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-		
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);		
 		box.addComponent(name);
 		box.addComponent(kurz);
 	
 		HorizontalLayout control = new HorizontalLayout();
-		control.setWidth("20%");
 		control.setSpacing(true);
+		box.setWidth("300px");
 		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-		
+		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);	
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		speichern.setIcon(new ThemeResource("img/save.ico"));
+		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 		
 		name.setImmediate(true);
 		name.setInputPrompt(nameText);
 		name.setMaxLength(15);
-//		updateCaption(0);
-//		
-//        name.addTextChangeListener(new TextChangeListener() {
-//            @Override
-//            public void textChange(final TextChangeEvent event) {
-//                updateCaption(event.getText().length());
-//            }
-//        });
 		
 		kurz.setImmediate(true);
 		kurz.setInputPrompt(kurzText);
-		kurz.setMaxLength(4);
-//		updateCaption(0);
-//		
-//        kurz.addTextChangeListener(new TextChangeListener() {
-//            @Override
-//            public void textChange(final TextChangeEvent event) {
-//                updateCaption(event.getText().length());
-//            }
-//        });
-		
+		kurz.setMaxLength(4);	
         
 		speichern.addClickListener(new ClickListener()
 		{
@@ -106,18 +87,6 @@ public class MengeneinheitErstellen extends VerticalLayout {
 				 */
 			}
 		});
-//	}	
-//	
-//    private void updateCaption(final int textLength) {
-//        final StringBuilder builder = new StringBuilder();
-//        builder.append(String.valueOf(textLength));
-//        if (laenge.getMaxLength() >= 0) {
-//            builder.append("/").append(laenge.getMaxLength());
-//        }
-//        builder.append(" characters");
-//        name.setCaption(builder.toString());
-    
- 
 
 
         name.addValueChangeListener(new ValueChangeListener() {
