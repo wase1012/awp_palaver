@@ -28,8 +28,13 @@ public class RezeptDAO extends AbstractDAO {
 																"`geschmack_fk`," +
 																"`mitarebietr_fk`)VALUES({0})";
 	private final static String UPDATE_REZEPT = "UPDATE rezept SET `name` = {0}, `rezeptart_fk` = {1},`kommentar` = {2},`portion` = {3},`geschmack_fk` = {4},`mitarebietr_fk` = {5} WHERE id = {6} ";
-    private final static String GET_GESCHMACK_REZEPT= " SELECT * FROM geschmack JOIN rezept ON geschmack.id = rezept.geschmack_fk WHERE id ={0}";
-	public RezeptDAO() {
+    private final static String GET_GESCHMACK_NAME= "SELECT geschmack.name FROM geschmack JOIN rezept ON geschmack.id = rezept.geschmack_fk WHERE rezept.id = {0};";
+	private final static String GET_FUSSNOTEN_REZEPT = " SELECT fussnote.name FROM fussnote JOIN rezept_has_fussnote ON rezept_has_fussnote.fussnote_fk = fussnote.id WHERE rezept_has_fussnote.rezept_fk = {0};";
+    private final static String GET_ZUTATEN_REZEPT = "SELECT artikel.name FROM artikel JOIN rezept_has_artikel ON artikel.id = rezept_has_artikel.artikel_fk JOIN rezept ON rezept.id = rezept_has_artikel.rezept_fk WHERE rezept.id = {0};";
+    private final static String GET_ZUBEREITUNG_NAME = "SELECT zubereitung.name FROM zubereitung JOIN rezept_has_zubereitung ON rezept_has_zubereitung.rezept_fk = zubereitung.id WHERE rezept_has_zubereitung.rezept_fk = {0};";
+    private final static String GET_REZEPTART_NAME = "SELECT rezeptart.name FROM rezeptart JOIN rezept ON rezept.rezeptart_fk = rezeptart.id WHERE rezept.id = {0};";
+    
+    public RezeptDAO() {
 		super();
 	}
 
@@ -38,7 +43,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getAllRezepts() throws ConnectException, DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
 		ResultSet set = get (GET_ALL_REZEPTS);
-		
+		;
 		while(set.next()){
 			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")),
 					            GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
@@ -71,6 +76,11 @@ public class RezeptDAO extends AbstractDAO {
 		}
 		return rezept;
 	}
+	
+	
+
+	
+	
 //	public List<Rezept> getAllRezepts() throws ConnectException, DAOException, SQLException {
 //		List<Rezept> list = new ArrayList<Rezept>();
 //		ResultSet set = get (GET_ALL_REZEPTS);
