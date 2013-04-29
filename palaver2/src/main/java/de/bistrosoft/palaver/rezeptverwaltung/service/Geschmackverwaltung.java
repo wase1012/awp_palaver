@@ -52,8 +52,8 @@ public class Geschmackverwaltung extends GeschmackDAO {
 
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Geschmack lieferant = super.getGeschmackById(id);
-		return lieferant;
+		Geschmack geschmack = super.getGeschmackById(id);
+		return geschmack;
 	}
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
