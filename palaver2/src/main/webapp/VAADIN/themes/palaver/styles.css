@@ -1,0 +1,9 @@
+@import url(../reindeer/legacy-styles.css);
+
+.palaver-header {
+background: #ffffff url('img/Logo_links.jpg') no-repeat left top;
+}
+
+.v-app {
+background: #DDFFAA;
+}

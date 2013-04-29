@@ -4,6 +4,9 @@
  */
 package de.bistrosoft.palaver;
 
+
+import com.vaadin.annotations.Theme;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -14,6 +17,7 @@ import de.bistrosoft.palaver.gui.layout.MainLayout;
  * The Application's "main" class
  */
 
+@Theme("palaver")
 @SuppressWarnings("serial")
 public class Application extends UI
 {
@@ -35,6 +39,8 @@ public class Application extends UI
 	@Override
     protected void init(VaadinRequest request) 
     {
+        Page.getCurrent().setTitle("PalaverApp v.0.1");
+        
         final VerticalLayout layout = new VerticalLayout();
 //        layout.setMargin(true);
         layout.setSizeFull();

@@ -3,6 +3,8 @@
  */
 package de.bistrosoft.palaver.gui.layout;
 
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.server.ThemeResource;
@@ -37,6 +39,7 @@ public class MainLayout extends VerticalLayout implements Command
 	
 	private MenuBar					menu = new MenuBar();
 	
+	@SuppressWarnings("deprecation")
 	private MainLayout()
 	{
 		super();
@@ -45,14 +48,25 @@ public class MainLayout extends VerticalLayout implements Command
 		
 		header.setWidth("100%");
 		header.setHeight("100px");
+		header.setStyleName("palaver-header");
 		
-		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
-		header.addComponent(logo);
-		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
-		logo.addClickListener(new ClickListener()
+//		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
+//		header.addComponent(logo);
+//		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
+//		logo.addClickListener(new ClickListener()
+//		{
+//			@Override
+//			public void click(ClickEvent event)
+//			{
+//				ViewHandler.getInstance().switchView(DefaultView.class);
+//			}
+//		});
+		
+		header.addListener(new LayoutClickListener()
 		{
+
 			@Override
-			public void click(ClickEvent event)
+			public void layoutClick(LayoutClickEvent event)
 			{
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			}
