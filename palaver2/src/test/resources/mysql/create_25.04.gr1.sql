@@ -65,7 +65,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`mitarbeiter_has_rollen` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`mitarbeiter_has_rollen` (
-  `mitarbeiter_fk` INT NOT NULL ,
+  `mitarbeiter_fk` INT NOT NULL AUTO_INCREMENT,
   `rollen_fk` INT NOT NULL ,
   PRIMARY KEY (`mitarbeiter_fk`, `rollen_fk`) ,
   INDEX `fk_mitarbeiter_has_rollen_rollen1_idx` (`rollen_fk` ASC) ,
@@ -101,7 +101,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`zubereitung` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`zubereitung` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
@@ -167,7 +167,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`geschmack` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
@@ -321,7 +321,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`menue_has_rezept` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue_has_rezept` (
-  `menue_id` INT NOT NULL ,
+  `menue_id` INT NOT NULL AUTO_INCREMENT,
   `rezept_id` INT NOT NULL ,
   PRIMARY KEY (`menue_id`, `rezept_id`) ,
   INDEX `fk_menue_has_rezept_rezept1_idx` (`rezept_id` ASC) ,
@@ -367,7 +367,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`rezept_has_fussnote` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_fussnote` (
-  `rezept_fk` INT NOT NULL ,
+  `rezept_fk` INT NOT NULL AUTO_INCREMENT,
   `fussnote_fk` INT NOT NULL ,
   INDEX `fk_rezept_has_fussnote_rezept1_idx` (`rezept_fk` ASC) ,
   INDEX `fk_rezept_has_fussnote_fussnote1_idx` (`fussnote_fk` ASC) ,
@@ -483,7 +483,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`rezept_has_zubereitung` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_zubereitung` (
-  `rezept_fk` INT NOT NULL ,
+  `rezept_fk` INT NOT NULL AUTO_INCREMENT,
   `zubereitung_fk` INT NULL ,
   PRIMARY KEY (`rezept_fk`) ,
   INDEX `fk_zubereitung_idx` (`zubereitung_fk` ASC) ,
