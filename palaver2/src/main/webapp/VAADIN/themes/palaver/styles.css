@@ -8,25 +8,39 @@
 	background: #eeeeee;
 }
 
-
-.v-button {
+.v-button,
+.v-button:FOCUS,
+.v-button:HOVER,
+.v-button:ACTIVE,
+.v-button.v-pressed {
 	height: 26px;
 	padding: 0 0 0 20px;
 	background-color: transparent;
 	background-repeat: no-repeat;
-	background-image: url(img/button/left.png);
 	background-position: left top;
 	border: none;
 	cursor: default;
 }
 
-.v-button-wrap {
+.v-button-wrap,
+.v-button:FOCUS .v-button-wrap,
+.v-button:HOVER .v-button-wrap,
+.v-button:ACTIVE .v-button-wrap,
+.v-button.v-pressed .v-button-wrap {
 	display: block;
-    height: 22px;
+    height: 26px;
     padding: 4px 20px 0px 0px;
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: right top;
+}
+
+
+.v-button {
+	background-image: url(img/button/left.png);
+}
+
+.v-button-wrap {
     background-image: url(img/button/right.png);
 }
 
@@ -37,24 +51,27 @@
     line-height: 16px;
 }
 
-.v-button:focus {
+.v-button:FOCUS,
+.v-button:HOVER {
     background-image: url(img/button/left-focus.png);
     outline: none;
 }
 
-.v-button:focus .v-button-wrap {
+.v-button:FOCUS .v-button-wrap,
+.v-button:HOVER .v-button-wrap {
     background-image: url(img/button/right-focus.png);
     outline: none;
 }
 
-.v-button:active,
+.v-button:ACTIVE,
 .v-button.v-pressed {
     background-image: url(img/button/left-pressed.png);
     outline: none;
 }
 
-.v-button:active .v-button-wrap,
+.v-button:ACTIVE .v-button-wrap,
 .v-button.v-pressed .v-button-wrap {
     background-image: url(img/button/right-pressed.png);
     outline: none;
 }
+
