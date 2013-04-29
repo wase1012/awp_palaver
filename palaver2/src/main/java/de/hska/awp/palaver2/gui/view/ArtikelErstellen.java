@@ -131,13 +131,14 @@ public class ArtikelErstellen extends VerticalLayout
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
-				final Window dialog = new Window("Speichern");
+				final Window dialog = new Window();
 				dialog.setClosable(false);
 				dialog.setWidth("300px");
 				dialog.setHeight("150px");
 				dialog.setModal(true);
 				dialog.center();
 				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
 				
 				Label message = new Label("Artikel gespeichert");
 				

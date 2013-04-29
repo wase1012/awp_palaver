@@ -75,3 +75,13 @@
     outline: none;
 }
 
+.dialog-window .v-window-outerheader {
+	padding: 12px 32px 0 14px;
+    height: 0px;
+    background: transparent repeat-x;
+    background-image: none;
+}
+
+.dialog-window .v-window-contents {
+	background: #eeeeee;
+}
