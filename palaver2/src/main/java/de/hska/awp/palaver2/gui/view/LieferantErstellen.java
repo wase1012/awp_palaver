@@ -66,8 +66,8 @@ public class LieferantErstellen extends VerticalLayout
 		this.setMargin(true);
 		
 		name.setWidth("100%");
-		bezeichnung.setWidth("100");
-		kundennummer.setWidth("100");
+		bezeichnung.setWidth("100%");
+		kundennummer.setWidth("100%");
 		strasse.setWidth("100%");
 		plz.setWidth("100%");
 		ort.setWidth("100%");
