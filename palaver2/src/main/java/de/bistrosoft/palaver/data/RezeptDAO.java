@@ -19,10 +19,21 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 
 public class RezeptDAO extends AbstractDAO {
 
+	private final static String TABLE = "rezept";
+	private final static String ID = "id";
+	private final static String NAME = "name";
+	private final static String GESCHMACK = "geschmack_fk";
+	private final static String REZEPTART = "rezeptart_fk";
+	private final static String KOMMENTAR = "kommentar";
+	private final static String PORTION = "portion";
+	private final static String MITARBEITER = "mitarbeiter_fk";
+
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE name = {0}";
-	private final static String PUT_REZEPT = "INSERT INTO rezept(`name`," + "`rezeptart_fk`," + "`kommentar`,`" + "`portion`," + "`geschmack_fk`," + "`mitarbeiter_fk`)VALUES({0})";
+	private final static String PUT_REZEPT = "INSERT INTO rezept(`name`,"
+			+ "`rezeptart_fk`," + "`kommentar`,`" + "`portion`,"
+			+ "`geschmack_fk`," + "`mitarbeiter_fk`)VALUES({0})";
 	private final static String UPDATE_REZEPT = "UPDATE rezept SET `name` = {0}, `rezeptart_fk` = {1},`kommentar` = {2},`portion` = {3},`geschmack_fk` = {4},`mitarebietr_fk` = {5} WHERE id = {6} ";
 	private final static String GET_GESCHMACK_NAME = "SELECT geschmack.name FROM geschmack JOIN rezept ON geschmack.id = rezept.geschmack_fk WHERE rezept.id = {0};";
 	private final static String GET_FUSSNOTEN_REZEPT = " SELECT fussnote.name FROM fussnote JOIN rezept_has_fussnote ON rezept_has_fussnote.fussnote_fk = fussnote.id WHERE rezept_has_fussnote.rezept_fk = {0};";
@@ -40,13 +51,12 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = get(GET_ALL_REZEPTS);
 		;
 		while (set.next()) {
-			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")),
-					GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
-					set.getString("name"),
-				 MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("id"))
-			   
-					
-			
+			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
+					set.getLong("id")), GeschmackDAO.getInstance()
+					.getGeschmackById(set.getLong("id")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(set.getLong("id")), set
+					.getString("name"), null, set.getInt("portion")
+
 			));
 		}
 		return list;
@@ -57,44 +67,25 @@ public class RezeptDAO extends AbstractDAO {
 		List<Rezept> rezept = new ArrayList<Rezept>();
 		ResultSet set = get(GET_REZEPT_BY_ID);
 		while (set.next()) {
-			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")), 
-								  GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
-								  set.getString("name"),
-								  MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("id"))
-			
-					
-			// set.getString("menues")
-			));
+			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
+					set.getLong("id")), GeschmackDAO.getInstance()
+					.getGeschmackById(set.getLong("id")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(set.getLong("id")), set
+					.getString("name"), null, set.getInt("portion")));
 		}
 		return rezept;
 	}
 
-	// public void updateRezept(Rezept rezept) throws ConnectException,
-	// DAOException {
-	// put(MessageFormat.format(UPDATE_REZEPT, "'" + artikel.getArtikelnr()
-	// + "'", "'" + artikel.getName() + "'", artikel
-	// .getBestellgroesse(), artikel.getMengeneinheit().getId(),
-	// artikel.getPreis(), artikel.getLieferant().getId(), Util
-	// .convertBoolean(artikel.isBio()), artikel
-	// .getKategorie().getId(), Util.convertBoolean(artikel
-	// .isStandard()), Util.convertBoolean(artikel
-	// .isGrundbedarf()), artikel.getDurchschnitt(), Util
-	// .convertBoolean(artikel.isLebensmittel())));
-	// }
-//	INSERT INTO rezept(`name`," + "`rezeptart_fk`," + "`kommentar`,`" + "`portion`," + "`geschmack_fk`," + "`mitarbeiter_fk`)VALUES({0})";
-
 	public void createRezept(Rezept rezept) throws ConnectException,
-			DAOException {
-		put(MessageFormat.format(
-				PUT_REZEPT,
-				"'" + rezept.getName() + "','" + rezept.getRezeptart() + "',"
-						+ rezept.getKommentar() + ","
-						+ rezept.getPortion() + ","
-						+ rezept.getGeschmack().getId() + ","
-						+ rezept.getMitarbeiter().getId() + ","
-						));
+			DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
+				+ GESCHMACK + "," + REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
+				+ MITARBEITER + ")" + "VALUES" + "('" + rezept.getName()
+				+ "','" + rezept.getGeschmack().getId() + "','"
+				+ rezept.getRezeptart().getId() + "','" + rezept.getKommentar()
+				+ "','" + rezept.getPortion() + "','"
+				+ rezept.getMitarbeiter().getId() + "')";
+		this.put(INSERT_QUERY);
 	}
-
-
 
 }

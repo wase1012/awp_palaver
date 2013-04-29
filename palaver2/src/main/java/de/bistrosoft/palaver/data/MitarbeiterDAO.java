@@ -56,8 +56,8 @@ public class MitarbeiterDAO extends AbstractDAO {
 		ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(	set.getString("name"),
-											set.getString("vorname"));
+			mitarbeiter = new Mitarbeiter(set.getLong("id"),
+					set.getString("name"), set.getString("vorname"));
 		}
 		return mitarbeiter;
 	}
@@ -66,14 +66,14 @@ public class MitarbeiterDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
 
-		ResultSet set = get(GET_MITARBEITER_BY_NAME + name + "%'");
+		ResultSet set = get(GET_MITARBEITER_BY_NAME + name + "'%'");
 
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getString("name"), set.getString("vorname")));
+			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"),
+					set.getString("vorname")));
 		}
 
 		return list;
 	}
-	
-	
+
 }

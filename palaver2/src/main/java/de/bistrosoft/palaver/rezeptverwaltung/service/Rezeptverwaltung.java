@@ -66,7 +66,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 //	}
 
 	public void createRezept(Rezept Rezept) throws ConnectException,
-			DAOException {
+			DAOException, SQLException {
 		super.createRezept(Rezept);
 	}
 

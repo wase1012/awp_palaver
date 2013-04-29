@@ -43,7 +43,8 @@ public class Mitarbeiter implements java.io.Serializable {
 
 
 
-	public Mitarbeiter(String name, String vorname) {
+	public Mitarbeiter(Long id, String name, String vorname) {
+		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
 	}
