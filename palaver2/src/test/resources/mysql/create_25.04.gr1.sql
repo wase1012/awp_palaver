@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `palaver`.`rollen` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`rollen` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`) ,  
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
@@ -103,8 +103,9 @@ DROP TABLE IF EXISTS `palaver`.`zubereitung` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`zubereitung` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+  PRIMARY KEY (`id`) )
+-- ,
+ -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -117,7 +118,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`menue` (
   `name` VARCHAR(45) NOT NULL ,
   `koch` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+--  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_menue_mitarbeiter1_idx` (`koch` ASC) ,
   CONSTRAINT `fk_menue_mitarbeiter1`
     FOREIGN KEY (`koch` )
@@ -156,8 +157,8 @@ DROP TABLE IF EXISTS `palaver`.`rezeptart` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezeptart` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+  PRIMARY KEY (`id`) )
+--  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -169,8 +170,8 @@ DROP TABLE IF EXISTS `palaver`.`geschmack` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+  PRIMARY KEY (`id`) )
+ -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -188,7 +189,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `geschmack_fk` INT NULL ,
   `mitarbeiter_fk` INT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+ -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_rezept_rezeptart1_idx` (`rezeptart_fk` ASC) ,
   INDEX `fk_geschmack_idx` (`geschmack_fk` ASC) ,
   INDEX `fk_mitarbeiter_idx` (`mitarbeiter_fk` ASC) ,
