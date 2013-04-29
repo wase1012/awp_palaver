@@ -57,20 +57,22 @@ public class FussnoteDAO extends AbstractDAO {
 			DAOException, SQLException {
 		ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
 		while (set.next()) {
-			fussnote = new Fussnote(set.getLong(ID), set.getString(NAME), set.getString(ABKUERZUNG));
+			fussnote = new Fussnote(set.getLong(ID), set.getString(NAME),
+					set.getString(ABKUERZUNG));
 		}
 		return fussnote;
 	}
 
-	public void createNewFussnote(Fussnote fussnote)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name,abkuerzung) VALUES('"
-				+ fussnote.getName() + "','"+ fussnote.getAbkuerzung()+"');";
+	public void createNewFussnote(Fussnote fussnote) throws ConnectException,
+			DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO " + TABLE
+				+ "(name,abkuerzung) VALUES('" + fussnote.getName() + "','"
+				+ fussnote.getAbkuerzung() + "');";
 		this.put(INSERT_QUERY);
 	}
-	
-//	public void deleteFussnote{
-//		???	
-//	}
+
+	// public void deleteFussnote{
+	// ???
+	// }
 
 }

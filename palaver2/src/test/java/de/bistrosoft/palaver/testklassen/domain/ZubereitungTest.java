@@ -13,23 +13,23 @@ import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
-import de.bistrosoft.palaver.data.FussnoteDAO;
+import de.bistrosoft.palaver.data.ZubereitungDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.util.AbstractTest;
 
 /**
  * @author Michael Marschall
  * 
  */
-public class FussnoteTest extends AbstractTest {
+public class ZubereitungTest extends AbstractTest {
 
-	final String NAME = "Weizen";
-	final String ABKUERZUNG = "Abk";
+	final String NAME = "Kühlschrank";
 	final Long ID = Long.valueOf("2");
-	private FussnoteDAO dao = new FussnoteDAO();
+	private ZubereitungDAO dao = new ZubereitungDAO();
 
 	/**
-	 * Die Testmethode liefert alle Fussnoten aus der Datenbank zurück.
+	 * Die Testmethode liefert alle Zubereitungen aus der Datenbank zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
@@ -37,20 +37,20 @@ public class FussnoteTest extends AbstractTest {
 	 */
 
 	@Test
-	public void getFussnoten() {
+	public void getZubereitungen() {
 		Boolean exception = false;
-		List<Fussnote> fussnotelist = null;
+		List<Zubereitung> zblist = null;
 		try {
-			fussnotelist = dao.getAllFussnote();
+			zblist = dao.getAllZubereitung();
 		} catch (ConnectException | DAOException | SQLException e) {
 			exception = true;
 		}
-		assertThat(fussnotelist.isEmpty(), is(false));
+		assertThat(zblist.isEmpty(), is(false));
 		assertThat(exception, is(false));
 	}
 
 	/**
-	 * Die Testmethode sucht nach einer Fussnote anhand einer Id
+	 * Die Testmethode sucht nach einer Zubereitung anhand einer Id
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
@@ -58,15 +58,15 @@ public class FussnoteTest extends AbstractTest {
 	 */
 
 	@Test
-	public void getFussnoteById() throws ConnectException, DAOException,
+	public void getZubereitungById() throws ConnectException, DAOException,
 			SQLException {
-		Fussnote fussnote = new Fussnote();
-		fussnote = dao.getFussnoteById(ID);
-		assertThat(fussnote.getId(), is(ID));
+		Zubereitung zubereitung = new Zubereitung();
+		zubereitung = dao.getZubereitungById(ID);
+		assertThat(zubereitung.getId(), is(ID));
 	}
-	
+
 	/**
-	 * Die Testmethode erstellt eine Fussnote
+	 * Die Testmethode erstellt eine Zubereitung
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
@@ -74,12 +74,11 @@ public class FussnoteTest extends AbstractTest {
 	 */
 
 	@Test
-	public void createFussnote() throws ConnectException, DAOException,
+	public void createZubereitung() throws ConnectException, DAOException,
 			SQLException {
-		Fussnote fussnote = new Fussnote();
-		fussnote.setName(NAME + "_NEW");
-		fussnote.setAbkuerzung(ABKUERZUNG + "_NEW");
-		dao.createNewFussnote(fussnote);
+		Zubereitung zubereitung = new Zubereitung();
+		zubereitung.setName(NAME);
+		dao.createZubereitung(zubereitung);
 	}
 
 }
