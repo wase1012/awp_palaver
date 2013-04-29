@@ -58,21 +58,21 @@ public class Rezept implements java.io.Serializable {
 	private String name;
 	private String kommentar;
 	private Zubereitung zubereitung;
+	
 	private int portion;
 //	private Set<Menue> menues = new HashSet<Menue>(0);
 	private Set<RezeptHasFussnote> rezeptHasFussnotes = new HashSet<RezeptHasFussnote>(0);
 	private Set<RezeptHasArtikel> rezeptHasArtikels = new HashSet<RezeptHasArtikel>(0);
 	private RezeptHasZubereitung rezeptHasZubereitung;
 
-	public Rezept() {
+	public Rezept(Rezeptart rezeptart2, Geschmack geschmack2, Mitarbeiter mitarbeiter2, String string) {
 	}
 
-	public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name, String kommentar, Zubereitung zubereitung) {
+	public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name, Mitarbeiter mitarbeiter) {
 		this.rezeptart = rezeptart;
-		this.geschmack = geschmack;
+		this.geschmack = geschmack;		
 		this.name = name;
-		this.kommentar = kommentar;
-		this.zubereitung = zubereitung;
+		this.mitarbeiter = mitarbeiter;
 	}
 
 	public Rezept(Geschmack geschmack, Rezeptart rezeptart,
@@ -92,6 +92,10 @@ public class Rezept implements java.io.Serializable {
 		this.rezeptHasArtikels = rezeptHasArtikels;
 		this.rezeptHasZubereitung = rezeptHasZubereitung;
 	}
+
+
+
+
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

@@ -6,6 +6,9 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
+import java.sql.SQLException;
+
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -22,6 +25,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+
 /**
  * @author Jan Lauinger
  * 
@@ -37,6 +45,8 @@ public class RezeptAnlegen extends VerticalLayout {
 	private TextField bezeichnung = new TextField("Bezeichnung");
 	private TextField rezeptersteller = new TextField("Rezeptersteller");
 	private TextField portion = new TextField("Portion");
+	private TextField art1 = new TextField("Rezeptart");
+	private TextField geschmack1 = new TextField("Geschmack");
 	
 	//Checkboxen
 	private CheckBox herd = new CheckBox("Herd");
@@ -114,7 +124,17 @@ public class RezeptAnlegen extends VerticalLayout {
 		fussnoten.setRightColumnCaption("ausgewaehlte Fussnoten");
 		subBox.setWidth("100%");
 		control.setSpacing(true);
-		
+		art1.setDescription("bitte die entsprechende Zahl eintragen <br />" +
+				"            1 - Hauptgericht <br />" +
+				"            2 - Pasta <br />" +
+				"            3 - Suppe <br />" +
+				"            4 - Salat <br />" +
+				"            5 - Dessert <br />");
+		geschmack1.setDescription("bitte die entsprechende Zahl eintragen <br />" +
+				"            1 - exotisch <br />" +
+				"            2 - klassisch <br />" +
+				"            3 - deftig <br />" +
+				"            4 - mediterran <br />");
 		
 		
 		//Komponenten zum Layout 'subBox' hinzufuegen
@@ -127,10 +147,12 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(bezeichnung);
 		box.addComponent(rezeptersteller);
 		box.addComponent(portion);
-		box.addComponent(geschmack);
-		box.addComponent(art);
+		//box.addComponent(geschmack);
+		box.addComponent(geschmack1);
+		//box.addComponent(art);
+		box.addComponent(art1);
 		box.addComponent(subBox);
-		box.addComponent(fussnoten);
+		//box.addComponent(fussnoten);
         box.addComponent(zutaten);
 		box.addComponent(zutatenhinzufuegen);
 		box.addComponent(kommentar);
@@ -153,8 +175,10 @@ public class RezeptAnlegen extends VerticalLayout {
 	private void felderLeeren() {
 		bezeichnung.setValue("");
 		rezeptersteller.setValue("");
-		geschmack.setValue(null);
-		art.setValue(null);
+		//geschmack.setValue(null);
+		//art.setValue(null);
+		geschmack1.setValue("");
+		art1.setValue("");
 		fussnoten.removeAllItems();
 		zutaten.removeAllItems();
 		kommentar.setValue("");
@@ -173,6 +197,9 @@ public class RezeptAnlegen extends VerticalLayout {
 	}
     //fussnotenAdd fuegt die Fussnoten in die Twincolselect 'fussnoten' ein 
 	private void fussnotenAdd() {
+		
+		
+		
 		fussnoten.addItem(1);
 		fussnoten.setItemCaption(1, "Rindfleisch ");
 		fussnoten.addItem(2);

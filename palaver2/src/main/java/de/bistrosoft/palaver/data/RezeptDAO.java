@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
@@ -39,14 +40,13 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = get(GET_ALL_REZEPTS);
 		;
 		while (set.next()) {
-			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
-					set.getLong("id")), GeschmackDAO.getInstance()
-					.getGeschmackById(set.getLong("id")),
-			// ZubereitungDAO.getInstance().getZubereitungById(set.getLong("id")),
-			// MitarbeiterDAO.getInstance().getMitarbeiterByName(set.getLong("id"),
-			// null,
-					set.getString("name"), null, null
-			// set.getString("menues")
+			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")),
+					GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
+					set.getString("name"),
+				 MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("id"))
+			   
+					
+			
 			));
 		}
 		return list;
@@ -57,13 +57,12 @@ public class RezeptDAO extends AbstractDAO {
 		List<Rezept> rezept = new ArrayList<Rezept>();
 		ResultSet set = get(GET_REZEPT_BY_ID);
 		while (set.next()) {
-			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
-					set.getLong(rezeptID)), GeschmackDAO.getInstance()
-					.getGeschmackById(set.getLong("id")),
-			// ZubereitungDAO.getInstance().getZubereitungById(set.getLong("id")),
-			// MitarbeiterDAO.getInstance().getMitarbeiterByName(set.getLong("id"),
-			// null,
-					set.getString("name"), null, null
+			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")), 
+								  GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
+								  set.getString("name"),
+								  MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("id"))
+			
+					
 			// set.getString("menues")
 			));
 		}
@@ -95,5 +94,7 @@ public class RezeptDAO extends AbstractDAO {
 						+ rezept.getMitarbeiter().getId() + ","
 						));
 	}
+
+
 
 }
