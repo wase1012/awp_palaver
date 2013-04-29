@@ -251,6 +251,7 @@ public class LieferantErstellen extends VerticalLayout
 			dialog.setModal(true);
 			dialog.center();
 			dialog.setResizable(false);
+			dialog.setStyleName("dialog-window");
 			
 			Label message = new Label("Lieferant gespeichert");
 			
