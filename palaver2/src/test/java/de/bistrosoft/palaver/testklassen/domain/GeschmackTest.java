@@ -1,16 +1,28 @@
 /**
  * 
  */
-package de.bistrosoft.palaver.test.testklassen.domain;
+package de.bistrosoft.palaver.testklassen.domain;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.util.AbstractTest;
 
 /**
  * @author Android
  * 
  */
 public class GeschmackTest extends AbstractTest {
-/**
+
 	public static String NAME = "Exotisch";
 	public static Long ID = Long.valueOf("1");
 
@@ -62,5 +74,5 @@ public class GeschmackTest extends AbstractTest {
 		dao.createGeschmack(geschmack);
 
 	}
-*/
+
 }

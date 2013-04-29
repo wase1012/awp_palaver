@@ -2,21 +2,19 @@
  * Created by bach1014
  * 22.04.2013 - 15:29:56
  */
-package test.java.de.bistrosoft.palaver.util;
+package de.bistrosoft.palaver.util;
 
-import java.util.logging.Level;
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Logger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import de.bistrosoft.palaver.test.util.*;
-import de.bistrosoft.palaver.test.*;
+
+import com.mysql.jdbc.Driver;
 
 /**
  * @author bach1014

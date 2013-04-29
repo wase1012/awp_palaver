@@ -93,7 +93,8 @@ public class GeschmackDAO extends AbstractDAO {
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "')";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
+				+ geschmack.getName() +"');";
 		this.put(INSERT_QUERY);
 	}
 

@@ -37,6 +37,12 @@ public class Fussnote implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public Fussnote(Long id, String name, String abkuerzung) {
+		this.id = id;
+		this.name = name;
+		this.abkuerzung = abkuerzung;
+	}
+
 	public Fussnote(String name, String abkuerzung,
 			Set<RezeptHasFussnote> rezeptHasFussnotes) {
 		this.name = name;

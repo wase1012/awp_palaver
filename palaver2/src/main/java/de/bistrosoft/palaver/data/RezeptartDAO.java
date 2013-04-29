@@ -81,7 +81,8 @@ public class RezeptartDAO extends AbstractDAO {
 
 	public void createRezeptart(Rezeptart rezeptart) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "')";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
+				+ rezeptart.getName() +"');";
 		this.put(INSERT_QUERY);
 	}
 

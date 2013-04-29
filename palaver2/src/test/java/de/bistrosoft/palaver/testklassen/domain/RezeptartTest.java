@@ -1,18 +1,29 @@
 /**
  * 
  */
-package de.bistrosoft.palaver.test.testklassen.domain;
+package de.bistrosoft.palaver.testklassen.domain;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.util.AbstractTest;
 
 /**
  * @author Android
  *
  */
 public class RezeptartTest extends AbstractTest{
-/**	public static String NAME = "Hauptgericht";
+	public static String NAME = "Hauptgericht";
 	public static Long ID = Long.valueOf("1");
 
 	private RezeptartDAO dao = new RezeptartDAO();
@@ -63,5 +74,5 @@ public class RezeptartTest extends AbstractTest{
 		dao.createRezeptart(rezeptart);
 
 	}
-*/
+
 }
