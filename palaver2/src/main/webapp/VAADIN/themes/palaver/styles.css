@@ -1,13 +1,25 @@
 @import url(../reindeer/legacy-styles.css);
 
 .palaver-header {
-background: #ffffff url('img/Logo_links.jpg') no-repeat left top;
+background: #ffffff url('img/Header.jpg') no-repeat left top;
 }
 
 .v-app {
-background: #DDFFAA;
+background: #F0FFF0;
 }
 
 .menueplan-grid {
+ margin: 0px;
+padding: 0px;
+border-left: 1px solid black;
+border-bottom: 1px solid black;
+ 
+}
+
+.menueplan-grid > div {
+margin: 0px;
+padding: 0px;
+border-right: 1px solid black;
+border-top: 1px solid black;
 
 }

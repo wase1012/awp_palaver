@@ -95,6 +95,8 @@ public class MenueComponent extends CustomComponent{
 				                	//Löschbutton hinzufügen
 				                	menueGrid.addComponent(btn, destCol, destRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+				        			btn.setHeight("100px");
+				        			btn.setWidth("149px");
 				                }
 				            }			            
 				        });	
@@ -102,6 +104,7 @@ public class MenueComponent extends CustomComponent{
 		});
 		
 		vl.addComponent(btDelete);
+		vl.setHeight("100px");
 		
 		
 	}
