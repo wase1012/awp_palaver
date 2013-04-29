@@ -57,8 +57,9 @@ public class Rezept implements java.io.Serializable {
 	private Mitarbeiter mitarbeiter;
 	private String name;
 	private String kommentar;
+	private Zubereitung zubereitung;
 	private int portion;
-	private Set<Menue> menues = new HashSet<Menue>(0);
+//	private Set<Menue> menues = new HashSet<Menue>(0);
 	private Set<RezeptHasFussnote> rezeptHasFussnotes = new HashSet<RezeptHasFussnote>(0);
 	private Set<RezeptHasArtikel> rezeptHasArtikels = new HashSet<RezeptHasArtikel>(0);
 	private RezeptHasZubereitung rezeptHasZubereitung;
@@ -66,12 +67,12 @@ public class Rezept implements java.io.Serializable {
 	public Rezept() {
 	}
 
-	public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name, int portion, String kommentar) {
+	public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name, String kommentar, Zubereitung zubereitung) {
 		this.rezeptart = rezeptart;
 		this.geschmack = geschmack;
 		this.name = name;
-		this.portion = portion;
 		this.kommentar = kommentar;
+		this.zubereitung = zubereitung;
 	}
 
 	public Rezept(Geschmack geschmack, Rezeptart rezeptart,
@@ -86,7 +87,7 @@ public class Rezept implements java.io.Serializable {
 		this.name = name;
 		this.kommentar = kommentar;
 		this.portion = portion;
-		this.menues = menues;
+//		this.menues = menues;
 		this.rezeptHasFussnotes = rezeptHasFussnotes;
 		this.rezeptHasArtikels = rezeptHasArtikels;
 		this.rezeptHasZubereitung = rezeptHasZubereitung;
@@ -160,15 +161,15 @@ public class Rezept implements java.io.Serializable {
 		this.portion = portion;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "menue_has_rezept", catalog = "palaver", joinColumns = { @JoinColumn(name = "rezept_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "menue_id", nullable = false, updatable = false) })
-	public Set<Menue> getMenues() {
-		return this.menues;
-	}
-
-	public void setMenues(Set<Menue> menues) {
-		this.menues = menues;
-	}
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "menue_has_rezept", catalog = "palaver", joinColumns = { @JoinColumn(name = "rezept_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "menue_id", nullable = false, updatable = false) })
+//	public Set<Menue> getMenues() {
+//		return this.menues;
+//	}
+//
+//	public void setMenues(Set<Menue> menues) {
+//		this.menues = menues;
+//	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rezept")
 	public Set<RezeptHasFussnote> getRezeptHasFussnotes() {
@@ -207,7 +208,7 @@ public class Rezept implements java.io.Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kommentar == null) ? 0 : kommentar.hashCode());
-		result = prime * result + ((menues == null) ? 0 : menues.hashCode());
+		//result = prime * result + ((menues == null) ? 0 : menues.hashCode());
 		result = prime * result
 				+ ((mitarbeiter == null) ? 0 : mitarbeiter.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -253,11 +254,11 @@ public class Rezept implements java.io.Serializable {
 				return false;
 		} else if (!kommentar.equals(other.kommentar))
 			return false;
-		if (menues == null) {
-			if (other.menues != null)
-				return false;
-		} else if (!menues.equals(other.menues))
-			return false;
+//		if (menues == null) {
+//			if (other.menues != null)
+//				return false;
+//		} else if (!menues.equals(other.menues))
+//			return false;
 		if (mitarbeiter == null) {
 			if (other.mitarbeiter != null)
 				return false;
@@ -298,7 +299,7 @@ public class Rezept implements java.io.Serializable {
 		return "Rezept [id=" + id + ", geschmack=" + geschmack + ", rezeptart="
 				+ rezeptart + ", mitarbeiter=" + mitarbeiter + ", name=" + name
 				+ ", kommentar=" + kommentar + ", portion=" + portion
-				+ ", menues=" + menues + ", rezeptHasFussnotes="
+				+ ", rezeptHasFussnotes="
 				+ rezeptHasFussnotes + ", rezeptHasArtikels="
 				+ rezeptHasArtikels + ", rezeptHasZubereitung="
 				+ rezeptHasZubereitung + "]";

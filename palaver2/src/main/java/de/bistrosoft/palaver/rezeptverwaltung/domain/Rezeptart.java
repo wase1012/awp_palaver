@@ -110,8 +110,7 @@ public class Rezeptart implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Rezeptart [id=" + id + ", name=" + name + ", rezepts="
-				+ rezepts + "]";
+		return name;
 	}
 
 }

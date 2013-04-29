@@ -105,8 +105,7 @@ public class Geschmack implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Geschmack [id=" + id + ", name=" + name + ", rezepts="
-				+ rezepts + "]";
+		return name;
 	}
 
 }

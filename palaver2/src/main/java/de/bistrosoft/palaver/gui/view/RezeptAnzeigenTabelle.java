@@ -41,7 +41,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout {
 		try{
 			container = new BeanItemContainer<Rezept>(Rezept.class, Rezeptverwaltung.getInstance().getAllRezepts());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"name", "portion", "rezeptart", "geschmack", "kommentar", "mitarbeiter"});
+			table.setVisibleColumns(new Object[] {"name", "rezeptart", "geschmack", "mitarbeiter"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
 			}
 			catch (IllegalArgumentException  | ConnectException | DAOException | SQLException  e){
