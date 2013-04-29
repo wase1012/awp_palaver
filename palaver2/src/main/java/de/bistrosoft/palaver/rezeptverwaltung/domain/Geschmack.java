@@ -25,17 +25,12 @@ public class Geschmack implements java.io.Serializable {
 	private Set<Rezept> rezepts = new HashSet<Rezept>(0);
 
 	public Geschmack() {
+		super();
 	}
 
 	public Geschmack(Long id, String name) {
 		this.id = id;
 		this.name = name;
-	}
-
-	public Geschmack(Long id, String name, Set<Rezept> rezepts) {
-		this.id = id;
-		this.name = name;
-		this.rezepts = rezepts;
 	}
 
 	@Id
@@ -72,7 +67,6 @@ public class Geschmack implements java.io.Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((rezepts == null) ? 0 : rezepts.hashCode());
 		return result;
 	}
 
@@ -94,11 +88,6 @@ public class Geschmack implements java.io.Serializable {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (rezepts == null) {
-			if (other.rezepts != null)
-				return false;
-		} else if (!rezepts.equals(other.rezepts))
 			return false;
 		return true;
 	}
