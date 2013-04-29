@@ -1,8 +1,6 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
@@ -14,21 +12,31 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 public class Bestellung implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -4115989551813492575L;
-
-
 	
 	private Long id;
 	private Lieferant lieferant;
-	private Date datum;	
+	private Date datum;
 	
 	public Bestellung() {
+		super();
 	}
 
+	
+
+	/**
+	 * @param id
+	 * @param lieferant
+	 * @param datum
+	 * @param bestellposition
+	 */
 	public Bestellung(Long id, Lieferant lieferant, Date datum) {
+		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
 	}
+
+
 
 	public Long getId() {
 		return this.id;
@@ -49,6 +57,7 @@ public class Bestellung implements java.io.Serializable {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
+
 
 	@Override
 	public int hashCode() {

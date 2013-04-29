@@ -19,14 +19,26 @@ public class Bestellposition implements java.io.Serializable {
 	private int menge;
 
 	public Bestellposition() {
+		super();
 	}
 
-
-	public Bestellposition(Artikel artikel, Bestellung bestellung, int menge) {
+	/**
+	 * @param id
+	 * @param artikel
+	 * @param bestellung
+	 * @param menge
+	 */
+	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung,
+			int menge) {
+		super();
+		this.id = id;
 		this.artikel = artikel;
 		this.bestellung = bestellung;
 		this.menge = menge;
 	}
+
+
+
 
 	public Long getId() {
 		return this.id;

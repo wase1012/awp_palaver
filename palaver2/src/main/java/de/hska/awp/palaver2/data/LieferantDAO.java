@@ -176,7 +176,7 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt()
 				+ "'," + EMAIL + "='" + lieferant.getEmail() + "'," + TELEFON
 				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
-				+ lieferant.getFax() + "'" + "WHERE id='" + lieferant.getId()
+				+ lieferant.getFax() + "'" + "WHERE " + ID + "='" + lieferant.getId()
 				+ "'";
 		this.put(UPDATE_QUERY);
 	}
