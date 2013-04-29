@@ -45,6 +45,8 @@ public class MenueplanGridLayout extends CustomComponent{
 	    int height = ROWS*100;
 	    layout.setWidth(width+"px");
 	    layout.setHeight(height+"px");
+		layout.setStyleName("menueplan-grid");
+		
 	   
 	    // Verschieben nur in die Zellenmitte erlauben
 	    layout.setComponentHorizontalDropRatio(0);

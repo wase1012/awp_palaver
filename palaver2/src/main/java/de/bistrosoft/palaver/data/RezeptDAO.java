@@ -28,7 +28,7 @@ public class RezeptDAO extends AbstractDAO {
 																"`geschmack_fk`," +
 																"`mitarebietr_fk`)VALUES({0})";
 	private final static String UPDATE_REZEPT = "UPDATE rezept SET `name` = {0}, `rezeptart_fk` = {1},`kommentar` = {2},`portion` = {3},`geschmack_fk` = {4},`mitarebietr_fk` = {5} WHERE id = {6} ";
-
+    private final static String GET_GESCHMACK_REZEPT= " SELECT * FROM geschmack JOIN rezept ON geschmack.id = rezept.geschmack_fk WHERE id ={0}";
 	public RezeptDAO() {
 		super();
 	}
@@ -52,6 +52,24 @@ public class RezeptDAO extends AbstractDAO {
 					));
 		}
 		return list;
+	}
+	
+	public List<Rezept> getRezept(int rezeptID) throws ConnectException, DAOException, SQLException {
+		List<Rezept> rezept = new ArrayList<Rezept>();
+		ResultSet set = get (GET_REZEPT_BY_ID);
+		while(set.next()){
+			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong(rezeptID)),
+					            GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
+//					ZubereitungDAO.getInstance().getZubereitungById(set.getLong("id")),
+//					MitarbeiterDAO.getInstance().getMitarbeiterByName(set.getLong("id"),
+//					            null,
+					set.getString("name"),
+					set.getInt("portion"),
+					set.getString("kommentar")
+//					set.getString("menues")
+					));
+		}
+		return rezept;
 	}
 //	public List<Rezept> getAllRezepts() throws ConnectException, DAOException, SQLException {
 //		List<Rezept> list = new ArrayList<Rezept>();
