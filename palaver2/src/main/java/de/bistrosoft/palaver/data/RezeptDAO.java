@@ -40,9 +40,15 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = get (GET_ALL_REZEPTS);
 		
 		while(set.next()){
-			list.add(new Rezept(new Rezeptart(),
+			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(set.getLong("id")),
+					            GeschmackDAO.getInstance().getGeschmackById(set.getLong("id")),
+//					ZubereitungDAO.getInstance().getZubereitungById(set.getLong("id")),
+//					MitarbeiterDAO.getInstance().getMitarbeiterByName(set.getLong("id"),
+//					            null,
 					set.getString("name"),
-					set.getInt("portion")
+					set.getInt("portion"),
+					set.getString("kommentar")
+//					set.getString("menues")
 					));
 		}
 		return list;

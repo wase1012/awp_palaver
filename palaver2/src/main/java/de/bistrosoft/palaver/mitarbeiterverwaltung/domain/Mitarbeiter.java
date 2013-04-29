@@ -44,8 +44,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	private Set<Nachricht> nachrichten = new HashSet<Nachricht>(0);
 	private Set<Rollen> rollens = new HashSet<Rollen>(0);
 
-	public Mitarbeiter() {
-	}
+
 
 	public Mitarbeiter(String name, String vorname) {
 		this.name = name;

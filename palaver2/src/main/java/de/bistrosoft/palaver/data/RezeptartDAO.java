@@ -15,7 +15,7 @@ public class RezeptartDAO extends AbstractDAO {
 	private final static String ID = "id";
 	private final static String NAME = "name";
 	private static final String GET_REZEPTART_BY_ID = "SELECT * FROM " + TABLE
-			+ "WHERE " + ID + "= {0}";
+			+ " WHERE " + ID + "= {0}";
 	private static final String GET_REZEPTART_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private final static String GET_ALL_REZEPTART = "SELECT * FROM " + TABLE;

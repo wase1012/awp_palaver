@@ -66,10 +66,12 @@ public class Rezept implements java.io.Serializable {
 	public Rezept() {
 	}
 
-	public Rezept(Rezeptart rezeptart, String name, int portion) {
+	public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name, int portion, String kommentar) {
 		this.rezeptart = rezeptart;
+		this.geschmack = geschmack;
 		this.name = name;
 		this.portion = portion;
+		this.kommentar = kommentar;
 	}
 
 	public Rezept(Geschmack geschmack, Rezeptart rezeptart,

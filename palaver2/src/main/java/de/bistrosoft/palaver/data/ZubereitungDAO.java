@@ -13,7 +13,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	private final static String ID = "id";
 	private final static String NAME = "name";
 	private static final String GET_ZUBEREITUNG_BY_ID = "SELECT * FROM "
-			+ TABLE + "WHERE " + ID + "= {0}";
+			+ TABLE + " WHERE " + ID + "= {0}";
 
 	public ZubereitungDAO() {
 		super();

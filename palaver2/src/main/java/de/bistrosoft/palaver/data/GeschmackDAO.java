@@ -15,7 +15,8 @@ public class GeschmackDAO extends AbstractDAO {
 	private final static String ID = "id";
 	private final static String NAME = "name";
 	private static final String GET_GESCHMACK_BY_ID = "SELECT * FROM " + TABLE
-			+ "WHERE " + ID + "= {0}";
+			+ " WHERE " + ID + " = {0}";
+//	private final static String GET_GESCHMACK_BY_ID_ANAME ="SELECT";
 	private final static String GET_ALL_GESCHMACK = "SELECT * FROM " + TABLE;
 	private static final String GET_GESCHMACK_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
@@ -41,6 +42,17 @@ public class GeschmackDAO extends AbstractDAO {
 		}
 		return geschmack;
 	}
+
+//	public Geschmack getGeschmackByIdAName(Long id) throws ConnectException,
+//			DAOException, SQLException {
+//		Geschmack geschmack = null;
+//		ResultSet set = get(MessageFormat.format(GET_GESCHMACK_BY_ID_ANAME, id));
+//
+//		while (set.next()) {
+//			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
+//		}
+//		return geschmack;
+//	}
 
 	public Geschmack getGeschmackByName(Long id) throws ConnectException,
 			DAOException, SQLException {
@@ -81,7 +93,7 @@ public class GeschmackDAO extends AbstractDAO {
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME+ "')";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "')";
 		this.put(INSERT_QUERY);
 	}
 
