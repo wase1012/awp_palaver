@@ -25,5 +25,10 @@ public interface IConstants
 	
 	public final String		BUTTON_SHOW_FILTER = "Filter anzeigen";
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
+	public final String		BUTTON_SAVE = "Speichern";
+	public final String		BUTTON_DISCARD = "Verwerfen";
+	
+	public final String		BUTTON_SAVE_ICON = "img/save.ico";
+	public final String		BUTTON_DISCARD_ICON = "img/cross.ico";
 	
 }

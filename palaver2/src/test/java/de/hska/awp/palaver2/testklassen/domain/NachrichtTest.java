@@ -16,13 +16,14 @@ import de.hska.awp.palaver2.data.RollenDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
+import de.hska.awp.palaver2.util.AbstractTest;
 
 /**
  * @author PhilippT
  *
  */
 
-public class NachrichtTest  {
+public class NachrichtTest extends AbstractTest {
 	
 
 	private static final String test_nachricht = "Ich bin die Testnachricht";	

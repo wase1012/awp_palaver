@@ -24,6 +24,11 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
+/**
+ * 
+ * @author Sebastian Walz
+ *
+ */
 @SuppressWarnings("serial")
 public class ArtikelAnzeigen extends VerticalLayout
 {
