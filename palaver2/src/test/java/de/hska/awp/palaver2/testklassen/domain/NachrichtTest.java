@@ -68,6 +68,13 @@ public class NachrichtTest extends AbstractTest {
 		assertThat(nachricht.getId(), is(id));
     }
     
+    /**
+     * Testmethode um Nachrichten zu einer Rolle zu suchen, auszulesen
+     * @throws ConnectException
+     * @throws DAOException
+     * @throws SQLException
+     */
+    
     @Test
     public void findNachrichtByRolle() throws ConnectException, DAOException, SQLException {
     	
