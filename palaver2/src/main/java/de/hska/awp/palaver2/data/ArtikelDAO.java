@@ -15,6 +15,7 @@ import de.hska.awp.palaver2.util.Util;
 
 public class ArtikelDAO extends AbstractDAO
 {	
+	private static ArtikelDAO instance = null;
 	private final static String			GET_ALL_ARTIKLES = "SELECT * FROM artikel";
 	private final static String			GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String			GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
@@ -26,6 +27,13 @@ public class ArtikelDAO extends AbstractDAO
 	public ArtikelDAO()
 	{
 		super();
+	}
+	
+	public static ArtikelDAO getInstance() {
+		if (instance == null) {
+			instance = new ArtikelDAO();
+		}
+		return instance;
 	}
 	
 	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException
@@ -207,4 +215,5 @@ public class ArtikelDAO extends AbstractDAO
 								artikel.getDurchschnitt(),
 								Util.convertBoolean(artikel.isLebensmittel())));
 	}
+
 }

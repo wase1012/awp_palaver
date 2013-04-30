@@ -154,7 +154,7 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getBezeichnung() + "','" + lieferant.getStrasse()
 				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
 				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
-				+ "','" + lieferant.getTelefon() + "')";
+				+ "','" + lieferant.getFax() + "')";
 		this.put(INSERT_QUERY);
 	}
 

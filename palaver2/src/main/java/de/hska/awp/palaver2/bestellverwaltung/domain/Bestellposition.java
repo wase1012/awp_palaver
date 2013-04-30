@@ -28,13 +28,12 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param bestellung
 	 * @param menge
 	 */
-	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung,
-			int menge) {
+	public Bestellposition(Long id, int menge, Artikel artikel, Bestellung bestellung) {
 		super();
 		this.id = id;
+		this.menge = menge;
 		this.artikel = artikel;
 		this.bestellung = bestellung;
-		this.menge = menge;
 	}
 
 
