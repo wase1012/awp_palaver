@@ -31,6 +31,15 @@ public class NachrichtDAO extends AbstractDAO {
 		super();
 	}
 	
+	/**
+	 * Methode um eine Nachricht anhand der ID zu suchen
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	
 	public Nachricht getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
 		
 		if(id ==null) {
@@ -49,6 +58,15 @@ public class NachrichtDAO extends AbstractDAO {
 		return nachricht;
 		 
 	}
+	
+	/**
+	 * Methode um eine Nachricht zu gegebener Rolle zu suchen
+	 * @param rolle
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	
 	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
 		
@@ -71,6 +89,14 @@ public class NachrichtDAO extends AbstractDAO {
 		 
 	}
 	
+	/**
+	 * Methode um alle Nachrichten zu suchen, ausgeben zu lassen
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	
 	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException
 	{
 		List<Nachricht> list = new ArrayList<Nachricht>();
@@ -85,6 +111,14 @@ public class NachrichtDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	/**
+	 * Methode um eine neue Nachricht anzulegen. Nachricht wird mitgeliefert
+	 * @param nachricht
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	
 	public void createNachricht(Nachricht nachricht)
 			throws ConnectException, DAOException, SQLException {
@@ -102,6 +136,14 @@ public class NachrichtDAO extends AbstractDAO {
 		put(anlegen); 
 
 	}
+	
+	/** 
+	 * Methode um eine vorhandene Nachricht zu gegebener ID zu löschen
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	
 	public void deleteNachricht(Long id) 
 			throws ConnectException, DAOException, SQLException {

@@ -31,6 +31,9 @@ public class NachrichtTest extends AbstractTest {
 	private MitarbeiterDAO mdao = new MitarbeiterDAO();
 	private RollenDAO rdao = new RollenDAO();
 
+	/**
+	 * Test ob alle Nachrichten aus der Datenbank ausgelesen werden können.
+	 */
     @Test
     public void findAllNachricht() {
     	
@@ -45,6 +48,10 @@ public class NachrichtTest extends AbstractTest {
 
 		assertThat(nachricht.isEmpty(), is(false));
     }
+    
+    /**
+     * Test, eine Nachricht anhand einer gegebenen ID suchen
+     */
 	
     @Test
     public void findNachrichtById() {
@@ -60,6 +67,10 @@ public class NachrichtTest extends AbstractTest {
 
 		assertThat(nachricht.getId(), is(id));
     }
+    
+    /**
+     * Test, eine neue Nachricht anzulegen, in die Datenbank zu schreiben
+     */
     
 	@Test
 	public void createNachrichten() {
@@ -90,6 +101,13 @@ public class NachrichtTest extends AbstractTest {
 			throw new NullPointerException();
 		}
 	}
+	
+	/**
+	 * Test, eine Nachricht zu löschen. Gegeben ist die ID
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	
     @Test
     public void deleteNachricht() throws ConnectException, DAOException, SQLException {
