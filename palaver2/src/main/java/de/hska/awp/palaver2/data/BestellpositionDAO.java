@@ -1,3 +1,6 @@
+/**
+ * Created by Elena W
+ */
 package de.hska.awp.palaver2.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +10,14 @@ import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+
+/**
+ * Klasse BestellpositionDAO. Die Klasse stellt für die Bestellposition alle notwendigen
+ * Methoden bereit um auf die Datenbank zuzugreifen.
+ * 
+ * @author Elena W
+ * 
+ */
 
 public class BestellpositionDAO extends AbstractDAO {
 	
@@ -58,21 +69,7 @@ public class BestellpositionDAO extends AbstractDAO {
 		return list;
 	}
 	
-	public Bestellposition getBestellpositionById(Long id) throws ConnectException,
-	DAOException, SQLException {
-
-		Bestellposition bestellposition = null;
-		ResultSet set = get(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_ID, id));
-
-		while (set.next()) {
-			bestellposition = new Bestellposition(set.getLong(ID), set.getInt(MENGE),
-					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)), 
-					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)));
-}
-
-return bestellposition;
-}
-	
+		
 	/**
 	 * Die Methode erzeugt eine BEstellposition in der Datenbank.
 	 * 
@@ -99,7 +96,7 @@ return bestellposition;
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void updateBestellung(Bestellposition bestellposition)
+	public void updateBestellposition(Bestellposition bestellposition)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "='"
 				+ bestellposition.getMenge() + "'," + ARTIKEL_FK + "='"
