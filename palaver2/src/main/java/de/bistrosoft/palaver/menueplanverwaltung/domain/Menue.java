@@ -11,6 +11,13 @@ public class Menue {
 	private Mitarbeiter koch;
 	private List<Rezept> rezepte;
 	
+	public Menue(Long id, String name, Mitarbeiter koch){
+		this.id=id;
+		this.name=name;
+		this.koch=koch;
+		rezepte=null;
+	}
+	
 	public Long getId() {
 		return id;
 	}

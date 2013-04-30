@@ -1,8 +1,10 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import com.vaadin.ui.Button;
@@ -16,6 +18,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.util.CalendarWeek;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -30,7 +36,7 @@ public class MenueplanGridLayout extends CustomComponent{
     private static final int COLUMNS = 6;
        
     // Seitenlayout erstellen
-    public MenueplanGridLayout(int week, int year) {
+    public MenueplanGridLayout(int week, int year)  {
 	    setCaption("Kalenderwoche: " + week +"/"+year);
 	    setSizeFull();
 	
@@ -117,6 +123,24 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	layout.addComponent(vl,col,1);	
 	        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 	    }
+	    
+	    //Füge MenueItems aus DB ein
+	    MenueplanDAO tmp = new MenueplanDAO();
+	    Long id = 1L;
+	    List<MenueplanItem> items=null;
+		try {
+			items = tmp.getItemsForMenueplan(id);
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    if(items!=null){
+	    	for (MenueplanItem i : items){
+		    	MenueComponent comp = new MenueComponent(i.getMenue().getName(), layout,i.getSpalte(),i.getZeile()); 
+		    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
+		    }
+	    }
+	    
 	    
 	    // Füge ADD Buttons in noch leere Felder ein
 	    for (int row = 2; row < ROWS; row++) {

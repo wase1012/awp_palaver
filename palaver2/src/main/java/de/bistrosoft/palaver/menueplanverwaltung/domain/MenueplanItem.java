@@ -1,9 +1,17 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
+import java.awt.Component;
+
 public class MenueplanItem {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3949683156254221803L;
+	
 	private Menue menue;
-	private Integer zeile;
-	private Integer spalte;
+	private int zeile;
+	private int spalte;
 	
 	public Menue getMenue() {
 		return menue;
@@ -13,19 +21,19 @@ public class MenueplanItem {
 		this.menue = menue;
 	}
 	
-	public Integer getZeile() {
+	public int getZeile() {
 		return zeile;
 	}
 	
-	public void setZeile(Integer zeile) {
+	public void setZeile(int zeile) {
 		this.zeile = zeile;
 	}
 	
-	public Integer getSpalte() {
+	public int getSpalte() {
 		return spalte;
 	}
 	
-	public void setSpalte(Integer spalte) {
+	public void setSpalte(int spalte) {
 		this.spalte = spalte;
 	}
 }
