@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickListener;
@@ -15,6 +18,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.util.CalendarWeek;
 
@@ -133,7 +138,10 @@ public class MenueplanGridLayout extends CustomComponent{
 	    for (int row = 2; row < ROWS; row++) {
 	        for (int col = 0; col < COLUMNS; col++) {
 	        	if(layout.getComponent(col, row)==null) {
-	        		Button btn = new Button("ADD");
+	        		Button btn = new Button();
+	        		btn.setStyleName(BaseTheme.BUTTON_LINK);
+	        		btn.setIcon(new ThemeResource("img/addIcon.png"));
+	        		btn.addStyleName("menueplan-add");
 	                btn.addClickListener(new ClickListener() {
 						
 	                	// Click-Listener für ADD_Buttons
@@ -155,7 +163,9 @@ public class MenueplanGridLayout extends CustomComponent{
 						}
 					});
 	                
-	        		layout.addComponent(btn, col, row);
+	        		btn.setHeight("100px");
+	        		btn.setWidth("149px");
+	                layout.addComponent(btn, col, row);
 	                layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 	        	}
 	                

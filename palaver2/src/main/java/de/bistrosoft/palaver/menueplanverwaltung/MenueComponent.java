@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Alignment;
@@ -15,6 +16,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.BaseTheme;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -25,7 +27,7 @@ public class MenueComponent extends CustomComponent{
 	public int destRow;
 	public int destCol;
 	DDGridLayout menueGrid;
-	Button btn = new Button("ADD");
+	Button btn = new Button();
 	Button btDelete = new Button("Löschen");
 	
 	// Konstruktor für Menükomponente 
@@ -40,7 +42,8 @@ public class MenueComponent extends CustomComponent{
 		setCompositionRoot(vl);
 		
 		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
-		Label lbText = new Label(text);
+		@SuppressWarnings("deprecation")
+		Label lbText = new Label("<div align=center>"+text+"</div>", Label.CONTENT_XHTML);
 		vl.addComponent(lbText);
 		
 		// Horizontales Layout erstellen
@@ -63,20 +66,23 @@ public class MenueComponent extends CustomComponent{
 		vl.addComponent(hlProp);
 		
 		//Clicklistener für den ADD Button
-		btn.addClickListener(new ClickListener() {
+		btn.setStyleName(BaseTheme.BUTTON_LINK);
+		btn.setIcon(new ThemeResource("img/addIcon.png"));
+		btn.addStyleName("menueplan-add");
+        btn.addClickListener(new ClickListener() {
 			
+        	// Click-Listener für ADD_Buttons
 			@Override
-			public void buttonClick(ClickEvent event) {	    
-                
-				// Window zum hinzufügen eines Menüs in den Menüplan 
-				WinSelectMenue window = new WinSelectMenue(menueGrid, btn, destRow, destCol);
+			public void buttonClick(ClickEvent event) {
+	       		WinSelectMenue window = new WinSelectMenue(menueGrid, btn, destRow, destCol);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
         		window.setWidth("50%");
         		window.setHeight("50%");
-				
 			}
 		});
+		btn.setHeight("100px");
+		btn.setWidth("149px");
 		
 		// ClickListener für den Löschbutton
 		btDelete.addClickListener(new ClickListener() {
@@ -120,6 +126,9 @@ public class MenueComponent extends CustomComponent{
 		});
 		
 		vl.addComponent(btDelete);
+		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
+		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
+		vl.setComponentAlignment(btDelete, Alignment.MIDDLE_CENTER);
 		vl.setHeight("100px");
 		
 		
