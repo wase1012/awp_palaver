@@ -110,6 +110,7 @@ public class ArtikelErstellen extends VerticalLayout
 		
 		subBox2_Vertical.addComponent(standard);
 		subBox2_Vertical.addComponent(lebensmittel);
+		subBox2_Vertical.setSpacing(true);
 		
 		subBox2.addComponent(subBox2_Vertical);
 		subBox2.addComponent(durchschnitt);
