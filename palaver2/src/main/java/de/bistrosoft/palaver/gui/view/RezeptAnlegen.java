@@ -33,6 +33,8 @@ import com.vaadin.ui.Window;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
@@ -230,13 +232,49 @@ public class RezeptAnlegen extends VerticalLayout {
 				Rezept rezept = new Rezept();
 				rezept.setName(nameInput);
 				//Achtung dieses Konvertieren geht net
-	//			rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
-				rezept.getRezeptart().setId(
-						Long.parseLong(rezeptartInput.toString()));
+				
+				try {
+					rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					rezept.setRezeptart(RezeptartDAO.getInstance().getRezeptartById(Long.parseLong(rezeptartInput.toString())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//getRezeptart().setId(
+						//Long.parseLong(rezeptartInput.toString()));
 				rezept.setKommentar(kommentarInput);
 				rezept.setPortion(Integer.parseInt(portionInput.toString()));
-				rezept.getMitarbeiter().setId(
-						Long.parseLong(mitarbeiterInput.toString()));
+				try {
+					rezept.setMitarbeiter(MitarbeiterDAO.getInstance().getMitarbeiterById(Long.parseLong(mitarbeiterInput.toString())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//getMitarbeiter().setId(Long.parseLong(mitarbeiterInput.toString()));
 				geschmacktest.setValue(geschmackInput);
 
 				try {
@@ -270,13 +308,16 @@ public class RezeptAnlegen extends VerticalLayout {
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				mitarbeiterCb.addItem(e);
+				//mitarbeiterCb.addItem(e);
+				mitarbeiterCb.addItem(e.getId());
+				mitarbeiterCb.setItemCaption(e.getId(), e.getName());
 			}
 
 			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
 					.getAllRezeptart();
 			for (Rezeptart e : rezeptart) {
-				rezeptartCb.addItem(e);
+				rezeptartCb.addItem(e.getId());
+				rezeptartCb.setItemCaption(e.getId(), e.getName());
 			}
 
 		} catch (ConnectException | DAOException | SQLException e) {
