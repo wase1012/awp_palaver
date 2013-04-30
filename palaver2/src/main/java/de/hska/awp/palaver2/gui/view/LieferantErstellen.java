@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -24,6 +25,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
@@ -56,8 +58,8 @@ public class LieferantErstellen extends VerticalLayout
 	
 	private ListSelect			ansprehpartner = new ListSelect("Ansprechpartner");
 	
-	private Button				speichern = new Button("Speichern");
-	private Button				verwerfen = new Button("Verwerfen");
+	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	
 	public LieferantErstellen()
 	{
@@ -106,6 +108,9 @@ public class LieferantErstellen extends VerticalLayout
 		
 		contol.addComponent(verwerfen);
 		contol.addComponent(speichern);
+		
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		rechts.addComponent(contol);
 		rechts.setComponentAlignment(contol, Alignment.MIDDLE_RIGHT);

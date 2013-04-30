@@ -18,6 +18,7 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.gui.layout.DefaultView;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /*
@@ -34,8 +35,8 @@ public class MengeneinheitErstellen extends VerticalLayout {
 	private String			nameText;
 	private String			kurzText;
 	
-	private Button			speichern = new Button("Speichern");
-	private Button			verwerfen = new Button("Verwerfen");
+	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	
 	public MengeneinheitErstellen()
 	{
@@ -60,8 +61,8 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);	
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
-		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
 		name.setInputPrompt(nameText);

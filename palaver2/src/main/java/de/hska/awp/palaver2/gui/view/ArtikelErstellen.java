@@ -31,10 +31,11 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * @author Sebastian
+ * @author Sebastian Walz
  *
  */
 @SuppressWarnings("serial")
@@ -57,9 +58,12 @@ public class ArtikelErstellen extends VerticalLayout
 	private CheckBox		grundbedarf = new CheckBox("Grundbedarf");
 	private CheckBox		lebensmittel = new CheckBox("Lebensmittel");
 	
-	private Button			speichern = new Button("Speichern");
-	private Button			verwerfen = new Button("Verwerfen");
+	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	
+	/**
+	 * 
+	 */
 	public ArtikelErstellen()
 	{
 		super();
@@ -102,12 +106,15 @@ public class ArtikelErstellen extends VerticalLayout
 		subBox2.setWidth("100%");
 		box.addComponent(subBox2);
 		
-		subBox2.addComponent(standard);
+		VerticalLayout subBox2_Vertical = new VerticalLayout();
+		
+		subBox2_Vertical.addComponent(standard);
+		subBox2_Vertical.addComponent(lebensmittel);
+		
+		subBox2.addComponent(subBox2_Vertical);
 		subBox2.addComponent(durchschnitt);
 		
 		box.addComponent(bestellung);
-		
-		box.addComponent(lebensmittel);
 		
 		HorizontalLayout control = new HorizontalLayout();
 //		control.setWidth("100%");
@@ -117,8 +124,8 @@ public class ArtikelErstellen extends VerticalLayout
 		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
-		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		grundbedarf.addValueChangeListener(new ValueChangeListener() 
 		{
@@ -171,6 +178,9 @@ public class ArtikelErstellen extends VerticalLayout
 		load();
 	}
 	
+	/**
+	 * 
+	 */
 	public void load()
 	{
 		try

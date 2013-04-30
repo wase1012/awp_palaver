@@ -10,6 +10,7 @@ import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * The Application's "main" class
+ * @author Sebastian Walz
  */
 @Theme("palaver")
 @SuppressWarnings("serial")
@@ -30,6 +31,9 @@ public class Application extends UI
     	return instance;
     }
 	
+    /**
+     * 
+     */
 	@Override
     protected void init(VaadinRequest request) 
     {
