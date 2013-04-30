@@ -29,7 +29,6 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.MengeneinheitDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.ViewHandler;
@@ -47,7 +46,7 @@ public class ArtikelErstellen extends VerticalLayout
 	private TextField		preis = new TextField("Preis");
 	private TextField		artnr = new TextField("Artikelnummer");
 	private TextField		durchschnitt = new TextField("Durchschnitt");
-	private TextField		bestellung = new TextField("Bestellung");
+	private TextField		bestellung = new TextField("Bestellgröße");
 	
 	private ComboBox		lieferant = new ComboBox("Lieferant");
 	private ComboBox		mengeneinheit = new ComboBox("Mengeneinheit");
@@ -56,6 +55,7 @@ public class ArtikelErstellen extends VerticalLayout
 	private CheckBox		bio = new CheckBox("Bio");
 	private CheckBox		standard = new CheckBox("Standard");
 	private CheckBox		grundbedarf = new CheckBox("Grundbedarf");
+	private CheckBox		lebensmittel = new CheckBox("Lebensmittel");
 	
 	private Button			speichern = new Button("Speichern");
 	private Button			verwerfen = new Button("Verwerfen");
@@ -106,6 +106,8 @@ public class ArtikelErstellen extends VerticalLayout
 		subBox2.addComponent(durchschnitt);
 		
 		box.addComponent(bestellung);
+		
+		box.addComponent(lebensmittel);
 		
 		HorizontalLayout control = new HorizontalLayout();
 //		control.setWidth("100%");

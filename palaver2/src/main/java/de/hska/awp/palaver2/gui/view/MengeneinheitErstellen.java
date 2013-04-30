@@ -45,6 +45,8 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		
 		name.setWidth("100%");
 		kurz.setWidth("100%");
+		
+		box.setSpacing(true);
 
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);		
