@@ -52,11 +52,8 @@ public class LieferantErstellen extends VerticalLayout
 	private String faxInput;
 	private String bezInput;
 	private String knrInput;
-	private String ansprInput;
 	
-	
-	
-	private ListSelect			ansprehpartner = new ListSelect("Ansprechpartner");
+	private ListSelect		ansprechpartner = new ListSelect("Ansprechpartner");
 	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -77,7 +74,7 @@ public class LieferantErstellen extends VerticalLayout
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
 		
-		ansprehpartner.setWidth("100%");
+		ansprechpartner.setWidth("100%");
 		
 		box.setWidth("610px");
 		box.setSpacing(true);
@@ -101,19 +98,19 @@ public class LieferantErstellen extends VerticalLayout
 		links.addComponent(telefon);
 		links.addComponent(fax);
 		
-		rechts.addComponent(ansprehpartner);
+		rechts.addComponent(ansprechpartner);
 		
-		HorizontalLayout contol = new HorizontalLayout();
-		contol.setSpacing(true);
+		HorizontalLayout control = new HorizontalLayout();
+		control.setSpacing(true);
 		
-		contol.addComponent(verwerfen);
-		contol.addComponent(speichern);
+		control.addComponent(verwerfen);
+		control.addComponent(speichern);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
-		rechts.addComponent(contol);
-		rechts.setComponentAlignment(contol, Alignment.MIDDLE_RIGHT);
+		rechts.addComponent(control);
+		rechts.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
@@ -298,7 +295,7 @@ public class LieferantErstellen extends VerticalLayout
 				public void buttonClick(ClickEvent event)
 				{
 					UI.getCurrent().removeWindow(dialog);
-					ViewHandler.getInstance().returnToDefault();
+					ViewHandler.getInstance().switchView(LieferantSuche.class);
 				}
 			});
 		}
