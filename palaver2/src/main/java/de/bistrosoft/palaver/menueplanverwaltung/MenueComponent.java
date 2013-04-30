@@ -22,8 +22,8 @@ import fi.jasoft.dragdroplayouts.DDGridLayout;
 public class MenueComponent extends CustomComponent{
 	
 	Component destComp;
-	int destRow;
-	int destCol;
+	public int destRow;
+	public int destCol;
 	DDGridLayout menueGrid;
 	Button btn = new Button("ADD");
 	Button btDelete = new Button("Löschen");
@@ -33,6 +33,7 @@ public class MenueComponent extends CustomComponent{
 		destCol = nDestCol;
 		destRow = nDestRow;
 		menueGrid = nMenueGrid;
+		destComp = this;
 		
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
@@ -65,8 +66,8 @@ public class MenueComponent extends CustomComponent{
 		btn.addClickListener(new ClickListener() {
 			
 			@Override
-			public void buttonClick(ClickEvent event) {
-				
+			public void buttonClick(ClickEvent event) {	    
+                
 				// Window zum hinzufügen eines Menüs in den Menüplan 
 				WinSelectMenue window = new WinSelectMenue(menueGrid, btn, destRow, destCol);
         		UI.getCurrent().addWindow(window);
@@ -89,14 +90,29 @@ public class MenueComponent extends CustomComponent{
 
 				            public void onClose(ConfirmDialog dialog) {
 				                if (dialog.isConfirmed()) {
-				                	//aktuelle Menükomponente löschen
-				                	menueGrid.removeComponent(destCol, destRow);
+				                	//finde position
+				                    Component sourceComp = destComp;
+				                	Integer sourceRow =-1;
+				                    Integer sourceColumn=-1;
+				                    
+				                    final int COLUMNS = menueGrid.getColumns();
+				                    final int ROWS = menueGrid.getRows();
+				                    
+				                    for (int row = 0; row < ROWS; row++) {
+				            	        for (int col = 0; col < COLUMNS; col++) {
+				            	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
+				            	        		sourceColumn=col;
+				            	        		sourceRow=row;
+				            	        	}
+				            	        }
+				                    }		                    
 				                	
-				                	//Löschbutton hinzufügen
-				                	menueGrid.addComponent(btn, destCol, destRow);
+				                	//aktuelle Menükomponente löschen
+				                	menueGrid.removeComponent(destComp);
+				                	
+				                	//ADD Button hinzufügen
+				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
-				        			btn.setHeight("100px");
-				        			btn.setWidth("149px");
 				                }
 				            }			            
 				        });	

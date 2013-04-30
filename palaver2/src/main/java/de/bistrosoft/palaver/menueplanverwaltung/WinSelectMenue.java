@@ -174,6 +174,23 @@ public class WinSelectMenue extends Window {
 	private void initOKButton() {
 		ok.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				// aktuelle Column und Row ermitteln
+				Component sourceComp = destComp;
+            	Integer sourceRow =-1;
+                Integer sourceColumn=-1;
+                
+                final int COLUMNS = menueGrid.getColumns();
+                final int ROWS = menueGrid.getRows();
+                
+                for (int row = 0; row < ROWS; row++) {
+        	        for (int col = 0; col < COLUMNS; col++) {
+        	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
+        	        		sourceColumn=col;
+        	        		sourceRow=row;
+        	        	}
+        	        }
+                }
+                
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
 				
@@ -181,8 +198,8 @@ public class WinSelectMenue extends Window {
 				menueGrid.removeComponent(destComp);
 				
 				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
-				MenueComponent menue = new MenueComponent(titel, menueGrid, destRow, destCol);
-				menueGrid.addComponent(menue, destCol, destRow);
+				MenueComponent menue = new MenueComponent(titel, menueGrid, sourceRow, sourceColumn);
+				menueGrid.addComponent(menue, sourceColumn, sourceRow);
 				menueGrid.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
 				
 				// Window schließen
