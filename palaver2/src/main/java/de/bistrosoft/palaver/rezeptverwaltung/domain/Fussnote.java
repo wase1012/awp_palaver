@@ -137,9 +137,7 @@ public class Fussnote implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Fussnote [id=" + id + ", name=" + name + ", abkuerzung="
-				+ abkuerzung + ", rezeptHasFussnotes=" + rezeptHasFussnotes
-				+ "]";
+		return name;
 	}
 
 }

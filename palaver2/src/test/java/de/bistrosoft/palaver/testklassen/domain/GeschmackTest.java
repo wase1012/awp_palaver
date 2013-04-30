@@ -29,7 +29,7 @@ public class GeschmackTest extends AbstractTest {
 	private GeschmackDAO dao = new GeschmackDAO();
 
 	@Test
-	public void getGeschmack() {
+	public void getAllGeschmack() {
 		Boolean exception = false;
 		List<Geschmack> geschmacklist = null;
 		try {

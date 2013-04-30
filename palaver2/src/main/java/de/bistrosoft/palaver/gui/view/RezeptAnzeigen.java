@@ -2,7 +2,10 @@
  
 package de.bistrosoft.palaver.gui.view;
 
+import java.sql.SQLException;
+
 import com.vaadin.client.ui.Action;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -14,6 +17,11 @@ import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 
 
 public class RezeptAnzeigen extends VerticalLayout{
@@ -62,6 +70,10 @@ public class RezeptAnzeigen extends VerticalLayout{
 		
 		HorizontalLayout subBox = new HorizontalLayout();
 		HorizontalLayout control = new HorizontalLayout();
+		
+		
+		
+			
 		
 		//Eigenschaften anpassen
 		bezeichnung.setWidth("100%");	
