@@ -18,6 +18,7 @@ public class BestellpositionDAO extends AbstractDAO {
 	private final static String MENGE = "menge";
 	
 	
+	
 	private final static String GET_ALL_BESTELLPOSITIONEN = "SELECT * FROM " + TABLE;
 	private final static String GET_BESTELLPOSITIONEN_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
