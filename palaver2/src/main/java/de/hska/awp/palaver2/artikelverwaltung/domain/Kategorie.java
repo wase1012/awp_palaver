@@ -1,50 +1,27 @@
-/**
- *  Created by Sebastian Walz
- *  Edit by Mihail Boehm
- */
 package de.hska.awp.palaver2.artikelverwaltung.domain;
 
+/**
+ * Klasse Kategorie
+ * @author Mihail Boehm
+ */
 public class Kategorie implements java.io.Serializable {
 	private static final long serialVersionUID = -4647006694762094989L;
 
 	private Long id;
 	private String name;
 
-	/**
-	 * Standardkonstruktor
-	 */
 	public Kategorie() {
 		super();
 	}
 
-	/**
-	 * Konstruktor
-	 * 
-	 * @param id
-	 *            KategorieId
-	 * @param name
-	 *            KategorieName
-	 */
 	public Kategorie(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	/**
-	 * getId
-	 * 
-	 * @return KategorieId
-	 */
-
 	public Long getId() {
 		return this.id;
 	}
-
-	/**
-	 * getName + setName
-	 * 
-	 * @return KategorieName
-	 */
 
 	public String getName() {
 		return this.name;
@@ -54,18 +31,12 @@ public class Kategorie implements java.io.Serializable {
 		this.name = name;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
 		return name;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,9 +46,6 @@ public class Kategorie implements java.io.Serializable {
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -99,5 +67,4 @@ public class Kategorie implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
 }
