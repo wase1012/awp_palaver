@@ -12,7 +12,7 @@ import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 
 /**
- * @author Android
+ * @author Michael Marschall
  *
  */
 public class Rezeptartverwaltung extends RezeptartDAO{

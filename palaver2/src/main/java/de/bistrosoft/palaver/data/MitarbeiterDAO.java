@@ -17,7 +17,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 	private static MitarbeiterDAO instance = null;
 
-	private final static String TABLE = "geschmack";
+	private final static String TABLE = "mitarbeiter";
 	private final static String ID = "id";
 	private final static String VORNAME = "vorname";
 	private final static String NAME = "name";

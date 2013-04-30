@@ -28,6 +28,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String PORTION = "portion";
 	private final static String MITARBEITER = "mitarbeiter_fk";
 
+	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE name = {0}";
@@ -45,7 +46,14 @@ public class RezeptDAO extends AbstractDAO {
 		super();
 	}
 
-	public List<Rezept> getAllRezepts() throws ConnectException, DAOException,
+	public static RezeptDAO getInstance() {
+		if (instance == null) {
+			instance = new RezeptDAO();
+		}
+		return instance;
+	}
+
+	public List<Rezept> getAllRezepte() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
 		ResultSet set = get(GET_ALL_REZEPTS);
@@ -76,11 +84,26 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
+	// public List<Rezept> getRezeptByName(String name) throws ConnectException,
+	// DAOException, SQLException {
+	// List<Rezept> rezept = new ArrayList<Rezept>();
+	// ResultSet set = get(GET_REZEPT_BY_NAME + "'" + name + "'");
+	// while (set.next()) {
+	// rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartByName(
+	// set.getLong("id")), GeschmackDAO.getInstance()
+	// .getGeschmackById(set.getLong("id")), MitarbeiterDAO
+	// .getInstance().getMitarbeiterById(set.getLong("id")), set
+	// .getString("name"), null, set.getInt("portion")));
+	// }
+	// return rezept;
+	// }
+
+
 	public void createRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ GESCHMACK + "," + REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
-				+ MITARBEITER + ")" + "VALUES" + "('" + rezept.getName()
+				+ GESCHMACK + "," + REZEPTART + "," + KOMMENTAR + "," + PORTION
+				+ "," + MITARBEITER + ")" + "VALUES" + "('" + rezept.getName()
 				+ "','" + rezept.getGeschmack().getId() + "','"
 				+ rezept.getRezeptart().getId() + "','" + rezept.getKommentar()
 				+ "','" + rezept.getPortion() + "','"

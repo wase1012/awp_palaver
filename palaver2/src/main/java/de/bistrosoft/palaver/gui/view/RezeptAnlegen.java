@@ -25,11 +25,14 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.util.ViewHandler;
+import de.bistrosoft.palaver.util.IConstants;
 
 /**
  * @author Jan Lauinger
@@ -47,9 +50,9 @@ public class RezeptAnlegen extends VerticalLayout {
 	private TextField portion = new TextField("Portion");
 	private TextField name = new TextField("Bezeichnung");
 
-	private ComboBox mitarbeiter = new ComboBox("Koch");
-	private ComboBox rezeptart = new ComboBox("Rezeptart");
-	private ComboBox geschmack = new ComboBox("Geschmack");
+	private ComboBox mitarbeiterCb = new ComboBox("Koch");
+	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
+	private ComboBox geschmackCb = new ComboBox("Geschmack");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -62,9 +65,9 @@ public class RezeptAnlegen extends VerticalLayout {
 		this.setMargin(true);
 		name.setWidth("100%");
 		portion.setWidth("100%");
-		mitarbeiter.setWidth("100%");
-		rezeptart.setWidth("100%");
-		geschmack.setWidth("100%");
+		mitarbeiterCb.setWidth("100%");
+		rezeptartCb.setWidth("100%");
+		geschmackCb.setWidth("100%");
 		kommentar.setWidth("100%");
 
 		portion.setEnabled(false);
@@ -77,9 +80,9 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(ueberschrift);
 		box.addComponent(name);
 		box.addComponent(portion);
-		box.addComponent(mitarbeiter);
-		box.addComponent(rezeptart);
-		box.addComponent(geschmack);
+		box.addComponent(mitarbeiterCb);
+		box.addComponent(rezeptartCb);
+		box.addComponent(geschmackCb);
 		box.addComponent(kommentar);
 
 		HorizontalLayout control = new HorizontalLayout();
@@ -104,7 +107,7 @@ public class RezeptAnlegen extends VerticalLayout {
 				dialog.setResizable(false);
 				dialog.setStyleName("dialog-window");
 
-				Label message = new Label("Artikel gespeichert");
+				Label message = new Label("Rezept gespeichert");
 
 				Button okButton = new Button("OK");
 
@@ -129,33 +132,32 @@ public class RezeptAnlegen extends VerticalLayout {
 				});
 			}
 		});
-//		load();
+		load();
 	}
 
-	
-//	public void load() {
-//		try {
-//			List<Geschmack> geschmack = Geschmackverwaltung.getInstance().getAllGeschmack();
-//			for (Geschmack e : geschmack) {
-//				geschmack.addItem(e);
-//				
-//			}
-////			List<Kategorie> kategorien = Artikelverwaltung.getInstance()
-////					.getAllKategorien();
-////			for (Kategorie e : kategorien) {
-////				kategorie.addItem(e);
-////			}
-//			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance().getAllRezeptart();
-//			for (Rezeptart e : rezeptart) {
-//				rezeptart.addItem(e);
-//			}
-////			List<Mengeneinheit> mengen = Mengeneinheitverwaltung.getInstance()
-////					.getAllMengeneinheit();
-////			for (Mengeneinheit e : mengen) {
-////				mengeneinheit.addItem(e);
-////			}
-//		} catch (ConnectException | DAOException | SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void load() {
+		try {
+			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
+					.getAllGeschmack();
+			for (Geschmack e : geschmack) {
+				geschmackCb.addItem(e);
+
+			}
+
+			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
+					.getAllMitarbeiter();
+			for (Mitarbeiter e : mitarbeiter) {
+				mitarbeiterCb.addItem(e);
+			}
+
+			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
+					.getAllRezeptart();
+			for (Rezeptart e : rezeptart) {
+				rezeptartCb.addItem(e);
+			}
+
+		} catch (ConnectException | DAOException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

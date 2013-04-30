@@ -12,7 +12,7 @@ import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 
 /**
- * @author Android
+ * @author Michael Marschall
  * 
  */
 public class Geschmackverwaltung extends GeschmackDAO {
@@ -30,7 +30,7 @@ public class Geschmackverwaltung extends GeschmackDAO {
 		return instance;
 	}
 
-	public List<Geschmack> getAllLieferanten() throws ConnectException,
+	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
 
 		List<Geschmack> result = null;

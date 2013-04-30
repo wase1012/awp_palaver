@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
@@ -22,7 +19,6 @@ public class FussnoteDAO extends AbstractDAO {
 	private final static String ABKUERZUNG = "abkuerzung";
 
 	private static FussnoteDAO instance = null;
-
 	Fussnote fussnote;
 
 	private final static String TABLE = "fussnote";
@@ -30,10 +26,13 @@ public class FussnoteDAO extends AbstractDAO {
 	private final static String GET_FUSSNOTE_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
 
+	
+	
 	public FussnoteDAO() {
 		super();
 	}
 
+	
 	public static FussnoteDAO getInstance() {
 		if (instance == null) {
 			instance = new FussnoteDAO();
@@ -42,6 +41,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return instance;
 	}
 
+	// Die Methode getAllFussnote() liefert alle in der Datenbank befindlichen Fussnoten zurück.
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -52,7 +52,8 @@ public class FussnoteDAO extends AbstractDAO {
 		}
 		return list;
 	}
-
+	
+	// Die Methode getFussnoteById() liefert ein Ergebnis zurück
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));

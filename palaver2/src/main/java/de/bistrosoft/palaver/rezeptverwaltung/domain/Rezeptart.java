@@ -26,7 +26,7 @@ public class Rezeptart implements java.io.Serializable {
 	private static final long serialVersionUID = 3791004464836691661L;
 	private Long id;
 	private String name;
-	private Set<Rezept> rezepts = new HashSet<Rezept>(0);
+//	private Set<Rezept> rezepts = new HashSet<Rezept>(0);
 
 	public Rezeptart() {
 	}
@@ -36,11 +36,11 @@ public class Rezeptart implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Rezeptart(Long id, String name, Set<Rezept> rezepts) {
-		this.id = id;
-		this.name = name;
-		this.rezepts = rezepts;
-	}
+//	public Rezeptart(Long id, String name, Set<Rezept> rezepts) {
+//		this.id = id;
+//		this.name = name;
+//		this.rezepts = rezepts;
+//	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -62,14 +62,14 @@ public class Rezeptart implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rezeptart")
-	public Set<Rezept> getRezepts() {
-		return this.rezepts;
-	}
-
-	public void setRezepts(Set<Rezept> rezepts) {
-		this.rezepts = rezepts;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rezeptart")
+//	public Set<Rezept> getRezepts() {
+//		return this.rezepts;
+//	}
+//
+//	public void setRezepts(Set<Rezept> rezepts) {
+//		this.rezepts = rezepts;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -77,7 +77,7 @@ public class Rezeptart implements java.io.Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((rezepts == null) ? 0 : rezepts.hashCode());
+//		result = prime * result + ((rezepts == null) ? 0 : rezepts.hashCode());
 		return result;
 	}
 
@@ -100,11 +100,11 @@ public class Rezeptart implements java.io.Serializable {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (rezepts == null) {
-			if (other.rezepts != null)
-				return false;
-		} else if (!rezepts.equals(other.rezepts))
-			return false;
+//		if (rezepts == null) {
+//			if (other.rezepts != null)
+//				return false;
+//		} else if (!rezepts.equals(other.rezepts))
+//			return false;
 		return true;
 	}
 
