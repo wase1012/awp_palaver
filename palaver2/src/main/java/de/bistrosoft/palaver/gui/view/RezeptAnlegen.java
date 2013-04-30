@@ -9,6 +9,8 @@ package de.bistrosoft.palaver.gui.view;
 import java.sql.SQLException;
 import java.util.List;
 
+import sun.security.jca.GetInstance;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
@@ -30,6 +32,7 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
@@ -115,9 +118,8 @@ public class RezeptAnlegen extends VerticalLayout {
 		geschmackCb.setImmediate(true);
 		geschmackCb.setInputPrompt(geschmackInput);
 		geschmackCb.setNullSelectionAllowed(false);
-		geschmackCb.setConvertedValue(geschmackInput);
+//		geschmackCb.setConvertedValue(geschmackInput);
 		
-		geschmacktest.setValue(geschmackInput);
 
 		rezeptartCb.setImmediate(true);
 		rezeptartCb.setInputPrompt(rezeptartInput);
@@ -228,13 +230,14 @@ public class RezeptAnlegen extends VerticalLayout {
 				Rezept rezept = new Rezept();
 				rezept.setName(nameInput);
 				//Achtung dieses Konvertieren geht net
-				rezept.getGeschmack().setName(geschmackInput);
+	//			rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
 				rezept.getRezeptart().setId(
 						Long.parseLong(rezeptartInput.toString()));
 				rezept.setKommentar(kommentarInput);
 				rezept.setPortion(Integer.parseInt(portionInput.toString()));
 				rezept.getMitarbeiter().setId(
 						Long.parseLong(mitarbeiterInput.toString()));
+				geschmacktest.setValue(geschmackInput);
 
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
@@ -259,7 +262,8 @@ public class RezeptAnlegen extends VerticalLayout {
 			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
 					.getAllGeschmack();
 			for (Geschmack e : geschmack) {
-				geschmackCb.addItem(e);
+				geschmackCb.addItem(e.getId());
+				geschmackCb.setItemCaption(e.getId(), e.getName());
 
 			}
 
