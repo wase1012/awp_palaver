@@ -346,19 +346,59 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`menueplan` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`menueplan` (
-  `datum` DATE NOT NULL ,
-  `position` INT NOT NULL ,
-  `menue` INT NOT NULL ,
-  PRIMARY KEY (`datum`, `position`) ,
-  INDEX `menue_fk_idx` (`menue` ASC) ,
-  CONSTRAINT `menue_fk`
-    FOREIGN KEY (`menue` )
+  id INT NOT NULL,
+  `week` INT NOT NULL ,
+  `year` INT NOT NULL ,
+  PRIMARY KEY (`week`, `year`)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+
+-- Table `palaver`.`menueplan_has_koeche`
+
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`menueplan_has_koeche` ;
+
+CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_koeche` (
+	menueplan INT NOT NULL,
+	koch INT NOT NULL,
+	PRIMARY KEY (menueplan,koch),
+	CONSTRAINT `fk_menueplan_has_koch_menue`
+    FOREIGN KEY (`menueplan` )
+    REFERENCES `palaver`.`menueplan` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menueplan_has_koch_koch`
+    FOREIGN KEY (`koch` )
+    REFERENCES `palaver`.`mitarbeiter` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+	);
+
+-- -----------------------------------------------------
+
+-- Table `palaver`.`menueplan_has_koeche`
+
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`menueplan_has_menues` ;
+
+CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
+	menueplan INT NOT NULL,
+	menue INT NOT NULL,
+	spalte INT NOT NULL,
+	zeile INT NOT NULL,
+	PRIMARY KEY (menueplan,spalte, zeile),
+	CONSTRAINT `fk_menueplan_has_menue_menueplan`
+    FOREIGN KEY (`menueplan` )
+    REFERENCES `palaver`.`menueplan` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menueplan_has_menue_menue`
+    FOREIGN KEY (`koch` )
     REFERENCES `palaver`.`menue` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
+	);
 -- -----------------------------------------------------
 
 -- Table `palaver`.`rezept_has_fussnote`

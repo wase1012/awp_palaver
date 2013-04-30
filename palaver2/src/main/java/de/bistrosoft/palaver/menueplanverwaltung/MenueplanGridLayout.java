@@ -7,6 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickListener;
@@ -17,6 +20,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
@@ -34,7 +39,8 @@ public class MenueplanGridLayout extends CustomComponent{
     // Konstanten
 	private static final int ROWS = 8;
     private static final int COLUMNS = 6;
-       
+    DDGridLayout layout = null;
+    
     // Seitenlayout erstellen
     public MenueplanGridLayout(int week, int year)  {
 	    setCaption("Kalenderwoche: " + week +"/"+year);
@@ -46,7 +52,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    setCompositionRoot(outer);
 	
 	    // DragDropGridLayout erstellen
-	    final DDGridLayout layout = new DDGridLayout(COLUMNS, ROWS);
+	    layout = new DDGridLayout(COLUMNS, ROWS);
 	    int width = COLUMNS*150; 
 	    int height = ROWS*100;
 	    layout.setWidth(width+"px");
@@ -78,14 +84,14 @@ public class MenueplanGridLayout extends CustomComponent{
 	    
 	    // Fülle Überschriftenspalte mit formatierten Labels
 	    @SuppressWarnings("deprecation")
-		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDatum</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nKöche</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 1</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nHauptgericht 2</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nVegetarisches Gericht</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nPastagericht</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nSalat / Suppe</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \nDessert</font></pre>", Label.CONTENT_XHTML)};
+		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Datum</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Köche</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht 1</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht 2</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Vegetarisches Gericht</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Pastagericht</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Salat / Suppe</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Dessert</font></pre>", Label.CONTENT_XHTML)};
 	    for (int i = 0; i < arlbUeb.length; i++) {
 	    	arlbUeb[i].setWidth("150px");
 	    	arlbUeb[i].setHeight("100px");
@@ -103,9 +109,11 @@ public class MenueplanGridLayout extends CustomComponent{
 	    						date.get(Calendar.MONTH) + "." + 
 	    						date.get(Calendar.YEAR);
 	    	
-	    	Label lbTmp = new Label(strDay +"\r\n"+strDate);
-	    	lbTmp.setWidth("140px");
-			layout.addComponent(lbTmp,col,0);	
+	    	@SuppressWarnings("deprecation")
+	    	Label lbTmp = new Label("<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;"+"\r\n"+strDay +"\r\n"+strDate, Label.CONTENT_XHTML);
+	    	lbTmp.setHeight("100px");
+	    	lbTmp.setWidth("149px");
+	    	layout.addComponent(lbTmp,col,0);
 	        layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
 	    }
 	    
@@ -114,13 +122,21 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	VerticalLayout vl = new VerticalLayout();
 	    	ComboBox koch1 = new ComboBox();
 	        ComboBox koch2 = new ComboBox();
-	    	koch1.setWidth("140px");
+	    	Label platzhalter=new Label();
+	        koch1.setWidth("140px");
 	    	koch1.addItem("Test");
 	    	koch2.setWidth("140px");
 	    	koch2.addItem("Test");
+	    	platzhalter.setHeight("5px");
 	    	vl.addComponent(koch1);
 	    	vl.addComponent(koch2);
-	    	layout.addComponent(vl,col,1);	
+	    	vl.addComponent(platzhalter);
+	    	vl.setWidth("149px");
+	    	vl.setHeight("100px");
+	    	vl.setComponentAlignment(koch1, Alignment.MIDDLE_CENTER);
+	    	vl.setComponentAlignment(koch2, Alignment.MIDDLE_CENTER);
+	    	vl.setComponentAlignment(platzhalter, Alignment.MIDDLE_CENTER);
+	    	layout.addComponent(vl,col,1);
 	        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 	    }
 	    
@@ -146,7 +162,10 @@ public class MenueplanGridLayout extends CustomComponent{
 	    for (int row = 2; row < ROWS; row++) {
 	        for (int col = 0; col < COLUMNS; col++) {
 	        	if(layout.getComponent(col, row)==null) {
-	        		Button btn = new Button("ADD");
+	        		Button btn = new Button();
+	        		btn.setStyleName(BaseTheme.BUTTON_LINK);
+	        		btn.setIcon(new ThemeResource("img/addIcon.png"));
+	        		btn.addStyleName("menueplan-add");
 	                btn.addClickListener(new ClickListener() {
 						
 	                	// Click-Listener für ADD_Buttons
@@ -168,6 +187,8 @@ public class MenueplanGridLayout extends CustomComponent{
 						}
 					});
 	                
+	        		btn.setHeight("100px");
+	        		btn.setWidth("149px");
 	                layout.addComponent(btn, col, row);
 	                layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 	        	}
@@ -176,4 +197,23 @@ public class MenueplanGridLayout extends CustomComponent{
 	    }
 	}
 
+    @SuppressWarnings("unused")
+	public void ersetzen(Component comp, int col, int row)
+    {
+    	
+        Integer compRow =-1;
+        Integer compColumn=-1;
+        
+//        final int COLUMNS = layout.getColumns();
+//        final int ROWS = layout.getRows();
+        
+        for (int i = 0; i < ROWS; i++) {
+	        for (int s = 0; s < COLUMNS; s++) {
+	        	if(comp.equals(layout.getComponent(col, row))) {
+	        		compColumn=col;
+	        		compRow=row;
+	        	}
+	        }
+        }
+    }
 }

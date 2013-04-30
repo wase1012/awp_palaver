@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
@@ -72,7 +73,7 @@ public class ZubereitungTest extends AbstractTest {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-
+	
 	@Test
 	public void createZubereitung() throws ConnectException, DAOException,
 			SQLException {

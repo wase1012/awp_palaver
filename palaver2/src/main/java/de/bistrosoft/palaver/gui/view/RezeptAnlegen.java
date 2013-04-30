@@ -6,210 +6,323 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import sun.security.jca.GetInstance;
+
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.ViewHandler;
 
 /**
  * @author Jan Lauinger
  * 
  */
+@SuppressWarnings("serial")
 public class RezeptAnlegen extends VerticalLayout {
 
 	private VerticalLayout box = new VerticalLayout();
 
-	//Labelfeld
-	private Label ueberschrift = new Label("<pre><b><font size='4' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anlegen</font><b></pre>",Label.CONTENT_XHTML);
-	
-	//Text Felder
-	private TextField bezeichnung = new TextField("Bezeichnung");
-	private TextField rezeptersteller = new TextField("Rezeptersteller");
+	private Label ueberschrift = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anlegen</font><b></pre>",
+			Label.CONTENT_XHTML);
+
 	private TextField portion = new TextField("Portion");
-	
-	//Checkboxen
-	private CheckBox herd = new CheckBox("Herd");
-	private CheckBox konvektomat = new CheckBox("Konvektomat");
-	
-	//Combofeld
-	private ComboBox art = new ComboBox("Rezeptart");
-	private ComboBox geschmack = new ComboBox("Geschmack");
-	
-	//Twincolselect
-	private TwinColSelect fussnoten = new TwinColSelect();
-	
-	//Textarea
+	private TextField name = new TextField("Bezeichnung");
+
+	private ComboBox mitarbeiterCb = new ComboBox("Koch");
+	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
+	private ComboBox geschmackCb = new ComboBox("Geschmack");
+
 	private TextArea kommentar = new TextArea("Kommentar");
 	
-	//Buttons
+	private TextField geschmacktest = new TextField();
+	
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
-	private Button zutatenhinzufuegen = new Button("Zutaten hinzufügen");
 
-	//Tabelle
-	private Table zutaten = new Table("Zutaten");
+	private String nameInput;
+	private String portionInput;
+	private String kommentarInput;
+	private String geschmackInput;
+	private String rezeptartInput;
+	private String mitarbeiterInput;
 
 	public RezeptAnlegen() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
-		
-		
-        //Prozedur, welche gestartet wird, wenn man auf den Button verwerfen klickt
-		// diese führt die Funktion felderLeeren aus
-		verwerfen.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				felderLeeren();
+		name.setWidth("100%");
+		portion.setWidth("100%");
+		mitarbeiterCb.setWidth("100%");
+		rezeptartCb.setWidth("100%");
+		geschmackCb.setWidth("100%");
+		kommentar.setWidth("100%");
 
-				Notification.show("Rezept wurde verworfen",
-						Type.TRAY_NOTIFICATION);
-			}
-		});
-        
-		//Prozedur, welche gestartet wird, wenn man auf den Button speichernn klickt
-		// diese führt die Funktion felderLeeren aus
-		//Datensätze werden in der DB gespeichert (noch nicht)
-		speichern.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				felderLeeren();
+//		portion.setEnabled(false);
 
-				Notification.show("Rezept wurde erfolgreich gespeichert",
-						Type.TRAY_NOTIFICATION);
-			}
-		});	
-		
-		
-        //vertikales Layout auf die Seite legen
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-		
-		//neue Horizontale Layouts einfuegen 
-		HorizontalLayout subBox = new HorizontalLayout();				
-		HorizontalLayout control = new HorizontalLayout();
-				
-		//Eigenschaften der Felder anpassen
 		box.setWidth("300px");
 		box.setSpacing(true);
-		bezeichnung.setWidth("100%");
-		rezeptersteller.setWidth("100%");
-		kommentar.setWidth("100%");
-		portion.setWidth("100%");
-		portion.setValue("30");
-		portion.setReadOnly(true);
-		fussnoten.setMultiSelect(true);
-		fussnoten.setLeftColumnCaption("Auswahl");
-		fussnoten.setRightColumnCaption("ausgewaehlte Fussnoten");
-		subBox.setWidth("100%");
-		control.setSpacing(true);
-		
-		
-		
-		//Komponenten zum Layout 'subBox' hinzufuegen
-		subBox.addComponent(herd);
-		subBox.addComponent(konvektomat);		
-		
-		
-        //Komponenten zum Layout 'box' hinzufuegen
-		box.addComponent(ueberschrift);
-		box.addComponent(bezeichnung);
-		box.addComponent(rezeptersteller);
-		box.addComponent(portion);
-		box.addComponent(geschmack);
-		box.addComponent(art);
-		box.addComponent(subBox);
-		box.addComponent(fussnoten);
-        box.addComponent(zutaten);
-		box.addComponent(zutatenhinzufuegen);
-		box.addComponent(kommentar);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_LEFT);
 
-		//Komponenten zum Layout 'control' hinzufuegen
+		// sample = new NativeSelect("Select an option");
+
+		this.addComponent(box);
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		box.addComponent(ueberschrift);
+		box.addComponent(name);
+		box.addComponent(portion);
+		box.addComponent(mitarbeiterCb);
+		box.addComponent(rezeptartCb);
+		box.addComponent(geschmackCb);
+		box.addComponent(kommentar);
+		box.addComponent(geschmacktest);
+
+		name.setImmediate(true);
+		name.setInputPrompt(nameInput);
+		name.setMaxLength(150);
+
+		portion.setImmediate(true);
+		portion.setInputPrompt(portionInput);
+		portion.setMaxLength(150);
+//		portion.setColumns(portionInput);
+
+		geschmackCb.setImmediate(true);
+		geschmackCb.setInputPrompt(geschmackInput);
+		geschmackCb.setNullSelectionAllowed(false);
+//		geschmackCb.setConvertedValue(geschmackInput);
+		
+
+		rezeptartCb.setImmediate(true);
+		rezeptartCb.setInputPrompt(rezeptartInput);
+		geschmackCb.setNullSelectionAllowed(false);
+
+		mitarbeiterCb.setImmediate(true);
+		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
+		geschmackCb.setNullSelectionAllowed(false);
+		load();
+
+		kommentar.setImmediate(true);
+		kommentar.setInputPrompt(kommentarInput);
+		kommentar.setMaxLength(1000);
+
+		HorizontalLayout control = new HorizontalLayout();
+		control.setSpacing(true);
+		box.addComponent(control);
+		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
-        
-		
-		//Prozeduren ausführen
-		geschmackAdd();
-		artAdd();
-		fussnotenAdd();
-		zutatenAdd();
-		
-	}
-    // mit der Prozedur felderLeeren wrden die Ihnalte aus den Feldern geloescht
-	private void felderLeeren() {
-		bezeichnung.setValue("");
-		rezeptersteller.setValue("");
-		geschmack.setValue(null);
-		art.setValue(null);
-		fussnoten.removeAllItems();
-		zutaten.removeAllItems();
-		kommentar.setValue("");
-		herd.setValue(false);
-		konvektomat.setValue(false);
-		fussnotenAdd();
-	}
-    //artAdd fuegt die Rezeptarten in die Combobox 'art'
-	private void artAdd() {
-		art.addItem(1);
-		art.setItemCaption(1, "Hauptgericht");
-		art.addItem(2);
-		art.setItemCaption(2, "Suppe");
-		art.addItem(3);
-		art.setItemCaption(3, "Beilage");
-	}
-    //fussnotenAdd fuegt die Fussnoten in die Twincolselect 'fussnoten' ein 
-	private void fussnotenAdd() {
-		fussnoten.addItem(1);
-		fussnoten.setItemCaption(1, "Rindfleisch ");
-		fussnoten.addItem(2);
-		fussnoten.setItemCaption(2, "ohne Zwiebel");
-		fussnoten.addItem(3);
-		fussnoten.setItemCaption(3, "Tomaten");
-		fussnoten.addItem(4);
-		fussnoten.setItemCaption(4, "vegetarisch");
-		fussnoten.addItem(5);
-		fussnoten.setItemCaption(5, "vegan");
-		fussnoten.addItem(6);
-		fussnoten.setItemCaption(6, "Nuesse");
-	}
-	 //zutatennAdd fuegt die Zutaten in die Tabelle 'zutaten' ein 
-	//bruacht man spaeter nicht mehr
-	private void zutatenAdd() {
-		zutaten.addContainerProperty("Bezeichnug", String.class, null);
-		zutaten.addContainerProperty("Menge", Integer.class, null);
-		zutaten.addContainerProperty("Mengeneinheit", String.class, null);
-		zutaten.addContainerProperty("Typ", String.class, null);
+		speichern.setIcon(new ThemeResource("img/save.ico"));
+		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 
-		zutaten.addItem(
-				new Object[] { "Hackfleisch", 3500, "g", "Hauptzutat" },
-				new Integer(1));
-		zutaten.addItem(new Object[] { "Tomaten", 10, "st", "Hauptzutat" },
-				new Integer(2));
-		zutaten.addItem(new Object[] { "Käse", 1000, "g", "Hauptzutat" },
-				new Integer(3));
-		zutaten.addItem(new Object[] { "Salz", 3, "g", "Standard" },
-				new Integer(4));
+		name.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				nameInput = valueString;
+			}
+		});
+
+		portion.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				portionInput = valueString;
+			}
+		});
+		kommentar.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				kommentarInput = valueString;
+			}
+		});
+		geschmackCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				geschmackInput = valueString;
+			}
+		});
+		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				rezeptartInput = valueString;
+			}
+		});
+		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				mitarbeiterInput = valueString;
+			}
+		});
+
+		speichern.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				final Window dialog = new Window();
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
+
+				Label message = new Label("Rezept gespeichert");
+
+				Button okButton = new Button("OK");
+
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton,
+						Alignment.BOTTOM_RIGHT);
+
+				UI.getCurrent().addWindow(dialog);
+				Rezept rezept = new Rezept();
+				rezept.setName(nameInput);
+				//Achtung dieses Konvertieren geht net
+				
+				try {
+					rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					rezept.setRezeptart(RezeptartDAO.getInstance().getRezeptartById(Long.parseLong(rezeptartInput.toString())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}//getRezeptart().setId(
+						//Long.parseLong(rezeptartInput.toString()));
+				rezept.setKommentar(kommentarInput);
+				rezept.setPortion(Integer.parseInt(portionInput.toString()));
+				try {
+					rezept.setMitarbeiter(MitarbeiterDAO.getInstance().getMitarbeiterById(Long.parseLong(mitarbeiterInput.toString())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//getMitarbeiter().setId(Long.parseLong(mitarbeiterInput.toString()));
+				geschmacktest.setValue(geschmackInput);
+
+				try {
+					Rezeptverwaltung.getInstance().createRezept(rezept);
+				} catch (ConnectException | DAOException | SQLException e) {
+					e.printStackTrace();
+				}
+
+				okButton.addClickListener(new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						UI.getCurrent().removeWindow(dialog);
+						ViewHandler.getInstance().returnToDefault();
+					}
+				});
+			}
+		});
+
 	}
-	 //geschmacknAdd fuegt die Geschmacksrichtungen in die Combobox 'geschmack' ein 
-	private void geschmackAdd() {
-		geschmack.addItem(1);
-		geschmack.setItemCaption(1, "klassisch");
-		geschmack.addItem(2);
-		geschmack.setItemCaption(2, "exotisch");
+
+	public void load() {
+		try {
+			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
+					.getAllGeschmack();
+			for (Geschmack e : geschmack) {
+				geschmackCb.addItem(e.getId());
+				geschmackCb.setItemCaption(e.getId(), e.getName());
+
+			}
+
+			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
+					.getAllMitarbeiter();
+			for (Mitarbeiter e : mitarbeiter) {
+				//mitarbeiterCb.addItem(e);
+				mitarbeiterCb.addItem(e.getId());
+				mitarbeiterCb.setItemCaption(e.getId(), e.getName());
+			}
+
+			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
+					.getAllRezeptart();
+			for (Rezeptart e : rezeptart) {
+				rezeptartCb.addItem(e.getId());
+				rezeptartCb.setItemCaption(e.getId(), e.getName());
+			}
+
+		} catch (ConnectException | DAOException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

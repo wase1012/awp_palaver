@@ -38,11 +38,9 @@ public class Mitarbeiter implements java.io.Serializable {
 	private String passwort;
 	private String eintrittsdatum;
 	private String austrittsdatum;
-	private Set<Rezept> rezepts = new HashSet<Rezept>(0);
-	private Set<Schichtplan> schichtplans = new HashSet<Schichtplan>(0);
-	private Set<Menue> menues = new HashSet<Menue>(0);
 	private Set<Nachricht> nachrichten = new HashSet<Nachricht>(0);
 	private Set<Rollen> rollens = new HashSet<Rollen>(0);
+
 
 
 	public Mitarbeiter(){
@@ -54,10 +52,15 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.vorname = vorname;
 	}
 
+	public Mitarbeiter(Long id, String name, String vorname) {
+		this.id = id;
+		this.name = name;
+		this.vorname = vorname;
+	}
+
 	public Mitarbeiter(String name, String vorname, String email,
 			String passwort, String eintrittsdatum, String austrittsdatum,
-			Set<Rezept> rezepts, Set<Schichtplan> schichtplans,
-			Set<Menue> menues, Set<Nachricht> nachrichten,
+			 Set<Nachricht> nachrichten,
 			Set<Rollen> rollens) {
 		this.name = name;
 		this.vorname = vorname;
@@ -65,9 +68,7 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.passwort = passwort;
 		this.eintrittsdatum = eintrittsdatum;
 		this.austrittsdatum = austrittsdatum;
-		this.rezepts = rezepts;
-		this.schichtplans = schichtplans;
-		this.menues = menues;
+		
 		this.nachrichten = nachrichten;
 		this.rollens = rollens;
 	}
@@ -137,32 +138,6 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.austrittsdatum = austrittsdatum;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiter")
-	public Set<Rezept> getRezepts() {
-		return this.rezepts;
-	}
-
-	public void setRezepts(Set<Rezept> rezepts) {
-		this.rezepts = rezepts;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiter")
-	public Set<Schichtplan> getSchichtplans() {
-		return this.schichtplans;
-	}
-
-	public void setSchichtplans(Set<Schichtplan> schichtplans) {
-		this.schichtplans = schichtplans;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiter")
-	public Set<Menue> getMenues() {
-		return this.menues;
-	}
-
-	public void setMenues(Set<Menue> menues) {
-		this.menues = menues;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY)
 	public Set<Nachricht> getNachrichten() {
@@ -193,16 +168,15 @@ public class Mitarbeiter implements java.io.Serializable {
 				+ ((eintrittsdatum == null) ? 0 : eintrittsdatum.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((menues == null) ? 0 : menues.hashCode());
+		
 		result = prime * result
 				+ ((nachrichten == null) ? 0 : nachrichten.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((passwort == null) ? 0 : passwort.hashCode());
-		result = prime * result + ((rezepts == null) ? 0 : rezepts.hashCode());
+		
 		result = prime * result + ((rollens == null) ? 0 : rollens.hashCode());
-		result = prime * result
-				+ ((schichtplans == null) ? 0 : schichtplans.hashCode());
+		
 		result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
 		return result;
 	}
@@ -236,11 +210,6 @@ public class Mitarbeiter implements java.io.Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (menues == null) {
-			if (other.menues != null)
-				return false;
-		} else if (!menues.equals(other.menues))
-			return false;
 		if (nachrichten == null) {
 			if (other.nachrichten != null)
 				return false;
@@ -256,20 +225,10 @@ public class Mitarbeiter implements java.io.Serializable {
 				return false;
 		} else if (!passwort.equals(other.passwort))
 			return false;
-		if (rezepts == null) {
-			if (other.rezepts != null)
-				return false;
-		} else if (!rezepts.equals(other.rezepts))
-			return false;
 		if (rollens == null) {
 			if (other.rollens != null)
 				return false;
 		} else if (!rollens.equals(other.rollens))
-			return false;
-		if (schichtplans == null) {
-			if (other.schichtplans != null)
-				return false;
-		} else if (!schichtplans.equals(other.schichtplans))
 			return false;
 		if (vorname == null) {
 			if (other.vorname != null)
@@ -281,12 +240,7 @@ public class Mitarbeiter implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Mitarbeiter [id=" + id + ", name=" + name + ", vorname="
-				+ vorname + ", email=" + email + ", passwort=" + passwort
-				+ ", eintrittsdatum=" + eintrittsdatum + ", austrittsdatum="
-				+ austrittsdatum + ", rezepts=" + rezepts + ", schichtplans="
-				+ schichtplans + ", menues=" + menues + ", nachrichtens="
-				+ nachrichten + ", rollens=" + rollens + "]";
+		return name;
 	}
 
 

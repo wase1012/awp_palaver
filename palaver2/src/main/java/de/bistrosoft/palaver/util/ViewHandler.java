@@ -12,8 +12,6 @@ import de.bistrosoft.palaver.gui.layout.DefaultView;
 public class ViewHandler {
 	private static ViewHandler instance = null;
 
-	private Class<? extends VerticalLayout> currentView = DefaultView.class;
-
 	private ViewHandler() {
 		super();
 	}
@@ -40,10 +38,17 @@ public class ViewHandler {
 										MainLayout.getInstance()
 												.getComponentCount() - 1), 1);
 			}
-		} catch (InstantiationException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			MainLayout.getInstance().addComponent(new DefaultView());
+			MainLayout.getInstance().setExpandRatio(
+					MainLayout.getInstance().getComponent(
+							MainLayout.getInstance().getComponentCount() - 1),
+					1);
 		}
+	}
+
+	public void returnToDefault() {
+		switchView(DefaultView.class);
 	}
 }

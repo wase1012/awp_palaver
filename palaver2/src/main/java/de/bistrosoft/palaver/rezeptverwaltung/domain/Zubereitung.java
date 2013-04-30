@@ -116,8 +116,7 @@ public class Zubereitung implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Zubereitung [id=" + id + ", name=" + name
-				+ ", rezeptHasZubereitungs=" + rezeptHasZubereitungs + "]";
+		return name;
 	}
 
 }

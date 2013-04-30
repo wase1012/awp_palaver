@@ -25,7 +25,7 @@ public class MenueAddComponent extends CustomComponent implements Component.List
 		setCompositionRoot(vl);
 		
 		Label lbText = new Label();
-		lbText.setIcon(new ThemeResource("../icons/add2_64.png"));
+		lbText.setIcon(new ThemeResource("../icons/addIcon.png"));
 		vl.addComponent(lbText);
 	}
 

@@ -133,7 +133,7 @@ public class MainLayout extends VerticalLayout implements Command
 		    }
 		if (selectedItem.getText().equals("Suchen"))
 			    {
-			      ViewHandler.getInstance().switchView(RezeptSuchen.class);
+			      ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
 	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 	    {
