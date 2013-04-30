@@ -81,6 +81,13 @@ public class Lieferantenverwaltung extends LieferantDAO {
 		return lieferant;
 	}
 
+	public Lieferant getLastLieferant() throws ConnectException, DAOException,
+			SQLException {
+		List<Lieferant> lieferanten = super.getAllLieferanten();
+		return lieferanten.get(lieferanten.size() - 1);
+	}
+	
+
 	/**
 	 * Die Methode erzeugt einen Lieferant.
 	 * 
