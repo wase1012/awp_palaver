@@ -49,7 +49,7 @@ public class NachrichtTest extends AbstractTest {
     @Test
     public void findNachrichtById() {
     	
-    	Long id = Long.valueOf(2);
+    	Long id = Long.valueOf(1);
 
 		Nachricht nachricht = null;;
 		try {
