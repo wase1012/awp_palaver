@@ -75,7 +75,7 @@ public class NachrichtDAO extends AbstractDAO {
 		}
 		List<Nachricht> list = new ArrayList<Nachricht>();
 		
-		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle));
+		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle.getId()));
 
 		while(set.next())
 		{

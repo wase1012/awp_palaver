@@ -68,6 +68,22 @@ public class NachrichtTest extends AbstractTest {
 		assertThat(nachricht.getId(), is(id));
     }
     
+    @Test
+    public void findNachrichtByRolle() throws ConnectException, DAOException, SQLException {
+    	
+    	Long id = Long.valueOf(1);
+    	Rollen rolle = rdao.getRollenById(id);
+    	List<Nachricht> nachrichten = null;
+		try {
+			nachrichten = ndao.getNachrichtByRolle(rolle);
+		} catch (ConnectException | DAOException | SQLException e) {
+			throw new NullPointerException("fehler");
+		} 
+
+		assertThat(nachrichten.isEmpty(), is(false));
+    	
+    }
+    
     /**
      * Test, eine neue Nachricht anzulegen, in die Datenbank zu schreiben
      */
