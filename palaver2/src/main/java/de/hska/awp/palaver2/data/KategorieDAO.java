@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Mihail Boehm
@@ -47,6 +46,10 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	/**
+	 * Die Methode getAllKategories liefert alle in der Datenbank befindlichen
+	 * Kategorien zurück.
+	 * 
+	 * 
 	 * @author Mihail Boehm
 	 * @return KategorieListe
 	 * @throws ConnectException
@@ -65,6 +68,10 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	/**
+	 * Die Methode getKategorieById liefert ein Ergebniss zurück bei der Suche
+	 * nach einer Kategorie in der Datenbank.
+	 * 
+	 * 
 	 * @author Mihail Boehm
 	 * @param id
 	 * @return kategorie (id + name)
@@ -83,6 +90,8 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	/**
+	 * Die Methode erzeugt eine Kategorie in der Datenbank.
+	 * 
 	 * @author Mihail Boehm
 	 * @param kategorie
 	 * @throws ConnectException
@@ -98,6 +107,8 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	/**
+	 * Die Methode aktualisiert eine Kategorie in der Datenbank.
+	 * 
 	 * @author Mihail Boehm
 	 * @param kategorie
 	 * @throws ConnectException
