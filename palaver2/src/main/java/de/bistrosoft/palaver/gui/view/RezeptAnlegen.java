@@ -9,6 +9,8 @@ package de.bistrosoft.palaver.gui.view;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -17,6 +19,9 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -28,11 +33,12 @@ import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.ViewHandler;
-import de.bistrosoft.palaver.util.IConstants;
 
 /**
  * @author Jan Lauinger
@@ -55,9 +61,18 @@ public class RezeptAnlegen extends VerticalLayout {
 	private ComboBox geschmackCb = new ComboBox("Geschmack");
 
 	private TextArea kommentar = new TextArea("Kommentar");
-
+	
+	private TextField geschmacktest = new TextField();
+	
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
+
+	private String nameInput;
+	private String portionInput;
+	private String kommentarInput;
+	private String geschmackInput;
+	private String rezeptartInput;
+	private String mitarbeiterInput;
 
 	public RezeptAnlegen() {
 		super();
@@ -70,10 +85,12 @@ public class RezeptAnlegen extends VerticalLayout {
 		geschmackCb.setWidth("100%");
 		kommentar.setWidth("100%");
 
-		portion.setEnabled(false);
+//		portion.setEnabled(false);
 
 		box.setWidth("300px");
 		box.setSpacing(true);
+
+		// sample = new NativeSelect("Select an option");
 
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
@@ -84,6 +101,36 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(rezeptartCb);
 		box.addComponent(geschmackCb);
 		box.addComponent(kommentar);
+		box.addComponent(geschmacktest);
+
+		name.setImmediate(true);
+		name.setInputPrompt(nameInput);
+		name.setMaxLength(150);
+
+		portion.setImmediate(true);
+		portion.setInputPrompt(portionInput);
+		portion.setMaxLength(150);
+//		portion.setColumns(portionInput);
+
+		geschmackCb.setImmediate(true);
+		geschmackCb.setInputPrompt(geschmackInput);
+		geschmackCb.setNullSelectionAllowed(false);
+		geschmackCb.setConvertedValue(geschmackInput);
+		
+		geschmacktest.setValue(geschmackInput);
+
+		rezeptartCb.setImmediate(true);
+		rezeptartCb.setInputPrompt(rezeptartInput);
+		geschmackCb.setNullSelectionAllowed(false);
+
+		mitarbeiterCb.setImmediate(true);
+		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
+		geschmackCb.setNullSelectionAllowed(false);
+		load();
+
+		kommentar.setImmediate(true);
+		kommentar.setInputPrompt(kommentarInput);
+		kommentar.setMaxLength(1000);
 
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
@@ -94,6 +141,62 @@ public class RezeptAnlegen extends VerticalLayout {
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
 		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
+
+		name.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				nameInput = valueString;
+			}
+		});
+
+		portion.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				portionInput = valueString;
+			}
+		});
+		kommentar.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				kommentarInput = valueString;
+			}
+		});
+		geschmackCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				geschmackInput = valueString;
+			}
+		});
+		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				rezeptartInput = valueString;
+			}
+		});
+		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				mitarbeiterInput = valueString;
+			}
+		});
 
 		speichern.addClickListener(new ClickListener() {
 			@Override
@@ -122,6 +225,22 @@ public class RezeptAnlegen extends VerticalLayout {
 						Alignment.BOTTOM_RIGHT);
 
 				UI.getCurrent().addWindow(dialog);
+				Rezept rezept = new Rezept();
+				rezept.setName(nameInput);
+				//Achtung dieses Konvertieren geht net
+				rezept.getGeschmack().setName(geschmackInput);
+				rezept.getRezeptart().setId(
+						Long.parseLong(rezeptartInput.toString()));
+				rezept.setKommentar(kommentarInput);
+				rezept.setPortion(Integer.parseInt(portionInput.toString()));
+				rezept.getMitarbeiter().setId(
+						Long.parseLong(mitarbeiterInput.toString()));
+
+				try {
+					Rezeptverwaltung.getInstance().createRezept(rezept);
+				} catch (ConnectException | DAOException | SQLException e) {
+					e.printStackTrace();
+				}
 
 				okButton.addClickListener(new ClickListener() {
 					@Override
@@ -132,7 +251,7 @@ public class RezeptAnlegen extends VerticalLayout {
 				});
 			}
 		});
-		load();
+
 	}
 
 	public void load() {
@@ -160,4 +279,5 @@ public class RezeptAnlegen extends VerticalLayout {
 			e.printStackTrace();
 		}
 	}
+
 }
