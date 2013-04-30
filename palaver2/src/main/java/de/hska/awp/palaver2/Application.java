@@ -6,6 +6,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
@@ -69,6 +70,7 @@ public class Application extends UI
 //            }
 //        });
 //        layout.addComponent(button);
-        layout.addComponent(MainLayout.getInstance());
+//        layout.addComponent(MainLayout.getInstance());
+        layout.addComponent(new LoginForm());
     }
 }

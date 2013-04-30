@@ -85,3 +85,7 @@
 .dialog-window .v-window-contents {
 	background: #eeeeee;
 }
+
+.palaver-login {
+	background: transparent url('img/login_form.png') no-repeat left top;
+}

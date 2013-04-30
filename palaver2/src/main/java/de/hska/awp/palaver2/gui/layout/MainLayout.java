@@ -8,6 +8,7 @@ import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
@@ -84,6 +85,8 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		this.addComponent(menu);
 		
+		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
+		
 		DefaultView content = new DefaultView();
 		this.addComponent(content);
 		this.setExpandRatio(content, 1);
@@ -123,6 +126,9 @@ public class MainLayout extends VerticalLayout implements Command
 			break;
 			case IConstants.MENU_MENGENEINHEIT_ANZEIGEN:
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+			break;
+			case IConstants.MENU_LOGOUT:
+				UI.getCurrent().setContent(new LoginForm());
 			break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);

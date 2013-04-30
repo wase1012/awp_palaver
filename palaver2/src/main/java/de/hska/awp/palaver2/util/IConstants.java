@@ -22,6 +22,7 @@ public interface IConstants
 	public final String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
 	public final String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten";
 	public final String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
+	public final String		MENU_LOGOUT = "Logout";
 	
 	public final String		BUTTON_SHOW_FILTER = "Filter anzeigen";
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
