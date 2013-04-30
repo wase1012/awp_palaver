@@ -28,7 +28,8 @@ public class MenueplanGridLayout extends CustomComponent{
     // Konstanten
 	private static final int ROWS = 8;
     private static final int COLUMNS = 6;
-       
+    DDGridLayout layout = null;
+    
     // Seitenlayout erstellen
     public MenueplanGridLayout(int week, int year) {
 	    setCaption("Kalenderwoche: " + week +"/"+year);
@@ -40,7 +41,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    setCompositionRoot(outer);
 	
 	    // DragDropGridLayout erstellen
-	    final DDGridLayout layout = new DDGridLayout(COLUMNS, ROWS);
+	    layout = new DDGridLayout(COLUMNS, ROWS);
 	    int width = COLUMNS*150; 
 	    int height = ROWS*100;
 	    layout.setWidth(width+"px");
@@ -132,7 +133,6 @@ public class MenueplanGridLayout extends CustomComponent{
 	    for (int row = 2; row < ROWS; row++) {
 	        for (int col = 0; col < COLUMNS; col++) {
 	        	if(layout.getComponent(col, row)==null) {
-//	        		MenueAddComponent btn = new MenueAddComponent();
 	        		Button btn = new Button("ADD");
 	                btn.addClickListener(new ClickListener() {
 						
@@ -155,14 +155,31 @@ public class MenueplanGridLayout extends CustomComponent{
 						}
 					});
 	                
-	    	    	btn.setWidth("149px");
-	    	    	btn.setHeight("100px");
 	        		layout.addComponent(btn, col, row);
-	                //layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+	                layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 	        	}
 	                
 	        }
 	    }
 	}
 
+    @SuppressWarnings("unused")
+	public void ersetzen(Component comp, int col, int row)
+    {
+    	
+        Integer compRow =-1;
+        Integer compColumn=-1;
+        
+//        final int COLUMNS = layout.getColumns();
+//        final int ROWS = layout.getRows();
+        
+        for (int i = 0; i < ROWS; i++) {
+	        for (int s = 0; s < COLUMNS; s++) {
+	        	if(comp.equals(layout.getComponent(col, row))) {
+	        		compColumn=col;
+	        		compRow=row;
+	        	}
+	        }
+        }
+    }
 }
