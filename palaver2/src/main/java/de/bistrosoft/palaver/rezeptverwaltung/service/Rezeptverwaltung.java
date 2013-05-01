@@ -6,6 +6,8 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
+import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.FussnoteDAO;
@@ -38,48 +40,58 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return instance;
 	}
 
-//	public List<Rezept> getAllRezept() throws ConnectException, DAOException,
-//			SQLException {
-//		List<Rezept> result = null;
-//
-//		result = super.getAllRezept();
-//
-//		return result;
-//	}
-//
-//	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
-//			SQLException {
-//		Rezept result = null;
-//
-//		result = super.getRezeptById(id);
-//
-//		return result;
-//	}
-//
-//	public List<Rezept> getRezeptByName(String name) throws ConnectException,
-//			DAOException, SQLException {
-//		List<Rezept> result = null;
-//
-//		result = super.getRezeptByName(name);
-//
-//		return result;
-//	}
+	// public List<Rezept> getAllRezept() throws ConnectException, DAOException,
+	// SQLException {
+	// List<Rezept> result = null;
+	//
+	// result = super.getAllRezept();
+	//
+	// return result;
+	// }
+	//
+	// public Rezept getRezeptById(Long id) throws ConnectException,
+	// DAOException,
+	// SQLException {
+	// Rezept result = null;
+	//
+	// result = super.getRezeptById(id);
+	//
+	// return result;
+	// }
+	//
+	// public List<Rezept> getRezeptByName(String name) throws ConnectException,
+	// DAOException, SQLException {
+	// List<Rezept> result = null;
+	//
+	// result = super.getRezeptByName(name);
+	//
+	// return result;
+	// }
 
 	public void createRezept(Rezept Rezept) throws ConnectException,
 			DAOException, SQLException {
 		super.createRezept(Rezept);
 	}
 
-//	public void updateRezept(Rezept Rezept) throws ConnectException,
-//			DAOException {
-//		super.updateRezept(Rezept);
-//	}
+	// public void updateRezept(Rezept Rezept) throws ConnectException,
+	// DAOException {
+	// super.updateRezept(Rezept);
+	// }
 
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> result = null;
 
 		result = ZubereitungDAO.getInstance().getAllZubereitung();
+
+		return result;
+	}
+
+	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
+			DAOException, SQLException {
+		List<Artikel> result = null;
+
+		result = ArtikelDAO.getInstance().getAllArtikel();
 
 		return result;
 	}
