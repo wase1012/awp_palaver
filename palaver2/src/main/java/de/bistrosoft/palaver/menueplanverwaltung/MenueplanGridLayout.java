@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -20,11 +19,9 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-import de.bistrosoft.palaver.data.ConnectException;
-import de.bistrosoft.palaver.data.DAOException;
-import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -37,10 +34,16 @@ public class MenueplanGridLayout extends CustomComponent{
     // Konstanten
 	private static final int ROWS = 8;
     private static final int COLUMNS = 6;
-    DDGridLayout layout = null;
+    private DDGridLayout layout = null;
+    private Menueplan menueplan=null;
     
     // Seitenlayout erstellen
     public MenueplanGridLayout(int week, int year)  {
+    	System.out.println(week+"/"+year);
+    	menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeek(new Week(week,year));
+    	if (menueplan==null){
+    		menueplan = new Menueplan(new Week(week,year));
+    	}
 	    setCaption("Kalenderwoche: " + week +"/"+year);
 	    setSizeFull();
 	
@@ -138,48 +141,18 @@ public class MenueplanGridLayout extends CustomComponent{
 	        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 	    }
 	    
-	    //Füge MenueItems aus DB ein
-	    MenueplanDAO tmp = new MenueplanDAO();
-	    Long id=0L;
-		try {
-			Menueplan mpl=tmp.getMenuePlanByWeek(new Week(week,year));
-			if (mpl!=null){
-				id = mpl.getId();
-			}
-			
-		} catch (ConnectException | DAOException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	    List<MenueplanItem> items=null;
-		if (id==0){
-			try {
-				items = tmp.getItemsForMenueplan(id);
-			} catch (ConnectException | DAOException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    if(items!=null){
-		    	for (MenueplanItem i : items){
-			    	MenueComponent comp = new MenueComponent(i.getMenue(), layout,i.getSpalte(),i.getZeile()); 
-			    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
-			    }
-		    }
-		}
-	    
-	    try {
-			items = tmp.getItemsForMenueplan(id);
-		} catch (ConnectException | DAOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    if(items!=null){
-	    	for (MenueplanItem i : items){
-		    	MenueComponent comp = new MenueComponent(i.getMenue(), layout,i.getSpalte(),i.getZeile()); 
-		    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
-		    }
+	    //Füge MenueItems ein
+	    System.out.println("Items einfügen");
+	    if (menueplan!=null){
+	    	System.out.println("menueplan!=null");
+	    	if (menueplan.getMenues()!=null){
+	    		System.out.println("menueplan.getMenues()!=null");
+	    		for (MenueComponent mc : menueplan.getMenues()){
+	    			System.out.println(mc.getMenue().getName()+"-"+mc.getCol()+"-"+mc.getRow());
+	    			layout.addComponent(mc, mc.getCol(), mc.getRow());
+	    		}
+	    	}
 	    }
-	    
 	    
 	    // Füge ADD Buttons in noch leere Felder ein
 	    for (int row = 2; row < ROWS; row++) {
@@ -219,6 +192,38 @@ public class MenueplanGridLayout extends CustomComponent{
 	        }
 	    }
 	}
+    
+    public void speichern(){
+    	
+    	//Extrahiere Menüs
+    	List<MenueComponent> menues = new ArrayList<>();
+    	for (int col=0;col<COLUMNS;++col){
+			for (int row=0;row<ROWS;++row){
+				Component comp = layout.getComponent(col, row);
+				if (MenueComponent.class.isInstance(comp)){
+					MenueComponent menueComp = (MenueComponent) comp;
+					menueComp.setCol(col);
+					menueComp.setRow(row);
+					menues.add(menueComp);
+//					if (menueComp.isChanged()){
+//						//menueplan,menue, spalte, zeile
+//						Menue menue = menueComp.getMenue();
+//						Long menueId = menue.getId();
+//						System.out.println(row+"-"+col);
+//						menueComp.isChanged(false);
+//					}
+//					menueComp.
+					
+				}
+			}
+		}
+    	menueplan.setMenues(menues);
+    	//Extrahiere Köche
+    	List<Mitarbeiter> koeche = new ArrayList<>();
+    	
+    	menueplan.setKoeche(koeche);
+    	Menueplanverwaltung.getInstance().persist(menueplan);
+    }
 
     @SuppressWarnings("unused")
 	public void ersetzen(Component comp, int col, int row)

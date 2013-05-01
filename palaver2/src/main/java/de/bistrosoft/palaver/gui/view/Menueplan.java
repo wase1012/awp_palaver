@@ -75,6 +75,18 @@ public class Menueplan extends VerticalLayout{
 		hlChangeWeek.addComponent(btCurWeek);
 		hlChangeWeek.addComponent(btNextWeek);
 		box.addComponent(hlChangeWeek);
+		Button btSpeichern = new Button("Speichern");
+        
+		btSpeichern.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				//alle felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
+				shownMenueplan.speichern();
+			}
+		});
+		
+		box.addComponent(btSpeichern);
 		/////////////
 		
 		

@@ -25,19 +25,55 @@ import fi.jasoft.dragdroplayouts.DDGridLayout;
 @SuppressWarnings("serial")
 public class MenueComponent extends CustomComponent{
 	
-	Component comp;
+	private Component comp;
 	public int row;
 	public int col;
-	DDGridLayout menueGrid;
-	Button btn = new Button();
-	Button btDelete = new Button("Löschen");
+	private DDGridLayout menueGrid;
+	private Button btn = new Button();
+	private Button btDelete = new Button("Löschen");
+	private Menue menue;
+	private Boolean isChanged;
 	
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
+	public Menue getMenue() {
+		return menue;
+	}
+
+	public void setMenue(Menue menue) {
+		this.menue = menue;
+	}
+
+	public Boolean isChanged() {
+		return isChanged;
+	}
+
+	public void isChanged(Boolean isChanged) {
+		this.isChanged = isChanged;
+	}
+
 	// Konstruktor für Menükomponente 
-	public MenueComponent(Menue menue, DDGridLayout nMenueGrid, int nRow, int nCol){
+	public MenueComponent(Menue menue, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
+		this.isChanged = isChanged;
 		col = nCol;
 		row = nRow;
 		menueGrid = nMenueGrid;
 		comp = this;
+		this.setMenue(menue);
 		
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
