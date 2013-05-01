@@ -4,11 +4,13 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
@@ -83,6 +85,10 @@ public class Menueplan extends VerticalLayout{
 			public void buttonClick(ClickEvent event) {
 				//alle felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
 				shownMenueplan.speichern();
+				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
+				int year = shownMenueplan.getMenueplan().getWeek().getYear();
+				Notification notification = new Notification("Menüplan für Kalenderwoche " + week + "/" + year + " wurde gespeichert");
+				notification.show(Page.getCurrent());
 			}
 		});
 		

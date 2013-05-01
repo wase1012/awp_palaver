@@ -37,7 +37,15 @@ public class MenueplanGridLayout extends CustomComponent{
     private DDGridLayout layout = null;
     private Menueplan menueplan=null;
     
-    // Seitenlayout erstellen
+    public Menueplan getMenueplan() {
+		return menueplan;
+	}
+
+	public void setMenueplan(Menueplan menueplan) {
+		this.menueplan = menueplan;
+	}
+
+	// Seitenlayout erstellen
     public MenueplanGridLayout(int week, int year)  {
     	System.out.println(week+"/"+year);
     	menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeek(new Week(week,year));
