@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Klasse AnsprechpartnerDAO. Die Klasse stellt für den Ansprechpartner alle
@@ -37,6 +38,8 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
 	private static final String DELETE_NACHRICHT = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
+	private static final String GET_ANSPRECHPARTNER_BY_LIEFERANT = "SELECT * FROM " 
+			+ TABLE + " WHERE " + LIEFERANT_FK + "=";
 
 	public AnsprechpartnerDAO() {
 		super();
@@ -182,5 +185,21 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			throw new NullPointerException("kein Ansprechpartner übergeben");
 		}
 		put(MessageFormat.format(DELETE_NACHRICHT, id));
+	}
+
+	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) 
+			throws ConnectException, DAOException, SQLException {
+		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
+
+		ResultSet set = get(GET_ANSPRECHPARTNER_BY_LIEFERANT + lieferant.getId());
+
+		while (set.next()) {
+			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),
+					set.getString(TELEFON), set.getString(HANDY), set
+							.getString(FAX), LieferantDAO.getInstance()
+							.getLieferantById(set.getLong(LIEFERANT_FK))));
+		}
+
+		return list;
 	}
 }

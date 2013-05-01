@@ -2,16 +2,31 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.popup.AnsprechpartnerAdd;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.PopUp;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class LieferantSuche extends VerticalLayout{
@@ -28,11 +43,12 @@ public class LieferantSuche extends VerticalLayout{
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
 	
-	private Table ansprechpartner;
+	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
+	private Table 				ansprechpartner = new Table();
 	
 
 	
-	public LieferantSuche() {
+	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
 		super();
 		
@@ -48,6 +64,8 @@ public class LieferantSuche extends VerticalLayout{
 		email.setWidth("100%");
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
+
+		ansprechpartner.setWidth("100%");
 		
 		box.setWidth("610px");
 		box.setSpacing(true);
@@ -58,7 +76,7 @@ public class LieferantSuche extends VerticalLayout{
 		rechts.setWidth("300px");
 		links.setSpacing(true);
 		rechts.setSpacing(true);
-		box.addComponent(links);
+		box.addComponentAsFirst(links);
 		box.addComponent(rechts);
 		
 		links.addComponent(name);
@@ -70,6 +88,10 @@ public class LieferantSuche extends VerticalLayout{
 		links.addComponent(email);
 		links.addComponent(telefon);
 		links.addComponent(fax);
+		
+		rechts.addComponent(ansprAdd);
+		
+		ansprAdd.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 		
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
@@ -111,7 +133,32 @@ public class LieferantSuche extends VerticalLayout{
 			throw new NullPointerException();
 		}
 
+		
+		BeanItemContainer<Ansprechpartner> container;
+
+			try {
+				container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
+				ansprechpartner.setContainerDataSource(container);
+				ansprechpartner.setVisibleColumns(new Object[] {"name"});
+				ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		rechts.addComponent(ansprechpartner);	
+		
+		ansprAdd.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				BrowserWindowOpener opener = new BrowserWindowOpener(AnsprechpartnerAdd.class);
+					opener.setFeatures("height=400,width=600");
+					 
+					// Attach it to a button
+					opener.extend(ansprAdd);
 				
+			}
+		});
 	}
 
 }

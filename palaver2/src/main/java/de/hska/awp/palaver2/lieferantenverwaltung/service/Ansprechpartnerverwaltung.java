@@ -5,12 +5,14 @@
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.AnsprechpartnerDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der Ansprechpartner und stellt für die
@@ -123,4 +125,16 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 		super.deleteAnsprechpartner(id);
 	}
 
+	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) {
+		List<Ansprechpartner> result = null;
+
+		try {
+			result = super.getAnsprechpartnerByLieferant(lieferant);
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 }

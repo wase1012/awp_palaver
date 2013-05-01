@@ -28,8 +28,11 @@ public interface IConstants
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
 	public final String		BUTTON_SAVE = "Speichern";
 	public final String		BUTTON_DISCARD = "Verwerfen";
+	public final String		BUTTON_ADD = "Hinzufügen";
 	
 	public final String		BUTTON_SAVE_ICON = "img/save.ico";
 	public final String		BUTTON_DISCARD_ICON = "img/cross.ico";
+	public final String 	BUTTON_ADD_ICON = "img/add.ico";
+	
 	
 }

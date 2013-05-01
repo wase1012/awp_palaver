@@ -31,7 +31,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class LieferantErstellen extends VerticalLayout
 {
-	private HorizontalLayout	box = new HorizontalLayout();
+	private VerticalLayout	box = new VerticalLayout();
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
@@ -53,8 +53,6 @@ public class LieferantErstellen extends VerticalLayout
 	private String bezInput;
 	private String knrInput;
 	
-	private ListSelect		ansprechpartner = new ListSelect("Ansprechpartner");
-	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	
@@ -74,19 +72,14 @@ public class LieferantErstellen extends VerticalLayout
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
 		
-		ansprechpartner.setWidth("100%");
 		
-		box.setWidth("610px");
+		box.setWidth("300px");
 		box.setSpacing(true);
 		
 		VerticalLayout links = new VerticalLayout();
-		VerticalLayout rechts = new VerticalLayout();
 		links.setWidth("300px");
-		rechts.setWidth("300px");
 		links.setSpacing(true);
-		rechts.setSpacing(true);
 		box.addComponent(links);
-		box.addComponent(rechts);
 		
 		links.addComponent(name);
 		links.addComponent(bezeichnung);
@@ -98,19 +91,16 @@ public class LieferantErstellen extends VerticalLayout
 		links.addComponent(telefon);
 		links.addComponent(fax);
 		
-		rechts.addComponent(ansprechpartner);
-		
 		HorizontalLayout control = new HorizontalLayout();
+//		control.setWidth("100%");
 		control.setSpacing(true);
+		box.addComponent(control);
+		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
-		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-		
-		rechts.addComponent(control);
-		rechts.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
