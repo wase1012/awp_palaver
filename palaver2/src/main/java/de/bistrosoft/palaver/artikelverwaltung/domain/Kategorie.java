@@ -29,7 +29,8 @@ public class Kategorie implements java.io.Serializable {
 	public Kategorie() {
 	}
 
-	public Kategorie(String name) {
+	public Kategorie(Long id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
@@ -37,6 +38,8 @@ public class Kategorie implements java.io.Serializable {
 		this.name = name;
 		this.artikels = artikels;
 	}
+
+
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

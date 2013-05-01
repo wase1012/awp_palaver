@@ -26,19 +26,18 @@ import de.bistrosoft.palaver.bestellverwaltung.domain.Bestellung;
 @Entity
 @Table(name = "lieferant", catalog = "palaver")
 @NamedQueries({
-	@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_NAME, query = "SELECT k FROM Lieferant k WHERE k.name = :"
-			+ Ansprechpartner.PARAM_NAME),
-	@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_ID, query = "Select k FROM Lieferant k WHERE k.id = :"
-			+ Ansprechpartner.PARAM_ID),
-	@NamedQuery(name = Lieferant.FIND_ALL_LIEFERANT, query = "Select k FROM Lieferant k")
-})
+		@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_NAME, query = "SELECT k FROM Lieferant k WHERE k.name = :"
+				+ Ansprechpartner.PARAM_NAME),
+		@NamedQuery(name = Lieferant.FIND_LIEFERANT_BY_ID, query = "Select k FROM Lieferant k WHERE k.id = :"
+				+ Ansprechpartner.PARAM_ID),
+		@NamedQuery(name = Lieferant.FIND_ALL_LIEFERANT, query = "Select k FROM Lieferant k") })
 public class Lieferant implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 509321793481530142L;
-	
+
 	private static final String PREFIX = "Lieferant.";
 
 	public static final String FIND_LIEFERANT_BY_NAME = PREFIX
@@ -65,10 +64,22 @@ public class Lieferant implements java.io.Serializable {
 	private Set<Artikel> artikels = new HashSet<Artikel>(0);
 
 	public Lieferant() {
+		super();
 	}
 
-	public Lieferant(String name) {
+	public Lieferant(Long id, String name, String kundennummer,
+			String bezeichnung, String strasse, String plz, String ort,
+			String email, String telefon, String fax) {
+		this.id = id;
 		this.name = name;
+		this.kundennummer = kundennummer;
+		this.bezeichnung = bezeichnung;
+		this.strasse = strasse;
+		this.plz = plz;
+		this.ort = ort;
+		this.email = email;
+		this.telefon = telefon;
+		this.fax = fax;
 	}
 
 	public Lieferant(String name, String kundennummer, String bezeichnung,

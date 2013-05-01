@@ -21,21 +21,20 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 /**
  * 
  * @author bach1014
- *
+ * 
  */
 @Entity
 @Table(name = "mengeneinheit", catalog = "palaver", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "name"),
 		@UniqueConstraint(columnNames = "kurz") })
 @NamedQueries({
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_KURZ, query = "SELECT k FROM Mengeneinheit k WHERE k.kurz = :"
-			+ Mengeneinheit.PARAM_KURZ),
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_NAME, query = "SELECT k FROM Mengeneinheit k WHERE k.name = :"
-			+ Mengeneinheit.PARAM_NAME),
-	@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_ID, query = "Select k FROM Mengeneinheit k WHERE k.id = :"
-			+ Mengeneinheit.PARAM_ID),
-	@NamedQuery(name = Mengeneinheit.FIND_ALL_MENGENEINHEIT, query = "Select k FROM Mengeneinheit k")
-})
+		@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_KURZ, query = "SELECT k FROM Mengeneinheit k WHERE k.kurz = :"
+				+ Mengeneinheit.PARAM_KURZ),
+		@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_NAME, query = "SELECT k FROM Mengeneinheit k WHERE k.name = :"
+				+ Mengeneinheit.PARAM_NAME),
+		@NamedQuery(name = Mengeneinheit.FIND_MENGENEINHEIT_BY_ID, query = "Select k FROM Mengeneinheit k WHERE k.id = :"
+				+ Mengeneinheit.PARAM_ID),
+		@NamedQuery(name = Mengeneinheit.FIND_ALL_MENGENEINHEIT, query = "Select k FROM Mengeneinheit k") })
 public class Mengeneinheit implements java.io.Serializable {
 
 	/**
@@ -51,11 +50,12 @@ public class Mengeneinheit implements java.io.Serializable {
 			+ "findMengeneinheitById";
 	public static final String FIND_MENGENEINHEIT_BY_KURZ = PREFIX
 			+ "findMengeneinheitByKurz";
-	public static final String FIND_ALL_MENGENEINHEIT = PREFIX + "findAllMengeneinheit";
+	public static final String FIND_ALL_MENGENEINHEIT = PREFIX
+			+ "findAllMengeneinheit";
 	public static final String PARAM_NAME = "name";
 	public static final String PARAM_ID = "id";
 	public static final String PARAM_KURZ = "kurz";
-	
+
 	private Long id;
 	private String name;
 	private String kurz;
@@ -64,6 +64,13 @@ public class Mengeneinheit implements java.io.Serializable {
 	private Set<Artikel> artikels = new HashSet<Artikel>(0);
 
 	public Mengeneinheit() {
+		super();
+	}
+
+	public Mengeneinheit(Long id, String name, String kurz) {
+		this.id = id;
+		this.name = name;
+		this.kurz = kurz;
 	}
 
 	public Mengeneinheit(String name, String kurz,

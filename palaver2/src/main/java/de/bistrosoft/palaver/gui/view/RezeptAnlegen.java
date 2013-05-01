@@ -9,8 +9,6 @@ package de.bistrosoft.palaver.gui.view;
 import java.sql.SQLException;
 import java.util.List;
 
-import sun.security.jca.GetInstance;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
@@ -21,9 +19,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -67,11 +62,9 @@ public class RezeptAnlegen extends VerticalLayout {
 
 	private TextArea kommentar = new TextArea("Kommentar");
 	
-	private TextField geschmacktest = new TextField();
-	
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
-
+    private Button zutatneu = new Button("Zutaten hinzufuegen");
 	private String nameInput;
 	private String portionInput;
 	private String kommentarInput;
@@ -90,12 +83,8 @@ public class RezeptAnlegen extends VerticalLayout {
 		geschmackCb.setWidth("100%");
 		kommentar.setWidth("100%");
 
-//		portion.setEnabled(false);
-
 		box.setWidth("300px");
 		box.setSpacing(true);
-
-		// sample = new NativeSelect("Select an option");
 
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
@@ -106,7 +95,7 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(rezeptartCb);
 		box.addComponent(geschmackCb);
 		box.addComponent(kommentar);
-		box.addComponent(geschmacktest);
+		box.addComponent(zutatneu);
 
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
@@ -115,13 +104,10 @@ public class RezeptAnlegen extends VerticalLayout {
 		portion.setImmediate(true);
 		portion.setInputPrompt(portionInput);
 		portion.setMaxLength(150);
-//		portion.setColumns(portionInput);
 
 		geschmackCb.setImmediate(true);
 		geschmackCb.setInputPrompt(geschmackInput);
 		geschmackCb.setNullSelectionAllowed(false);
-//		geschmackCb.setConvertedValue(geschmackInput);
-		
 
 		rezeptartCb.setImmediate(true);
 		rezeptartCb.setInputPrompt(rezeptartInput);
@@ -140,7 +126,19 @@ public class RezeptAnlegen extends VerticalLayout {
 		control.setSpacing(true);
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-
+		
+		
+		
+		
+		
+		zutatneu.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            	 ViewHandler.getInstance().switchView(Artikelanzeigen.class);
+            }
+        });
+		
+		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
@@ -156,6 +154,11 @@ public class RezeptAnlegen extends VerticalLayout {
 			}
 		});
 
+		
+		
+		
+		
+		
 		portion.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -231,52 +234,25 @@ public class RezeptAnlegen extends VerticalLayout {
 				UI.getCurrent().addWindow(dialog);
 				Rezept rezept = new Rezept();
 				rezept.setName(nameInput);
-				//Achtung dieses Konvertieren geht net
 				
 				try {
 					rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
 				} catch (NumberFormatException | ConnectException
 						| DAOException | SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance().getRezeptartById(Long.parseLong(rezeptartInput.toString())));
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
+				} catch (NumberFormatException | ConnectException | DAOException | SQLException e1) {
 					e1.printStackTrace();
-				} catch (ConnectException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DAOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}//getRezeptart().setId(
-						//Long.parseLong(rezeptartInput.toString()));
+				}
 				rezept.setKommentar(kommentarInput);
 				rezept.setPortion(Integer.parseInt(portionInput.toString()));
 				try {
 					rezept.setMitarbeiter(MitarbeiterDAO.getInstance().getMitarbeiterById(Long.parseLong(mitarbeiterInput.toString())));
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
+				} catch (NumberFormatException | ConnectException | DAOException | SQLException e1) {
 					e1.printStackTrace();
-				} catch (ConnectException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DAOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//getMitarbeiter().setId(Long.parseLong(mitarbeiterInput.toString()));
-				geschmacktest.setValue(geschmackInput);
-
+				} 
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
 				} catch (ConnectException | DAOException | SQLException e) {
