@@ -6,14 +6,12 @@ package de.bistrosoft.palaver.gui.view;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.WinSelectMenue;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 
@@ -23,7 +21,7 @@ public class Menueplan extends VerticalLayout{
 
 	private VerticalLayout	box = new VerticalLayout();
 	
-	Week curWeek =CalendarWeek.getCurrentWeek(); 
+	Week curWeek = CalendarWeek.getCurrentWeek(); 
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
 	

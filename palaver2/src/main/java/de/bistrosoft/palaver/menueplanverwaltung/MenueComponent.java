@@ -18,24 +18,26 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
 public class MenueComponent extends CustomComponent{
 	
-	Component destComp;
-	public int destRow;
-	public int destCol;
+	Component comp;
+	public int row;
+	public int col;
 	DDGridLayout menueGrid;
 	Button btn = new Button();
 	Button btDelete = new Button("Löschen");
 	
 	// Konstruktor für Menükomponente 
-	public MenueComponent(String text, DDGridLayout nMenueGrid, int nDestRow, int nDestCol){
-		destCol = nDestCol;
-		destRow = nDestRow;
+	public MenueComponent(Menue menue, DDGridLayout nMenueGrid, int nRow, int nCol){
+		col = nCol;
+		row = nRow;
 		menueGrid = nMenueGrid;
-		destComp = this;
+		comp = this;
 		
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
@@ -43,7 +45,7 @@ public class MenueComponent extends CustomComponent{
 		
 		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
 		@SuppressWarnings("deprecation")
-		Label lbText = new Label("<div align=center>"+text+"</div>", Label.CONTENT_XHTML);
+		Label lbText = new Label("<div align=center>"+ menue.getName() +"</div>", Label.CONTENT_XHTML);
 		vl.addComponent(lbText);
 		
 		// Horizontales Layout erstellen
@@ -74,7 +76,7 @@ public class MenueComponent extends CustomComponent{
         	// Click-Listener für ADD_Buttons
 			@Override
 			public void buttonClick(ClickEvent event) {
-	       		WinSelectMenue window = new WinSelectMenue(menueGrid, btn, destRow, destCol);
+	       		WinSelectMenue window = new WinSelectMenue(menueGrid, btn, row, col);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
         		window.setWidth("50%");
@@ -97,7 +99,7 @@ public class MenueComponent extends CustomComponent{
 				            public void onClose(ConfirmDialog dialog) {
 				                if (dialog.isConfirmed()) {
 				                	//finde position
-				                    Component sourceComp = destComp;
+				                    Component sourceComp = comp;
 				                	Integer sourceRow =-1;
 				                    Integer sourceColumn=-1;
 				                    
@@ -114,7 +116,7 @@ public class MenueComponent extends CustomComponent{
 				                    }		                    
 				                	
 				                	//aktuelle Menükomponente löschen
-				                	menueGrid.removeComponent(destComp);
+				                	menueGrid.removeComponent(comp);
 				                	
 				                	//ADD Button hinzufügen
 				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);

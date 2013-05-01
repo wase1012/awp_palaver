@@ -7,20 +7,17 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.data.ConnectException;
@@ -30,7 +27,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -165,7 +161,7 @@ public class MenueplanGridLayout extends CustomComponent{
 			}
 		    if(items!=null){
 		    	for (MenueplanItem i : items){
-			    	MenueComponent comp = new MenueComponent(i.getMenue().getName(), layout,i.getSpalte(),i.getZeile()); 
+			    	MenueComponent comp = new MenueComponent(i.getMenue(), layout,i.getSpalte(),i.getZeile()); 
 			    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
 			    }
 		    }
@@ -179,7 +175,7 @@ public class MenueplanGridLayout extends CustomComponent{
 		}
 	    if(items!=null){
 	    	for (MenueplanItem i : items){
-		    	MenueComponent comp = new MenueComponent(i.getMenue().getName(), layout,i.getSpalte(),i.getZeile()); 
+		    	MenueComponent comp = new MenueComponent(i.getMenue(), layout,i.getSpalte(),i.getZeile()); 
 		    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
 		    }
 	    }

@@ -23,6 +23,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -193,14 +195,14 @@ public class WinSelectMenue extends Window {
                 
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
-				
+				Menue menue = new Menue(titel);
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
 				
 				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
-				MenueComponent menue = new MenueComponent(titel, menueGrid, sourceRow, sourceColumn);
-				menueGrid.addComponent(menue, sourceColumn, sourceRow);
-				menueGrid.setComponentAlignment(menue, Alignment.MIDDLE_CENTER);
+				MenueComponent menueComp = new MenueComponent(menue, menueGrid, sourceRow, sourceColumn);
+				menueGrid.addComponent(menueComp, sourceColumn, sourceRow);
+				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
 				
 				// Window schließen
 				subwindow.close();

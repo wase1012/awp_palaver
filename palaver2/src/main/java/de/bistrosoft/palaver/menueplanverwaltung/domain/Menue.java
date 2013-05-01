@@ -18,6 +18,10 @@ public class Menue {
 		rezepte=null;
 	}
 	
+	public Menue(String name) {
+		this.name=name;
+	}
+
 	public Long getId() {
 		return id;
 	}
