@@ -107,7 +107,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2, Locale.GERMANY);
 	
 	    	String strDate = date.get(Calendar.DAY_OF_MONTH) + "." + 
-	    						date.get(Calendar.MONTH) + "." + 
+	    						(date.get(Calendar.MONTH)+1) + "." + 
 	    						date.get(Calendar.YEAR);
 	    	
 	    	@SuppressWarnings("deprecation")
