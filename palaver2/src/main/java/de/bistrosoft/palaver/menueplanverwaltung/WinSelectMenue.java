@@ -195,7 +195,8 @@ public class WinSelectMenue extends Window {
                 
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
-				Menue menue = new Menue(titel);
+				Long id = 1L;
+				Menue menue = new Menue(id,titel,null);
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
 				

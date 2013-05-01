@@ -142,13 +142,9 @@ public class MenueplanGridLayout extends CustomComponent{
 	    }
 	    
 	    //Füge MenueItems ein
-	    System.out.println("Items einfügen");
 	    if (menueplan!=null){
-	    	System.out.println("menueplan!=null");
 	    	if (menueplan.getMenues()!=null){
-	    		System.out.println("menueplan.getMenues()!=null");
 	    		for (MenueComponent mc : menueplan.getMenues()){
-	    			System.out.println(mc.getMenue().getName()+"-"+mc.getCol()+"-"+mc.getRow());
 	    			layout.addComponent(mc, mc.getCol(), mc.getRow());
 	    		}
 	    	}
@@ -205,19 +201,11 @@ public class MenueplanGridLayout extends CustomComponent{
 					menueComp.setCol(col);
 					menueComp.setRow(row);
 					menues.add(menueComp);
-//					if (menueComp.isChanged()){
-//						//menueplan,menue, spalte, zeile
-//						Menue menue = menueComp.getMenue();
-//						Long menueId = menue.getId();
-//						System.out.println(row+"-"+col);
-//						menueComp.isChanged(false);
-//					}
-//					menueComp.
-					
 				}
 			}
 		}
     	menueplan.setMenues(menues);
+    	
     	//Extrahiere Köche
     	List<Mitarbeiter> koeche = new ArrayList<>();
     	

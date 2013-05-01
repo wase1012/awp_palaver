@@ -38,6 +38,15 @@ public class Menueplanverwaltung extends MenueplanDAO {
 	}
 
 	public void persist(Menueplan menueplan) {
+		if(menueplan.getId()==null){
+			try {
+				super.createMenueplan(menueplan);
+				menueplan = super.getMenueplanByWeek(menueplan.getWeek());
+			} catch (ConnectException | DAOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		List<MenueComponent> menues = menueplan.getMenues();
 		for (MenueComponent mc : menues){
 			if(mc.isChanged()){
