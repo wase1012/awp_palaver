@@ -25,7 +25,6 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwalt
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.popup.AnsprechpartnerAdd;
 import de.hska.awp.palaver2.util.IConstants;
-import de.hska.awp.palaver2.util.PopUp;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")

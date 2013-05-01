@@ -12,21 +12,17 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.gui.layout.DefaultView;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
-import de.hska.awp.palaver2.util.PopUp;
-import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * 
@@ -51,7 +47,6 @@ public class AnsprechpartnerAdd extends UI {
 	private String 			faxInput;
 	private Lieferant 		lieferant;
 
-	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
@@ -76,7 +71,7 @@ public class AnsprechpartnerAdd extends UI {
 		feld.addComponent(telefon);
 		feld.addComponent(handy);
 		feld.addComponent(fax);
-		
+
 		box.addComponentAsFirst(feld);
 		box.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 
@@ -98,7 +93,21 @@ public class AnsprechpartnerAdd extends UI {
 		telefon.setInputPrompt(telefonInput);
 		telefon.setMaxLength(10);	
 		
-        
+		handy.setImmediate(true);
+		handy.setInputPrompt(handyInput);
+		handy.setMaxLength(10);
+		
+		fax.setImmediate(true);
+		fax.setInputPrompt(faxInput);
+		fax.setMaxLength(10);
+		
+		try {
+			lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		  
 		speichern.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
@@ -113,14 +122,9 @@ public class AnsprechpartnerAdd extends UI {
 					Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 				} catch (ConnectException | DAOException | SQLException e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben");
-				}
-				ViewHandler.getInstance().switchView(DefaultView.class);
-				/*
-				 * später ersetzten durch suche mit der angelegten mengeneinheit
-				 */
+				}				
 			}
 		});
-
 
         name.addValueChangeListener(new ValueChangeListener() {
 
@@ -161,7 +165,7 @@ public class AnsprechpartnerAdd extends UI {
             }
         });
     }
-	
+
 	public AnsprechpartnerAdd()
 	{
 		super();
