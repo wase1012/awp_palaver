@@ -24,7 +24,7 @@ public class MenueplanDAO extends AbstractDAO {
 	private final String TABLE = "menueplan";
 	private final String ID = "id";
 	
-	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE + " WHERE week = {0} AND year = {1}";
+	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE + " WHERE week = {0} AND year = {1,number,#}";
 	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*, mhm.spalte, mhm.zeile " +
 							"FROM menue men, menueplan_has_menues mhm " +
 							"WHERE men.id = mhm.menue AND mhm.menueplan = {0}";
@@ -42,9 +42,9 @@ public class MenueplanDAO extends AbstractDAO {
 	
 	public Menueplan getMenuePlanByWeek(Week week) throws ConnectException, DAOException, SQLException{
 		Menueplan menueplan = null;
-		
+		System.out.println(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
 		ResultSet set = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
-
+		
 		while (set.next()) {
 			menueplan = new Menueplan(set.getLong(ID),week);
 		}

@@ -26,8 +26,10 @@ import com.vaadin.ui.themes.BaseTheme;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.util.CalendarWeek;
+import de.bistrosoft.palaver.util.Week;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -142,9 +144,34 @@ public class MenueplanGridLayout extends CustomComponent{
 	    
 	    //Füge MenueItems aus DB ein
 	    MenueplanDAO tmp = new MenueplanDAO();
-	    Long id = 1L;
-	    List<MenueplanItem> items=null;
+	    Long id=0L;
 		try {
+			Menueplan mpl=tmp.getMenuePlanByWeek(new Week(week,year));
+			if (mpl!=null){
+				id = mpl.getId();
+			}
+			
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    List<MenueplanItem> items=null;
+		if (id==0){
+			try {
+				items = tmp.getItemsForMenueplan(id);
+			} catch (ConnectException | DAOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    if(items!=null){
+		    	for (MenueplanItem i : items){
+			    	MenueComponent comp = new MenueComponent(i.getMenue().getName(), layout,i.getSpalte(),i.getZeile()); 
+			    	layout.addComponent(comp,i.getSpalte(),i.getZeile());
+			    }
+		    }
+		}
+	    
+	    try {
 			items = tmp.getItemsForMenueplan(id);
 		} catch (ConnectException | DAOException | SQLException e) {
 			// TODO Auto-generated catch block

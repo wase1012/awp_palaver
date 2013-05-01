@@ -4,6 +4,14 @@ public class Week {
 	private int week;
 	private int year;
 	
+	public Week(int week, int year) {
+		this.week=week;
+		this.year=year;
+	}
+
+	public Week() {
+	}
+
 	public int getWeek() {
 		return week;
 	}
