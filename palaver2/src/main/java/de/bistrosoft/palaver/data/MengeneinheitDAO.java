@@ -16,6 +16,8 @@ import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
  * 
  */
 public class MengeneinheitDAO extends AbstractDAO {
+	private static MengeneinheitDAO instance = null;
+
 	private final static String TABLE = "mengeneinheit";
 	private final static String GET_ALL_MENGENEINHEITEN = "SELECT * FROM "
 			+ TABLE;
@@ -31,6 +33,13 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 */
 	public MengeneinheitDAO() {
 		super();
+	}
+	
+	public static MengeneinheitDAO getInstance() {
+		if (instance == null) {
+			instance = new MengeneinheitDAO();
+		}
+		return instance;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
-* Created by Sebastian Walz
-* 24.04.2013 16:03:13
-*/
+ * Created by Sebastian Walz
+ * 24.04.2013 16:03:13
+ */
 package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
@@ -24,77 +24,68 @@ import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
-
-
 /**
-*
-* @author Sebastian Walz
-*
-*/
+ * 
+ * @author Sebastian Walz
+ * 
+ */
 
-//von der anderen Gruppe
+// von der anderen Gruppe
 
 @SuppressWarnings("serial")
-public class Artikelanzeigen extends VerticalLayout
-{
-private FilterTable	table;
+public class Artikelanzeigen extends VerticalLayout {
+	private FilterTable table;
 
-private Button	showFilter;
+	private Button showFilter;
 
-public Artikelanzeigen()
-{
-super();
+	public Artikelanzeigen() {
+		super();
 
-this.setSizeFull();
-this.setMargin(true);
+		this.setSizeFull();
+		this.setMargin(true);
 
-showFilter = new Button("Filter anzeigen");
-showFilter.setIcon(new ThemeResource("img/filter.ico"));
+		showFilter = new Button("Filter anzeigen");
+		showFilter.setIcon(new ThemeResource("img/filter.ico"));
 
-table = new FilterTable();
-table.setSizeFull();
-table.setFilterBarVisible(false);
-table.setFilterGenerator(new customFilter());
-table.setFilterDecorator(new customFilterDecorator());
+		table = new FilterTable();
+		table.setSizeFull();
+		table.setFilterBarVisible(false);
+		table.setFilterGenerator(new customFilter());
+		table.setFilterDecorator(new customFilterDecorator());
 
-BeanItemContainer<Artikel> container;
-try
-{
-container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
-table.setContainerDataSource(container);
-table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "bestellgroesse"});
-table.sort(new Object[] {"name"}, new boolean[] {true});
-}
-catch (IllegalArgumentException | ConnectException | DAOException
-| SQLException e)
-{
-e.printStackTrace();
-}	
+		BeanItemContainer<Artikel> container;
+		try {
+			container = new BeanItemContainer<Artikel>(Artikel.class,
+					Artikelverwaltung.getInstance().getAllArtikel());
+			table.setContainerDataSource(container);
+			table.setVisibleColumns(new Object[] { "name", "artikelnr",
+					"lieferant", "kategorie", "preis", "bestellgroesse" });
+			table.sort(new Object[] { "name" }, new boolean[] { true });
+		} catch (IllegalArgumentException | ConnectException | DAOException
+				| SQLException e) {
+			e.printStackTrace();
+		}
 
-this.addComponent(showFilter);
-this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
-this.addComponent(table);
-this.setExpandRatio(table, 1);
+		this.addComponent(showFilter);
+		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		this.addComponent(table);
+		this.setExpandRatio(table, 1);
 
-showFilter.addClickListener(new ClickListener()
-{
-@Override
-public void buttonClick(ClickEvent event)
-{
-if (table.isFilterBarVisible())
-{
-table.setFilterBarVisible(false);
-table.resetFilters();
-showFilter.setCaption("Filter anzeigen");
-showFilter.setIcon(new ThemeResource("img/filter.ico"));
-}
-else
-{
-table.setFilterBarVisible(true);
-showFilter.setCaption("Filter verbergen");
-showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-}
-}
-});
-}
+		showFilter.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (table.isFilterBarVisible()) {
+					table.setFilterBarVisible(false);
+					table.resetFilters();
+					showFilter.setCaption("Filter anzeigen");
+					showFilter.setIcon(new ThemeResource("img/filter.ico"));
+				} else {
+					table.setFilterBarVisible(true);
+					showFilter.setCaption("Filter verbergen");
+					showFilter.setIcon(new ThemeResource(
+							"img/disable_filter.ico"));
+				}
+			}
+		});
+	}
 }

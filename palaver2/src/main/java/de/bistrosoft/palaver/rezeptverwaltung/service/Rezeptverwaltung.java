@@ -3,10 +3,12 @@
  */
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
+import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
@@ -73,6 +75,12 @@ public class Rezeptverwaltung extends RezeptDAO {
 		super.createRezept(Rezept);
 	}
 
+
+//	public void addArtikel(Artikel a, BigDecimal m, Rezept r, Mengeneinheit me) throws ConnectException,
+//	DAOException, SQLException {
+//		this.Rezept.getId();
+//	}
+	
 	// public void updateRezept(Rezept Rezept) throws ConnectException,
 	// DAOException {
 	// super.updateRezept(Rezept);
