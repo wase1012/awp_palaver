@@ -93,7 +93,14 @@ public class MenueplanGridDropHandler extends
             		layout.addComponent(btAdd, sourceColumn, sourceRow);
                 	layout.setComponentAlignment(btAdd, dropAlignment);
             	}
-            	
+            }
+            if(MenueComponent.class.isInstance(destComp)){
+            	MenueComponent comp = (MenueComponent) destComp;
+            	comp.isChanged(true);
+            }
+            if(MenueComponent.class.isInstance(sourceComp)){
+            	MenueComponent comp = (MenueComponent) sourceComp;
+            	comp.isChanged(true);
             }
         }
     }
