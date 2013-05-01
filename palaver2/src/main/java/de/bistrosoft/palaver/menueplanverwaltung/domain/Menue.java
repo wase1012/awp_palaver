@@ -22,6 +22,9 @@ public class Menue {
 		this.name=name;
 	}
 
+	public Menue() {
+	}
+
 	public Long getId() {
 		return id;
 	}
