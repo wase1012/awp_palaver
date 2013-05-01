@@ -182,7 +182,7 @@ DROP TABLE IF EXISTS `palaver`.`rezept` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(150) NOT NULL ,
   `rezeptart_fk` INT NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
   `portion` INT NOT NULL ,
@@ -346,10 +346,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`menueplan` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`menueplan` (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   `week` INT NOT NULL ,
   `year` INT NOT NULL ,
-  PRIMARY KEY (`week`, `year`)
+  PRIMARY KEY (id))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -373,32 +373,34 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_koeche` (
     REFERENCES `palaver`.`mitarbeiter` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-	);
+	ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 
--- Table `palaver`.`menueplan_has_koeche`
+-- Table `palaver`.`menueplan_has_menues`
 
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `palaver`.`menueplan_has_menues` ;
 
 CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
+	id INT NOT NULL AUTO_INCREMENT,
 	menueplan INT NOT NULL,
 	menue INT NOT NULL,
 	spalte INT NOT NULL,
 	zeile INT NOT NULL,
-	PRIMARY KEY (menueplan,spalte, zeile),
-	CONSTRAINT `fk_menueplan_has_menue_menueplan`
+	PRIMARY KEY (id),
+  CONSTRAINT `fk_menueplan_has_menue_menueplan`
     FOREIGN KEY (`menueplan` )
     REFERENCES `palaver`.`menueplan` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION  ,
   CONSTRAINT `fk_menueplan_has_menue_menue`
-    FOREIGN KEY (`koch` )
+	FOREIGN KEY (`menue` )
     REFERENCES `palaver`.`menue` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-	);
+    ON UPDATE NO ACTION
+    )
+	ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 -- Table `palaver`.`rezept_has_fussnote`
