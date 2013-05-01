@@ -64,7 +64,7 @@ public class RezeptAnlegen extends VerticalLayout {
 	
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
-
+    private Button zutatneu = new Button("Zutaten hinzufuegen");
 	private String nameInput;
 	private String portionInput;
 	private String kommentarInput;
@@ -95,6 +95,7 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(rezeptartCb);
 		box.addComponent(geschmackCb);
 		box.addComponent(kommentar);
+		box.addComponent(zutatneu);
 
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
@@ -125,7 +126,19 @@ public class RezeptAnlegen extends VerticalLayout {
 		control.setSpacing(true);
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-
+		
+		
+		
+		
+		
+		zutatneu.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            	 ViewHandler.getInstance().switchView(Artikelanzeigen.class);
+            }
+        });
+		
+		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
@@ -141,6 +154,11 @@ public class RezeptAnlegen extends VerticalLayout {
 			}
 		});
 
+		
+		
+		
+		
+		
 		portion.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
