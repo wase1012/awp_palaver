@@ -58,6 +58,14 @@ public class MenueComponent extends CustomComponent{
 		this.menue = menue;
 	}
 
+	public DDGridLayout getMenueGrid() {
+		return menueGrid;
+	}
+
+	public void setMenueGrid(DDGridLayout menueGrid) {
+		this.menueGrid = menueGrid;
+	}
+
 	public Boolean isChanged() {
 		return isChanged;
 	}

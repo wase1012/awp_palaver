@@ -41,23 +41,27 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		if(menueplan.getId()==null){
 			try {
 				super.createMenueplan(menueplan);
-				menueplan = super.getMenueplanByWeek(menueplan.getWeek());
+				menueplan.setId(super.getMenueplanByWeek(menueplan.getWeek()).getId());
 			} catch (ConnectException | DAOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		deleteItemsByMenueplan(menueplan);
-		List<MenueComponent> menues = menueplan.getMenues(); 
-		for (MenueComponent mc : menues){
-//			if(mc.isChanged()){
-				try {
-					super.createMenueForMenueplan(menueplan, mc.getMenue(), mc.getCol(), mc.getRow());
-				} catch (ConnectException | DAOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//			}
+		try {
+			super.deleteItemsByMenueplan(menueplan);
+		} catch (ConnectException | DAOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		 
+		for (MenueComponent mc : menueplan.getMenues()){
+
+			try {
+				super.createMenueForMenueplan(menueplan, mc.getMenue(), mc.getCol(), mc.getRow());
+			} catch (ConnectException | DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -68,78 +72,4 @@ public class Menueplanverwaltung extends MenueplanDAO {
 			e.printStackTrace();
 		}
 	}
-
-//	public List<Rezept> getAllRezept() throws ConnectException, DAOException,
-//			SQLException {
-//		List<Rezept> result = null;
-//
-//		result = super.getAllRezept();
-//
-//		return result;
-//	}
-//
-//	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
-//			SQLException {
-//		Rezept result = null;
-//
-//		result = super.getRezeptById(id);
-//
-//		return result;
-//	}
-//
-//	public List<Rezept> getRezeptByName(String name) throws ConnectException,
-//			DAOException, SQLException {
-//		List<Rezept> result = null;
-//
-//		result = super.getRezeptByName(name);
-//
-//		return result;
-//	}
-
-//	public void createRezept(Rezept Rezept) throws ConnectException,
-//			DAOException, SQLException {
-//		super.createRezept(Rezept);
-//	}
-
-//	public void updateRezept(Rezept Rezept) throws ConnectException,
-//			DAOException {
-//		super.updateRezept(Rezept);
-//	}
-
-//	public List<Zubereitung> getAllZubereitung() throws ConnectException,
-//			DAOException, SQLException {
-//		List<Zubereitung> result = null;
-//
-//		result = ZubereitungDAO.getInstance().getAllZubereitung();
-//
-//		return result;
-//	}
-//
-//	public List<Fussnote> getAllFussnote() throws ConnectException,
-//			DAOException, SQLException {
-//		List<Fussnote> result = null;
-//
-//		result = FussnoteDAO.getInstance().getAllFussnote();
-//
-//		return result;
-//	}
-//
-//	public List<Rezeptart> Rezeptart() throws ConnectException, DAOException,
-//			SQLException {
-//		List<Rezeptart> result = null;
-//
-//		result = RezeptartDAO.getInstance().getAllRezeptart();
-//
-//		return result;
-//	}
-//
-//	public List<Geschmack> Geschmack() throws ConnectException, DAOException,
-//			SQLException {
-//		List<Geschmack> result = null;
-//
-//		result = GeschmackDAO.getInstance().getAllGeschmack();
-//
-//		return result;
-//	}
-
 }

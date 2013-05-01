@@ -88,6 +88,7 @@ public class Menueplan extends VerticalLayout{
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
 				Notification notification = new Notification("Menüplan für Kalenderwoche " + week + "/" + year + " wurde gespeichert");
+				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
 		});

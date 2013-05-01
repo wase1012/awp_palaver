@@ -153,6 +153,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    if (menueplan!=null){
 	    	if (menueplan.getMenues()!=null){
 	    		for (MenueComponent mc : menueplan.getMenues()){
+	    			mc.setMenueGrid(layout);
 	    			layout.addComponent(mc, mc.getCol(), mc.getRow());
 	    		}
 	    	}
@@ -212,12 +213,14 @@ public class MenueplanGridLayout extends CustomComponent{
 				}
 			}
 		}
+    	System.out.println(menues.size());
     	menueplan.setMenues(menues);
     	
     	//Extrahiere Köche
     	List<Mitarbeiter> koeche = new ArrayList<>();
     	
     	menueplan.setKoeche(koeche);
+    	
     	Menueplanverwaltung.getInstance().persist(menueplan);
     }
 
