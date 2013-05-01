@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
@@ -27,7 +28,11 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String KOMMENTAR = "kommentar";
 	private final static String PORTION = "portion";
 	private final static String MITARBEITER = "mitarbeiter_fk";
-
+	private final static String ARTIKEL = "artikel_fk";
+	private final static String MENGE = "menge";
+	private final static String REZEPT_FK = "rezept_fk";
+	private final static String MENGENEINHEIT = "mengeneinheit";
+	
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
@@ -114,6 +119,16 @@ public class RezeptDAO extends AbstractDAO {
 	// }
 	// return rezept;
 	// }
+	
+	public void addZutat(RezeptHasArtikel rezeptHasArtikel)throws ConnectException,
+	DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO rezept_has_artikel (" + REZEPT_FK + ","
+				+ ARTIKEL + "," + MENGE + "," + MENGENEINHEIT +")" + "VALUES" + "('" + rezeptHasArtikel.getRezept().getId()
+				+ "','" + rezeptHasArtikel.getArtikel().getId() + "','"
+				+ rezeptHasArtikel.getMenge() + "','" + rezeptHasArtikel.getMengeneinheit().getId() + "')";
+		this.put(INSERT_QUERY);
+		
+	}
 
 	public void createRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
