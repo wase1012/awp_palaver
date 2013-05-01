@@ -47,16 +47,25 @@ public class Menueplanverwaltung extends MenueplanDAO {
 				e.printStackTrace();
 			}
 		}
-		List<MenueComponent> menues = menueplan.getMenues();
+		deleteItemsByMenueplan(menueplan);
+		List<MenueComponent> menues = menueplan.getMenues(); 
 		for (MenueComponent mc : menues){
-			if(mc.isChanged()){
+//			if(mc.isChanged()){
 				try {
 					super.createMenueForMenueplan(menueplan, mc.getMenue(), mc.getCol(), mc.getRow());
 				} catch (ConnectException | DAOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+//			}
+		}
+	}
+	
+	public void deleteItemsByMenueplan(Menueplan mpl){
+		try {
+			super.deleteItemsByMenueplan(mpl);
+		} catch (ConnectException | DAOException e) {
+			e.printStackTrace();
 		}
 	}
 

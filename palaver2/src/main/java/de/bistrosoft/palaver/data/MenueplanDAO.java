@@ -32,6 +32,7 @@ public class MenueplanDAO extends AbstractDAO {
 	private final String CREATE_MENUE_FOR_MENUEPLAN ="INSERT INTO menueplan_has_menues (menueplan, menue, spalte, zeile) " +
 														"VALUES ({0},{1},{2},{3})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
+	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
 	
 	public MenueplanDAO() {
 		super();
@@ -109,6 +110,10 @@ public class MenueplanDAO extends AbstractDAO {
 	public void createMenueplan(Menueplan menueplan) throws ConnectException, DAOException {
 		Week week = menueplan.getWeek();
 		put(MessageFormat.format(CREATE_MENUEPLAN,week.getWeek(),week.getYear() ));
-		
+	}
+	
+	public void deleteItemsByMenueplan(Menueplan menueplan) throws ConnectException, DAOException {
+		Week week = menueplan.getWeek();
+		put(MessageFormat.format(DELETE_MENUPLANITEMS_BY_MENUEPLAN,menueplan.getId()));
 	}
 }
