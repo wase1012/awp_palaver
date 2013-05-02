@@ -95,9 +95,6 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		});
 	}
 
-	/* (non-Javadoc)
-	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
-	 */
 	@Override
 	public void getViewParam(ViewData data)
 	{
