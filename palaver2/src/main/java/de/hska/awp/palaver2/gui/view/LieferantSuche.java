@@ -26,6 +26,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
@@ -46,16 +47,16 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
 	private Table 				ansprechpartner = new Table();
 	
-	private String			nameInput;
-	private String			telefonInput;
-	private String 			handyInput;
-	private String 			faxInput;
-	private Lieferant 		lieferant;
+	private String				nameInput;
+	private String				telefonInput;
+	private String 				handyInput;
+	private String 				faxInput;
+	private Lieferant 			lieferant;
 	
-	private TextField		nameAnspr = new TextField("Name");
-	private TextField		telefonAnspr = new TextField("Telefon");
-	private TextField		handyAnspr = new TextField("Handy");
-	private TextField		faxAnspr = new TextField("Fax");
+	private TextField			nameAnspr = new TextField("Name");
+	private TextField			telefonAnspr = new TextField("Telefon");
+	private TextField			handyAnspr = new TextField("Handy");
+	private TextField			faxAnspr = new TextField("Fax");
 	
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
@@ -105,58 +106,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
-		try {
-			lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
-			
-			name.setValue(lieferant.getName());
-			name.setEnabled(false);
-			
-			bezeichnung.setValue(lieferant.getBezeichnung());
-			bezeichnung.setEnabled(false);
-			
-			kundennummer.setValue(lieferant.getKundennummer());
-			kundennummer.setEnabled(false);
-			
-			strasse.setValue(lieferant.getStrasse());
-			strasse.setEnabled(false);
-			
-			plz.setValue(lieferant.getPlz());
-			plz.setEnabled(false);
-			
-			ort.setValue(lieferant.getOrt());
-			ort.setEnabled(false);
-			
-			email.setValue(lieferant.getEmail());
-			email.setEnabled(false);
-			
-			telefon.setValue(lieferant.getTelefon());
-			telefon.setEnabled(false);
-			
-			fax.setValue(lieferant.getFax());
-			fax.setEnabled(false);
-
-			
-		} catch (ConnectException | DAOException | SQLException e) {
-			throw new NullPointerException();
-		}
-
-		BeanItemContainer<Ansprechpartner> container;
-
-			try {
-				container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
-				ansprechpartner.setContainerDataSource(container);
-				ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
-				ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
-				ansprechpartner.setColumnCollapsingAllowed(true);
-				ansprechpartner.setColumnCollapsed(handyAnspr, false);
-				ansprechpartner.setColumnCollapsed(faxAnspr, false);				
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		rechts.addComponent(ansprechpartner);	
-		
-		
 		
 		ansprAdd.addClickListener(new ClickListener() {
 		
@@ -301,5 +251,46 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	@Override
 	public void getViewParam(ViewData data)
 	{
+		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
+		name.setValue(lieferant.getName());
+		name.setEnabled(false);
+			
+		bezeichnung.setValue(lieferant.getBezeichnung());
+		bezeichnung.setEnabled(false);
+			
+		kundennummer.setValue(lieferant.getKundennummer());
+		kundennummer.setEnabled(false);
+			
+		strasse.setValue(lieferant.getStrasse());
+		strasse.setEnabled(false);
+			
+		plz.setValue(lieferant.getPlz());
+		plz.setEnabled(false);
+						ort.setValue(lieferant.getOrt());
+		ort.setEnabled(false);
+			
+		email.setValue(lieferant.getEmail());
+		email.setEnabled(false);
+			
+		telefon.setValue(lieferant.getTelefon());
+		telefon.setEnabled(false);
+			
+		fax.setValue(lieferant.getFax());
+		fax.setEnabled(false);
+		
+		BeanItemContainer<Ansprechpartner> container;
+
+		try {
+			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
+			ansprechpartner.setContainerDataSource(container);
+			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
+			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
+			ansprechpartner.setColumnCollapsingAllowed(true);
+			ansprechpartner.setColumnCollapsed(handyAnspr, false);
+			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -21,6 +23,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
@@ -31,6 +34,7 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 		private FilterTable		table;
 		
 		private Button			showFilter;
+		private Lieferant 		lieferant;
 		
 		public LieferantAnzeigen()
 		{
@@ -47,12 +51,21 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			table.setFilterBarVisible(false);
 			table.setFilterGenerator(new customFilter());
 			table.setFilterDecorator(new customFilterDecorator());
+			table.setSelectable(true);
 			
+			table.addValueChangeListener(new ValueChangeListener() {
+				
+				@Override
+				public void valueChange(ValueChangeEvent event) {
+					lieferant = (Lieferant) event.getProperty().getValue();
+				}
+			});
+	
 			table.addItemClickListener(new ItemClickListener() {	
 				@Override
 				public void itemClick(ItemClickEvent event) {
 					if(event.isDoubleClick()){
-						ViewHandler.getInstance().switchView(LieferantSuche.class);
+						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
 					
 				}
