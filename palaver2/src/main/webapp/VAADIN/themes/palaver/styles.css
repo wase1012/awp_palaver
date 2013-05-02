@@ -16,6 +16,18 @@ border-bottom: 1px solid rgb(50,205,50);
  
 }
 
+/* .v-table-row-odd {
+        background: #F0FFF0;
+}
+
+.v-table-header {
+	background: #F0FFF0;
+}
+ */
+/* .v-window-contents {
+	background: #F0FFF0;
+} */
+
 .menueplan-grid > div {
 margin: 0px;
 padding: 0px;
@@ -43,3 +55,4 @@ display: block;
 margin-right: 90%;
 height: 50px;
 }
+
