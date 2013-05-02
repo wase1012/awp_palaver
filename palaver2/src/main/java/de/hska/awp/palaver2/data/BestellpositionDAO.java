@@ -1,6 +1,5 @@
 /**
- * Created by Christian Barth
- * 30.04.2013 - 14:54:02
+ * Created by Elena W
  */
 package de.hska.awp.palaver2.data;
 
@@ -13,8 +12,11 @@ import java.util.List;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 /**
- * @author Christian Barth
- *
+ * Klasse BestellungpositionDAO. Die Klasse stellt für die Bestellung alle notwendigen
+ * Methoden bereit um auf die Datenbank zuzugreifen.
+ * 
+ * @author Elena W
+ * 
  */
 public class BestellpositionDAO extends AbstractDAO{
 	
@@ -46,6 +48,16 @@ public class BestellpositionDAO extends AbstractDAO{
 		return instance;
 	}
 
+	/**
+	 * Die Methode getBestellpositionById liefert ein Ergebniss zurück bei der Suche
+	 * nach einer Bestellposition in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public Bestellposition getBestellpositionById(Long id) throws ConnectException,
 			DAOException, SQLException {
 
@@ -61,6 +73,16 @@ public class BestellpositionDAO extends AbstractDAO{
 		return bp;
 	}
 	
+	/**
+	 * Die Methode getBestellpositionenByBestellungId liefert ein Ergebniss zurück bei der Suche
+	 * nach einer Bestellposition anhang der BestellungId in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Bestellposition> getBestellpositionenByBestellungId(Long id)
 			throws ConnectException, DAOException, SQLException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
@@ -76,6 +98,14 @@ public class BestellpositionDAO extends AbstractDAO{
 		return list;
 	}
 	
+	/**
+	 * Die Methode erzeugt eine BEstellposition in der Datenbank.
+	 * 
+	 * @param bestellposition
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + MENGE + ","
@@ -86,6 +116,15 @@ public class BestellpositionDAO extends AbstractDAO{
 		this.put(INSERT_QUERY);
 	}
 
+	
+	/**
+	 * Die Methode aktualisiert eine Bestellposition in der Datenbank.
+	 * 
+	 * @param bestellposition
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void updateBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "='"
