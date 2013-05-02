@@ -20,6 +20,7 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
  */
 public class BestellpositionDAO extends AbstractDAO{
 	
+	
 	private static BestellpositionDAO instance = null;
 
 	private final static String TABLE = "bestellposition";
