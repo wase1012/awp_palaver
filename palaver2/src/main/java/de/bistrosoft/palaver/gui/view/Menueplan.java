@@ -51,7 +51,6 @@ public class Menueplan extends VerticalLayout{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
-		/////////////
 		HorizontalLayout left = new HorizontalLayout();
 		HorizontalLayout right = new HorizontalLayout();
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
@@ -65,14 +64,18 @@ public class Menueplan extends VerticalLayout{
 				if(shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, prevMenueplan);
 					shownMenueplan=prevMenueplan;
-					Label lbForeWeek = new Label("Kalenderwoche: " + (week-1) +"/"+year);
+					strKW= "Kalenderwoche: " + (week-1) +"/"+year;
+					@SuppressWarnings("deprecation")
+					Label lbForeWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
 					lbKW=lbForeWeek;
 				}
 				if(shownMenueplan == nextMenueplan) {
 					box.replaceComponent(shownMenueplan, curMenueplan);
 					shownMenueplan=curMenueplan;
-					Label lbForeWeek = new Label("Kalenderwoche: " + (week) +"/"+year);
+					strKW= "Kalenderwoche: " + (week) +"/"+year;
+					@SuppressWarnings("deprecation")
+					Label lbForeWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
 					lbKW=lbForeWeek;
 				}
@@ -93,14 +96,18 @@ public class Menueplan extends VerticalLayout{
 				if(shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, nextMenueplan);
 					shownMenueplan=nextMenueplan;
-					Label lbNextWeek = new Label("Kalenderwoche: " + (week+1) +"/"+year);
+					strKW= "Kalenderwoche: " + (week+1) +"/"+year;
+					@SuppressWarnings("deprecation")
+					Label lbNextWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
 					lbKW=lbNextWeek;
 				}
 				if(shownMenueplan == prevMenueplan) {
 				box.replaceComponent(shownMenueplan, curMenueplan);
 				shownMenueplan=curMenueplan; 
-				Label lbNextWeek = new Label("Kalenderwoche: " + (week) +"/"+year);
+				strKW= "Kalenderwoche: " + (week+1) +"/"+year;
+				@SuppressWarnings("deprecation")
+				Label lbNextWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 				hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
 				lbKW=lbNextWeek;
 				}
@@ -135,12 +142,20 @@ public class Menueplan extends VerticalLayout{
 			}
 		});
 		
-		box.addComponent(btSpeichern);
-		/////////////
-		
-		
+				
+		Label lbPlatzhalter1 = new Label(" ");
+		Label lbPlatzhalter2 = new Label(" ");
+		lbPlatzhalter1.setHeight("60px");
+		lbPlatzhalter2.setHeight("100px");
+		btSpeichern.setHeight("30px");
 		box.addComponent(curMenueplan);
+		box.addComponent(lbPlatzhalter1);
+		box.addComponent(btSpeichern);
+		box.addComponent(lbPlatzhalter2);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(lbPlatzhalter1, Alignment.BOTTOM_CENTER);
+		box.setComponentAlignment(btSpeichern, Alignment.BOTTOM_CENTER);
+		box.setComponentAlignment(lbPlatzhalter2, Alignment.BOTTOM_CENTER);
 		
 		
 //		HorizontalCarousel carousel = new HorizontalCarousel();
