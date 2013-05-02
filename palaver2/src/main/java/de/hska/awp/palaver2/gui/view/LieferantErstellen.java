@@ -30,10 +30,12 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class LieferantErstellen extends VerticalLayout
+public class LieferantErstellen extends VerticalLayout implements View
 {
 	private VerticalLayout	box = new VerticalLayout();
 	
@@ -302,5 +304,11 @@ public class LieferantErstellen extends VerticalLayout
 			});
 		}
 	});
+	}
+
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
+		
 	}
 }
