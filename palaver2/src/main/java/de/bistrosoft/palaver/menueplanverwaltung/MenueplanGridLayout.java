@@ -52,7 +52,7 @@ public class MenueplanGridLayout extends CustomComponent{
     	if (menueplan==null){
     		menueplan = new Menueplan(new Week(week,year));
     	}
-	    setCaption("Kalenderwoche: " + week +"/"+year);
+//    	setCaption("Kalenderwoche: " + week +"/"+year);
 	    setSizeFull();
 	
 	    // vertikales Layout anlegen

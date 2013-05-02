@@ -14,6 +14,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
+import com.vaadin.ui.Label;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
@@ -33,8 +34,12 @@ public class Menueplan extends VerticalLayout{
 	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week+1, year);
 	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week-1, year);
 	
+	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
+	private String strKW= new String("Kalenderwoche: " + week +"/"+year);
+	@SuppressWarnings("deprecation")
+	private Label lbKW = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 	MenueplanGridLayout shownMenueplan = curMenueplan;
 
 	public Menueplan()
@@ -47,7 +52,6 @@ public class Menueplan extends VerticalLayout{
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		/////////////
-		HorizontalLayout hlChangeWeek = new HorizontalLayout();
 		HorizontalLayout left = new HorizontalLayout();
 		HorizontalLayout right = new HorizontalLayout();
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
@@ -61,11 +65,18 @@ public class Menueplan extends VerticalLayout{
 				if(shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, prevMenueplan);
 					shownMenueplan=prevMenueplan;
+					Label lbForeWeek = new Label("Kalenderwoche: " + (week-1) +"/"+year);
+					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
+					lbKW=lbForeWeek;
 				}
 				if(shownMenueplan == nextMenueplan) {
 					box.replaceComponent(shownMenueplan, curMenueplan);
-					shownMenueplan=curMenueplan;	
+					shownMenueplan=curMenueplan;
+					Label lbForeWeek = new Label("Kalenderwoche: " + (week) +"/"+year);
+					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
+					lbKW=lbForeWeek;
 				}
+				
 			}
 			
 		});
@@ -81,11 +92,17 @@ public class Menueplan extends VerticalLayout{
 			public void buttonClick(ClickEvent event) {
 				if(shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, nextMenueplan);
-					shownMenueplan=nextMenueplan; 
+					shownMenueplan=nextMenueplan;
+					Label lbNextWeek = new Label("Kalenderwoche: " + (week+1) +"/"+year);
+					hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
+					lbKW=lbNextWeek;
 				}
 				if(shownMenueplan == prevMenueplan) {
 				box.replaceComponent(shownMenueplan, curMenueplan);
 				shownMenueplan=curMenueplan; 
+				Label lbNextWeek = new Label("Kalenderwoche: " + (week) +"/"+year);
+				hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
+				lbKW=lbNextWeek;
 				}
 			}
 			
@@ -95,8 +112,10 @@ public class Menueplan extends VerticalLayout{
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
 		right.setComponentAlignment(btNextWeek, Alignment.TOP_RIGHT);
-        hlChangeWeek.addComponents(left, right);
+		
+		hlChangeWeek.addComponents(left, lbKW, right);
         hlChangeWeek.setComponentAlignment(left, Alignment.TOP_LEFT);
+        hlChangeWeek.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
         hlChangeWeek.setComponentAlignment(right, Alignment.TOP_RIGHT);
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);

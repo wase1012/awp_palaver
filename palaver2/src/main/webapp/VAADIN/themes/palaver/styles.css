@@ -32,10 +32,12 @@ margin-right: auto;
 
 .menueplan-nextweek .v-icon{
 display: block;
-margin-left: 95%;
+margin-left: 90%;
 height: 50px;
 }
 
 .menueplan-lastweek .v-icon{
+display: block;
+margin-right: 90%;
 height: 50px;
 }
