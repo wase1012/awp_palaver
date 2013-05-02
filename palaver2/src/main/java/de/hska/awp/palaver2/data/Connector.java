@@ -73,6 +73,7 @@ public class Connector
 	{
 		try 
 		{
+			connection.commit();
 			stmt.close();
 			connection.close();
 		} 
