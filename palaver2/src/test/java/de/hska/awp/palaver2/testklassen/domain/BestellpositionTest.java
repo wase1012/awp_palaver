@@ -26,7 +26,10 @@ public class BestellpositionTest extends AbstractTest {
 	private ArtikelDAO adao = new ArtikelDAO();
 
 	final Long ID = Long.valueOf("2");
-	final int MENGE = 2;
+	final int MENGE = 5;
+	final Float DURCHSCHNITT =  (float) 20;
+	final Float KANTINE =  (float) 5;
+	final Float GESAMT = (float) 5;
 
 	@Test
 	public void createBestellposition() throws ConnectException, DAOException,
@@ -45,6 +48,10 @@ public class BestellpositionTest extends AbstractTest {
 		bestellposition.setBestellung(bestellung);
 		bestellposition.setArtikel(artikel);
 		bestellposition.setMenge(MENGE);
+		bestellposition.setDurchschnitt(DURCHSCHNITT);
+		bestellposition.setKantine(KANTINE);
+		bestellposition.setGesamt(GESAMT);
+		
 
 		bpdao.createBestellposition(bestellposition);
 
