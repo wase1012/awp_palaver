@@ -37,6 +37,8 @@ public class Menueplan extends VerticalLayout{
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
+	private Button platzhalter1 = new Button();
+	private Button platzhalter2 = new Button();
 	private String strKW= new String("Kalenderwoche: " + week +"/"+year);
 	@SuppressWarnings("deprecation")
 	private Label lbKW = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
@@ -51,8 +53,15 @@ public class Menueplan extends VerticalLayout{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
-		HorizontalLayout left = new HorizontalLayout();
-		HorizontalLayout right = new HorizontalLayout();
+		platzhalter1.setStyleName(BaseTheme.BUTTON_LINK);
+		platzhalter1.setIcon(new ThemeResource("img/platzhalter.png"));
+		platzhalter1.addStyleName("menueplan-lastweek");
+		platzhalter2.setStyleName(BaseTheme.BUTTON_LINK);
+		platzhalter2.setIcon(new ThemeResource("img/platzhalter.png"));
+		platzhalter2.addStyleName("menueplan-nextweek");
+		
+		final HorizontalLayout left = new HorizontalLayout();
+		final HorizontalLayout right = new HorizontalLayout();
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
 		btForeWeek.setIcon(new ThemeResource("img/woche_vorherklein.png"));
 		btForeWeek.addStyleName("menueplan-lastweek");
@@ -69,6 +78,8 @@ public class Menueplan extends VerticalLayout{
 					Label lbForeWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
 					lbKW=lbForeWeek;
+					left.replaceComponent(btForeWeek, platzhalter1);
+					
 				}
 				if(shownMenueplan == nextMenueplan) {
 					box.replaceComponent(shownMenueplan, curMenueplan);
@@ -78,6 +89,8 @@ public class Menueplan extends VerticalLayout{
 					Label lbForeWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbForeWeek);
 					lbKW=lbForeWeek;
+					left.replaceComponent(platzhalter1, btForeWeek);
+					right.replaceComponent(platzhalter2, btNextWeek);
 				}
 				
 			}
@@ -101,25 +114,29 @@ public class Menueplan extends VerticalLayout{
 					Label lbNextWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 					hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
 					lbKW=lbNextWeek;
+					right.replaceComponent(btNextWeek, platzhalter2);
 				}
 				if(shownMenueplan == prevMenueplan) {
 				box.replaceComponent(shownMenueplan, curMenueplan);
 				shownMenueplan=curMenueplan; 
-				strKW= "Kalenderwoche: " + (week+1) +"/"+year;
+				strKW= "Kalenderwoche: " + (week) +"/"+year;
 				@SuppressWarnings("deprecation")
 				Label lbNextWeek = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 				hlChangeWeek.replaceComponent(lbKW,lbNextWeek);
 				lbKW=lbNextWeek;
+				right.replaceComponent(platzhalter2, btNextWeek);
+				left.replaceComponent(platzhalter1, btForeWeek);
 				}
 			}
 			
 		});
 
+        
         left.addComponent(btForeWeek);
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
 		right.setComponentAlignment(btNextWeek, Alignment.TOP_RIGHT);
-		
+        
 		hlChangeWeek.addComponents(left, lbKW, right);
         hlChangeWeek.setComponentAlignment(left, Alignment.TOP_LEFT);
         hlChangeWeek.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
