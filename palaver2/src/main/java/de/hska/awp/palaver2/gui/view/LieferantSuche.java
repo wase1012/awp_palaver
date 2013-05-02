@@ -140,7 +140,6 @@ public class LieferantSuche extends VerticalLayout{
 
 			
 		} catch (ConnectException | DAOException | SQLException e) {
-			// TODO Auto-generated catch block
 			throw new NullPointerException();
 		}
 
@@ -165,17 +164,21 @@ public class LieferantSuche extends VerticalLayout{
 			final Window anspr = new Window();
 			anspr.setClosable(false);
 			anspr.setWidth("400px");
-			anspr.setHeight("400px");
+			anspr.setHeight("280px");
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
 			anspr.setStyleName("dialog-window");
+
 			
 			UI.getCurrent().addWindow(anspr);
 			
 			Label message = new Label("Ansprechpartner hinzufügen");
 			
 			VerticalLayout	layout = new VerticalLayout();
+			layout.setMargin(true);
+			layout.setWidth("100%");
+			layout.setSpacing(true);
 			
 			TextField		nameAnspr = new TextField("Name");
 			TextField		telefon = new TextField("Telefon");
@@ -213,8 +216,11 @@ public class LieferantSuche extends VerticalLayout{
 			verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 			
 			layout.addComponent(message);
+			layout.setComponentAlignment(message, Alignment.TOP_CENTER);
 			layout.addComponent(feld);
+			layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 			layout.addComponent(control);
+			layout.setComponentAlignment(control, Alignment.BOTTOM_CENTER);
 			anspr.setContent(layout);
 			
 			nameAnspr.setImmediate(true);
