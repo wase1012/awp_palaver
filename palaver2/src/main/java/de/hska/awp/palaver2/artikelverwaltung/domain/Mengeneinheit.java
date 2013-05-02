@@ -15,7 +15,11 @@ public class Mengeneinheit implements java.io.Serializable {
 	public Mengeneinheit() {
 		super();
 	}
-
+	/**
+	 * @param id
+	 * @param name
+	 * @param kurz
+	 */
 	public Mengeneinheit(Long id, String name, String kurz) {
 		this.id = id;
 		this.name = name;

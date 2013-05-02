@@ -27,38 +27,70 @@ public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 		return instance;
 	}
 	
+	/**
+	 * Die Methode liefert alle Mengeneinheiten zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Mengeneinheit>
+	 */
 	public List<Mengeneinheit> getAllMengeneinheit() throws ConnectException, DAOException, SQLException
 	{
-		List<Mengeneinheit> result = null;
-		
-		result = super.getAllMengeneinheit();
-		
+		List<Mengeneinheit> result = null;		
+		result = super.getAllMengeneinheit();		
 		return result;
 	}
 	
+	/**
+	 * Die Methode liefert eine Mengeneinheit anhand des Parameter id zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return Mengeneinheit
+	 */
 	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException
 	{
-		Mengeneinheit result = null;
-		
-		result = super.getMengeneinheitById(id);
-		
+		Mengeneinheit result = null;		
+		result = super.getMengeneinheitById(id);		
 		return result;
 	}
 	
+	/**
+	 * Die Methode liefert eine Mengeneinheit anhand des Parameter name zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return Mengeneinheit
+	 */
 	public List<Mengeneinheit> getMengeneinheitByName(String name) throws ConnectException, DAOException, SQLException
 	{
-		List<Mengeneinheit> result = null;
-		
-		result = super.getMengeneinheitByName(name);
-		
+		List<Mengeneinheit> result = null;		
+		result = super.getMengeneinheitByName(name);		
 		return result;
 	}
 	
+	/**
+	 * Die Methode erzeugt eine Mengeneinheit.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException
 	{
 		dao.createNewMengeneinheit(mengeneinheit);
 	}
 	
+	/**
+	 * Die Methode aktualisiert eine Mengeneinheit.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException
 	{
 		super.updateMengeneinheit(mengeneinheit);

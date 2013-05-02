@@ -99,4 +99,22 @@ public class ArtikelTest extends AbstractTest
 		
 		artikelDao.createArtikel(artikel);
 	}
+	
+	@Test
+	public void updateArtikel() throws ConnectException, DAOException, SQLException{
+		float prise = Float.valueOf(12.3F);
+		
+		Mengeneinheit mengeneinheit = new Mengeneinheit();
+		Kategorie kategorie = new Kategorie();
+		Lieferant lieferant = new Lieferant();
+		
+		Artikel artikel = artikelDao.getArtikelById((long)3);
+		artikel.setName(artikel.getName() + "_up");
+		artikel.setBio(false);
+		artikel.setPreis((float) 3.46);
+		Artikel artikelUpdate = new Artikel(mengeneinheit, kategorie, lieferant, artikel.getArtikelnr(),
+				artikel.getName()+"_up", 12.5, prise, true, false, true, 12, true);
+		
+		artikelDao.updateArtikel(artikelUpdate);
+	}
 }

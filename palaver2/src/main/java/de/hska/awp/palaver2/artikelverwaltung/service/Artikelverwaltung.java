@@ -16,67 +16,102 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.KategorieDAO;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
 
-public class Artikelverwaltung extends ArtikelDAO
-{
-	private static Artikelverwaltung		instance = null;
-	
-	private Artikelverwaltung()
-	{
+public class Artikelverwaltung extends ArtikelDAO {
+	private static Artikelverwaltung instance = null;
+
+	private Artikelverwaltung() {
 		super();
 	}
-	
-	public static Artikelverwaltung getInstance()
-	{
-		if (instance == null)
-		{
+
+	public static Artikelverwaltung getInstance() {
+		if (instance == null) {
 			instance = new Artikelverwaltung();
 		}
 		return instance;
 	}
 	
-	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException
-	{
+	/**
+	 * Die Methode liefert alle Artikeln zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Artikel>
+	 */
+	public List<Artikel> getAllArtikel() throws ConnectException, DAOException,
+			SQLException {
 		List<Artikel> result = null;
-		
 		result = super.getAllArtikel();
-		
 		return result;
 	}
-	
-	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode liefert ein Artikel anhand des Parameter id zurück.
+	 * 
+	 * @param id 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Artikel
+	 */
+	public Artikel getArtikelById(Long id) throws ConnectException,
+			DAOException, SQLException {
 		Artikel result = null;
-		
 		result = super.getArtikelById(id);
-		
 		return result;
 	}
-	
-	public List<Artikel> getArtikelByName(String name) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode liefert ein Artikel anhand des Parameter name zurück.
+	 * 
+	 * @param id 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Artikel
+	 */
+	public List<Artikel> getArtikelByName(String name) throws ConnectException,
+			DAOException, SQLException {
 		List<Artikel> result = null;
-		
 		result = super.getArtikelByName(name);
-		
 		return result;
 	}
-	
-	public void createArtikel(Artikel artikel) throws ConnectException, DAOException
-	{
+
+	/**
+	 * Die Methode erzeugt ein Artikel.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void createArtikel(Artikel artikel) throws ConnectException,
+			DAOException {
 		super.createArtikel(artikel);
 	}
-	
-	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
-	{
+
+	/**
+	 * Die Methode aktualisiert ein Artikel.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void updateArtikel(Artikel artikel) throws ConnectException,
+			DAOException {
 		super.updateArtikel(artikel);
 	}
-	
-	public List<Kategorie> getAllKategorien() throws ConnectException, DAOException, SQLException
-	{
+
+	/* see Kategorienverwaltung
+	 * 
+	 * public List<Kategorie> getAllKategorien() throws ConnectException,
+			DAOException, SQLException {
 		List<Kategorie> result = null;
-		
+
 		result = KategorieDAO.getInstance().getAllKategories();
-		
+
 		return result;
 	}
+	*/
 }

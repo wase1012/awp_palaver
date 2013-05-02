@@ -26,6 +26,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -191,7 +192,7 @@ public class ArtikelErstellen extends VerticalLayout
 			{
 				lieferant.addItem(e);
 			}
-			List<Kategorie> kategorien = Artikelverwaltung.getInstance().getAllKategorien();
+			List<Kategorie> kategorien = Kategorienverwaltung.getInstance().getAllKategories();
 			for (Kategorie e : kategorien)
 			{
 				kategorie.addItem(e);

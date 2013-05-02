@@ -9,6 +9,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.data.util.converter.ConverterUtil;
+
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.util.Util;
@@ -20,7 +22,7 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String			GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String			GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
 	private final static String			PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`)VALUES({0})";
-	private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `artikelnr` = {0},`name` = {1},`bestellgroesse` = {2},`mengeneinheit_fk` = {3},`preis` = {4},`lieferant_fk` = {5},`bio` = {6},`kategorie_fk` = {7},`standard` = {8},`grundbedarf` = {9},`durchschnitt` = {10},`lebensmittel` = {11}WHERE id = {12}";
+	private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `artikelnr` = {0},`name` = {1},`bestellgroesse` = {2},`mengeneinheit_fk` = {3},`preis` = {4},`lieferant_fk` = {5},`bio` = {6},`kategorie_fk` = {7},`standard` = {8},`grundbedarf` = {9},`durchschnitt` = {10},`lebensmittel` = {11} WHERE id = {12}";
 	private final static String			GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM artikel WHERE grundbedarf=1";
 	private final static String			GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
 	
@@ -72,7 +74,7 @@ public class ArtikelDAO extends AbstractDAO
 		while(set.next())
 		{
 			result = new Artikel(set.getLong("id"),
-								new Mengeneinheit(),
+								MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
@@ -201,6 +203,24 @@ public class ArtikelDAO extends AbstractDAO
 	
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
+		put("UPDATE artikel SET `artikelnr` = '"+ artikel.getArtikelnr() +"'," +
+				"`name` = '" + artikel.getName() + "'," +
+				"`bestellgroesse` = " + artikel.getBestellgroesse() + "," +
+				"`mengeneinheit_fk` = " + artikel.getMengeneinheit().getId() + "," +
+				"`preis` = " + artikel.getPreis() + "," +
+				"`lieferant_fk` = "+artikel.getLieferant().getId()+"," +
+				"`bio` = "+Util.convertBoolean(artikel.isBio())+"," +
+				"`kategorie_fk` = "+artikel.getKategorie().getId()+"," +
+				"`standard` = "+Util.convertBoolean(artikel.isStandard())+"," +
+				"`grundbedarf` = "+Util.convertBoolean(artikel.isGrundbedarf())+"," +
+				"`durchschnitt` = "+artikel.getDurchschnitt()+"," +
+				"`lebensmittel` = "+Util.convertBoolean(artikel.isLebensmittel())+
+				" WHERE id = "+artikel.getId());
+		
+		/*
+		 * float und double werden in String mit ',' konvertiert
+		 * Error by update
+		 * 
 		put(MessageFormat.format(UPDATE_ARTIKEL, 
 								"'" + artikel.getArtikelnr() + "'",
 								"'" + artikel.getName() + "'",
@@ -213,7 +233,8 @@ public class ArtikelDAO extends AbstractDAO
 								Util.convertBoolean(artikel.isStandard()),
 								Util.convertBoolean(artikel.isGrundbedarf()),
 								artikel.getDurchschnitt(),
-								Util.convertBoolean(artikel.isLebensmittel())));
+								Util.convertBoolean(artikel.isLebensmittel()),
+								artikel.getId()));
+								*/
 	}
-
 }
