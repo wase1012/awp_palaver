@@ -5,6 +5,7 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -12,6 +13,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
@@ -31,6 +33,8 @@ public class Menueplan extends VerticalLayout{
 	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week+1, year);
 	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week-1, year);
 	
+	private Button btForeWeek = new Button();
+	private Button btNextWeek = new Button();
 	MenueplanGridLayout shownMenueplan = curMenueplan;
 
 	public Menueplan()
@@ -44,39 +48,56 @@ public class Menueplan extends VerticalLayout{
 		
 		/////////////
 		HorizontalLayout hlChangeWeek = new HorizontalLayout();
-		Button btCurWeek = new Button("Aktuelle Woche");
-		btCurWeek.addClickListener(new ClickListener() {
+		HorizontalLayout left = new HorizontalLayout();
+		HorizontalLayout right = new HorizontalLayout();
+		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
+		btForeWeek.setIcon(new ThemeResource("img/woche_vorherklein.png"));
+		btForeWeek.addStyleName("menueplan-add");
+		btForeWeek.addClickListener(new ClickListener() {
 			
+        	// Click-Listener für eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
+				if(shownMenueplan == curMenueplan) {
+					box.replaceComponent(shownMenueplan, prevMenueplan);
+					shownMenueplan=prevMenueplan;
+				}
+				if(shownMenueplan == nextMenueplan) {
+					box.replaceComponent(shownMenueplan, curMenueplan);
+					shownMenueplan=curMenueplan;	
+				}
+			}
+			
+		});
+		
+
+        btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
+        btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
+        btNextWeek.addStyleName("menueplan-add");
+        btNextWeek.addClickListener(new ClickListener() {
+			
+        	// Click-Listener für eine Woche später
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(shownMenueplan == curMenueplan) {
+					box.replaceComponent(shownMenueplan, nextMenueplan);
+					shownMenueplan=nextMenueplan; 
+				}
+				if(shownMenueplan == prevMenueplan) {
 				box.replaceComponent(shownMenueplan, curMenueplan);
-				shownMenueplan=curMenueplan;
+				shownMenueplan=curMenueplan; 
+				}
 			}
-		});
-		
-		Button btPrevWeek = new Button("Vorherige Woche");
-		btPrevWeek.addClickListener(new ClickListener() {
 			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				box.replaceComponent(shownMenueplan, prevMenueplan);
-				shownMenueplan=prevMenueplan;
-			}
 		});
-		
-		Button btNextWeek = new Button("Nächste Woche");
-		btNextWeek.addClickListener(new ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				box.replaceComponent(shownMenueplan, nextMenueplan);
-				shownMenueplan=nextMenueplan; 
-			}
-		});
-		hlChangeWeek.addComponent(btPrevWeek);
-		hlChangeWeek.addComponent(btCurWeek);
-		hlChangeWeek.addComponent(btNextWeek);
+
+        left.addComponent(btForeWeek);
+        left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
+		right.addComponent(btNextWeek);
+		right.setComponentAlignment(btNextWeek, Alignment.TOP_RIGHT);
+        hlChangeWeek.addComponents(left, right);
 		box.addComponent(hlChangeWeek);
+//		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
 		Button btSpeichern = new Button("Speichern");
         
 		btSpeichern.addClickListener(new ClickListener() {

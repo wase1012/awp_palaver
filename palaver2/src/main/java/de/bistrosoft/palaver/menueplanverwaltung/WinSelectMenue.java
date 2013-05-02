@@ -6,6 +6,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -24,6 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -40,15 +42,15 @@ public class WinSelectMenue extends Window {
 	private FormLayout editorLayout = new FormLayout();
 	private FieldGroup editorFields = new FieldGroup();
 	
-	private static final String MENU = "Menübezeichnung";
-	private static final String[] fieldNames = new String[] { MENU, "Portionenanzahl", "Eigentümer" };
+	private static final String MENU = "name";
+	private static final String[] fieldNames = new String[] { MENU, "koch" };
 	
 	Component destComp;
 	int destRow;
 	int destCol;
 	DDGridLayout menueGrid;
 
-	IndexedContainer menueContainer = createDummyDatasource();
+	BeanItemContainer<Menue>  menueContainer;
 
 	// Konstruktor 
 	public WinSelectMenue(DDGridLayout nMenueGrid,Component nDestComp,int nDestRow, int nDestCol) {
@@ -111,8 +113,11 @@ public class WinSelectMenue extends Window {
 		// Für jeden Feldnamen 
 		for (String fieldName : fieldNames) {
 			
+			// erster Buchstabe groß
+			String f = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+			
 			// soll ein Textfeld erstellt werden
-			TextField field = new TextField(fieldName);
+			TextField field = new TextField(f);
 			
 			// Inhalt des Feldes in Array speichern
 			textfields.add(field);
@@ -212,11 +217,17 @@ public class WinSelectMenue extends Window {
 	}
 
 	private void initMenueList() {
+		
+		menueContainer = new BeanItemContainer<Menue>(Menue.class, Menueverwaltung.getInstance().getAllMenues());
+		menueList.setContainerDataSource(menueContainer);
+		menueList.setVisibleColumns(new Object[] {"name"});
+		menueList.sort(new Object[] {"name"}, new boolean[] {true});
+		menueContainer.getContainerPropertyIds();
+		
 		// Container für Menüliste festlegen
 		menueList.setContainerDataSource(menueContainer);
 		
 		// Spaltenbezeichnung angeben
-		menueList.setVisibleColumns(new String[] { MENU });
 		menueList.setSelectable(true);
 		menueList.setImmediate(true);
 
@@ -237,29 +248,5 @@ public class WinSelectMenue extends Window {
 			}
 		});
 	}
-
-	// Beispieldaten für die Menüliste
-	@SuppressWarnings("unchecked")
-	private static IndexedContainer createDummyDatasource() {
-		IndexedContainer ic = new IndexedContainer();
-
-		// Neue Eigenschaft für jeden Feldnamen hinzufügen
-		for (String p : fieldNames) {
-			ic.addContainerProperty(p, String.class, "");
-		}
-
-		// Testdaten
-		String[] fnames = { "Kartoffelauflauf", "Bolognese", "Hackbraten", "Salat"};
-
-		// für jedes Objekt id anlegen und Menübezeichnung zuordnen
-		int s = fnames.length;
-		for (int i = 0; i < s; i++) {
-			Object id = ic.addItem();
-			ic.getContainerProperty(id, MENU).setValue(fnames[i]);
-
-		}
-
-		return ic;
-	}	
 
 }
