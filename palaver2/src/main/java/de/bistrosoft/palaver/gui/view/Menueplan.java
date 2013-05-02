@@ -24,6 +24,7 @@ import de.bistrosoft.palaver.util.Week;
 @SuppressWarnings("serial")
 public class Menueplan extends VerticalLayout{
 
+	// Variablen und Komponenten
 	private VerticalLayout	box = new VerticalLayout();
 	
 	Week curWeek = CalendarWeek.getCurrentWeek(); 
@@ -51,6 +52,7 @@ public class Menueplan extends VerticalLayout{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
+		// Pfeil zum Wechseln zur vorherigen KW und Anzeige der Wochen-Nr
 		HorizontalLayout left = new HorizontalLayout();
 		HorizontalLayout right = new HorizontalLayout();
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
@@ -85,7 +87,8 @@ public class Menueplan extends VerticalLayout{
 		});
 		
 
-        btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
+		// Pfeil zum Wechseln zur nächsten KW und Anzeige der Wochen-Nr
+		btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
         btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
         btNextWeek.addStyleName("menueplan-nextweek");
         btNextWeek.addClickListener(new ClickListener() {
@@ -115,6 +118,7 @@ public class Menueplan extends VerticalLayout{
 			
 		});
 
+        // Hinzufügen und Anordnen der Komponenten
         left.addComponent(btForeWeek);
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -126,13 +130,16 @@ public class Menueplan extends VerticalLayout{
         hlChangeWeek.setComponentAlignment(right, Alignment.TOP_RIGHT);
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
+		
+		
+		// Button zum Speichern des Menüplans
 		Button btSpeichern = new Button("Speichern");
         
 		btSpeichern.addClickListener(new ClickListener() {
-			
+			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//alle felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
+				//alle Felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
@@ -142,7 +149,7 @@ public class Menueplan extends VerticalLayout{
 			}
 		});
 		
-				
+		// Hinzufügen und Anordnen weiterer Komponenten		
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);
