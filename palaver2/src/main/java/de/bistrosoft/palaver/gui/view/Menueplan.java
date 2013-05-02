@@ -143,19 +143,14 @@ public class Menueplan extends VerticalLayout{
 		});
 		
 				
-		Label lbPlatzhalter1 = new Label(" ");
-		Label lbPlatzhalter2 = new Label(" ");
-		lbPlatzhalter1.setHeight("60px");
-		lbPlatzhalter2.setHeight("100px");
-		btSpeichern.setHeight("30px");
-		box.addComponent(curMenueplan);
-		box.addComponent(lbPlatzhalter1);
+		Label lbPlatzhalter = new Label(" ");
+		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);
-		box.addComponent(lbPlatzhalter2);
+		box.addComponent(curMenueplan);
+		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
-		box.setComponentAlignment(lbPlatzhalter1, Alignment.BOTTOM_CENTER);
-		box.setComponentAlignment(btSpeichern, Alignment.BOTTOM_CENTER);
-		box.setComponentAlignment(lbPlatzhalter2, Alignment.BOTTOM_CENTER);
+		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
+		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 		
 		
 //		HorizontalCarousel carousel = new HorizontalCarousel();
