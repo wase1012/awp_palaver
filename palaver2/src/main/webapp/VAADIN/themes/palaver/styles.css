@@ -4,7 +4,9 @@
 background: #ffffff url('img/Header.jpg') no-repeat left top;
 }
 
-
+.v-app {
+background: #F0FFF0;
+}
 
 .menueplan-grid {
  margin: 0px;
