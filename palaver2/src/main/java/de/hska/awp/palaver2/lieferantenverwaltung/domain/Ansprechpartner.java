@@ -56,6 +56,8 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getName() {
+		if(name == null){
+			name = "";}
 		return this.name;
 	}
 
@@ -64,6 +66,8 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getTelefon() {
+		if(telefon == null){
+			telefon = "";}
 		return this.telefon;
 	}
 
@@ -72,6 +76,8 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getHandy() {
+		if(handy == null){
+			handy = "";}
 		return this.handy;
 	}
 
@@ -80,6 +86,8 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getFax() {
+		if(fax == null){
+			fax = "";}
 		return this.fax;
 	}
 

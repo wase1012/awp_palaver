@@ -54,6 +54,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getName() {
+		if(name== null){ name = ""; }
 		return this.name;
 	}
 
@@ -62,6 +63,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getKundennummer() {
+		if(kundennummer== null){ kundennummer = ""; }
 		return this.kundennummer;
 	}
 
@@ -70,6 +72,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getBezeichnung() {
+		if(bezeichnung== null){ bezeichnung = ""; }
 		return this.bezeichnung;
 	}
 
@@ -78,6 +81,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getStrasse() {
+		if(strasse== null){ strasse = ""; }
 		return this.strasse;
 	}
 
@@ -86,6 +90,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getPlz() {
+		if(plz== null){ plz = ""; }
 		return this.plz;
 	}
 
@@ -94,6 +99,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getOrt() {
+		if(ort== null){ ort = ""; }
 		return this.ort;
 	}
 
@@ -102,6 +108,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getEmail() {
+		if(email== null){ email = ""; }
 		return this.email;
 	}
 
@@ -110,6 +117,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getTelefon() {
+		if(telefon== null){ telefon = ""; }
 		return this.telefon;
 	}
 
@@ -118,6 +126,7 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getFax() {
+		if(fax== null){ fax = ""; }
 		return this.fax;
 	}
 
