@@ -81,7 +81,7 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
-		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
+//		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		this.addComponent(menu);
 		
@@ -121,9 +121,9 @@ public class MainLayout extends VerticalLayout implements Command
 			case IConstants.MENU_LIEFERANT_ANZEIGEN:
 				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
 			break;
-			case IConstants.MENU_MENGENEINHEIT_NEU:
-				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
-			break;
+//			case IConstants.MENU_MENGENEINHEIT_NEU:
+//				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
+//			break;
 			case IConstants.MENU_MENGENEINHEIT_ANZEIGEN:
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 			break;

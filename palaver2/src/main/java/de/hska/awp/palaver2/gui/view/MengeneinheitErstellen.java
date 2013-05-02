@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -11,14 +12,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.gui.layout.DefaultView;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -66,12 +65,12 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
-		name.setInputPrompt(nameText);
 		name.setMaxLength(15);
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 		
 		kurz.setImmediate(true);
-		kurz.setInputPrompt(kurzText);
 		kurz.setMaxLength(4);	
+		kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			
@@ -80,7 +79,7 @@ public class MengeneinheitErstellen extends VerticalLayout {
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);							
 			}
 		});
-        
+
 		speichern.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
@@ -91,7 +90,7 @@ public class MengeneinheitErstellen extends VerticalLayout {
 				try {
 					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 				} catch (ConnectException | DAOException | SQLException e) {
-					throw new NullPointerException("Bitte gültige Werte eingeben"+ nameText + kurzText);
+					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 			}
