@@ -13,7 +13,11 @@ public class Kategorie implements java.io.Serializable {
 	public Kategorie() {
 		super();
 	}
-
+	
+	/**
+	 * @param id
+	 * @param name
+	 */
 	public Kategorie(Long id, String name) {
 		this.id = id;
 		this.name = name;
