@@ -117,17 +117,20 @@ public class WinSelectMenue extends Window {
 			
 			// soll ein Textfeld erstellt werden
 			TextField field = new TextField(f);
-			
+			field.setEnabled(false);
 			// Inhalt des Feldes in Array speichern
 			textfields.add(field);
 			
 			// dem EditorLayout das Textfeld hinzufügen
-			editorLayout.addComponent(field);
-			field.setWidth("100%");
-
-			editorFields.bind(field, fieldName);
 			
-			if(f == "Id"){
+				editorLayout.addComponent(field);
+				field.setWidth("100%");
+
+				editorFields.bind(field, fieldName);
+
+			
+						
+			if(fieldName == "id"){
 				field.setVisible(false);
 			}
 		}
