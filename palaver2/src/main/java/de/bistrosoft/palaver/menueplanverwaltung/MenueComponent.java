@@ -103,17 +103,17 @@ public class MenueComponent extends CustomComponent{
 		eigenschaften.add("D");
 		
 		// Für jede Eigenschaft eine Checkbox erstellen
-		for(int i=1;i<eigenschaften.size();++i){
-			CheckBox cbTmp = new CheckBox(eigenschaften.get(i));
-			cbTmp.setEnabled(true);
-			hlProp.addComponent(cbTmp);
-		}
+//		for(int i=1;i<eigenschaften.size();++i){
+//			CheckBox cbTmp = new CheckBox(eigenschaften.get(i));
+//			cbTmp.setEnabled(true);
+//			hlProp.addComponent(cbTmp);
+//		}
 		// Horizontales Layout dem vertikalen Layout zufügen
 		vl.addComponent(hlProp);
 		
 		//Clicklistener für den ADD Button
 		btn.setStyleName(BaseTheme.BUTTON_LINK);
-		btn.setIcon(new ThemeResource("img/addIcon.png"));
+		btn.setIcon(new ThemeResource("img/Menue.png"));
 		btn.addStyleName("menueplan-add");
         btn.addClickListener(new ClickListener() {
 			

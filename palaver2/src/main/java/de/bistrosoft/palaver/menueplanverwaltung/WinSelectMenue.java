@@ -7,7 +7,6 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
@@ -218,14 +217,13 @@ public class WinSelectMenue extends Window {
 
 	private void initMenueList() {
 		
+		// Container für Menüliste festlegen
 		menueContainer = new BeanItemContainer<Menue>(Menue.class, Menueverwaltung.getInstance().getAllMenues());
 		menueList.setContainerDataSource(menueContainer);
+
+		// Spalten festlegen
 		menueList.setVisibleColumns(new Object[] {"name"});
 		menueList.sort(new Object[] {"name"}, new boolean[] {true});
-		menueContainer.getContainerPropertyIds();
-		
-		// Container für Menüliste festlegen
-		menueList.setContainerDataSource(menueContainer);
 		
 		// Spaltenbezeichnung angeben
 		menueList.setSelectable(true);
