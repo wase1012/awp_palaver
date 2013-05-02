@@ -24,10 +24,12 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class LieferantSuche extends VerticalLayout{
+public class LieferantSuche extends VerticalLayout  implements View{
 	
 	private HorizontalLayout	box = new HorizontalLayout();
 	
@@ -291,5 +293,13 @@ public class LieferantSuche extends VerticalLayout{
 	        });
 		}
 	});
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	 */
+	@Override
+	public void getViewParam(ViewData data)
+	{
 	}
 }

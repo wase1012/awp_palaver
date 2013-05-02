@@ -30,7 +30,7 @@ public class ViewHandler
 		return instance;
 	}
 	
-	public void switchView(Class<? extends VerticalLayout> view)
+	public void switchView(Class<? extends View> view)
 	{
 		try
 		{
@@ -39,6 +39,27 @@ public class ViewHandler
 				MainLayout.getInstance().removeComponent(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1));
 				MainLayout.getInstance().addComponent(view.newInstance());
 				MainLayout.getInstance().setExpandRatio(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1), 1);
+			}
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			MainLayout.getInstance().addComponent(new DefaultView());
+			MainLayout.getInstance().setExpandRatio(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1), 1);
+		} 
+	}
+	
+	public void switchView(Class<? extends View> view, ViewData data)
+	{
+		try
+		{
+			if (view != null)
+			{
+				View current = view.newInstance();
+				MainLayout.getInstance().removeComponent(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1));
+				MainLayout.getInstance().addComponent(current);
+				MainLayout.getInstance().setExpandRatio(MainLayout.getInstance().getComponent(MainLayout.getInstance().getComponentCount() -1), 1);
+				current.getViewParam(data);
 			}
 		} 
 		catch (Exception e)

@@ -3,6 +3,7 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -73,5 +74,7 @@ public class LoginForm extends VerticalLayout
 				UI.getCurrent().setContent(MainLayout.getInstance());
 			}
 		});
+		
+		loginButton.setClickShortcut(KeyCode.ENTER);
 	}
 }

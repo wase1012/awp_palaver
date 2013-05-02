@@ -19,6 +19,8 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /*
@@ -26,7 +28,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 
 @SuppressWarnings("serial")
-public class MengeneinheitErstellen extends VerticalLayout {
+public class MengeneinheitErstellen extends VerticalLayout  implements View{
 
 	private VerticalLayout	box = new VerticalLayout();
 	
@@ -115,5 +117,13 @@ public class MengeneinheitErstellen extends VerticalLayout {
                 kurzText = valueString;
             }
         });
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	 */
+	@Override
+	public void getViewParam(ViewData data)
+	{
 	}
 }

@@ -17,11 +17,13 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
-public class LieferantAnzeigen extends VerticalLayout {
+public class LieferantAnzeigen extends VerticalLayout  implements View {
 
 		private FilterTable		table;
 		
@@ -82,5 +84,13 @@ public class LieferantAnzeigen extends VerticalLayout {
 					}
 				}
 			});
+		}
+
+		/* (non-Javadoc)
+		 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+		 */
+		@Override
+		public void getViewParam(ViewData data)
+		{
 		}
 	}

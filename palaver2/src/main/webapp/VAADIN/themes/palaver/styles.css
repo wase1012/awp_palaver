@@ -4,8 +4,12 @@
 	background: #ffffff url('img/header_links.jpg') no-repeat left top;
 }
 
+.v-app {
+	background: #f0fff0;
+}
+
 .v-window-contents {
-	background: #eeeeee;
+	background: #f0fff0;
 }
 
 .v-button,

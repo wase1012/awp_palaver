@@ -21,6 +21,8 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
@@ -30,7 +32,7 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
  *
  */
 @SuppressWarnings("serial")
-public class ArtikelAnzeigen extends VerticalLayout
+public class ArtikelAnzeigen extends VerticalLayout  implements View
 {
 	private FilterTable		table;
 	
@@ -91,5 +93,13 @@ public class ArtikelAnzeigen extends VerticalLayout
 				}
 			}
 		});
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	 */
+	@Override
+	public void getViewParam(ViewData data)
+	{
 	}
 }
