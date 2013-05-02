@@ -42,7 +42,7 @@ public class WinSelectMenue extends Window {
 	private FieldGroup editorFields = new FieldGroup();
 	
 	private static final String MENU = "name";
-	private static final String[] fieldNames = new String[] { MENU, "koch" };
+	private static final String[] fieldNames = new String[] { MENU, "koch", "id" };
 	
 	Component destComp;
 	int destRow;
@@ -126,6 +126,10 @@ public class WinSelectMenue extends Window {
 			field.setWidth("100%");
 
 			editorFields.bind(field, fieldName);
+			
+			if(f == "Id"){
+				field.setVisible(false);
+			}
 		}
 
 		editorFields.setBuffered(false);
@@ -199,7 +203,8 @@ public class WinSelectMenue extends Window {
                 
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
-				Long id = 2L;
+				String s = textfields.get(2).getValue();
+				Long id = Long.parseLong(s.trim());
 				Menue menue = new Menue(id,titel,null);
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
