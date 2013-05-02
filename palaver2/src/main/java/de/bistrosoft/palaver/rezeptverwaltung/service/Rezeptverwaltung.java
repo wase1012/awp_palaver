@@ -3,12 +3,10 @@
  */
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
-import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
@@ -41,6 +39,28 @@ public class Rezeptverwaltung extends RezeptDAO {
 			instance = new Rezeptverwaltung();
 		}
 		return instance;
+	}
+	
+	public void createArtikelForRezept(Rezept rezept){
+		try {
+			super.createArtikelForRezept(rezept);
+		} catch (ConnectException | DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
+		List<RezeptHasArtikel> artikel=null;
+		
+		try {
+			super.getArtikelByRezept(rezept);
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return artikel;
 	}
 
 	// public List<Rezept> getAllRezept() throws ConnectException, DAOException,
@@ -132,10 +152,10 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return result;
 	}
 	
-	public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws ConnectException,
-	DAOException, SQLException {
-
-super.addZutat(rezeptHasArtikel);
-}
+//	public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws ConnectException,
+//	DAOException, SQLException {
+//
+//		super.addZutat(rezeptHasArtikel);
+//	}
 
 }
