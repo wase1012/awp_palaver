@@ -165,7 +165,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	        	if(layout.getComponent(col, row)==null) {
 	        		Button btn = new Button();
 	        		btn.setStyleName(BaseTheme.BUTTON_LINK);
-	        		btn.setIcon(new ThemeResource("img/addIcon.png"));
+	        		btn.setIcon(new ThemeResource("img/Menue.png"));
 	        		btn.addStyleName("menueplan-add");
 	                btn.addClickListener(new ClickListener() {
 						

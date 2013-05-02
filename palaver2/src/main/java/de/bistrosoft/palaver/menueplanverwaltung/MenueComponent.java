@@ -113,7 +113,7 @@ public class MenueComponent extends CustomComponent{
 		
 		//Clicklistener für den ADD Button
 		btn.setStyleName(BaseTheme.BUTTON_LINK);
-		btn.setIcon(new ThemeResource("img/addIcon.png"));
+		btn.setIcon(new ThemeResource("img/Menue.png"));
 		btn.addStyleName("menueplan-add");
         btn.addClickListener(new ClickListener() {
 			
