@@ -183,9 +183,7 @@ public class Mengeneinheit implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Mengeneinheit [id=" + id + ", name=" + name + ", kurz=" + kurz
-				+ ", rezeptHasArtikels=" + rezeptHasArtikels + ", artikels="
-				+ artikels + "]";
+		return kurz;
 	}
 
 }

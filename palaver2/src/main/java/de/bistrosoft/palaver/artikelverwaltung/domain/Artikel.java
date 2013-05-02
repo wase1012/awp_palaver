@@ -44,6 +44,12 @@ public class Artikel implements java.io.Serializable {
 		super();
 	}
 
+	public Artikel(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	/**
 	 * @param mengeneinheit
 	 * @param kategorie

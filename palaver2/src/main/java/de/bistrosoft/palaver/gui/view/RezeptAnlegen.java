@@ -30,6 +30,7 @@ import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.WinSelectMenue;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
@@ -134,7 +135,11 @@ public class RezeptAnlegen extends VerticalLayout {
 		zutatneu.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
-            	 ViewHandler.getInstance().switchView(Artikelanzeigen.class);
+            	 WinSelectArtikel window = new WinSelectArtikel();
+	        		UI.getCurrent().addWindow(window);
+	        		window.setModal(true);
+	        		window.setWidth("50%");
+	        		window.setHeight("50%"); 
             }
         });
 		
