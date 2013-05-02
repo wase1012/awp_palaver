@@ -22,28 +22,60 @@ public class Kategorienverwaltung extends KategorieDAO {
 		}
 		return instance;
 	}
-	
+
+	/**
+	 * Die Methode liefert alle Kategorien zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Kategorie>
+	 */
 	public List<Kategorie> getAllKategories() throws ConnectException,
 			DAOException, SQLException {
 		List<Kategorie> result = null;
 		result = super.getAllKategories();
 		return result;
 	}
-	
-	public Kategorie getKategorieById(Long id) throws ConnectException, DAOException, SQLException
-	{
-		Kategorie result = null;		
-		result = super.getKategorieById(id);		
+
+	/**
+	 * Die Methode liefert eine Kategorie anhand des Parameter id zurück.
+	 * 
+	 * @param id 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Kategorie
+	 */
+	public Kategorie getKategorieById(Long id) throws ConnectException,
+			DAOException, SQLException {
+		Kategorie result = null;
+		result = super.getKategorieById(id);
 		return result;
 	}
-	
-	public void createNewKategorie(Kategorie kategorie) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode erzeugt eine Kategorie.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void createNewKategorie(Kategorie kategorie)
+			throws ConnectException, DAOException, SQLException {
 		super.createNewKategorie(kategorie);
 	}
-	
-	public void updateKategorie(Kategorie kategorie) throws ConnectException, DAOException, SQLException
-	{
+
+	/**
+	 * Die Methode aktualisiert eine Kategorie.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void updateKategorie(Kategorie kategorie) throws ConnectException,
+			DAOException, SQLException {
 		super.updateKategorie(kategorie);
 	}
 }
