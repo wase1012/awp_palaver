@@ -13,6 +13,7 @@ import java.util.List;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,6 +23,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -264,30 +266,30 @@ public class RezeptAnlegen extends VerticalLayout {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				final Window dialog = new Window();
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-
-				Label message = new Label("Rezept gespeichert");
-
-				Button okButton = new Button("OK");
-
-				VerticalLayout dialogContent = new VerticalLayout();
-				dialogContent.setSizeFull();
-				dialogContent.setMargin(true);
-				dialog.setContent(dialogContent);
-
-				dialogContent.addComponent(message);
-				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton,
-						Alignment.BOTTOM_RIGHT);
-
-				UI.getCurrent().addWindow(dialog);
+//				final Window dialog = new Window();
+//				dialog.setClosable(false);
+//				dialog.setWidth("300px");
+//				dialog.setHeight("150px");
+//				dialog.setModal(true);
+//				dialog.center();
+//				dialog.setResizable(false);
+//				dialog.setStyleName("dialog-window");
+//
+//				Label message = new Label("Rezept gespeichert");
+//
+//				Button okButton = new Button("OK");
+//
+//				VerticalLayout dialogContent = new VerticalLayout();
+//				dialogContent.setSizeFull();
+//				dialogContent.setMargin(true);
+//				dialog.setContent(dialogContent);
+//
+//				dialogContent.addComponent(message);
+//				dialogContent.addComponent(okButton);
+//				dialogContent.setComponentAlignment(okButton,
+//						Alignment.BOTTOM_RIGHT);
+//
+//				UI.getCurrent().addWindow(dialog);
 				Rezept rezept = new Rezept();
 //				Artikel artikel = new Artikel();
 				RezeptHasArtikel artikel = new RezeptHasArtikel();
@@ -326,15 +328,22 @@ public class RezeptAnlegen extends VerticalLayout {
 					e.printStackTrace();
 				}
 
-				okButton.addClickListener(new ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().returnToDefault();
-					}
-				});
+//				okButton.addClickListener(new ClickListener() {
+//					@Override
+//					public void buttonClick(ClickEvent event) {
+//						UI.getCurrent().removeWindow(dialog);
+//						ViewHandler.getInstance().returnToDefault();
+//					}
+//				});
+				
+				Notification notification = new Notification("Rezept wurde gespeichert!");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
 			}
+			
+			
 		});
+		
 
 	}
 
