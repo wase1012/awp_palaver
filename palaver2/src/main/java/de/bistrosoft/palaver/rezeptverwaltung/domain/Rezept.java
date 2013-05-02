@@ -5,6 +5,7 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -43,6 +44,7 @@ public class Rezept implements java.io.Serializable {
 	private String name;
 	private String kommentar;
 	private int portion;
+	private List<RezeptHasArtikel> artikel;
 
 	// private Set<Menue> menues = new HashSet<Menue>(0);
 	// private Set<RezeptHasFussnote> rezeptHasFussnotes = new
@@ -50,6 +52,14 @@ public class Rezept implements java.io.Serializable {
 	// private Set<RezeptHasArtikel> rezeptHasArtikels = new
 	// HashSet<RezeptHasArtikel>(0);
 	// private RezeptHasZubereitung rezeptHasZubereitung;
+
+	public List<RezeptHasArtikel> getArtikel() {
+		return artikel;
+	}
+
+	public void setArtikel(List<RezeptHasArtikel> artikel) {
+		this.artikel = artikel;
+	}
 
 	public Rezept() {
 		super();

@@ -33,6 +33,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout {
 		this.setMargin(true);
 		table = new FilterTable();
 		table.setSizeFull();
+		table.setSelectable(true);
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());

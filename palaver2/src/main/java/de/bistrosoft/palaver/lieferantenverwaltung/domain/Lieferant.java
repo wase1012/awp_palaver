@@ -324,12 +324,7 @@ public class Lieferant implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Lieferant [id=" + id + ", name=" + name + ", kundennummer="
-				+ kundennummer + ", bezeichnung=" + bezeichnung + ", strasse="
-				+ strasse + ", plz=" + plz + ", ort=" + ort + ", email="
-				+ email + ", telefon=" + telefon + ", fax=" + fax
-				+ ", ansprechpartners=" + ansprechpartners + ", bestellungs="
-				+ bestellungs + ", artikels=" + artikels + "]";
+		return name;
 	}
 
 }

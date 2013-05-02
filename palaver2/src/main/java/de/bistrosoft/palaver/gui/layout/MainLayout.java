@@ -86,7 +86,6 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
-		rezeptItem.addItem("Suchen", this);
 		
 		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
 		
@@ -131,10 +130,6 @@ public class MainLayout extends VerticalLayout implements Command
 		    {
 		      ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 		    }
-		if (selectedItem.getText().equals("Suchen"))
-			    {
-			      ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
-	    }
 	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 	    {
 	      ViewHandler.getInstance().switchView(Menueplan.class);

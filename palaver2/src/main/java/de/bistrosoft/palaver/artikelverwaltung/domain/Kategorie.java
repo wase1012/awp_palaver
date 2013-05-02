@@ -110,8 +110,7 @@ public class Kategorie implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Kategorie [id=" + id + ", name=" + name + ", artikels="
-				+ artikels + "]";
+		return name;
 	}
 
 }
