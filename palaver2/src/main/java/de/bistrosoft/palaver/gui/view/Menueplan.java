@@ -52,7 +52,7 @@ public class Menueplan extends VerticalLayout{
 		HorizontalLayout right = new HorizontalLayout();
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
 		btForeWeek.setIcon(new ThemeResource("img/woche_vorherklein.png"));
-		btForeWeek.addStyleName("menueplan-add");
+		btForeWeek.addStyleName("menueplan-lastweek");
 		btForeWeek.addClickListener(new ClickListener() {
 			
         	// Click-Listener für eine Woche vorher
@@ -73,7 +73,7 @@ public class Menueplan extends VerticalLayout{
 
         btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
         btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
-        btNextWeek.addStyleName("menueplan-add");
+        btNextWeek.addStyleName("menueplan-nextweek");
         btNextWeek.addClickListener(new ClickListener() {
 			
         	// Click-Listener für eine Woche später
@@ -96,8 +96,10 @@ public class Menueplan extends VerticalLayout{
 		right.addComponent(btNextWeek);
 		right.setComponentAlignment(btNextWeek, Alignment.TOP_RIGHT);
         hlChangeWeek.addComponents(left, right);
+        hlChangeWeek.setComponentAlignment(left, Alignment.TOP_LEFT);
+        hlChangeWeek.setComponentAlignment(right, Alignment.TOP_RIGHT);
 		box.addComponent(hlChangeWeek);
-//		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
+		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
 		Button btSpeichern = new Button("Speichern");
         
 		btSpeichern.addClickListener(new ClickListener() {

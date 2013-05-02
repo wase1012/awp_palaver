@@ -27,5 +27,15 @@ border-top: 1px solid rgb(50,205,50);
 .menueplan-add .v-icon{
 display: block;
 margin-left: auto;
-margin-right: auto
+margin-right: auto;
+}
+
+.menueplan-nextweek .v-icon{
+display: block;
+margin-left: 95%;
+height: 50px;
+}
+
+.menueplan-lastweek .v-icon{
+height: 50px;
 }
