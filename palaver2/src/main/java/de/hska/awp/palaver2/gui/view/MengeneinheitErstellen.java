@@ -11,6 +11,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -71,6 +72,14 @@ public class MengeneinheitErstellen extends VerticalLayout {
 		kurz.setImmediate(true);
 		kurz.setInputPrompt(kurzText);
 		kurz.setMaxLength(4);	
+		
+		verwerfen.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);							
+			}
+		});
         
 		speichern.addClickListener(new ClickListener()
 		{
@@ -84,10 +93,7 @@ public class MengeneinheitErstellen extends VerticalLayout {
 				} catch (ConnectException | DAOException | SQLException e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben"+ nameText + kurzText);
 				}
-				ViewHandler.getInstance().switchView(DefaultView.class);
-				/*
-				 * später ersetzten durch suche mit der angelegten mengeneinheit
-				 */
+				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 			}
 		});
 
