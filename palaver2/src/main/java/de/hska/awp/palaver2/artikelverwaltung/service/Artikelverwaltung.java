@@ -103,7 +103,7 @@ public class Artikelverwaltung extends ArtikelDAO {
 		super.updateArtikel(artikel);
 	}
 
-	/* Kategorienverwaltung
+	/* see Kategorienverwaltung
 	 * 
 	 * public List<Kategorie> getAllKategorien() throws ConnectException,
 			DAOException, SQLException {
