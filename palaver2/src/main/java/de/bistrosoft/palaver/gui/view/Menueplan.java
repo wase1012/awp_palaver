@@ -24,6 +24,7 @@ import de.bistrosoft.palaver.util.Week;
 @SuppressWarnings("serial")
 public class Menueplan extends VerticalLayout{
 
+	// Variablen und Komponenten
 	private VerticalLayout	box = new VerticalLayout();
 	
 	Week curWeek = CalendarWeek.getCurrentWeek(); 
@@ -59,9 +60,11 @@ public class Menueplan extends VerticalLayout{
 		platzhalter2.setStyleName(BaseTheme.BUTTON_LINK);
 		platzhalter2.setIcon(new ThemeResource("img/platzhalter.png"));
 		platzhalter2.addStyleName("menueplan-nextweek");
-		
+
+		// Pfeil zum Wechseln zur vorherigen KW und Anzeige der Wochen-Nr
 		final HorizontalLayout left = new HorizontalLayout();
 		final HorizontalLayout right = new HorizontalLayout();
+
 		btForeWeek.setStyleName(BaseTheme.BUTTON_LINK);
 		btForeWeek.setIcon(new ThemeResource("img/woche_vorherklein.png"));
 		btForeWeek.addStyleName("menueplan-lastweek");
@@ -98,7 +101,8 @@ public class Menueplan extends VerticalLayout{
 		});
 		
 
-        btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
+		// Pfeil zum Wechseln zur nächsten KW und Anzeige der Wochen-Nr
+		btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
         btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
         btNextWeek.addStyleName("menueplan-nextweek");
         btNextWeek.addClickListener(new ClickListener() {
@@ -131,7 +135,7 @@ public class Menueplan extends VerticalLayout{
 			
 		});
 
-        
+        // Hinzufügen und Anordnen der Komponenten
         left.addComponent(btForeWeek);
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -143,13 +147,16 @@ public class Menueplan extends VerticalLayout{
         hlChangeWeek.setComponentAlignment(right, Alignment.TOP_RIGHT);
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
+		
+		
+		// Button zum Speichern des Menüplans
 		Button btSpeichern = new Button("Speichern");
         
 		btSpeichern.addClickListener(new ClickListener() {
-			
+			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//alle felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
+				//alle Felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
@@ -159,20 +166,15 @@ public class Menueplan extends VerticalLayout{
 			}
 		});
 		
-				
-		Label lbPlatzhalter1 = new Label(" ");
-		Label lbPlatzhalter2 = new Label(" ");
-		lbPlatzhalter1.setHeight("60px");
-		lbPlatzhalter2.setHeight("100px");
-		btSpeichern.setHeight("30px");
-		box.addComponent(curMenueplan);
-		box.addComponent(lbPlatzhalter1);
+		// Hinzufügen und Anordnen weiterer Komponenten		
+		Label lbPlatzhalter = new Label(" ");
+		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);
-		box.addComponent(lbPlatzhalter2);
+		box.addComponent(curMenueplan);
+		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
-		box.setComponentAlignment(lbPlatzhalter1, Alignment.BOTTOM_CENTER);
-		box.setComponentAlignment(btSpeichern, Alignment.BOTTOM_CENTER);
-		box.setComponentAlignment(lbPlatzhalter2, Alignment.BOTTOM_CENTER);
+		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
+		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 		
 		
 //		HorizontalCarousel carousel = new HorizontalCarousel();
