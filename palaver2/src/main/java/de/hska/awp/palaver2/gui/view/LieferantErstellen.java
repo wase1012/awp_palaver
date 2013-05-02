@@ -8,6 +8,10 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator;
+import com.vaadin.data.validator.AbstractStringValidator;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -106,7 +110,7 @@ public class LieferantErstellen extends VerticalLayout
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
-		name.setInputPrompt(nameInput);
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -121,8 +125,16 @@ public class LieferantErstellen extends VerticalLayout
 		strasse.setInputPrompt(strasseInput);
 		strasse.setMaxLength(45);
 		
+//        Validator postalCodeValidator = new AbstractStringValidator(
+//                "Bitte gültige PLZ eingeben.") {
+//			@Override
+//			protected boolean isValidValue(String value) {
+//                return value.matches("[1-9][0-9]{4}");
+//			}
+//        };
+		
 		plz.setImmediate(true);
-		plz.setInputPrompt(plzInput);
+//		plz.addValidator(postalCodeValidator);
 		plz.setMaxLength(45);
 		
 		ort.setImmediate(true);
@@ -130,7 +142,7 @@ public class LieferantErstellen extends VerticalLayout
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.setInputPrompt(emailInput);
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);
