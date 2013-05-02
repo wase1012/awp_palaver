@@ -232,8 +232,13 @@ public class MenueplanGridLayout extends CustomComponent{
     	menueplan.setMenues(menues);
     	
     	//Extrahiere Köche
-    	List<Mitarbeiter> koeche = new ArrayList<>();
-    	
+    	List<KochInMenueplan> koeche = new ArrayList<>();
+    	for (int col=2;col<COLUMNS;++col) {
+    		VerticalLayout vl=(VerticalLayout) layout.getComponent(col, 1);
+    		ComboBox cb1=(ComboBox) vl.getComponent(0);
+    		ComboBox cb2=(ComboBox) vl.getComponent(1);
+    		
+    	}
     	menueplan.setKoeche(koeche);
     	
     	Menueplanverwaltung.getInstance().persist(menueplan);

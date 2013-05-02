@@ -2,6 +2,7 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 import java.util.List;
 
+import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.util.Week;
@@ -10,7 +11,7 @@ public class Menueplan {
 	private Long id;
 	private Week week;
 	private List<MenueComponent> menues;
-	private List<Mitarbeiter> koeche;
+	private List<KochInMenueplan> koeche;
 	
 	public Menueplan(Long id, Week week){
 		this.id = id;
@@ -51,11 +52,11 @@ public class Menueplan {
 		this.menues = menues;
 	}
 	
-	public List<Mitarbeiter> getKoeche() {
+	public List<KochInMenueplan> getKoeche() {
 		return koeche;
 	}
 	
-	public void setKoeche(List<Mitarbeiter> koeche) {
+	public void setKoeche(List<KochInMenueplan> koeche) {
 		this.koeche = koeche;
 	}
 }
