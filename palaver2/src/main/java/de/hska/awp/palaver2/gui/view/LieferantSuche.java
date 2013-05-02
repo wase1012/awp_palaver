@@ -1,37 +1,28 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import de.hska.awp.palaver2.popup.AnsprechpartnerAdd;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -58,7 +49,6 @@ public class LieferantSuche extends VerticalLayout{
 	private String 			handyInput;
 	private String 			faxInput;
 	private Lieferant 		lieferant;
-
 	
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
@@ -84,7 +74,7 @@ public class LieferantSuche extends VerticalLayout{
 		
 		VerticalLayout links = new VerticalLayout();
 		VerticalLayout rechts = new VerticalLayout();
-		links.setWidth("300px");
+		links.setWidth("250px");
 		rechts.setWidth("300px");
 		links.setSpacing(true);
 		rechts.setSpacing(true);
@@ -112,38 +102,37 @@ public class LieferantSuche extends VerticalLayout{
 			lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
 			
 			name.setValue(lieferant.getName());
-			name.setReadOnly(true);
+			name.setEnabled(false);
 			
 			bezeichnung.setValue(lieferant.getBezeichnung());
-			bezeichnung.setReadOnly(true);
+			bezeichnung.setEnabled(false);
 			
 			kundennummer.setValue(lieferant.getKundennummer());
-			kundennummer.setReadOnly(true);
+			kundennummer.setEnabled(false);
 			
 			strasse.setValue(lieferant.getStrasse());
-			strasse.setReadOnly(true);
+			strasse.setEnabled(false);
 			
 			plz.setValue(lieferant.getPlz());
-			plz.setReadOnly(true);
+			plz.setEnabled(false);
 			
 			ort.setValue(lieferant.getOrt());
-			ort.setReadOnly(true);
+			ort.setEnabled(false);
 			
 			email.setValue(lieferant.getEmail());
-			email.setReadOnly(true);
+			email.setEnabled(false);
 			
 			telefon.setValue(lieferant.getTelefon());
-			telefon.setReadOnly(true);
+			telefon.setEnabled(false);
 			
 			fax.setValue(lieferant.getFax());
-			fax.setReadOnly(true);
+			fax.setEnabled(false);
 
 			
 		} catch (ConnectException | DAOException | SQLException e) {
 			throw new NullPointerException();
 		}
 
-		
 		BeanItemContainer<Ansprechpartner> container;
 
 			try {
@@ -164,16 +153,13 @@ public class LieferantSuche extends VerticalLayout{
 			final Window anspr = new Window();
 			anspr.setClosable(false);
 			anspr.setWidth("400px");
-			anspr.setHeight("280px");
+			anspr.setHeight("270px");
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setStyleName("dialog-window");
-
+			anspr.setCaption("Ansprechpartner hinzufügen");
 			
 			UI.getCurrent().addWindow(anspr);
-			
-			Label message = new Label("Ansprechpartner hinzufügen");
 			
 			VerticalLayout	layout = new VerticalLayout();
 			layout.setMargin(true);
@@ -194,33 +180,23 @@ public class LieferantSuche extends VerticalLayout{
 			fax.setWidth("100%");
 			
 			VerticalLayout feld = new VerticalLayout();
-			
-			box.setSpacing(true);
 		
 			feld.addComponent(nameAnspr);
 			feld.addComponent(telefon);
 			feld.addComponent(handy);
 			feld.addComponent(fax);
 
-			box.addComponentAsFirst(feld);
-			box.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
-
 			HorizontalLayout control = new HorizontalLayout();
 			control.setSpacing(true);
-			box.setWidth("300px");
-			box.addComponent(control);
-			box.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);	
 			control.addComponent(verwerfen);
 			control.addComponent(speichern);
 			speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 			verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-			
-			layout.addComponent(message);
-			layout.setComponentAlignment(message, Alignment.TOP_CENTER);
+
 			layout.addComponent(feld);
 			layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 			layout.addComponent(control);
-			layout.setComponentAlignment(control, Alignment.BOTTOM_CENTER);
+			layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
 			anspr.setContent(layout);
 			
 			nameAnspr.setImmediate(true);
@@ -238,6 +214,14 @@ public class LieferantSuche extends VerticalLayout{
 			fax.setImmediate(true);
 			fax.setInputPrompt(faxInput);
 			fax.setMaxLength(10);
+			
+			verwerfen.addClickListener(new ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					UI.getCurrent().removeWindow(anspr);							
+				}
+			});
 			  
 			speichern.addClickListener(new ClickListener()
 			{
@@ -300,6 +284,5 @@ public class LieferantSuche extends VerticalLayout{
 	        });
 		}
 	});
-
 	}
 }

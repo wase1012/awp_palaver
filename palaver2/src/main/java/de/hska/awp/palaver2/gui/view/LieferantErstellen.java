@@ -236,7 +236,7 @@ public class LieferantErstellen extends VerticalLayout
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			final Window dialog = new Window("Speichern");
+			final Window dialog = new Window();
 			dialog.setClosable(false);
 			dialog.setWidth("300px");
 			dialog.setHeight("150px");
