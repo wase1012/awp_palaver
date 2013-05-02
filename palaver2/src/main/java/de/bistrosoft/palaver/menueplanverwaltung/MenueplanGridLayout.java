@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -19,9 +20,12 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -132,10 +136,21 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	ComboBox koch1 = new ComboBox();
 	        ComboBox koch2 = new ComboBox();
 	    	Label platzhalter=new Label();
+	    	try {
+		    	List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
+						.getAllMitarbeiter();
+				for (Mitarbeiter e : mitarbeiter) {
+					//mitarbeiterCb.addItem(e);
+					koch1.addItem(e.getId());
+					koch1.setItemCaption(e.getId(), e.getName());
+					koch2.addItem(e.getId());
+					koch2.setItemCaption(e.getId(), e.getName());
+				}
+	    	} catch (ConnectException | DAOException | SQLException e) {
+				e.printStackTrace();
+			}
 	        koch1.setWidth("140px");
-	    	koch1.addItem("Test");
 	    	koch2.setWidth("140px");
-	    	koch2.addItem("Test");
 	    	platzhalter.setHeight("5px");
 	    	vl.addComponent(koch1);
 	    	vl.addComponent(koch2);
