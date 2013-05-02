@@ -50,6 +50,11 @@ public class LieferantSuche extends VerticalLayout{
 	private String 			faxInput;
 	private Lieferant 		lieferant;
 	
+	private TextField		nameAnspr = new TextField("Name");
+	private TextField		telefonAnspr = new TextField("Telefon");
+	private TextField		handyAnspr = new TextField("Handy");
+	private TextField		faxAnspr = new TextField("Fax");
+	
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
 		super();
@@ -138,13 +143,18 @@ public class LieferantSuche extends VerticalLayout{
 			try {
 				container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
 				ansprechpartner.setContainerDataSource(container);
-				ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon"});
+				ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
 				ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
+				ansprechpartner.setColumnCollapsingAllowed(true);
+				ansprechpartner.setColumnCollapsed(handyAnspr, false);
+				ansprechpartner.setColumnCollapsed(faxAnspr, false);				
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		rechts.addComponent(ansprechpartner);	
+		
+		
 		
 		ansprAdd.addClickListener(new ClickListener() {
 		
@@ -166,25 +176,22 @@ public class LieferantSuche extends VerticalLayout{
 			layout.setWidth("100%");
 			layout.setSpacing(true);
 			
-			TextField		nameAnspr = new TextField("Name");
-			TextField		telefon = new TextField("Telefon");
-			TextField		handy = new TextField("Handy");
-			TextField		fax = new TextField("Fax");
+
 
 			Button			speichern = new Button(IConstants.BUTTON_SAVE);
 			Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 			
 			nameAnspr.setWidth("100%");
-			telefon.setWidth("100%");
-			handy.setWidth("100%");
-			fax.setWidth("100%");
+			telefonAnspr.setWidth("100%");
+			handyAnspr.setWidth("100%");
+			faxAnspr.setWidth("100%");
 			
 			VerticalLayout feld = new VerticalLayout();
 		
 			feld.addComponent(nameAnspr);
-			feld.addComponent(telefon);
-			feld.addComponent(handy);
-			feld.addComponent(fax);
+			feld.addComponent(telefonAnspr);
+			feld.addComponent(handyAnspr);
+			feld.addComponent(faxAnspr);
 
 			HorizontalLayout control = new HorizontalLayout();
 			control.setSpacing(true);
@@ -203,17 +210,17 @@ public class LieferantSuche extends VerticalLayout{
 			nameAnspr.setInputPrompt(nameInput);
 			nameAnspr.setMaxLength(15);
 			
-			telefon.setImmediate(true);
-			telefon.setInputPrompt(telefonInput);
-			telefon.setMaxLength(10);	
+			telefonAnspr.setImmediate(true);
+			telefonAnspr.setInputPrompt(telefonInput);
+			telefonAnspr.setMaxLength(10);	
 			
-			handy.setImmediate(true);
-			handy.setInputPrompt(handyInput);
-			handy.setMaxLength(10);
+			handyAnspr.setImmediate(true);
+			handyAnspr.setInputPrompt(handyInput);
+			handyAnspr.setMaxLength(10);
 			
-			fax.setImmediate(true);
-			fax.setInputPrompt(faxInput);
-			fax.setMaxLength(10);
+			faxAnspr.setImmediate(true);
+			faxAnspr.setInputPrompt(faxInput);
+			faxAnspr.setMaxLength(10);
 			
 			verwerfen.addClickListener(new ClickListener() {
 				
@@ -254,7 +261,7 @@ public class LieferantSuche extends VerticalLayout{
 	            }
 	        });
 	        
-	        telefon.addValueChangeListener(new ValueChangeListener() {
+	        telefonAnspr.addValueChangeListener(new ValueChangeListener() {
 	            @Override
 	            public void valueChange(final ValueChangeEvent event) {
 	                final String valueString = String.valueOf(event.getProperty()
@@ -263,7 +270,7 @@ public class LieferantSuche extends VerticalLayout{
 	            }
 	        });
 	        
-	        handy.addValueChangeListener(new ValueChangeListener() {
+	        handyAnspr.addValueChangeListener(new ValueChangeListener() {
 
 	            public void valueChange(final ValueChangeEvent event) {
 	                final String valueString = String.valueOf(event.getProperty()
@@ -273,7 +280,7 @@ public class LieferantSuche extends VerticalLayout{
 	            }
 	        });
 	        
-	        fax.addValueChangeListener(new ValueChangeListener() {
+	        faxAnspr.addValueChangeListener(new ValueChangeListener() {
 
 	            public void valueChange(final ValueChangeEvent event) {
 	                final String valueString = String.valueOf(event.getProperty()
