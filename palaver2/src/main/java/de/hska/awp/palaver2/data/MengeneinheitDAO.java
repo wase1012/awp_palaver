@@ -16,6 +16,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 public class MengeneinheitDAO extends AbstractDAO {
 	
 	private final static String TABLE = "mengeneinheit";
+	private static MengeneinheitDAO instance = null;
 	private final static String GET_ALL_MENGENEINHEITEN = "SELECT * FROM "+ TABLE;
 	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM Mengeneinheit WHERE id = {0}";
 	private final static String GET_MENGENEINHEIT_BY_NAME = "SELECT * FROM Mengeneinheit WHERE name = '";
@@ -29,6 +30,16 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 */
 	public MengeneinheitDAO() {
 		super();
+	}
+	
+	/**
+	 * @return instance
+	 */
+	public static MengeneinheitDAO getInstance() {
+		if (instance == null) {
+			instance = new MengeneinheitDAO();
+		}
+		return instance;
 	}
 
 	/**
