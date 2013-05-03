@@ -134,16 +134,20 @@ public class BestellpositionDAO extends AbstractDAO{
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
+	/* 
+	 * änderung von Mihail Boehm: Anführungszeichen wurde gelöscht, 
+	 * jetzt Update funktioniert
+	 */
 	public void updateBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "='"
-				+ bestellposition.getMenge() + "'," + ARTIKEL_FK + "='"
-				+ bestellposition.getArtikel().getId() + "'," + BESTELLUNG_FK + "='"
-				+ bestellposition.getBestellung().getId() + "'," + DURCHSCHNITT + "='"
-				+ bestellposition.getDurchschnitt() + "','" + KANTINE + "='"
-				+ bestellposition.getKantine() + "','" + GESAMT + "='"
-				+ bestellposition.getGesamt() + "'" + "WHERE " + ID + "='"
-				+ bestellposition.getId() + "'";
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "="
+				+ bestellposition.getMenge() + "," + ARTIKEL_FK + "="
+				+ bestellposition.getArtikel().getId() + "," + BESTELLUNG_FK + "="
+				+ bestellposition.getBestellung().getId() + "," + DURCHSCHNITT + "="
+				+ bestellposition.getDurchschnitt() + "," + KANTINE + "="
+				+ bestellposition.getKantine() + "," + GESAMT + "="
+				+ bestellposition.getGesamt() + "WHERE " + ID + "="
+				+ bestellposition.getId();
 		this.put(UPDATE_QUERY);
 	}
 }
