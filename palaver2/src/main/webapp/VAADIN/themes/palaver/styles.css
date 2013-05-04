@@ -46,13 +46,13 @@ width: 65%;
 
 .menueplan-nextweek .v-icon{
 display: block;
-margin-left: 90%;
-height: 50px;
+margin-left: 300px;
+height: 30px;
 }
 
 .menueplan-lastweek .v-icon{
 display: block;
-margin-right: 90%;
-height: 50px;
+margin-right: 300px;
+height: 30px;
 }
 
