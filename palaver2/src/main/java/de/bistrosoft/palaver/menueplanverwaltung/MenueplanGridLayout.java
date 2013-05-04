@@ -67,7 +67,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    // DragDropGridLayout erstellen
 	    layout = new DDGridLayout(COLUMNS, ROWS);
 	    int width = COLUMNS*150; 
-	    int height = ROWS*100;
+	    int height = ((ROWS-2)*100)+30+60;
 	    layout.setWidth(width+"px");
 	    layout.setHeight(height+"px");
 		layout.setStyleName("menueplan-grid");
@@ -97,8 +97,8 @@ public class MenueplanGridLayout extends CustomComponent{
 	    
 	    // Fülle Überschriftenspalte mit formatierten Labels
 	    @SuppressWarnings("deprecation")
-		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Datum</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Köche</font></pre>", Label.CONTENT_XHTML),
+		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     Köche</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Fleischgericht</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),
@@ -111,6 +111,8 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	layout.addComponent(arlbUeb[i],0,i);
 	    	layout.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
 	    }
+	    arlbUeb[0].setHeight("30px");
+	    arlbUeb[1].setHeight("60px");
 	        
 	    // Fülle Datumszeile mit Wochentag und Datum
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week, year);
@@ -123,8 +125,8 @@ public class MenueplanGridLayout extends CustomComponent{
 	    						date.get(Calendar.YEAR);
 	    	
 	    	@SuppressWarnings("deprecation")
-	    	Label lbTmp = new Label("<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;"+"\r\n"+strDay +"\r\n"+strDate, Label.CONTENT_XHTML);
-	    	lbTmp.setHeight("100px");
+	    	Label lbTmp = new Label("<div align=center><B>"+"\r\n"+strDay +"\r\n"+strDate+"</B></div>", Label.CONTENT_XHTML);
+	    	lbTmp.setHeight("30px");
 	    	lbTmp.setWidth("149px");
 	    	layout.addComponent(lbTmp,col,0);
 	        layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
@@ -151,15 +153,15 @@ public class MenueplanGridLayout extends CustomComponent{
 			}
 	        koch1.setWidth("140px");
 	    	koch2.setWidth("140px");
-	    	platzhalter.setHeight("5px");
+//	    	platzhalter.setHeight("5px");
 	    	vl.addComponent(koch1);
 	    	vl.addComponent(koch2);
-	    	vl.addComponent(platzhalter);
+//	    	vl.addComponent(platzhalter);
 	    	vl.setWidth("149px");
-	    	vl.setHeight("100px");
+	    	vl.setHeight("60px");
 	    	vl.setComponentAlignment(koch1, Alignment.MIDDLE_CENTER);
 	    	vl.setComponentAlignment(koch2, Alignment.MIDDLE_CENTER);
-	    	vl.setComponentAlignment(platzhalter, Alignment.MIDDLE_CENTER);
+//	    	vl.setComponentAlignment(platzhalter, Alignment.MIDDLE_CENTER);
 	    	layout.addComponent(vl,col,1);
 	        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 	    }
