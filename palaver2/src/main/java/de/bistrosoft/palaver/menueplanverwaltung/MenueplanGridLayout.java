@@ -67,7 +67,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    // DragDropGridLayout erstellen
 	    layout = new DDGridLayout(COLUMNS, ROWS);
 	    int width = COLUMNS*150; 
-	    int height = ((ROWS-2)*100)+30+60;
+	    int height = ((ROWS-2)*90)+30+50;
 	    layout.setWidth(width+"px");
 	    layout.setHeight(height+"px");
 		layout.setStyleName("menueplan-grid");
@@ -107,12 +107,12 @@ public class MenueplanGridLayout extends CustomComponent{
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Dessert</font></pre>", Label.CONTENT_XHTML)};
 	    for (int i = 0; i < arlbUeb.length; i++) {
 	    	arlbUeb[i].setWidth("150px");
-	    	arlbUeb[i].setHeight("100px");
+	    	arlbUeb[i].setHeight("90px");
 	    	layout.addComponent(arlbUeb[i],0,i);
 	    	layout.setComponentAlignment(arlbUeb[i], Alignment.MIDDLE_CENTER);
 	    }
 	    arlbUeb[0].setHeight("30px");
-	    arlbUeb[1].setHeight("60px");
+	    arlbUeb[1].setHeight("50px");
 	        
 	    // Fülle Datumszeile mit Wochentag und Datum
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week, year);
@@ -137,7 +137,6 @@ public class MenueplanGridLayout extends CustomComponent{
 	    	VerticalLayout vl = new VerticalLayout();
 	    	ComboBox koch1 = new ComboBox();
 	        ComboBox koch2 = new ComboBox();
-	    	Label platzhalter=new Label();
 	    	try {
 		    	List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 						.getAllMitarbeiter();
@@ -153,15 +152,12 @@ public class MenueplanGridLayout extends CustomComponent{
 			}
 	        koch1.setWidth("140px");
 	    	koch2.setWidth("140px");
-//	    	platzhalter.setHeight("5px");
 	    	vl.addComponent(koch1);
 	    	vl.addComponent(koch2);
-//	    	vl.addComponent(platzhalter);
 	    	vl.setWidth("149px");
-	    	vl.setHeight("60px");
+	    	vl.setHeight("50px");
 	    	vl.setComponentAlignment(koch1, Alignment.MIDDLE_CENTER);
 	    	vl.setComponentAlignment(koch2, Alignment.MIDDLE_CENTER);
-//	    	vl.setComponentAlignment(platzhalter, Alignment.MIDDLE_CENTER);
 	    	layout.addComponent(vl,col,1);
 	        layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 	    }
@@ -205,7 +201,7 @@ public class MenueplanGridLayout extends CustomComponent{
 						}
 					});
 	                
-	        		btn.setHeight("100px");
+	        		btn.setHeight("90px");
 	        		btn.setWidth("149px");
 	                layout.addComponent(btn, col, row);
 	                layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);

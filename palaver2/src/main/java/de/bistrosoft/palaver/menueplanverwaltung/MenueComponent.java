@@ -31,6 +31,7 @@ public class MenueComponent extends CustomComponent{
 	private DDGridLayout menueGrid;
 	private Button btn = new Button();
 	private Button btDelete = new Button("Löschen");
+	private Button btChange = new Button("Ändern");
 	private Menue menue;
 	private Boolean isChanged;
 	
@@ -127,8 +128,50 @@ public class MenueComponent extends CustomComponent{
         		window.setHeight("50%");
 			}
 		});
-		btn.setHeight("100px");
+		btn.setHeight("90px");
 		btn.setWidth("149px");
+		
+		
+		//ClickListener für den Ändernbutton
+		btChange.addClickListener(new ClickListener(){
+			
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				
+				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
+				ConfirmDialog.show(UI.getCurrent(), "Menü ändern:", "Wollen Sie das Menü wirklich durch ein anderes ersetzen?",
+				        "Ja", "Nein", new ConfirmDialog.Listener() {
+
+							//löschen
+				            public void onClose(ConfirmDialog dialog) {
+				                if (dialog.isConfirmed()) {
+				                	//finde position
+				                    Component sourceComp = comp;
+				                	Integer sourceRow =-1;
+				                    Integer sourceColumn=-1;
+				                    final int COLUMNS = menueGrid.getColumns();
+				                    final int ROWS = menueGrid.getRows();
+				                    for (int row = 0; row < ROWS; row++) {
+				            	        for (int col = 0; col < COLUMNS; col++) {
+				            	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
+				            	        		sourceColumn=col;
+				            	        		sourceRow=row;
+				            	        	}
+				            	        }
+				                    }	
+				                	//aktuelle Menükomponente löschen
+				                	menueGrid.removeComponent(comp);
+				                	//Add
+				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
+				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+				        			btn.click();
+				                }
+				            }			            
+				        });	
+			        }
+		});
+		        
+		
 		
 		// ClickListener für den Löschbutton
 		btDelete.addClickListener(new ClickListener() {
@@ -171,11 +214,13 @@ public class MenueComponent extends CustomComponent{
 			        }
 		});
 		
+		vl.addComponent(btChange);
 		vl.addComponent(btDelete);
 		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
 		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
+		vl.setComponentAlignment(btChange, Alignment.MIDDLE_CENTER);
 		vl.setComponentAlignment(btDelete, Alignment.MIDDLE_CENTER);
-		vl.setHeight("100px");
+		vl.setHeight("90px");
 		
 		
 	}
