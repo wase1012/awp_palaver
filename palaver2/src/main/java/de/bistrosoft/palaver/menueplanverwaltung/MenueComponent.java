@@ -17,6 +17,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.BaseTheme;
+import com.vaadin.ui.themes.Reindeer;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 
@@ -214,12 +215,16 @@ public class MenueComponent extends CustomComponent{
 			        }
 		});
 		
-		vl.addComponent(btChange);
-		vl.addComponent(btDelete);
+		HorizontalLayout hl = new HorizontalLayout();
+		btChange.setStyleName(Reindeer.BUTTON_SMALL);
+		btDelete.setStyleName(Reindeer.BUTTON_SMALL);
+		hl.addComponent(btChange);
+		hl.addComponent(btDelete);
+		vl.addComponent(hl);
 		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
 		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
-		vl.setComponentAlignment(btChange, Alignment.MIDDLE_CENTER);
-		vl.setComponentAlignment(btDelete, Alignment.MIDDLE_CENTER);
+		vl.setComponentAlignment(hl, Alignment.BOTTOM_CENTER);
+//		vl.setComponentAlignment(btDelete, Alignment.BOTTOM_RIGHT);
 		vl.setHeight("90px");
 		
 		
