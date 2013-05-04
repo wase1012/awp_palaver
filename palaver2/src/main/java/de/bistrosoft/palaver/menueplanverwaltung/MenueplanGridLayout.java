@@ -232,6 +232,7 @@ public class MenueplanGridLayout extends CustomComponent{
     	menueplan.setMenues(menues);
     	
     	//Extrahiere Köche
+    	// TODO: Köche extrahieren
     	List<KochInMenueplan> koeche = new ArrayList<>();
     	for (int col=2;col<COLUMNS;++col) {
     		VerticalLayout vl=(VerticalLayout) layout.getComponent(col, 1);
