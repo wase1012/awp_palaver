@@ -53,7 +53,7 @@ public class BestellungDAO extends AbstractDAO {
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
 		List<Bestellung> list = new ArrayList<Bestellung>();
-		ResultSet set = get(GET_ALL_BESTELLUNGEN);
+		ResultSet set = getManaged(GET_ALL_BESTELLUNGEN);
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
 					.getLieferantById(set.getLong(LIEFERANT_FK)), set
@@ -76,7 +76,7 @@ public class BestellungDAO extends AbstractDAO {
 			DAOException, SQLException {
 
 		Bestellung bestellung = null;
-		ResultSet set = get(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
 
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
@@ -101,7 +101,7 @@ public class BestellungDAO extends AbstractDAO {
 				+ DATUM + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "')";
-		this.put(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class BestellungDAO extends AbstractDAO {
 				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
 				+ bestellung.getDatum() + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
-		this.put(UPDATE_QUERY);
+		this.putManaged(UPDATE_QUERY);
 	}
 
 }

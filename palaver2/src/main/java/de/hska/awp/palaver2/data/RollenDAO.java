@@ -27,7 +27,7 @@ public class RollenDAO extends AbstractDAO {
 	{
 		List<Rollen> list = new ArrayList<Rollen>();
 		
-		ResultSet set = get(GET_ALL_ROLLEN);
+		ResultSet set = getManaged(GET_ALL_ROLLEN);
 		
 		while(set.next())
 		{
@@ -45,7 +45,7 @@ public class RollenDAO extends AbstractDAO {
 			return null;
 		}
 		Rollen rolle = null;
-		ResultSet set = get(MessageFormat.format(GET_ROLLE_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ROLLE_BY_ID, id));
 
 		while(set.next())
 		{

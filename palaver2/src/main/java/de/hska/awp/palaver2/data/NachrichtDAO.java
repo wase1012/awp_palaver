@@ -46,7 +46,7 @@ public class NachrichtDAO extends AbstractDAO {
 			return null;
 		}
 		Nachricht nachricht = null;
-		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ID, id));
 
 		while (set.next()) {
 			nachricht = new Nachricht(set.getLong("id"), 
@@ -75,7 +75,7 @@ public class NachrichtDAO extends AbstractDAO {
 		}
 		List<Nachricht> list = new ArrayList<Nachricht>();
 		
-		ResultSet set = get(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle.getId()));
+		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle.getId()));
 
 		while(set.next())
 		{
@@ -100,7 +100,7 @@ public class NachrichtDAO extends AbstractDAO {
 	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException
 	{
 		List<Nachricht> list = new ArrayList<Nachricht>();
-		ResultSet set = get(GET_ALL_NACHRICHTEN);		
+		ResultSet set = getManaged(GET_ALL_NACHRICHTEN);		
 		while(set.next())
 		{
 			list.add(new Nachricht(set.getLong("id"),
@@ -133,7 +133,7 @@ public class NachrichtDAO extends AbstractDAO {
 		
 		String anlegen = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
 							+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
-		put(anlegen); 
+		putManaged(anlegen); 
 
 	}
 	
@@ -151,6 +151,6 @@ public class NachrichtDAO extends AbstractDAO {
 		if(id == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
 		}		
-		put(MessageFormat.format(DELETE_NACHRICHT, id));
+		putManaged(MessageFormat.format(DELETE_NACHRICHT, id));
 	}
 }

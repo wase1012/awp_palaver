@@ -42,7 +42,7 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
 		
-		ResultSet set = get(GET_ALL_ARTIKLES);
+		ResultSet set = getManaged(GET_ALL_ARTIKLES);
 		
 		while(set.next())
 		{
@@ -69,7 +69,7 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		Artikel result = null;
 		
-		ResultSet set = get(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
 		
 		while(set.next())
 		{
@@ -96,7 +96,7 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
 		
-		ResultSet set = get(GET_ARTIKEL_BY_NAME + "'" + name + "'");
+		ResultSet set = getManaged(GET_ARTIKEL_BY_NAME + "'" + name + "'");
 		
 		while(set.next())
 		{
@@ -132,7 +132,7 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
 		
-		ResultSet set = get(GET_ARTIKEL_BY_GRUNDBEDARF);
+		ResultSet set = getManaged(GET_ARTIKEL_BY_GRUNDBEDARF);
 		
 		while(set.next())
 		{
@@ -168,7 +168,7 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
 		
-		ResultSet set = get(GET_ARTIKEL_BY_STANDARDBEDARF);
+		ResultSet set = getManaged(GET_ARTIKEL_BY_STANDARDBEDARF);
 		
 		while(set.next())
 		{
@@ -193,7 +193,7 @@ public class ArtikelDAO extends AbstractDAO
 	
 	public void createArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
-		put(MessageFormat.format(PUT_ARTIKEL,
+		putManaged(MessageFormat.format(PUT_ARTIKEL,
 				"'" + artikel.getArtikelnr() + "','" + artikel.getName() + "'," 
 				+ artikel.getBestellgroesse() + "," + artikel.getMengeneinheit().getId() + "," 
 				+ artikel.getPreis() + "," + artikel.getLieferant().getId() + "," + Util.convertBoolean(artikel.isBio()) 
@@ -203,7 +203,7 @@ public class ArtikelDAO extends AbstractDAO
 	
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
-		put("UPDATE artikel SET `artikelnr` = '"+ artikel.getArtikelnr() +"'," +
+		putManaged("UPDATE artikel SET `artikelnr` = '"+ artikel.getArtikelnr() +"'," +
 				"`name` = '" + artikel.getName() + "'," +
 				"`bestellgroesse` = " + artikel.getBestellgroesse() + "," +
 				"`mengeneinheit_fk` = " + artikel.getMengeneinheit().getId() + "," +
