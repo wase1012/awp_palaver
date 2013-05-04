@@ -21,7 +21,7 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
-/*
+/**
  * @Author PhilippT
  */
 
