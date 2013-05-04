@@ -99,11 +99,11 @@ public class MenueplanGridLayout extends CustomComponent{
 	    @SuppressWarnings("deprecation")
 		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Datum</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Köche</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht 1</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht 2</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Vegetarisches Gericht</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Fleischgericht</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Pastagericht</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Salat / Suppe</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Suppe / Salat</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Dessert</font></pre>", Label.CONTENT_XHTML)};
 	    for (int i = 0; i < arlbUeb.length; i++) {
 	    	arlbUeb[i].setWidth("150px");
