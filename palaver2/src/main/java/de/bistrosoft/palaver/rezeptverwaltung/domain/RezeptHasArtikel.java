@@ -16,55 +16,72 @@ import javax.persistence.Table;
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
 import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
 
-
-public class RezeptHasArtikel  {
+public class RezeptHasArtikel {
 
 	private Artikel artikel;
-	private BigDecimal menge;
+	private double menge;
 	private Mengeneinheit mengeneinheit;
-	
 
 	public RezeptHasArtikel() {
 		super();
 	}
 
-	public RezeptHasArtikel(Artikel artikel,Mengeneinheit mengeneinheit, BigDecimal menge) {
+	public RezeptHasArtikel(Artikel artikel, Mengeneinheit mengeneinheit,
+			double menge) {
 		this.artikel = artikel;
 		this.mengeneinheit = mengeneinheit;
 		this.menge = menge;
 	}
-	public BigDecimal getMenge() {
-		return this.menge;
-		
+
+	@Override
+	public String toString() {
+		return "artikel " + artikel.getId();
 	}
-	public void setMenge(BigDecimal menge) {
+
+	public double getMenge() {
+		return this.menge;
+
+	}
+
+	public void setMenge(double menge) {
 		this.menge = menge;
+		System.out.println(this.menge);
 	}
 
 	public String getArtikelName() {
-	return this.artikel.getName();
-}
+		return this.artikel.getName();
+	}
 	
+	public Long getArtikelId() {
+		return this.artikel.getId();
+	}
 
+	public void setArtike(Artikel artikel) {
+		this.artikel = artikel;
+	}
 
-//	public Artikel getArtikel() {
-//		return this.artikel;
-//	}
-//
-//	public void setArtikel(Artikel artikel) {
-//		this.artikel = artikel;
-//	}
-//
-//	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
-//		this.mengeneinheit = mengeneinheit;
-//	}
-//
-//
-//	public BigDecimal getMenge() {
-//		return this.menge;
-//	}
-//
-//	public void setMenge(BigDecimal menge) {
-//		this.menge = menge;
-//	}
+	// public void setRezeptart(Rezeptart rezeptart) {
+	// this.rezeptart = rezeptart;
+	// }
+
+	// public Artikel getArtikel() {
+	// return this.artikel;
+	// }
+	//
+	// public void setArtikel(Artikel artikel) {
+	// this.artikel = artikel;
+	// }
+	//
+	// public void setMengeneinheit(Mengeneinheit mengeneinheit) {
+	// this.mengeneinheit = mengeneinheit;
+	// }
+	//
+	//
+	// public BigDecimal getMenge() {
+	// return this.menge;
+	// }
+	//
+	// public void setMenge(BigDecimal menge) {
+	// this.menge = menge;
+	// }
 }

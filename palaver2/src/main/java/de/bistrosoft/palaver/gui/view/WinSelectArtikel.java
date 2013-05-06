@@ -82,7 +82,7 @@ public class WinSelectArtikel extends Window {
 								artikel = Artikelverwaltung.getInstance()
 										.getArtikelById(id);
 								RezeptHasArtikel a = new RezeptHasArtikel(artikel,
-										null, null);
+										null, 1.1);
 								artikellist.add(a);
 							} catch (ConnectException | DAOException | SQLException e) {
 								// TODO Auto-generated catch block

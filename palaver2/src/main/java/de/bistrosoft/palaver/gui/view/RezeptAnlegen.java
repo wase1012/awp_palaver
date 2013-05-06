@@ -6,6 +6,7 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnResizeEvent;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -32,6 +34,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
+import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
@@ -86,6 +89,9 @@ public class RezeptAnlegen extends VerticalLayout {
 	private String geschmackInput;
 	private String rezeptartInput;
 	private String mitarbeiterInput;
+	
+	private Artikel ar;
+	private RezeptHasArtikel rhA;
 	
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 
@@ -200,12 +206,13 @@ public class RezeptAnlegen extends VerticalLayout {
 		zutatneu.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				WinSelectArtikel window = new WinSelectArtikel(tblArtikel,ausgArtikel);
+				WinSelectArtikel window = new WinSelectArtikel(tblArtikel, ausgArtikel);
 				UI.getCurrent().addWindow(window);
 				window.setModal(true);
 				window.setWidth("50%");
 				window.setHeight("50%");
 				
+				//ar.getId(ArtikelDAO.getInstance().getArtikelById(Long.parseLong(ausgArtikel.toString()))));
 //				 for( String k: WinSelectArtikel.ArtId )
 //	                {
 //	                	
@@ -286,6 +293,7 @@ public class RezeptAnlegen extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				Rezept rezept = new Rezept();
 				RezeptHasArtikel artikel = new RezeptHasArtikel();
+				
 				rezept.setName(nameInput);
 
 				try {
@@ -317,6 +325,7 @@ public class RezeptAnlegen extends VerticalLayout {
 				}
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
+					
 				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -324,13 +333,25 @@ public class RezeptAnlegen extends VerticalLayout {
 				Notification notification = new Notification("Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				
 				System.out.println(ausgArtikel.size());
 				
 			}
 		});
-		
+	}
 
+	
+	public void addArtikelMenge(){
+		RezeptHasArtikel rhA = new RezeptHasArtikel();
+		rhA.setMenge(menge)
+		tblArtikel.get
+		try {
+			
+			
+					rhA.setArtike(ArtikelDAO.getInstance().getArtikelByName(artikelInput));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					e1.printStackTrace();
+				}
 	}
 
 	public void load() {
@@ -361,10 +382,10 @@ public class RezeptAnlegen extends VerticalLayout {
 		} catch (ConnectException | DAOException | SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	
 
 //	public void addRezeptHasArtikel(RezeptHasArtikel artikel, Table tbArtikel) {
 //		// tbArtikel.getContainerDataSource()
 //	}
-
+	}
 }
