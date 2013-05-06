@@ -19,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
 import de.bistrosoft.palaver.gui.view.Menueplan;
+import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
@@ -87,7 +88,9 @@ public class MainLayout extends VerticalLayout implements Command
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
 		
-		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
+		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, null);
+		menuplanItem.addItem(IConstants.MENU_MENUPLAN_AKTUELL, this);
+		menuplanItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		
@@ -130,11 +133,14 @@ public class MainLayout extends VerticalLayout implements Command
 		    {
 		      ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 		    }
-	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
+	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_AKTUELL))
 	    {
 	      ViewHandler.getInstance().switchView(Menueplan.class);
 	    }
-	    
+	    if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
+	    {
+	      ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+	    }
 
 	  }
 	 

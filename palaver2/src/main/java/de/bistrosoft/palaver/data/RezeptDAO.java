@@ -58,37 +58,38 @@ public class RezeptDAO extends AbstractDAO {
 		return instance;
 	}
 	
-	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept) throws ConnectException, DAOException, SQLException{
-		List<RezeptHasArtikel> list=null;
-		Long rezeptId = rezept.getId();
-		ResultSet set = get(MessageFormat.format(GET_ARTIKEL_BY_REZEPT,rezeptId));
-		while (set.next()) {
-			Artikelverwaltung av=Artikelverwaltung.getInstance();
-			
-			RezeptHasArtikel rha = new RezeptHasArtikel();
-			Artikel art = av.getArtikelById(set.getLong("artikel_fk"));
-			rha.setArtikel(art);
-			rha.setMenge(set.getBigDecimal("menge"));
-			Mengeneinheit me = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(set.getLong("mengeneinheit"));
-			rha.setMengeneinheit(me);
-		}
-		return list;
-	}
-	
-	public void createArtikelForRezept(Rezept rezept) throws ConnectException, DAOException{
-		List<RezeptHasArtikel> artikel = rezept.getArtikel();
-		Long rezeptId = rezept.getId();
-		
-		for(RezeptHasArtikel rha : artikel){
-			Long artikelId = rha.getArtikel().getId();
-			BigDecimal menge = rha.getMenge();
-			Long meId = rha.getMengeneinheit().getId();
-			
-			put(MessageFormat.format(CREATE_REZEPT_HAS_ARTIKEL, rezeptId,artikelId,menge, meId ));
-		}
-		
-		
-	}
+//	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept) throws ConnectException, DAOException, SQLException{
+//		List<RezeptHasArtikel> list=null;
+//		Long rezeptId = rezept.getId();
+//		ResultSet set = get(MessageFormat.format(GET_ARTIKEL_BY_REZEPT,rezeptId));
+//		while (set.next()) {
+//			Artikelverwaltung av=Artikelverwaltung.getInstance();
+//			
+//			RezeptHasArtikel rha = new RezeptHasArtikel();
+//			Artikel art = av.getArtikelById(set.getLong("artikel_fk"));
+//			rha.setArtikel(art);
+//			rha.setMenge(set.getBigDecimal("menge"));
+//			Mengeneinheit me = Mengeneinheitverwaltung.getInstance()
+//									.getMengeneinheitById(set.getLong("mengeneinheit"));
+//			rha.setMengeneinheit(me);
+//		}
+//		return list;
+//	}
+//	
+//	public void createArtikelForRezept(Rezept rezept) throws ConnectException, DAOException{
+//		List<RezeptHasArtikel> artikel = rezept.getArtikel();
+//		Long rezeptId = rezept.getId();
+//		
+//		for(RezeptHasArtikel rha : artikel){
+//			Long artikelId = rha.getArtikel().getId();
+//			BigDecimal menge = rha.getMenge();
+//			Long meId = rha.getMengeneinheit().getId();
+//			
+//			put(MessageFormat.format(CREATE_REZEPT_HAS_ARTIKEL, rezeptId,artikelId,menge, meId ));
+//		}
+//		
+//		
+//	}
 
 	public List<Rezept> getAllRezepte() throws ConnectException, DAOException,
 			SQLException {

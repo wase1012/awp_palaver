@@ -38,7 +38,7 @@ public class MenueplanGridLayout extends CustomComponent{
     // Konstanten
 	private static final int ROWS = 8;
     private static final int COLUMNS = 6;
-    private DDGridLayout layout = null;
+    public DDGridLayout layout = null;
     private Menueplan menueplan=null;
     
     public Menueplan getMenueplan() {

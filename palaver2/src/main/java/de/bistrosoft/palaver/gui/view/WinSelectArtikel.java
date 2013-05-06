@@ -2,192 +2,141 @@ package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
-import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
 import de.bistrosoft.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
-import de.bistrosoft.palaver.data.GeschmackDAO;
-import de.bistrosoft.palaver.data.MitarbeiterDAO;
-import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import de.bistrosoft.palaver.util.ViewHandler;
 
 public class WinSelectArtikel extends Window {
-
-	// private IndexedContainer container;
-	Window subwindow = this;
-
-	// private FilterTable table;
-	// private TextField searchField = new TextField();
-	VerticalLayout box = new VerticalLayout();
-
-	// private Button showFilter;
-	private Button btAdd;
-	private TwinColSelect artikelcol = new TwinColSelect();
 	
-	private String artikelcolInput;
+	// private IndexedContainer container;
+			Window subwindow = this;
 
-//	BeanItemContainer<Artikel> artikelContainer;
+			// private FilterTable table;
+			// private TextField searchField = new TextField();
+			VerticalLayout box = new VerticalLayout();
 
-	private Table tblArtikel;
+			// private Button showFilter;
+			private Button btAdd;
+			private TwinColSelect artikelcol = new TwinColSelect();
+			public String valueString = new String();
+			private String artikelcolInput;
 
-	// private static final String ARTIKEL = "name";
+			// BeanItemContainer<Artikel> artikelContainer;
 
-	public WinSelectArtikel(Table tblArtikel) {
-        artikelcol.setMultiSelect(true);
-        artikelcol.setSizeFull();
-		initLayout();
-		initArtikelList();
-		this.tblArtikel = tblArtikel;
-		// initSearch();
+			private Table tblArtikel;
+			public static List<String> ArtId = new ArrayList<>();
+			public static List<String> ArtName = new ArrayList<>();
+			List<RezeptHasArtikel> ausgArtikel;
+			
+			
+			public WinSelectArtikel(Table tblArtikel,
+					List<RezeptHasArtikel> nAusgArtikel) {
+				artikelcol.setMultiSelect(true);
+				artikelcol.setSizeFull();
+				initLayout();
+				initArtikelList();
+				this.tblArtikel = tblArtikel;
+				this.ausgArtikel = nAusgArtikel;
+				// initSearch();
 
-//		tblArtikel.getContainerDataSource().addItem();
-	}
+				btAdd.addClickListener(new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+//						System.out.println(valueString);
+						List<String> ArtId = Arrays.asList(valueString.substring(1,
+								valueString.length() - 1).split("\\s*,\\s*"));
+						for (String s : ArtId) {
+//							System.out.println(s);
+						}
+						// valueString.split
+						BeanItemContainer<RezeptHasArtikel> artikelcontainer;
+						List<RezeptHasArtikel> artikellist = new ArrayList<RezeptHasArtikel>();
 
-	private void initLayout() {
-		final VerticalLayout box = new VerticalLayout();
-		box.setSizeFull();
-		box.setMargin(true);
-		setContent(box);
-		btAdd = new Button("Hinzufügen");
-		box.addComponent(artikelcol);
-		box.addComponent(btAdd);
-		
+						for (String sId : ArtId) {
+							Long id = null;
+							try {
+								id = Long.parseLong(sId.trim());
 
-//		btAdd.addClickListener(new ClickListener() {
-//			
-//
-//			/**
-//			 * 
-//			 */
-//			private static final long serialVersionUID = 903679555643091354L;
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-////				extractSelected();
-//			}
-//		});
-		// box.addComponent(searchField);
-	}
+							} catch (NumberFormatException nfe) {
 
-	// private void initSearch() {
-	//
-	// // Info im Suchfeld setzen
-	// searchField.setInputPrompt("Artikel suchen");
-	//
-	// // TextChangeEvent wird ausgelöst, wenn bei der Eingabe eine Pause ist
-	// searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
-	//
-	// // ChangeListener hinzufügen
-	// searchField.addTextChangeListener(new TextChangeListener() {
-	// public void textChange(final TextChangeEvent event) {
-	//
-	// // Alle Filter entfernen
-	// artikelContainer.removeAllContainerFilters();
-	// // Nur den eingegeben Filter hinzufügen
-	// artikelContainer.addContainerFilter(new ArtikelFilter(event
-	// .getText()));
-	// }
-	// });
-	// }
-	//
-	// // Klasse für MenueFilter
-	// private class ArtikelFilter implements Filter {
-	// private String needle;
-	//
-	// // Konstruktor für Menuefilter
-	// public ArtikelFilter(String needle) {
-	// // string in Kleinbuchstaben
-	// this.needle = needle.toLowerCase();
-	// }
-	//
-	// public boolean passesFilter(Object itemId, Item item) {
-	// String haystack = ("" + item.getItemProperty(ARTIKEL).getValue())
-	// .toLowerCase();
-	// return haystack.contains(needle);
-	// }
-	//
-	// public boolean appliesToProperty(Object id) {
-	// return true;
-	// }
-	// }
+							}
 
-	private void initArtikelList() {
+							Artikel artikel = null;
+							try {
+								artikel = Artikelverwaltung.getInstance()
+										.getArtikelById(id);
+								RezeptHasArtikel a = new RezeptHasArtikel(artikel,
+										null, 1.1);
+								artikellist.add(a);
+							} catch (ConnectException | DAOException | SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 
-		List<Artikel> artikel;
-		try {
-			artikel = Artikelverwaltung.getInstance().getAllArtikelName();
-			for (Artikel e : artikel) {
-				artikelcol.addItem(e.getId());
-				artikelcol.setItemCaption(e.getId(), e.getName());
+						}
+						artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
+								RezeptHasArtikel.class, artikellist);
+						RezeptAnlegen.tblArtikel
+								.setContainerDataSource(artikelcontainer);
+						ausgArtikel=artikellist;
+						subwindow.close();
+					}
+				});
 			}
-		} catch (ConnectException | SQLException | DAOException e) {
+			
+			private void initLayout() {
+				final VerticalLayout box = new VerticalLayout();
+				box.setSizeFull();
+				box.setMargin(true);
+				setContent(box);
+				btAdd = new Button("Hinzufügen");
+				box.addComponent(artikelcol);
+				box.addComponent(btAdd);
 
-			e.printStackTrace();
-		}
+			}
+			
+			private void initArtikelList() {
 
+				List<Artikel> artikel;
+				try {
+					artikel = Artikelverwaltung.getInstance().getAllArtikelName();
+					for (Artikel e : artikel) {
+						artikelcol.addItem(e.getId());
+						artikelcol.setItemCaption(e.getId(), e.getName());
+					}
+				} catch (ConnectException | SQLException | DAOException e) {
+
+					e.printStackTrace();
+				}
+
+				artikelcol.addValueChangeListener(new ValueChangeListener() {
+					@Override
+					public void valueChange(final ValueChangeEvent event) {
+						valueString = String
+								.valueOf(event.getProperty().getValue());
+
+					}
+				});			
+	
+	
+
+			}
+
+			}
 		
-
-		
-		// showFilter = new Button("Filter anzeigen");
-		//
-		// table = new FilterTable();
-		// table.setSizeFull();
-		// table.setFilterBarVisible(false);
-		// table.setFilterGenerator(new customFilter());
-		// table.setFilterDecorator(new customFilterDecorator());
-		//
-		// BeanItemContainer<Artikel> container;
-		// try {
-		// container = new BeanItemContainer<Artikel>(Artikel.class,
-		// Artikelverwaltung.getInstance().getAllArtikelName());
-		// table.setContainerDataSource(container);
-		// table.setVisibleColumns(new Object[] { "name" });
-		// table.sort(new Object[] { "name" }, new boolean[] { true });
-		// } catch (IllegalArgumentException | ConnectException | DAOException
-		// | SQLException e) {
-		// e.printStackTrace();
-		// }
-
-		// this.addComponent(showFilter);
-		// this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
-		// this.addComponent(table);
-		// this.setExpandRatio(table, 1);
-
-	}
-
-//	private List<Artikel> extractSelected() {
-//
-//		List<Artikel> al = new ArrayList<>();
-//		Set<Artikel> artikel = (Set<Artikel>) artikelcol.getValue();
-//		for (Artikel a : artikel) {
-//			al.add(a);
-//		}
-//
-//		return al;
-//	}
-}
