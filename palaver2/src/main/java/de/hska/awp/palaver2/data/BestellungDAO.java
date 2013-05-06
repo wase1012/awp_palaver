@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
@@ -98,18 +99,27 @@ public class BestellungDAO extends AbstractDAO {
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
 		
-		if(bestellung.getBestellpositionen().size()== 0){
-			return;
-		}
-		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
 				+ DATUM + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "')";
 		this.putManaged(INSERT_QUERY);
 		
-		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
 		
+	
+		List<Bestellung> bestellungen = getAllBestellungen();
+		Long id = bestellungen.get(bestellungen.size() - 1).getId();
+		
+		Bestellung bestell = getBestellungById(id);
+		
+		//TODO für Test an der Stelle hier, später an den Andfang der Methode setzen.
+		if(bestellung.getBestellpositionen().size()== 0){
+			return;
+		}
+		
+		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
+			
+			bestellung.getBestellpositionen().get(i).setBestellung(bestell);
 			BestellpositionDAO.getInstance().createBestellposition(bestellung.getBestellpositionen().get(i));
 		}
 		
