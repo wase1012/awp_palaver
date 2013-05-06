@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
 import java.sql.SQLException;
@@ -18,6 +15,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 public class Geschmackverwaltung extends GeschmackDAO {
 
 	private static Geschmackverwaltung instance = null;
+	private GeschmackDAO dao;
 
 	private Geschmackverwaltung() {
 		super();
@@ -32,33 +30,43 @@ public class Geschmackverwaltung extends GeschmackDAO {
 
 	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
-
 		List<Geschmack> result = null;
-
 		result = super.getAllGeschmack();
-
-		return result;
-	}
-
-	public List<Geschmack> getGeschmackByName(String name)
-			throws ConnectException, DAOException, SQLException {
-
-		List<Geschmack> result = null;
-
-		result = super.getGeschmackByName(name);
-
 		return result;
 	}
 
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Geschmack geschmack = super.getGeschmackById(id);
-		return geschmack;
+		Geschmack result = null;
+		result = super.getGeschmackById(id);
+		return result;
+	}
+
+	public List<Geschmack> getGeschmackByName(String name)
+			throws ConnectException, DAOException, SQLException {
+		List<Geschmack> result = null;
+		result = super.getGeschmackByName(name);
+		return result;
 	}
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-
-		super.createGeschmack(geschmack);
+		dao.createGeschmack(geschmack);
 	}
+
+	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
+			DAOException, SQLException {
+		super.updateGeschmack(geschmack);
+	}
+
+	public void deleteGeschmackByName(String name) throws ConnectException,
+			DAOException, SQLException {
+		super.deleteGeschmackByName(name);
+	}
+
+	public void deleteGeschmackById(Long id) throws ConnectException,
+			DAOException, SQLException {
+		super.deleteGeschmackById(id);
+	}
+
 }
