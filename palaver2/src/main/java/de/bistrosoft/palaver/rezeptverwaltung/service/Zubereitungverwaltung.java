@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
 import java.sql.SQLException;
@@ -29,15 +26,12 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 			instance = new Zubereitungverwaltung();
 		}
 		return instance;
-
 	}
 
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> result = null;
-
 		result = super.getAllZubereitung();
-
 		return result;
 	}
 
@@ -74,5 +68,4 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 			DAOException, SQLException {
 		super.deleteZubereitungById(id);
 	}
-
 }

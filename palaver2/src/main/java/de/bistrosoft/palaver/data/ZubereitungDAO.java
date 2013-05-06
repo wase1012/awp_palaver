@@ -6,8 +6,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
-
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 
 /**
