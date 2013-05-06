@@ -57,7 +57,9 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 				
 				@Override
 				public void valueChange(ValueChangeEvent event) {
-					lieferant = (Lieferant) event.getProperty().getValue();
+					if(event.getProperty().getValue() != null) {
+						lieferant = (Lieferant) event.getProperty().getValue();
+					}
 				}
 			});
 	
