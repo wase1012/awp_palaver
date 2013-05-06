@@ -25,7 +25,6 @@ public class BestellpositionDAO extends AbstractDAO{
 
 	private final static String TABLE = "bestellposition";
 	private final static String ID = "id";
-	private final static String MENGE = "menge";
 	private final static String DURCHSCHNITT = "durchschnitt";
 	private final static String KANTINE = "kantine";
 	private final static String GESAMT = "gesamt";
@@ -69,7 +68,7 @@ public class BestellpositionDAO extends AbstractDAO{
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITION_BY_ID, id));
 
 		while (set.next()) {
-			bp = new Bestellposition(set.getLong(ID), set.getInt(MENGE),
+			bp = new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
 					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT));
@@ -95,7 +94,7 @@ public class BestellpositionDAO extends AbstractDAO{
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
 
 		while (set.next()) {
-			list.add(new Bestellposition(set.getLong(ID), set.getInt(MENGE),
+			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
 					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT)));
@@ -114,10 +113,9 @@ public class BestellpositionDAO extends AbstractDAO{
 	 */
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + MENGE + ","
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "("
 				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + ")"
-				+ "VALUES" + "('" + bestellposition.getMenge() + "','"
-				+ bestellposition.getArtikel().getId() + "','"
+				+ "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
 				+ bestellposition.getBestellung().getId() + "','"
 				+ bestellposition.getDurchschnitt() + "','"
 				+ bestellposition.getKantine() + "','"
@@ -140,8 +138,7 @@ public class BestellpositionDAO extends AbstractDAO{
 	 */
 	public void updateBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "="
-				+ bestellposition.getMenge() + "," + ARTIKEL_FK + "="
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ARTIKEL_FK + "="
 				+ bestellposition.getArtikel().getId() + "," + BESTELLUNG_FK + "="
 				+ bestellposition.getBestellung().getId() + "," + DURCHSCHNITT + "="
 				+ bestellposition.getDurchschnitt() + "," + KANTINE + "="
