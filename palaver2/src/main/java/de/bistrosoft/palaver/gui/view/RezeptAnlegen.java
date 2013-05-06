@@ -341,17 +341,17 @@ public class RezeptAnlegen extends VerticalLayout {
 
 	
 	public void addArtikelMenge(){
-		RezeptHasArtikel rhA = new RezeptHasArtikel();
-		rhA.setMenge(menge)
-		tblArtikel.get
-		try {
-			
-			
-					rhA.setArtike(ArtikelDAO.getInstance().getArtikelByName(artikelInput));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
-					e1.printStackTrace();
-				}
+//		RezeptHasArtikel rhA = new RezeptHasArtikel();
+//		rhA.setMenge(menge);
+//		tblArtikel.get
+//		try {
+//			
+//			
+//					rhA.setArtike(ArtikelDAO.getInstance().getArtikelByName(artikelInput));
+//				} catch (NumberFormatException | ConnectException
+//						| DAOException | SQLException e1) {
+//					e1.printStackTrace();
+//				}
 	}
 
 	public void load() {
