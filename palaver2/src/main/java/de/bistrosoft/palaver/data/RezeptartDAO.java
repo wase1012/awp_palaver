@@ -14,8 +14,10 @@ public class RezeptartDAO extends AbstractDAO {
 	private final static String TABLE = "rezeptart";
 	private final static String ID = "id";
 	private final static String NAME = "name";
-	private static final String GET_REZEPTART_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
-	private static final String GET_REZEPTART_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%'";
+	private static final String GET_REZEPTART_BY_ID = "SELECT * FROM " + TABLE
+			+ " WHERE " + ID + "= {0}";
+	private static final String GET_REZEPTART_BY_NAME = "SELECT * FROM "
+			+ TABLE + " WHERE " + NAME + " LIKE" + " '%'";
 	private final static String GET_ALL_REZEPTART = "SELECT * FROM " + TABLE;
 
 	public RezeptartDAO() {
@@ -40,16 +42,16 @@ public class RezeptartDAO extends AbstractDAO {
 		return rezeptart;
 	}
 
-	 public Rezeptart getRezeptartByName(Long id) throws ConnectException,
-	 DAOException, SQLException {
-	 Rezeptart rezeptart = null;
-	 ResultSet set = get(MessageFormat.format(GET_REZEPTART_BY_ID, id));
-	
-	 while (set.next()) {
-	 rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
-	 }
-	 return rezeptart;
-	 }
+	public Rezeptart getRezeptartByName(Long id) throws ConnectException,
+			DAOException, SQLException {
+		Rezeptart rezeptart = null;
+		ResultSet set = get(MessageFormat.format(GET_REZEPTART_BY_ID, id));
+
+		while (set.next()) {
+			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
+		}
+		return rezeptart;
+	}
 
 	public List<Rezeptart> getRezeptartByName(String name)
 			throws ConnectException, DAOException, SQLException {
