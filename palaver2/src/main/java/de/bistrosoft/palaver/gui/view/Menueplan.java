@@ -4,6 +4,10 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import com.vaadin.client.metadata.Property;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -12,6 +16,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.Label;
@@ -40,7 +45,7 @@ public class Menueplan extends VerticalLayout{
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	private String strKW= new String("Kalenderwoche: " + week +"/"+year);
+	private String strKW= new String("Kalenderwoche: " + week +"/"+year+"      ");
 	@SuppressWarnings("deprecation")
 	private Label lbKW = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 	MenueplanGridLayout shownMenueplan = curMenueplan;
@@ -134,19 +139,50 @@ public class Menueplan extends VerticalLayout{
 			}
 			
 		});
+        
+        //######################
+        // Button zum Speichern des Menüplans
+		final Button btKalender = new Button("Plan zu anderem Datum anzeigen");
+		 
+		btKalender.addClickListener(new ClickListener() {
+			// Click-Listener zur Kalenderanzeige
+			@Override
+			public void buttonClick(ClickEvent event) {
+				//Kalender zur Datums-Auswahl
+		        PopupDateField date = new PopupDateField("Datum wählen:");
+		        date.setWidth("150px");
+		        date.setDateFormat("dd.MM.yyyy");
+		        date.setLenient(true);
+		        hlChangeWeek.replaceComponent(lbKW, date);
+		        hlChangeWeek.removeComponent(left);
+		        hlChangeWeek.removeComponent(right);
+		        Button btDatumsauswahl = new Button("Menüplan anzeigen");
+		        btDatumsauswahl.addClickListener(new ClickListener() {
+					// Click-Listener zur Datumsauswahl
+					@Override
+					public void buttonClick(ClickEvent event) {
+						//TODO: Plan anzeigen bzw. Meldung, wenn keiner existiert
+					}
+				});
+		        hlChangeWeek.replaceComponent(btKalender,btDatumsauswahl);
+		        hlChangeWeek.setComponentAlignment(btDatumsauswahl, Alignment.MIDDLE_CENTER);
+			}
+		});
+        //######################
 
         // Hinzufügen und Anordnen der Komponenten
         left.addComponent(btForeWeek);
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
 		right.setComponentAlignment(btNextWeek, Alignment.TOP_RIGHT);
-        
-		hlChangeWeek.addComponents(left, lbKW, right);
+		
+		hlChangeWeek.addComponents(left, lbKW, btKalender, right);
         hlChangeWeek.setComponentAlignment(left, Alignment.TOP_LEFT);
         hlChangeWeek.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
+        hlChangeWeek.setComponentAlignment(btKalender, Alignment.TOP_CENTER);
         hlChangeWeek.setComponentAlignment(right, Alignment.TOP_RIGHT);
 		box.addComponent(hlChangeWeek);
-		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
+		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);		
 		
 		
 		// Button zum Speichern des Menüplans
