@@ -43,7 +43,7 @@ public class BestellungDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAllBestellungen liefert alle in der Datenbank befindlichen
-	 * Bestellungen zurück.
+	 * Bestellungen zurück ohne Bestellpositionen.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -63,8 +63,8 @@ public class BestellungDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getLieferantById liefert ein Ergebnisse zurück bei der Suche
-	 * nach einem Lieferant in der Datenbank.
+	 * Die Methode getBestellungById liefert ein Ergebnisse zurück bei der Suche
+	 * nach einer Bestellung in der Datenbank inklusive Bestellpositionen.
 	 * 
 	 * @param id
 	 * @return
@@ -81,14 +81,14 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM));
+					set.getDate(DATUM), BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id));
 		}
 
 		return bestellung;
 	}
 
 	/**
-	 * Die Methode erzeugt eine BEstellung in der Datenbank.
+	 * Die Methode erzeugt eine Bestellung in der Datenbank inklusive den Bestellpositionen.
 	 * 
 	 * @param bestellung
 	 * @throws ConnectException
@@ -97,13 +97,24 @@ public class BestellungDAO extends AbstractDAO {
 	 */
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
+		
+		if(bestellung.getBestellpositionen().size()== 0){
+			return;
+		}
+		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
 				+ DATUM + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "')";
 		this.putManaged(INSERT_QUERY);
+		
+		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
+		
+			BestellpositionDAO.getInstance().createBestellposition(bestellung.getBestellpositionen().get(i));
+		}
+		
 	}
-
+//TODO Bestellpositionen
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
 	 * 
@@ -119,6 +130,12 @@ public class BestellungDAO extends AbstractDAO {
 				+ bestellung.getDatum() + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
+		
+		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
+			
+			BestellpositionDAO.getInstance().updateBestellposition(bestellung.getBestellpositionen().get(i));
+		}
+		
 	}
 
 }

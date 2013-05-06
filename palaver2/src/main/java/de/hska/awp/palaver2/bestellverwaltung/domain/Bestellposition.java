@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
+import java.util.Date;
+
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
 
@@ -19,6 +21,9 @@ public class Bestellposition implements java.io.Serializable {
 	private Float durchschnitt;
 	private Float kantine;
 	private Float gesamt;
+	private Integer freitag;
+	private Integer montag;
+	private Date lieferdatum;
 
 	public Bestellposition() {
 		super();
@@ -31,7 +36,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param menge
 	 */
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, 
-			Float durchschnitt, Float kantine, Float gesamt) {
+			Float durchschnitt, Float kantine, Float gesamt, Integer freitag, Integer montag, Date lieferdatum) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -39,6 +44,9 @@ public class Bestellposition implements java.io.Serializable {
 		this.durchschnitt = durchschnitt;
 		this.kantine = kantine;
 		this.gesamt = gesamt;
+		this.freitag = freitag;
+		this.montag = montag;
+		this.lieferdatum = lieferdatum;
 	}
 
 
@@ -99,6 +107,42 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	/**
+	 * @return the freitag
+	 */
+	public Integer getFreitag() {
+		return freitag;
+	}
+
+	/**
+	 * @param freitag the freitag to set
+	 */
+	public void setFreitag(Integer freitag) {
+		this.freitag = freitag;
+	}
+
+	/**
+	 * @return the montag
+	 */
+	public Integer getMontag() {
+		return montag;
+	}
+
+	/**
+	 * @param montag the montag to set
+	 */
+	public void setMontag(Integer montag) {
+		this.montag = montag;
+	}
+
+	public Date getLieferdatum() {
+		return lieferdatum;
+	}
+
+	public void setLieferdatum(Date lieferdatum) {
+		this.lieferdatum = lieferdatum;
+	}
+
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -108,6 +152,7 @@ public class Bestellposition implements java.io.Serializable {
 				+ ", durchschnitt=" + durchschnitt + ", kantine=" + kantine
 				+ ", gesamt=" + gesamt + "]";
 	}
+
 
 	
 

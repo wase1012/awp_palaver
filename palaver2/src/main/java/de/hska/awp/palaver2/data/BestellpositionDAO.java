@@ -30,6 +30,9 @@ public class BestellpositionDAO extends AbstractDAO{
 	private final static String GESAMT = "gesamt";
 	private final static String ARTIKEL_FK = "artikel_fk";
 	private final static String BESTELLUNG_FK = "bestellung_fk";
+	private final static String FREITAG = "freitag";
+	private final static String MONTAG = "montag";
+	private final static String LIEFERDATUM = "lieferdatum";
 
 	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
@@ -71,7 +74,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			bp = new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT));
+					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG),set.getDate(LIEFERDATUM));
 		}
 
 		return bp;
@@ -97,7 +100,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT)));
+					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG),set.getDate(LIEFERDATUM)));
 		}
 
 		return list;
@@ -114,12 +117,15 @@ public class BestellpositionDAO extends AbstractDAO{
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "("
-				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + ")"
+				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + "," + FREITAG + "," + MONTAG + "," + LIEFERDATUM + ")"
 				+ "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
 				+ bestellposition.getBestellung().getId() + "','"
 				+ bestellposition.getDurchschnitt() + "','"
 				+ bestellposition.getKantine() + "','"
-				+ bestellposition.getGesamt() + "')";
+				+ bestellposition.getGesamt() + "','"
+				+ bestellposition.getFreitag() + "','"
+				+ bestellposition.getMontag() + "','"
+				+ bestellposition.getLieferdatum() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -136,15 +142,18 @@ public class BestellpositionDAO extends AbstractDAO{
 	 * änderung von Mihail Boehm: Anführungszeichen wurde gelöscht, 
 	 * jetzt Update funktioniert
 	 */
-	public void updateBestellposition(Bestellposition bestellposition) throws ConnectException,
-			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ARTIKEL_FK + "="
-				+ bestellposition.getArtikel().getId() + "," + BESTELLUNG_FK + "="
-				+ bestellposition.getBestellung().getId() + "," + DURCHSCHNITT + "="
-				+ bestellposition.getDurchschnitt() + "," + KANTINE + "="
-				+ bestellposition.getKantine() + "," + GESAMT + "="
-				+ bestellposition.getGesamt() + "WHERE " + ID + "="
-				+ bestellposition.getId();
+	public void updateBestellposition(Bestellposition bestellposition)
+			throws ConnectException, DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ARTIKEL_FK + "='"
+				+ bestellposition.getArtikel().getId() + "'," + BESTELLUNG_FK
+				+ "='" + bestellposition.getBestellung().getId() + "',"
+				+ DURCHSCHNITT + "='" + bestellposition.getDurchschnitt()
+				+ "'," + KANTINE + "='" + bestellposition.getKantine() + "',"
+				+ GESAMT + "='" + bestellposition.getGesamt() + "'," + FREITAG
+				+ "='" + bestellposition.getFreitag() + "'," + MONTAG + "='"
+				+ bestellposition.getMontag() + "'," + LIEFERDATUM + "='"
+				+ bestellposition.getLieferdatum() + "'," + "WHERE " + ID
+				+ "='" + bestellposition.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
 }
