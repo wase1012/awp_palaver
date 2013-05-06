@@ -63,7 +63,6 @@ public class BestellpositionTest extends AbstractTest {
 
 		bestellposition.setBestellung(bestellung);
 		bestellposition.setArtikel(artikel);
-		bestellposition.setMenge(MENGE);
 		bestellposition.setDurchschnitt(DURCHSCHNITT);
 		bestellposition.setKantine(KANTINE);
 		bestellposition.setGesamt(GESAMT);
@@ -87,7 +86,7 @@ public class BestellpositionTest extends AbstractTest {
 
 		Bestellposition bestellposition = bpdao.getBestellpositionById(ID);
 
-		bestellposition.setMenge(MENGE);
+		bestellposition.setDurchschnitt(DURCHSCHNITT);
 
 		bpdao.updateBestellposition(bestellposition);
 
