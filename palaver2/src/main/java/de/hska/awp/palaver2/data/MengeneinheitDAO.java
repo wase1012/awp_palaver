@@ -108,8 +108,8 @@ public class MengeneinheitDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='"
 				+ mengeneinheit.getName() + "', kurz='"
-				+ mengeneinheit.getKurz() + "' WHERE id="
-				+ mengeneinheit.getId() + "";
+				+ mengeneinheit.getKurz() + "' WHERE id='"
+				+ mengeneinheit.getId() + "'";
 		putManaged(UPDATE_QUERY);
 	}
 

@@ -17,6 +17,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
@@ -33,6 +34,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class LieferantSuche extends VerticalLayout  implements View{
 	
 	private HorizontalLayout	box = new HorizontalLayout();
+	private HorizontalLayout 	knoepfe = new HorizontalLayout();
+	private VerticalLayout 		links = new VerticalLayout();
+	private VerticalLayout		rechts = new VerticalLayout();
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
@@ -46,6 +50,9 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	
 	private Button				okButton = new Button("Ok");
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
+	private Button				updateB	= new Button("Update");
+	private Button				speichern = new Button("Speichern");
+	private Button				verwerfen = new Button("Verwerfen");
 	private Table 				ansprechpartner = new Table();
 	
 	private String				nameInput;
@@ -53,11 +60,21 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private String 				handyInput;
 	private String 				faxInput;
 	private Lieferant 			lieferant;
+	private String 				nameLi;
+	private String 				strasseLi;
+	private String 				plzLi;
+	private String 				ortLi;
+	private String 				emailLi;
+	private String 				telefonLi;
+	private String 				faxLi;
+	private String 				bezLi;
+	private String 				knrLi;
 	
 	private TextField			nameAnspr = new TextField("Name");
 	private TextField			telefonAnspr = new TextField("Telefon");
 	private TextField			handyAnspr = new TextField("Handy");
 	private TextField			faxAnspr = new TextField("Fax");
+	
 	
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
@@ -81,8 +98,6 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		box.setWidth("610px");
 		box.setSpacing(true);
 		
-		VerticalLayout links = new VerticalLayout();
-		VerticalLayout rechts = new VerticalLayout();
 		links.setWidth("250px");
 		rechts.setWidth("300px");
 		links.setSpacing(true);
@@ -106,16 +121,167 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 		rechts.addComponent(ansprechpartner);
-		rechts.addComponent(okButton);
-		rechts.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+		knoepfe.addComponent(okButton);
+		knoepfe.addComponentAsFirst(updateB);
+		rechts.addComponent(knoepfe);
+		rechts.setComponentAlignment(knoepfe, Alignment.BOTTOM_RIGHT);
 		
         okButton.addClickListener(new ClickListener() {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);					
+			}
+		});
+        
+		updateB.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				name.setEnabled(true);
+				bezeichnung.setEnabled(true);
+				kundennummer.setEnabled(true);
+				strasse.setEnabled(true);
+				plz.setEnabled(true);
+				ort.setEnabled(true);
+				email.setEnabled(true);
+				telefon.setEnabled(true);
+				fax.setEnabled(true);
+				
+				knoepfe.setVisible(false);
+				HorizontalLayout 	knoNeu = new HorizontalLayout();
+				
+				knoNeu.addComponent(verwerfen);
+				knoNeu.addComponent(speichern);
+				rechts.addComponent(knoNeu);
+				rechts.setComponentAlignment(knoNeu, Alignment.BOTTOM_RIGHT);
+				
+				verwerfen.addClickListener(new ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));						
+					}
+				});
+				
+				speichern.addClickListener(new ClickListener()
+				{
+					public void buttonClick(ClickEvent event)
+					{
+						lieferant.setName(name.getValue());
+						lieferant.setBezeichnung(bezeichnung.getValue());
+						lieferant.setKundennummer(kundennummer.getValue());
+						lieferant.setStrasse(strasse.getValue());
+						lieferant.setOrt(ort.getValue());
+						lieferant.setPlz(plz.getValue());
+						lieferant.setEmail(email.getValue());
+						lieferant.setTelefon(telefon.getValue());
+						lieferant.setFax(fax.getValue());
+						try {
+							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
+						} catch (ConnectException | DAOException | SQLException e) {
+							throw new NullPointerException("Bitte gültige Werte eingeben");
+						}
+						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+					}
+				});
+				
+		        name.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                nameInput = valueString;
+		            }
+		        });
+		        
+		        bezeichnung.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                bezLi = valueString;
+		            }
+		        });
+		        
+		        kundennummer.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                knrLi = valueString;
+		            }
+		        });
+		        
+		        strasse.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                strasseLi = valueString;
+		            }
+		        });
+		        
+		        plz.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                plzLi = valueString;
+		            }
+		        });
+		        
+		        ort.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                ortLi = valueString;
+		            }
+		        });
+		        
+		        email.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                emailLi = valueString;
+		            }
+		        });
+		        
+		        telefon.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                telefonLi = valueString;
+		            }
+		        });
+		        
+		        fax.addValueChangeListener(new ValueChangeListener() {
+
+		            public void valueChange(final ValueChangeEvent event) {
+		                final String valueString = String.valueOf(event.getProperty()
+		                        .getValue());
+
+		                faxLi = valueString;
+		            }
+		        });
+				
+				
 			}
 		});
 		
@@ -210,7 +376,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					}				
 					
 					UI.getCurrent().removeWindow(anspr);
-					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				
+					}
 			});
 
 	        nameAnspr.addValueChangeListener(new ValueChangeListener() {
