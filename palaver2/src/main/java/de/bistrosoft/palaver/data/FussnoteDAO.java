@@ -16,23 +16,27 @@ public class FussnoteDAO extends AbstractDAO {
 
 	private final static String ID = "id";
 	private final static String NAME = "name";
-	private final static String ABKUERZUNG = "abkuerzung";
+	private static final String ABKUERZUNG = "abkuerzung";
+	private final static String TABLE = "fussnote";
 
 	private static FussnoteDAO instance = null;
+
 	Fussnote fussnote;
 
-	private final static String TABLE = "fussnote";
 	private final static String GET_ALL_FUSSNOTE = "SELECT * FROM " + TABLE;
 	private final static String GET_FUSSNOTE_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
+	private final static String GET_FUSSNOTE_BY_NAME = "SELECT * FROM " + TABLE
+			+ " WHERE " + NAME + " LIKE" + " '%";
+	private static final String DELETE_FUSSNOTE_BY_NAME = "DELETE FROM "
+			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
+	private static final String DELETE_FUSSNOTE_BY_ID = "DELETE FROM " + TABLE
+			+ " WHERE id = {0}";
 
-	
-	
 	public FussnoteDAO() {
 		super();
 	}
 
-	
 	public static FussnoteDAO getInstance() {
 		if (instance == null) {
 			instance = new FussnoteDAO();
@@ -41,7 +45,6 @@ public class FussnoteDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Die Methode getAllFussnote() liefert alle in der Datenbank befindlichen Fussnoten zurück.
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -52,8 +55,7 @@ public class FussnoteDAO extends AbstractDAO {
 		}
 		return list;
 	}
-	
-	// Die Methode getFussnoteById() liefert ein Ergebnis zurück
+
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
@@ -64,16 +66,47 @@ public class FussnoteDAO extends AbstractDAO {
 		return fussnote;
 	}
 
-	public void createNewFussnote(Fussnote fussnote) throws ConnectException,
+	public List<Fussnote> getFussnoteByName(String name)
+			throws ConnectException, DAOException, SQLException {
+		List<Fussnote> list = new ArrayList<Fussnote>();
+		ResultSet set = get(GET_FUSSNOTE_BY_NAME + name + "%'");
+		while (set.next()) {
+			list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
+					.getString(ABKUERZUNG)));
+		}
+		return list;
+	}
+
+	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name,abkuerzung) VALUES('" + fussnote.getName() + "','"
+				+ "(name, abkuerzung) VALUES('" + fussnote.getName() + "','"
 				+ fussnote.getAbkuerzung() + "');";
 		this.put(INSERT_QUERY);
 	}
 
-	// public void deleteFussnote{
-	// ???
-	// }
+	public void updateFussnote(Fussnote fussnote) throws ConnectException,
+			DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
+				+ fussnote.getName() + "'," + ABKUERZUNG + "='"
+				+ fussnote.getAbkuerzung() + "'" + " WHERE " + ID + "='"
+				+ fussnote.getId() + "'";
+		this.put(UPDATE_QUERY);
+	}
 
+	public void deleteFussnoteByName(String name) throws ConnectException,
+			DAOException, SQLException {
+		if (name == null) {
+			throw new NullPointerException("keine Fussnote übergeben!");
+		}
+		put(DELETE_FUSSNOTE_BY_NAME + name + "%'");
+	}
+
+	public void deleteFussnoteById(Long id) throws ConnectException,
+			DAOException, SQLException {
+		if (id == null) {
+			throw new NullPointerException("keine Fussnote übergeben!");
+		}
+		put(MessageFormat.format(DELETE_FUSSNOTE_BY_ID, id));
+	}
 }

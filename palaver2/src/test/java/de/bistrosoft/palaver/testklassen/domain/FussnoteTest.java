@@ -1,14 +1,13 @@
-/**
- * 
- */
 package de.bistrosoft.palaver.testklassen.domain;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
@@ -23,9 +22,11 @@ import de.bistrosoft.palaver.util.AbstractTest;
  */
 public class FussnoteTest extends AbstractTest {
 
-	final String NAME = "Weizen";
-	final String ABKUERZUNG = "Abk";
+	final String NAME = "vegan";
+	final String NAME2 = "test";
+	final String ABKUERZUNG = "t";
 	final Long ID = Long.valueOf("2");
+	final Long ID2 = Long.valueOf("8");
 	private FussnoteDAO dao = new FussnoteDAO();
 
 	/**
@@ -37,15 +38,15 @@ public class FussnoteTest extends AbstractTest {
 	 */
 
 	@Test
-	public void getFussnoten() {
+	public void findAllFussnote() {
 		Boolean exception = false;
-		List<Fussnote> fussnotelist = null;
+		List<Fussnote> zblist = null;
 		try {
-			fussnotelist = dao.getAllFussnote();
+			zblist = dao.getAllFussnote();
 		} catch (ConnectException | DAOException | SQLException e) {
 			exception = true;
 		}
-		assertThat(fussnotelist.isEmpty(), is(false));
+		assertThat(zblist.isEmpty(), is(false));
 		assertThat(exception, is(false));
 	}
 
@@ -58,13 +59,37 @@ public class FussnoteTest extends AbstractTest {
 	 */
 
 	@Test
-	public void getFussnoteById() throws ConnectException, DAOException,
+	public void findFussnoteById() throws ConnectException, DAOException,
 			SQLException {
 		Fussnote fussnote = new Fussnote();
 		fussnote = dao.getFussnoteById(ID);
 		assertThat(fussnote.getId(), is(ID));
 	}
-	
+
+	/**
+	 * Die Testmethode sucht nach einer Fussnote anhand eines Names
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+
+	@Test
+	public void findFussnoteByName() throws ConnectException, DAOException,
+			SQLException {
+
+		Boolean exception = false;
+		List<Fussnote> list = null;
+
+		try {
+			list = dao.getFussnoteByName(NAME);
+		} catch (ConnectException | DAOException | SQLException e) {
+			exception = true;
+		}
+		assertThat(list.isEmpty(), is(false));
+		assertThat(exception, is(false));
+	}
+
 	/**
 	 * Die Testmethode erstellt eine Fussnote
 	 * 
@@ -77,9 +102,58 @@ public class FussnoteTest extends AbstractTest {
 	public void createFussnote() throws ConnectException, DAOException,
 			SQLException {
 		Fussnote fussnote = new Fussnote();
-		fussnote.setName(NAME + "_NEW");
-		fussnote.setAbkuerzung(ABKUERZUNG + "_NEW");
-		dao.createNewFussnote(fussnote);
+		fussnote.setName(NAME2);
+		fussnote.setAbkuerzung(ABKUERZUNG);
+		dao.createFussnote(fussnote);
+	}
+
+	/**
+	 * Die Testmethode ändert eine Fussnote
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+
+	@Test
+	public void updateFussnote() throws ConnectException, DAOException,
+			SQLException {
+		Fussnote f = dao.getFussnoteById(ID);
+		f.setName("Testt");
+		f.setAbkuerzung("tt");
+		dao.updateFussnote(f);
+	}
+
+	/**
+	 * Diese Testmethoden löschen eine Fussnote über ID oder Name
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+
+	@Test
+	public void deleteFussnoteByName() throws ConnectException, DAOException,
+			SQLException {
+		String name = "Weizen_NEW";
+
+		List<Fussnote> zb = new ArrayList<Fussnote>();
+		zb = dao.getFussnoteByName(name);
+
+		dao.deleteFussnoteByName(name);
+	}
+
+	@Ignore
+	@Test
+	public void deleteFussnoteById() throws ConnectException, DAOException,
+			SQLException {
+
+		Long id = Long.valueOf(7);
+		Fussnote fussnote = new Fussnote();
+		fussnote = dao.getFussnoteById(id);
+
+		dao.deleteFussnoteById(fussnote.getId());
+
 	}
 
 }
