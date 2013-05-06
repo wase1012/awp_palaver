@@ -25,8 +25,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -205,6 +207,32 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				Artikel artikel = new Artikel();
+				artikel.setArtikelnr(artnr.getValue());
+				artikel.setBestellgroesse(Double.parseDouble(bestellung.getValue()));
+				artikel.setBio(bio.getValue());
+				artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer.parseInt(durchschnitt.getValue()) : 0);
+				artikel.setGrundbedarf(grundbedarf.getValue());
+				artikel.setKategorie((Kategorie) kategorie.getValue());
+				artikel.setLebensmittel(lebensmittel.getValue());
+				artikel.setLieferant((Lieferant) lieferant.getValue());
+				artikel.setMengeneinheit((Mengeneinheit) mengeneinheit.getValue());
+				artikel.setName(name.getValue());
+				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',', '.')));
+				artikel.setStandard(standard.getValue());
+				
+				String notification = "Artikel gespeichert";
+				
+				try
+				{
+					Artikelverwaltung.getInstance().createArtikel(artikel);
+				} 
+				catch (ConnectException | DAOException e)
+				{
+					e.printStackTrace();
+					notification = e.toString();
+				}
+				
 				final Window dialog = new Window();
 				dialog.setClosable(false);
 				dialog.setWidth("300px");
@@ -214,7 +242,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				dialog.setResizable(false);
 				dialog.setStyleName("dialog-window");
 				
-				Label message = new Label("Artikel gespeichert");
+				Label message = new Label(notification);
 				
 				Button okButton = new Button("OK");
 				
@@ -261,9 +289,9 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	}
 	
 	/**
-	 * 
+	 * Befüllt die Comboboxen mit Inhalt
 	 */
-	public void load()
+	private void load()
 	{
 		try
 		{
