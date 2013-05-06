@@ -44,6 +44,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
 	
+	private Button				okButton = new Button("Ok");
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
 	private Table 				ansprechpartner = new Table();
 	
@@ -106,7 +107,17 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
-		rechts.addComponent(ansprechpartner);	
+		rechts.addComponent(ansprechpartner);
+		rechts.addComponent(okButton);
+		rechts.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+		
+        okButton.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);					
+			}
+		});
 		
 		ansprAdd.addClickListener(new ClickListener() {
 		
@@ -127,8 +138,6 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			layout.setMargin(true);
 			layout.setWidth("100%");
 			layout.setSpacing(true);
-			
-
 
 			Button			speichern = new Button(IConstants.BUTTON_SAVE);
 			Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -195,12 +204,13 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					try {
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (ConnectException | DAOException | SQLException e) {
+						System.out.println(e);
 						throw new NullPointerException("Bitte gültige Werte eingeben");
+
 					}				
 					
 					UI.getCurrent().removeWindow(anspr);
-					ViewHandler.getInstance().switchView(LieferantSuche.class);
-				}
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
 			});
 
 	        nameAnspr.addValueChangeListener(new ValueChangeListener() {
@@ -252,6 +262,14 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	public void getViewParam(ViewData data)
 	{
 		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
+		if(lieferant.getId() == null) {
+			try {
+				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
+			} catch (ConnectException | DAOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		name.setValue(lieferant.getName());
 		name.setEnabled(false);
 			

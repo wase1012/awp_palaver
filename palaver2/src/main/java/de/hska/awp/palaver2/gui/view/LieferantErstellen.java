@@ -32,6 +32,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
@@ -58,6 +59,9 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private String faxInput;
 	private String bezInput;
 	private String knrInput;
+	
+	private Lieferant lieferant = new Lieferant();
+
 	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -273,7 +277,6 @@ public class LieferantErstellen extends VerticalLayout implements View
 			dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
 			
 			UI.getCurrent().addWindow(dialog);
-			Lieferant lieferant = new Lieferant();
 			lieferant.setName(nameInput);
 			lieferant.setBezeichnung(bezInput);
 			lieferant.setKundennummer(knrInput);
@@ -299,8 +302,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 				public void buttonClick(ClickEvent event)
 				{
 					UI.getCurrent().removeWindow(dialog);
-					ViewHandler.getInstance().switchView(LieferantSuche.class);
-				}
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
 			});
 		}
 	});
