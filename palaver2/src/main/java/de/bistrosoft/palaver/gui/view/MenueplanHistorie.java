@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import com.vaadin.client.metadata.Property;
 import com.vaadin.server.Page;
@@ -35,6 +36,10 @@ public class MenueplanHistorie extends VerticalLayout{
 
 	// Variablen und Komponenten
 	private VerticalLayout	box = new VerticalLayout();
+	MenueplanGridLayout Menueplan=null;
+	Label lbKW = null;
+	Label lbPlatzhalter1 =new Label();
+	Label lbPlatzhalter2 =new Label();
 	
 
 	public MenueplanHistorie()
@@ -59,13 +64,13 @@ public class MenueplanHistorie extends VerticalLayout{
 			// Click-Listener zur Datumsauswahl
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//TODO: Woche und Jahr aus Datum; nur Vergangenheitswerte zulassen; Meldung, wenn nichts in DB
-				 SimpleDateFormat sdf;
+				//TODO: nur Vergangenheitswerte zulassen; Meldung, wenn nichts in DB 
+				SimpleDateFormat sdf;
 		         Calendar cal;
 		         Date datum = null;
 		         int week;
-		         String sample = ""+date.getValue();
-		         sdf = new SimpleDateFormat("dd.MM.yyyy");
+		         String sample = date.getValue().toString();
+		         sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
 		         try {
 					datum = sdf.parse(sample);
 				} catch (ParseException e) {
@@ -77,13 +82,25 @@ public class MenueplanHistorie extends VerticalLayout{
 		         week = cal.get(Calendar.WEEK_OF_YEAR);
 				@SuppressWarnings("deprecation")
 				int year = date.getValue().getYear()+1900;
-				MenueplanGridLayout Menueplan = new MenueplanGridLayout(week, year);
+				if (Menueplan!=null){
+					box.removeComponent(Menueplan);
+					box.removeComponent(lbKW);
+					box.removeComponent(lbPlatzhalter1);
+					box.removeComponent(lbPlatzhalter2);
+				}
+				Menueplan = new MenueplanGridLayout(week, year);
 				String strKW= new String("Kalenderwoche: " + week +"/"+year);
 				@SuppressWarnings("deprecation")
-				Label lbKW = new Label("<pre><div align=center><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</div></pre>", Label.CONTENT_XHTML);
-				box.replaceComponent(date, lbKW);
+				Label lbKW2 = new Label("<pre><div align=center><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</div></pre>", Label.CONTENT_XHTML);
+				lbKW=lbKW2;
+				lbPlatzhalter1.setHeight("30px");
+		        box.addComponent(lbPlatzhalter1);
+		        box.setComponentAlignment(lbPlatzhalter1, Alignment.TOP_CENTER);
+				box.addComponent(lbKW);
 				box.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
-				box.removeComponent(btDatumsauswahl);
+				lbPlatzhalter2.setHeight("30px");
+		        box.addComponent(lbPlatzhalter2);
+		        box.setComponentAlignment(lbPlatzhalter2, Alignment.TOP_CENTER);
 				box.addComponent(Menueplan);
 				box.setComponentAlignment(Menueplan, Alignment.MIDDLE_CENTER);
 			}
