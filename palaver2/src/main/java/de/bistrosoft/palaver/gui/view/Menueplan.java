@@ -45,7 +45,7 @@ public class Menueplan extends VerticalLayout{
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	private String strKW= new String("Kalenderwoche: " + week +"/"+year+"      ");
+	private String strKW= new String("Kalenderwoche: " + week +"/"+year);
 	@SuppressWarnings("deprecation")
 	private Label lbKW = new Label("<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"+strKW+"</pre>", Label.CONTENT_XHTML);
 	MenueplanGridLayout shownMenueplan = curMenueplan;
