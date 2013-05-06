@@ -47,7 +47,6 @@ public class MenueplanDAO extends AbstractDAO {
 	
 	public Menueplan getMenueplanByWeek(Week week) throws ConnectException, DAOException, SQLException{
 		Menueplan menueplan = null;
-		System.out.println(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
 		ResultSet setMpl = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
 		
 		while (setMpl.next()) {
@@ -59,11 +58,9 @@ public class MenueplanDAO extends AbstractDAO {
 			
 			List<MenueComponent> menues = new ArrayList<>();
 			// TODO: Menüs laden
-			System.out.println(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 			ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 			
 			while (setMenues.next()) {
-				System.out.println("menue");
 				Long id = setMenues.getLong("id");
 				String name = setMenues.getString("name");
 				Mitarbeiter koch=null;
@@ -74,7 +71,6 @@ public class MenueplanDAO extends AbstractDAO {
 				MenueComponent menueComp = new MenueComponent(menue, null, row, col, false);
 				menues.add(menueComp);
 			}
-			System.out.println(menues.size());
 			menueplan.setMenues(menues);
 		}
 			return menueplan;
@@ -102,7 +98,6 @@ public class MenueplanDAO extends AbstractDAO {
 	}
 	
 	public void createMenueForMenueplan(Menueplan mpl, Menue menue, int col, int row) throws ConnectException, DAOException{
-		System.out.println(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN, mpl.getId(),menue.getId(),col,row));
 		put(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN, mpl.getId(),menue.getId(),col,row));
 		
 	}

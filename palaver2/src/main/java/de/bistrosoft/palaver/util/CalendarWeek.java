@@ -7,20 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
  
 /**
- * @author Tom
+ * @author Eike
  * 
  */
-//public class CalendarWeek {
- 
-    /**
-     * @param args
-     */
-//    public static void main(final String[] args) {
-//        final CalendarWeek calendarWeek = new CalendarWeek(37,Locale.GERMANY);
-//        System.out.println(calendarWeek.getStart());
-//        System.out.println(calendarWeek.getEnd());
-//    }
- 
     public class CalendarWeek {
         int weekOfYear;
  

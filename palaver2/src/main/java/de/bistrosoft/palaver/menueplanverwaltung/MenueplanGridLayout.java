@@ -51,7 +51,6 @@ public class MenueplanGridLayout extends CustomComponent{
 
 	// Seitenlayout erstellen
     public MenueplanGridLayout(int week, int year)  {
-    	System.out.println(week+"/"+year);
     	menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeek(new Week(week,year));
     	if (menueplan==null){
     		menueplan = new Menueplan(new Week(week,year));
@@ -226,7 +225,6 @@ public class MenueplanGridLayout extends CustomComponent{
 				}
 			}
 		}
-    	System.out.println(menues.size());
     	menueplan.setMenues(menues);
     	
     	//Extrahiere Köche
