@@ -41,27 +41,27 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return instance;
 	}
 	
-	public void createArtikelForRezept(Rezept rezept){
-		try {
-			super.createArtikelForRezept(rezept);
-		} catch (ConnectException | DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
-		List<RezeptHasArtikel> artikel=null;
-		
-		try {
-			super.getArtikelByRezept(rezept);
-		} catch (ConnectException | DAOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return artikel;
-	}
+//	public void createArtikelForRezept(Rezept rezept){
+//		try {
+//			super.createArtikelForRezept(rezept);
+//		} catch (ConnectException | DAOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
+//		List<RezeptHasArtikel> artikel=null;
+//		
+//		try {
+//			super.getArtikelByRezept(rezept);
+//		} catch (ConnectException | DAOException | SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return artikel;
+//	}
 
 	// public List<Rezept> getAllRezept() throws ConnectException, DAOException,
 	// SQLException {

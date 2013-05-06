@@ -33,32 +33,38 @@ public class RezeptHasArtikel  {
 		this.mengeneinheit = mengeneinheit;
 		this.menge = menge;
 	}
-
-
-	public Artikel getArtikel() {
-		return this.artikel;
-	}
-
-	public void setArtikel(Artikel artikel) {
-		this.artikel = artikel;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "einheit", nullable = false)
-	public Mengeneinheit getMengeneinheit() {
-		return this.mengeneinheit;
-	}
-
-	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
-		this.mengeneinheit = mengeneinheit;
-	}
-
-
 	public BigDecimal getMenge() {
 		return this.menge;
+		
 	}
-
 	public void setMenge(BigDecimal menge) {
 		this.menge = menge;
 	}
+
+	public String getArtikelName() {
+	return this.artikel.getName();
+}
+	
+
+
+//	public Artikel getArtikel() {
+//		return this.artikel;
+//	}
+//
+//	public void setArtikel(Artikel artikel) {
+//		this.artikel = artikel;
+//	}
+//
+//	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
+//		this.mengeneinheit = mengeneinheit;
+//	}
+//
+//
+//	public BigDecimal getMenge() {
+//		return this.menge;
+//	}
+//
+//	public void setMenge(BigDecimal menge) {
+//		this.menge = menge;
+//	}
 }

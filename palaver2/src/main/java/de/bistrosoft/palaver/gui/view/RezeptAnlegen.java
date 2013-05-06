@@ -1,6 +1,6 @@
 /**
  * 
- * Jan Lauinger
+ * Jan Lauinger -> FAIL
  * 18.04.2013 - 21:21:58
  *
  */
@@ -48,6 +48,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.ViewHandler;
+import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
 /**
  * @author Jan Lauinger
@@ -72,7 +73,7 @@ public class RezeptAnlegen extends VerticalLayout {
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
 	private ComboBox geschmackCb = new ComboBox("Geschmack");
 
-	private Table artikelT = new Table("Zutaten");
+	public static  Table tblArtikel = new Table("Zutaten");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -85,6 +86,8 @@ public class RezeptAnlegen extends VerticalLayout {
 	private String geschmackInput;
 	private String rezeptartInput;
 	private String mitarbeiterInput;
+	
+	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 
 	List<RezeptHasArtikel> artikel = new ArrayList<>();
 
@@ -114,7 +117,7 @@ public class RezeptAnlegen extends VerticalLayout {
 		box.addComponent(geschmackCb);
 		box.addComponent(herd);
 		box.addComponent(konvektomat);
-		box.addComponent(artikelT);
+		box.addComponent(tblArtikel);
 		box.addComponent(zutatneu);
 //		box.addComponent(btAdd);
 		box.addComponent(kommentar);
@@ -123,14 +126,14 @@ public class RezeptAnlegen extends VerticalLayout {
 
 		// 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1, "name",
 		// 1, 1.00, true, true, true, 1, true
-		try {
-			container = new BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, artikel);
-			artikelT.setContainerDataSource(container);
-			artikelT.setVisibleColumns(new Object[] { "name", "menge", "einheit" });
-			artikelT.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			container = new BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, artikel);
+//			artikelT.setContainerDataSource(container);
+//			artikelT.setVisibleColumns(new Object[] { "name", "menge", "einheit" });
+//			artikelT.sort(new Object[] { "name" }, new boolean[] { true });
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		}
 //		BeanItemContainer<Artikel> container;
 //
 //		// 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1, "name",
@@ -168,11 +171,14 @@ public class RezeptAnlegen extends VerticalLayout {
 		portion.setInputPrompt(portionInput);
 		portion.setMaxLength(150);
 		
-		artikelT.setSizeUndefined();
-		artikelT.setSelectable(true);
-		artikelT.setMultiSelect(true);
-		artikelT.setImmediate(true);
-		artikelT.setEditable(true);
+		tblArtikel.setSizeUndefined();
+		tblArtikel.setSelectable(true);
+		tblArtikel.setMultiSelect(true);
+		tblArtikel.setImmediate(true);
+		tblArtikel.setEditable(true);
+		tblArtikel.addContainerProperty("Name", String.class, null );
+		tblArtikel.addContainerProperty("Menge", Long.class, null);
+		tblArtikel.setEditable(true);
 
 		geschmackCb.setImmediate(true);
 		geschmackCb.setInputPrompt(geschmackInput);
@@ -194,11 +200,23 @@ public class RezeptAnlegen extends VerticalLayout {
 		zutatneu.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				WinSelectArtikel window = new WinSelectArtikel(artikelT);
+				WinSelectArtikel window = new WinSelectArtikel(tblArtikel,ausgArtikel);
 				UI.getCurrent().addWindow(window);
 				window.setModal(true);
 				window.setWidth("50%");
 				window.setHeight("50%");
+				
+//				 for( String k: WinSelectArtikel.ArtId )
+//	                {
+//	                	
+//	                	artikelT.addItem(new Object[] {
+//	                			  k, 3500}, new Integer(k));
+//	                	
+//	                	Notification.show(k);
+//	                }
+				
+				
+				
 			}
 		});
 
@@ -266,32 +284,7 @@ public class RezeptAnlegen extends VerticalLayout {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				final Window dialog = new Window();
-//				dialog.setClosable(false);
-//				dialog.setWidth("300px");
-//				dialog.setHeight("150px");
-//				dialog.setModal(true);
-//				dialog.center();
-//				dialog.setResizable(false);
-//				dialog.setStyleName("dialog-window");
-//
-//				Label message = new Label("Rezept gespeichert");
-//
-//				Button okButton = new Button("OK");
-//
-//				VerticalLayout dialogContent = new VerticalLayout();
-//				dialogContent.setSizeFull();
-//				dialogContent.setMargin(true);
-//				dialog.setContent(dialogContent);
-//
-//				dialogContent.addComponent(message);
-//				dialogContent.addComponent(okButton);
-//				dialogContent.setComponentAlignment(okButton,
-//						Alignment.BOTTOM_RIGHT);
-//
-//				UI.getCurrent().addWindow(dialog);
 				Rezept rezept = new Rezept();
-//				Artikel artikel = new Artikel();
 				RezeptHasArtikel artikel = new RezeptHasArtikel();
 				rezept.setName(nameInput);
 
@@ -328,20 +321,13 @@ public class RezeptAnlegen extends VerticalLayout {
 					e.printStackTrace();
 				}
 
-//				okButton.addClickListener(new ClickListener() {
-//					@Override
-//					public void buttonClick(ClickEvent event) {
-//						UI.getCurrent().removeWindow(dialog);
-//						ViewHandler.getInstance().returnToDefault();
-//					}
-//				});
-				
 				Notification notification = new Notification("Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+				
+				System.out.println(ausgArtikel.size());
+				
 			}
-			
-			
 		});
 		
 
