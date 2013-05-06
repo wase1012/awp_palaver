@@ -26,7 +26,7 @@ public abstract class AbstractDAO
 	}
 	
 	@SuppressWarnings({ "resource", "restriction" })
-	protected synchronized ResultSet get(String querry) throws ConnectException, DAOException, SQLException 
+	protected synchronized ResultSet getManaged(String querry) throws ConnectException, DAOException, SQLException 
 	{
 		openConnection();
 
@@ -52,7 +52,7 @@ public abstract class AbstractDAO
 		return cache.getOriginal();
 	}
 	
-	protected synchronized void put(String querry) throws ConnectException, DAOException 
+	protected synchronized void putManaged(String querry) throws ConnectException, DAOException 
 	{
 		openConnection();
 
@@ -70,13 +70,21 @@ public abstract class AbstractDAO
 		}
 	}
 	
-	private void openConnection() throws ConnectException
+	protected ResultSet get(String querry) throws SQLException
+	{
+		ResultSet result = null;
+		result = statement.executeQuery(querry);
+		
+		return result;
+	}
+	
+	protected void openConnection() throws ConnectException
 	{
 		conn.connect();
 		statement = conn.getStmt();
 	}
 	
-	private void closeConnection() throws ConnectException, DAOException
+	protected void closeConnection() throws ConnectException, DAOException
 	{
 		conn.disconnect();
 		try

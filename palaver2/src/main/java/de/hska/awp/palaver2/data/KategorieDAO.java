@@ -60,7 +60,7 @@ public class KategorieDAO extends AbstractDAO {
 	public List<Kategorie> getAllKategories() throws ConnectException,
 			DAOException, SQLException {
 		List<Kategorie> list = new ArrayList<Kategorie>();
-		ResultSet set = get(GET_ALL_KATEGORIES);
+		ResultSet set = getManaged(GET_ALL_KATEGORIES);
 		while (set.next()) {
 			list.add(new Kategorie(set.getLong(ID), set.getString(NAME)));
 		}
@@ -82,7 +82,7 @@ public class KategorieDAO extends AbstractDAO {
 	 */
 	public Kategorie getKategorieById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = get(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
 		while (set.next()) {
 			kategorie = new Kategorie(set.getLong(ID), set.getString(NAME));
 		}
@@ -103,7 +103,7 @@ public class KategorieDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
 				+ kategorie.getName() + "')";
-		this.put(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
 	}
 
 	/**
@@ -120,6 +120,6 @@ public class KategorieDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='"
 				+ kategorie.getName() + "' WHERE id=" + kategorie.getId() + "";
-		this.put(UPDATE_QUERY);
+		this.putManaged(UPDATE_QUERY);
 	}
 }

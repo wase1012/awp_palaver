@@ -30,7 +30,7 @@ public class SystemDAO extends AbstractDAO
 	{
 		String result = "FAIL";
 		
-		ResultSet set = get(TEST_CONNECTION);
+		ResultSet set = getManaged(TEST_CONNECTION);
 		
 		while(set.next())
 		{

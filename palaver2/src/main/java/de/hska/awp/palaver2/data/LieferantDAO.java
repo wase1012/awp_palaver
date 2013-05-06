@@ -69,7 +69,7 @@ public class LieferantDAO extends AbstractDAO {
 			DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
-		ResultSet set = get(GET_ALL_LIEFERANTEN);
+		ResultSet set = getManaged(GET_ALL_LIEFERANTEN);
 
 		while (set.next()) {
 			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
@@ -96,7 +96,7 @@ public class LieferantDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
-		ResultSet set = get(GET_LIEFERANT_BY_NAME + name + "%'");
+		ResultSet set = getManaged(GET_LIEFERANT_BY_NAME + name + "%'");
 
 		while (set.next()) {
 			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
@@ -123,7 +123,7 @@ public class LieferantDAO extends AbstractDAO {
 			DAOException, SQLException {
 
 		Lieferant lieferant = null;
-		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
 
 		while (set.next()) {
 			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
@@ -155,7 +155,7 @@ public class LieferantDAO extends AbstractDAO {
 				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
 				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
 				+ "','" + lieferant.getFax() + "')";
-		this.put(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
 	}
 
 	/**
@@ -178,6 +178,6 @@ public class LieferantDAO extends AbstractDAO {
 				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
 				+ lieferant.getFax() + "'" + "WHERE " + ID + "='" + lieferant.getId()
 				+ "'";
-		this.put(UPDATE_QUERY);
+		this.putManaged(UPDATE_QUERY);
 	}
 }

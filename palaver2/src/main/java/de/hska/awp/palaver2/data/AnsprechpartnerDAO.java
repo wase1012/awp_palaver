@@ -67,7 +67,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	public List<Ansprechpartner> getAllAnsprechpartner()
 			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
-		ResultSet set = get(GET_ALL_ANSPRECHPARTNER);
+		ResultSet set = getManaged(GET_ALL_ANSPRECHPARTNER);
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID),
 					set.getString("name"), set.getString("telefon"), set
@@ -92,7 +92,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 
-		ResultSet set = get(GET_ANSPRECHPARTNER_BY_NAME + name + "%'");
+		ResultSet set = getManaged(GET_ANSPRECHPARTNER_BY_NAME + name + "%'");
 
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),
@@ -118,7 +118,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 
 		Ansprechpartner ansprechpartner = null;
-		ResultSet set = get(MessageFormat.format(GET_ANSPRECHPARTNER_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ANSPRECHPARTNER_BY_ID, id));
 
 		while (set.next()) {
 			ansprechpartner = new Ansprechpartner(set.getLong(ID),
@@ -147,7 +147,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 				+ ansprechpartner.getTelefon() + "','"
 				+ ansprechpartner.getHandy() + "','" + ansprechpartner.getFax()
 				+ "','" + ansprechpartner.getLieferant().getId() + "')";
-		this.put(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 				+ ansprechpartner.getFax() + "'," + LIEFERANT_FK + "='"
 				+ ansprechpartner.getLieferant().getId() + "'" + "WHERE " + ID
 				+ "='" + ansprechpartner.getId() + "'";
-		this.put(UPDATE_QUERY);
+		this.putManaged(UPDATE_QUERY);
 	}
 
 	/**
@@ -184,14 +184,14 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 		if (id == null) {
 			throw new NullPointerException("kein Ansprechpartner übergeben");
 		}
-		put(MessageFormat.format(DELETE_NACHRICHT, id));
+		putManaged(MessageFormat.format(DELETE_NACHRICHT, id));
 	}
 
 	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) 
 			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 
-		ResultSet set = get(GET_ANSPRECHPARTNER_BY_LIEFERANT + lieferant.getId());
+		ResultSet set = getManaged(GET_ANSPRECHPARTNER_BY_LIEFERANT + lieferant.getId());
 
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),

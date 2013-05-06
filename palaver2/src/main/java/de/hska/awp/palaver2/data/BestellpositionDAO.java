@@ -66,7 +66,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			DAOException, SQLException {
 
 		Bestellposition bp = null;
-		ResultSet set = get(MessageFormat.format(GET_BESTELLPOSITION_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITION_BY_ID, id));
 
 		while (set.next()) {
 			bp = new Bestellposition(set.getLong(ID), set.getInt(MENGE),
@@ -92,7 +92,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			throws ConnectException, DAOException, SQLException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
-		ResultSet set = get(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
 
 		while (set.next()) {
 			list.add(new Bestellposition(set.getLong(ID), set.getInt(MENGE),
@@ -122,7 +122,7 @@ public class BestellpositionDAO extends AbstractDAO{
 				+ bestellposition.getDurchschnitt() + "','"
 				+ bestellposition.getKantine() + "','"
 				+ bestellposition.getGesamt() + "')";
-		this.put(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
 	}
 
 	
@@ -134,16 +134,20 @@ public class BestellpositionDAO extends AbstractDAO{
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
+	/* 
+	 * änderung von Mihail Boehm: Anführungszeichen wurde gelöscht, 
+	 * jetzt Update funktioniert
+	 */
 	public void updateBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "='"
-				+ bestellposition.getMenge() + "'," + ARTIKEL_FK + "='"
-				+ bestellposition.getArtikel().getId() + "'," + BESTELLUNG_FK + "='"
-				+ bestellposition.getBestellung().getId() + "'," + DURCHSCHNITT + "='"
-				+ bestellposition.getDurchschnitt() + "','" + KANTINE + "='"
-				+ bestellposition.getKantine() + "','" + GESAMT + "='"
-				+ bestellposition.getGesamt() + "'" + "WHERE " + ID + "='"
-				+ bestellposition.getId() + "'";
-		this.put(UPDATE_QUERY);
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + MENGE + "="
+				+ bestellposition.getMenge() + "," + ARTIKEL_FK + "="
+				+ bestellposition.getArtikel().getId() + "," + BESTELLUNG_FK + "="
+				+ bestellposition.getBestellung().getId() + "," + DURCHSCHNITT + "="
+				+ bestellposition.getDurchschnitt() + "," + KANTINE + "="
+				+ bestellposition.getKantine() + "," + GESAMT + "="
+				+ bestellposition.getGesamt() + "WHERE " + ID + "="
+				+ bestellposition.getId();
+		this.putManaged(UPDATE_QUERY);
 	}
 }
