@@ -12,6 +12,7 @@ import java.util.List;
 import com.vaadin.data.util.converter.ConverterUtil;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
@@ -27,6 +28,7 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String			GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM artikel WHERE grundbedarf=1";
 	private final static String			GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
 	private static final String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
+	private final static String 		GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
 	
 	public ArtikelDAO()
 	{
@@ -44,15 +46,15 @@ public class ArtikelDAO extends AbstractDAO
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
 		
-		openConnection();
+		ResultSet set = getManaged(GET_ALL_ARTIKLES);
 		
-		ResultSet set = get(GET_ALL_ARTIKLES);
+		openConnection();
 		
 		while(set.next())
 		{
 			list.add(new Artikel(set.getLong("id"),
 								new Mengeneinheit(),
-								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
+								getKategorieById(set.getLong("kategorie_fk")),
 								getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
 								set.getString("name"),
@@ -258,5 +260,15 @@ public class ArtikelDAO extends AbstractDAO
 		}
 
 			return lieferant;
+	}
+	
+	private Kategorie getKategorieById(Long id) throws ConnectException,
+													DAOException, SQLException {
+		Kategorie kategorie = null;
+		ResultSet set = get(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
+		while (set.next()) {
+			kategorie = new Kategorie(set.getLong("id"), set.getString("name"));
+		}
+		return kategorie;
 	}
 }

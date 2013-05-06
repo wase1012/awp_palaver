@@ -26,6 +26,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
@@ -43,19 +44,20 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
 	
+	private Button				okButton = new Button("Ok");
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
 	private Table 				ansprechpartner = new Table();
 	
-	private String			nameInput;
-	private String			telefonInput;
-	private String 			handyInput;
-	private String 			faxInput;
-	private Lieferant 		lieferant;
+	private String				nameInput;
+	private String				telefonInput;
+	private String 				handyInput;
+	private String 				faxInput;
+	private Lieferant 			lieferant;
 	
-	private TextField		nameAnspr = new TextField("Name");
-	private TextField		telefonAnspr = new TextField("Telefon");
-	private TextField		handyAnspr = new TextField("Handy");
-	private TextField		faxAnspr = new TextField("Fax");
+	private TextField			nameAnspr = new TextField("Name");
+	private TextField			telefonAnspr = new TextField("Telefon");
+	private TextField			handyAnspr = new TextField("Handy");
+	private TextField			faxAnspr = new TextField("Fax");
 	
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
 		
@@ -105,58 +107,17 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
-		try {
-			lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
+		rechts.addComponent(ansprechpartner);
+		rechts.addComponent(okButton);
+		rechts.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+		
+        okButton.addClickListener(new ClickListener() {
 			
-			name.setValue(lieferant.getName());
-			name.setEnabled(false);
-			
-			bezeichnung.setValue(lieferant.getBezeichnung());
-			bezeichnung.setEnabled(false);
-			
-			kundennummer.setValue(lieferant.getKundennummer());
-			kundennummer.setEnabled(false);
-			
-			strasse.setValue(lieferant.getStrasse());
-			strasse.setEnabled(false);
-			
-			plz.setValue(lieferant.getPlz());
-			plz.setEnabled(false);
-			
-			ort.setValue(lieferant.getOrt());
-			ort.setEnabled(false);
-			
-			email.setValue(lieferant.getEmail());
-			email.setEnabled(false);
-			
-			telefon.setValue(lieferant.getTelefon());
-			telefon.setEnabled(false);
-			
-			fax.setValue(lieferant.getFax());
-			fax.setEnabled(false);
-
-			
-		} catch (ConnectException | DAOException | SQLException e) {
-			throw new NullPointerException();
-		}
-
-		BeanItemContainer<Ansprechpartner> container;
-
-			try {
-				container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
-				ansprechpartner.setContainerDataSource(container);
-				ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
-				ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
-				ansprechpartner.setColumnCollapsingAllowed(true);
-				ansprechpartner.setColumnCollapsed(handyAnspr, false);
-				ansprechpartner.setColumnCollapsed(faxAnspr, false);				
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);					
 			}
-		rechts.addComponent(ansprechpartner);	
-		
-		
+		});
 		
 		ansprAdd.addClickListener(new ClickListener() {
 		
@@ -177,8 +138,6 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			layout.setMargin(true);
 			layout.setWidth("100%");
 			layout.setSpacing(true);
-			
-
 
 			Button			speichern = new Button(IConstants.BUTTON_SAVE);
 			Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -245,12 +204,13 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					try {
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (ConnectException | DAOException | SQLException e) {
+						System.out.println(e);
 						throw new NullPointerException("Bitte gültige Werte eingeben");
+
 					}				
 					
 					UI.getCurrent().removeWindow(anspr);
-					ViewHandler.getInstance().switchView(LieferantSuche.class);
-				}
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
 			});
 
 	        nameAnspr.addValueChangeListener(new ValueChangeListener() {
@@ -301,5 +261,54 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	@Override
 	public void getViewParam(ViewData data)
 	{
+		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
+		if(lieferant.getId() == null) {
+			try {
+				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
+			} catch (ConnectException | DAOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		name.setValue(lieferant.getName());
+		name.setEnabled(false);
+			
+		bezeichnung.setValue(lieferant.getBezeichnung());
+		bezeichnung.setEnabled(false);
+			
+		kundennummer.setValue(lieferant.getKundennummer());
+		kundennummer.setEnabled(false);
+			
+		strasse.setValue(lieferant.getStrasse());
+		strasse.setEnabled(false);
+			
+		plz.setValue(lieferant.getPlz());
+		plz.setEnabled(false);
+						ort.setValue(lieferant.getOrt());
+		ort.setEnabled(false);
+			
+		email.setValue(lieferant.getEmail());
+		email.setEnabled(false);
+			
+		telefon.setValue(lieferant.getTelefon());
+		telefon.setEnabled(false);
+			
+		fax.setValue(lieferant.getFax());
+		fax.setEnabled(false);
+		
+		BeanItemContainer<Ansprechpartner> container;
+
+		try {
+			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
+			ansprechpartner.setContainerDataSource(container);
+			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
+			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
+			ansprechpartner.setColumnCollapsingAllowed(true);
+			ansprechpartner.setColumnCollapsed(handyAnspr, false);
+			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
