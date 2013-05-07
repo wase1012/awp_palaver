@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.BestellungDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -17,7 +18,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Christian Barth
- * 
+ * @author Mihail Boehm
  */
 public class Bestellverwaltung extends BestellungDAO {
 
@@ -73,9 +74,14 @@ public class Bestellverwaltung extends BestellungDAO {
 	// }
 
 	// TODO
-	// public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant){
-	//
-	// }
+	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant)
+			throws ConnectException, DAOException, SQLException {
+		List<Artikel> list = null;
+		ArtikelDAO adao = ArtikelDAO.getInstance();
+		adao.getAllArtikelByLieferantId(lieferant.getId());
+		return list;
+
+	}
 
 	// TODO
 	@SuppressWarnings("null")
