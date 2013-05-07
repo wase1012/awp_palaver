@@ -43,6 +43,24 @@ public class ArtikelTest extends AbstractTest
 	}
 	
 	@Test
+	public void getAllArtikelByLieferantId()
+	{
+		Long id = 1L;
+		Boolean exception = false;
+		List<Artikel> list = null;
+		try
+		{
+			list = artikelDao.getAllArtikelByLieferantId(id);
+		} 
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(list.isEmpty(), is(false));
+		assertThat(exception, is(false));
+	}
+	
+	@Test
 	public void getArtikelById() throws ConnectException, DAOException, SQLException
 	{
 		Long id = 1L;

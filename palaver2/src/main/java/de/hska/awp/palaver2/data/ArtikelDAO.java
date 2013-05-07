@@ -21,10 +21,11 @@ public class ArtikelDAO extends AbstractDAO
 {	
 	private static ArtikelDAO instance = null;
 	private final static String			GET_ALL_ARTIKLES = "SELECT * FROM artikel";
+	private final static String			GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM artikel where lieferant_fk = {0}";
 	private final static String			GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String			GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
 	private final static String			PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`)VALUES({0})";
-	private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `artikelnr` = {0},`name` = {1},`bestellgroesse` = {2},`mengeneinheit_fk` = {3},`preis` = {4},`lieferant_fk` = {5},`bio` = {6},`kategorie_fk` = {7},`standard` = {8},`grundbedarf` = {9},`durchschnitt` = {10},`lebensmittel` = {11} WHERE id = {12}";
+	//private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `artikelnr` = {0},`name` = {1},`bestellgroesse` = {2},`mengeneinheit_fk` = {3},`preis` = {4},`lieferant_fk` = {5},`bio` = {6},`kategorie_fk` = {7},`standard` = {8},`grundbedarf` = {9},`durchschnitt` = {10},`lebensmittel` = {11} WHERE id = {12}";
 	private final static String			GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM artikel WHERE grundbedarf=1";
 	private final static String			GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
 	private static final String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
@@ -71,6 +72,33 @@ public class ArtikelDAO extends AbstractDAO
 		closeConnection();
 		return list;
 	}
+	
+	public List<Artikel> getAllArtikelByLieferantId(Long id) throws ConnectException, DAOException, SQLException
+	{
+		List<Artikel> list = new ArrayList<Artikel>();		
+		ResultSet set = getManaged(MessageFormat.format(GET_ALL_ARTIKLES_BY_LIEFERANT_ID, id));		
+		openConnection();		
+		while(set.next())
+		{
+			list.add(new Artikel(set.getLong("id"),
+								new Mengeneinheit(),
+								getKategorieById(set.getLong("kategorie_fk")),
+								getLieferantById(set.getLong("lieferant_fk")),
+								set.getString("artikelnr"),
+								set.getString("name"),
+								set.getDouble("bestellgroesse"),
+								set.getFloat("preis"),
+								set.getBoolean("bio"),
+								set.getBoolean("standard"),
+								set.getBoolean("grundbedarf"),
+								set.getInt("durchschnitt"),
+								set.getBoolean("lebensmittel")
+								));
+		}		
+		closeConnection();
+		return list;
+	}
+	
 	
 	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException
 	{

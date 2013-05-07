@@ -55,6 +55,22 @@ public class LieferantTest extends AbstractTest{
 			assertThat(exception, is(false));
 		}
 		
+		@Test
+		public void getLieferantenByArtikelId(){
+			Boolean exception = false;
+			Lieferant liefant = null;
+			try
+			{
+				liefant = dao.getLieferantenByArtikelId(1L);
+			} 
+			catch (ConnectException | DAOException | SQLException e)
+			{
+				exception = true;
+			}
+			assertThat(liefant.getId(), is(1L));
+			assertThat(exception, is(false));
+		}
+		
 		/**
 		 * Die Testmethode sucht nach einen Lieferanten anhand eines Namen.
 		 * @throws SQLException 
