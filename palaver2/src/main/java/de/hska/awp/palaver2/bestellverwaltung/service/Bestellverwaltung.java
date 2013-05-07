@@ -12,17 +12,18 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.BestellungDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Christian Barth
- *
+ * 
  */
 public class Bestellverwaltung extends BestellungDAO {
-	
+
 	private static Bestellverwaltung instance = null;
 
-	private Bestellverwaltung() {
+	public Bestellverwaltung() {
 		super();
 	}
 
@@ -33,23 +34,21 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
-	
-	//TODO
-	public void createBestellung(Bestellung bestellung) throws ConnectException,
-	DAOException, SQLException {
+	// TODO
+	public void createBestellung(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException {
 
 		super.createBestellung(bestellung);
 	}
-	
-	//TODO
-	public void updateBestellung(Bestellung bestellung) throws ConnectException,
-	DAOException, SQLException {
 
-			super.updateBestellung(bestellung);
+	// TODO
+	public void updateBestellung(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException {
+
+		super.updateBestellung(bestellung);
 
 	}
-	
-	
+
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
 
@@ -59,32 +58,35 @@ public class Bestellverwaltung extends BestellungDAO {
 
 		return result;
 	}
-	
+
 	public Bestellung getBestellungById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Bestellung bestellung = super.getBestellungById(id);
 		return bestellung;
 	}
-	
-	
-	
-	//TODO
+
+	// TODO
 	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
 	// Aufteilung Menge auf Freitag und Montag
-//	public List<Artikel> getAllArtikelByMPAndGB(  Input KW     ){
-//		
-//	}
-	
-	//TODO
-//	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant){
-//		
-//	}
-	
-	//TODO
-//	public List<Lieferant> getAllLieferantenByArtikellist(List<Artikel> artikellist){
-//		
-//	}
-	
-	
-	
+	// public List<Artikel> getAllArtikelByMPAndGB( Input KW ){
+	//
+	// }
+
+	// TODO
+	// public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant){
+	//
+	// }
+
+	// TODO
+	@SuppressWarnings("null")
+	public List<Lieferant> getAllLieferantenByArtikellist(
+			List<Artikel> artikellist) throws ConnectException, DAOException,
+			SQLException {
+		List<Lieferant> list = null;
+		LieferantDAO ldao = LieferantDAO.getInstance();
+		for (Artikel a : artikellist) {
+			list.add(ldao.getLieferantenByArtikelId(a.getId()));
+		}
+		return list;
+	}
 }

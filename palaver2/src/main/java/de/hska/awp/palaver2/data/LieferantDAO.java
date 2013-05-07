@@ -24,6 +24,7 @@ public class LieferantDAO extends AbstractDAO {
 	private static LieferantDAO instance = null;
 
 	private final static String TABLE = "lieferant";
+	private final static String TABLE_ARTIKEL = "artikel";
 	private final static String ID = "id";
 	private final static String NAME = "name";
 	private final static String KUNDENNUMMER = "kundennummer";
@@ -41,6 +42,10 @@ public class LieferantDAO extends AbstractDAO {
 			+ " WHERE " + ID + "= {0}";
 	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
+	
+	private final static String GET_LIEFERANTEN_BY_ARTIKEL_ID = "SELECT * FROM " + TABLE +
+			" join " + TABLE_ARTIKEL + " on " + TABLE +"." + ID + " = " + TABLE_ARTIKEL + ".lieferant_fk" +
+			" where " + TABLE_ARTIKEL + "." + ID + " = {0}";
 
 	public LieferantDAO() {
 		super();
@@ -179,5 +184,27 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getFax() + "'" + "WHERE " + ID + "='"
 				+ lieferant.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
+	}
+	/**
+	 * Die Methode liefert ein Ergebnisse zurück bei der Suche
+	 * nach einem Lieferant bei ArtikelId in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public Lieferant getLieferantenByArtikelId(long id) throws ConnectException, DAOException, SQLException{
+		Lieferant lieferant = null;
+		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANTEN_BY_ARTIKEL_ID, id));
+		while (set.next()) {
+			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
+					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
+					set.getString(STRASSE), set.getString(PLZ),
+					set.getString(ORT), set.getString(EMAIL),
+					set.getString(TELEFON), set.getString(FAX));
+		}
+		return lieferant;
 	}
 }
