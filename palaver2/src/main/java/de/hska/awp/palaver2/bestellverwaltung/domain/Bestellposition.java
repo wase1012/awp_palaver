@@ -83,6 +83,9 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getDurchschnitt() {
+		if(durchschnitt==null){
+			durchschnitt = 0;
+		}
 		return durchschnitt;
 	}
 
@@ -91,6 +94,9 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getKantine() {
+		if(kantine==null){
+			kantine = 0;
+		}
 		return kantine;
 	}
 
@@ -99,6 +105,9 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getGesamt() {
+		if(gesamt==null){
+			gesamt = 0;
+		}
 		return gesamt;
 	}
 
@@ -110,6 +119,9 @@ public class Bestellposition implements java.io.Serializable {
 	 * @return the freitag
 	 */
 	public Integer getFreitag() {
+		if(freitag==null){
+			freitag = 0;
+		}
 		return freitag;
 	}
 
@@ -124,6 +136,9 @@ public class Bestellposition implements java.io.Serializable {
 	 * @return the montag
 	 */
 	public Integer getMontag() {
+		if(montag==null){
+			montag = 0;
+		}
 		return montag;
 	}
 

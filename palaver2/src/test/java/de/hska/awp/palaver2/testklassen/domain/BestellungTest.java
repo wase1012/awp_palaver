@@ -4,14 +4,16 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.BestellungDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -24,6 +26,7 @@ public class BestellungTest extends AbstractTest {
 	final Long ID = Long.valueOf("2");
 	private BestellungDAO bdao = new BestellungDAO();
 	private LieferantDAO ldao = new LieferantDAO();
+	private ArtikelDAO adao = new ArtikelDAO();
 
 
 	/**
@@ -38,30 +41,61 @@ public class BestellungTest extends AbstractTest {
 	public void createBestellung() throws ConnectException, DAOException,
 			SQLException, ParseException {
 
+		//Bestellung erzeugen
 		Bestellung bestellung = new Bestellung();
 
+		//Bestellung Lieferant setzen
 		Long lid = Long.valueOf(1);
 		Lieferant lieferant = null;
 		lieferant = ldao.getLieferantById(lid);
 		bestellung.setLieferant(lieferant);
-
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-
+		
+		//Bestellung Datum setzen
+		Date date2 = new Date(0);
+		Date timestamp = new Date(date2.getTime());
 		bestellung.setDatum(timestamp);
+		
+		//Bestellpositionliste zusammenbauen
+		//Bestellposition Bestellung setzen
+		Bestellposition bp = new Bestellposition();
+		bp.setArtikel(adao.getArtikelById(Long.valueOf("1")));
+// wird in der BestellungDAO schon gemacht.
+//		bp.setBestellung(bestellung); 
+		
+		//Bestellposition Lieferdatum setzen
+		Date lieferdate = new Date(0);
+		Date ld = new Date(lieferdate.getTime());
+		bp.setLieferdatum(ld);
+
+
+		//Bestellung Bestellposition setzen
+		bestellung.addBestellposition(bp);
 
 		bdao.createBestellung(bestellung);
 
 	}
-	
+	@Ignore
 	@Test
 	public void updateBestellung() throws ConnectException, DAOException,
 			SQLException, ParseException {
-
+		
 		Bestellung bestellung = bdao.getBestellungById(ID);
+		
+		Bestellposition bp = new Bestellposition();
+		bp.setArtikel(adao.getArtikelById(Long.valueOf("1")));
+		bp.setBestellung(bestellung);
+		
+		Date lieferdate = new Date(0);
+		Date ld = new Date(lieferdate.getTime());
+		bp.setLieferdatum(ld);
+		
+		List<Bestellposition> bestellpositionen = (List<Bestellposition>) new Bestellposition();
+		bestellpositionen.add(bp);
 
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
+		bestellung.setBestellpositionen(bestellpositionen);
+		
+		Date date = new Date(0);
+		Date timestamp = new Date(date.getTime());
 
 		bestellung.setDatum(timestamp);
 
@@ -77,6 +111,7 @@ public class BestellungTest extends AbstractTest {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
+	
 	@Test
 	public void getBestellungen() {
 		Boolean exception = false;

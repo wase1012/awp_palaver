@@ -101,24 +101,21 @@ public class BestellungDAO extends AbstractDAO {
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException, ParseException {
 		
+		if(bestellung.getBestellpositionen().size()== 0){
+			return;
+		}
+		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
 				+ DATUM + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "')";
 		this.putManaged(INSERT_QUERY);
-		
-		
-	
+			
 		List<Bestellung> bestellungen = getAllBestellungen();
 		
 		Bestellung bestell = getBestellungById(bestellungen.get(bestellungen.size() - 1).getId());
 		
-		//TODO für Test an der Stelle hier, später an den Andfang der Methode setzen.
-		if(bestellung.getBestellpositionen().size()== 0){
-			return;
-		}
-		
-		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
+		for(int i = 0 ; i < bestellung.getBestellpositionen().size() ; i++){
 			
 			bestellung.getBestellpositionen().get(i).setBestellung(bestell);
 			BestellpositionDAO.getInstance().createBestellposition(bestellung.getBestellpositionen().get(i));
