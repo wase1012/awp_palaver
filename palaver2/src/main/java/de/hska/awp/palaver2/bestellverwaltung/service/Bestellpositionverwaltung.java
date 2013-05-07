@@ -5,6 +5,7 @@
 package de.hska.awp.palaver2.bestellverwaltung.service;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.ConnectException;
@@ -43,7 +44,12 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException {
 
-		super.createBestellposition(bestellposition);
+		try {
+			super.createBestellposition(bestellposition);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

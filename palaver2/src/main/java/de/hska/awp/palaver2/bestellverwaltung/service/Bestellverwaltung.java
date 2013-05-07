@@ -5,6 +5,7 @@
 package de.hska.awp.palaver2.bestellverwaltung.service;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -39,7 +40,12 @@ public class Bestellverwaltung extends BestellungDAO {
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
 
-		super.createBestellung(bestellung);
+		try {
+			super.createBestellung(bestellung);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// TODO
@@ -80,7 +86,6 @@ public class Bestellverwaltung extends BestellungDAO {
 		ArtikelDAO adao = ArtikelDAO.getInstance();
 		adao.getAllArtikelByLieferantId(lieferant.getId());
 		return list;
-
 	}
 
 	// TODO
