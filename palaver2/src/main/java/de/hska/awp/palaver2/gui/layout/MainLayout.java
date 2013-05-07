@@ -14,6 +14,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
@@ -80,6 +81,7 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
+		bestellungItem.addItem("Test", this);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 //		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
@@ -134,6 +136,9 @@ public class MainLayout extends VerticalLayout implements Command
 			break;
 			case IConstants.MENU_LOGOUT:
 				UI.getCurrent().setContent(new LoginForm());
+			break;
+			case "Test":
+				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
 			break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
