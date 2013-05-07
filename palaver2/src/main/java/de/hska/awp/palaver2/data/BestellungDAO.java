@@ -3,6 +3,7 @@ package de.hska.awp.palaver2.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,9 +83,9 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id));
+					set.getDate(DATUM));
 		}
-
+//		 BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id)
 		return bestellung;
 	}
 
@@ -95,9 +96,10 @@ public class BestellungDAO extends AbstractDAO {
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
+	 * @throws ParseException 
 	 */
 	public void createBestellung(Bestellung bestellung)
-			throws ConnectException, DAOException, SQLException {
+			throws ConnectException, DAOException, SQLException, ParseException {
 		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
 				+ DATUM + ")" + "VALUES" + "('"
@@ -108,9 +110,8 @@ public class BestellungDAO extends AbstractDAO {
 		
 	
 		List<Bestellung> bestellungen = getAllBestellungen();
-		Long id = bestellungen.get(bestellungen.size() - 1).getId();
 		
-		Bestellung bestell = getBestellungById(id);
+		Bestellung bestell = getBestellungById(bestellungen.get(bestellungen.size() - 1).getId());
 		
 		//TODO für Test an der Stelle hier, später an den Andfang der Methode setzen.
 		if(bestellung.getBestellpositionen().size()== 0){

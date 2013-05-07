@@ -6,6 +6,7 @@ package de.hska.awp.palaver2.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class BestellpositionDAO extends AbstractDAO{
 
 	private final static String TABLE = "bestellposition";
 	private final static String ID = "id";
+	private final static String ARTIKEL_FK = "artikel_fk";
+	private final static String BESTELLUNG_FK = "bestellung_fk";
 	private final static String DURCHSCHNITT = "durchschnitt";
 	private final static String KANTINE = "kantine";
 	private final static String GESAMT = "gesamt";
-	private final static String ARTIKEL_FK = "artikel_fk";
-	private final static String BESTELLUNG_FK = "bestellung_fk";
 	private final static String FREITAG = "freitag";
 	private final static String MONTAG = "montag";
 	private final static String LIEFERDATUM = "lieferdatum";
@@ -74,7 +75,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			bp = new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG),set.getDate(LIEFERDATUM));
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set.getDate(LIEFERDATUM));
 		}
 
 		return bp;
@@ -100,7 +101,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getFloat(DURCHSCHNITT), set.getFloat(KANTINE), set.getFloat(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG),set.getDate(LIEFERDATUM)));
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG),set.getDate(LIEFERDATUM)));
 		}
 
 		return list;
@@ -113,9 +114,10 @@ public class BestellpositionDAO extends AbstractDAO{
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
+	 * @throws ParseException 
 	 */
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
-			DAOException, SQLException {
+			DAOException, SQLException, ParseException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "("
 				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + "," + FREITAG + "," + MONTAG + "," + LIEFERDATUM + ")"
 				+ "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
@@ -152,7 +154,7 @@ public class BestellpositionDAO extends AbstractDAO{
 				+ GESAMT + "='" + bestellposition.getGesamt() + "'," + FREITAG
 				+ "='" + bestellposition.getFreitag() + "'," + MONTAG + "='"
 				+ bestellposition.getMontag() + "'," + LIEFERDATUM + "='"
-				+ bestellposition.getLieferdatum() + "'," + "WHERE " + ID
+				+ bestellposition.getLieferdatum() + "'" + " WHERE " + ID
 				+ "='" + bestellposition.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
