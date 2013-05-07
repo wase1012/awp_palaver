@@ -44,7 +44,6 @@ public class LieferantenverwaltungTest {
     		{
     			exception = true;
     		}
-    		// Then
     		for (Lieferant k : liefantlist) {
     			assertThat(k.getName(), is(name));
     		}
