@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
@@ -25,9 +25,8 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
  */
 public class LieferantenverwaltungTest {
 
-	Lieferantenverwaltung lv;
+	Lieferantenverwaltung lv = Lieferantenverwaltung.getInstance();
 	
-	@Ignore
 	@Test
     public void getLieferantenByName() {
     	
@@ -48,6 +47,76 @@ public class LieferantenverwaltungTest {
     			assertThat(k.getName(), is(name));
     		}
     	}
+	
+	@Test
+	public void getLieferantById(){
+		
+	
+		Lieferant lf = null;
+		Boolean exception = false;
+		final Long id = Long.valueOf(1);
+		
+		try{
+		 lf = lv.getLieferantById(id);
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(lf.getId(),is(id));
+	}
 
+	@Test
+	public void createLieferant(){
+		
+		Lieferant lf = new Lieferant();
+		Boolean exception = false;
+		
+		final String name = "Testlv";
+		final String tel = "123456789";
+		lf.setName(name);
+		lf.setTelefon(tel);
+		
+		try{
+	    lv.createLieferant(lf);
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		
+		assertThat(lf.getName(),is(name));
+	}
+	
+	@Test
+	public void updateLieferant (){
+		
+		Lieferant lf = new Lieferant();
+		
+		Boolean exception = false;
+		final Long id = Long.valueOf(1);
+		final String neuerName = "Fleischlieferant";
+		
+		try{
+			
+		lv.getLieferantById(id);
+		
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		lf.setName(neuerName);
+		
+		try{
+		lv.updateLieferant(lf);
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(lf.getName(), is(neuerName));
+	}
+	
     }
 	
