@@ -9,8 +9,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vaadin.data.util.converter.ConverterUtil;
-
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -305,7 +303,7 @@ public class ArtikelDAO extends AbstractDAO
 													DAOException, SQLException {
 
 		Mengeneinheit me = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
+		ResultSet set = get(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
 
 		while (set.next()) {
 			me = new Mengeneinheit(set.getLong("id"), set.getString("name"),
