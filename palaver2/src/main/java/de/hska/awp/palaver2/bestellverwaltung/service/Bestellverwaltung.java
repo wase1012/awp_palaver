@@ -38,14 +38,9 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	// TODO
 	public void createBestellung(Bestellung bestellung)
-			throws ConnectException, DAOException, SQLException {
+			throws ConnectException, DAOException, SQLException, ParseException {
 
-		try {
 			super.createBestellung(bestellung);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	// TODO
@@ -88,16 +83,43 @@ public class Bestellverwaltung extends BestellungDAO {
 		return list;
 	}
 
-	// TODO
+	/**
+	 * Die Methode gibt eine Liste mit Lieferanten zurück anhand einer Artikelliste,
+	 * wobei jedoch nur jeder Lieferant nur einmal in der Liste erscheint.
+	 * @author Christian Barth
+	 * @param artikellist
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	@SuppressWarnings("null")
 	public List<Lieferant> getAllLieferantenByArtikellist(
 			List<Artikel> artikellist) throws ConnectException, DAOException,
 			SQLException {
 		List<Lieferant> list = null;
+		Lieferant lieferant = null;
 		LieferantDAO ldao = LieferantDAO.getInstance();
+		
 		for (Artikel a : artikellist) {
-			list.add(ldao.getLieferantenByArtikelId(a.getId()));
+			lieferant = ldao.getLieferantByArtikelId(a.getId());
+
+			if (list.isEmpty()==true) {
+				list.add(lieferant);
+			} else {
+				Boolean vorhanden = false;
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getId().equals(lieferant.getId()) == true) {
+						vorhanden = true;
+					}
+				}
+				if (vorhanden == false) {
+					list.add(lieferant);
+				}
+			}
+
 		}
 		return list;
 	}
+	
 }

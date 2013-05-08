@@ -195,7 +195,7 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Lieferant getLieferantenByArtikelId(long id) throws ConnectException, DAOException, SQLException{
+	public Lieferant getLieferantByArtikelId(long id) throws ConnectException, DAOException, SQLException{
 		Lieferant lieferant = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANTEN_BY_ARTIKEL_ID, id));
 		while (set.next()) {

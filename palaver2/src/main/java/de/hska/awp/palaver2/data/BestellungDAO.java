@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
