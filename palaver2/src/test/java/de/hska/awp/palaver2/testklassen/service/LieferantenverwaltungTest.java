@@ -20,7 +20,8 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 
 /**
- * @author bach1014
+ * Testklasse für die Lieferantenverwaltung
+ * @author Elena W
  *
  */
 public class LieferantenverwaltungTest {
@@ -66,6 +67,13 @@ public class LieferantenverwaltungTest {
 		assertThat(lf.getId(),is(id));
 	}
 
+	 /**
+		 * Testmethode createLieferant
+		 * Erzeugt einen Lieferant in der Datenbank
+		 * @throws SQLException 
+		 * @throws DAOException 
+		 * @throws ConnectException 
+		 */
 	@Test
 	public void createLieferant(){
 		
@@ -87,6 +95,13 @@ public class LieferantenverwaltungTest {
 		
 		assertThat(lf.getName(),is(name));
 	}
+	 /**
+	 * Testmethode updateLieferant
+	 * Update des Namens eines Lieferantes in der Datenbank
+     * @throws SQLException 
+     * @throws DAOException 
+     * @throws ConnectException 
+	 */
 	
 	@Test
 	public void updateLieferant (){
