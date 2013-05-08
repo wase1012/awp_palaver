@@ -3,6 +3,11 @@
  * 24.04.2013 16:59:46
  */
 package de.hska.awp.palaver2.testklassen.service;
+/**
+ * Testklasse für die Artikelverwaltung
+ * @author Elena W
+ *
+ */
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -74,6 +79,14 @@ final Boolean lebensmittel = true;
     			assertThat(a.getName(), is(name));
     		}
     	}
+	
+	/**
+	 * Testmethode createArtikel
+	 * Erzeugt einen Artikel in der Datenbank
+	 * @throws SQLException 
+	 * @throws DAOException 
+	 * @throws ConnectException 
+	 */
 	@Test
 	public void createArtikel(){
 		
@@ -103,6 +116,13 @@ final Boolean lebensmittel = true;
 		assertThat(art.getName(),is(name));
 	}
 	
+	 /**
+		 * Testmethode updateArtikel
+		 * Update des Namens eines Artikels in der Datenbank
+	     * @throws SQLException 
+	     * @throws DAOException 
+	     * @throws ConnectException 
+		 */
 	@Test
 	public void updateArtikel (){
 		
