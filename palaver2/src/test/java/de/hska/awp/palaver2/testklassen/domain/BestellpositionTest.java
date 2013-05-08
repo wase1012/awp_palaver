@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -36,9 +37,9 @@ public class BestellpositionTest extends AbstractTest {
 
 	final Long ID = Long.valueOf("2");
 	final int MENGE = 5;
-	final Float DURCHSCHNITT =  (float) 20;
-	final Float KANTINE =  (float) 5;
-	final Float GESAMT = (float) 5;
+	final Integer DURCHSCHNITT = 20;
+	final Integer KANTINE = 5;
+	final Integer GESAMT = 5;
 	
 	/**
 	 * Die Testmethode erzeugt eine Bestellposition in der Datenbank.
@@ -46,7 +47,6 @@ public class BestellpositionTest extends AbstractTest {
      * @throws DAOException 
      * @throws ConnectException 
 	 */
-
 	@Test
 	public void createBestellposition() throws ConnectException, DAOException,
 			SQLException, ParseException {
@@ -66,7 +66,9 @@ public class BestellpositionTest extends AbstractTest {
 		bestellposition.setDurchschnitt(DURCHSCHNITT);
 		bestellposition.setKantine(KANTINE);
 		bestellposition.setGesamt(GESAMT);
-		
+		bestellposition.setFreitag(1);
+		bestellposition.setMontag(1);
+//		bestellposition.setLieferdatum(null);
 
 		bpdao.createBestellposition(bestellposition);
 
@@ -106,8 +108,8 @@ public class BestellpositionTest extends AbstractTest {
 	public void getBestellpositionById() throws ConnectException, DAOException,
 			SQLException {
 
-		Bestellposition bestellposition = bpdao.getBestellpositionById(ID);
-
+		Bestellposition bestellposition = bpdao.getBestellpositionById(Long.valueOf(ID));
+		System.out.print(bestellposition.getLieferdatum());
 		assertThat(bestellposition.getId(), is(ID));
 	}
 

@@ -1,6 +1,6 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
@@ -18,9 +18,9 @@ public class Bestellposition implements java.io.Serializable {
 	private Long id;
 	private Artikel artikel;
 	private Bestellung bestellung;	
-	private Float durchschnitt;
-	private Float kantine;
-	private Float gesamt;
+	private Integer durchschnitt;
+	private Integer kantine;
+	private Integer gesamt;
 	private Integer freitag;
 	private Integer montag;
 	private Date lieferdatum;
@@ -36,7 +36,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param menge
 	 */
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, 
-			Float durchschnitt, Float kantine, Float gesamt, Integer freitag, Integer montag, Date lieferdatum) {
+			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, Date lieferdatum) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -82,27 +82,36 @@ public class Bestellposition implements java.io.Serializable {
 		this.bestellung = bestellung;
 	}
 
-	public Float getDurchschnitt() {
+	public Integer getDurchschnitt() {
+		if(durchschnitt==null){
+			durchschnitt = 0;
+		}
 		return durchschnitt;
 	}
 
-	public void setDurchschnitt(Float durchschnitt) {
+	public void setDurchschnitt(Integer durchschnitt) {
 		this.durchschnitt = durchschnitt;
 	}
 
-	public Float getKantine() {
+	public Integer getKantine() {
+		if(kantine==null){
+			kantine = 0;
+		}
 		return kantine;
 	}
 
-	public void setKantine(Float kantine) {
+	public void setKantine(Integer kantine) {
 		this.kantine = kantine;
 	}
 
-	public Float getGesamt() {
+	public Integer getGesamt() {
+		if(gesamt==null){
+			gesamt = 0;
+		}
 		return gesamt;
 	}
 
-	public void setGesamt(Float gesamt) {
+	public void setGesamt(Integer gesamt) {
 		this.gesamt = gesamt;
 	}
 
@@ -110,6 +119,9 @@ public class Bestellposition implements java.io.Serializable {
 	 * @return the freitag
 	 */
 	public Integer getFreitag() {
+		if(freitag==null){
+			freitag = 0;
+		}
 		return freitag;
 	}
 
@@ -124,6 +136,9 @@ public class Bestellposition implements java.io.Serializable {
 	 * @return the montag
 	 */
 	public Integer getMontag() {
+		if(montag==null){
+			montag = 0;
+		}
 		return montag;
 	}
 
@@ -135,6 +150,9 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Date getLieferdatum() {
+		if(lieferdatum==null){
+			lieferdatum =  new Date(00000000);
+		}
 		return lieferdatum;
 	}
 
@@ -142,16 +160,6 @@ public class Bestellposition implements java.io.Serializable {
 		this.lieferdatum = lieferdatum;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Bestellposition [id=" + id + ", artikel=" + artikel
-				+ ", bestellung=" + bestellung
-				+ ", durchschnitt=" + durchschnitt + ", kantine=" + kantine
-				+ ", gesamt=" + gesamt + "]";
-	}
 
 
 	

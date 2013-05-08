@@ -1,7 +1,7 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
