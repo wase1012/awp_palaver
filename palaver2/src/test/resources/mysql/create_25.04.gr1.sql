@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
 
 DROP TABLE IF EXISTS `palaver`.`menue_has_fussnote` ;
 
-CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_fussnote` (
+CREATE  TABLE IF NOT EXISTS `palaver`.`menue_has_fussnote` (
   `menue_fk` INT NOT NULL,
   `fussnote_fk` INT NOT NULL ,
   INDEX `fk_rezept_has_fussnote_menue1_idx` (`menue_fk` ASC) ,

@@ -72,8 +72,8 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/rezept_has_fussnote.csv'
-INTO TABLE rezept_has_fussnote
+LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/menue_has_fussnote.csv'
+INTO TABLE menue_has_fussnote
 FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
