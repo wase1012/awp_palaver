@@ -182,12 +182,15 @@ DROP TABLE IF EXISTS `palaver`.`rezept` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(150) NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
   `rezeptart_fk` INT NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
   `portion` INT NOT NULL ,
   `geschmack_fk` INT NULL ,
   `mitarbeiter_fk` INT NULL ,
+   aufwand` BOOLEAN NULL ,
+   `erstellt` TIMESTAMP NULL ,
+    `favorit` BOOLEAN INT NULL ,
   PRIMARY KEY (`id`) ,
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_rezept_rezeptart1_idx` (`rezeptart_fk` ASC) ,
@@ -407,16 +410,16 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
 
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `palaver`.`rezept_has_fussnote` ;
+DROP TABLE IF EXISTS `palaver`.`menue_has_fussnote` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_fussnote` (
-  `rezept_fk` INT NOT NULL AUTO_INCREMENT,
+  `menue_fk` INT NOT NULL,
   `fussnote_fk` INT NOT NULL ,
-  INDEX `fk_rezept_has_fussnote_rezept1_idx` (`rezept_fk` ASC) ,
+  INDEX `fk_rezept_has_fussnote_menue1_idx` (`menue_fk` ASC) ,
   INDEX `fk_rezept_has_fussnote_fussnote1_idx` (`fussnote_fk` ASC) ,
-  CONSTRAINT `fk_rezept_has_fussnote_rezept1`
-    FOREIGN KEY (`rezept_fk` )
-    REFERENCES `palaver`.`rezept` (`id` )
+  CONSTRAINT `fk_rezept_has_fussnote_menue1`
+    FOREIGN KEY (`menue_fk` )
+    REFERENCES `palaver`.`menue` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_rezept_has_fussnote_fussnote1`
