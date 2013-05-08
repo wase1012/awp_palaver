@@ -61,7 +61,7 @@ public class LieferantTest extends AbstractTest{
 			Lieferant liefant = null;
 			try
 			{
-				liefant = dao.getLieferantenByArtikelId(1L);
+				liefant = dao.getLieferantByArtikelId(1L);
 			} 
 			catch (ConnectException | DAOException | SQLException e)
 			{

@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
+import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ArtikelDAO;
@@ -69,13 +73,21 @@ public class Bestellverwaltung extends BestellungDAO {
 	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
 	// Umrechnung auf Gebindegroesse auf ganze Stück
 	// Aufteilung Menge auf Freitag und Montag
-//	 public List<Artikel> getAllArtikelByMPAndGB( Input KW ){
-//		 
-//		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
-//		 Menueplan mp = getMenueplanByKW();
-//		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
-//		 return list;
-//	 }
+	 public List<Artikel> getAllArtikelByMPAndGB(Week week) throws de.bistrosoft.palaver.data.ConnectException, de.bistrosoft.palaver.data.DAOException, SQLException, ConnectException, DAOException{
+		 List<Artikel> list = null;
+		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
+		 Menueplan mp = MenueplanDAO.getInstance().getMenueplanByWeek(week);
+		 
+		 for(int i = 0 ; i < mp.getMenues().size() ; i++ ){
+			 
+		 //Fehlender Code von team1
+//		 List<Rezept> rezeptlist = mp.getMenues().get(i).getRezepte();
+		 
+		 }
+		 
+		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+		 return list;
+	 }
 	
 	
 
