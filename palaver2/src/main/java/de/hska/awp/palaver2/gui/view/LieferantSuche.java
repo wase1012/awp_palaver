@@ -50,9 +50,9 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	
 	private Button				okButton = new Button("Ok");
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
-	private Button				updateB	= new Button("Update");
-	private Button				speichern = new Button("Speichern");
-	private Button				verwerfen = new Button("Verwerfen");
+	private Button				updateB	= new Button(IConstants.BUTTON_EDIT);
+	private Button				speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button				verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Table 				ansprechpartner = new Table();
 	
 	private String				nameInput;
@@ -128,6 +128,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		rechts.addComponent(ansprechpartner);
 		knoepfe.addComponent(okButton);
 		knoepfe.addComponentAsFirst(updateB);
+		updateB.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
 		rechts.addComponent(knoepfe);
 		rechts.setComponentAlignment(knoepfe, Alignment.BOTTOM_RIGHT);
 		
