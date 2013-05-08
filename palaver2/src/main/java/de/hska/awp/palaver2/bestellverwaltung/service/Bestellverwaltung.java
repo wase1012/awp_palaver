@@ -36,14 +36,12 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
-	// TODO
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException, ParseException {
 
 			super.createBestellung(bestellung);
 	}
 
-	// TODO
 	public void updateBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
 
@@ -69,10 +67,17 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	// TODO
 	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
+	// Umrechnung auf Gebindegroesse auf ganze Stück
 	// Aufteilung Menge auf Freitag und Montag
-	// public List<Artikel> getAllArtikelByMPAndGB( Input KW ){
-	//
-	// }
+//	 public List<Artikel> getAllArtikelByMPAndGB( Input KW ){
+//		 
+//		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
+//		 Menueplan mp = getMenueplanByKW();
+//		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+//		 return list;
+//	 }
+	
+	
 
 	// TODO
 	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant)
