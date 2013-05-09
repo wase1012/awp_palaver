@@ -4,14 +4,12 @@
 package de.hska.awp.palaver2.testklassen.domain;
 
 import static org.hamcrest.core.Is.is;
-
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -109,7 +107,6 @@ public class BestellpositionTest extends AbstractTest {
 			SQLException {
 
 		Bestellposition bestellposition = bpdao.getBestellpositionById(Long.valueOf(ID));
-		System.out.print(bestellposition.getLieferdatum());
 		assertThat(bestellposition.getId(), is(ID));
 	}
 

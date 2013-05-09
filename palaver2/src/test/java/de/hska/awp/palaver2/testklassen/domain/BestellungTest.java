@@ -54,7 +54,7 @@ public class BestellungTest extends AbstractTest {
 		Date date2 = new Date(0);
 		Date timestamp = new Date(date2.getTime());
 		bestellung.setDatum(timestamp);
-		
+		bestellung.setLieferdatum("17.05.1999");
 		//Bestellpositionliste zusammenbauen
 		//Bestellposition Bestellung setzen
 		Bestellposition bp = new Bestellposition();
@@ -62,10 +62,6 @@ public class BestellungTest extends AbstractTest {
 // wird in der BestellungDAO schon gemacht.
 //		bp.setBestellung(bestellung); 
 		
-		//Bestellposition Lieferdatum setzen
-		Date lieferdate = new Date(0);
-		Date ld = new Date(lieferdate.getTime());
-		bp.setLieferdatum(ld);
 
 
 		//Bestellung Bestellposition setzen
@@ -84,10 +80,6 @@ public class BestellungTest extends AbstractTest {
 		Bestellposition bp = new Bestellposition();
 		bp.setArtikel(adao.getArtikelById(Long.valueOf("1")));
 		bp.setBestellung(bestellung);
-		
-		Date lieferdate = new Date(0);
-		Date ld = new Date(lieferdate.getTime());
-		bp.setLieferdatum(ld);
 		
 		List<Bestellposition> bestellpositionen = (List<Bestellposition>) new Bestellposition();
 		bestellpositionen.add(bp);

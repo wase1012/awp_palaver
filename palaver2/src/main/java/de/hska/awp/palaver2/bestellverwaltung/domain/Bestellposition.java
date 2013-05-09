@@ -1,7 +1,5 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
-import java.sql.Date;
-
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
 
@@ -23,7 +21,6 @@ public class Bestellposition implements java.io.Serializable {
 	private Integer gesamt;
 	private Integer freitag;
 	private Integer montag;
-	private Date lieferdatum;
 
 	public Bestellposition() {
 		super();
@@ -36,7 +33,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param menge
 	 */
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, 
-			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, Date lieferdatum) {
+			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -46,7 +43,6 @@ public class Bestellposition implements java.io.Serializable {
 		this.gesamt = gesamt;
 		this.freitag = freitag;
 		this.montag = montag;
-		this.lieferdatum = lieferdatum;
 	}
 
 
@@ -149,19 +145,5 @@ public class Bestellposition implements java.io.Serializable {
 		this.montag = montag;
 	}
 
-	public Date getLieferdatum() {
-		if(lieferdatum==null){
-			lieferdatum =  new Date(00000000);
-		}
-		return lieferdatum;
-	}
-
-	public void setLieferdatum(Date lieferdatum) {
-		this.lieferdatum = lieferdatum;
-	}
-
-
-
-	
 
 }
