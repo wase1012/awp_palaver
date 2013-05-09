@@ -23,7 +23,7 @@ public class Lieferant implements java.io.Serializable {
 	private String telefon;
 	private String fax;
 	private String notiz;
-	private Boolean mehrereLiefertermine;
+	private Boolean mehrereliefertermine;
 
 	public Lieferant() {
 	}
@@ -34,7 +34,7 @@ public class Lieferant implements java.io.Serializable {
 
 	public Lieferant(Long id, String name, String kundennummer,
 			String bezeichnung, String strasse, String plz, String ort,
-			String email, String telefon, String fax, String notiz, Boolean mehrereLiefertermine) {
+			String email, String telefon, String fax, String notiz, Boolean mehrereliefertermine) {
 		this.id = id;
 		this.name = name;
 		this.kundennummer = kundennummer;
@@ -46,7 +46,7 @@ public class Lieferant implements java.io.Serializable {
 		this.telefon = telefon;
 		this.fax = fax;
 		this.notiz = notiz;
-		this.mehrereLiefertermine = mehrereLiefertermine;
+		this.mehrereliefertermine = mehrereliefertermine;
 	}
 
 	public Long getId() {
@@ -155,15 +155,15 @@ public class Lieferant implements java.io.Serializable {
 	/**
 	 * @return the mehrereLiefertermine
 	 */
-	public Boolean getMehrereLiefertermine() {
-		return mehrereLiefertermine;
+	public Boolean getMehrereliefertermine() {
+		return mehrereliefertermine;
 	}
 
 	/**
 	 * @param mehrereLiefertermine the mehrereLiefertermine to set
 	 */
 	public void setMehrereLiefertermine(Boolean mehrereLiefertermine) {
-		this.mehrereLiefertermine = mehrereLiefertermine;
+		this.mehrereliefertermine = mehrereLiefertermine;
 	}
 
 	// Geändert von S.Walz wegen GUI
