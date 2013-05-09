@@ -21,6 +21,7 @@ public class BestellungData
 	private TextField	gesamt;
 	private IntStepper 	freitag;
 	private IntStepper	montag;
+	private Artikel		artikel;
 	
 	/**
 	 * @param name
@@ -64,6 +65,7 @@ public class BestellungData
 		this.freitag.setValue(artikel.getDurchschnitt());
 		this.montag = new IntStepper();
 		this.montag.setValue(0);
+		this.artikel = artikel;
 	}
 	
 	/**
@@ -177,5 +179,10 @@ public class BestellungData
 	public void setMontag(IntStepper montag)
 	{
 		this.montag = montag;
+	}
+	
+	public Artikel getBestellungArtikel()
+	{
+		return this.artikel;
 	}
 }
