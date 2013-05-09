@@ -25,7 +25,6 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -42,7 +41,7 @@ public class WinSelectMenue extends Window {
 	private FieldGroup editorFields = new FieldGroup();
 	
 	private static final String MENU = "name";
-	private static final String[] fieldNames = new String[] { MENU, "koch", "id" };
+	private static final String[] fieldNames = new String[] { MENU, "id", "koch"};
 	
 	Component destComp;
 	int destRow;
@@ -206,9 +205,11 @@ public class WinSelectMenue extends Window {
                 
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
-				String s = textfields.get(2).getValue();
+				String s = textfields.get(1).getValue();
 				Long id = Long.parseLong(s.trim());
-				Menue menue = new Menue(id,titel,null);
+				String k = textfields.get(2).getValue();
+//				Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(id)
+				Menue menue = new Menue(id,titel,k);
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
 				
