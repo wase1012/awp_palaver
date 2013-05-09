@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.util.Util;
 
 /**
  * Klasse LieferantDAO. Die Klasse stellt für den Lieferant alle notwendigen
@@ -35,7 +36,8 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String EMAIL = "email";
 	private final static String TELEFON = "telefon";
 	private final static String FAX = "fax";
-	private final static String MEHRERELIEFERTERMINE = "mehrereLiefertermine";
+	private final static String NOTIZ = "notiz";
+	private final static String MEHRERELIEFERTERMINE = "mehrereliefertermine";
 
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE;
 
@@ -82,7 +84,7 @@ public class LieferantDAO extends AbstractDAO {
 					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
 					.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE)));
+							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -109,7 +111,7 @@ public class LieferantDAO extends AbstractDAO {
 					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
 					.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE)));
+							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -136,9 +138,32 @@ public class LieferantDAO extends AbstractDAO {
 					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
 					set.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE));
+					set.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
 		}
 
+		return lieferant;
+	}
+	
+	/**
+	 * Die Methode liefert ein Ergebnisse zurück bei der Suche
+	 * nach einem Lieferant bei ArtikelId in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public Lieferant getLieferantByArtikelId(long id) throws ConnectException, DAOException, SQLException{
+		Lieferant lieferant = null;
+		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANTEN_BY_ARTIKEL_ID, id));
+		while (set.next()) {
+			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
+					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
+					set.getString(STRASSE), set.getString(PLZ),
+					set.getString(ORT), set.getString(EMAIL),
+					set.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
+		}
 		return lieferant;
 	}
 
@@ -154,13 +179,13 @@ public class LieferantDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ
-				+ "," + ORT + "," + EMAIL + "," + TELEFON + "," + FAX + "," + MEHRERELIEFERTERMINE + ")"
+				+ "," + ORT + "," + EMAIL + "," + TELEFON + "," + FAX + "," + NOTIZ + "," + MEHRERELIEFERTERMINE + ")"
 				+ "VALUES" + "('" + lieferant.getName() + "','"
 				+ lieferant.getKundennummer() + "','"
 				+ lieferant.getBezeichnung() + "','" + lieferant.getStrasse()
 				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
 				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
-				+ "','" + lieferant.getFax() + "','" + lieferant.getMehrereLiefertermine() + "')";
+				+ "','" + lieferant.getFax() + "','" + lieferant.getNotiz() + "','"+ Util.convertBoolean(lieferant.getMehrereLiefertermine()) + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -182,31 +207,11 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt()
 				+ "'," + EMAIL + "='" + lieferant.getEmail() + "'," + TELEFON
 				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
-				+ lieferant.getFax()+ "'," + MEHRERELIEFERTERMINE
-				+ "='" + lieferant.getMehrereLiefertermine() + "' WHERE " + ID + "='"
+				+ lieferant.getFax()+ "'," + NOTIZ + "='"
+				+ lieferant.getNotiz()+ "'," + MEHRERELIEFERTERMINE	+ "='"
+				+ Util.convertBoolean(lieferant.getMehrereLiefertermine()) + "' WHERE " + ID + "='"
 				+ lieferant.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
-	/**
-	 * Die Methode liefert ein Ergebnisse zurück bei der Suche
-	 * nach einem Lieferant bei ArtikelId in der Datenbank.
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ConnectException
-	 * @throws DAOException
-	 * @throws SQLException
-	 */
-	public Lieferant getLieferantByArtikelId(long id) throws ConnectException, DAOException, SQLException{
-		Lieferant lieferant = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANTEN_BY_ARTIKEL_ID, id));
-		while (set.next()) {
-			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
-					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
-					set.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE));
-		}
-		return lieferant;
-	}
+	
 }

@@ -379,7 +379,7 @@ public class ArtikelDAO extends AbstractDAO
 			set.getString("kundennummer"), set.getString("bezeichnung"),
 			set.getString("strasse"), set.getString("plz"),
 			set.getString("ort"), set.getString("email"),
-			set.getString("telefon"), set.getString("fax"));
+			set.getString("telefon"), set.getString("fax"), set.getString("notiz"), set.getBoolean("mehrereliefertermine"));
 		}
 
 			return lieferant;

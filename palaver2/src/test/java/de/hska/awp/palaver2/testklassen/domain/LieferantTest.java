@@ -120,6 +120,8 @@ public class LieferantTest extends AbstractTest{
 	    	Lieferant lieferant = new Lieferant();
 	    	lieferant.setName("Testlieferant");
 	    	lieferant.setTelefon("0175/55667788");
+	    	lieferant.setNotiz("test");
+	    	lieferant.setMehrereLiefertermine(false);
 	    	dao.createLieferant(lieferant);
 	    	
 	    }
