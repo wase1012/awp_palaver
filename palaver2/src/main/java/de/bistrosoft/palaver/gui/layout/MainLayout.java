@@ -17,6 +17,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
+import de.bistrosoft.palaver.gui.view.Fussnoten;
+import de.bistrosoft.palaver.gui.view.Geschmäcker;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
 import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
@@ -24,6 +26,7 @@ import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.RezeptSuchen;
+import de.bistrosoft.palaver.gui.view.Rezeptarten;
 import de.bistrosoft.palaver.gui.view.Zubereitungen;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
@@ -141,13 +144,13 @@ public class MainLayout extends VerticalLayout implements Command {
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE)) {
-			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+			ViewHandler.getInstance().switchView(Fussnoten.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK)) {
-			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+			ViewHandler.getInstance().switchView(Geschmäcker.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_REZEPTART)) {
-			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+			ViewHandler.getInstance().switchView(Rezeptarten.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG)) {
 			ViewHandler.getInstance().switchView(Zubereitungen.class);
