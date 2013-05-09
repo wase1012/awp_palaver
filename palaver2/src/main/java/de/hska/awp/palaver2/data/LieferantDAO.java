@@ -35,6 +35,7 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String EMAIL = "email";
 	private final static String TELEFON = "telefon";
 	private final static String FAX = "fax";
+	private final static String MEHRERELIEFERTERMINE = "mehrereLiefertermine";
 
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE;
 
@@ -81,7 +82,7 @@ public class LieferantDAO extends AbstractDAO {
 					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
 					.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX)));
+							.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -108,7 +109,7 @@ public class LieferantDAO extends AbstractDAO {
 					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
 					.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX)));
+							.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -135,7 +136,7 @@ public class LieferantDAO extends AbstractDAO {
 					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
 					set.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX));
+					set.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE));
 		}
 
 		return lieferant;
@@ -153,13 +154,13 @@ public class LieferantDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ
-				+ "," + ORT + "," + EMAIL + "," + TELEFON + "," + FAX + ")"
+				+ "," + ORT + "," + EMAIL + "," + TELEFON + "," + FAX + "," + MEHRERELIEFERTERMINE + ")"
 				+ "VALUES" + "('" + lieferant.getName() + "','"
 				+ lieferant.getKundennummer() + "','"
 				+ lieferant.getBezeichnung() + "','" + lieferant.getStrasse()
 				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
 				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
-				+ "','" + lieferant.getFax() + "')";
+				+ "','" + lieferant.getFax() + "','" + lieferant.getMehrereLiefertermine() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -181,7 +182,8 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt()
 				+ "'," + EMAIL + "='" + lieferant.getEmail() + "'," + TELEFON
 				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
-				+ lieferant.getFax() + "'" + "WHERE " + ID + "='"
+				+ lieferant.getFax()+ "'," + MEHRERELIEFERTERMINE
+				+ "='" + lieferant.getMehrereLiefertermine() + "' WHERE " + ID + "='"
 				+ lieferant.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
@@ -203,7 +205,7 @@ public class LieferantDAO extends AbstractDAO {
 					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
 					set.getString(STRASSE), set.getString(PLZ),
 					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX));
+					set.getString(TELEFON), set.getString(FAX), set.getBoolean(MEHRERELIEFERTERMINE));
 		}
 		return lieferant;
 	}

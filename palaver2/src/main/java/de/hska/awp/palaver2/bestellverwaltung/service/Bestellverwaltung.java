@@ -44,15 +44,17 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
-	public void createBestellung(Bestellung bestellung)
+	public void createBestellung(Bestellung bestellung, String lieferdatum)
 			throws ConnectException, DAOException, SQLException, ParseException {
-
+			
+			bestellung.setLieferdatum(lieferdatum);
 			super.createBestellung(bestellung);
 	}
 
-	public void updateBestellung(Bestellung bestellung)
+	public void updateBestellung(Bestellung bestellung, String lieferdatum)
 			throws ConnectException, DAOException, SQLException {
-
+		
+		bestellung.setLieferdatum(lieferdatum);
 		super.updateBestellung(bestellung);
 
 	}
@@ -93,7 +95,7 @@ public class Bestellverwaltung extends BestellungDAO {
 //		 return list;
 //	 }
 	
-	public Bestellung genBestellungByArtikelByGB(Week week, Lieferant lieferant, String lieferdatum) throws de.bistrosoft.palaver.data.ConnectException, de.bistrosoft.palaver.data.DAOException, SQLException, ConnectException, DAOException{
+	public Bestellung genBestellungByArtikelByGB(Week week, Lieferant lieferant, String lieferdatum) throws SQLException, ConnectException, DAOException{
 		 
 		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
 		 
@@ -104,7 +106,6 @@ public class Bestellverwaltung extends BestellungDAO {
 		 Date timestamp = new Date(date2.getTime());
 		 bestellung.setDatum(timestamp);
 		 bestellung.setLieferant(lieferant);
-		 bestellung.setLieferdatum(lieferdatum);
 		 
 		 List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
 		 
