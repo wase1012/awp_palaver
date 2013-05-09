@@ -74,30 +74,20 @@ public class Bestellverwaltung extends BestellungDAO {
 		return bestellung;
 	}
 
-	// TODO
+	//TODO
 	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
 	// Umrechnung auf Gebindegroesse auf ganze Stück
 	// Aufteilung Menge auf Freitag und Montag
-//	 public List<Artikel> getAllArtikelByMPAndGB(Week week) throws de.bistrosoft.palaver.data.ConnectException, de.bistrosoft.palaver.data.DAOException, SQLException, ConnectException, DAOException{
-//		 List<Artikel> list = null;
-//		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
-//		 Menueplan mp = MenueplanDAO.getInstance().getMenueplanByWeek(week);
-//		 
-//		 for(int i = 0 ; i < mp.getMenues().size() ; i++ ){
-//			 
-//		 //Fehlender Code von team1
-////		 List<Rezept> rezeptlist = mp.getMenues().get(i).getRezepte();
-//		 
-//		 }
-//		 
-//		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
-//		 return list;
-//	 }
-	
-	public Bestellung generiereBestellungByArtikelByGB(Lieferant lieferant) throws SQLException, ConnectException, DAOException{
-		 //TODO Input Week week muss noch erfolgen
+	//TODO Input Week week muss noch erfolgen
+	public Bestellung generiereBestellungByLieferant(Lieferant lieferant) throws SQLException, ConnectException, DAOException{
+		
+		 //Input
 		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
 		 
+//		 List<Artikel> menueartikellist = MenueplanDAO.getIInstance().getMenueplanByWeek(week);
+		 
+		 
+		 //Bestellung anlegen
 		 Bestellung bestellung = new Bestellung();
 		 
 		 //TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
@@ -113,6 +103,8 @@ public class Bestellverwaltung extends BestellungDAO {
 		 bestellung.setDatum(date);
 		 bestellung.setLieferant(lieferant);
 		 
+		 
+		 //Bestellpositionen zusammenbauen aus den zwei Listen
 		 List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
 		 
 		 for(int i = 0 ; i < artikellist.size(); i++){
@@ -136,8 +128,6 @@ public class Bestellverwaltung extends BestellungDAO {
 		
 		 return bestellung;
 	 }
-	
-	
 	
 
 	// TODO

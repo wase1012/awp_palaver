@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -81,7 +82,7 @@ public class BestellungTest extends AbstractTest {
 		bp.setArtikel(adao.getArtikelById(Long.valueOf("1")));
 		bp.setBestellung(bestellung);
 		
-		List<Bestellposition> bestellpositionen = (List<Bestellposition>) new Bestellposition();
+		List<Bestellposition> bestellpositionen = new ArrayList <Bestellposition>();
 		bestellpositionen.add(bp);
 
 		bestellung.setBestellpositionen(bestellpositionen);

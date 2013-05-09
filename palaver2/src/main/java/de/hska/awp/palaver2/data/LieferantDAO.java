@@ -185,7 +185,7 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getBezeichnung() + "','" + lieferant.getStrasse()
 				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
 				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
-				+ "','" + lieferant.getFax() + "','" + lieferant.getNotiz() + "','"+ Util.convertBoolean(lieferant.getMehrereLiefertermine()) + "')";
+				+ "','" + lieferant.getFax() + "','" + lieferant.getNotiz() + "','"+ Util.convertBoolean(lieferant.getMehrereliefertermine()) + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -209,7 +209,7 @@ public class LieferantDAO extends AbstractDAO {
 				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
 				+ lieferant.getFax()+ "'," + NOTIZ + "='"
 				+ lieferant.getNotiz()+ "'," + MEHRERELIEFERTERMINE	+ "='"
-				+ Util.convertBoolean(lieferant.getMehrereLiefertermine()) + "' WHERE " + ID + "='"
+				+ Util.convertBoolean(lieferant.getMehrereliefertermine()) + "' WHERE " + ID + "='"
 				+ lieferant.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
