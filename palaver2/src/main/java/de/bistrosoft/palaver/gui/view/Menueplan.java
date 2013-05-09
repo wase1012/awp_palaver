@@ -171,14 +171,20 @@ public class Menueplan extends VerticalLayout{
 			}
 		});
 		
+		// Fußnoten
+		@SuppressWarnings("deprecation")
+		Label lbFussnoten=new Label("<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>", Label.CONTENT_XHTML);
+		
 		// Hinzufügen und Anordnen weiterer Komponenten		
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);
 		box.addComponent(curMenueplan);
+		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
+		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 		
 		

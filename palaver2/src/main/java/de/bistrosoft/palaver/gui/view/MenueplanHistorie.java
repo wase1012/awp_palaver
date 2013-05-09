@@ -37,6 +37,10 @@ public class MenueplanHistorie extends VerticalLayout{
 	Label lbKW = null;
 	Label lbPlatzhalter1 =new Label();
 	Label lbPlatzhalter2 =new Label();
+	// Fußnoten
+	@SuppressWarnings("deprecation")
+	Label lbFussnoten=new Label("<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>", Label.CONTENT_XHTML);
+	Label lbPlatzhalter =new Label();
 	
 
 	public MenueplanHistorie()
@@ -114,6 +118,8 @@ public class MenueplanHistorie extends VerticalLayout{
 				        box.setComponentAlignment(lbPlatzhalter2, Alignment.TOP_CENTER);
 				        box.addComponent(Menueplan);
 						box.setComponentAlignment(Menueplan, Alignment.MIDDLE_CENTER);
+						box.addComponent(lbFussnoten);
+						box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 					}
 				}
 				else{
@@ -123,12 +129,17 @@ public class MenueplanHistorie extends VerticalLayout{
 				}
 			}
 		});
-		Label lbPlatzhalter =new Label();
+       
+    	
 		lbPlatzhalter.setHeight("30px");
         box.addComponent(lbPlatzhalter);
         box.setComponentAlignment(lbPlatzhalter, Alignment.TOP_CENTER);
         box.addComponent(btDatumsauswahl);
         box.setComponentAlignment(btDatumsauswahl, Alignment.TOP_CENTER);
+       
 	}
+	
+	
+	
 	
 }
