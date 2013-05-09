@@ -56,7 +56,6 @@ public class KategorienverwaltungTest {
 		
 		Kategorie kat = new Kategorie();
 		Boolean exception = false;
-		
 		final String name = "SuperKategorie";
 		
 		
@@ -71,5 +70,39 @@ public class KategorienverwaltungTest {
 		}
 		
 		assertThat(kat.getName(),is(name));
+	}
+	
+	/**
+	 * Testmethode updateKategorie
+	 * Aktualisierung des Namens einer Kategorie in der Datenbank
+     * @throws SQLException 
+     * @throws DAOException 
+     * @throws ConnectException 
+	 */
+	@Test
+	public void updateKategorie (){
+	
+		Kategorie kat = new Kategorie();
+	
+		Boolean exception = false;
+		final Long id = KATEGORIE_ID_VORHANDEN;
+		final String neuerName = "TestKategorie";
+	
+		try{		
+			kv.getKategorieById(id);	
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		kat.setName(neuerName);		
+		try{
+			kv.updateKategorie(kat);
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(kat.getName(), is(neuerName));
 	}
 }
