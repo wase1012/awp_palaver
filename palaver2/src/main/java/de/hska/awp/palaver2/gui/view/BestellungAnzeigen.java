@@ -73,7 +73,12 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 			@Override
 			public void drop(DragAndDropEvent event)
 			{
-
+				Transferable t = event.getTransferable();
+				BestellungData selected = (BestellungData) t.getData("itemId");
+				containerBestellung.removeItem(selected);
+				containerArtikel.addItem(selected.getBestellungArtikel());
+				artikelTable.markAsDirty();
+				bestellungTable.markAsDirty();
 			}
 		});
 		
@@ -101,8 +106,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 				Transferable t = event.getTransferable();
 				Artikel selected = (Artikel) t.getData("itemId");
 				containerArtikel.removeItem(selected);
-				BestellungData newData = new BestellungData(selected);
-				containerBestellung.addItem(newData);
+				containerBestellung.addItem(new BestellungData(selected));
 				artikelTable.markAsDirty();
 				bestellungTable.markAsDirty();
 			}
