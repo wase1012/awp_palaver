@@ -139,13 +139,13 @@ public class MenueComponent extends CustomComponent{
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				
-				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
-				ConfirmDialog.show(UI.getCurrent(), "Menü ändern:", "Wollen Sie das Menü wirklich durch ein anderes ersetzen?",
-				        "Ja", "Nein", new ConfirmDialog.Listener() {
-
-							//löschen
-				            public void onClose(ConfirmDialog dialog) {
-				                if (dialog.isConfirmed()) {
+//				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
+//				ConfirmDialog.show(UI.getCurrent(), "Menü ändern:", "Wollen Sie das Menü wirklich durch ein anderes ersetzen?",
+//				        "Ja", "Nein", new ConfirmDialog.Listener() {
+//
+//							//löschen
+//				            public void onClose(ConfirmDialog dialog) {
+//				                if (dialog.isConfirmed()) {
 				                	//finde position
 				                    Component sourceComp = comp;
 				                	Integer sourceRow =-1;
@@ -166,9 +166,9 @@ public class MenueComponent extends CustomComponent{
 				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 				        			btn.click();
-				                }
-				            }			            
-				        });	
+//				                }
+//				            }			            
+//				        });	
 			        }
 		});
 		        
