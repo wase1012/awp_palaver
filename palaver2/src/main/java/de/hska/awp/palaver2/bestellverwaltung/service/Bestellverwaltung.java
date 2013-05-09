@@ -6,12 +6,13 @@ package de.hska.awp.palaver2.bestellverwaltung.service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.MenueplanDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.util.Week;
+//import de.bistrosoft.palaver.data.MenueplanDAO;
+//import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+//import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+//import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ArtikelDAO;
@@ -20,6 +21,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.util.BestellungData;
 
 /**
  * @author Christian Barth
@@ -73,21 +75,21 @@ public class Bestellverwaltung extends BestellungDAO {
 	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
 	// Umrechnung auf Gebindegroesse auf ganze Stück
 	// Aufteilung Menge auf Freitag und Montag
-	 public List<Artikel> getAllArtikelByMPAndGB(Week week) throws de.bistrosoft.palaver.data.ConnectException, de.bistrosoft.palaver.data.DAOException, SQLException, ConnectException, DAOException{
-		 List<Artikel> list = null;
-		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
-		 Menueplan mp = MenueplanDAO.getInstance().getMenueplanByWeek(week);
-		 
-		 for(int i = 0 ; i < mp.getMenues().size() ; i++ ){
-			 
-		 //Fehlender Code von team1
-//		 List<Rezept> rezeptlist = mp.getMenues().get(i).getRezepte();
-		 
-		 }
-		 
-		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
-		 return list;
-	 }
+//	 public List<Artikel> getAllArtikelByMPAndGB(Week week) throws de.bistrosoft.palaver.data.ConnectException, de.bistrosoft.palaver.data.DAOException, SQLException, ConnectException, DAOException{
+//		 List<Artikel> list = null;
+//		 //1. Menueplan mit allen Artikeln und Mengen zurückliefern lassen
+//		 Menueplan mp = MenueplanDAO.getInstance().getMenueplanByWeek(week);
+//		 
+//		 for(int i = 0 ; i < mp.getMenues().size() ; i++ ){
+//			 
+//		 //Fehlender Code von team1
+////		 List<Rezept> rezeptlist = mp.getMenues().get(i).getRezepte();
+//		 
+//		 }
+//		 
+//		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+//		 return list;
+//	 }
 	
 	
 
@@ -114,29 +116,24 @@ public class Bestellverwaltung extends BestellungDAO {
 	public List<Lieferant> getAllLieferantenByArtikellist(
 			List<Artikel> artikellist) throws ConnectException, DAOException,
 			SQLException {
-		List<Lieferant> list = null;
+		List<Lieferant> list = new ArrayList<Lieferant>();
 		Lieferant lieferant = null;
-		LieferantDAO ldao = LieferantDAO.getInstance();
+		LieferantDAO ldao = new LieferantDAO();
 		
-		for (Artikel a : artikellist) {
-			lieferant = ldao.getLieferantByArtikelId(a.getId());
-
-			if (list.isEmpty()==true) {
+		for (Artikel e : artikellist) {
+			lieferant = ldao.getLieferantByArtikelId(e.getId());
+			if (list == null) {
 				list.add(lieferant);
-			} else {
-				Boolean vorhanden = false;
+			} 
+			else {
 				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).getId().equals(lieferant.getId()) == true) {
-						vorhanden = true;
+					if (list.get(i).getId().equals(lieferant.getId()) == false) {
+						list.add(lieferant);
 					}
-				}
-				if (vorhanden == false) {
-					list.add(lieferant);
 				}
 			}
 
-		}
+		}	
 		return list;
 	}
-	
 }
