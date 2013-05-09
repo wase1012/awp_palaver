@@ -8,6 +8,7 @@ import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -15,6 +16,7 @@ public class MenueDAO extends AbstractDAO {
 	private final String ID = "id";
 	
 	private final String GET_ALL_MENUES = "SELECT * FROM menue";
+	
 	
 	public MenueDAO() {
 		super();
@@ -27,20 +29,24 @@ public class MenueDAO extends AbstractDAO {
 		return instance;
 	}
 	
-	public List<Menue> getAllMenues() throws ConnectException, DAOException, SQLException{
-		List<Menue> menues = new ArrayList<>();
-		ResultSet set = get(GET_ALL_MENUES);
-		
-		while (set.next()) {
-			Menue m = new Menue();
-			m.setId(set.getLong("id"));
-			m.setName(set.getString("name"));
-			m.setKoch(null);
-			m.setRezepte(null);
-			menues.add(m);
-		}	
-		
-		return menues;
-	}
+	public List<Menue> getAllMenues() throws ConnectException, DAOException,
+	SQLException {
+List<Menue> list = new ArrayList<Menue>();
+ResultSet set = get(GET_ALL_MENUES);
+;
+while (set.next()) {
+	list.add(new Menue(set.getString("name"), MitarbeiterDAO.getInstance().getMitarbeiterById(
+									set.getLong("koch")))	
+
+	);
+}
+
+
+return list;
+}
+	
+	
+	
+
 
 }
