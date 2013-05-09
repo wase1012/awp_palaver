@@ -11,10 +11,15 @@ import java.util.List;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.Transferable;
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptAll;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.ui.CustomTable.TableDragMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -28,13 +33,16 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 @SuppressWarnings("serial")
 public class BestellungAnzeigen extends VerticalLayout implements View
 {
-	private Table 				bestellungTable;
+	private Table 								bestellungTable;
 	
-	private FilterTable			artikelTable;
+	private FilterTable							artikelTable;
 	
-	private HorizontalLayout	form;
+	private HorizontalLayout					form;
 	
-	private Lieferant lieferant;
+	private Lieferant 							lieferant;
+	
+	private BeanItemContainer<BestellungData> 	containerBestellung;
+	private BeanItemContainer<Artikel> 			containerArtikel;
 	
 	public BestellungAnzeigen()
 	{
@@ -53,6 +61,46 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
+		artikelTable.setDropHandler(new DropHandler()
+		{
+			
+			@Override
+			public AcceptCriterion getAcceptCriterion()
+			{
+				return AcceptAll.get();
+			}
+			
+			@Override
+			public void drop(DragAndDropEvent event)
+			{
+
+			}
+		});
+		
+		bestellungTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		bestellungTable.setDropHandler(new DropHandler()
+		{
+			
+			@Override
+			public AcceptCriterion getAcceptCriterion()
+			{
+				return AcceptAll.get();
+			}
+			
+			@Override
+			public void drop(DragAndDropEvent event)
+			{
+				Transferable t = event.getTransferable();
+				Artikel selected = (Artikel) t.getData("itemId");
+				System.out.println("Ausgwählt: " + selected);
+				containerArtikel.removeItem(selected);
+				BestellungData newData = new BestellungData(selected);
+				containerBestellung.addItem(newData);
+				artikelTable.markAsDirty();
+				bestellungTable.markAsDirty();
+			}
+		});
 		
 		form.addComponent(bestellungTable);
 		form.addComponent(artikelTable);
@@ -86,15 +134,15 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		
 		for (Artikel e : artikelListe)
 		{
-			list.add(new BestellungData(e));
+//			list.add(new BestellungData(e));
 			artikel.add(e);
 		}
 		
-		BeanItemContainer<BestellungData> container = new BeanItemContainer<BestellungData>(BestellungData.class, list);
-		bestellungTable.setContainerDataSource(container);
+		containerBestellung = new BeanItemContainer<BestellungData>(BestellungData.class, list);
+		bestellungTable.setContainerDataSource(containerBestellung);
 		bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "freitag", "montag"});
 		
-		BeanItemContainer<Artikel> containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
+		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
 	}
