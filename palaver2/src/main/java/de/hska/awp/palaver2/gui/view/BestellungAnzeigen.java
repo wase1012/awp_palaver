@@ -16,7 +16,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.ui.CustomTable.TableDragMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -79,21 +78,28 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		});
 		
 		bestellungTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		/**
+		 * Drag n Drop
+		 */
 		bestellungTable.setDropHandler(new DropHandler()
 		{
-			
+			/**
+			 * Prueft, ob das Element verschoben werden darf.
+			 */
 			@Override
 			public AcceptCriterion getAcceptCriterion()
 			{
 				return AcceptAll.get();
 			}
 			
+			/**
+			 * Verschiebt einen Artikel in die Bestellliste.
+			 */
 			@Override
 			public void drop(DragAndDropEvent event)
 			{
 				Transferable t = event.getTransferable();
 				Artikel selected = (Artikel) t.getData("itemId");
-				System.out.println("Ausgwählt: " + selected);
 				containerArtikel.removeItem(selected);
 				BestellungData newData = new BestellungData(selected);
 				containerBestellung.addItem(newData);
@@ -111,8 +117,8 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	/**
+	 * Uebergibt den Lieferanten und fuellt die Tabellen
 	 */
 	@Override
 	public void getViewParam(ViewData data)
