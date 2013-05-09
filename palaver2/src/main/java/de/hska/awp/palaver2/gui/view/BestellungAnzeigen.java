@@ -57,19 +57,30 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		
 		bestellungTable = new Table();
 		bestellungTable.setSizeFull();
+		bestellungTable.setStyleName("palaverTable");
 		
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setStyleName("palaverTable");
+		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
+		/**
+		 * Darg n Drop
+		 */
 		artikelTable.setDropHandler(new DropHandler()
 		{
-			
+			/**
+			 * Prueft, ob das Element verschoben werden darf.
+			 */
 			@Override
 			public AcceptCriterion getAcceptCriterion()
 			{
 				return AcceptAll.get();
 			}
 			
+			/**
+			 * Bestellposition loeschen und Artikel wieder in Liste setzen.
+			 */
 			@Override
 			public void drop(DragAndDropEvent event)
 			{
@@ -128,6 +139,9 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 	public void getViewParam(ViewData data)
 	{
 		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
+		
+		bestellungTable.setCaption("Bestellung " + lieferant.getName());
+		artikelTable.setCaption("Artikel");
 		
 		List<BestellungData> list = new ArrayList<BestellungData>();
 		List<Artikel> artikel = new ArrayList<Artikel>();

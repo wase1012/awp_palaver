@@ -137,3 +137,8 @@
 .v-ie8 .v-stepper .v-stepper-updown {
 	top: 1px;
 }
+
+.v-caption-palaverTable .v-captiontext {
+	font-size: 18px;
+	padding-bottom: 10px;
+}
