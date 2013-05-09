@@ -18,17 +18,19 @@ public class Bestellung implements java.io.Serializable {
 	private Long id;
 	private Lieferant lieferant;
 	private Date datum;
+	private String lieferdatum;
 	private List<Bestellposition> bestellpositionen;
 	
 	public Bestellung() {
 		super();
 	}
 
-	public Bestellung(Long id, Lieferant lieferant, Date datum) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
+		this.lieferdatum = lieferdatum;
 	}
 
 	/**
@@ -37,11 +39,12 @@ public class Bestellung implements java.io.Serializable {
 	 * @param datum
 	 * @param bestellpositionen
 	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, List<Bestellposition> bestellpositionen) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum, List<Bestellposition> bestellpositionen) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
+		this.lieferdatum = lieferdatum;
 		this.bestellpositionen = bestellpositionen;
 	}
 
@@ -67,6 +70,20 @@ public class Bestellung implements java.io.Serializable {
 		this.datum = datum;
 	}
 
+	/**
+	 * @return the lieferdatum
+	 */
+	public String getLieferdatum() {
+		return lieferdatum;
+	}
+
+	/**
+	 * @param lieferdatum the lieferdatum to set
+	 */
+	public void setLieferdatum(String lieferdatum) {
+		this.lieferdatum = lieferdatum;
+	}
+
 	public List<Bestellposition> getBestellpositionen() {
 		return bestellpositionen;
 	}
@@ -83,14 +100,13 @@ public class Bestellung implements java.io.Serializable {
 		return this;
 	}
 
-	
-	/**
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Bestellung [id=" + id + ", lieferant=" + lieferant + ", datum="
-				+ datum + "]";
+				+ datum + ", lieferdatum=" + lieferdatum + "]";
 	}
 
 }

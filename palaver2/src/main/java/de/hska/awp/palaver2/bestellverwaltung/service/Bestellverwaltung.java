@@ -4,6 +4,7 @@
  */
 package de.hska.awp.palaver2.bestellverwaltung.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 //import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 //import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.BestellungDAO;
@@ -42,15 +44,17 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
-	public void createBestellung(Bestellung bestellung)
+	public void createBestellung(Bestellung bestellung, String lieferdatum)
 			throws ConnectException, DAOException, SQLException, ParseException {
-
+			
+			bestellung.setLieferdatum(lieferdatum);
 			super.createBestellung(bestellung);
 	}
 
-	public void updateBestellung(Bestellung bestellung)
+	public void updateBestellung(Bestellung bestellung, String lieferdatum)
 			throws ConnectException, DAOException, SQLException {
-
+		
+		bestellung.setLieferdatum(lieferdatum);
 		super.updateBestellung(bestellung);
 
 	}
@@ -90,6 +94,47 @@ public class Bestellverwaltung extends BestellungDAO {
 //		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
 //		 return list;
 //	 }
+	
+	public Bestellung genBestellungByArtikelByGB(Week week, Lieferant lieferant, String lieferdatum) throws SQLException, ConnectException, DAOException{
+		 
+		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+		 
+		 Bestellung bestellung = new Bestellung();
+		 
+		 //TODO Input sieht später anders aus.
+		 Date date2 = new Date(0);
+		 Date timestamp = new Date(date2.getTime());
+		 bestellung.setDatum(timestamp);
+		 bestellung.setLieferant(lieferant);
+		 
+		 List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
+		 
+		 for(int i = 0 ; i < artikellist.size(); i++){
+			 Bestellposition bestellposition = null;
+			 bestellposition.setArtikel(artikellist.get(i));
+			 bestellposition.setDurchschnitt(artikellist.get(i).getDurchschnitt());
+			 //TODO die Menge auf Freitag und Montag aufteilen laut Menüplan
+//			 bestellposition.setFreitag(freitag);
+//			 bestellposition.setMontag(montag);
+			 //TODO die Menge vom Menüplan auslesen und setzen
+//			 bestellposition.setKantine(kantine);
+			 //TODO die Kantinemenge dazu addieren
+			 bestellposition.setGesamt(artikellist.get(i).getDurchschnitt());
+			 
+			 //TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
+			 if(lieferant.ge){
+			 bestellposition.setLieferdatum(lieferdatum);
+			 }
+			 bestellpositionen.add(bestellposition);
+			 
+		 }
+		 
+		 bestellung.setBestellpositionen(bestellpositionen);
+		 
+		
+		 return bestellung;
+	 }
+	
 	
 	
 
