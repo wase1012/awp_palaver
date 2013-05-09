@@ -23,7 +23,6 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.util.BestellungData;
 
 /**
  * @author Christian Barth
@@ -95,11 +94,18 @@ public class Bestellverwaltung extends BestellungDAO {
 //		 return list;
 //	 }
 	
-	public Bestellung genBestellungByArtikelByGB(Week week, Lieferant lieferant, String lieferdatum) throws SQLException, ConnectException, DAOException{
-		 
+	public Bestellung generiereBestellungByArtikelByGB(Lieferant lieferant) throws SQLException, ConnectException, DAOException{
+		 //TODO Input Week week muss noch erfolgen
 		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
 		 
 		 Bestellung bestellung = new Bestellung();
+		 
+		 //TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
+		 // "17.05.2013" und "20.05.2013" ersetzen durch die genauen Liefertermine errechnet aus der week.
+		 if(lieferant.getMehrereliefertermine()==true){
+			 String text = "Freitag: " + "17.05.2013" + "Montag: " + "20.05.2013";
+			 bestellung.setLieferdatum(text);
+		 }
 		 
 		 //TODO Input sieht später anders aus.
 		 Date date2 = new Date(0);
@@ -110,7 +116,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		 List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
 		 
 		 for(int i = 0 ; i < artikellist.size(); i++){
-			 Bestellposition bestellposition = null;
+			 Bestellposition bestellposition = new Bestellposition();
 			 bestellposition.setArtikel(artikellist.get(i));
 			 bestellposition.setDurchschnitt(artikellist.get(i).getDurchschnitt());
 			 //TODO die Menge auf Freitag und Montag aufteilen laut Menüplan
@@ -120,11 +126,7 @@ public class Bestellverwaltung extends BestellungDAO {
 //			 bestellposition.setKantine(kantine);
 			 //TODO die Kantinemenge dazu addieren
 			 bestellposition.setGesamt(artikellist.get(i).getDurchschnitt());
-			 
-			 //TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
-			 if(lieferant.ge){
-			 bestellposition.setLieferdatum(lieferdatum);
-			 }
+			
 			 bestellpositionen.add(bestellposition);
 			 
 		 }
@@ -157,7 +159,6 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("null")
 	public List<Lieferant> getAllLieferantenByArtikellist(
 			List<Artikel> artikellist) throws ConnectException, DAOException,
 			SQLException {
