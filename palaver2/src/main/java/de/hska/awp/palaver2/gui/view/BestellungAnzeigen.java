@@ -19,9 +19,11 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 
 @SuppressWarnings("serial")
 public class BestellungAnzeigen extends VerticalLayout implements View
@@ -31,6 +33,8 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 	private FilterTable			artikelTable;
 	
 	private HorizontalLayout	form;
+	
+	private Lieferant lieferant;
 	
 	public BestellungAnzeigen()
 	{
@@ -57,13 +61,23 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	 */
+	@Override
+	public void getViewParam(ViewData data)
+	{
+		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
+		
 		List<BestellungData> list = new ArrayList<BestellungData>();
 		List<Artikel> artikel = new ArrayList<Artikel>();
 //		list.add(new BestellungData("Mehl", "1 KG", new Kategorie(1L, "Grundbedarf"), 10, 20));
 		List<Artikel> artikelListe = null;
 		try
 		{
-			artikelListe = Artikelverwaltung.getInstance().getAllArtikel();
+			artikelListe = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(lieferant.getId());
 		} catch (ConnectException | DAOException | SQLException e)
 		{
 			// TODO Auto-generated catch block
@@ -83,13 +97,5 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		BeanItemContainer<Artikel> containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
-	}
-
-	/* (non-Javadoc)
-	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
-	 */
-	@Override
-	public void getViewParam(ViewData data)
-	{
 	}
 }

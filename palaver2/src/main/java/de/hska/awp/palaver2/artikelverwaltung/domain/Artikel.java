@@ -229,4 +229,12 @@ public class Artikel implements java.io.Serializable
 	{
 		this.lebensmittel = lebensmittel;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Artikel [name=" + name + "]";
+	}
 }

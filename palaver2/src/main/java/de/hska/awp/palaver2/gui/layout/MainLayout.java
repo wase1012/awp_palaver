@@ -15,6 +15,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
+import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
@@ -138,7 +139,7 @@ public class MainLayout extends VerticalLayout implements Command
 				UI.getCurrent().setContent(new LoginForm());
 			break;
 			case "Test":
-				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
+				ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
 			break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
