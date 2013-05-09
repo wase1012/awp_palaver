@@ -15,6 +15,11 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
+/**
+ * Klasse ArtikelDAO. Die Klasse stellt für den Artikel alle
+ * notwendigen Methoden bereit um auf die Datenbank zuzugreifen.
+ * 
+ */
 public class ArtikelDAO extends AbstractDAO
 {	
 	private static ArtikelDAO instance = null;
@@ -35,6 +40,9 @@ public class ArtikelDAO extends AbstractDAO
 		super();
 	}
 	
+	/**
+	 * @return instance
+	 */
 	public static ArtikelDAO getInstance() {
 		if (instance == null) {
 			instance = new ArtikelDAO();
@@ -42,6 +50,15 @@ public class ArtikelDAO extends AbstractDAO
 		return instance;
 	}
 	
+	/**
+	 * Die Methode getAllArtikel liefert alle in der Datenbank
+	 * befindlichen Artikeln zurück.
+	 * 
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
@@ -72,6 +89,16 @@ public class ArtikelDAO extends AbstractDAO
 		return list;
 	}
 	
+	/**
+	 * Die Methode getAllArtikelByLieferantId liefert ein Ergebniss zurück bei der Suche
+	 * nach einem Artikel anhang der LieferantId in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Artikel> getAllArtikelByLieferantId(Long id) throws ConnectException, DAOException, SQLException
 	{
 		List<Artikel> list = new ArrayList<Artikel>();		
@@ -98,6 +125,16 @@ public class ArtikelDAO extends AbstractDAO
 		return list;
 	}
 	
+	/**
+	 * Die Methode getArtikelById liefert eins Ergebniss zurück bei der
+	 * Suche nach einem Artikel in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	
 	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException
 	{
@@ -126,6 +163,16 @@ public class ArtikelDAO extends AbstractDAO
 		return result;
 	}
 	
+	/**
+	 * Die Methode getArtikelByName liefert eins bis mehrere Ergebnisse
+	 * zurück bei der Suche nach einem Artikel in der Datenbank.
+	 * 
+	 * @param name
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Artikel> getArtikelByName(String name) throws ConnectException, DAOException, SQLException
 	{
 		List<Artikel> list = new ArrayList<Artikel>();
@@ -225,6 +272,14 @@ public class ArtikelDAO extends AbstractDAO
 		return list;
 	}
 	
+	/**
+	 * Die Methode erzeugt einen Artikel in der Datenbank.
+	 * 
+	 * @param ansprechpartner
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void createArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
 		putManaged(MessageFormat.format(PUT_ARTIKEL,
@@ -235,6 +290,14 @@ public class ArtikelDAO extends AbstractDAO
 				+ Util.convertBoolean(artikel.isGrundbedarf()) + "," + artikel.getDurchschnitt() + "," + Util.convertBoolean(artikel.isLebensmittel())));
 	}
 	
+	/**
+	 * Die Methode aktualisiert einen Artikel in der Datenbank.
+	 * 
+	 * @param ansprechpartner
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException
 	{
 		putManaged("UPDATE artikel SET `artikelnr` = '"+ artikel.getArtikelnr() +"'," +
