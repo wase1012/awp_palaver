@@ -78,6 +78,24 @@ public class Artikelverwaltung extends ArtikelDAO {
 		result = super.getArtikelByName(name);
 		return result;
 	}
+	
+	
+
+	/**
+	 * Die Methode liefert alle Artikel zurück die Lebensmittel sind.
+	 * 
+	 * @author Christian Barth
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public List<Artikel> getArtikelByLebensmittel() throws ConnectException,
+			DAOException, SQLException {
+		List<Artikel> result = null;
+		result = super.getArtikelByLebensmittel();
+		return result;
+	}
+	
 
 	/**
 	 * Die Methode erzeugt ein Artikel.
