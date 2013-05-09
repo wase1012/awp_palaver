@@ -122,7 +122,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		
 		for (Artikel e : artikellist) {
 			lieferant = ldao.getLieferantByArtikelId(e.getId());
-			if (list == null) {
+			if (list.isEmpty() == true) {
 				list.add(lieferant);
 			} 
 			else {
