@@ -72,12 +72,6 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/menue_has_fussnote.csv'
-INTO TABLE menue_has_fussnote
-FIELDS TERMINATED BY ';'
-OPTIONALLY ENCLOSED BY '"'
-IGNORE 1 LINES;
-
 LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/rezept_has_zubereitung.csv'
 INTO TABLE rezept_has_zubereitung
 FIELDS TERMINATED BY ';'
@@ -101,5 +95,12 @@ INTO TABLE menue
 FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
+
+LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/menue_has_fussnote.csv'
+INTO TABLE menue_has_fussnote
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 LINES;
+
 
 -- vergesst nicht den pfad anzupassen

@@ -2,74 +2,70 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 
 @Entity
 @Table(name = "menue_has_fussnote", catalog = "palaver")
-public class MenueHasFussnote implements java.io.Serializable {
+public class MenueHasRezept implements java.io.Serializable {
 
-	private MenueHasFussnoteId menueHasFussnoteId;
-	private Fussnote fussnote;
+	private MenueHasRezeptId id;
 	private Menue menue;
+	private Rezept rezept;
 
-	public MenueHasFussnote() {
+	public MenueHasRezept() {
 	}
 
-	public MenueHasFussnote(MenueHasFussnoteId menueHasFussnoteId, Fussnote fussnote,
-			Menue menue) {
-		this.menueHasFussnoteId = menueHasFussnoteId;
-		this.fussnote = fussnote;
+	public MenueHasRezept(MenueHasRezeptId id, 
+			Menue menue, Rezept rezept) {
+		this.id = id;
 		this.menue = menue;
+		this.rezept = rezept;
 	}
 	
-	public MenueHasFussnote( Fussnote fussnote,
-			Menue menue) {
+	public MenueHasRezept(Menue menue, Rezept rezept) {
 		
-		this.fussnote = fussnote;
 		this.menue = menue;
+		this.rezept = rezept;
 	}
 
-	
-	
 	@EmbeddedId
 	@AttributeOverrides({
 			@AttributeOverride(name = "menueFk", column = @Column(name = "menue_fk", nullable = false)),
-			@AttributeOverride(name = "fussnoteFk", column = @Column(name = "fussnote_fk", nullable = false)) })
-	public MenueHasFussnoteId getId() {
-		return this.menueHasFussnoteId;
-	}
-	public void setId(Long id) {
-		this.menueHasFussnoteId = menueHasFussnoteId;
-	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fussnote_fk", nullable = false, insertable = false, updatable = false)
-	public Fussnote getFussnote() {
-		return this.fussnote;
+			@AttributeOverride(name = "rezeptFk", column = @Column(name = "rezept_fk", nullable = false)) })
+	public MenueHasRezeptId getId() {
+		return this.id;
 	}
 
-	public void setFussnote(Fussnote fussnote) {
-		this.fussnote = fussnote;
+	public void setId(MenueHasRezeptId id) {
+		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "rezept_fk", nullable = false, insertable = false, updatable = false)
+	public Rezept getRezept() {
+		return rezept;  ///stand bei beidem noch this.
+	}
+
+	public void setRezept(Rezept rezept) {
+		this.rezept = rezept;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menue_fk", nullable = false, insertable = false, updatable = false)
 	public Menue getMenue() {
-		return this.menue;
+		return menue;
 	}
 
 	public void setMenue(Menue menue) {
@@ -81,7 +77,7 @@ public class MenueHasFussnote implements java.io.Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((fussnote == null) ? 0 : fussnote.hashCode());
+				+ ((rezept == null) ? 0 : rezept.hashCode());
 		result = prime * result + ((menue == null) ? 0 : menue.hashCode());
 		return result;
 	}
@@ -94,11 +90,11 @@ public class MenueHasFussnote implements java.io.Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MenueHasFussnote other = (MenueHasFussnote) obj;
-		if (fussnote == null) {
-			if (other.fussnote != null)
+		MenueHasRezept other = (MenueHasRezept) obj;
+		if (rezept == null) {
+			if (other.rezept != null)
 				return false;
-		} else if (!fussnote.equals(other.fussnote))
+		} else if (!rezept.equals(other.rezept))
 			return false;
 		if (menue == null) {
 			if (other.menue != null)
@@ -110,7 +106,7 @@ public class MenueHasFussnote implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "menueHasFussnote [fussnote=" + fussnote + ", menue=" + menue
+		return "menueHasFussnote [fussnote=" + rezept + ", menue=" + menue
 				+ "]";
 	}
 

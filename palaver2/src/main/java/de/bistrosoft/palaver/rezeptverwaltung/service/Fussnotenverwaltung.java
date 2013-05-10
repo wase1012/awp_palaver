@@ -43,9 +43,9 @@ public class Fussnotenverwaltung extends FussnoteDAO {
 		return result;
 	}
 
-	public List<Fussnote> getFussnoteByName(String name)
+	public Fussnote getFussnoteByName(String name)
 			throws ConnectException, DAOException, SQLException {
-		List<Fussnote> result = null;
+		Fussnote result = null;
 		result = super.getFussnoteByName(name);
 		return result;
 	}

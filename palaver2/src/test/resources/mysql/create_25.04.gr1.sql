@@ -415,14 +415,14 @@ DROP TABLE IF EXISTS `palaver`.`menue_has_fussnote` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue_has_fussnote` (
   `menue_fk` INT NOT NULL,
   `fussnote_fk` INT NOT NULL ,
-  INDEX `fk_rezept_has_fussnote_menue1_idx` (`menue_fk` ASC) ,
-  INDEX `fk_rezept_has_fussnote_fussnote1_idx` (`fussnote_fk` ASC) ,
-  CONSTRAINT `fk_rezept_has_fussnote_menue1`
+  INDEX `fk_menue_has_fussnote_menue1_idx` (`menue_fk` ASC) ,
+  INDEX `fk_menue_has_fussnote_fussnote1_idx` (`fussnote_fk` ASC) ,
+  CONSTRAINT `fk_menue_has_fussnote_menue1`
     FOREIGN KEY (`menue_fk` )
     REFERENCES `palaver`.`menue` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rezept_has_fussnote_fussnote1`
+  CONSTRAINT `fk_menue_has_fussnote_fussnote1`
     FOREIGN KEY (`fussnote_fk` )
     REFERENCES `palaver`.`fussnote` (`id` )
     ON DELETE NO ACTION

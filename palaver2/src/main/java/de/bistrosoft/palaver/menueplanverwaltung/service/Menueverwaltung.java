@@ -7,6 +7,9 @@ import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+
 
 public class Menueverwaltung extends MenueDAO{
 	
@@ -32,5 +35,15 @@ public class Menueverwaltung extends MenueDAO{
 			return null;
 		}
 	}
+	
+	
+	public void createMenue(Menue menue) throws ConnectException,
+	DAOException, SQLException {
+super.createMenue(menue);
+}
+	public void FussnoteAdd(MenueHasFussnote menueHasFussnote) throws ConnectException,
+	DAOException, SQLException {
+super.FussnoteAdd(menueHasFussnote);
+}
 	
 }
