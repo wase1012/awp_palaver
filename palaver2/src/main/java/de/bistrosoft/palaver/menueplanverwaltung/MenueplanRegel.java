@@ -13,18 +13,20 @@ public class MenueplanRegel {
 	String regeltyp;
 	String operator;
 	List<String> regelwerte;
+	String fehlermeldung;
 
 	public MenueplanRegel() {
 
 	}
 
 	public MenueplanRegel(String regeltyp, List<Integer> rows,
-			List<Integer> columns, String operator, List<String> regelwerte) {
+			List<Integer> columns, String operator, List<String> regelwerte, String fehlermeldung) {
 		this.regeltyp = regeltyp;
 		this.rows = rows;
 		this.columns = columns;
 		this.operator = operator;
 		this.regelwerte = regelwerte;
+		this.fehlermeldung=fehlermeldung;
 	}
 
 	// Testdaten
@@ -36,7 +38,7 @@ public class MenueplanRegel {
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("Pommes");
-		regeln.add(new MenueplanRegel("name", r, c, "enthält nicht", rw));
+		regeln.add(new MenueplanRegel("name", r, c, "enthält nicht", rw,"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden!"));
 
 		return regeln;
 	}
@@ -48,7 +50,7 @@ public class MenueplanRegel {
 			if (operator.equals("enthält nicht")) {
 				for (String rw : regelwerte) {
 					if (rw.equals(menue.getName())) {
-						System.out.println("Nicht erlaubt");
+						System.out.println(fehlermeldung);
 					}
 				}
 			}
