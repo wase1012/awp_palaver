@@ -1,4 +1,3 @@
-
 package de.bistrosoft.palaver.gui.view;
 
 import java.math.BigDecimal;

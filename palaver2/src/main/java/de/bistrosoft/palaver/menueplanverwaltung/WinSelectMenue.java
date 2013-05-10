@@ -219,8 +219,9 @@ public class WinSelectMenue extends Window {
 				MenueComponent menueComp = new MenueComponent(menue, menueplan, sourceRow, sourceColumn,true);
 				menueGrid.addComponent(menueComp, sourceColumn, sourceRow);
 				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
-				menueplan.pruefeRegeln(menueComp);
 				
+				menueplan.pruefeRegeln(menueComp);
+									
 				// Window schließen
 				subwindow.close();
 		}
