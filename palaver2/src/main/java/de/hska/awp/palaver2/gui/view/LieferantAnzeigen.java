@@ -47,6 +47,8 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			showFilter.setIcon(new ThemeResource("img/filter.ico"));
 			
 			table = new FilterTable();
+			table.setCaption("Alle Lieferanten");
+			table.setStyleName("palaverTable");
 			table.setSizeFull();
 			table.setFilterBarVisible(false);
 			table.setFilterGenerator(new customFilter());
