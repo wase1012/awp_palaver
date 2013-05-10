@@ -44,7 +44,10 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian Walz
- *
+ *	Diese Klasse ist eine Eingabeform fuer das Erstellen oder Ändern eines Artikels. 
+ *	Wenn die Klasse ohne Parameter aufgerufen wird, dient sie zum Erstellen, werden Parameter 
+ *	uebergeben, werde die Daten automatisch in die Felder geschrieben und anstatt einen neuen 
+ *	Artikel anzulegen wird er geaendert.
  */
 @SuppressWarnings({ "serial", "deprecation" })
 public class ArtikelErstellen extends VerticalLayout implements View
@@ -77,7 +80,8 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private Artikel				artikel;
 	
 	/**
-	 * 
+	 * Der Konstruktor wird automatisch von dem ViewHandler aufgerufen. 
+	 * Er erzeugt das Layout, befuellt die Comboboxen und stellt die Funktionen bereit.
 	 */
 	public ArtikelErstellen()
 	{
@@ -322,6 +326,11 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		}
 	}
 
+	/**
+	 * Wenn ein Artikel uebergeben wird, werden die Felder mit den Daten gefuellt 
+	 * und der Speicher-Knopf durch einen Update-Knopf ersetzt.
+	 * @param ViewData - ein Artikel in einem ViewData Objekt.
+	 */
 	@Override
 	public void getViewParam(ViewData data)
 	{
@@ -330,6 +339,11 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		control.replaceComponent(speichern, update);
 		update.addClickListener(new ClickListener()
 		{	
+			/**
+			 * Wenn der Update-Knopf gedrueckt wird, wird der Artikel mit den neuen 
+			 * Daten aus den Feldern überschrieben; die ID bleibt. ANschliessend wird 
+			 * er gespeichert und ein Dialog-Fenster oeffnet sich.
+			 */
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
@@ -378,7 +392,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 					public void buttonClick(ClickEvent event)
 					{
 						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().returnToDefault();
+						ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
 					}
 				});
 				
@@ -394,6 +408,9 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			}
 		});
 		
+		/**
+		 * Daten in Felder schreiben.
+		 */
 		name.setValue(artikel.getName());
 		artnr.setValue(artikel.getArtikelnr());
 		preis.setValue(artikel.getPreis() + "");

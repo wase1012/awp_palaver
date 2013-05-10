@@ -33,9 +33,9 @@ import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
- * 
  * @author Sebastian Walz
- *
+ *	Diese Klasse gibt eine Tabelle aus, in der alle Artikel angezeigt werden. 
+ *	Klick man doppelt auf einen, kommt man direkt zur UpdateForm.
  */
 @SuppressWarnings("serial")
 public class ArtikelAnzeigen extends VerticalLayout  implements View
