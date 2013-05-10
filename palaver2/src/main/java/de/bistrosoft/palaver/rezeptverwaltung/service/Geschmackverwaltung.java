@@ -27,7 +27,7 @@ public class Geschmackverwaltung extends GeschmackDAO {
 		}
 		return instance;
 	}
-
+	
 	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
 		List<Geschmack> result = null;

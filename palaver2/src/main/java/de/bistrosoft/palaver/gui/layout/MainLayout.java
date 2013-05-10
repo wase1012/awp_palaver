@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.Fussnoten;
-import de.bistrosoft.palaver.gui.view.Geschmäcker;
+import de.bistrosoft.palaver.gui.view.GeschmackEinst;
 import de.bistrosoft.palaver.gui.view.LieferantErstellen;
 import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
@@ -147,7 +147,7 @@ public class MainLayout extends VerticalLayout implements Command {
 			ViewHandler.getInstance().switchView(Fussnoten.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK)) {
-			ViewHandler.getInstance().switchView(Geschmäcker.class);
+			ViewHandler.getInstance().switchView(GeschmackEinst.class);
 		}
 		if (selectedItem.getText().equals(IConstants.MENU_REZEPTART)) {
 			ViewHandler.getInstance().switchView(Rezeptarten.class);

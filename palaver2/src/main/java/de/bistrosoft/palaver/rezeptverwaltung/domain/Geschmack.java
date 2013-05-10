@@ -13,7 +13,7 @@ public class Geschmack implements java.io.Serializable {
 	private String name;
 
 	public Geschmack() {
-
+		super();
 	}
 
 	public Geschmack(String name) {
