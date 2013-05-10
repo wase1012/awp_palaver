@@ -10,7 +10,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.gui.view.Fussnoten;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
-import de.bistrosoft.palaver.gui.view.Geschmäcker;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
