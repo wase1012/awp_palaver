@@ -16,6 +16,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -40,22 +41,22 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
-	
+
 	private TextField name = new TextField("Geschmack");
-	
+
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
-	
+
 	private String nameInput;
 
-	
-	
-	
 	private FilterTable table;
 
 	public GeschmackEinst() {
 		super();
 		table = new FilterTable();
+		
+
+		
 		name.setWidth("100%");
 //		table.setSizeFull();
 		table.setSelectable(true);
@@ -86,7 +87,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 
 		name.addValueChangeListener(new ValueChangeListener() {
-
 			public void valueChange(final ValueChangeEvent event) {
 				final String valueString = String.valueOf(event.getProperty()
 						.getValue());
@@ -96,7 +96,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		});
 		
 		speichern.addClickListener(new ClickListener() {
-			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Geschmack geschmack = new Geschmack();
@@ -114,6 +113,22 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			notification.show(Page.getCurrent());
 		
 		}
+		});
+		
+
+		verwerfen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				felderLeeren();
+
+				Notification.show("Rezept wurde verworfen",
+						Type.TRAY_NOTIFICATION);
+			}
+
+			private void felderLeeren() {
+				name.setValue("");
+				
+			}
 		});
 
 		BeanItemContainer<Geschmack> container;
@@ -134,6 +149,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	@Override
 	public void getViewParam(ViewData data) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
