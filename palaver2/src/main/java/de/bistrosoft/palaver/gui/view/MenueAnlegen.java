@@ -167,7 +167,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 						.getValue());
                
 				hauptgerichtInput = valueString;
-				y = "1";
+				
 			}
 		});
 		beilage1.addValueChangeListener(new ValueChangeListener() {
@@ -234,9 +234,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 				MenueHasFussnote fussnote = new MenueHasFussnote();
 
 				
-				if( y != "1") {
-					System.out.println("hallo");
-				}
+				
 				
 				
 				menue.setName(menuenameInput);
@@ -261,10 +259,6 @@ public class MenueAnlegen extends VerticalLayout implements View {
 				
 /// Liste der Fussnoten
 				
-				
-				
-				
-				
 				Menue menue1 = null;
 				try {
 					menue1 = Menueverwaltung.getInstance().getMenueByName(menuenameInput);
@@ -274,6 +268,9 @@ public class MenueAnlegen extends VerticalLayout implements View {
 				}
 				
 				
+				
+
+			
 				
 				List<String> FussnoteId = Arrays.asList(valueString.substring(1,
 						valueString.length() - 1).split("\\s*,\\s*"));
@@ -325,9 +322,10 @@ public class MenueAnlegen extends VerticalLayout implements View {
 				}
 				
 				
+				
 ///////////////	
 //Hauptgericht
-				
+				if (hauptgericht.getValue() != null) {
 				
 				Rezept rezept = new Rezept();
 				
@@ -348,14 +346,16 @@ public class MenueAnlegen extends VerticalLayout implements View {
 						e.printStackTrace();
 					}		
 				
+				}
 				
-				
-				
+				else {
+					
+				}
 ////////	
 				
 ///B1    
 				
-				
+				if (beilage1.getValue() != null) {
 				
 Rezept rezept1 = new Rezept();
 				
@@ -376,13 +376,13 @@ Rezept rezept1 = new Rezept();
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				
+				}
 				 
-//				 else {
-//					 System.out.println("hallo");
-//				 }
+				 else {
+					 
+				 }
 //B2
-				
+				if (beilage2.getValue() != null) {	
 Rezept rezept2 = new Rezept();
 				
 				try {
@@ -402,6 +402,10 @@ Rezept rezept2 = new Rezept();
 						e.printStackTrace();
 					}
 				
+				}
+				else {
+					
+				}
 				
 				
 				
@@ -410,10 +414,6 @@ Rezept rezept2 = new Rezept();
 				
 				
 				
-				
-				System.out.println(hauptgerichtInput);
-				System.out.println(rezept);
-				System.out.println(y);
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
