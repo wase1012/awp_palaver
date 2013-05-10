@@ -39,6 +39,7 @@ import de.hska.awp.palaver2.util.CustomDoubleValidator;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -48,28 +49,32 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings({ "serial", "deprecation" })
 public class ArtikelErstellen extends VerticalLayout implements View
 {
-	private VerticalLayout	box = new VerticalLayout();
+	private VerticalLayout		box = new VerticalLayout();
+	private HorizontalLayout 	control = new HorizontalLayout();
 	
-	private TextField		name = new TextField("Name");
-	private TextField		preis = new TextField("Preis");
-	private TextField		artnr = new TextField("Artikelnummer");
-	private TextField		durchschnitt = new TextField("Durchschnitt");
-	private TextField		bestellung = new TextField("Bestellgröße");
+	private TextField			name = new TextField("Name");
+	private TextField			preis = new TextField("Preis");
+	private TextField			artnr = new TextField("Artikelnummer");
+	private TextField			durchschnitt = new TextField("Durchschnitt");
+	private TextField			bestellung = new TextField("Bestellgröße");
 	
-	private ComboBox		lieferant = new ComboBox("Lieferant");
-	private ComboBox		mengeneinheit = new ComboBox("Mengeneinheit");
-	private ComboBox		kategorie = new ComboBox("Kategorie");
+	private ComboBox			lieferant = new ComboBox("Lieferant");
+	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
+	private ComboBox			kategorie = new ComboBox("Kategorie");
 	
-	private CheckBox		bio = new CheckBox("Bio");
-	private CheckBox		standard = new CheckBox("Standard");
-	private CheckBox		grundbedarf = new CheckBox("Grundbedarf");
-	private CheckBox		lebensmittel = new CheckBox("Lebensmittel");
+	private CheckBox			bio = new CheckBox("Bio");
+	private CheckBox			standard = new CheckBox("Standard");
+	private CheckBox			grundbedarf = new CheckBox("Grundbedarf");
+	private CheckBox			lebensmittel = new CheckBox("Lebensmittel");
 	
-	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
-	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
-	private Button			addLieferant = new Button(IConstants.BUTTON_NEW);
-	private Button			addMengeneinheit = new Button(IConstants.BUTTON_NEW);
-	private Button			addKategorie = new Button(IConstants.BUTTON_NEW);
+	private Button				speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button				verwerfen = new Button(IConstants.BUTTON_DISCARD);
+	private Button				addLieferant = new Button(IConstants.BUTTON_NEW);
+	private Button				addMengeneinheit = new Button(IConstants.BUTTON_NEW);
+	private Button				addKategorie = new Button(IConstants.BUTTON_NEW);
+	private Button				update = new Button("Update");
+	
+	private Artikel				artikel;
 	
 	/**
 	 * 
@@ -82,7 +87,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		name.setWidth("100%");
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Name zu lang oder zu kurz: {0}",2,30,false));
+		name.addValidator(new StringLengthValidator("Name zu lang oder zu kurz: {0}",2,50,false));
 		
 		preis.setWidth("100%");
 		preis.setImmediate(true);
@@ -173,7 +178,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		box.addComponent(bestellung);
 		
-		HorizontalLayout control = new HorizontalLayout();
+		
 //		control.setWidth("100%");
 		control.setSpacing(true);
 		box.addComponent(control);
@@ -317,12 +322,90 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
-	 */
 	@Override
 	public void getViewParam(ViewData data)
 	{
+		artikel = (Artikel) ((ViewDataObject<?>)data).getData();
+		
+		control.replaceComponent(speichern, update);
+		update.addClickListener(new ClickListener()
+		{	
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				artikel.setArtikelnr(artnr.getValue());
+				artikel.setBestellgroesse(Double.parseDouble(bestellung.getValue()));
+				artikel.setBio(bio.getValue());
+				artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer.parseInt(durchschnitt.getValue()) : 0);
+				artikel.setGrundbedarf(grundbedarf.getValue());
+				artikel.setKategorie((Kategorie) kategorie.getValue());
+				artikel.setLebensmittel(lebensmittel.getValue());
+				artikel.setLieferant((Lieferant) lieferant.getValue());
+				artikel.setMengeneinheit((Mengeneinheit) mengeneinheit.getValue());
+				artikel.setName(name.getValue());
+				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',', '.')));
+				artikel.setStandard(standard.getValue());
+				
+				String notification = "Artikel gespeichert";
+				
+				final Window dialog = new Window();
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
+				
+				Label message = new Label(notification);
+				
+				Button okButton = new Button("OK");
+				
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+				
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+				
+				UI.getCurrent().addWindow(dialog);
+				
+				okButton.addClickListener(new ClickListener()
+				{	
+					@Override
+					public void buttonClick(ClickEvent event)
+					{
+						UI.getCurrent().removeWindow(dialog);
+						ViewHandler.getInstance().returnToDefault();
+					}
+				});
+				
+				try
+				{
+					Artikelverwaltung.getInstance().updateArtikel(artikel);
+				} 
+				catch (ConnectException | DAOException e)
+				{
+					e.printStackTrace();
+					notification = e.toString();
+				}
+			}
+		});
+		
+		name.setValue(artikel.getName());
+		artnr.setValue(artikel.getArtikelnr());
+		preis.setValue(artikel.getPreis() + "");
+		lieferant.select(artikel.getLieferant());
+		mengeneinheit.select(artikel.getMengeneinheit());
+		kategorie.select(artikel.getKategorie());
+		bestellung.setValue(artikel.getBestellgroesse() + "");
+		standard.setValue(artikel.isStandard());
+		grundbedarf.setValue(artikel.isGrundbedarf());
+		bio.setValue(artikel.isBio());
+		lebensmittel.setValue(artikel.isLebensmittel());
+		durchschnitt.setValue(artikel.getDurchschnitt() + "");
 	}
 }
 

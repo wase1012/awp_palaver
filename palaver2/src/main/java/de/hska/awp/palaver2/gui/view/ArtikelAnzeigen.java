@@ -8,7 +8,11 @@ import java.sql.SQLException;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -23,6 +27,8 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
@@ -37,6 +43,8 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 	private FilterTable		table;
 	
 	private Button			showFilter;
+	
+	private Artikel			artikel;
 	
 	public ArtikelAnzeigen()
 	{
@@ -55,6 +63,27 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		table.setFilterBarVisible(false);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
+		table.setSelectable(true);
+		
+		table.addValueChangeListener(new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if(event.getProperty().getValue() != null) {
+					artikel = (Artikel) event.getProperty().getValue();
+				}
+			}
+		});
+		
+		table.addItemClickListener(new ItemClickListener() {	
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if(event.isDoubleClick()){
+					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+				}
+				
+			}
+		});
 		
 		BeanItemContainer<Artikel> container;
 		try

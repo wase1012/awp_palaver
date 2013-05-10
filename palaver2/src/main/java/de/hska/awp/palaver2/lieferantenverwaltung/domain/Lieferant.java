@@ -172,4 +172,114 @@ public class Lieferant implements java.io.Serializable {
 		return name;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((bezeichnung == null) ? 0 : bezeichnung.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((kundennummer == null) ? 0 : kundennummer.hashCode());
+		result = prime
+				* result
+				+ ((mehrereliefertermine == null) ? 0 : mehrereliefertermine
+						.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((notiz == null) ? 0 : notiz.hashCode());
+		result = prime * result + ((ort == null) ? 0 : ort.hashCode());
+		result = prime * result + ((plz == null) ? 0 : plz.hashCode());
+		result = prime * result + ((strasse == null) ? 0 : strasse.hashCode());
+		result = prime * result + ((telefon == null) ? 0 : telefon.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Lieferant other = (Lieferant) obj;
+		if (bezeichnung == null)
+		{
+			if (other.bezeichnung != null)
+				return false;
+		} else if (!bezeichnung.equals(other.bezeichnung))
+			return false;
+		if (email == null)
+		{
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fax == null)
+		{
+			if (other.fax != null)
+				return false;
+		} else if (!fax.equals(other.fax))
+			return false;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (kundennummer == null)
+		{
+			if (other.kundennummer != null)
+				return false;
+		} else if (!kundennummer.equals(other.kundennummer))
+			return false;
+		if (mehrereliefertermine == null)
+		{
+			if (other.mehrereliefertermine != null)
+				return false;
+		} else if (!mehrereliefertermine.equals(other.mehrereliefertermine))
+			return false;
+		if (name == null)
+		{
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (notiz == null)
+		{
+			if (other.notiz != null)
+				return false;
+		} else if (!notiz.equals(other.notiz))
+			return false;
+		if (ort == null)
+		{
+			if (other.ort != null)
+				return false;
+		} else if (!ort.equals(other.ort))
+			return false;
+		if (plz == null)
+		{
+			if (other.plz != null)
+				return false;
+		} else if (!plz.equals(other.plz))
+			return false;
+		if (strasse == null)
+		{
+			if (other.strasse != null)
+				return false;
+		} else if (!strasse.equals(other.strasse))
+			return false;
+		if (telefon == null)
+		{
+			if (other.telefon != null)
+				return false;
+		} else if (!telefon.equals(other.telefon))
+			return false;
+		return true;
+	}
+
 }
