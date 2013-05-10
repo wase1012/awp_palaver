@@ -36,6 +36,7 @@ import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 public class MenueplanGridLayout extends CustomComponent{
 
     // Konstanten
+	MenueplanGridLayout instance=this;
 	private static final int ROWS = 8;
     private static final int COLUMNS = 6;
     public DDGridLayout layout = null;
@@ -188,7 +189,7 @@ public class MenueplanGridLayout extends CustomComponent{
 							for (int row = 0; row < ROWS; row++) {
 						        for (int col = 0; col < COLUMNS; col++) {
 						        	if(tmp.equals(layout.getComponent(col, row))) {
-						        		WinSelectMenue window = new WinSelectMenue(layout, tmp, row, col);
+						        		WinSelectMenue window = new WinSelectMenue(instance, tmp, row, col);
 						        		UI.getCurrent().addWindow(window);
 						        		window.setModal(true);
 						        		window.setWidth("50%");
@@ -259,5 +260,23 @@ public class MenueplanGridLayout extends CustomComponent{
 	        	}
 	        }
         }
+    }
+    
+    public void pruefeRegeln(MenueComponent mc){
+    	System.out.println("1");
+    	//Lade Regeln
+    	List<MenueplanRegel> regeln=MenueplanRegel.getTestRegeln();
+    	//gehe Regeln durch und Prüfe falls Regel passt
+    	for(MenueplanRegel r :regeln){
+    		System.out.println("2");
+    		if(r.rows.indexOf(mc.row)>=0 || r.rows.indexOf(-1)>=0){
+    			System.out.println("3");
+    			if(r.columns.indexOf(mc.col)>=0 || r.columns.indexOf(-1)>=0){
+    				System.out.println("Prüfe");
+    				r.check(mc);
+    			}
+    		}
+    		
+    	}
     }
 }

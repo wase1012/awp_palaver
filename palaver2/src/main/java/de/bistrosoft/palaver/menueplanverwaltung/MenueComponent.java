@@ -29,6 +29,7 @@ public class MenueComponent extends CustomComponent{
 	private Component comp;
 	public int row;
 	public int col;
+	public MenueplanGridLayout menueplan;
 	private DDGridLayout menueGrid;
 	private Button btn = new Button();
 	private Button btDelete = new Button("Löschen");
@@ -77,11 +78,12 @@ public class MenueComponent extends CustomComponent{
 	}
 
 	// Konstruktor für Menükomponente 
-	public MenueComponent(Menue menue, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
+	public MenueComponent(Menue menue, MenueplanGridLayout nMenueplan, int nRow, int nCol, Boolean isChanged){
 		this.isChanged = isChanged;
 		col = nCol;
 		row = nRow;
-		menueGrid = nMenueGrid;
+		this.menueplan=nMenueplan;
+		menueGrid = menueplan.layout;
 		comp = this;
 		this.setMenue(menue);
 		
@@ -122,7 +124,7 @@ public class MenueComponent extends CustomComponent{
         	// Click-Listener für ADD_Buttons
 			@Override
 			public void buttonClick(ClickEvent event) {
-	       		WinSelectMenue window = new WinSelectMenue(menueGrid, btn, row, col);
+	       		WinSelectMenue window = new WinSelectMenue(menueplan, btn, row, col);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
         		window.setWidth("50%");

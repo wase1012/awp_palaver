@@ -46,13 +46,15 @@ public class WinSelectMenue extends Window {
 	Component destComp;
 	int destRow;
 	int destCol;
+	MenueplanGridLayout menueplan;
 	DDGridLayout menueGrid;
 
 	BeanItemContainer<Menue>  menueContainer;
 
 	// Konstruktor 
-	public WinSelectMenue(DDGridLayout nMenueGrid,Component nDestComp,int nDestRow, int nDestCol) {
-		menueGrid = nMenueGrid;
+	public WinSelectMenue(MenueplanGridLayout nMenuePlan,Component nDestComp,int nDestRow, int nDestCol) {
+		menueplan = nMenuePlan;
+		menueGrid=menueplan.layout;
 		destComp=nDestComp;
 		destCol = nDestCol;
 		destRow = nDestRow;
@@ -214,9 +216,10 @@ public class WinSelectMenue extends Window {
 				menueGrid.removeComponent(destComp);
 				
 				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
-				MenueComponent menueComp = new MenueComponent(menue, menueGrid, sourceRow, sourceColumn,true);
+				MenueComponent menueComp = new MenueComponent(menue, menueplan, sourceRow, sourceColumn,true);
 				menueGrid.addComponent(menueComp, sourceColumn, sourceRow);
 				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
+				menueplan.pruefeRegeln(menueComp);
 				
 				// Window schließen
 				subwindow.close();
