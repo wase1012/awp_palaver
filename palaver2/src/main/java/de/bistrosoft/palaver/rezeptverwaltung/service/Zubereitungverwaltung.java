@@ -51,7 +51,7 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 
 	public void createZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
-		dao.createZubereitung(zubereitung);
+		super.createZubereitung(zubereitung);
 	}
 
 	public void updateZubereitung(Zubereitung zubereitung)
