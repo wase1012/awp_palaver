@@ -23,27 +23,29 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
 /**
- * @author Michael Marschall
- * Jan Lauinger - Geschmack hinzufügen
+ * @author Michael Marschall 
+ * Jan Lauinger - Rezeptart hinzufügen
  * 
  */
-public class GeschmackEinst extends VerticalLayout implements View {
+public class RezeptartEinst extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = 2474121007841510011L;
 
 	private VerticalLayout box = new VerticalLayout();
 	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack anlegen</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
 
-	private TextField name = new TextField("Geschmack");
+	private TextField name = new TextField("Rezeptart");
 
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
@@ -51,11 +53,11 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private String nameInput;
 	private FilterTable table;
 
-	public GeschmackEinst() {
+	public RezeptartEinst() {
 		super();
 		table = new FilterTable();
 		name.setWidth("100%");
-//		table.setSizeFull();
+		// table.setSizeFull();
 		table.setSelectable(true);
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
@@ -63,12 +65,12 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
-		
+
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		box.addComponent(ueberschrift);
 		box.addComponent(name);
-		
+
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
 		box.addComponent(control);
@@ -77,7 +79,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
 		name.setMaxLength(150);
-		
+
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
@@ -91,47 +93,48 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				nameInput = valueString;
 			}
 		});
-		
+
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Geschmack geschmack = new Geschmack();
 				geschmack.setName(nameInput);
-			
-			try {
-				Geschmackverwaltung.getInstance().createGeschmack(geschmack);
-				
-			} catch (ConnectException | DAOException | SQLException e) {
-				e.printStackTrace();
-			}
 
-			Notification notification = new Notification("Geschmack wurde gespeichert!");
-			notification.setDelayMsec(500);
-			notification.show(Page.getCurrent());
-		
-		}
+				try {
+					Geschmackverwaltung.getInstance()
+							.createGeschmack(geschmack);
+
+				} catch (ConnectException | DAOException | SQLException e) {
+					e.printStackTrace();
+				}
+
+				Notification notification = new Notification(
+						"Rezeptart wurde gespeichert!");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+
+			}
 		});
-		
 
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				felderLeeren();
 
-				Notification.show("Geschmack wurde verworfen",
+				Notification.show("Rezeptart wurde verworfen",
 						Type.TRAY_NOTIFICATION);
 			}
 
 			private void felderLeeren() {
 				name.setValue("");
-				
+
 			}
 		});
 
-		BeanItemContainer<Geschmack> container;
+		BeanItemContainer<Rezeptart> container;
 		try {
-			container = new BeanItemContainer<Geschmack>(Geschmack.class,
-					Geschmackverwaltung.getInstance().getAllGeschmack());
+			container = new BeanItemContainer<Rezeptart>(Rezeptart.class,
+					Rezeptartverwaltung.getInstance().getAllRezeptart());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });

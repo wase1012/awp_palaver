@@ -14,7 +14,7 @@ import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.Rezeptarten;
+import de.bistrosoft.palaver.gui.view.RezeptartEinst;
 import de.bistrosoft.palaver.gui.view.Zubereitungen;
 import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.util.IConstants;
@@ -134,7 +134,7 @@ public class MainLayout extends VerticalLayout implements Command {
 			ViewHandler.getInstance().switchView(GeschmackEinst.class);
 			break;
 		case IConstants.MENU_REZEPTART:
-			ViewHandler.getInstance().switchView(Rezeptarten.class);
+			ViewHandler.getInstance().switchView(RezeptartEinst.class);
 			break;
 		case IConstants.MENU_ZUBEREITUNG:
 			ViewHandler.getInstance().switchView(Zubereitungen.class);

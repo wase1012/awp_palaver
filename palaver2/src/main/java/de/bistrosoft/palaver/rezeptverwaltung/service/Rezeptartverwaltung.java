@@ -51,7 +51,7 @@ public class Rezeptartverwaltung extends RezeptartDAO {
 
 	public void createRezeptart(Rezeptart rezeptart) throws ConnectException,
 			DAOException, SQLException {
-		dao.createRezeptart(rezeptart);
+		super.createRezeptart(rezeptart);
 	}
 
 	public void updateRezeptart(Rezeptart rezeptart) throws ConnectException,
