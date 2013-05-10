@@ -51,7 +51,7 @@ public class Geschmackverwaltung extends GeschmackDAO {
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		dao.createGeschmack(geschmack);
+		super.createGeschmack(geschmack);
 	}
 
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,

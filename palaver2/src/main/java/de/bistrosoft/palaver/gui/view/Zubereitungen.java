@@ -11,6 +11,8 @@ import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.bistrosoft.palaver.util.View;
+import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
@@ -18,7 +20,7 @@ import de.bistrosoft.palaver.util.customFilterDecorator;
  * @author Michael Marschall
  *
  */
-public class Zubereitungen extends VerticalLayout{
+public class Zubereitungen extends VerticalLayout implements View{
 
 	private static final long serialVersionUID = 2474121007841510011L;
 	
@@ -47,4 +49,10 @@ public class Zubereitungen extends VerticalLayout{
 		
 	
 		}
+
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
+		
+	}
 }

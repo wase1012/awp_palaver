@@ -1,109 +1,104 @@
-
- 
 package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import com.vaadin.client.ui.Action;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.lieferantenverwaltung.domain.Ansprechpartner;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.View;
+import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewDataObject;
 
+public class RezeptAnzeigen extends VerticalLayout implements View {
 
-public class RezeptAnzeigen extends VerticalLayout{
-	
-	//Layouts
+	private static final long serialVersionUID = 2001790425726326012L;
+	private Rezept rezept;
+//	private List<RezeptHasArtikel>rha=new List<RezeptHasArtikel>();
+
+	// Layouts
 	private HorizontalLayout oben = new HorizontalLayout();
 	private HorizontalLayout unten = new HorizontalLayout();
-	private VerticalLayout	links = new VerticalLayout();
-	private VerticalLayout	rechts = new VerticalLayout();
-	private VerticalLayout	mitte = new VerticalLayout();
+	private VerticalLayout links = new VerticalLayout();
+	private VerticalLayout rechts = new VerticalLayout();
+	private VerticalLayout mitte = new VerticalLayout();
 	private VerticalLayout verticalunten = new VerticalLayout();
-	//Ueberschriften
-	private Label uBezeichnung = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Bezeichnung</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uRezeptersteller = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptersteller</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uPortion = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Portion</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uBelegung = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Resourcenbelegung</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uArt = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uGeschmack = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uKommentar = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uFussnoten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnoten</font><b></pre>", Label.CONTENT_XHTML);
-	private Label uZutaten = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>", Label.CONTENT_XHTML);
-	 //Textfelder
-	private TextField bezeichnung = new TextField(); 
-	private TextField rezeptersteller = new TextField();  
-	private TextField portion = new TextField();	
+
+	// Ueberschriften
+	private Label uBezeichnung = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Bezeichnung</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uRezeptersteller = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Koch</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uPortion = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Portion</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uArt = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uGeschmack = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uKommentar = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uZutaten = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>",
+			Label.CONTENT_XHTML);
+
+	// Textfelder
+	private TextField bezeichnung = new TextField();
+	private TextField rezeptersteller = new TextField();
+	private TextField portion = new TextField();
 	private TextField art = new TextField();
 	private TextField geschmack = new TextField();
-	//Checkboxen
-	private CheckBox herd = new CheckBox("Herd");
-	private CheckBox konvektomat = new CheckBox("Konvektomat");
-	//Tabellen
-	private Table fussnoten = new Table();
+
+	// Tabellen
 	private Table zutaten = new Table();
-	//Textarea
+
+	// Textarea
 	private TextArea kommentar = new TextArea();
-	//Button
+
+	// Button
 	private Button aendern = new Button("Rezept bearbeiten");
-	
-	public RezeptAnzeigen()
-	{
+
+	public RezeptAnzeigen() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
 		this.addComponent(oben);
 		this.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
-		
+
 		HorizontalLayout subBox = new HorizontalLayout();
 		HorizontalLayout control = new HorizontalLayout();
-		
-		
-		
-			
-		
-		//Eigenschaften anpassen
-		bezeichnung.setWidth("100%");	
-		bezeichnung.setValue("Lasangne");
+
+		// Eigenschaften anpassen
+		bezeichnung.setWidth("100%");
 		bezeichnung.setReadOnly(true);
 		rezeptersteller.setWidth("100%");
-		rezeptersteller.setValue("Koch1");
-		rezeptersteller.setReadOnly(true);		
+		rezeptersteller.setReadOnly(true);
 		kommentar.setWidth("100%");
-		kommentar.setValue("es wird sowohl der Herd als auch der Konvektomat benoetigt");
-		kommentar.setReadOnly(true);		
+		kommentar.setReadOnly(true);
 		portion.setWidth("100%");
-		portion.setValue("30");
-		portion.setReadOnly(true);		
+		portion.setReadOnly(true);
 		geschmack.setWidth("100%");
-		geschmack.setValue("klassisch");
-		geschmack.setReadOnly(true);		
+		geschmack.setReadOnly(true);
 		art.setWidth("100%");
-		art.setValue("Hauptgericht");
-		art.setReadOnly(true);		
-		herd.setWidth("100%");
-		herd.setValue(true);
-		herd.setReadOnly(true);		
-		konvektomat.setWidth("100%");
-		konvektomat.setValue(true);
-		konvektomat.setReadOnly(true);		
-		fussnoten.setSizeFull();		
-		fussnoten.setImmediate(true);
-		
-		
+		art.setReadOnly(true);
 		oben.setSpacing(true);
 		links.setWidth("300px");
 		links.setSpacing(true);
@@ -111,14 +106,14 @@ public class RezeptAnzeigen extends VerticalLayout{
 		mitte.setSpacing(true);
 		rechts.setWidth("300px");
 		rechts.setSpacing(true);
-		unten.setWidth("100%");	
+		unten.setWidth("100%");
 		unten.setSpacing(true);
 		unten.setHeight(100.0f, Unit.PERCENTAGE);
 		subBox.setWidth("100%");
 		subBox.setImmediate(true);
 		control.setSpacing(true);
-		
-		//Komponenten zufuegen
+
+		// Komponenten zufuegen
 		oben.addComponent(links);
 		oben.addComponent(mitte);
 		oben.addComponent(rechts);
@@ -132,53 +127,75 @@ public class RezeptAnzeigen extends VerticalLayout{
 		links.addComponent(geschmack);
 		links.addComponent(uArt);
 		links.addComponent(art);
-		links.addComponent(uBelegung);
 		links.addComponent(subBox);
-		subBox.addComponent(herd);
-		subBox.addComponent(konvektomat);
 		links.addComponent(control);
 		links.setComponentAlignment(control, Alignment.MIDDLE_LEFT);
 		control.addComponent(aendern);
-	    mitte.addComponent(uFussnoten);
-		mitte.addComponent(fussnoten);
 		mitte.addComponent(unten);
 		rechts.addComponent(uZutaten);
-	    rechts.addComponent(zutaten);
-		
-		 fussnoten.addContainerProperty("Bezeichnug", String.class, null);
-		 fussnoten.addItem(new Object[] {
-				   "Rindfleisch"}, new Integer(1));
-		 fussnoten.addItem(new Object[] {
-				   "Tomaten"}, new Integer(2));
-		 
-		
-		
-			
-		
-		
-		
-		
-		
-		
-		
-	   zutaten.addContainerProperty("Bezeichnug", String.class, null);
-	   zutaten.addContainerProperty("Menge", Integer.class, null);
-	   zutaten.addContainerProperty("Mengeneinheit", String.class, null);
-	   zutaten.addContainerProperty("Typ", String.class, null);
+		rechts.addComponent(zutaten);
 
-	   zutaten.addItem(new Object[] {
-		   "Hackfleisch", 3500, "g", "Hauptzutat" }, new Integer(1));
-	   zutaten.addItem(new Object[] {
-			   "Tomaten", 10, "st", "Hauptzutat" }, new Integer(2));
-	   zutaten.addItem(new Object[] {
-			   "Käse", 1000, "g", "Hauptzutat" }, new Integer(3));
-	   zutaten.addItem(new Object[] {
-			   "Salz", 3, "g", "Standard" }, new Integer(4));
-	   
-	   
-	   unten.addComponent(verticalunten);
-	   verticalunten.addComponent(uKommentar);
-	   verticalunten.addComponent(kommentar);
+		zutaten.addContainerProperty("Bezeichnug", String.class, null);
+		zutaten.addContainerProperty("Menge", Integer.class, null);
+		zutaten.addContainerProperty("Mengeneinheit", String.class, null);
+		zutaten.addContainerProperty("Typ", String.class, null);
+
+		unten.addComponent(verticalunten);
+		verticalunten.addComponent(uKommentar);
+		verticalunten.addComponent(kommentar);
 	}
+
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+//	@Override
+//	public void getViewParam(ViewData data)
+//	{
+//		rezept = (Rezept) ((ViewDataObject<?>)data).getData();
+//		if(rezept.getId() == null) {
+//			try {
+//				rezept = Rezeptverwaltung.getInstance().getRezeptById();
+//			} catch (ConnectException | DAOException | SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//			
+//		bezeichnung.setValue(rezept.getName());
+//		bezeichnung.setEnabled(false);
+//			
+//		geschmack.setValue(rezept.getGeschmack().getName());
+//		geschmack.setEnabled(false);
+//			
+//		kommentar.setValue(rezept.getKommentar());
+//		kommentar.setEnabled(false);
+//			
+//		rezeptersteller.setValue(rezept.getMitarbeiter().getName());
+//		rezeptersteller.setEnabled(false);
+//					
+//		portion.setValue(Integer.parseInt. (rezept.getPortion()));
+//		portion.setEnabled(false);
+//			
+//		art.setValue(rezept.getRezeptart().getName());
+//		art.setEnabled(false);
+//					
+//		BeanItemContainer<RezeptHasArtikel> container;
+
+//		try {
+//			container = new BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, Rezeptverwaltung.getInstance().getAllArtikelByRezeptId());
+//			ansprechpartner.setContainerDataSource(container);
+//			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
+//			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
+//			ansprechpartner.setColumnCollapsingAllowed(true);
+//			ansprechpartner.setColumnCollapsed(handyAnspr, false);
+//			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }

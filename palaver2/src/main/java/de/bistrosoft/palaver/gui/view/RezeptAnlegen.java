@@ -50,6 +50,8 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.View;
+import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
@@ -58,7 +60,7 @@ import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
  * 
  */
 @SuppressWarnings("serial")
-public class RezeptAnlegen extends VerticalLayout {
+public class RezeptAnlegen extends VerticalLayout implements View {
 
 	private VerticalLayout box = new VerticalLayout();
 
@@ -387,5 +389,12 @@ public class RezeptAnlegen extends VerticalLayout {
 //	public void addRezeptHasArtikel(RezeptHasArtikel artikel, Table tbArtikel) {
 //		// tbArtikel.getContainerDataSource()
 //	}
+	}
+
+
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
+		
 	}
 }

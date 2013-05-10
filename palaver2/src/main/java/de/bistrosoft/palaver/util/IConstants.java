@@ -1,4 +1,5 @@
 /**
+ /**
  * Michael Marschall
  * 18.04.2013 21:28:55
  */
@@ -31,4 +32,7 @@ public interface IConstants {
 	public final String MENU_GESCHMACK = "Geschmäcker";
 	public final String MENU_REZEPTART = "Rezeptarten";
 	public final String MENU_ZUBEREITUNG = "Zubereitungen";
+
+	public final String BUTTON_SHOW_FILTER = "Filter anzeigen";
+	public final String BUTTON_HIDE_FILTER = "Filter ausblenden";
 }

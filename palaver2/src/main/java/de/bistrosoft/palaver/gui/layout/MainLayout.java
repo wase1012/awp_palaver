@@ -1,38 +1,28 @@
-/**
- * Sebastian Walz
- */
 package de.bistrosoft.palaver.gui.layout;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.event.MouseEvents.ClickListener;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.gui.view.ArtikelErstellen;
 import de.bistrosoft.palaver.gui.view.Fussnoten;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
-import de.bistrosoft.palaver.gui.view.LieferantErstellen;
-import de.bistrosoft.palaver.gui.view.Menueplan;
+import de.bistrosoft.palaver.gui.view.Geschmäcker;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.RezeptSuchen;
 import de.bistrosoft.palaver.gui.view.Rezeptarten;
 import de.bistrosoft.palaver.gui.view.Zubereitungen;
+import de.bistrosoft.palaver.gui.view.Menueplan;
 import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.ViewHandler;
 
 /**
- * @author Sebastian
+ * @author Jan Lauinger
  * 
  */
 @SuppressWarnings("serial")
@@ -125,37 +115,34 @@ public class MainLayout extends VerticalLayout implements Command {
 
 	@Override
 	public void menuSelected(MenuItem selectedItem) {
-		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU)) {
-			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
-			ViewHandler.getInstance().switchView(LieferantErstellen.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU)) {
-			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN)) {
+		switch (selectedItem.getText()) {
+		case IConstants.MENU_REZEPT_ANZEIGEN:
 			ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_AKTUELL)) {
+			break;
+		case IConstants.MENU_REZEPT_NEU:
+			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+			break;
+		case IConstants.MENU_MENUPLAN_AKTUELL:
 			ViewHandler.getInstance().switchView(Menueplan.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE)) {
+			break;
+		case IConstants.MENU_MENUPLAN_HISTORIE:
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE)) {
+			break;
+		case IConstants.MENU_FUSSNOTE:
 			ViewHandler.getInstance().switchView(Fussnoten.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK)) {
+			break;
+		case IConstants.MENU_GESCHMACK:
 			ViewHandler.getInstance().switchView(GeschmackEinst.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_REZEPTART)) {
+			break;
+		case IConstants.MENU_REZEPTART:
 			ViewHandler.getInstance().switchView(Rezeptarten.class);
-		}
-		if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG)) {
+			break;
+		case IConstants.MENU_ZUBEREITUNG:
 			ViewHandler.getInstance().switchView(Zubereitungen.class);
+			break;
+		default:
+			ViewHandler.getInstance().switchView(DefaultView.class);
 		}
-
 	}
 
 }

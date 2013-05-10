@@ -23,11 +23,13 @@ import com.vaadin.ui.Label;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
+import de.bistrosoft.palaver.util.View;
+import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.Week;
 
 
 @SuppressWarnings("serial")
-public class Menueplan extends VerticalLayout{
+public class Menueplan extends VerticalLayout implements View{
 
 	// Variablen und Komponenten
 	private VerticalLayout	box = new VerticalLayout();
@@ -200,6 +202,12 @@ public class Menueplan extends VerticalLayout{
 	}
 	
 	public static void switchMenueplan(){
+		
+	}
+
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
 		
 	}
 }
