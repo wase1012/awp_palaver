@@ -1,9 +1,12 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
+import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import static javax.persistence.GenerationType.IDENTITY;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class Menue {
@@ -27,10 +30,18 @@ public class Menue {
 	public Menue(String name) {
 		this.name=name;
 	}
+	
+	public Menue(String name, Mitarbeiter koch) {
+		this.name=name;
+		this.koch=koch;
+	}
 
 	public Menue() {
 	}
 
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return id;
 	}
@@ -51,6 +62,12 @@ public class Menue {
 	}
 	public void setKoch(Mitarbeiter koch) {
 		this.koch = koch;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return ""+id +"";
 	}
 	
 }

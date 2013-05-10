@@ -11,6 +11,8 @@ import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
 import de.bistrosoft.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.bistrosoft.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.bistrosoft.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 
@@ -45,7 +47,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
 	private final static String GET_ARTIKEL_BY_REZEPT = "SELECT * FROM rezept_has_artikel WHERE rezept_fk={0}";
 	private final static String CREATE_REZEPT_HAS_ARTIKEL = "INSERT INTO rezept_has_artikel (REZEPT_FK, ARTIKEL_FK, MENGE, EINHEIT) VALUES({0},{1},{2},{3})";
-	
+	private final static String GET_REZEPTE_BY_GESCHMACK = "SELECT * FROM rezept WHERE geschmack_fk = {0};";
 	
 	public RezeptDAO() {
 		super();
@@ -108,20 +110,87 @@ public class RezeptDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	public List<Rezept> getAllRezepteM() throws ConnectException, DAOException,
+	SQLException {
+List<Rezept> list = new ArrayList<Rezept>();
+ResultSet set = get(GET_ALL_REZEPTS);
+;
+while (set.next()) {
+	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance().getRezeptartById(
+			set.getLong("rezeptart_fk")), GeschmackDAO.getInstance()
+			.getGeschmackById(set.getLong("geschmack_fk")),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(
+					set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null, set.getInt("portion")
 
-	public List<Rezept> getRezeptById(int rezeptID) throws ConnectException,
-			DAOException, SQLException {
-		List<Rezept> rezept = new ArrayList<Rezept>();
-		ResultSet set = get(GET_REZEPT_BY_ID);
-		while (set.next()) {
-			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
-					set.getLong("id")), GeschmackDAO.getInstance()
-					.getGeschmackById(set.getLong("id")), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(set.getLong("id")), set
-					.getString("name"), null, set.getInt("portion")));
-		}
-		return rezept;
+	));
+}
+return list;
+}
+
+//	public List<Rezept> getRezeptById(long rezeptID) throws ConnectException,
+//			DAOException, SQLException {
+//		List<Rezept> rezept = new ArrayList<Rezept>();
+//		ResultSet set = get(GET_REZEPT_BY_ID);
+//		while (set.next()) {
+//			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
+//					set.getLong("rezeptart")), GeschmackDAO.getInstance()
+//					.getGeschmackById(set.getLong("geschmack")), MitarbeiterDAO
+//					.getInstance().getMitarbeiterById(set.getLong("mitarbeiter")), set
+//					.getString("name"), null, set.getInt("portion")));
+//		}
+//		return rezept;
+//	}
+	
+	public Rezept getRezeptById(Long id) throws ConnectException,
+	DAOException, SQLException {
+Rezept result = new Rezept();
+ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_ID, id));
+
+while (set.next()) {
+	result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance().getRezeptartById(
+			set.getLong("rezeptart")), GeschmackDAO.getInstance()
+			.getGeschmackById(set.getLong("geschmack")), MitarbeiterDAO
+			.getInstance().getMitarbeiterById(set.getLong("mitarbeiter")), set
+			.getString("name"), null, set.getInt("portion"));
+}
+
+return result;
+}	
+	
+	public Rezept getRezept1(Long id) throws ConnectException,
+	DAOException, SQLException {
+Rezept result = null;
+ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_ID, id));
+
+while (set.next()) {
+	result = new Rezept(set.getLong("id"));
 	}
+	
+	return result;
+	}	
+	
+	public Rezept getRezeptByName(String namerezept) throws ConnectException,
+	DAOException, SQLException {
+Rezept result = null;
+
+ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_NAME, NAME));
+
+while (set.next()) {
+	result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance().getRezeptartById(
+			set.getLong("rezeptart")), GeschmackDAO.getInstance()
+			.getGeschmackById(set.getLong("geschmack")), MitarbeiterDAO
+			.getInstance().getMitarbeiterById(set.getLong("mitarbeiter")), set
+			.getString("name"), null, set.getInt("portion"));
+}
+
+return result;
+}	
+	
+	
+	
+	
 
 	public List<Rezept> getAllArtikelByRezeptId(int rezeptID) throws ConnectException,
 			DAOException, SQLException {
@@ -136,15 +205,30 @@ public class RezeptDAO extends AbstractDAO {
 		}
 		return rezept;
 	}
-
-
 	
+	public List<Rezept> getRezeptebyGeschmack(Geschmack geschmack) throws ConnectException,
+	DAOException, SQLException {
+		List<Rezept> rezept = new ArrayList<Rezept>();
+		ResultSet set = get(GET_REZEPTE_BY_GESCHMACK);
+		while (set.next()) {
+			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
+					set.getLong("id")), GeschmackDAO.getInstance()
+					.getGeschmackById(set.getLong("geschmack_fk")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null, set.getInt("portion")));
+		}
+		return rezept;
+		
+	}
+
+
+//	
 //	public void addZutat(RezeptHasArtikel rezeptHasArtikel)throws ConnectException,
 //	DAOException, SQLException {
 //		String INSERT_QUERY = "INSERT INTO rezept_has_artikel (" + REZEPT_FK + ","
 //				+ ARTIKEL + "," + MENGE + "," + MENGENEINHEIT +")" + "VALUES" + "('" + rezeptHasArtikel.getRezept().getId()
 //				+ "','" + rezeptHasArtikel.getArtikel().getId() + "','"
-//				+ rezeptHasArtikel.getMenge() + "','" + rezeptHasArtikel.getMengeneinheit().getId() + "')";
+//				+ rezeptHasArtikel.getMenge() + "','" + rezeptHasArtikel.getMenge().getId() + "')";
 //		this.put(INSERT_QUERY);
 //		
 //	}

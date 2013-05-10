@@ -75,6 +75,24 @@ public class Rezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 		this.portion = portion;
 	}
+	
+	public Rezept(Long id, Rezeptart rezeptart, Geschmack geschmack,
+			Mitarbeiter mitarbeiter, String name, String kommentar, int portion) {
+		super();
+		this.id = id;
+		this.rezeptart = rezeptart;
+		this.geschmack = geschmack;
+		this.mitarbeiter = mitarbeiter;
+		this.name = name;
+		this.kommentar = kommentar;
+		this.portion = portion;
+	}
+	
+	public Rezept(Long id) {
+		super();
+		this.id = id;
+		
+	}
 
 	// public Rezept(Rezeptart rezeptart2, Geschmack geschmack2, Mitarbeiter
 	// mitarbeiter2, String string) {
@@ -314,9 +332,7 @@ public class Rezept implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Rezept [id=" + id + ", geschmack=" + geschmack + ", rezeptart="
-				+ rezeptart + ", mitarbeiter=" + mitarbeiter + ", name=" + name
-				+ ", kommentar=" + kommentar + ", portion=" + portion + "]";
+		return ""+id +"";
 	}
 
 }

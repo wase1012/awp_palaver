@@ -79,14 +79,14 @@ public class FussnoteTest extends AbstractTest {
 			SQLException {
 
 		Boolean exception = false;
-		List<Fussnote> list = null;
+		Fussnote list = null;
 
 		try {
 			list = dao.getFussnoteByName(NAME);
 		} catch (ConnectException | DAOException | SQLException e) {
 			exception = true;
 		}
-		assertThat(list.isEmpty(), is(false));
+		assertThat(list.getName(), is(NAME));
 		assertThat(exception, is(false));
 	}
 
@@ -137,7 +137,7 @@ public class FussnoteTest extends AbstractTest {
 			SQLException {
 		String name = "Weizen_NEW";
 
-		List<Fussnote> zb = new ArrayList<Fussnote>();
+		Fussnote zb = new Fussnote();
 		zb = dao.getFussnoteByName(name);
 
 		dao.deleteFussnoteByName(name);
