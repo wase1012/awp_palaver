@@ -270,55 +270,55 @@ public class MenueAnlegen extends VerticalLayout implements View {
 				
 				
 
-			
-				
-				List<String> FussnoteId = Arrays.asList(valueString.substring(1,
-						valueString.length() - 1).split("\\s*,\\s*"));
-				for (String s : FussnoteId) {
-//					System.out.println(s);
-				}
-				// valueString.split
-				BeanItemContainer<MenueHasFussnote> fussnotencontainer;
-				List<MenueHasFussnote> fussnotelist = new ArrayList<MenueHasFussnote>();
-
-				for (String sId : FussnoteId) {
-					Long id = null;
-					try {
-						id = Long.parseLong(sId.trim());
-
-					} catch (NumberFormatException nfe) {
-
+				if(fussnoten.getValue().toString() != "[]"){
+					List<String> FussnoteId = Arrays.asList(valueString.substring(1,
+							valueString.length() - 1).split("\\s*,\\s*"));
+					for (String s : FussnoteId) {
+	//					System.out.println(s);
 					}
-
-					Fussnote fussnote1 = null;
-//					Menue menue1 =  Menueverwaltung.getInstance()
-//							.getMenueByName(menuenameInput);
-					try {
+					// valueString.split
+					BeanItemContainer<MenueHasFussnote> fussnotencontainer;
+					List<MenueHasFussnote> fussnotelist = new ArrayList<MenueHasFussnote>();
+	
+					for (String sId : FussnoteId) {
+						Long id = null;
+						try {
+							id = Long.parseLong(sId.trim());
+	
+						} catch (NumberFormatException nfe) {
+	
+						}
+	
+						Fussnote fussnote1 = null;
+	//					Menue menue1 =  Menueverwaltung.getInstance()
+	//							.getMenueByName(menuenameInput);
+						try {
+							
+							
+							fussnote1 = Fussnotenverwaltung.getInstance()
+									.getFussnoteById(id);
+	//						
+							MenueHasFussnote a = new MenueHasFussnote(fussnote1,
+									menue1);
+							fussnotelist.add(a);
+						} catch (ConnectException | DAOException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	
+					}
+					
+					for (MenueHasFussnote i :fussnotelist) {
 						
 						
-						fussnote1 = Fussnotenverwaltung.getInstance()
-								.getFussnoteById(id);
-//						
-						MenueHasFussnote a = new MenueHasFussnote(fussnote1,
-								menue1);
-						fussnotelist.add(a);
-					} catch (ConnectException | DAOException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-				
-				for (MenueHasFussnote i :fussnotelist) {
+						try{
+						Menueverwaltung.getInstance().FussnoteAdd(i);
+						} catch (ConnectException | DAOException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
-					
-					try{
-					Menueverwaltung.getInstance().FussnoteAdd(i);
-					} catch (ConnectException | DAOException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-				
 				}
 				
 				
