@@ -70,6 +70,7 @@ public abstract class AbstractDAO
 		}
 	}
 	
+	@Deprecated
 	protected ResultSet get(String querry) throws SQLException
 	{
 		ResultSet result = null;

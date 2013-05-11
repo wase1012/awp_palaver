@@ -1,0 +1,83 @@
+package de.bistrosoft.palaver.menueplanverwaltung.domain;
+
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+
+public class MenueHasFussnote implements java.io.Serializable {
+
+	private MenueHasFussnoteId id;
+	private Fussnote fussnote;
+	private Menue menue;
+
+	public MenueHasFussnote() {
+	}
+
+	public MenueHasFussnote(MenueHasFussnoteId id, Fussnote fussnote,
+			Menue menue) {
+		this.id = id;
+		this.fussnote = fussnote;
+		this.menue = menue;
+	}
+
+	public MenueHasFussnoteId getId() {
+		return this.id;
+	}
+
+	public void setId(MenueHasFussnoteId id) {
+		this.id = id;
+	}
+
+	public Fussnote getFussnote() {
+		return this.fussnote;
+	}
+
+	public void setFussnote(Fussnote fussnote) {
+		this.fussnote = fussnote;
+	}
+
+	public Menue getMenue() {
+		return this.menue;
+	}
+
+	public void setMenue(Menue menue) {
+		this.menue = menue;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((fussnote == null) ? 0 : fussnote.hashCode());
+		result = prime * result + ((menue == null) ? 0 : menue.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenueHasFussnote other = (MenueHasFussnote) obj;
+		if (fussnote == null) {
+			if (other.fussnote != null)
+				return false;
+		} else if (!fussnote.equals(other.fussnote))
+			return false;
+		if (menue == null) {
+			if (other.menue != null)
+				return false;
+		} else if (!menue.equals(other.menue))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "menueHasFussnote [fussnote=" + fussnote + ", menue=" + menue
+				+ "]";
+	}
+
+}

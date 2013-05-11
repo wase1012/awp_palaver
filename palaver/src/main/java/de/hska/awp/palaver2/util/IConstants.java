@@ -39,5 +39,20 @@ public interface IConstants
 	public final String 	BUTTON_NEW_ICON = "img/new.ico";
 	public final String 	BUTTON_EDIT_ICON = "img/edit.ico";
 	
+	public final String 	MENU_REZEPT_HEADLINE = "Rezept";
+	public final String 	MENU_REZEPT_NEU = "Anlegen";
+	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
+	public final String 	MENU_REZEPT_AENDERN = "Ändern";
+	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
+
+	public final String 	MENU_MENUPLAN_HEADLINE = "Menüplan";
+	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
+	public final String 	MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
+
+	public final String 	MENU_FUSSNOTE = "Fussnoten";
+	public final String 	MENU_GESCHMACK = "Geschmäcker";
+	public final String 	MENU_REZEPTART = "Rezeptarten";
+	public final String 	MENU_ZUBEREITUNG = "Zubereitungen";
+	
 	
 }
