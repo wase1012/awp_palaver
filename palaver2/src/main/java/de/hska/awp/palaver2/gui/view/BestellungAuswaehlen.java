@@ -49,7 +49,7 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 		rechts.addComponent(liefTable);
 		rechts.addComponent(bestellen);
 		rechts.setComponentAlignment(liefTable, Alignment.MIDDLE_RIGHT);
-		rechts.setComponentAlignment(bestellen, Alignment.MIDDLE_RIGHT);
+		rechts.setComponentAlignment(bestellen, Alignment.BOTTOM_RIGHT);
 		
 		box.addComponent(rechts);
 		
@@ -64,7 +64,6 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 		}
 		try {
 			list = Bestellverwaltung.getInstance().getAllLieferantenByArtikellist(artList);
-			System.out.println(list);
 		} catch (ConnectException | DAOException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

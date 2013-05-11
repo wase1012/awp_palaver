@@ -6,11 +6,13 @@ package de.hska.awp.palaver2.bestellverwaltung.service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.BestellpositionDAO;
+import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 /**
@@ -77,5 +79,19 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		Bestellposition bestellposition = super.getBestellpositionById(id);
 		return bestellposition;
 	}
-
+	
+	public List<Bestellposition> getBestellpositionen(List<BestellungData> bestData) {
+		List<Bestellposition> bpen = new ArrayList<Bestellposition>();
+		Bestellposition bp = new Bestellposition();
+		 for( int i = 0; i < bestData.size(); ++i){
+			 bp.setArtikel(bestData.get(i).getBestellungArtikel());
+			 bp.setDurchschnitt(Integer.parseInt(bestData.get(i).getDurchschnitt().getValue()));
+			 bp.setKantine(Integer.parseInt(bestData.get(i).getKantine().getValue()));
+			 bp.setGesamt(Integer.parseInt(bestData.get(i).getGesamt().getValue()));
+			 bp.setFreitag(bestData.get(i).getFreitag().getValue());
+			 bp.setMontag(bestData.get(i).getMontag().getValue());
+			 bpen.add(bp);
+		 }
+		 return bpen;
+	}
 }
