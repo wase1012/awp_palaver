@@ -206,7 +206,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 				
 				String testDatum = "Freitag";
 				
-				Date date2 = new Date(0);
+				java.util.Date date2 = new java.util.Date();
 				Date date = new Date(date2.getTime());
 				bestellung = new Bestellung();
 				bestellung.setLieferant(lieferant);
