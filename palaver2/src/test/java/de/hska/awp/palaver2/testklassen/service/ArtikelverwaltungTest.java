@@ -59,6 +59,13 @@ final Boolean lebensmittel = true;
 		assertThat(art.getId(),is(id));
 	}
 	
+	/**
+	 * Testmethode  getArtikelByName liefert alle Artikel
+	 * anhand des Parameter name zurück.
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	@Test
     public void getArtikelByName() {
     	
@@ -159,5 +166,33 @@ final Boolean lebensmittel = true;
 		}
 		assertThat(art.getName(), is(neuerName));
 	}
+	
+	/**
+	 * Testmethode  getArtikelByLebensmittel 
+	 * liefert alle Artikel zurück die Lebensmittel sind.
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	@Test
+    public void getArtikelByLebensmittel() {
+    	
+	   	Boolean exception = false;
+    	List<Artikel> artikellist = null;
+	
+    		try{
+    			
+    			artikellist = av.getArtikelByLebensmittel();
+    		
+    		}
+    		catch (ConnectException | DAOException | SQLException e)
+    		{
+    			exception = true;
+    		}
+    		for (Artikel a : artikellist) {
+    			assertThat(a.isLebensmittel(), is(true));
+    		}
+    	}
+	
 }
 
