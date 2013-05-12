@@ -259,6 +259,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 		bestellungTable.setContainerDataSource(containerBestellung);
 		bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "freitag", "montag"});
 		
+		
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
