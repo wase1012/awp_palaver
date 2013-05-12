@@ -44,6 +44,8 @@ public class MenueplanGridDropHandler extends
         
         DDGridLayout layout = (DDGridLayout) details.getTarget();
         
+        MenueplanGridLayout menueplan= (MenueplanGridLayout) layout.getParent().getParent();
+        
         LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
                 .getTransferable();
                 
@@ -69,6 +71,8 @@ public class MenueplanGridDropHandler extends
         Integer destColumn = details.getOverColumn();
         Component destComp = details.getOverComponent();
         
+        
+        
         Boolean isDoDND = true;
         Boolean isSwitch = true;
         
@@ -81,12 +85,17 @@ public class MenueplanGridDropHandler extends
             //Füge Quellkomponente wieder ein
             layout.addComponent(sourceComp,destColumn,destRow);
             layout.setComponentAlignment(sourceComp, dropAlignment);
+            System.out.println("CAST");
             
+            System.out.println(menueplan);
             //Wenn Zielkomponente vorhanden füge diese ein
             if (destComp!=null){
             	if(isSwitch){
             		layout.addComponent(destComp, sourceColumn, sourceRow);
                 	layout.setComponentAlignment(destComp, dropAlignment);
+//                	System.out.println(destComp);
+                	
+//                	menueplan.pruefeRegeln((MenueComponent) destComp);
             	}
             	else {
             		Button btAdd = new Button();
@@ -94,13 +103,19 @@ public class MenueplanGridDropHandler extends
                 	layout.setComponentAlignment(btAdd, dropAlignment);
             	}
             }
-            if(MenueComponent.class.isInstance(destComp)){
+            if(destComp instanceof MenueComponent){
             	MenueComponent comp = (MenueComponent) destComp;
             	comp.isChanged(true);
+            	comp.setCol(sourceColumn);
+            	comp.setRow(sourceRow);
+            	menueplan.pruefeRegeln(comp);
             }
-            if(MenueComponent.class.isInstance(sourceComp)){
+            if(sourceComp instanceof MenueComponent){
             	MenueComponent comp = (MenueComponent) sourceComp;
             	comp.isChanged(true);
+            	comp.setCol(destColumn);
+            	comp.setRow(destRow);
+            	menueplan.pruefeRegeln(comp);
             }
         }
     }
