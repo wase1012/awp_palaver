@@ -82,9 +82,10 @@ public class LieferantenverwaltungTest {
 		
 		final String name = "Testlv";
 		final String tel = "123456789";
+		final Boolean termine = true;
 		lf.setName(name);
 		lf.setTelefon(tel);
-		
+		lf.setMehrereLiefertermine(termine);
 		try{
 	    lv.createLieferant(lf);
 		}
@@ -111,6 +112,7 @@ public class LieferantenverwaltungTest {
 		Boolean exception = false;
 		final Long id = Long.valueOf(1);
 		final String neuerName = "Fleischlieferant";
+		final Boolean termine = true;
 		
 		try{
 			
@@ -122,6 +124,7 @@ public class LieferantenverwaltungTest {
 			exception = true;
 		}
 		lf.setName(neuerName);
+		lf.setMehrereLiefertermine(termine);
 		
 		try{
 		lv.updateLieferant(lf);
