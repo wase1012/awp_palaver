@@ -6,7 +6,6 @@
  */
 package de.bistrosoft.palaver.gui.view;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,40 +19,37 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnResizeEvent;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.artikelverwaltung.domain.Artikel;
-import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.WinSelectMenue;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
-import de.bistrosoft.palaver.util.ViewHandler;
-import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
 /**
  * @author Jan Lauinger
@@ -70,15 +66,14 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 	private TextField portion = new TextField("Portion");
 	private TextField name = new TextField("Bezeichnung");
-	
-	private CheckBox herd = new CheckBox("Herd");
-	private CheckBox konvektomat = new CheckBox("Konvektomat");
+
+	private TwinColSelect zubereitung = new TwinColSelect("Zubereitung");
 
 	private ComboBox mitarbeiterCb = new ComboBox("Koch");
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
 	private ComboBox geschmackCb = new ComboBox("Geschmack");
 
-	public static  Table tblArtikel = new Table("Zutaten");
+	public static Table tblArtikel = new Table("Zutaten");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -91,10 +86,11 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	private String geschmackInput;
 	private String rezeptartInput;
 	private String mitarbeiterInput;
-	
+
 	private Artikel ar;
 	private RezeptHasArtikel rhA;
-	
+	public String valueString = new String();
+
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 
 	List<RezeptHasArtikel> artikel = new ArrayList<>();
@@ -107,6 +103,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		this.setMargin(true);
 		name.setWidth("100%");
 		portion.setWidth("100%");
+		zubereitung.setWidth("100%");
 		mitarbeiterCb.setWidth("100%");
 		rezeptartCb.setWidth("100%");
 		geschmackCb.setWidth("100%");
@@ -123,49 +120,52 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		box.addComponent(mitarbeiterCb);
 		box.addComponent(rezeptartCb);
 		box.addComponent(geschmackCb);
-		box.addComponent(herd);
-		box.addComponent(konvektomat);
+		box.addComponent(zubereitung);
 		box.addComponent(tblArtikel);
 		box.addComponent(zutatneu);
-//		box.addComponent(btAdd);
+		// box.addComponent(btAdd);
 		box.addComponent(kommentar);
 		// ///////////////////////////////////
 		BeanItemContainer<RezeptHasArtikel> container;
 
 		// 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1, "name",
 		// 1, 1.00, true, true, true, 1, true
-//		try {
-//			container = new BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, artikel);
-//			artikelT.setContainerDataSource(container);
-//			artikelT.setVisibleColumns(new Object[] { "name", "menge", "einheit" });
-//			artikelT.sort(new Object[] { "name" }, new boolean[] { true });
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		}
-//		BeanItemContainer<Artikel> container;
-//
-//		// 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1, "name",
-//		// 1, 1.00, true, true, true, 1, true
-//		try {
-//			container = new BeanItemContainer<Artikel>(Artikel.class, artikel);
-//			artikelT.setContainerDataSource(container);
-//			artikelT.setVisibleColumns(new Object[] { "name", "Menge", "Einheit" });
-//			artikelT.sort(new Object[] { "name" }, new boolean[] { true });
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// container = new
+		// BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, artikel);
+		// artikelT.setContainerDataSource(container);
+		// artikelT.setVisibleColumns(new Object[] { "name", "menge", "einheit"
+		// });
+		// artikelT.sort(new Object[] { "name" }, new boolean[] { true });
+		// } catch (IllegalArgumentException e) {
+		// e.printStackTrace();
+		// }
+		// BeanItemContainer<Artikel> container;
+		//
+		// // 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1,
+		// "name",
+		// // 1, 1.00, true, true, true, 1, true
+		// try {
+		// container = new BeanItemContainer<Artikel>(Artikel.class, artikel);
+		// artikelT.setContainerDataSource(container);
+		// artikelT.setVisibleColumns(new Object[] { "name", "Menge", "Einheit"
+		// });
+		// artikelT.sort(new Object[] { "name" }, new boolean[] { true });
+		// } catch (IllegalArgumentException e) {
+		// e.printStackTrace();
+		// }
 		// this.addComponent(artikelT);
 
 		// artikelT.setContainerDataSource(container);
-//		btAdd.addClickListener(new ClickListener() {
+		// btAdd.addClickListener(new ClickListener() {
 
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				Artikel b = new Artikel();
-//				artikel.add(b);
-//
-//			}
-//		});
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// Artikel b = new Artikel();
+		// artikel.add(b);
+		//
+		// }
+		// });
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
 		box.addComponent(control);
@@ -178,13 +178,15 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		portion.setImmediate(true);
 		portion.setInputPrompt(portionInput);
 		portion.setMaxLength(150);
-		
+
+		zubereitung.setImmediate(true);
+
 		tblArtikel.setSizeUndefined();
 		tblArtikel.setSelectable(true);
 		tblArtikel.setMultiSelect(true);
 		tblArtikel.setImmediate(true);
 		tblArtikel.setEditable(true);
-		tblArtikel.addContainerProperty("Name", String.class, null );
+		tblArtikel.addContainerProperty("Name", String.class, null);
 		tblArtikel.addContainerProperty("Menge", Long.class, null);
 		tblArtikel.setEditable(true);
 
@@ -199,33 +201,33 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		mitarbeiterCb.setImmediate(true);
 		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
 		geschmackCb.setNullSelectionAllowed(false);
-		load();
 
 		kommentar.setImmediate(true);
 		kommentar.setInputPrompt(kommentarInput);
 		kommentar.setMaxLength(1000);
 
+		load();
+
 		zutatneu.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				WinSelectArtikel window = new WinSelectArtikel(tblArtikel, ausgArtikel);
+				WinSelectArtikel window = new WinSelectArtikel(tblArtikel,
+						ausgArtikel);
 				UI.getCurrent().addWindow(window);
 				window.setModal(true);
 				window.setWidth("50%");
 				window.setHeight("50%");
-				
-				//ar.getId(ArtikelDAO.getInstance().getArtikelById(Long.parseLong(ausgArtikel.toString()))));
-//				 for( String k: WinSelectArtikel.ArtId )
-//	                {
-//	                	
-//	                	artikelT.addItem(new Object[] {
-//	                			  k, 3500}, new Integer(k));
-//	                	
-//	                	Notification.show(k);
-//	                }
-				
-				
-				
+
+				// ar.getId(ArtikelDAO.getInstance().getArtikelById(Long.parseLong(ausgArtikel.toString()))));
+				// for( String k: WinSelectArtikel.ArtId )
+				// {
+				//
+				// artikelT.addItem(new Object[] {
+				// k, 3500}, new Integer(k));
+				//
+				// Notification.show(k);
+				// }
+
 			}
 		});
 
@@ -253,6 +255,15 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				portionInput = valueString;
 			}
 		});
+
+		zubereitung.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				valueString = String.valueOf(event.getProperty().getValue());
+
+			}
+		});
+
 		kommentar.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -294,8 +305,9 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Rezept rezept = new Rezept();
-				RezeptHasArtikel artikel = new RezeptHasArtikel();
-				
+				// RezeptHasArtikel artikel = new RezeptHasArtikel();
+				RezeptHasZubereitung rhz = new RezeptHasZubereitung();
+
 				rezept.setName(nameInput);
 
 				try {
@@ -306,6 +318,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						| DAOException | SQLException e1) {
 					e1.printStackTrace();
 				}
+
 				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance()
 							.getRezeptartById(
@@ -327,33 +340,35 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				}
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
-					
+
 				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
 				}
+				
+				
 
-				Notification notification = new Notification("Rezept wurde gespeichert!");
+				Notification notification = new Notification(
+						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				System.out.println(ausgArtikel.size());
-				
+
 			}
 		});
 	}
 
-	
-	public void addArtikelMenge(){
-//		RezeptHasArtikel rhA = new RezeptHasArtikel();
-//		rhA.setMenge(menge);
-//		tblArtikel.get
-//		try {
-//			
-//			
-//					rhA.setArtike(ArtikelDAO.getInstance().getArtikelByName(artikelInput));
-//				} catch (NumberFormatException | ConnectException
-//						| DAOException | SQLException e1) {
-//					e1.printStackTrace();
-//				}
+	public void addArtikelMenge() {
+		// RezeptHasArtikel rhA = new RezeptHasArtikel();
+		// rhA.setMenge(menge);
+		// tblArtikel.get
+		// try {
+		//
+		//
+		// rhA.setArtike(ArtikelDAO.getInstance().getArtikelByName(artikelInput));
+		// } catch (NumberFormatException | ConnectException
+		// | DAOException | SQLException e1) {
+		// e1.printStackTrace();
+		// }
 	}
 
 	public void load() {
@@ -381,20 +396,26 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				rezeptartCb.setItemCaption(e.getId(), e.getName());
 			}
 
+			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
+					.getAllZubereitung();
+			for (Zubereitung z : zb) {
+				zubereitung.addItem(z.getId());
+				zubereitung.setItemCaption(z.getId(), z.getName());
+			}
+
 		} catch (ConnectException | DAOException | SQLException e) {
 			e.printStackTrace();
 		}
-	
 
-//	public void addRezeptHasArtikel(RezeptHasArtikel artikel, Table tbArtikel) {
-//		// tbArtikel.getContainerDataSource()
-//	}
+		// public void addRezeptHasArtikel(RezeptHasArtikel artikel, Table
+		// tbArtikel) {
+		// // tbArtikel.getContainerDataSource()
+		// }
 	}
-
 
 	@Override
 	public void getViewParam(ViewData data) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
