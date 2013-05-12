@@ -52,9 +52,9 @@ public class BestellungTest extends AbstractTest {
 		bestellung.setLieferant(lieferant);
 		
 		//Bestellung Datum setzen
-		Date date2 = new Date(0);
-		Date timestamp = new Date(date2.getTime());
-		bestellung.setDatum(timestamp);
+		java.util.Date date2 = new java.util.Date();
+		Date date = new Date(date2.getTime());
+		bestellung.setDatum(date);
 		bestellung.setLieferdatum("17.05.1999");
 		//Bestellpositionliste zusammenbauen
 		//Bestellposition Bestellung setzen
@@ -87,7 +87,7 @@ public class BestellungTest extends AbstractTest {
 
 		bestellung.setBestellpositionen(bestellpositionen);
 		
-		Date date = new Date(0);
+		java.util.Date date = new java.util.Date();
 		Date timestamp = new Date(date.getTime());
 
 		bestellung.setDatum(timestamp);
