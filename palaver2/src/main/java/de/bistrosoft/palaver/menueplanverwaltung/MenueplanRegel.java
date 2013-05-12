@@ -49,7 +49,7 @@ public class MenueplanRegel {
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
 		regeln.add(new MenueplanRegel("Kategorie", r2, c2, "enthält", rw2,
-				"Es darf kein Rezept mit Kat. 3 in Zeile 1 eingefügt werden!"));
+				"Es darf kein Rezept mit Kat. 3 in Zeile 2 eingefügt werden!"));
 
 		return regeln;
 	}
