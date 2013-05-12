@@ -37,6 +37,16 @@ public class MenueComponent extends CustomComponent{
 	private Menue menue;
 	private Boolean isChanged;
 	
+	
+	
+	public MenueplanGridLayout getMenueplan() {
+		return menueplan;
+	}
+
+	public void setMenueplan(MenueplanGridLayout menueplan) {
+		this.menueplan = menueplan;
+	}
+
 	public int getRow() {
 		return row;
 	}
@@ -83,7 +93,7 @@ public class MenueComponent extends CustomComponent{
 		col = nCol;
 		row = nRow;
 		this.menueplan=nMenueplan;
-		menueGrid = menueplan.layout;
+//		menueGrid = menueplan.layout;
 		comp = this;
 		this.setMenue(menue);
 		
