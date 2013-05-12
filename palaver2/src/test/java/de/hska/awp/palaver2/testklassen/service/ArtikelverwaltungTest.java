@@ -194,5 +194,23 @@ final Boolean lebensmittel = true;
     		}
     	}
 	
+	@Test 
+	public void getAllArtikel() {
+	    	
+		   	Boolean exception = false;
+	    	List<Artikel> artikellist = null;
+		
+	    		try{
+	    			
+	    			artikellist = av.getAllArtikel();
+	    		
+	    		}
+	    		catch (ConnectException | DAOException | SQLException e)
+	    		{
+	    			exception = true;
+	    		}
+	    		assertThat(artikellist.isEmpty(), is(false));
+	    		}
+	    	
 }
 
