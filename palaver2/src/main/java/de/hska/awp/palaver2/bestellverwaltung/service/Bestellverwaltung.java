@@ -57,6 +57,16 @@ public class Bestellverwaltung extends BestellungDAO {
 		super.updateBestellung(bestellung);
 
 	}
+	
+
+	/**
+	 * Die Methode liefert alle Bestellungen zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Bestellung>
+	 */
 
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
@@ -68,6 +78,16 @@ public class Bestellverwaltung extends BestellungDAO {
 		return result;
 	}
 
+	/**
+	 * Die Methode liefert eine Bestellung anhand des Parameter id zurück.
+	 * 
+	 * @param id 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Bestellung
+	 */
 	public Bestellung getBestellungById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Bestellung bestellung = super.getBestellungById(id);
