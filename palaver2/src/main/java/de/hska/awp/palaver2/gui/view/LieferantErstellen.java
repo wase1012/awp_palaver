@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator;
-import com.vaadin.data.validator.AbstractStringValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
@@ -17,9 +15,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -49,6 +47,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private TextField			email = new TextField("E-Mail");
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
+	private TextField			notiz = new TextField("Notiz");
+	private CheckBox			mehrereliefertermine = new CheckBox("mehrereliefertermine");
 	
 	private String nameInput;
 	private String strasseInput;
@@ -59,6 +59,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private String faxInput;
 	private String bezInput;
 	private String knrInput;
+	private String notizInput;
 	
 	private Lieferant lieferant = new Lieferant();
 
@@ -81,7 +82,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 		email.setWidth("100%");
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
-		
+		notiz.setWidth("100");
+		mehrereliefertermine.setWidth("100");
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
@@ -100,6 +102,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 		links.addComponent(email);
 		links.addComponent(telefon);
 		links.addComponent(fax);
+		links.addComponent(notiz);
+		links.addComponent(mehrereliefertermine);
 		
 		HorizontalLayout control = new HorizontalLayout();
 //		control.setWidth("100%");
@@ -158,6 +162,10 @@ public class LieferantErstellen extends VerticalLayout implements View
 		fax.setImmediate(true);
 		fax.setInputPrompt(faxInput);
 		fax.setMaxLength(45);
+		
+		notiz.setImmediate(true);
+		notiz.setInputPrompt(notizInput);
+		notiz.setMaxLength(300);
 		
         name.addValueChangeListener(new ValueChangeListener() {
 
@@ -248,6 +256,17 @@ public class LieferantErstellen extends VerticalLayout implements View
                 faxInput = valueString;
             }
         });
+        
+        notiz.addValueChangeListener(new ValueChangeListener() {
+
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+
+                notizInput = valueString;
+            }
+        });
+        
         	
 	speichern.addClickListener(new ClickListener()
 	{			
@@ -286,9 +305,9 @@ public class LieferantErstellen extends VerticalLayout implements View
 			lieferant.setEmail(emailInput);
 			lieferant.setTelefon(telefonInput);
 			lieferant.setFax(faxInput);
-//			lieferant.setAnsprechpartner();
-			
-			
+			lieferant.setNotiz(notizInput);
+			lieferant.setMehrereliefertermine(mehrereliefertermine.getValue());
+				
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
 			} catch (ConnectException | DAOException | SQLException e) {
