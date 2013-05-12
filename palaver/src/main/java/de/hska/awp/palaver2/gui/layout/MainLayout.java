@@ -12,6 +12,14 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import de.bistrosoft.palaver.gui.view.Fussnoten;
+import de.bistrosoft.palaver.gui.view.GeschmackEinst;
+import de.bistrosoft.palaver.gui.view.Menueplan;
+import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
+import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
+import de.bistrosoft.palaver.gui.view.Rezeptarten;
+import de.bistrosoft.palaver.gui.view.Zubereitungen;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
@@ -81,6 +89,14 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
+		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
+		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+		
+		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, null);
+		menuplanItem.addItem(IConstants.MENU_MENUPLAN_AKTUELL, this);
+		menuplanItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
+		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem("Test", this);
 		
@@ -88,6 +104,10 @@ public class MainLayout extends VerticalLayout implements Command
 //		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
+		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
+		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
+		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
+		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
 		this.addComponent(menu);
 		
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
@@ -141,6 +161,30 @@ public class MainLayout extends VerticalLayout implements Command
 			case "Test":
 				ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
 			break;
+			case IConstants.MENU_REZEPT_ANZEIGEN:
+				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+				break;
+			case IConstants.MENU_REZEPT_NEU:
+				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+				break;
+			case IConstants.MENU_MENUPLAN_AKTUELL:
+				ViewHandler.getInstance().switchView(Menueplan.class);
+				break;
+			case IConstants.MENU_MENUPLAN_HISTORIE:
+				ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+				break;
+			case IConstants.MENU_FUSSNOTE:
+				ViewHandler.getInstance().switchView(Fussnoten.class);
+				break;
+			case IConstants.MENU_GESCHMACK:
+				ViewHandler.getInstance().switchView(GeschmackEinst.class);
+				break;
+			case IConstants.MENU_REZEPTART:
+				ViewHandler.getInstance().switchView(Rezeptarten.class);
+				break;
+			case IConstants.MENU_ZUBEREITUNG:
+				ViewHandler.getInstance().switchView(Zubereitungen.class);
+				break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;

@@ -34,7 +34,8 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String 		GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
 	private final static String 		GET_MENGENEINHEIT_BY_ID = "SELECT * FROM Mengeneinheit WHERE id = {0}";
-	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
+	private final static String 		GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
+	private final static String 		GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
 	
 	public ArtikelDAO()
 	{
@@ -407,5 +408,20 @@ public class ArtikelDAO extends AbstractDAO
 		}
 
 		return me;
+	}
+	
+	public List<Artikel> getAllArtikelName() throws ConnectException,
+													DAOException, SQLException 
+	{
+		List<Artikel> list = new ArrayList<Artikel>();
+
+		ResultSet set = get(GET_ALL_ARTIKLES_NAME);
+
+		while (set.next()) 
+		{
+			list.add(new Artikel(set.getLong("id"), set.getString("name")));
+		}
+
+		return list;
 	}
 }

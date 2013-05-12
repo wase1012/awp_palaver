@@ -10,6 +10,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
+import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.drophandlers.AbstractDefaultLayoutDropHandler;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 

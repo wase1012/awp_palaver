@@ -142,3 +142,39 @@
 	font-size: 18px;
 	padding-bottom: 10px;
 }
+
+
+.menueplan-grid {
+ margin: 0px;
+padding: 0px;
+border-left: 1px solid rgb(50,205,50);
+border-bottom: 1px solid rgb(50,205,50);
+}
+
+.menueplan-grid > div {
+margin: 0px;
+padding: 0px;
+border-right: 1px solid rgb(50,205,50);
+border-top: 1px solid rgb(50,205,50);
+
+}
+
+.menueplan-add .v-icon{
+display: block;
+margin-left: auto;
+margin-right: auto;
+height: 65%;
+width: 65%;
+}
+
+.menueplan-nextweek .v-icon{
+display: block;
+margin-left: 300px;
+height: 30px;
+}
+
+.menueplan-lastweek .v-icon{
+display: block;
+margin-right: 300px;
+height: 30px;
+}
