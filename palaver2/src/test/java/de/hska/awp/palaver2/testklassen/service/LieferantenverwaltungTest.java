@@ -14,6 +14,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
@@ -136,5 +137,31 @@ public class LieferantenverwaltungTest {
 		assertThat(lf.getName(), is(neuerName));
 	}
 	
+	
+	/**
+	 * Die Testmethode liefert alle Lieferanten zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	@Test 
+	public void getAllLieferanten() {
+	    	
+		   	Boolean exception = false;
+		   	List<Lieferant> llist = null;
+		
+	    		try{
+	    			
+	    			llist = lv.getAllLieferanten();
+	    		
+	    		}
+	    		catch (ConnectException | DAOException | SQLException e)
+	    		{
+	    			exception = true;
+	    		}
+	    		assertThat(llist.isEmpty(), is(false));
+	    	}
+	    		
     }
 	
