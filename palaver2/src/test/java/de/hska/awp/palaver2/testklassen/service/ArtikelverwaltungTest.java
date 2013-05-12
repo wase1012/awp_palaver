@@ -39,7 +39,13 @@ final Boolean standard = true;
 final Boolean grundbedarf = true;
 final Boolean lebensmittel = true;
 
-
+/**
+ * Die Testmethode sucht nach einem Artikel anhand einer Id
+ * 
+ * @throws SQLException
+ * @throws DAOException
+ * @throws ConnectException
+ */
 	@Test
 	public void getArtikelById(){
 		
@@ -194,6 +200,14 @@ final Boolean lebensmittel = true;
     		}
     	}
 	
+	/**
+	 * Die Testmethode liefert alle Artikel zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Artikel>
+	 */
 	@Test 
 	public void getAllArtikel() {
 	    	
