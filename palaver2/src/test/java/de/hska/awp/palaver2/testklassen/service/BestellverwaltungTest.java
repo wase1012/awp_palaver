@@ -74,6 +74,7 @@ public class BestellverwaltungTest {
 	public void updateBestellung (){
 	
 		Bestellung b = new Bestellung();
+		final String lieferdatum = "Heute";
 	
 		Boolean exception = false;
 		final Long id = Long.valueOf(1);
@@ -89,8 +90,8 @@ public class BestellverwaltungTest {
 			exception = true;
 		}
 		
-		b.setLieferant(lieferant);
-		b.setDatum(datum);
+		//b.setLieferant(lieferant);
+		b.setLieferdatum(lieferdatum);
 	
 		try{
 			bv.updateBestellung(b);
@@ -99,7 +100,32 @@ public class BestellverwaltungTest {
 		{
 			exception = true;
 		}
-		assertThat(b.getDatum(), is(datum));
+		assertThat(b.getLieferdatum(), is(lieferdatum));
+	}
+/**
+ * Die Testmethode sucht nach einer Bestellung anhand einer Id
+ * 
+ * @throws SQLException
+ * @throws DAOException
+ * @throws ConnectException
+ */
+	@Test
+	public void getBestellungById(){
+	
+
+		Bestellung b = null;
+		Boolean exception = false;
+		final Long id = Long.valueOf(2);
+	
+	
+		try{
+			b = bv.getBestellungById(id);
+		}
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			exception = true;
+		}
+		assertThat(b.getId(),is(id));
 	}
 
 }
