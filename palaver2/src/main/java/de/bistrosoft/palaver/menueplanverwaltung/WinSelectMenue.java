@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
@@ -25,6 +26,8 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -212,6 +215,12 @@ public class WinSelectMenue extends Window {
 				String k = textfields.get(2).getValue();
 //				Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(id)
 				Menue menue = new Menue(id,titel,k);
+				//Testrezeptdaten
+				Rezept rez = new Rezept(1L);
+				rez.setRezeptart(new Rezeptart(3L,""));
+				List<Rezept> rezepte = new ArrayList<>();
+				rezepte.add(rez);
+				menue.setRezepte(rezepte);
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
 				

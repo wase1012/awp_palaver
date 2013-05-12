@@ -277,7 +277,6 @@ public class MenueplanGridLayout extends CustomComponent{
     				r.check(mc);
     			}
     		}
-    		
     	}
     }
 }
