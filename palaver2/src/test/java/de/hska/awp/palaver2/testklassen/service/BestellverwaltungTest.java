@@ -14,6 +14,7 @@ import java.sql.*;
 
 import org.junit.Test;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
@@ -127,5 +128,33 @@ public class BestellverwaltungTest {
 		}
 		assertThat(b.getId(),is(id));
 	}
+	
+	/**
+	 * Die Testmethode liefert alle Bestellungen zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Bestellung>
+	 */
+
+	@Test 
+	public void getAllBestellungen() {
+	    	
+		   	Boolean exception = false;
+	    	List<Bestellung> blist = null;
+		
+	    		try{
+	    			
+	    			blist = bv.getAllBestellungen();
+	    		
+	    		}
+	    		catch (ConnectException | DAOException | SQLException e)
+	    		{
+	    			exception = true;
+	    		}
+	    		assertThat(blist.isEmpty(), is(false));
+	    }
+	    	
 
 }
