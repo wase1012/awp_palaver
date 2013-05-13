@@ -62,7 +62,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("Bestellgr�ߟe");
+	private TextField			bestellung = new TextField("Bestellgröße");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -78,7 +78,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private Button				addLieferant = new Button(IConstants.BUTTON_NEW);
 	private Button				addMengeneinheit = new Button(IConstants.BUTTON_NEW);
 	private Button				addKategorie = new Button(IConstants.BUTTON_NEW);
-	private Button				update = new Button("Update");
+	private Button				update = new Button(IConstants.BUTTON_SAVE);
 	
 	private Artikel				artikel;
 	
@@ -352,6 +352,8 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		artikel = (Artikel) ((ViewDataObject<?>)data).getData();
 		
 		control.replaceComponent(speichern, update);
+		
+		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		update.addClickListener(new ClickListener()
 		{	
 			/**
@@ -388,7 +390,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				
 				Label message = new Label(notification);
 				
-				Button okButton = new Button("OK");
+				Button okButton = new Button(IConstants.BUTTON_OK);
 				
 				VerticalLayout dialogContent = new VerticalLayout();
 				dialogContent.setSizeFull();
