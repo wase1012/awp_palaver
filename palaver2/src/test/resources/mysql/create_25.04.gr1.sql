@@ -529,9 +529,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`rezept_has_zubereitung` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_zubereitung` (
-  `rezept_fk` INT NOT NULL AUTO_INCREMENT,
-  `zubereitung_fk` INT NULL ,
-  PRIMARY KEY (`rezept_fk`) ,
+  `rezept_fk` INT NOT NULL,
+  `zubereitung_fk` INT NOT NULL ,
+  INDEX `fk_rezept_idx` (`rezept_fk` ASC) ,
   INDEX `fk_zubereitung_idx` (`zubereitung_fk` ASC) ,
   CONSTRAINT `fk_rezept`
     FOREIGN KEY (`rezept_fk` )
@@ -544,6 +544,10 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_zubereitung` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+
+
 
 USE `palaver` ;
 
