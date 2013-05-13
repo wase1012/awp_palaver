@@ -118,7 +118,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		 }
 		 
 		 //TODO Input sieht später anders aus.
-		 Date date2 = new Date(0);
+		 java.util.Date date2 = new java.util.Date();
 		 Date date = new Date(date2.getTime());
 		 bestellung.setDatum(date);
 		 bestellung.setLieferant(lieferant);
