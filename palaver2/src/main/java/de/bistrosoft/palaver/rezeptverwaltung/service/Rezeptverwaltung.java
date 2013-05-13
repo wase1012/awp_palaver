@@ -19,6 +19,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 
@@ -40,28 +41,28 @@ public class Rezeptverwaltung extends RezeptDAO {
 		}
 		return instance;
 	}
-	
-//	public void createArtikelForRezept(Rezept rezept){
-//		try {
-//			super.createArtikelForRezept(rezept);
-//		} catch (ConnectException | DAOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
-//		List<RezeptHasArtikel> artikel=null;
-//		
-//		try {
-//			super.getArtikelByRezept(rezept);
-//		} catch (ConnectException | DAOException | SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		return artikel;
-//	}
+
+	// public void createArtikelForRezept(Rezept rezept){
+	// try {
+	// super.createArtikelForRezept(rezept);
+	// } catch (ConnectException | DAOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
+	// List<RezeptHasArtikel> artikel=null;
+	//
+	// try {
+	// super.getArtikelByRezept(rezept);
+	// } catch (ConnectException | DAOException | SQLException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// return artikel;
+	// }
 
 	// public List<Rezept> getAllRezept() throws ConnectException, DAOException,
 	// SQLException {
@@ -96,12 +97,12 @@ public class Rezeptverwaltung extends RezeptDAO {
 		super.createRezept(Rezept);
 	}
 
+	// public void addArtikel(Artikel a, BigDecimal m, Rezept r, Mengeneinheit
+	// me) throws ConnectException,
+	// DAOException, SQLException {
+	// this.Rezept.getId();
+	// }
 
-//	public void addArtikel(Artikel a, BigDecimal m, Rezept r, Mengeneinheit me) throws ConnectException,
-//	DAOException, SQLException {
-//		this.Rezept.getId();
-//	}
-	
 	// public void updateRezept(Rezept Rezept) throws ConnectException,
 	// DAOException {
 	// super.updateRezept(Rezept);
@@ -151,11 +152,18 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 		return result;
 	}
-	
-//	public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws ConnectException,
-//	DAOException, SQLException {
-//
-//		super.addZutat(rezeptHasArtikel);
-//	}
+
+	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
+			throws ConnectException, DAOException, SQLException {
+		super.ZubereitungAdd(rezeptHasZubereitung);
+
+	}
+
+	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws
+	// ConnectException,
+	// DAOException, SQLException {
+	//
+	// super.addZutat(rezeptHasArtikel);
+	// }
 
 }

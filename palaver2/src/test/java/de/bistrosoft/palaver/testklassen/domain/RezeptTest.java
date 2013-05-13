@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
@@ -54,30 +55,19 @@ public class RezeptTest extends AbstractTest {
 	// assertThat(rezept.getId(), is(id));
 	// }
 	//
-//	@Test
-//	public void getRezeptByName() {
-//		Boolean exception = false;
-//		List<Rezept> list = null;
-//		try {
-//			String name = "test";
-//			list = rdao.getRezeptByName(name);
-//		} catch (ConnectException | DAOException | SQLException e) {
-//			exception = true;
-//		}
-//		assertThat(list.isEmpty(), is(false));
-//		assertThat(exception, is(false));
-//	}
-	
-//	@Test
-//	public void getRezeptByName() throws ConnectException, DAOException, SQLException
-//	{
-//		String name = "test";
-//
-//		Rezept rezept = rdao.getRezeptByName(name);
-//
-//		assertThat(rezept.getName(), is(name));
-//	}
 
+	
+	@Test
+	public void getRezeptByName() throws ConnectException, DAOException, SQLException
+	{
+		String rezeptname = "Lasagne";
+
+		Rezept rezept = RezeptDAO.getInstance().getRezeptByName(rezeptname);
+
+		assertThat(rezept.getName(), is(rezeptname));
+	}
+
+	@Ignore
 	@Test
 	public void createRezept() throws ConnectException, DAOException,
 			SQLException {
