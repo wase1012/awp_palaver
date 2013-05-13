@@ -13,6 +13,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -37,6 +38,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private HorizontalLayout 	knoepfe = new HorizontalLayout();
 	private VerticalLayout 		links = new VerticalLayout();
 	private VerticalLayout		rechts = new VerticalLayout();
+	private VerticalLayout		mitte = new VerticalLayout();
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
@@ -47,7 +49,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			email = new TextField("E-Mail");
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
-	private TextField			notiz = new TextField("Notiz");
+	private TextArea			notiz = new TextArea("Notiz");
 	private CheckBox			mehrereliefertermine = new CheckBox("mehrereliefertermine");
 	
 	private Button				okButton = new Button("Ok");
@@ -86,19 +88,26 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
 		notiz.setWidth("100%");
+		notiz.setRows(5);
 		mehrereliefertermine.setWidth("100%");
 		
 
 		ansprechpartner.setWidth("100%");
+		ansprechpartner.setHeight("150px");
 		
-		box.setWidth("610px");
+//		box.setWidth("610px");
+		box.setWidth("75%");
+		box.setHeight("90%");
 		box.setSpacing(true);
 		
 		links.setWidth("250px");
-		rechts.setWidth("300px");
+		rechts.setWidth("320px");
 		links.setSpacing(true);
 		rechts.setSpacing(true);
+		mitte.setWidth("250px");
+		mitte.setSpacing(true);
 		box.addComponentAsFirst(links);
+		box.addComponent(mitte);
 		box.addComponent(rechts);
 		
 		links.addComponent(name);
@@ -107,11 +116,11 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		links.addComponent(strasse);
 		links.addComponent(plz);
 		links.addComponent(ort);
-		links.addComponent(email);
-		links.addComponent(telefon);
-		links.addComponent(fax);
-		links.addComponent(notiz);
-		links.addComponent(mehrereliefertermine);
+		mitte.addComponent(email);
+		mitte.addComponent(telefon);
+		mitte.addComponent(fax);
+		mitte.addComponent(notiz);
+		mitte.addComponent(mehrereliefertermine);
 		
 		rechts.addComponent(ansprAdd);
 		
@@ -248,19 +257,19 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			
 			nameAnspr.setImmediate(true);
 			nameAnspr.setInputPrompt(nameInput);
-			nameAnspr.setMaxLength(15);
+			nameAnspr.setMaxLength(30);
 			
 			telefonAnspr.setImmediate(true);
 			telefonAnspr.setInputPrompt(telefonInput);
-			telefonAnspr.setMaxLength(10);	
+			telefonAnspr.setMaxLength(20);	
 			
 			handyAnspr.setImmediate(true);
 			handyAnspr.setInputPrompt(handyInput);
-			handyAnspr.setMaxLength(10);
+			handyAnspr.setMaxLength(20);
 			
 			faxAnspr.setImmediate(true);
 			faxAnspr.setInputPrompt(faxInput);
-			faxAnspr.setMaxLength(10);
+			faxAnspr.setMaxLength(20);
 			
 			verwerfen.addClickListener(new ClickListener() {
 				

@@ -18,6 +18,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -36,7 +37,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class LieferantErstellen extends VerticalLayout implements View
 {
-	private VerticalLayout	box = new VerticalLayout();
+	private HorizontalLayout	box = new HorizontalLayout();
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
@@ -47,7 +48,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private TextField			email = new TextField("E-Mail");
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
-	private TextField			notiz = new TextField("Notiz");
+	private TextArea			notiz = new TextArea("Notiz");
 	private CheckBox			mehrereliefertermine = new CheckBox("mehrereliefertermine");
 	
 	private String nameInput;
@@ -82,37 +83,59 @@ public class LieferantErstellen extends VerticalLayout implements View
 		email.setWidth("100%");
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
-		notiz.setWidth("100");
-		mehrereliefertermine.setWidth("100");
+		notiz.setWidth("100%");
+		notiz.setRows(3);
+		mehrereliefertermine.setWidth("100%");
 		
-		box.setWidth("300px");
+		box.setWidth("65%");
+		box.setHeight("90%");
 		box.setSpacing(true);
 		
 		VerticalLayout links = new VerticalLayout();
-		links.setWidth("300px");
+		links.setWidth("250px");
 		links.setSpacing(true);
+		
+		VerticalLayout mitte = new VerticalLayout();
+		mitte.setWidth("250px");
+		mitte.setSpacing(true);
+		
+		VerticalLayout rechts = new VerticalLayout();
+		rechts.setWidth("250px");
+		rechts.setSpacing(true);
+		
 		box.addComponent(links);
+		box.addComponent(mitte);
+		
 		
 		links.addComponent(name);
 		links.addComponent(bezeichnung);
 		links.addComponent(kundennummer);
 		links.addComponent(strasse);
-		links.addComponent(plz);
-		links.addComponent(ort);
-		links.addComponent(email);
-		links.addComponent(telefon);
-		links.addComponent(fax);
-		links.addComponent(notiz);
-		links.addComponent(mehrereliefertermine);
+		mitte.addComponent(plz);
+		mitte.addComponent(ort);
+		mitte.addComponent(email);
+		mitte.addComponent(telefon);
+		rechts.addComponent(fax);
+		rechts.addComponent(notiz);
+		rechts.addComponent(mehrereliefertermine);
+		
+		box.addComponent(rechts);
 		
 		HorizontalLayout control = new HorizontalLayout();
-//		control.setWidth("100%");
+		control.setWidth("100%");
 		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-		
+//		box.addComponent(control);
+//		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+//		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		
+		rechts.addComponent(control);
+		rechts.setComponentAlignment(control, Alignment.TOP_CENTER);
+		
+//		rechts.addComponent(verwerfen);
+//		rechts.addComponent(speichern);
+		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
