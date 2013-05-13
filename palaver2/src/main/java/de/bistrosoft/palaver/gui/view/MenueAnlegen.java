@@ -65,12 +65,54 @@ import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 public class MenueAnlegen extends VerticalLayout implements View {
 
 	private VerticalLayout box = new VerticalLayout();
-
+	private HorizontalLayout horizont1 = new HorizontalLayout();
+	private HorizontalLayout horizont2 = new HorizontalLayout();
+	private HorizontalLayout horizont3 = new HorizontalLayout();
+	private VerticalLayout links = new VerticalLayout();
+	private VerticalLayout mitte = new VerticalLayout();
+	private VerticalLayout rechts = new VerticalLayout();
+	private VerticalLayout links2 = new VerticalLayout();
+	private VerticalLayout mitte2 = new VerticalLayout();
+	private VerticalLayout rechts2 = new VerticalLayout();
+	private VerticalLayout links3 = new VerticalLayout();
+	private VerticalLayout mitte3 = new VerticalLayout();
+	private VerticalLayout rechts3 = new VerticalLayout();
+	private VerticalLayout blank2 = new VerticalLayout();
+	private VerticalLayout b1 = new VerticalLayout();
+	private VerticalLayout b2 = new VerticalLayout();
+	private VerticalLayout b3 = new VerticalLayout();
+	
+	
+	
+	
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
 
-	
+	private Label dummy = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy1 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy2 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy3 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy4 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label d1 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label d2 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label d3 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
     private TextField menuename = new TextField("Menuename");
     private ComboBox ersteller = new ComboBox("Menueersteller");
 	private ComboBox hauptgericht = new ComboBox("Hauptgericht");
@@ -82,8 +124,12 @@ public class MenueAnlegen extends VerticalLayout implements View {
 
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
+	private Button neuesRezept = new Button("neues Rezeptanlegen");
+	private Button hAnsehen = new Button("Hauptegricht ansehen");
+	private Button b1Ansehen = new Button("Beilage1 ansehen    ");
+	private Button b2Ansehen = new Button("Beilage2 ansehen    ");
 	
-	private String y;
+	
 	private String hauptgerichtInput;
 	private String beilage1Input;
 	private String beilage2Input;
@@ -108,7 +154,12 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		beilage2.setWidth("100%");
 		fussnoten.setWidth("100%");
 		menuename.setWidth("100%");
-
+        b1Ansehen.setWidth("150");
+        b2Ansehen.setWidth("150");
+        hAnsehen.setWidth("150");
+		
+		
+		
 		box.setWidth("300px");
 		box.setSpacing(true);
 
@@ -117,10 +168,50 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		box.addComponent(ueberschrift);
 		box.addComponent(menuename);
 		box.addComponent(ersteller);
-		box.addComponent(hauptgericht);
-		box.addComponent(beilage1);
-		box.addComponent(beilage2);
+		box.addComponent(horizont1);
+		box.addComponent(horizont2);
+		box.addComponent(horizont3);
+		box.setComponentAlignment(horizont1, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(horizont2, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(horizont3, Alignment.MIDDLE_CENTER);
+		horizont1.addComponent(links);
+		horizont1.addComponent(b1);
+		horizont1.addComponent(mitte);
+		horizont1.addComponent(rechts);
+		horizont1.setComponentAlignment(links, Alignment.BOTTOM_CENTER);
+		horizont1.setComponentAlignment(mitte, Alignment.MIDDLE_CENTER);
+		horizont1.setComponentAlignment(rechts, Alignment.MIDDLE_CENTER);
+		horizont2.addComponent(links2);
+		horizont2.addComponent(b2);
+		horizont2.addComponent(mitte2);
+		horizont2.addComponent(blank2);
+		horizont2.addComponent(rechts2);
+		horizont2.setComponentAlignment(links2, Alignment.MIDDLE_CENTER);
+		horizont2.setComponentAlignment(mitte2, Alignment.MIDDLE_CENTER);
+		horizont2.setComponentAlignment(rechts2, Alignment.MIDDLE_CENTER);
+		horizont3.addComponent(links3);
+		horizont3.addComponent(b3);
+		horizont3.addComponent(mitte3);
+		horizont3.addComponent(rechts3);
+		horizont3.setComponentAlignment(links3, Alignment.MIDDLE_CENTER);
+		horizont3.setComponentAlignment(mitte3, Alignment.MIDDLE_RIGHT);
+		horizont3.setComponentAlignment(rechts3, Alignment.MIDDLE_CENTER);
+		links.addComponent(hauptgericht);
+		links2.addComponent(beilage1);
+		links3.addComponent(beilage2);
+		mitte.addComponent(dummy1);
+		mitte2.addComponent(dummy2);
+		mitte3.addComponent(dummy3);
+		mitte.addComponent(hAnsehen);
+		mitte2.addComponent(b1Ansehen);
+		blank2.addComponent(dummy);
+		mitte3.addComponent(b2Ansehen);
+		rechts2.addComponent(dummy4);
+		rechts2.addComponent(neuesRezept);
 		box.addComponent(fussnoten);
+		b1.addComponent(d1);
+		b2.addComponent(d2);
+		b3.addComponent(d3);
 		
 //		
 		// ///////////////////////////////////
@@ -150,7 +241,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		beilage2.setNullSelectionAllowed(false);
 
 		fussnoten.setImmediate(true);
-		y = "";
+	
 		
 		load();
 
@@ -225,15 +316,80 @@ public class MenueAnlegen extends VerticalLayout implements View {
 			}
 		});
 		
+		neuesRezept.addClickListener(new ClickListener(){
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+			}
+		});
+		hAnsehen.addClickListener(new ClickListener(){
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				if (hauptgericht.getValue() != null) {
+			ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+				}
+				else {
+					Notification notification = new Notification("es wurde kein Rezept augewählt");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+					
+				}
+			
+			
+			
+			}
+		});
+		b1Ansehen.addClickListener(new ClickListener(){
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				
+				if (beilage1.getValue() != null) {
+			ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+				}
+				else {
+					Notification notification = new Notification("es wurde kein Rezept augewählt");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+					
+				}
+			
+			}
+		});
+		b2Ansehen.addClickListener(new ClickListener(){
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				if (beilage2.getValue() != null) {
+					ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+						}
+						else {
+							Notification notification = new Notification("es wurde kein Rezept augewählt");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
+							
+						}
+			}
+		});
+		
 
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				
+				
+				
+				
 				Menue menue = new Menue();
 				MenueHasFussnote fussnote = new MenueHasFussnote();
 
 				
-				
+if (menuename.getValue() != null) {
+					
+					
+					if (ersteller.getValue() != null) {
 				
 				
 				menue.setName(menuenameInput);
@@ -412,12 +568,25 @@ Rezept rezept2 = new Rezept();
 				
 				
 				
-				
+				ViewHandler.getInstance().switchView(MenueAnlegen.class);
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				//System.out.println(ausgArtikel.size());
-				
+					}
+					else{
+						Notification notification = new Notification("Bitte geben Sie dem Menü einen Namen");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+						
+					}
+				}
+				else{ 
+					Notification notification = new Notification("Bitte geben sie den Menüersteller an");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+					
+				}
 			}
 		});
 	}
