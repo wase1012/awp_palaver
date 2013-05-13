@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -64,6 +66,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private String 				handyInput;
 	private String 				faxInput;
 	private Lieferant 			lieferant;
+	private Ansprechpartner		ap;
 	
 	private TextField			nameAnspr = new TextField("Name");
 	private TextField			telefonAnspr = new TextField("Telefon");
@@ -94,6 +97,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 
 		ansprechpartner.setWidth("100%");
 		ansprechpartner.setHeight("150px");
+		
 		
 //		box.setWidth("610px");
 		box.setWidth("75%");
@@ -144,6 +148,195 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);					
+			}
+		});
+        
+        nameAnspr.addValueChangeListener(new ValueChangeListener() {
+
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+
+                nameInput = valueString;
+            }
+        });
+        
+        telefonAnspr.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+                telefonInput = valueString;
+            }
+        });
+        
+        handyAnspr.addValueChangeListener(new ValueChangeListener() {
+
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+
+                handyInput = valueString;
+            }
+        });
+        
+        faxAnspr.addValueChangeListener(new ValueChangeListener() {
+
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+
+                faxInput = valueString;
+            }
+        });
+        
+        ansprechpartner.addItemClickListener(new ItemClickListener() {	
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if(event.isDoubleClick()){
+					final Window anspr = new Window();
+					anspr.setClosable(false);
+					anspr.setWidth("400px");
+					anspr.setHeight("270px");
+					anspr.setModal(true);
+					anspr.center();
+					anspr.setResizable(false);
+					anspr.setCaption("Ansprechpartner bearbeiten");
+					
+					UI.getCurrent().addWindow(anspr);
+					
+					VerticalLayout	layout = new VerticalLayout();
+					layout.setMargin(true);
+					layout.setWidth("100%");
+					layout.setSpacing(true);
+
+					Button			speichern = new Button(IConstants.BUTTON_SAVE);
+					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
+					
+					nameAnspr.setWidth("100%");
+					telefonAnspr.setWidth("100%");
+					handyAnspr.setWidth("100%");
+					faxAnspr.setWidth("100%");
+					
+					VerticalLayout feld = new VerticalLayout();
+					
+					
+					//TODO
+					nameAnspr.setValue(nameInput);
+					telefonAnspr.setValue(telefonInput);
+					handyAnspr.setValue(handyInput);
+					faxAnspr.setValue(faxInput);
+					
+					feld.addComponent(nameAnspr);
+					feld.addComponent(telefonAnspr);
+					feld.addComponent(handyAnspr);
+					feld.addComponent(faxAnspr);
+
+					HorizontalLayout control = new HorizontalLayout();
+					control.setSpacing(true);
+					control.addComponent(verwerfen);
+					control.addComponent(speichern);
+					//TODO update aus speichern machen.
+					speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+					verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+
+					layout.addComponent(feld);
+					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
+					layout.addComponent(control);
+					layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
+					anspr.setContent(layout);
+					
+					nameAnspr.setImmediate(true);
+					nameAnspr.setInputPrompt(nameInput);
+					nameAnspr.setMaxLength(30);
+					
+					telefonAnspr.setImmediate(true);
+					telefonAnspr.setInputPrompt(telefonInput);
+					telefonAnspr.setMaxLength(20);	
+					
+					handyAnspr.setImmediate(true);
+					handyAnspr.setInputPrompt(handyInput);
+					handyAnspr.setMaxLength(20);
+					
+					faxAnspr.setImmediate(true);
+					faxAnspr.setInputPrompt(faxInput);
+					faxAnspr.setMaxLength(20);
+					
+					verwerfen.addClickListener(new ClickListener() {
+						
+						@Override
+						public void buttonClick(ClickEvent event) {
+							UI.getCurrent().removeWindow(anspr);							
+						}
+					});
+					  
+					speichern.addClickListener(new ClickListener()
+					{
+						public void buttonClick(ClickEvent event)
+						{
+							Ansprechpartner ans = new Ansprechpartner();
+							ans.setName(nameInput);
+							ans.setTelefon(telefonInput);
+							ans.setHandy(handyInput);
+							ans.setFax(faxInput);
+							ans.setLieferant(lieferant);
+							try {
+								Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
+							} catch (ConnectException | DAOException | SQLException e) {
+								System.out.println(e);
+								throw new NullPointerException("Bitte gültige Werte eingeben");
+
+							}				
+							
+							UI.getCurrent().removeWindow(anspr);
+							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				
+							}
+					});
+					
+					
+
+			        nameAnspr.addValueChangeListener(new ValueChangeListener() {
+
+			            public void valueChange(final ValueChangeEvent event) {
+			                final String valueString = String.valueOf(event.getProperty()
+			                        .getValue());
+
+			                nameInput = valueString;
+			            }
+			        });
+			        
+			        telefonAnspr.addValueChangeListener(new ValueChangeListener() {
+			            @Override
+			            public void valueChange(final ValueChangeEvent event) {
+			                final String valueString = String.valueOf(event.getProperty()
+			                        .getValue());
+			                telefonInput = valueString;
+			            }
+			        });
+			        
+			        handyAnspr.addValueChangeListener(new ValueChangeListener() {
+
+			            public void valueChange(final ValueChangeEvent event) {
+			                final String valueString = String.valueOf(event.getProperty()
+			                        .getValue());
+
+			                handyInput = valueString;
+			            }
+			        });
+			        
+			        faxAnspr.addValueChangeListener(new ValueChangeListener() {
+
+			            public void valueChange(final ValueChangeEvent event) {
+			                final String valueString = String.valueOf(event.getProperty()
+			                        .getValue());
+
+			                faxInput = valueString;
+			            }
+			        });
+				}
+			
+				
+				
 			}
 		});
         
@@ -301,6 +494,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				
 					}
 			});
+			
+			
 
 	        nameAnspr.addValueChangeListener(new ValueChangeListener() {
 
