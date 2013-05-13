@@ -7,6 +7,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -105,4 +106,31 @@ public class KategorienverwaltungTest {
 		}
 		assertThat(kat.getName(), is(neuerName));
 	}
+	
+	/**
+	 * Die Testmethode liefert alle Kategorien zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Kategorie>
+	 */
+	@Test 
+	public void getAllKategories() {
+	    	
+		   	Boolean exception = false;
+		   	List<Kategorie> klist = null;
+		
+	    		try{
+	    			
+	    			klist = kv.getAllKategories();
+	    		
+	    		}
+	    		catch (ConnectException | DAOException | SQLException e)
+	    		{
+	    			exception = true;
+	    		}
+	    		assertThat(klist.isEmpty(), is(false));
+	    		}
+	    	
 }

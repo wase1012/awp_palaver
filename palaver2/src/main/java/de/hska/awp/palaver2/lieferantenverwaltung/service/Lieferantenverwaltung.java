@@ -90,6 +90,7 @@ public class Lieferantenverwaltung extends LieferantDAO {
 
 	/**
 	 * Die Methode erzeugt einen Lieferant.
+	 * @return 
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException

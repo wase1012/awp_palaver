@@ -14,6 +14,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
@@ -82,9 +83,10 @@ public class LieferantenverwaltungTest {
 		
 		final String name = "Testlv";
 		final String tel = "123456789";
+		final Boolean termine = true;
 		lf.setName(name);
 		lf.setTelefon(tel);
-		
+		lf.setMehrereLiefertermine(termine);
 		try{
 	    lv.createLieferant(lf);
 		}
@@ -111,6 +113,7 @@ public class LieferantenverwaltungTest {
 		Boolean exception = false;
 		final Long id = Long.valueOf(1);
 		final String neuerName = "Fleischlieferant";
+		final Boolean termine = true;
 		
 		try{
 			
@@ -122,6 +125,7 @@ public class LieferantenverwaltungTest {
 			exception = true;
 		}
 		lf.setName(neuerName);
+		lf.setMehrereLiefertermine(termine);
 		
 		try{
 		lv.updateLieferant(lf);
@@ -133,5 +137,31 @@ public class LieferantenverwaltungTest {
 		assertThat(lf.getName(), is(neuerName));
 	}
 	
+	
+	/**
+	 * Die Testmethode liefert alle Lieferanten zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	@Test 
+	public void getAllLieferanten() {
+	    	
+		   	Boolean exception = false;
+		   	List<Lieferant> llist = null;
+		
+	    		try{
+	    			
+	    			llist = lv.getAllLieferanten();
+	    		
+	    		}
+	    		catch (ConnectException | DAOException | SQLException e)
+	    		{
+	    			exception = true;
+	    		}
+	    		assertThat(llist.isEmpty(), is(false));
+	    	}
+	    		
     }
 	

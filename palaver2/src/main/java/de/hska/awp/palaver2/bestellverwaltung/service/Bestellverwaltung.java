@@ -57,6 +57,16 @@ public class Bestellverwaltung extends BestellungDAO {
 		super.updateBestellung(bestellung);
 
 	}
+	
+
+	/**
+	 * Die Methode liefert alle Bestellungen zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Bestellung>
+	 */
 
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
@@ -68,6 +78,16 @@ public class Bestellverwaltung extends BestellungDAO {
 		return result;
 	}
 
+	/**
+	 * Die Methode liefert eine Bestellung anhand des Parameter id zurück.
+	 * 
+	 * @param id 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Bestellung
+	 */
 	public Bestellung getBestellungById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Bestellung bestellung = super.getBestellungById(id);
@@ -98,7 +118,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		 }
 		 
 		 //TODO Input sieht später anders aus.
-		 Date date2 = new Date(0);
+		 java.util.Date date2 = new java.util.Date();
 		 Date date = new Date(date2.getTime());
 		 bestellung.setDatum(date);
 		 bestellung.setLieferant(lieferant);

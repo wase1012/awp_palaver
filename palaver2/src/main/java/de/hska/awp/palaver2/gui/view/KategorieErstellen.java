@@ -31,7 +31,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class KategorieErstellen extends VerticalLayout  implements View{
 
-private VerticalLayout	box = new VerticalLayout();
+	private VerticalLayout	box = new VerticalLayout();
 	
 	private TextField		name = new TextField("Name");
 	private String			nameText;
@@ -91,7 +91,7 @@ private VerticalLayout	box = new VerticalLayout();
 
 
         name.addValueChangeListener(new ValueChangeListener() {
-
+        	
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());

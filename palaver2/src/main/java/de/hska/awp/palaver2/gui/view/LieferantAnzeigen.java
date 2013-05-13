@@ -80,7 +80,7 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			{
 				container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
 				table.setContainerDataSource(container);
-				table.setVisibleColumns(new Object[] {"name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax"});
+				table.setVisibleColumns(new Object[] {"name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax", "notiz"});
 				table.sort(new Object[] {"name"}, new boolean[] {true});
 			} 
 			catch (IllegalArgumentException | ConnectException | DAOException

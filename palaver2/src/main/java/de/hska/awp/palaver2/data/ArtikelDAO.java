@@ -108,7 +108,7 @@ public class ArtikelDAO extends AbstractDAO
 		while(set.next())
 		{
 			list.add(new Artikel(set.getLong("id"),
-								new Mengeneinheit(),
+								getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 								getKategorieById(set.getLong("kategorie_fk")),
 								getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
