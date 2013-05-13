@@ -12,6 +12,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -135,6 +136,11 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		box.addComponent(headline);
+		
+		Label line = new Label("<hr>");
+		line.setContentMode(ContentMode.HTML);
+		box.addComponent(line);
+		
 		box.addComponent(name);
 		box.addComponent(preis);
 		
