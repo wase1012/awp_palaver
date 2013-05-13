@@ -55,6 +55,8 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private VerticalLayout		box = new VerticalLayout();
 	private HorizontalLayout 	control = new HorizontalLayout();
 	
+	private Label				headline;
+	
 	private TextField			name = new TextField("Name");
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
@@ -88,6 +90,9 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
+		
+		headline = new Label("Neuer Artikel");
+		headline.setStyleName("ViewHeadline");
 		
 		name.setWidth("100%");
 		name.setImmediate(true);
@@ -129,6 +134,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
+		box.addComponent(headline);
 		box.addComponent(name);
 		box.addComponent(preis);
 		
@@ -292,6 +298,14 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			{
 				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
 			}
+		});		
+		addKategorie.addClickListener(new ClickListener()
+		{	
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				ViewHandler.getInstance().switchView(KategorieErstellen.class);
+			}
 		});
 		
 		load();
@@ -411,6 +425,8 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		/**
 		 * Daten in Felder schreiben.
 		 */
+		headline.setValue("Artikel bearbeiten");
+		
 		name.setValue(artikel.getName());
 		artnr.setValue(artikel.getArtikelnr());
 		preis.setValue(artikel.getPreis() + "");
