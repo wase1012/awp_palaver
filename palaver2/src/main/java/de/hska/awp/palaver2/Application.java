@@ -19,6 +19,8 @@ public class Application extends UI
 {
     private static Application instance = null;
     
+    private String username;
+    
     /**
      * Zugriff auf "MAIN" Klasse und Session
      * @return Application
@@ -73,4 +75,20 @@ public class Application extends UI
 //        layout.addComponent(MainLayout.getInstance());
         layout.addComponent(new LoginForm());
     }
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername()
+	{
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
 }

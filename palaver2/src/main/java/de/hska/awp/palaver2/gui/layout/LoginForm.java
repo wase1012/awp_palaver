@@ -16,6 +16,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
+import de.hska.awp.palaver2.Application;
+
 /**
  * @author Sebastian
  *
@@ -62,6 +64,7 @@ public class LoginForm extends VerticalLayout
 		username.setWidth("100%");
 		password.setWidth("100%");
 		fields.setComponentAlignment(loginButton, Alignment.BOTTOM_RIGHT);
+		username.focus();
 		
 		content.addComponent(fields);
 		
@@ -71,6 +74,7 @@ public class LoginForm extends VerticalLayout
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				Application.getInstance().setUsername(username.getValue());
 				UI.getCurrent().setContent(MainLayout.getInstance());
 			}
 		});

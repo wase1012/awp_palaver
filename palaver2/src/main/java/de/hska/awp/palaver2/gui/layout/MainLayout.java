@@ -12,6 +12,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import de.hska.awp.palaver2.Application;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
@@ -36,7 +37,7 @@ public class MainLayout extends VerticalLayout implements Command
 	private HorizontalLayout		header = new HorizontalLayout();
 	
 	private MenuBar					menu = new MenuBar();
-	
+	private MenuItem 				username = null;
 	@SuppressWarnings("deprecation")
 	private MainLayout()
 	{
@@ -91,6 +92,8 @@ public class MainLayout extends VerticalLayout implements Command
 		this.addComponent(menu);
 		
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
+		MenuItem username = menu.addItem(getUser(), null);
+		username.setEnabled(false);
 		
 		DefaultView content = new DefaultView();
 		this.addComponent(content);
@@ -136,6 +139,8 @@ public class MainLayout extends VerticalLayout implements Command
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 			break;
 			case IConstants.MENU_LOGOUT:
+				Application.getInstance().setUsername(null);
+				instance = null;
 				UI.getCurrent().setContent(new LoginForm());
 			break;
 			case IConstants.MENU_BESTELLUNG_NEW:
@@ -145,5 +150,10 @@ public class MainLayout extends VerticalLayout implements Command
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;
 		}
+	}
+	
+	private String getUser()
+	{
+		return "Benutzer : " + Application.getInstance().getUsername();
 	}
 }
