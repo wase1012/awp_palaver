@@ -20,6 +20,7 @@ public interface IConstants
 	public final String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
 	public final String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
+	public final String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
 	public final String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten";
 	public final String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
 	public final String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
@@ -48,6 +49,7 @@ public interface IConstants
 	public final String		BUTTON_ADD = "Hinzufügen";
 	public final String		BUTTON_NEW = "Neu";
 	public final String		BUTTON_EDIT = "Bearbeiten";
+	public final String		BUTTON_OK = "OK";
 	
 	// Icons fuer Knoepfe
 	public final String		BUTTON_SAVE_ICON = "img/save.ico";
@@ -55,4 +57,5 @@ public interface IConstants
 	public final String 	BUTTON_ADD_ICON = "img/add.ico";
 	public final String 	BUTTON_NEW_ICON = "img/new.ico";
 	public final String 	BUTTON_EDIT_ICON = "img/edit.ico";
+	public final String		BUTTON_OK_ICON = "img/check.ico";
 }
