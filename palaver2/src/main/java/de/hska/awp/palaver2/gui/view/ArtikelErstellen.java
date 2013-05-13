@@ -12,6 +12,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -55,11 +56,13 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private VerticalLayout		box = new VerticalLayout();
 	private HorizontalLayout 	control = new HorizontalLayout();
 	
+	private Label				headline;
+	
 	private TextField			name = new TextField("Name");
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("Bestellgröße");
+	private TextField			bestellung = new TextField("Bestellgr�ߟe");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -89,17 +92,20 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
+		headline = new Label("Neuer Artikel");
+		headline.setStyleName("ViewHeadline");
+		
 		name.setWidth("100%");
 		name.setImmediate(true);
 		name.addValidator(new StringLengthValidator("Name zu lang oder zu kurz: {0}",2,50,false));
 		
 		preis.setWidth("100%");
 		preis.setImmediate(true);
-		preis.addValidator(new CustomDoubleValidator("Ungültiger Preis: {0}"));
+		preis.addValidator(new CustomDoubleValidator("Ung�ltiger Preis: {0}"));
 		
 		artnr.setWidth("100%");
 		artnr.setImmediate(true);
-		artnr.addValidator(new StringLengthValidator("Artikelnummer zu lang oder zu kurz: {0}",2,30,false));
+//		artnr.addValidator(new StringLengthValidator("Artikelnummer zu lang oder zu kurz: {0}",2,30,false));
 		
 		durchschnitt.setWidth("100%");
 		durchschnitt.setImmediate(true);
@@ -107,7 +113,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		bestellung.setWidth("100%");
 		bestellung.setImmediate(true);
-		bestellung.addValidator(new CustomDoubleValidator("Ungültige Bestellgröße: {0}"));
+		bestellung.addValidator(new CustomDoubleValidator("Ung�ltige Bestellgr�ߟe: {0}"));
 		
 		lieferant.setWidth("100%");
 		
@@ -129,6 +135,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
+		box.addComponent(headline);
 		box.addComponent(name);
 		box.addComponent(preis);
 		
@@ -292,6 +299,14 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			{
 				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
 			}
+		});		
+		addKategorie.addClickListener(new ClickListener()
+		{	
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				ViewHandler.getInstance().switchView(KategorieErstellen.class);
+			}
 		});
 		
 		load();
@@ -341,7 +356,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		{	
 			/**
 			 * Wenn der Update-Knopf gedrueckt wird, wird der Artikel mit den neuen 
-			 * Daten aus den Feldern überschrieben; die ID bleibt. ANschliessend wird 
+			 * Daten aus den Feldern Ueberschrieben; die ID bleibt. ANschliessend wird 
 			 * er gespeichert und ein Dialog-Fenster oeffnet sich.
 			 */
 			@Override
@@ -411,6 +426,8 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		/**
 		 * Daten in Felder schreiben.
 		 */
+		headline.setValue("Artikel bearbeiten");
+		
 		name.setValue(artikel.getName());
 		artnr.setValue(artikel.getArtikelnr());
 		preis.setValue(artikel.getPreis() + "");
