@@ -172,5 +172,89 @@ public class Lieferant implements java.io.Serializable {
 		return name;
 	}
 
+	/**
+	 * Wird fuer die GUI benoetigt!
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Lieferant other = (Lieferant) obj;
+		if (bezeichnung == null)
+		{
+			if (other.bezeichnung != null)
+				return false;
+		} else if (!bezeichnung.equals(other.bezeichnung))
+			return false;
+		if (email == null)
+		{
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fax == null)
+		{
+			if (other.fax != null)
+				return false;
+		} else if (!fax.equals(other.fax))
+			return false;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (kundennummer == null)
+		{
+			if (other.kundennummer != null)
+				return false;
+		} else if (!kundennummer.equals(other.kundennummer))
+			return false;
+		if (mehrereliefertermine != other.mehrereliefertermine)
+			return false;
+		if (name == null)
+		{
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (notiz == null)
+		{
+			if (other.notiz != null)
+				return false;
+		} else if (!notiz.equals(other.notiz))
+			return false;
+		if (ort == null)
+		{
+			if (other.ort != null)
+				return false;
+		} else if (!ort.equals(other.ort))
+			return false;
+		if (plz == null)
+		{
+			if (other.plz != null)
+				return false;
+		} else if (!plz.equals(other.plz))
+			return false;
+		if (strasse == null)
+		{
+			if (other.strasse != null)
+				return false;
+		} else if (!strasse.equals(other.strasse))
+			return false;
+		if (telefon == null)
+		{
+			if (other.telefon != null)
+				return false;
+		} else if (!telefon.equals(other.telefon))
+			return false;
+		return true;
+	}
+
 
 }
