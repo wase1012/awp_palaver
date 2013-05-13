@@ -143,20 +143,92 @@
 	padding-bottom: 10px;
 }
 
+
+.menueplan-grid {
+ margin: 0px;
+padding: 0px;
+border-left: 1px solid rgb(50,205,50);
+border-bottom: 1px solid rgb(50,205,50);
+}
+
+.menueplan-grid > div {
+margin: 0px;
+padding: 0px;
+border-right: 1px solid rgb(50,205,50);
+border-top: 1px solid rgb(50,205,50);
+
+}
+
+.menueplan-add .v-icon{
+display: block;
+margin-left: auto;
+margin-right: auto;
+height: 65%;
+width: 65%;
+}
+
+.menueplan-nextweek .v-icon{
+display: block;
+margin-left: 300px;
+height: 30px;
+}
+
+.menueplan-lastweek .v-icon{
+display: block;
+margin-right: 300px;
+height: 30px;
+}
+
+.v-button.v-button-link,
+.v-button.v-button-link:focus,
+.v-button.v-button-link:active,
+.v-button-link.v-pressed,
+.v-disabled.v-button.v-button-link,
+.v-button.v-button-link .v-button-wrap,
+.v-button.v-button-link:focus .v-button-wrap,
+.v-button.v-button-link:active .v-button-wrap,
+.v-button-link.v-pressed .v-button-wrap,
+.v-disabled.v-button.v-button-link .v-button-wrap {
+        background: transparent;
+        height: auto;
+        padding: 0;
+        cursor: pointer;
+        line-height: inherit;
+        }
+
+.v-button.v-button-link.v-disabled,
+.v-button.v-button-link.v-disabled .v-button-wrap {
+        cursor: default;
+        }
+        
+.v-button-link .v-button-caption,
+.v-nativebutton-link .v-nativebutton-caption {
+        line-height: inherit;
+        font-weight: normal;
+        color: #1b699f;
+        font-size: 12px;
+        text-shadow: none;
+        }
+        
+.v-button-link:focus .v-button-caption,
+.v-nativebutton-link:focus .v-nativebutton-caption {
+        outline: 1px dotted #1b699f;
+        }
+        
 .ViewHeadline {
 	font-size: 18px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 }
 
 .v-table-cell-content-check {
-	background-image:url('img/check.ico');
+	background-image:url('img/tick_circle.ico');
 	background-position:center center;
 	background-repeat: no-repeat;
 	font-size: 0px;
 }
 
 .v-table-cell-content-cross {
-	background-image:url('img/false.ico');
+	background-image:url('img/cross_circle.ico');
 	background-position:center center;
 	background-repeat: no-repeat;
 	font-size: 0px;
