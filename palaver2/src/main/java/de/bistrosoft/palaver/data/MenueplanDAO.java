@@ -68,7 +68,7 @@ public class MenueplanDAO extends AbstractDAO {
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
-				MenueComponent menueComp = new MenueComponent(menue, null, row, col, false);
+				MenueComponent menueComp = new MenueComponent(menue, null, null, row, col, false);
 				menues.add(menueComp);
 			}
 			menueplan.setMenues(menues);

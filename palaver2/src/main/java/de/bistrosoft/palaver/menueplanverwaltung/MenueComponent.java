@@ -88,12 +88,12 @@ public class MenueComponent extends CustomComponent{
 	}
 
 	// Konstruktor für Menükomponente 
-	public MenueComponent(Menue menue, MenueplanGridLayout nMenueplan, int nRow, int nCol, Boolean isChanged){
+	public MenueComponent(Menue menue, MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
 		this.isChanged = isChanged;
 		col = nCol;
 		row = nRow;
 		this.menueplan=nMenueplan;
-//		menueGrid = menueplan.layout;
+		menueGrid = nMenueGrid;
 		comp = this;
 		this.setMenue(menue);
 		
