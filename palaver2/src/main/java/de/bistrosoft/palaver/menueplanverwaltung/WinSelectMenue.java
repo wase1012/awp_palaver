@@ -10,6 +10,8 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.server.Page;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -19,6 +21,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -53,7 +56,11 @@ public class WinSelectMenue extends Window {
 	DDGridLayout menueGrid;
 
 	BeanItemContainer<Menue>  menueContainer;
-
+	
+	// Horizontales und vertikales Layout anlegen
+	HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+	VerticalLayout leftLayout = new VerticalLayout();
+	
 	// Konstruktor 
 	public WinSelectMenue(MenueplanGridLayout nMenuePlan,Component nDestComp,int nDestRow, int nDestCol) {
 		menueplan = nMenuePlan;
@@ -76,9 +83,6 @@ public class WinSelectMenue extends Window {
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		setContent(splitPanel);
 
-		// Horizontales und vertikales Layout anlegen
-		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-		VerticalLayout leftLayout = new VerticalLayout();
 		
 		// Splitpanel die Layouts zufügen
 		splitPanel.addComponent(leftLayout);
@@ -150,7 +154,7 @@ public class WinSelectMenue extends Window {
 
 		// Info im Suchfeld setzen
 		searchField.setInputPrompt("Menü suchen");
-
+			
 		// TextChangeEvent wird ausgelöst, wenn bei der Eingabe eine Pause ist
 		searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
 
@@ -267,6 +271,20 @@ public class WinSelectMenue extends Window {
 				editorLayout.setVisible(menueId != null);
 			}
 		});
+		
+		// bei Ändern Komponente aus Menüplan selektieren
+		if (menueGrid.getComponent(destCol, destRow).toString().contains("de.bistrosoft.palaver.menueplanverwaltung.MenueComponent")){
+			Integer MenueSelected = new Integer (((MenueComponent) menueGrid.getComponent(destCol, destRow)).getMenue().getId().intValue());
+			Integer Index = new Integer(0);
+			for (int i = 0; i < menueList.getItemIds().size(); i++) {
+				if(menueContainer.getIdByIndex(i).getId().intValue() == MenueSelected){
+					Index = i;
+				}
+			}
+			menueList.select(menueContainer.getIdByIndex(Index));
+
+		}
+		
 	}
 
 }
