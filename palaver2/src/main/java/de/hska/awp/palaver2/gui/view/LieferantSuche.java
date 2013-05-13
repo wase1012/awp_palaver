@@ -66,7 +66,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private String 				handyInput;
 	private String 				faxInput;
 	private Lieferant 			lieferant;
-	private Ansprechpartner		ap;
+	private Ansprechpartner		ansprechpartnerBean;
 	
 	private TextField			nameAnspr = new TextField("Name");
 	private TextField			telefonAnspr = new TextField("Telefon");
@@ -190,6 +190,17 @@ public class LieferantSuche extends VerticalLayout  implements View{
             }
         });
         
+        ansprechpartner.setSelectable(true);
+        
+        ansprechpartner.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				ansprechpartnerBean = (Ansprechpartner) event.getProperty().getValue();
+			}
+		});
+        
         ansprechpartner.addItemClickListener(new ItemClickListener() {	
 			@Override
 			public void itemClick(ItemClickEvent event) {
@@ -222,10 +233,10 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					
 					
 					//TODO
-					nameAnspr.setValue(nameInput);
-					telefonAnspr.setValue(telefonInput);
-					handyAnspr.setValue(handyInput);
-					faxAnspr.setValue(faxInput);
+					nameAnspr.setValue(ansprechpartnerBean.getName());
+					telefonAnspr.setValue(ansprechpartnerBean.getTelefon());
+					handyAnspr.setValue(ansprechpartnerBean.getHandy());
+					faxAnspr.setValue(ansprechpartnerBean.getFax());
 					
 					feld.addComponent(nameAnspr);
 					feld.addComponent(telefonAnspr);
