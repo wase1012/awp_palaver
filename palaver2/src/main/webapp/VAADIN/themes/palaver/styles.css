@@ -142,3 +142,22 @@
 	font-size: 18px;
 	padding-bottom: 10px;
 }
+
+.ViewHeadline {
+	font-size: 18px;
+	padding-bottom: 5px;
+}
+
+.v-table-cell-content-check {
+	background-image:url('img/check.ico');
+	background-position:center center;
+	background-repeat: no-repeat;
+	font-size: 0px;
+}
+
+.v-table-cell-content-cross {
+	background-image:url('img/false.ico');
+	background-position:center center;
+	background-repeat: no-repeat;
+	font-size: 0px;
+}

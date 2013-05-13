@@ -16,7 +16,9 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -90,8 +92,24 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		{
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "bestellgroesse"});
+			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "bestellgroesse"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
+			
+			table.setCellStyleGenerator(new CellStyleGenerator()
+			{
+				
+				@Override
+				public String getStyle(CustomTable source, Object itemId, Object propertyId)
+				{
+					if ("standard".equals(propertyId))
+					{
+						Artikel artikel = (Artikel) itemId;
+						return artikel.isStandard() ? "check" : "cross";
+					}
+					return "";
+				}
+			});
+			table.setColumnWidth("standard", 60);
 		} 
 		catch (IllegalArgumentException | ConnectException | DAOException
 				| SQLException e)
