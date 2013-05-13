@@ -97,7 +97,7 @@ public class MenueplanGridLayout extends CustomComponent{
 	    // Fülle Überschriftenspalte mit formatierten Labels
 	    @SuppressWarnings("deprecation")
 		Label[] arlbUeb = {new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>", Label.CONTENT_XHTML),
-	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     Köche</font></pre>", Label.CONTENT_XHTML),
+	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     K�che</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Fleischgericht</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),
 	    					new Label("<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>", Label.CONTENT_XHTML),

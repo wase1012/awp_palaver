@@ -41,7 +41,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("StaÃŸe");
+	private TextField			strasse = new TextField("Staße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -186,7 +186,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (ConnectException | DAOException | SQLException e) {
-							throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
@@ -297,7 +297,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setCaption("Ansprechpartner hinzufÃ¼gen");
+			anspr.setCaption("Ansprechpartner hinzufügen");
 			
 			UI.getCurrent().addWindow(anspr);
 			
@@ -372,7 +372,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (ConnectException | DAOException | SQLException e) {
 						System.out.println(e);
-						throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+						throw new NullPointerException("Bitte gültige Werte eingeben");
 
 					}				
 					

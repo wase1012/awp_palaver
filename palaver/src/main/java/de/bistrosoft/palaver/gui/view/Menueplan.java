@@ -167,7 +167,7 @@ public class Menueplan extends VerticalLayout implements View{
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
-				Notification notification = new Notification("MenÃ¼plan fÃ¼r Kalenderwoche " + week + "/" + year + " wurde gespeichert");
+				Notification notification = new Notification("Menüplan für Kalenderwoche " + week + "/" + year + " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -175,7 +175,7 @@ public class Menueplan extends VerticalLayout implements View{
 		
 		// FuÃŸnoten
 		@SuppressWarnings("deprecation")
-		Label lbFussnoten=new Label("<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mÃ¶gl. &nbsp;&nbsp; (veg.m) = vegetarisch mÃ¶gl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mÃ¶gl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mÃ¶gl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mÃ¶gl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mÃ¶gl.</div>", Label.CONTENT_XHTML);
+		Label lbFussnoten=new Label("<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>", Label.CONTENT_XHTML);
 		
 		// HinzufÃ¼gen und Anordnen weiterer Komponenten		
 		Label lbPlatzhalter = new Label(" ");

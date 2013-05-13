@@ -6,6 +6,8 @@ package de.hska.awp.palaver2.util;
 
 import org.vaadin.risto.stepper.IntStepper;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.TextField;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -48,6 +50,7 @@ public class BestellungData
 		this.montag.setValue(0);
 	}
 	
+	@SuppressWarnings("serial")
 	public BestellungData(Artikel artikel)
 	{
 		super();
@@ -66,6 +69,34 @@ public class BestellungData
 		this.montag = new IntStepper();
 		this.montag.setValue(0);
 		this.artikel = artikel;
+		
+		this.durchschnitt.setWidth("50px");
+		this.kantine.setWidth("50px");
+		this.gesamt.setWidth("50px");
+		this.freitag.setWidth("50px");
+		this.montag.setWidth("50px");
+		
+		this.durchschnitt.setImmediate(true);
+		this.kantine.setImmediate(true);
+		
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				valueChangeEvent();
+			}
+		});
+		
+		this.kantine.addValueChangeListener(new ValueChangeListener()
+		{
+			
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				valueChangeEvent();
+			}
+		});
 	}
 	
 	/**
@@ -184,5 +215,19 @@ public class BestellungData
 	public Artikel getBestellungArtikel()
 	{
 		return this.artikel;
+	}
+	
+	private void valueChangeEvent()
+	{
+		try
+		{
+			Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+			gesamt.setValue(gesammt + "");
+			freitag.setValue(gesammt);
+		}
+		catch (NumberFormatException e)
+		{
+			gesamt.setValue("Invalid");
+		}
 	}
 }

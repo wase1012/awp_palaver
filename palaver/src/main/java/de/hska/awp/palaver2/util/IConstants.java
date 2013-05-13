@@ -29,7 +29,7 @@ public interface IConstants
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
 	public final String		BUTTON_SAVE = "Speichern";
 	public final String		BUTTON_DISCARD = "Verwerfen";
-	public final String		BUTTON_ADD = "HinzufÃ¼gen";
+	public final String		BUTTON_ADD = "Hinzufügen";
 	public final String		BUTTON_NEW = "Neu";
 	public final String		BUTTON_EDIT = "Bearbeiten";
 	
@@ -43,14 +43,14 @@ public interface IConstants
 	public final String 	MENU_REZEPT_NEU = "Anlegen";
 	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
 	public final String 	MENU_REZEPT_AENDERN = "Ã„ndern";
-	public final String 	MENU_REZEPT_LOESCHEN = "LÃ¶schen";
+	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
 
-	public final String 	MENU_MENUPLAN_HEADLINE = "MenÃ¼plan";
-	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller MenÃ¼plan";
-	public final String 	MENU_MENUPLAN_HISTORIE = "MenÃ¼plan-Historie";
+	public final String 	MENU_MENUPLAN_HEADLINE = "Menüplan";
+	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
+	public final String 	MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
 
 	public final String 	MENU_FUSSNOTE = "Fussnoten";
-	public final String 	MENU_GESCHMACK = "GeschmÃ¤cker";
+	public final String 	MENU_GESCHMACK = "Geschmäcker";
 	public final String 	MENU_REZEPTART = "Rezeptarten";
 	public final String 	MENU_ZUBEREITUNG = "Zubereitungen";
 	

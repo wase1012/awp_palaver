@@ -59,7 +59,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("Bestellgröße");
+	private TextField			bestellung = new TextField("Bestellgr�ߟe");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -95,7 +95,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		preis.setWidth("100%");
 		preis.setImmediate(true);
-		preis.addValidator(new CustomDoubleValidator("Ungültiger Preis: {0}"));
+		preis.addValidator(new CustomDoubleValidator("Ung�ltiger Preis: {0}"));
 		
 		artnr.setWidth("100%");
 		artnr.setImmediate(true);
@@ -107,7 +107,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		bestellung.setWidth("100%");
 		bestellung.setImmediate(true);
-		bestellung.addValidator(new CustomDoubleValidator("Ungültige Bestellgröße: {0}"));
+		bestellung.addValidator(new CustomDoubleValidator("Ung�ltige Bestellgr�ߟe: {0}"));
 		
 		lieferant.setWidth("100%");
 		
@@ -341,7 +341,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		{	
 			/**
 			 * Wenn der Update-Knopf gedrueckt wird, wird der Artikel mit den neuen 
-			 * Daten aus den Feldern überschrieben; die ID bleibt. ANschliessend wird 
+			 * Daten aus den Feldern Ueberschrieben; die ID bleibt. ANschliessend wird 
 			 * er gespeichert und ein Dialog-Fenster oeffnet sich.
 			 */
 			@Override
