@@ -33,7 +33,7 @@ public class customFilterDecorator implements FilterDecorator {
 
 	@Override
 	public Resource getBooleanFilterIcon(Object propertyId, boolean value) {
-		return value ? new ThemeResource("img/check.ico") : new ThemeResource("img/false.ico");
+		return value ? new ThemeResource("img/tick_circle.ico") : new ThemeResource("img/cross_circle.ico");
 	}
 
 	@Override
