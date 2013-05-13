@@ -7,6 +7,8 @@ import java.util.List;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -81,6 +83,18 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if(event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
+				}
+			}
+		});
+		
+		liefTable.addItemClickListener(new ItemClickListener()
+		{
+			@Override
+			public void itemClick(ItemClickEvent event)
+			{
+				if (event.isDoubleClick())
+				{
+					bestellen.click();
 				}
 			}
 		});
