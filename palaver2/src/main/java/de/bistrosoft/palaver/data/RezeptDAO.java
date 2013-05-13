@@ -36,7 +36,7 @@ public class RezeptDAO extends AbstractDAO {
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
-	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE name = {0}";
+	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private final static String PUT_REZEPT = "INSERT INTO rezept(`name`,"
 			+ "`rezeptart_fk`," + "`kommentar`,`" + "`portion`,"
 			+ "`geschmack_fk`," + "`mitarbeiter_fk`)VALUES({0})";
@@ -196,6 +196,19 @@ public class RezeptDAO extends AbstractDAO {
 
 		return result;
 	}
+	
+	public Rezept getRezeptByName1(String name) throws ConnectException,
+	DAOException, SQLException {
+Rezept result = null;
+
+ResultSet set =  get(MessageFormat.format(GET_REZEPT_BY_NAME, "name"));
+
+while (set.next()) {
+	result = new Rezept(set.getLong("id"));
+}
+
+return result;
+}
 
 	public List<Rezept> getAllArtikelByRezeptId(int rezeptID)
 			throws ConnectException, DAOException, SQLException {
@@ -256,7 +269,7 @@ public class RezeptDAO extends AbstractDAO {
 
 	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
 			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO rezept_has_fussnote (rezept_fk, zubereitung_fk) VALUES"
+		String INSERT_QUERY = "INSERT INTO rezept_has_zubereitung (rezept_fk, zubereitung_fk) VALUES"
 				+ "("
 				+ rezeptHasZubereitung.getRezept()
 				+ ", "

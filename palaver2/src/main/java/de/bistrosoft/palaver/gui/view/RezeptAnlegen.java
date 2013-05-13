@@ -319,15 +319,46 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					e1.printStackTrace();
 				}
 
+			
+
+				
+				try {
+					rezept.setRezeptart(RezeptartDAO.getInstance()
+							.getRezeptartById(
+									Long.parseLong(rezeptartInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					e1.printStackTrace();
+				}
+				rezept.setKommentar(kommentarInput);
+				rezept.setPortion(Integer.parseInt(portionInput.toString()));
+				try {
+					rezept.setMitarbeiter(MitarbeiterDAO
+							.getInstance()
+							.getMitarbeiterById(
+									Long.parseLong(mitarbeiterInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				try {
+					Rezeptverwaltung.getInstance().createRezept(rezept);
+
+				} catch (ConnectException | DAOException | SQLException e) {
+					e.printStackTrace();
+				}
+				
 				// / Liste der Zubereitungen
 				Rezept rez = null;
 				try {
-					rez = Rezeptverwaltung.getInstance().getRezeptByName(
-							nameInput);
+					System.out.println(nameInput);
+					rez = Rezeptverwaltung.getInstance().getRezeptByName1(nameInput);
 				} catch (ConnectException | DAOException | SQLException e1) {
 					e1.printStackTrace();
 				}
-
+				System.out.println(rez);
 				if (zubereitung.getValue().toString() != "[]") {
 					List<String> ZubereitungId = Arrays.asList(valueString
 							.substring(1, valueString.length() - 1).split(
@@ -361,7 +392,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						}
 
 					}
-
+					System.out.println(zubereitunglist);
 					for (RezeptHasZubereitung i : zubereitunglist) {
 
 						try {
@@ -374,31 +405,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					}
 				}
 
-				try {
-					rezept.setRezeptart(RezeptartDAO.getInstance()
-							.getRezeptartById(
-									Long.parseLong(rezeptartInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
-					e1.printStackTrace();
-				}
-				rezept.setKommentar(kommentarInput);
-				rezept.setPortion(Integer.parseInt(portionInput.toString()));
-				try {
-					rezept.setMitarbeiter(MitarbeiterDAO
-							.getInstance()
-							.getMitarbeiterById(
-									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
-					e1.printStackTrace();
-				}
-				try {
-					Rezeptverwaltung.getInstance().createRezept(rezept);
-
-				} catch (ConnectException | DAOException | SQLException e) {
-					e.printStackTrace();
-				}
+				
+				
 
 				Notification notification = new Notification(
 						"Rezept wurde gespeichert!");

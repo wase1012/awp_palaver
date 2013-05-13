@@ -89,5 +89,17 @@ public class MenueDAO extends AbstractDAO {
 				+ menueHasRezept.getRezept() + ")";
 		this.put(INSERT_QUERY);
 	}
+	
+	///
+	
+	public void FussnoteDelete(Menue menue1)
+			throws ConnectException, DAOException, SQLException {
+//		String DELETE_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
+//				+ "("
+//				+ menueHasFussnote.getMenue()
+//				+ ", "
+//				+ menueHasFussnote.getFussnote() + ")";
+//		this.put(DELETE_QUERY);
+	}
 
 }
