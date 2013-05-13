@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -159,8 +161,8 @@ public class MenueComponent extends CustomComponent{
 //				            public void onClose(ConfirmDialog dialog) {
 //				                if (dialog.isConfirmed()) {
 				                	//finde position
-				                    Component sourceComp = comp;
-				                	Integer sourceRow =-1;
+									Component sourceComp = comp;
+									Integer sourceRow =-1;
 				                    Integer sourceColumn=-1;
 				                    final int COLUMNS = menueGrid.getColumns();
 				                    final int ROWS = menueGrid.getRows();
@@ -171,13 +173,16 @@ public class MenueComponent extends CustomComponent{
 				            	        		sourceRow=row;
 				            	        	}
 				            	        }
-				                    }	
-				                	//aktuelle Menükomponente löschen
-				                	menueGrid.removeComponent(comp);
-				                	//Add
-				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
-				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
-				        			btn.click();
+				                    }
+//				                	//Add
+//				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
+//				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+//				        			btn.click();
+				                    WinSelectMenue window = new WinSelectMenue(menueplan, sourceComp, row, col);
+					        		UI.getCurrent().addWindow(window);
+					        		window.setModal(true);
+					        		window.setWidth("50%");
+					        		window.setHeight("50%");
 //				                }
 //				            }			            
 //				        });	
