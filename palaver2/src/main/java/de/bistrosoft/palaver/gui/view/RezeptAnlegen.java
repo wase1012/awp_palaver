@@ -248,13 +248,13 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			}
 		});
 
-//		zubereitung.addValueChangeListener(new ValueChangeListener() {
-//			@Override
-//			public void valueChange(final ValueChangeEvent event) {
-//				valueString = String.valueOf(event.getProperty().getValue());
-//
-//			}
-//		});
+		zubereitung.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				valueString = String.valueOf(event.getProperty().getValue());
+
+			}
+		});
 
 		kommentar.addValueChangeListener(new ValueChangeListener() {
 
@@ -274,33 +274,33 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				ViewHandler.getInstance().returnToDefault();
 			}
 		});
-//		geschmackCb.addValueChangeListener(new ValueChangeListener() {
-//
-//			public void valueChange(final ValueChangeEvent event) {
-//				final String valueString = String.valueOf(event.getProperty()
-//						.getValue());
-//
-//				geschmackInput = valueString;
-//			}
-//		});
-//		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
-//
-//			public void valueChange(final ValueChangeEvent event) {
-//				final String valueString = String.valueOf(event.getProperty()
-//						.getValue());
-//
-//				rezeptartInput = valueString;
-//			}
-//		});
-//		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
-//
-//			public void valueChange(final ValueChangeEvent event) {
-//				final String valueString = String.valueOf(event.getProperty()
-//						.getValue());
-//
-//				mitarbeiterInput = valueString;
-//			}
-//		});
+		geschmackCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				geschmackInput = valueString;
+			}
+		});
+		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				rezeptartInput = valueString;
+			}
+		});
+		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty()
+						.getValue());
+
+				mitarbeiterInput = valueString;
+			}
+		});
 
 		speichern.addClickListener(new ClickListener() {
 			@Override
@@ -317,9 +317,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				rezept.setErstellt(date2);
 
 				try {
-					rezept.setGeschmack(GeschmackDAO.getInstance()
-							.getGeschmackById(
-									Long.parseLong(geschmackInput.toString())));
+					rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
 				} catch (NumberFormatException | ConnectException
 						| DAOException | SQLException e1) {
 					e1.printStackTrace();
@@ -414,10 +412,10 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				notification.show(Page.getCurrent());
 				
 				
-				System.out.println(ausgArtikel.size());
-				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
-				ausgArtikel=bicArtikel.getItemIds();
-				System.out.println(ausgArtikel.size());
+//				System.out.println(ausgArtikel.size());
+//				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
+//				ausgArtikel=bicArtikel.getItemIds();
+//				System.out.println(ausgArtikel.size());
 
 			}
 		});

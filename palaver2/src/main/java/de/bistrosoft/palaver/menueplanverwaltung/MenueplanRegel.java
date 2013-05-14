@@ -102,6 +102,9 @@ public class MenueplanRegel {
 									++count;
 									if (count > maxValue) {
 										System.out.println(fehlermeldung);
+										List<String> fehlermeldungen = new ArrayList<>();
+										fehlermeldungen.add(fehlermeldung);
+										mc.setFehlermeldungen(fehlermeldungen);
 										return false;
 									}
 								}

@@ -1,6 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -39,9 +40,28 @@ public class MenueComponent extends CustomComponent{
 	private Menue menue;
 	private Boolean isChanged;
 	private Button btFehler;
+	private List<String> fehlermeldungen;
 	
 	
 	
+	public List<String> getFehlermeldungen() {
+		return fehlermeldungen;
+	}
+
+	public void setFehlermeldungen(List<String> fehlermeldungen) {
+		this.fehlermeldungen = fehlermeldungen;
+		if(fehlermeldungen!=null && fehlermeldungen.size()>0){
+			btFehler.setVisible(true);
+			String desc="";
+			for (String s : fehlermeldungen){
+				desc+=s;
+			}
+			btFehler.setDescription(desc);
+		}
+		else btFehler.setVisible(false);
+		
+	}
+
 	public MenueplanGridLayout getMenueplan() {
 		return menueplan;
 	}
@@ -213,6 +233,8 @@ public class MenueComponent extends CustomComponent{
 		btFehler.setIcon(new ThemeResource("img/icon_fehler.bmp"));
 //		btFehler.addStyleName("menueplan-add");
 		vl.addComponent(btFehler);
+		btFehler.setDescription("Fehler");
+		btFehler.setVisible(false);
 //		vl.setComponentAlignment(btFehler, Alignment.MIDDLE_CENTER);
 		
 		HorizontalLayout hl = new HorizontalLayout();
