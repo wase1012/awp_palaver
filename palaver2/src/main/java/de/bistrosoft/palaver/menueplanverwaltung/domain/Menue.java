@@ -18,12 +18,15 @@ public class Menue {
 	private List<Rezept> rezepte;
 	private Mitarbeiter koch;
 	private String kochname;
+	private Boolean hauptgericht;
 	
 	public Menue(Long id, String name, String koch){
 		this.id=id;
 		this.name=name;
 		this.kochname=koch;
 	}
+	
+	
 	
 	public Menue(Long id, String name, Mitarbeiter koch){
 		this.id=id;
@@ -57,6 +60,14 @@ public class Menue {
 
 	public void setKochname(String kochname) {
 		this.kochname = kochname;
+	}
+	
+	public Boolean getHauptgericht() {
+		return hauptgericht;
+	}
+
+	public void setHauptgericht(Boolean hauptgericht) {
+		this.hauptgericht = hauptgericht;
 	}
 
 	@Id

@@ -17,6 +17,8 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.IConstants;
@@ -27,19 +29,15 @@ import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
-/**
- * @author Jan Lauinger
- * 
- */
 @SuppressWarnings("serial")
-public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
+public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private FilterTable table;
 
 	private Button showFilter;
-	private Rezept rezept;
+	private Menue menue;
 
-	public RezeptAnzeigenTabelle() {
+	public MenueAnzeigenTabelle() {
 		super();
 
 		this.setSizeFull();
@@ -60,8 +58,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					rezept = (Rezept) event.getProperty().getValue();
-					System.out.println(rezept);
+					menue = (Menue) event.getProperty().getValue();
 				}
 
 			}
@@ -71,25 +68,22 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
-					ViewHandler.getInstance().switchView(RezeptAnlegen.class,
-							new ViewDataObject<Rezept>(rezept));
-				}
+				ViewHandler.getInstance().switchView(MenueAnzeigen.class,
+						new ViewDataObject<Menue>(menue));
 
 			}
 		});
 
-		BeanItemContainer<Rezept> container;
+		BeanItemContainer<Menue> container;
 
 		try {
-			container = new BeanItemContainer<Rezept>(Rezept.class,
-					Rezeptverwaltung.getInstance().getAllRezepte());
+			container = new BeanItemContainer<Menue>(Menue.class,
+					Menueverwaltung.getInstance().getAllMenues());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"id", "name", "rezeptart",
-					"geschmack", "mitarbeiter" });
+			table.setVisibleColumns(new Object[] { "id", "name",
+					"kochname" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 

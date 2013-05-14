@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.gui.view.Fussnoten;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
+import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
@@ -84,6 +85,7 @@ public class MainLayout extends VerticalLayout implements Command {
 		MenuItem menue1Item = menu.addItem(IConstants.MENU_MENUE_HEADLINE,
 				null);
 		menue1Item.addItem(IConstants.MENU_MENUE_ANLEGEN, this);
+		menue1Item.addItem(IConstants.MENU_MENUE_SUCHEN, this);
 
 
 		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE,
@@ -146,6 +148,9 @@ public class MainLayout extends VerticalLayout implements Command {
 			break;
 		case IConstants.MENU_MENUE_ANLEGEN:
 			ViewHandler.getInstance().switchView(MenueAnlegen.class);
+			break;
+		case IConstants.MENU_MENUE_SUCHEN:
+			ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
 			break;
 		default:
 			ViewHandler.getInstance().switchView(DefaultView.class);

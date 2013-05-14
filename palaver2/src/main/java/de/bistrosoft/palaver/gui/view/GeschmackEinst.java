@@ -26,6 +26,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
@@ -39,6 +40,10 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private static final long serialVersionUID = 2474121007841510011L;
 
 	private VerticalLayout box = new VerticalLayout();
+	private VerticalLayout box1 = new VerticalLayout();
+	private HorizontalLayout horizont = new HorizontalLayout();
+	private VerticalLayout d1 = new VerticalLayout();
+	private HorizontalLayout d2 = new HorizontalLayout();
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
@@ -48,6 +53,12 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 
+	private Label dummy = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	
+	
+	
 	private String nameInput;
 	private FilterTable table;
 
@@ -63,16 +74,22 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		
 		box.setWidth("300px");
 		box.setSpacing(true);
-		
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		this.addComponent(d2);
+		this.setComponentAlignment(d2, Alignment.MIDDLE_CENTER);
+		d2.addComponent(dummy);
+		this.addComponent(horizont);
+		this.setComponentAlignment(horizont, Alignment.MIDDLE_CENTER);
+		horizont.addComponent(box1);
+		horizont.addComponent(d1);
+		d1.addComponent(dummy);
+		horizont.addComponent(box);
 		box.addComponent(ueberschrift);
 		box.addComponent(name);
 		
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
 		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		box.setComponentAlignment(control, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
@@ -108,6 +125,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			Notification notification = new Notification("Geschmack wurde gespeichert!");
 			notification.setDelayMsec(500);
 			notification.show(Page.getCurrent());
+			ViewHandler.getInstance().switchView(GeschmackEinst.class);
 		
 		}
 		});
@@ -139,7 +157,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				| SQLException e) {
 			e.printStackTrace();
 		}
-		this.addComponent(table);
+		box1.addComponent(table);
 
 	}
 

@@ -2,9 +2,12 @@ package de.bistrosoft.palaver.testklassen.domain;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.bistrosoft.palaver.data.ConnectException;
@@ -29,6 +32,9 @@ public class RezeptTest extends AbstractTest {
 	private RezeptDAO rdao = new RezeptDAO();
 	private GeschmackDAO gdao = new GeschmackDAO();
 	private MitarbeiterDAO mdao = new MitarbeiterDAO();
+	
+	public static Long ID = Long.valueOf("1");
+	private RezeptDAO dao = new RezeptDAO();
 
 	@Test
 	public void getAllRezepte() {
@@ -43,62 +49,43 @@ public class RezeptTest extends AbstractTest {
 		assertThat(exception, is(false));
 	}
 
-	// @Test
-	// public void getRezeptById() throws ConnectException, DAOException,
-	// SQLException
-	// {
-	// Long id = 1;
-	//
-	// Rezept rezept = rdao.getRezeptById(id);
-	//
-	// assertThat(rezept.getId(), is(id));
-	// }
-	//
-//	@Test
-//	public void getRezeptByName() {
-//		Boolean exception = false;
-//		List<Rezept> list = null;
-//		try {
-//			String name = "test";
-//			list = rdao.getRezeptByName(name);
-//		} catch (ConnectException | DAOException | SQLException e) {
-//			exception = true;
-//		}
-//		assertThat(list.isEmpty(), is(false));
-//		assertThat(exception, is(false));
-//	}
-	
-//	@Test
-//	public void getRezeptByName() throws ConnectException, DAOException, SQLException
-//	{
-//		String name = "test";
-//
-//		Rezept rezept = rdao.getRezeptByName(name);
-//
-//		assertThat(rezept.getName(), is(name));
-//	}
+	@Test
+	public void findRezeptById() throws ConnectException, DAOException,
+			SQLException {
+		Rezept rezept = new Rezept();
+		rezept = dao.getRezeptById(ID);
+		assertThat(rezept.getId(), is(ID));
+	}
 
+	@Ignore
+	@Test
+	public void getRezeptByName() throws ConnectException, DAOException,
+			SQLException {
+		String rezeptname = "Lasagne";
+
+		Rezept rezept = RezeptDAO.getInstance().getRezeptByName(rezeptname);
+
+		assertThat(rezept.getName(), is(rezeptname));
+	}
+
+	@Ignore
 	@Test
 	public void createRezept() throws ConnectException, DAOException,
 			SQLException {
 
+		// Rezept erzeugen
 		Rezept rezept = new Rezept();
 
-		Long raid = Long.valueOf(1);
-		Long gid = Long.valueOf(1);
+		Long raid = Long.valueOf(6);
+		Long gid = Long.valueOf(5);
 		Long mid = Long.valueOf(1);
-		Long rid = Long.valueOf(1);
 
-		Rezeptart rezeptart = null;
-		Geschmack geschmack = null;
-		Mitarbeiter mitarbeiter = null;
-		String name = "test";
-		String kommentar = null;
+		Rezeptart rezeptart = radao.getRezeptartById(raid);
+		Geschmack geschmack = gdao.getGeschmackById(gid);
+		Mitarbeiter mitarbeiter = mdao.getMitarbeiterById(mid);
+		String name = "Gummibaerchen";
+		String kommentar = "lalalala";
 		int portion = 30;
-
-		rezeptart = radao.getRezeptartById(raid);
-		geschmack = gdao.getGeschmackById(gid);
-		mitarbeiter = mdao.getMitarbeiterById(mid);
 
 		rezept.setRezeptart(rezeptart);
 		rezept.setGeschmack(geschmack);
@@ -106,6 +93,12 @@ public class RezeptTest extends AbstractTest {
 		rezept.setName(name);
 		rezept.setKommentar(kommentar);
 		rezept.setPortion(portion);
+		rezept.setAufwand(false);
+		rezept.setFavorit(true);
+
+		java.util.Date date2 = new java.util.Date();
+		Date date = new Date(date2.getTime());
+		rezept.setErstellt(date);
 
 		rdao.createRezept(rezept);
 	}
