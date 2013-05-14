@@ -143,9 +143,9 @@ public class MenueplanGridLayout extends CustomComponent{
 				for (Mitarbeiter e : mitarbeiter) {
 					//mitarbeiterCb.addItem(e);
 					koch1.addItem(e.getId());
-					koch1.setItemCaption(e.getId(), e.getName());
+					koch1.setItemCaption(e.getId(), e.getVorname());
 					koch2.addItem(e.getId());
-					koch2.setItemCaption(e.getId(), e.getName());
+					koch2.setItemCaption(e.getId(), e.getVorname());
 				}
 	    	} catch (ConnectException | DAOException | SQLException e) {
 				e.printStackTrace();
