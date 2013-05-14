@@ -21,6 +21,7 @@ public interface IConstants
 	public final String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	public final String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
+	public final String 	MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen";
 	public final String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten";
 	public final String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
 	public final String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
@@ -64,4 +65,7 @@ public interface IConstants
 	public final String		ICON_YES = "img/tick_circle.ico";
 	public final String		ICON_NO = "img/cross_circle.ico";
 	public final String		ICON_DELETE = "img/Delete.ico";
+
+
+	
 }
