@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.dom4j.bean.BeanAttribute;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
@@ -409,6 +412,11 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+				
+				
+				System.out.println(ausgArtikel.size());
+				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
+				ausgArtikel=bicArtikel.getItemIds();
 				System.out.println(ausgArtikel.size());
 
 			}

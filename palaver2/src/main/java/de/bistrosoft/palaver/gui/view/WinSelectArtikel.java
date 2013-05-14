@@ -45,8 +45,7 @@ public class WinSelectArtikel extends Window {
 			List<RezeptHasArtikel> ausgArtikel;
 			
 			
-			public WinSelectArtikel(Table tblArtikel,
-					List<RezeptHasArtikel> nAusgArtikel) {
+			public WinSelectArtikel(Table tblArtikel, List<RezeptHasArtikel> nAusgArtikel) {
 				artikelcol.setMultiSelect(true);
 				artikelcol.setSizeFull();
 				initLayout();
