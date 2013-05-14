@@ -34,9 +34,9 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout rechts = new VerticalLayout();
 	
-	private Table liefTable = new Table();
-	private Lieferant lieferant = null;
-	private Button bestellen = new Button("bestellen");
+	private Table 		liefTable = new Table();
+	private Lieferant 	lieferant = null;
+	private Button 		bestellen = new Button("bestellen");
 	
 	public BestellungAuswaehlen() {
 		super();
@@ -48,6 +48,9 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 		liefTable.setSizeFull();
 		liefTable.setSelectable(true);
 		
+		bestellen.setEnabled(false);
+		
+		rechts.setSpacing(true);
 		rechts.addComponent(liefTable);
 		rechts.addComponent(bestellen);
 		rechts.setComponentAlignment(liefTable, Alignment.MIDDLE_RIGHT);
@@ -84,6 +87,12 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 				if(event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
 				}
+				if(event.getProperty().getValue() == null) {
+					bestellen.setEnabled(false);
+				}
+				else {
+					bestellen.setEnabled(true);
+				}
 			}
 		});
 		
@@ -103,7 +112,7 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(BestellungAnzeigen.class, new ViewDataObject<Lieferant>(lieferant));
+				ViewHandler.getInstance().switchView(BestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
 				
 			}
 		});
