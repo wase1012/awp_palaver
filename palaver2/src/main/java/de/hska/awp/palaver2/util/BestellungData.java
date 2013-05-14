@@ -230,4 +230,18 @@ public class BestellungData
 			gesamt.setValue("Invalid");
 		}
 	}
+	
+	public static Integer getInt(String str) {
+		Integer nummer = null;
+		try
+		{
+			nummer = Integer.parseInt(str);
+
+		}
+		catch (NumberFormatException e)
+		{
+
+		}
+		return nummer;
+	}
 }
