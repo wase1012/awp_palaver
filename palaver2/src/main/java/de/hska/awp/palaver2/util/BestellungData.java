@@ -81,6 +81,8 @@ public class BestellungData
 		
 		this.freitag.setMinValue(0);
 		this.montag.setMinValue(0);
+		this.freitag.setManualInputAllowed(false);
+		this.montag.setManualInputAllowed(false);
 		
 		this.gesamt.addValueChangeListener(new ValueChangeListener()
 		{
@@ -115,7 +117,7 @@ public class BestellungData
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
-				if (freitag.getValue() > getInt(gesamt.getValue()))
+				if (freitag.getValue() >= getInt(gesamt.getValue()))
 				{
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
@@ -132,7 +134,7 @@ public class BestellungData
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
-				if (montag.getValue() > getInt(gesamt.getValue()))
+				if (montag.getValue() >= getInt(gesamt.getValue()))
 				{
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
