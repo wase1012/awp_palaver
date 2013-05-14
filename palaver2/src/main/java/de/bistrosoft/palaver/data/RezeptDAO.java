@@ -32,6 +32,8 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
 	private final static String GET_REZEPTE_BY_GESCHMACK = "SELECT * FROM rezept WHERE geschmack_fk = {0};";
 
+	Rezept rezept;
+	
 	public RezeptDAO() {
 		super();
 	}
@@ -86,12 +88,12 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = get(GET_ALL_REZEPTS);
 		;
 		while (set.next()) {
-			list.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
-					set.getLong("rezeptart_fk")), GeschmackDAO.getInstance()
-					.getGeschmackById(set.getLong("geschmack_fk")),
+			list.add(new Rezept(set.getLong("id"),GeschmackDAO.getInstance()
+			.getGeschmackById(set.getLong("geschmack_fk")), RezeptartDAO.getInstance().getRezeptartById(
+							set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), null, set.getInt("portion")
+							.getString("name"), null, set.getInt("portion"), set.getBoolean("aufwand"), set.getDate("erstellt"),set.getBoolean("favorit")
 
 			));
 		}
@@ -133,19 +135,18 @@ public class RezeptDAO extends AbstractDAO {
 
 	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
 			SQLException {
-		Rezept result = new Rezept();
 		ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_ID, id));
 
 		while (set.next()) {
-			result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-					.getRezeptartById(set.getLong("rezeptart")), GeschmackDAO
-					.getInstance().getGeschmackById(set.getLong("geschmack")),
+			rezept = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")), GeschmackDAO
+					.getInstance().getGeschmackById(set.getLong("geschmack_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter")), set.getString("name"),
+							set.getLong("mitarbeiter_fk")), set.getString("name"),
 					null, set.getInt("portion"));
 		}
 
-		return result;
+		return rezept;
 	}
 
 	public Rezept getRezept1(Long id) throws ConnectException, DAOException,

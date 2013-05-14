@@ -49,6 +49,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewDataObject;
 
 /**
  * @author Jan Lauinger
@@ -87,15 +88,15 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	private String rezeptartInput;
 	private String mitarbeiterInput;
 
-//	private Artikel ar;
-//	private RezeptHasArtikel rhA;
+	// private Artikel ar;
+	// private RezeptHasArtikel rhA;
 	public String valueString = new String();
 
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 
 	List<RezeptHasArtikel> artikel = new ArrayList<>();
 
-//	private Button btAdd = new Button("Add");
+	// private Button btAdd = new Button("Add");
 
 	public RezeptAnlegen() {
 		super();
@@ -126,7 +127,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		// box.addComponent(btAdd);
 		box.addComponent(kommentar);
 		// ///////////////////////////////////
-//		BeanItemContainer<RezeptHasArtikel> container;
+		// BeanItemContainer<RezeptHasArtikel> container;
 
 		// 1L, new Mengeneinheit(), new Kategorie(), new Lieferant(), 1, "name",
 		// 1, 1.00, true, true, true, 1, true
@@ -306,7 +307,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				Rezept rezept = new Rezept();
 				// RezeptHasArtikel artikel = new RezeptHasArtikel();
-//				RezeptHasZubereitung rhz = new RezeptHasZubereitung();
+				// RezeptHasZubereitung rhz = new RezeptHasZubereitung();
 
 				rezept.setName(nameInput);
 
@@ -319,9 +320,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					e1.printStackTrace();
 				}
 
-			
-
-				
 				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance()
 							.getRezeptartById(
@@ -341,20 +339,20 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						| DAOException | SQLException e1) {
 					e1.printStackTrace();
 				}
-				
-				
+
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
 
 				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 				// / Liste der Zubereitungen
 				Rezept rez = null;
 				try {
 					System.out.println(nameInput);
-					rez = Rezeptverwaltung.getInstance().getRezeptByName1(nameInput);
+					rez = Rezeptverwaltung.getInstance().getRezeptByName1(
+							nameInput);
 				} catch (ConnectException | DAOException | SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -363,9 +361,9 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					List<String> ZubereitungId = Arrays.asList(valueString
 							.substring(1, valueString.length() - 1).split(
 									"\\s*,\\s*"));
-//					for (String s : ZubereitungId) {
-//						// System.out.println(s);
-//					}
+					// for (String s : ZubereitungId) {
+					// // System.out.println(s);
+					// }
 					// valueString.split
 					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
 
@@ -404,9 +402,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 					}
 				}
-
-				
-				
 
 				Notification notification = new Notification(
 						"Rezept wurde gespeichert!");

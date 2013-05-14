@@ -32,6 +32,9 @@ public class RezeptTest extends AbstractTest {
 	private RezeptDAO rdao = new RezeptDAO();
 	private GeschmackDAO gdao = new GeschmackDAO();
 	private MitarbeiterDAO mdao = new MitarbeiterDAO();
+	
+	public static Long ID = Long.valueOf("1");
+	private RezeptDAO dao = new RezeptDAO();
 
 	@Test
 	public void getAllRezepte() {
@@ -46,17 +49,13 @@ public class RezeptTest extends AbstractTest {
 		assertThat(exception, is(false));
 	}
 
-	// @Test
-	// public void getRezeptById() throws ConnectException, DAOException,
-	// SQLException
-	// {
-	// Long id = 1;
-	//
-	// Rezept rezept = rdao.getRezeptById(id);
-	//
-	// assertThat(rezept.getId(), is(id));
-	// }
-	//
+	@Test
+	public void findRezeptById() throws ConnectException, DAOException,
+			SQLException {
+		Rezept rezept = new Rezept();
+		rezept = dao.getRezeptById(ID);
+		assertThat(rezept.getId(), is(ID));
+	}
 
 	@Ignore
 	@Test
@@ -69,6 +68,7 @@ public class RezeptTest extends AbstractTest {
 		assertThat(rezept.getName(), is(rezeptname));
 	}
 
+	@Ignore
 	@Test
 	public void createRezept() throws ConnectException, DAOException,
 			SQLException {
@@ -82,7 +82,7 @@ public class RezeptTest extends AbstractTest {
 
 		Rezeptart rezeptart = radao.getRezeptartById(raid);
 		Geschmack geschmack = gdao.getGeschmackById(gid);
-		Mitarbeiter mitarbeiter =  mdao.getMitarbeiterById(mid);
+		Mitarbeiter mitarbeiter = mdao.getMitarbeiterById(mid);
 		String name = "Gummibaerchen";
 		String kommentar = "lalalala";
 		int portion = 30;

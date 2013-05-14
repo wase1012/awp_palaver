@@ -113,6 +113,7 @@ public class RezeptartTest extends AbstractTest {
 	 * @throws ConnectException
 	 */
 
+	@Ignore
 	@Test
 	public void updateRezeptart() throws ConnectException, DAOException,
 			SQLException {

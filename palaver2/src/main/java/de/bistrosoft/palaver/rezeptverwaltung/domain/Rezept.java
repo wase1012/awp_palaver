@@ -25,8 +25,8 @@ public class Rezept implements java.io.Serializable {
 	private String name;
 	private String kommentar;
 	private int portion;
-	private Boolean aufwand;
-	private Boolean favorit;
+	private boolean aufwand;
+	private boolean favorit;
 	private Date erstellt;
 	private List<RezeptHasArtikel> artikel;
 
@@ -64,7 +64,7 @@ public class Rezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 		this.portion = portion;
 	}
-	
+
 	public Rezept(Long id, Geschmack geschmack, Rezeptart rezeptart,
 			Mitarbeiter mitarbeiter, String name, String kommentar,
 			int portion, boolean aufwand, Date erstellt, boolean favorit) {
@@ -184,21 +184,19 @@ public class Rezept implements java.io.Serializable {
 	public void setPortion(int portion) {
 		this.portion = portion;
 	}
-	
-	
 
-//	@PrePersist
-//	private void prePersist() {
-//		erstellt = new Date();
-//	}
-//
-//	public Date getErzeugt() {
-//		return erstellt == null ? null : (Date) erstellt.clone();
-//	}
-//
-//	public void setErzeugt() {
-//		this.erstellt = erstellt == null ? null : (Date) erstellt.clone();
-//	}
+	// @PrePersist
+	// private void prePersist() {
+	// erstellt = new Date();
+	// }
+	//
+	// public Date getErzeugt() {
+	// return erstellt == null ? null : (Date) erstellt.clone();
+	// }
+	//
+	// public void setErzeugt() {
+	// this.erstellt = erstellt == null ? null : (Date) erstellt.clone();
+	// }
 
 	// @ManyToMany(fetch = FetchType.LAZY)
 	// @JoinTable(name = "menue_has_rezept", catalog = "palaver", joinColumns =
@@ -260,7 +258,7 @@ public class Rezept implements java.io.Serializable {
 	}
 
 	public boolean getFavorit() {
-		return favorit;
+		return this.favorit;
 	}
 
 	public void setFavorit(boolean favorit) {
@@ -271,11 +269,12 @@ public class Rezept implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-//		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
-//		result = prime * result + (aufwand ? 1231 : 1237);
-//		result = prime * result
-//				+ ((erstellt == null) ? 0 : erstellt.hashCode());
-//		result = prime * result + (favorit ? 1231 : 1237);
+		// result = prime * result + ((artikel == null) ? 0 :
+		// artikel.hashCode());
+		// result = prime * result + (aufwand ? 1231 : 1237);
+		// result = prime * result
+		// + ((erstellt == null) ? 0 : erstellt.hashCode());
+		// result = prime * result + (favorit ? 1231 : 1237);
 		result = prime * result
 				+ ((geschmack == null) ? 0 : geschmack.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());

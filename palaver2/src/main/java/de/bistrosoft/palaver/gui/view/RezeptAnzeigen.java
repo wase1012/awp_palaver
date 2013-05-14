@@ -6,6 +6,7 @@ import java.util.List;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -16,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.lieferantenverwaltung.domain.Ansprechpartner;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -26,8 +28,8 @@ import de.bistrosoft.palaver.util.ViewDataObject;
 public class RezeptAnzeigen extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = 2001790425726326012L;
-	private Rezept rezept;
-//	private List<RezeptHasArtikel>rha=new List<RezeptHasArtikel>();
+	private Rezept rezept = new Rezept();
+	// private List<RezeptHasArtikel>rha=new List<RezeptHasArtikel>();
 
 	// Layouts
 	private HorizontalLayout oben = new HorizontalLayout();
@@ -59,7 +61,13 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 	private Label uZutaten = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>",
 			Label.CONTENT_XHTML);
-
+	private Label uFavorit = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Favorit</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uAufwand = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Aufwand</font><b></pre>",
+			Label.CONTENT_XHTML);
+	
 	// Textfelder
 	private TextField bezeichnung = new TextField();
 	private TextField rezeptersteller = new TextField();
@@ -72,6 +80,10 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 
 	// Textarea
 	private TextArea kommentar = new TextArea();
+	
+	// Checkbox
+	private CheckBox favorit = new CheckBox();
+	private CheckBox aufwand = new CheckBox();
 
 	// Button
 	private Button aendern = new Button("Rezept bearbeiten");
@@ -88,17 +100,11 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 
 		// Eigenschaften anpassen
 		bezeichnung.setWidth("100%");
-		bezeichnung.setReadOnly(true);
 		rezeptersteller.setWidth("100%");
-		rezeptersteller.setReadOnly(true);
 		kommentar.setWidth("100%");
-		kommentar.setReadOnly(true);
 		portion.setWidth("100%");
-		portion.setReadOnly(true);
 		geschmack.setWidth("100%");
-		geschmack.setReadOnly(true);
 		art.setWidth("100%");
-		art.setReadOnly(true);
 		oben.setSpacing(true);
 		links.setWidth("300px");
 		links.setSpacing(true);
@@ -143,59 +149,26 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		unten.addComponent(verticalunten);
 		verticalunten.addComponent(uKommentar);
 		verticalunten.addComponent(kommentar);
+		verticalunten.addComponent(uFavorit);
+		verticalunten.addComponent(favorit);
+		verticalunten.addComponent(uAufwand);
+		verticalunten.addComponent(aufwand);
 	}
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		
+		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
+		
+		bezeichnung.setValue(rezept.getName());
+		rezeptersteller.setValue(rezept.getMitarbeiter().getName());
+		art.setValue(rezept.getRezeptart().getName());
+		geschmack.setValue(rezept.getGeschmack().getName());
+		kommentar.setValue(rezept.getKommentar());
+		favorit.setValue(rezept.getFavorit());
+		aufwand.setValue(rezept.getAufwand());
+		
 		
 	}
-
-//	@Override
-//	public void getViewParam(ViewData data)
-//	{
-//		rezept = (Rezept) ((ViewDataObject<?>)data).getData();
-//		if(rezept.getId() == null) {
-//			try {
-//				rezept = Rezeptverwaltung.getInstance().getRezeptById();
-//			} catch (ConnectException | DAOException | SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//			
-//		bezeichnung.setValue(rezept.getName());
-//		bezeichnung.setEnabled(false);
-//			
-//		geschmack.setValue(rezept.getGeschmack().getName());
-//		geschmack.setEnabled(false);
-//			
-//		kommentar.setValue(rezept.getKommentar());
-//		kommentar.setEnabled(false);
-//			
-//		rezeptersteller.setValue(rezept.getMitarbeiter().getName());
-//		rezeptersteller.setEnabled(false);
-//					
-//		portion.setValue(Integer.parseInt. (rezept.getPortion()));
-//		portion.setEnabled(false);
-//			
-//		art.setValue(rezept.getRezeptart().getName());
-//		art.setEnabled(false);
-//					
-//		BeanItemContainer<RezeptHasArtikel> container;
-
-//		try {
-//			container = new BeanItemContainer<RezeptHasArtikel>(RezeptHasArtikel.class, Rezeptverwaltung.getInstance().getAllArtikelByRezeptId());
-//			ansprechpartner.setContainerDataSource(container);
-//			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
-//			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
-//			ansprechpartner.setColumnCollapsingAllowed(true);
-//			ansprechpartner.setColumnCollapsed(handyAnspr, false);
-//			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
-//		} catch (IllegalArgumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 
 }

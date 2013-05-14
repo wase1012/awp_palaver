@@ -61,6 +61,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					rezept = (Rezept) event.getProperty().getValue();
+					System.out.println(rezept);
 				}
 
 			}
@@ -70,8 +71,10 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				ViewHandler.getInstance().switchView(RezeptAnzeigen.class,
-						new ViewDataObject<Rezept>(rezept));
+				if (event.isDoubleClick()) {
+					ViewHandler.getInstance().switchView(RezeptAnzeigen.class,
+							new ViewDataObject<Rezept>(rezept));
+				}
 
 			}
 		});
@@ -82,7 +85,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			container = new BeanItemContainer<Rezept>(Rezept.class,
 					Rezeptverwaltung.getInstance().getAllRezepte());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "name", "rezeptart",
+			table.setVisibleColumns(new Object[] {"id", "name", "rezeptart",
 					"geschmack", "mitarbeiter" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (IllegalArgumentException | ConnectException | DAOException
