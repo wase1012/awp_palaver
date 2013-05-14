@@ -9,6 +9,7 @@ import java.util.List;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -20,6 +21,7 @@ public class MenueDAO extends AbstractDAO {
 	private final String GET_ALL_MENUES = "SELECT * FROM menue";
 	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0} ";
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
+	private static final String GET_REZEPTE_BY_MENUE = "SELECT * FROM rezept JOIN menue_has_rezept ON rezept.id = menue_has_rezept.rezept_fk WHERE menue_has_rezept.menue_fk = {0}";
 
 	public MenueDAO() {
 		super();
@@ -47,6 +49,17 @@ public class MenueDAO extends AbstractDAO {
 		return list;
 	}
 	
+	public List<Rezept> getRezepteByMenue() throws ConnectException, DAOException,
+	SQLException {
+List<Rezept> list = new ArrayList<Rezept>();
+ResultSet set = get(GET_REZEPTE_BY_MENUE);
+
+while (set.next()) {
+	list.add(new Rezept(set.getLong("id")));
+}
+
+return list;
+}
 	
 	
 	
@@ -94,11 +107,12 @@ this.put(INSERT_QUERY);
 
 	public void RezepteAdd(MenueHasRezept menueHasRezept)
 			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO menue_has_rezept (menue_id, rezept_id) VALUES"
+		String INSERT_QUERY = "INSERT INTO menue_has_rezept (menue_id, rezept_id, hauptgericht) VALUES"
 				+ "("
 				+ menueHasRezept.getMenue()
 				+ ", "
-				+ menueHasRezept.getRezept() + ")";
+				+ menueHasRezept.getRezept() + ", "
+				+ menueHasRezept.getHauptgericht() +")";
 		this.put(INSERT_QUERY);
 	}
 	

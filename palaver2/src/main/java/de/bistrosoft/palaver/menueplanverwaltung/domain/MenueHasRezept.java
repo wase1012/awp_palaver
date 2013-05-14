@@ -23,6 +23,7 @@ public class MenueHasRezept implements java.io.Serializable {
 	private MenueHasRezeptId id;
 	private Menue menue;
 	private Rezept rezept;
+	private Boolean hauptgericht;
 
 	public MenueHasRezept() {
 	}
@@ -38,6 +39,13 @@ public class MenueHasRezept implements java.io.Serializable {
 		
 		this.menue = menue;
 		this.rezept = rezept;
+	}
+	
+public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
+		
+		this.menue = menue;
+		this.rezept = rezept;
+		this.hauptgericht = hauptgericht;
 	}
 
 	@EmbeddedId
@@ -70,6 +78,15 @@ public class MenueHasRezept implements java.io.Serializable {
 
 	public void setMenue(Menue menue) {
 		this.menue = menue;
+	}
+	
+	
+	public Boolean getHauptgericht() {
+		return hauptgericht;
+	}
+
+	public void setHauptgericht(Boolean hauptgericht) {
+		this.hauptgericht = hauptgericht;
 	}
 
 	@Override
