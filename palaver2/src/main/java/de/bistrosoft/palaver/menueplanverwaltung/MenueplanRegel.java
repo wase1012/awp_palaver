@@ -41,16 +41,17 @@ public class MenueplanRegel {
 		List<String> rw = new ArrayList<String>();
 		rw.add("Pommes");
 		regeln.add(new MenueplanRegel("name", r, c, "enthält", rw,
-				"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden!"));
+				"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden! "));
 
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
+		r2.add(4);
 		List<Integer> c2 = new ArrayList<Integer>();
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
 		regeln.add(new MenueplanRegel("Kategorie", r2, c2, "max", rw2,
-				"Es darf kein Rezept mit Kat. 3 in Zeile 2 eingefügt werden! max 5"));
+				"Es dürfen maximal 3 menüs einer Kat eingefügt werden"));
 
 		return regeln;
 	}
@@ -72,6 +73,9 @@ public class MenueplanRegel {
 					if (regelwerte.indexOf(rez.getRezeptart().getId()
 							.toString()) == -1) {
 						System.out.println(fehlermeldung);
+						List<String> fehlermeldungen = new ArrayList<>();
+						fehlermeldungen.add(fehlermeldung);
+						mc.setFehlermeldungen(fehlermeldungen);
 						return false;
 					}
 				}
@@ -80,6 +84,9 @@ public class MenueplanRegel {
 					if (regelwerte.indexOf(rez.getRezeptart().getId()
 							.toString()) >= 0) {
 						System.out.println(fehlermeldung);
+						List<String> fehlermeldungen = new ArrayList<>();
+						fehlermeldungen.add(fehlermeldung);
+						mc.setFehlermeldungen(fehlermeldungen);
 						return false;
 					}
 				}
@@ -124,11 +131,17 @@ public class MenueplanRegel {
 		if (operator.equals("enthält nicht")) {
 			if (regelwerte.indexOf(menue.getName()) == -1) {
 				System.out.println(fehlermeldung);
+				List<String> fehlermeldungen = new ArrayList<>();
+				fehlermeldungen.add(fehlermeldung);
+				mc.setFehlermeldungen(fehlermeldungen);
 				isOk = false;
 			}
 		} else if (operator.equals("enthält")) {
 			if (regelwerte.indexOf(menue.getName()) >= 0) {
 				System.out.println(fehlermeldung);
+				List<String> fehlermeldungen = new ArrayList<>();
+				fehlermeldungen.add(fehlermeldung);
+				mc.setFehlermeldungen(fehlermeldungen);
 				isOk = false;
 			}
 			// for (String rw : regelwerte) {
