@@ -169,27 +169,29 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Lieferant> getAllLieferantenByArtikellist(
-			List<Artikel> artikellist) throws ConnectException, DAOException,
+	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException,
 			SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
-		Lieferant lieferant = null;
-		LieferantDAO ldao = new LieferantDAO();
+		list = LieferantDAO.getInstance().getLieferantenWithArtikel();
 		
-		for (Artikel e : artikellist) {
-			lieferant = ldao.getLieferantByArtikelId(e.getId());
-			if (list.isEmpty() == true) {
-				list.add(lieferant);
-			} 
-			else {
-				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).getId().equals(lieferant.getId()) == false) {
-						list.add(lieferant);
-					}
-				}
-			}
-
-		}	
+//		List<Lieferant> list = new ArrayList<Lieferant>();
+//		Lieferant lieferant = null;
+//		LieferantDAO ldao = new LieferantDAO();
+//	
+//		for (Artikel e : artikellist) {
+//			lieferant = ldao.getLieferantByArtikelId(e.getId());
+//			if (list.isEmpty() == true) {
+//				list.add(lieferant);
+//			} 
+//			else {
+//				for (int i = 0; i < list.size(); i++) {
+//					if (list.get(i).getId().equals(lieferant.getId()) == false) {
+//						list.add(lieferant);
+//					}
+//				}
+//			}
+//
+//		}	
 		return list;
 	}
 }

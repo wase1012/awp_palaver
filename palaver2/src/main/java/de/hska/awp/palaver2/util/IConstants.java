@@ -20,6 +20,7 @@ public interface IConstants
 	public final String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
 	public final String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
+	public final String		MENU_BESTELLUNG_NEW_RANDOM = "Neue manuelle Bestellung";
 	public final String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
 	public final String 	MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen";
 	public final String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten";

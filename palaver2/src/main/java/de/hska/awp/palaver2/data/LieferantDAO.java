@@ -49,6 +49,11 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String GET_LIEFERANTEN_BY_ARTIKEL_ID = "SELECT * FROM " + TABLE +
 			" join " + TABLE_ARTIKEL + " on " + TABLE +"." + ID + " = " + TABLE_ARTIKEL + ".lieferant_fk" +
 			" where " + TABLE_ARTIKEL + "." + ID + " = {0}";
+	
+	private final static String GET_ALL_LIEFERANTEN_WITH_ARTIKEL_WITH_ID_AND_NAME = "SELECT Distinct lieferant.id, " +
+			"lieferant.name, lieferant.kundennummer, lieferant.bezeichnung, lieferant.strasse, lieferant.plz, lieferant.ort, " +
+			"lieferant.email, lieferant.telefon, lieferant.fax, lieferant.notiz, lieferant.mehrereliefertermine FROM lieferant " +
+			"join artikel on lieferant.id = artikel.lieferant_fk";
 
 	public LieferantDAO() {
 		super();
@@ -212,6 +217,23 @@ public class LieferantDAO extends AbstractDAO {
 				+ Util.convertBoolean(lieferant.getMehrereliefertermine()) + "' WHERE " + ID + "='"
 				+ lieferant.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
+	}
+
+	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException, SQLException {
+		
+		List<Lieferant> list = new ArrayList<Lieferant>();
+
+		ResultSet set = getManaged(GET_ALL_LIEFERANTEN_WITH_ARTIKEL_WITH_ID_AND_NAME);
+
+		while (set.next()) {
+			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
+					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
+					.getString(STRASSE), set.getString(PLZ),
+					set.getString(ORT), set.getString(EMAIL), set
+							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
+		}
+
+		return list;
 	}
 	
 }
