@@ -2,6 +2,8 @@ package de.bistrosoft.palaver.testklassen.domain;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,10 +58,10 @@ public class RezeptTest extends AbstractTest {
 	// }
 	//
 
-	
+	@Ignore
 	@Test
-	public void getRezeptByName() throws ConnectException, DAOException, SQLException
-	{
+	public void getRezeptByName() throws ConnectException, DAOException,
+			SQLException {
 		String rezeptname = "Lasagne";
 
 		Rezept rezept = RezeptDAO.getInstance().getRezeptByName(rezeptname);
@@ -67,28 +69,23 @@ public class RezeptTest extends AbstractTest {
 		assertThat(rezept.getName(), is(rezeptname));
 	}
 
-	@Ignore
 	@Test
 	public void createRezept() throws ConnectException, DAOException,
 			SQLException {
 
+		// Rezept erzeugen
 		Rezept rezept = new Rezept();
 
-		Long raid = Long.valueOf(1);
-		Long gid = Long.valueOf(1);
+		Long raid = Long.valueOf(6);
+		Long gid = Long.valueOf(5);
 		Long mid = Long.valueOf(1);
-		Long rid = Long.valueOf(1);
 
-		Rezeptart rezeptart = null;
-		Geschmack geschmack = null;
-		Mitarbeiter mitarbeiter = null;
-		String name = "test";
-		String kommentar = null;
+		Rezeptart rezeptart = radao.getRezeptartById(raid);
+		Geschmack geschmack = gdao.getGeschmackById(gid);
+		Mitarbeiter mitarbeiter =  mdao.getMitarbeiterById(mid);
+		String name = "Gummibaerchen";
+		String kommentar = "lalalala";
 		int portion = 30;
-
-		rezeptart = radao.getRezeptartById(raid);
-		geschmack = gdao.getGeschmackById(gid);
-		mitarbeiter = mdao.getMitarbeiterById(mid);
 
 		rezept.setRezeptart(rezeptart);
 		rezept.setGeschmack(geschmack);
@@ -96,6 +93,12 @@ public class RezeptTest extends AbstractTest {
 		rezept.setName(name);
 		rezept.setKommentar(kommentar);
 		rezept.setPortion(portion);
+		rezept.setAufwand(false);
+		rezept.setFavorit(true);
+
+		java.util.Date date2 = new java.util.Date();
+		Date date = new Date(date2.getTime());
+		rezept.setErstellt(date);
 
 		rdao.createRezept(rezept);
 	}
