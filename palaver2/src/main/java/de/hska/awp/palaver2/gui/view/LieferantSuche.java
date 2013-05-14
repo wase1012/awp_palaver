@@ -197,7 +197,10 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
-				ansprechpartnerBean = (Ansprechpartner) event.getProperty().getValue();
+				if (event.getProperty().getValue() != null)
+				{
+					ansprechpartnerBean = (Ansprechpartner) event.getProperty().getValue();
+				}
 			}
 		});
         
@@ -346,16 +349,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					speichern.addClickListener(new ClickListener()
 					{
 						public void buttonClick(ClickEvent event)
-						{
-							//TODO Problem Ansprechpartner wird nicht übergeben, somit keine ID
-							System.out.println(ansprechpartnerBean.getId());
-							System.out.println(nameInput);
-							System.out.println(telefonInput);
-							System.out.println(handyInput);
-							System.out.println(faxInput);
-							System.out.println(lieferant.getId());
-							System.out.println(lieferant.getName());
-							
+						{							
 							ansprechpartnerBean.setName(nameInput);
 							ansprechpartnerBean.setTelefon(telefonInput);
 							ansprechpartnerBean.setHandy(handyInput);
@@ -366,7 +360,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
 							} catch (ConnectException | DAOException | SQLException e) {
 								System.out.println(e);
-								throw new NullPointerException("Bitte gültige Werte eingeben");
+//								throw new NullPointerException("Bitte gültige Werte eingeben");
 
 							}				
 							
@@ -614,7 +608,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		try {
 			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
 			ansprechpartner.setContainerDataSource(container);
-			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
+			ansprechpartner.setVisibleColumns(new Object[] {"id", "name", "telefon", "handy", "fax"});
 			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
 			ansprechpartner.setColumnCollapsingAllowed(true);
 			ansprechpartner.setColumnCollapsed(handyAnspr, false);
