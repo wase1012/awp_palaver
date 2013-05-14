@@ -608,7 +608,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		try {
 			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
 			ansprechpartner.setContainerDataSource(container);
-			ansprechpartner.setVisibleColumns(new Object[] {"id", "name", "telefon", "handy", "fax"});
+			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
 			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
 			ansprechpartner.setColumnCollapsingAllowed(true);
 			ansprechpartner.setColumnCollapsed(handyAnspr, false);
