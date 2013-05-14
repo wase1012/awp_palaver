@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import de.hska.awp.palaver2.util.Util;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.util.Util;
 
 public class RezeptDAO extends AbstractDAO {
 
@@ -93,7 +93,7 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), null, set.getInt("portion"), set.getBoolean("aufwand"), set.getDate("erstellt"),set.getBoolean("favorit")
+							.getString("name"), set.getString("kommentar"), set.getInt("portion"), set.getBoolean("aufwand"), set.getDate("erstellt"),set.getBoolean("favorit")
 
 			));
 		}

@@ -161,9 +161,16 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
 		
 		bezeichnung.setValue(rezept.getName());
+		bezeichnung.setEnabled(false);
+		
 		rezeptersteller.setValue(rezept.getMitarbeiter().getName());
+		rezeptersteller.setEnabled(false);
+		
 		art.setValue(rezept.getRezeptart().getName());
+		art.setEnabled(false);
+		
 		geschmack.setValue(rezept.getGeschmack().getName());
+		
 		kommentar.setValue(rezept.getKommentar());
 		favorit.setValue(rezept.getFavorit());
 		aufwand.setValue(rezept.getAufwand());

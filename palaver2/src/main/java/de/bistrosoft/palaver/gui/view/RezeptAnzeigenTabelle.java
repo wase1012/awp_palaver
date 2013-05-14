@@ -72,7 +72,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					ViewHandler.getInstance().switchView(RezeptAnzeigen.class,
+					ViewHandler.getInstance().switchView(RezeptAnlegen.class,
 							new ViewDataObject<Rezept>(rezept));
 				}
 
