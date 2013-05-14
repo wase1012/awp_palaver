@@ -208,10 +208,12 @@ public class MenueComponent extends CustomComponent{
 			        }
 		});
 		
-		btFehler= new Button("test");
-//		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
-//		btn.setIcon(new ThemeResource("img/Menue.png"));
+		btFehler= new Button();
+		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
+		btFehler.setIcon(new ThemeResource("img/icon_fehler.bmp"));
+//		btFehler.addStyleName("menueplan-add");
 		vl.addComponent(btFehler);
+//		vl.setComponentAlignment(btFehler, Alignment.MIDDLE_CENTER);
 		
 		HorizontalLayout hl = new HorizontalLayout();
 		btChange.setStyleName(Reindeer.BUTTON_SMALL);
