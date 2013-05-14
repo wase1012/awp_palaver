@@ -4,6 +4,11 @@
 	background: #ffffff url('img/header_links.jpg') no-repeat left top;
 }
 
+.palaver-header:HOVER {
+	cursor: pointer;
+	background: #ffffff url('img/header_links_over.jpg') no-repeat left top;
+}
+
 .v-app {
 	background: #f0fff0;
 }
