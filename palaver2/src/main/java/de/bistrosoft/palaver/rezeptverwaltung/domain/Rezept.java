@@ -271,11 +271,11 @@ public class Rezept implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
-		result = prime * result + (aufwand ? 1231 : 1237);
-		result = prime * result
-				+ ((erstellt == null) ? 0 : erstellt.hashCode());
-		result = prime * result + (favorit ? 1231 : 1237);
+//		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
+//		result = prime * result + (aufwand ? 1231 : 1237);
+//		result = prime * result
+//				+ ((erstellt == null) ? 0 : erstellt.hashCode());
+//		result = prime * result + (favorit ? 1231 : 1237);
 		result = prime * result
 				+ ((geschmack == null) ? 0 : geschmack.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
