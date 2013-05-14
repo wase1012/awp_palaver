@@ -221,6 +221,7 @@ public class WinSelectMenue extends Window {
 				List<Rezept> rezepte = new ArrayList<>();
 				rezepte.add(rez);
 				menue.setRezepte(rezepte);
+				
 				// Aktuelle Menükomponente aus Plan löschen
 				menueGrid.removeComponent(destComp);
 				

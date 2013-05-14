@@ -95,7 +95,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 				final int woche = curWeek.getWeek();
 				if (week < woche) {
 					// nur gespeicherte Pläne
-					if (Menueplanverwaltung.getInstance().getMenueplanByWeek(
+					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
 							new Week(week, year)) == null) {
 						Notification notification = new Notification(
 								"Kein Menüplan vorhanden.");

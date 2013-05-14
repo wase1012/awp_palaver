@@ -33,6 +33,7 @@ public class MenueplanDAO extends AbstractDAO {
 														"VALUES ({0},{1},{2},{3})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
+//	private final String GET_MENUES_BY_MENUEPLAN = "";
 	
 	public MenueplanDAO() {
 		super();
@@ -45,7 +46,7 @@ public class MenueplanDAO extends AbstractDAO {
 		return instance;
 	}
 	
-	public Menueplan getMenueplanByWeek(Week week) throws ConnectException, DAOException, SQLException{
+	public Menueplan getMenueplanByWeekWithItems(Week week) throws ConnectException, DAOException, SQLException{
 		Menueplan menueplan = null;
 		ResultSet setMpl = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
 		
@@ -76,6 +77,39 @@ public class MenueplanDAO extends AbstractDAO {
 			return menueplan;
 	}
 	
+//	public Menueplan getMenueplanByWeekWithMenues(Week week) throws ConnectException, DAOException, SQLException{
+//		Menueplan menueplan = null;
+//		ResultSet setMpl = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
+//		
+//		while (setMpl.next()) {
+//			menueplan = new Menueplan(setMpl.getLong(ID),week);
+//		}	
+//		
+//		
+//		
+//		if(menueplan!=null){
+//			// TODO: Köche laden
+//			
+//			List<MenueComponent> menues = new ArrayList<>();
+//			// TODO: Menüs laden
+//			ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
+//			
+//			while (setMenues.next()) {
+//				Long id = setMenues.getLong("id");
+//				String name = setMenues.getString("name");
+//				Mitarbeiter koch=null;
+////				TODO:  = new Mitarbeiter(name, vorname);
+//				Menue menue = new Menue(id, name, koch);
+//				int row = setMenues.getInt("zeile");
+//				int col = setMenues.getInt("spalte");
+//				MenueComponent menueComp = new MenueComponent(menue, null, null, row, col, false);
+//				menues.add(menueComp);
+//			}
+//			menueplan.setMenues(menues);
+//		}
+//			return menueplan;
+//	}
+	
 	public List<MenueplanItem> getItemsForMenueplan(Long menuplanID) throws ConnectException, DAOException, SQLException{
 		List<MenueplanItem> items = new ArrayList<MenueplanItem>();
 		
@@ -95,6 +129,18 @@ public class MenueplanDAO extends AbstractDAO {
 			items.add(item);
 		}
 		return items;
+	}
+	
+	public List<Menue> getMenuesByMenueplan(Long menuplanID) throws ConnectException, DAOException, SQLException{
+		List<Menue> menues = new ArrayList<Menue>();
+		
+		List<MenueplanItem> items = getItemsForMenueplan(menuplanID);
+		
+		for(MenueplanItem i : items){
+			menues.add(i.getMenue());
+		}
+		
+		return menues;
 	}
 	
 	public void createMenueForMenueplan(Menueplan mpl, Menue menue, int col, int row) throws ConnectException, DAOException{

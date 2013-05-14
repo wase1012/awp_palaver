@@ -36,6 +36,7 @@ public class MenueComponent extends CustomComponent{
 	private Button btChange = new Button("Ändern");
 	private Menue menue;
 	private Boolean isChanged;
+	private Button btFehler;
 	
 	
 	
@@ -106,24 +107,11 @@ public class MenueComponent extends CustomComponent{
 		Label lbText = new Label("<div align=center>"+ menue.getName() +"</div>", Label.CONTENT_XHTML);
 		vl.addComponent(lbText);
 		
-		// Horizontales Layout erstellen
-		HorizontalLayout hlProp = new HorizontalLayout();
-		
-		//Testdaten für Eigenschaften
-		ArrayList<String> eigenschaften = new ArrayList<>();
-		eigenschaften.add("W");
-		eigenschaften.add("V");
-		eigenschaften.add("S");
-		eigenschaften.add("D");
-		
-		// Für jede Eigenschaft eine Checkbox erstellen
-//		for(int i=1;i<eigenschaften.size();++i){
-//			CheckBox cbTmp = new CheckBox(eigenschaften.get(i));
-//			cbTmp.setEnabled(true);
-//			hlProp.addComponent(cbTmp);
-//		}
-		// Horizontales Layout dem vertikalen Layout zufügen
-		vl.addComponent(hlProp);
+//		// Horizontales Layout erstellen
+//		HorizontalLayout hlProp = new HorizontalLayout();
+//		
+//		// Horizontales Layout dem vertikalen Layout zufügen
+//		vl.addComponent(hlProp);
 		
 		//Clicklistener für den ADD Button
 		btn.setStyleName(BaseTheme.BUTTON_LINK);
@@ -227,6 +215,11 @@ public class MenueComponent extends CustomComponent{
 			        }
 		});
 		
+		btFehler= new Button("test");
+//		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
+//		btn.setIcon(new ThemeResource("img/Menue.png"));
+		vl.addComponent(btFehler);
+		
 		HorizontalLayout hl = new HorizontalLayout();
 		btChange.setStyleName(Reindeer.BUTTON_SMALL);
 		btDelete.setStyleName(Reindeer.BUTTON_SMALL);
@@ -234,7 +227,7 @@ public class MenueComponent extends CustomComponent{
 		hl.addComponent(btDelete);
 		vl.addComponent(hl);
 		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
-		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
+//		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
 		vl.setComponentAlignment(hl, Alignment.BOTTOM_CENTER);
 //		vl.setComponentAlignment(btDelete, Alignment.BOTTOM_RIGHT);
 		vl.setHeight("90px");

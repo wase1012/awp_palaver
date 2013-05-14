@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class MenueplanRegel {
 
@@ -48,37 +49,65 @@ public class MenueplanRegel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new MenueplanRegel("Kategorie", r2, c2, "enthält", rw2,
-				"Es darf kein Rezept mit Kat. 3 in Zeile 2 eingefügt werden!"));
+		regeln.add(new MenueplanRegel("Kategorie", r2, c2, "max", rw2,
+				"Es darf kein Rezept mit Kat. 3 in Zeile 2 eingefügt werden! max 5"));
 
 		return regeln;
 	}
 
-	public Boolean check(MenueComponent mc) {
-		Menue menue = mc.getMenue();
-
+	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
-			return checkName(menue);
+			return checkName(mc, mp);
 		} else if (regeltyp.equals("Kategorie")) {
-			return checkKategorie(menue);
-		}
-		return true;
+			return checkKategorie(mc, mp);
+		} else
+			return true;
 	}
 
-	private Boolean checkKategorie(Menue menue) {
+	private Boolean checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
+		Menue menue = mc.getMenue();
 		if (menue.getRezepte() != null) {
 			if (operator.equals("enthält nicht")) {
 				for (Rezept rez : menue.getRezepte()) {
-					if (regelwerte.indexOf(rez.getRezeptart().getId().toString()) == -1) {
+					if (regelwerte.indexOf(rez.getRezeptart().getId()
+							.toString()) == -1) {
 						System.out.println(fehlermeldung);
 						return false;
 					}
 				}
 			} else if (operator.equals("enthält")) {
 				for (Rezept rez : menue.getRezepte()) {
-					if (regelwerte.indexOf(rez.getRezeptart().getId().toString()) >= 0) {
+					if (regelwerte.indexOf(rez.getRezeptart().getId()
+							.toString()) >= 0) {
 						System.out.println(fehlermeldung);
 						return false;
+					}
+				}
+			} else if (operator.equals("max")) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(regelwerte.get(0));
+				} catch (NumberFormatException e) {
+				      //do something! anything to handle the exception.
+				}
+				
+				DDGridLayout grid = mp.layout;
+				for (int col = 0; col < grid.getColumns(); ++col) {
+					for (int row = 0; row < grid.getRows(); ++row) {
+						if ((rows.indexOf(row) >= 0 || rows.indexOf(-1) >= 0) && (columns.indexOf(col) >= 0 || columns.indexOf(-1) >= 0)) {
+							if (grid.getComponent(col, row) instanceof MenueComponent) {
+								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+								if (mc.getMenue().getRezepte().get(0).getRezeptart().equals(tmp.getMenue().getRezepte().get(0).getRezeptart())) {
+									++count;
+									if (count > maxValue) {
+										System.out.println(fehlermeldung);
+										return false;
+									}
+								}
+
+							}
+						}
 					}
 				}
 			}
@@ -86,7 +115,8 @@ public class MenueplanRegel {
 		return true;
 	}
 
-	private Boolean checkName(Menue menue) {
+	private Boolean checkName(MenueComponent mc, MenueplanGridLayout mp) {
+		Menue menue = mc.getMenue();
 		Boolean isOk = true;
 		if (operator.equals("enthält nicht")) {
 			if (regelwerte.indexOf(menue.getName()) == -1) {
@@ -107,5 +137,4 @@ public class MenueplanRegel {
 		}
 		return isOk;
 	}
-
 }

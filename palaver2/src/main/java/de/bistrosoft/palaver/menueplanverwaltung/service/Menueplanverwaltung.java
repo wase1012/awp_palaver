@@ -25,10 +25,10 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		return instance;
 	}
 	
-	public Menueplan getMenueplanByWeek(Week week){
+	public Menueplan getMenueplanByWeekWithItems(Week week){
 		Menueplan mpl=null;
 		try {
-			mpl = super.getMenueplanByWeek(week);
+			mpl = super.getMenueplanByWeekWithItems(week);
 		} catch (ConnectException | DAOException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		if(menueplan.getId()==null){
 			try {
 				super.createMenueplan(menueplan);
-				menueplan.setId(super.getMenueplanByWeek(menueplan.getWeek()).getId());
+				menueplan.setId(super.getMenueplanByWeekWithItems(menueplan.getWeek()).getId());
 			} catch (ConnectException | DAOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
