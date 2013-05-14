@@ -52,6 +52,8 @@ public interface IConstants
 	public final String		BUTTON_EDIT = "Bearbeiten";
 	public final String		BUTTON_OK = "OK";
 	public final String		BUTTON_LÖSCHEN = "Löschen";
+	public final String		BUTTON_JA = "Ja";
+	public final String 	BUTTON_NEIN = "Nein";
 	
 	// Icons fuer Knoepfe
 	public final String		BUTTON_DELETE_ICON = "img/delete.ico";

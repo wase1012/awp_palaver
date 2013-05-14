@@ -14,6 +14,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -286,9 +287,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setMargin(true);
 					layout.setWidth("100%");
 					layout.setSpacing(true);
-					
-					//IConstants.BUTTON_LÖSCHEN
-					Button			löschen = new Button();
+
+					Button			löschen = new Button(IConstants.BUTTON_LÖSCHEN);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -317,7 +317,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					
 					speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 					verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-//					löschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
+					löschen.setIcon(new ThemeResource(IConstants.ICON_DELETE));
 					
 					layout.addComponent(feld);
 					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
@@ -354,14 +354,72 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						@Override
 						public void buttonClick(ClickEvent event) {
 							
-							try {
-								Ansprechpartnerverwaltung.getInstance().deleteAnsprechpartner(ansprechpartnerBean.getId());
-							} catch (ConnectException | DAOException | SQLException e) {
-								System.out.println(e);
-								}
+							anspr.setStyleName("dialog-window");
+							anspr.setClosable(false);
+							anspr.setWidth("320px");
+							anspr.setHeight("135px");
+							anspr.setModal(true);
+							anspr.center();
+							anspr.setResizable(false);
+							anspr.setCaption("");
 							
-							UI.getCurrent().removeWindow(anspr);
-							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+							HorizontalLayout layout = new HorizontalLayout();
+							layout.setMargin(true);
+//							layout.setWidth("300px");
+							layout.setSizeFull();
+							layout.setSpacing(true);
+							
+							VerticalLayout verticallayout = new VerticalLayout();
+//							verticallayout.setWidth("280px");
+														
+							Label label = new Label("Wollen Sie den Ansprechpartner wirklich löschen?");
+							verticallayout.addComponent(label);
+							verticallayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+							
+							HorizontalLayout horizontallayout = new HorizontalLayout();
+							horizontallayout.setMargin(true);
+//							horizontallayout.setWidth("280px");
+							horizontallayout.setSpacing(true);
+							
+							Button ja = new Button(IConstants.BUTTON_JA);
+							Button nein = new Button(IConstants.BUTTON_NEIN);
+							
+							ja.setIcon(new ThemeResource(IConstants.ICON_YES));
+							nein.setIcon(new ThemeResource(IConstants.ICON_NO));
+							
+							horizontallayout.addComponent(ja);
+							horizontallayout.addComponent(nein);
+							
+							verticallayout.addComponent(horizontallayout);
+							verticallayout.setComponentAlignment(horizontallayout, Alignment.MIDDLE_CENTER);
+							
+							layout.addComponent(verticallayout);
+							layout.setComponentAlignment(verticallayout, Alignment.MIDDLE_CENTER);
+							
+							anspr.setContent(layout);							
+							
+							ja.addClickListener(new ClickListener()
+							{
+								public void buttonClick(ClickEvent event){
+									try {
+									Ansprechpartnerverwaltung.getInstance().deleteAnsprechpartner(ansprechpartnerBean.getId());
+									} catch (ConnectException | DAOException | SQLException e) {
+									System.out.println(e);
+									}
+							
+								UI.getCurrent().removeWindow(anspr);
+								ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+								}
+							});
+							
+							nein.addClickListener(new ClickListener()
+							{
+								public void buttonClick(ClickEvent event){
+									
+								UI.getCurrent().removeWindow(anspr);
+								ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+								}
+							});
 						}						
 					});
 					
