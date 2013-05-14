@@ -92,7 +92,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		{
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "bestellgroesse"});
+			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio", "bestellgroesse"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
 			
 			table.setCellStyleGenerator(new CellStyleGenerator()
@@ -101,15 +101,25 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 				@Override
 				public String getStyle(CustomTable source, Object itemId, Object propertyId)
 				{
+					Artikel artikel = (Artikel) itemId;
 					if ("standard".equals(propertyId))
 					{
-						Artikel artikel = (Artikel) itemId;
 						return artikel.isStandard() ? "check" : "cross";
+					}
+					if ("grundbedarf".equals(propertyId))
+					{
+						return artikel.isGrundbedarf() ? "check" : "cross";
+					}
+					if ("bio".equals(propertyId))
+					{
+						return artikel.isBio() ? "check" : "cross";
 					}
 					return "";
 				}
 			});
 			table.setColumnWidth("standard", 60);
+			table.setColumnWidth("grundbedarf", 80);
+			table.setColumnWidth("bio", 30);
 		} 
 		catch (IllegalArgumentException | ConnectException | DAOException
 				| SQLException e)
