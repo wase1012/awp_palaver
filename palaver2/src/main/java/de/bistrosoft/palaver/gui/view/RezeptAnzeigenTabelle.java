@@ -86,7 +86,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 					Rezeptverwaltung.getInstance().getAllRezepte());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] {"id", "name", "rezeptart",
-					"geschmack", "mitarbeiter" });
+					"geschmack", "mitarbeiter", "erstellt" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (IllegalArgumentException | ConnectException | DAOException
 				| SQLException e) {
