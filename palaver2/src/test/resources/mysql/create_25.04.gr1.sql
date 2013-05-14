@@ -364,16 +364,19 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`menueplan_has_koeche` ;
 
 CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_koeche` (
+	id INT NOT NULL AUTO_INCREMENT,
 	menueplan INT NOT NULL,
-	koch INT NOT NULL,
-	PRIMARY KEY (menueplan,koch),
+	spalte INT NOT NULL,
+	koch1 INT,
+	koch2 INT,
+	PRIMARY KEY (id),
 	CONSTRAINT `fk_menueplan_has_koch_menue`
     FOREIGN KEY (`menueplan` )
     REFERENCES `palaver`.`menueplan` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_menueplan_has_koch_koch`
-    FOREIGN KEY (`koch` )
+  CONSTRAINT `fk_menueplan_has_koch_koch1`
+    FOREIGN KEY (`koch1` )
     REFERENCES `palaver`.`mitarbeiter` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
