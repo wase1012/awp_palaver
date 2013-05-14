@@ -62,7 +62,7 @@ import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
 
 @SuppressWarnings("serial")
-public class MenueAnlegen extends VerticalLayout implements View {
+public class MenueAendern extends VerticalLayout implements View {
 
 	private VerticalLayout box = new VerticalLayout();
 	private HorizontalLayout horizont1 = new HorizontalLayout();
@@ -122,7 +122,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 	private TwinColSelect fussnoten = new TwinColSelect("Fussnoten");
 	
 
-	private Button speichern = new Button("Speichern");
+	private Button aendern = new Button("Ändern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button neuesRezept = new Button("neues Rezeptanlegen");
 	private Button hAnsehen = new Button("Hauptegricht ansehen");
@@ -145,7 +145,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 
 	private Button btAdd = new Button("Add");
 
-	public MenueAnlegen() {
+	public MenueAendern() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
@@ -241,14 +241,13 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		beilage2.setNullSelectionAllowed(false);
 
 		fussnoten.setImmediate(true);
-		fussnoten.setWidth("400");
 	
 		
 		load();
 
 		control.addComponent(verwerfen);
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
+		control.addComponent(aendern);
+		aendern.setIcon(new ThemeResource("img/save.ico"));
 		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 
 		hauptgericht.addValueChangeListener(new ValueChangeListener() {
@@ -313,7 +312,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
-			ViewHandler.getInstance().switchView(MenueAnlegen.class);
+			ViewHandler.getInstance().switchView(MenueAendern.class);
 			}
 		});
 		
@@ -376,7 +375,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		});
 		
 
-		speichern.addClickListener(new ClickListener() {
+		aendern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
@@ -406,7 +405,7 @@ if (menuename.getValue() != null) {
 				
 				
 				try {
-					Menueverwaltung.getInstance().createMenue(menue);
+					Menueverwaltung.getInstance().updateMenue(menue);
 					
 					
 				} catch (ConnectException | DAOException | SQLException e) {
@@ -423,7 +422,18 @@ if (menuename.getValue() != null) {
 					e1.printStackTrace();
 				}
 				
-				
+				try {
+					Menueverwaltung.getInstance().FussnoteDelete(menue1);
+				} catch (ConnectException | DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Menueverwaltung.getInstance().RezepteDelete(menue1);
+				} catch (ConnectException | DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 
 				if(fussnoten.getValue().toString() != "[]"){
@@ -569,21 +579,21 @@ Rezept rezept2 = new Rezept();
 				
 				
 				
-				ViewHandler.getInstance().switchView(MenueAnlegen.class);
+				ViewHandler.getInstance().switchView(MenueAendern.class);
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				//System.out.println(ausgArtikel.size());
 					}
 					else{
-						Notification notification = new Notification("Bitte geben Sie den Menüersteller an einen Namen");
+						Notification notification = new Notification("Bitte geben Sie dem Menü einen Namen");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 						
 					}
 				}
 				else{ 
-					Notification notification = new Notification("Bitte geben sie dem Menue einen Namen");
+					Notification notification = new Notification("Bitte geben sie den Menüersteller an");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 					

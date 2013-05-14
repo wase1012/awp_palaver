@@ -46,6 +46,10 @@ public class MenueDAO extends AbstractDAO {
 
 		return list;
 	}
+	
+	
+	
+	
 
 	public Menue getMenueByName(String namemenue) throws ConnectException,
 			DAOException, SQLException {
@@ -69,6 +73,14 @@ public class MenueDAO extends AbstractDAO {
 				+ menue.getKoch().getId() + "')";
 		this.put(INSERT_QUERY);
 	}
+	
+	public void updateMenue(Menue menue) throws ConnectException, DAOException,
+	SQLException {
+String INSERT_QUERY = "UPDATE " + TABLE + "(" + NAME + "," + KOCH
+		+ ")" + "VALUES" + "('" + menue.getName() + "','"
+		+ menue.getKoch().getId() + "' WHERE menue_fk = " + menue.getId() + ")";
+this.put(INSERT_QUERY);
+}
 
 	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
 			throws ConnectException, DAOException, SQLException {
@@ -94,12 +106,16 @@ public class MenueDAO extends AbstractDAO {
 	
 	public void FussnoteDelete(Menue menue1)
 			throws ConnectException, DAOException, SQLException {
-//		String DELETE_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
-//				+ "("
-//				+ menueHasFussnote.getMenue()
-//				+ ", "
-//				+ menueHasFussnote.getFussnote() + ")";
-//		this.put(DELETE_QUERY);
+		String DELETE_QUERY = "DELETE * from menue_has_fussnote WHERE menue_fk = " + menue1.getId() + ";";
+
+		this.put(DELETE_QUERY);
+	}
+	
+	public void RezepteDelete(Menue menue1)
+			throws ConnectException, DAOException, SQLException {
+		String DELETE_QUERY = "DELETE * from menue_has_rezept WHERE menue_fk = " + menue1.getId() + ";";
+
+		this.put(DELETE_QUERY);
 	}
 
 }

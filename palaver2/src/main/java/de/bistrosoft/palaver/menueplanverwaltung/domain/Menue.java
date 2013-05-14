@@ -25,6 +25,8 @@ public class Menue {
 		this.kochname=koch;
 	}
 	
+	
+	
 	public Menue(Long id, String name, Mitarbeiter koch){
 		this.id=id;
 		this.name=name;

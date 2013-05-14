@@ -24,6 +24,7 @@ public interface IConstants {
 	public final String MENU_REZEPT_LOESCHEN = "Rezept Löschen";
 	public final String MENU_MENUE_HEADLINE = "Menü";
 	public final String MENU_MENUE_ANLEGEN = " Menü Anlegen";
+	public final String MENU_MENUE_SUCHEN = " Menü Suchen";
 	public final String MENU_MENUPLAN_HEADLINE = "Menüplan";
 	public final String MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
 	public final String MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
