@@ -12,6 +12,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
@@ -32,7 +33,8 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 public class BestellungLieferantAuswaehlen extends VerticalLayout implements View{
 
 	private FilterTable		table;
-	
+	private HorizontalLayout	box = new HorizontalLayout();
+	private VerticalLayout mitte = new VerticalLayout();
 	private Button			showFilter;
 	private Lieferant 		lieferant;
 	
@@ -42,12 +44,21 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 		
 		this.setSizeFull();
 		this.setMargin(true);
+		this.addComponent(box);
+		
+		box.setSizeFull();
+		box.setSpacing(true);
+		
+		mitte.setSizeFull();
+		box.setSpacing(true);
+		
+		box.addComponent(mitte);
 		
 		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
 		showFilter.setIcon(new ThemeResource("img/filter.ico"));
 		
 		table = new FilterTable();
-		table.setCaption("Alle Lieferanten");
+		table.setCaption("Alle Lieferanten mit Artikeln");
 		table.setStyleName("palaverTable");
 		table.setWidth("400px");
 		table.setFilterBarVisible(false);
@@ -89,10 +100,11 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			e.printStackTrace();
 		}	
 		
-		this.addComponent(showFilter);
-		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
-		this.addComponent(table);
-		this.setExpandRatio(table, 1);
+		mitte.addComponent(showFilter);
+		mitte.setComponentAlignment(showFilter, Alignment.MIDDLE_CENTER);
+		mitte.addComponent(table);
+		mitte.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
+		mitte.setExpandRatio(table, 1);
 		
 		showFilter.addClickListener(new ClickListener()
 		{
@@ -119,8 +131,6 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 	
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
