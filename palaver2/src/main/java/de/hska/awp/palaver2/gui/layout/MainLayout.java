@@ -15,7 +15,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import de.hska.awp.palaver2.Application;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
-import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
+import de.hska.awp.palaver2.gui.view.BestellungErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
