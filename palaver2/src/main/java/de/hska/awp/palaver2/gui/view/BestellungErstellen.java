@@ -47,7 +47,7 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class BestellungAnzeigen extends VerticalLayout implements View
+public class BestellungErstellen extends VerticalLayout implements View
 {
 	private Table 								bestellungTable;
 	
@@ -74,7 +74,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View
 	private BeanItemContainer<BestellungData> 	containerBestellung;
 	private BeanItemContainer<Artikel> 			containerArtikel;
 	
-	public BestellungAnzeigen()
+	public BestellungErstellen()
 	{
 		super();
 		
