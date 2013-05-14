@@ -99,8 +99,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		ansprechpartner.setHeight("150px");
 		
 		
-//		box.setWidth("610px");
-		box.setWidth("75%");
+		box.setWidth("900px");
 		box.setHeight("90%");
 		box.setSpacing(true);
 		
@@ -287,7 +286,9 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setMargin(true);
 					layout.setWidth("100%");
 					layout.setSpacing(true);
-
+					
+					//IConstants.BUTTON_LÖSCHEN
+					Button			löschen = new Button();
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -310,12 +311,14 @@ public class LieferantSuche extends VerticalLayout  implements View{
 
 					HorizontalLayout control = new HorizontalLayout();
 					control.setSpacing(true);
+					control.addComponent(löschen);
 					control.addComponent(verwerfen);
 					control.addComponent(speichern);
-			
+					
 					speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 					verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-
+//					löschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
+					
 					layout.addComponent(feld);
 					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 					layout.addComponent(control);
@@ -344,6 +347,22 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						public void buttonClick(ClickEvent event) {
 							UI.getCurrent().removeWindow(anspr);							
 						}
+					});
+					
+					löschen.addClickListener(new ClickListener(){
+						
+						@Override
+						public void buttonClick(ClickEvent event) {
+							
+							try {
+								Ansprechpartnerverwaltung.getInstance().deleteAnsprechpartner(ansprechpartnerBean.getId());
+							} catch (ConnectException | DAOException | SQLException e) {
+								System.out.println(e);
+								}
+							
+							UI.getCurrent().removeWindow(anspr);
+							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+						}						
 					});
 					
 					speichern.addClickListener(new ClickListener()
@@ -608,7 +627,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		try {
 			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(lieferant));
 			ansprechpartner.setContainerDataSource(container);
-			ansprechpartner.setVisibleColumns(new Object[] {"id", "name", "telefon", "handy", "fax"});
+			ansprechpartner.setVisibleColumns(new Object[] {"name", "telefon", "handy", "fax"});
 			ansprechpartner.sort(new Object[] {"id"}, new boolean[] {true});
 			ansprechpartner.setColumnCollapsingAllowed(true);
 			ansprechpartner.setColumnCollapsed(handyAnspr, false);

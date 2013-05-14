@@ -50,8 +50,10 @@ public interface IConstants
 	public final String		BUTTON_NEW = "Neu";
 	public final String		BUTTON_EDIT = "Bearbeiten";
 	public final String		BUTTON_OK = "OK";
+	public final String		BUTTON_LÖSCHEN = "Löschen";
 	
 	// Icons fuer Knoepfe
+	public final String		BUTTON_DELETE_ICON = "img/delete.ico";
 	public final String		BUTTON_SAVE_ICON = "img/save.ico";
 	public final String		BUTTON_DISCARD_ICON = "img/cross.ico";
 	public final String 	BUTTON_ADD_ICON = "img/add.ico";
