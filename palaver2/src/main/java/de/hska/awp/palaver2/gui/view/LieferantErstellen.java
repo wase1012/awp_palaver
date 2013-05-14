@@ -87,7 +87,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		notiz.setRows(3);
 		mehrereliefertermine.setWidth("100%");
 		
-		box.setWidth("65%");
+		box.setWidth("900px");
 		box.setHeight("90%");
 		box.setSpacing(true);
 		
