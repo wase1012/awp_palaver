@@ -21,7 +21,8 @@
 .v-button:FOCUS,
 .v-button:HOVER,
 .v-button:ACTIVE,
-.v-button.v-pressed {
+.v-button.v-pressed,
+.v-disabled.v-button {
 	height: 26px;
 	padding: 0 0 0 20px;
 	background-color: transparent;
@@ -35,7 +36,8 @@
 .v-button:FOCUS .v-button-wrap,
 .v-button:HOVER .v-button-wrap,
 .v-button:ACTIVE .v-button-wrap,
-.v-button.v-pressed .v-button-wrap {
+.v-button.v-pressed .v-button-wrap,
+.v-disabled.v-button .v-button-wrap {
 	display: block;
     height: 26px;
     padding: 4px 20px 0px 0px;
