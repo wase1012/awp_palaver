@@ -72,18 +72,17 @@ public class BestellverwaltungTest {
      * @throws ConnectException 
 	 */
 @Test
-	public void updateBestellung (){
+	public void updateBestellung () throws ConnectException, DAOException, SQLException{
 	
 		Bestellung b = new Bestellung();
 		final String lieferdatum = "Heute";
-	
+			
 		Boolean exception = false;
-		final Long id = Long.valueOf(1);
-		
+		final Long id = Long.valueOf(1);	
 	
 		try{
 		
-			bv.getBestellungById(id);
+			b = bv.getBestellungById(id);
 	
 		}
 		catch (ConnectException | DAOException | SQLException e)
@@ -93,6 +92,8 @@ public class BestellverwaltungTest {
 		
 		//b.setLieferant(lieferant);
 		b.setLieferdatum(lieferdatum);
+		List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
+		b.setBestellpositionen(bestellpositionen);
 	
 		try{
 			bv.updateBestellung(b);
