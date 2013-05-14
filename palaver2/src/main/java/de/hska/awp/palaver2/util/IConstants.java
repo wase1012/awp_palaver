@@ -60,4 +60,8 @@ public interface IConstants
 	public final String 	BUTTON_NEW_ICON = "img/new.ico";
 	public final String 	BUTTON_EDIT_ICON = "img/edit.ico";
 	public final String		BUTTON_OK_ICON = "img/check.ico";
+	
+	public final String		ICON_YES = "img/tick_circle.ico";
+	public final String		ICON_NO = "img/cross_circle.ico";
+	public final String		ICON_DELETE = "img/Delete.ico";
 }
