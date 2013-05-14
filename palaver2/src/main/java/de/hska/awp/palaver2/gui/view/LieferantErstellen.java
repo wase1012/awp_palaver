@@ -137,13 +137,14 @@ public class LieferantErstellen extends VerticalLayout implements View
 //		rechts.addComponent(speichern);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		speichern.setEnabled(false);
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -159,7 +160,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		strasse.setMaxLength(45);
 		
 //        Validator postalCodeValidator = new AbstractStringValidator(
-//                "Bitte gÃ¼ltige PLZ eingeben.") {
+//                "Bitte gültige PLZ eingeben.") {
 //			@Override
 //			protected boolean isValidValue(String value) {
 //                return value.matches("[1-9][0-9]{4}");
@@ -189,14 +190,19 @@ public class LieferantErstellen extends VerticalLayout implements View
 		notiz.setImmediate(true);
 		notiz.setInputPrompt(notizInput);
 		notiz.setMaxLength(300);
-		
         name.addValueChangeListener(new ValueChangeListener() {
-
+       
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());
-
                 nameInput = valueString;
+        		if (name.isValid() == true) {
+        			speichern.setEnabled(true);
+        		}
+        		else {
+        			speichern.setEnabled(false);
+        		}
+
             }
         });
         
