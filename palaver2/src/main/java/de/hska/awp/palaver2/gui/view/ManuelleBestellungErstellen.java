@@ -24,9 +24,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -201,6 +203,14 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 			{
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
+				int ii = 0;
+				for(int i = 0; i < (bestellpositionen.size()); i++){
+					
+					if(bestellpositionen.get(i).getGesamt()==0){
+						bestellpositionen.remove(i);
+						ii = ii + 1;
+					}
+				}
 				
 				//TODO
 				String testDatum = "Freitag";
