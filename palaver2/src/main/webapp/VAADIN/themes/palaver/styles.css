@@ -47,11 +47,13 @@
 }
 
 
-.v-button {
+.v-button,
+.v-disabled.v-button {
 	background-image: url(img/button/left.png);
 }
 
-.v-button-wrap {
+.v-button-wrap,
+.v-disabled.v-button .v-button-wrap {
     background-image: url(img/button/right.png);
 }
 
