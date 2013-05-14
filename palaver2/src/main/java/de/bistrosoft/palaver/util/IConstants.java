@@ -18,13 +18,13 @@ public interface IConstants {
 	public final String MENU_BESTELLUNG_HEADLINE = "Bestellung";
 
 	public final String MENU_REZEPT_HEADLINE = "Rezept";
-	public final String MENU_REZEPT_NEU = "Rezept Anlegen";
-	public final String MENU_REZEPT_ANZEIGEN = "Rezept Anzeigen";
-	public final String MENU_REZEPT_AENDERN = "Rezept Ändern";
-	public final String MENU_REZEPT_LOESCHEN = "Rezept Löschen";
+	public final String MENU_REZEPT_NEU = "Rezept anlegen";
+	public final String MENU_REZEPT_ANZEIGEN = "Rezept anzeigen";
+	public final String MENU_REZEPT_AENDERN = "Rezept ändern";
+	public final String MENU_REZEPT_LOESCHEN = "Rezept löschen";
 	public final String MENU_MENUE_HEADLINE = "Menü";
-	public final String MENU_MENUE_ANLEGEN = " Menü Anlegen";
-	public final String MENU_MENUE_SUCHEN = " Menü Suchen";
+	public final String MENU_MENUE_ANLEGEN = " Menü anlegen";
+	public final String MENU_MENUE_SUCHEN = " Menü suchen";
 	public final String MENU_MENUPLAN_HEADLINE = "Menüplan";
 	public final String MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
 	public final String MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
