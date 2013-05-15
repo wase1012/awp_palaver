@@ -53,6 +53,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -373,6 +374,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					e.printStackTrace();
 				}
 
+				
+				
 				// / Liste der Zubereitungen
 				Rezept rez = null;
 				try {
@@ -429,10 +432,10 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				
 				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
 				ausgArtikel=bicArtikel.getItemIds();
-				rezept.setArtikel(ausgArtikel);
+				rez.setArtikel(ausgArtikel);
 				
 				try {
-					Rezeptverwaltung.getInstance().saveArtikel(rezept);
+					Rezeptverwaltung.getInstance().saveArtikel(rez);
 				} catch (ConnectException | DAOException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -699,8 +702,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
 		
 		
 		

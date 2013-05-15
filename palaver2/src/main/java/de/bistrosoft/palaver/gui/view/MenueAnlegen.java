@@ -338,7 +338,14 @@ public class MenueAnlegen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event)
 			{
 				if (hauptgericht.getValue() != null) {
-			ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+					try {
+						ViewHandler.getInstance().switchView(RezeptAnlegen.class,
+								new ViewDataObject<Rezept>(RezeptDAO.getInstance().getRezept1(Long.parseLong(hauptgerichtInput.toString()))));
+					} catch (NumberFormatException | ConnectException
+							| DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else {
 					Notification notification = new Notification("es wurde kein Rezept augewählt");
@@ -357,7 +364,14 @@ public class MenueAnlegen extends VerticalLayout implements View {
 			{
 				
 				if (beilage1.getValue() != null) {
-			ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+					try {
+						ViewHandler.getInstance().switchView(RezeptAnlegen.class,
+								new ViewDataObject<Rezept>(RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage1Input.toString()))));
+					} catch (NumberFormatException | ConnectException
+							| DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else {
 					Notification notification = new Notification("es wurde kein Rezept augewählt");
@@ -373,7 +387,14 @@ public class MenueAnlegen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event)
 			{
 				if (beilage2.getValue() != null) {
-					ViewHandler.getInstance().switchView(RezeptAnzeigen.class);
+					try {
+						ViewHandler.getInstance().switchView(RezeptAnlegen.class,
+								new ViewDataObject<Rezept>(RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage2Input.toString()))));
+					} catch (NumberFormatException | ConnectException
+							| DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 						}
 						else {
 							Notification notification = new Notification("es wurde kein Rezept augewählt");
