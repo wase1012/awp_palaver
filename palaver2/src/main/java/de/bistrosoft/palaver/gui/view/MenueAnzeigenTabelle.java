@@ -77,7 +77,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				
 				
 				if(event.isDoubleClick()){
-				ViewHandler.getInstance().switchView(MenueAnzeigen.class,
+				ViewHandler.getInstance().switchView(MenueAnlegen.class,
 						new ViewDataObject<Menue>(menue));
 				}
 				else {

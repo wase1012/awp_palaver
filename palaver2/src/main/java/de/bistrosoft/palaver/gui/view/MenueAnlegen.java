@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -34,6 +35,7 @@ import de.bistrosoft.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
@@ -57,13 +59,20 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewDataObject;
 import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
+import de.hska.awp.palaver2.util.IConstants;
 
 
 @SuppressWarnings("serial")
 public class MenueAnlegen extends VerticalLayout implements View {
 
+	
+	List<Rezept> listrezept = new ArrayList<Rezept>();
+	List<Fussnote> listfussnote = new ArrayList<Fussnote>();
+	Menue menue2;
+	Integer z = 0;
 	private VerticalLayout box = new VerticalLayout();
 	private HorizontalLayout horizont1 = new HorizontalLayout();
 	private HorizontalLayout horizont2 = new HorizontalLayout();
@@ -81,9 +90,9 @@ public class MenueAnlegen extends VerticalLayout implements View {
 	private VerticalLayout b1 = new VerticalLayout();
 	private VerticalLayout b2 = new VerticalLayout();
 	private VerticalLayout b3 = new VerticalLayout();
+	private HorizontalLayout control = new HorizontalLayout();
 	
-	
-	
+	private Button update = new Button("Ändern");
 	
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
@@ -218,7 +227,7 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		BeanItemContainer<RezeptHasArtikel> container;
 
 		
-		HorizontalLayout control = new HorizontalLayout();
+		
 		control.setSpacing(true);
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
@@ -234,11 +243,11 @@ public class MenueAnlegen extends VerticalLayout implements View {
 		ersteller.setNullSelectionAllowed(false);
 		beilage1.setImmediate(true);
 		beilage1.setInputPrompt(beilage1Input);	
-		beilage1.setNullSelectionAllowed(false);
+		//beilage1.setNullSelectionAllowed(false);
 
 		beilage2.setImmediate(true);
 		beilage2.setInputPrompt(beilage2Input);
-		beilage2.setNullSelectionAllowed(false);
+		//beilage2.setNullSelectionAllowed(false);
 
 		fussnoten.setImmediate(true);
 		fussnoten.setWidth("400");
@@ -573,6 +582,7 @@ Rezept rezept2 = new Rezept();
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+				ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
 				//System.out.println(ausgArtikel.size());
 					}
 					else{
@@ -646,7 +656,326 @@ Rezept rezept2 = new Rezept();
 	}
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		menue2 = new Menue();
+		menue2 = (Menue) ((ViewDataObject<?>)data).getData();
+		control.replaceComponent(speichern, update);
+		
+		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		
+		update.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+				
+				
+				System.out.println("geaendert");
+				Menue menue = new Menue();
+				MenueHasFussnote fussnote = new MenueHasFussnote();
+
+				
+if (menuename.getValue() != null) {
+					
+					
+					if (ersteller.getValue() != null) {
+				
+				menue.setId(menue2.getId());
+				menue.setName(menuenameInput);
+
+				try {
+					menue.setKoch(MitarbeiterDAO.getInstance()
+							.getMitarbeiterById(
+									Long.parseLong(erstellerInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+				try {
+					Menueverwaltung.getInstance().updateMenue(menue);
+					
+					
+				} catch (ConnectException | DAOException | SQLException e) {
+					e.printStackTrace();
+				}
+				
+/// Liste der Fussnoten
+				
+//				Menue menue1 = null;
+//				try {
+//					menue1 = Menueverwaltung.getInstance().getMenueByName(menuenameInput);
+//				} catch (ConnectException | DAOException | SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+				
+				try {
+					Menueverwaltung.getInstance().FussnoteDelete(menue2);
+				} catch (ConnectException | DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Menueverwaltung.getInstance().RezepteDelete(menue2);
+				} catch (ConnectException | DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+
+				if(fussnoten.getValue().toString() != "[]"){
+					List<String> FussnoteId = Arrays.asList(valueString.substring(1,
+							valueString.length() - 1).split("\\s*,\\s*"));
+					for (String s : FussnoteId) {
+	//					System.out.println(s);
+					}
+					// valueString.split
+					BeanItemContainer<MenueHasFussnote> fussnotencontainer;
+					List<MenueHasFussnote> fussnotelist = new ArrayList<MenueHasFussnote>();
+	
+					for (String sId : FussnoteId) {
+						Long id = null;
+						try {
+							id = Long.parseLong(sId.trim());
+	
+						} catch (NumberFormatException nfe) {
+	
+						}
+	
+						Fussnote fussnote1 = null;
+	//					Menue menue1 =  Menueverwaltung.getInstance()
+	//							.getMenueByName(menuenameInput);
+						try {
+							
+							
+							fussnote1 = Fussnotenverwaltung.getInstance()
+									.getFussnoteById(id);
+	//						
+							MenueHasFussnote a = new MenueHasFussnote(fussnote1,
+									menue2);
+							fussnotelist.add(a);
+						} catch (ConnectException | DAOException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	
+					}
+					
+					for (MenueHasFussnote i :fussnotelist) {
+						
+						
+						try{
+						Menueverwaltung.getInstance().FussnoteAdd(i);
+						} catch (ConnectException | DAOException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+					}
+				}
+				
+				
+				
+///////////////	
+//Hauptgericht
+				if (hauptgericht.getValue() != null) {
+				
+				Rezept rezept = new Rezept();
+				
+				try {
+					rezept = RezeptDAO.getInstance().getRezept1(Long.parseLong(hauptgerichtInput.toString()));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				MenueHasRezept mhr = new MenueHasRezept(menue2, rezept, true);
+				
+				try{
+					Menueverwaltung.getInstance().RezepteAdd(mhr);
+					} catch (ConnectException | DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}		
+				
+				}
+				
+				else {
+					
+				}
+////////	
+				
+///B1    
+				
+				if (beilage1.getValue() != null) {
+				
+Rezept rezept1 = new Rezept();
+				
+				try {
+					rezept1 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage1Input.toString()));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+//				 if (rezept1 != null) {
+				MenueHasRezept mhr1 = new MenueHasRezept(menue2, rezept1, false);
+				
+				try{
+					Menueverwaltung.getInstance().RezepteAdd(mhr1);
+					} catch (ConnectException | DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				 
+				 else {
+					 
+				 }
+//B2
+				if (beilage2.getValue() != null) {	
+Rezept rezept2 = new Rezept();
+				
+				try {
+					rezept2 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage2Input.toString()));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				MenueHasRezept mhr2 = new MenueHasRezept(menue2, rezept2, false);
+				
+				try{
+					Menueverwaltung.getInstance().RezepteAdd(mhr2);
+					} catch (ConnectException | DAOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				}
+				else {
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				ViewHandler.getInstance().switchView(MenueAendern.class);
+				Notification notification = new Notification("Menue wurde geaendert!");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+				ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
+				//System.out.println(ausgArtikel.size());
+					}
+					else{
+						Notification notification = new Notification("Bitte geben Sie dem Menü einen Namen");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+						
+					}
+				}
+				else{ 
+					Notification notification = new Notification("Bitte geben sie den Menüersteller an");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+					
+				}
+			}
+		});
+	
+		
+		try {
+			listfussnote = FussnoteDAO.getInstance().getFussnoteByMenue(menue2.getId());
+		} catch (ConnectException | DAOException | SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		if(listfussnote != null) {
+			
+			for ( Fussnote fn: listfussnote) {
+				
+				fussnoten.select(fn.getId());
+			}
+			
+		}
+		else {
+			
+		}
+
+		try {
+			System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		menuename.setValue(menue2.getName());
+		try {
+			ersteller.setValue(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+		} catch (ReadOnlyException | ConnectException | DAOException
+				| SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtMenue(menue2.getId()).getId());
+		} catch (ReadOnlyException | ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			listrezept = MenueDAO.getInstance().getBeilagenByMenue(menue2.getId());
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(listrezept != null) {
+			z = listrezept.size();
+		System.out.println(z);
+		if(z < 1){
+		//	System.out.println("wwwww");
+		}
+		
+		else {
+			Integer j = 0;
+			if(z == 2){
+				
+				for (Rezept x : listrezept) {
+					
+					if(j == 0) {
+						beilage1.setValue(x.getId());
+						j = j + 1;
+					}
+					else{
+						beilage2.setValue(x.getId());
+						
+					}
+					
+				}
+				
+				
+			}
+			else{
+				for (Rezept t : listrezept) {
+					beilage1.setValue(t.getId());
+				//	System.out.println("eine");
+				}
+			}
+		}
+		}
+		else {
+		//	System.out.println("sssssss");
+		}
 		
 	}
 }
