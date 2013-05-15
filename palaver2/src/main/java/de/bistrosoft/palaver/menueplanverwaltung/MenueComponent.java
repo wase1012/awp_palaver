@@ -135,8 +135,8 @@ public class MenueComponent extends CustomComponent{
 		this.isChanged = isChanged;
 	}
 	
-	public void addFehlerRegel(Regel menueplanRegel) {
-		if (menueplanRegel == null){
+	public void addFehlerRegel(Regel regel) {
+		if (regel == null){
 			return;
 		}
 		
@@ -144,11 +144,11 @@ public class MenueComponent extends CustomComponent{
 			FehlerRegeln = new ArrayList<>();
 		}
 		
-		if (FehlerRegeln.indexOf(menueplanRegel)>=0){
+		if (FehlerRegeln.indexOf(regel)>=0){
 			return;
 		}
 		
-		FehlerRegeln.add(menueplanRegel);
+		FehlerRegeln.add(regel);
 		
 		btFehler.setVisible(true);
 		
@@ -299,7 +299,6 @@ public class MenueComponent extends CustomComponent{
 		btFehler.setIcon(new ThemeResource("img/icon_fehler.bmp"));
 //		btFehler.addStyleName("menueplan-add");
 		vl.addComponent(btFehler);
-		btFehler.setDescription("Fehler");
 		btFehler.setVisible(false);
 //		vl.setComponentAlignment(btFehler, Alignment.MIDDLE_CENTER);
 		

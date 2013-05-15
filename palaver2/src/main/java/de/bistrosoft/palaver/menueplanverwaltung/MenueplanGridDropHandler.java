@@ -93,9 +93,6 @@ public class MenueplanGridDropHandler extends
             	if(isSwitch){
             		layout.addComponent(destComp, sourceColumn, sourceRow);
                 	layout.setComponentAlignment(destComp, dropAlignment);
-//                	System.out.println(destComp);
-                	
-//                	menueplan.pruefeRegeln((MenueComponent) destComp);
             	}
             	else {
             		Button btAdd = new Button();

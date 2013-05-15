@@ -272,9 +272,9 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 	
 	public void addMenue(MenueComponent comp, Integer col, Integer row) {
-
+		
 		layout.addComponent(comp, col, row);
-		pruefeRegeln(comp);
+		pruefeRegeln(comp);	
 	}
 
 	public void pruefeRegeln(MenueComponent mc) {
