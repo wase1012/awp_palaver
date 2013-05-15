@@ -8,6 +8,7 @@ import java.util.List;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.util.Util;
 
@@ -31,6 +32,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
 	private final static String GET_REZEPTE_BY_GESCHMACK = "SELECT * FROM rezept WHERE geschmack_fk = {0};";
+	private final static String SAVE_ARTIKEL = "INSERT INTO rezept_has_artikel VALUES ({0},{1},{2},{3})";
 
 	Rezept rezept;
 
@@ -266,6 +268,21 @@ public class RezeptDAO extends AbstractDAO {
 				+ rezeptHasZubereitung.getZubereitung() + ")";
 		this.put(INSERT_QUERY);
 
+	}
+	
+	public void saveArtikel(Rezept rezept) throws ConnectException, DAOException,
+	SQLException {
+		System.out.println("saveArtikel");
+		List<RezeptHasArtikel> rha = rezept.getArtikel();
+		System.out.println(rha.size());
+		for (RezeptHasArtikel a : rha){
+			String rez = "1";//rezept.getId().toString();
+			String artikel_fk = a.getArtikelId().toString();
+			String menge = Double.toString(a.getMenge());
+			String me = "1";
+			
+			put(MessageFormat.format(SAVE_ARTIKEL,rez,artikel_fk,menge,me));
+		}
 	}
 
 	public void updateRezept(Rezept rezept) throws ConnectException,

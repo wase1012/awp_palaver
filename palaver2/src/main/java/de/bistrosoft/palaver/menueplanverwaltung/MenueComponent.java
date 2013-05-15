@@ -118,8 +118,8 @@ public class MenueComponent extends CustomComponent{
 		this.isChanged = isChanged;
 	}
 	
-	public void addFehlerRegel(Regel regel) {
-		if (regel == null){
+	public void addFehlerRegel(Regel menueplanRegel) {
+		if (menueplanRegel == null){
 			return;
 		}
 		
@@ -127,11 +127,11 @@ public class MenueComponent extends CustomComponent{
 			FehlerRegeln = new ArrayList<>();
 		}
 		
-		if (FehlerRegeln.indexOf(regel)>=0){
+		if (FehlerRegeln.indexOf(menueplanRegel)>=0){
 			return;
 		}
 		
-		FehlerRegeln.add(regel);
+		FehlerRegeln.add(menueplanRegel);
 		
 		btFehler.setVisible(true);
 		

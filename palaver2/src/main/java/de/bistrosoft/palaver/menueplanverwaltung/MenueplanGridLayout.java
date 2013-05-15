@@ -281,7 +281,7 @@ public class MenueplanGridLayout extends CustomComponent {
 		System.out.println("1");
 		// Lade Regeln
 
-		List<Regel> regeln = Regel.getTestRegeln();
+//		List<Regel> regeln = Regel.getTestRegeln();
 
 		
 
