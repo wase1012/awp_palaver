@@ -117,6 +117,12 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return result;
 	}
 
+	public void saveArtikel(Rezept rezept) throws ConnectException,
+			DAOException, SQLException {
+		
+		super.saveArtikel(rezept);	
+	}
+
 	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
 			DAOException, SQLException {
 		List<Artikel> result = null;

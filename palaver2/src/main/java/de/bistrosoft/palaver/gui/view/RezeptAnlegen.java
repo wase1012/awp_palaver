@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
@@ -307,6 +308,19 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				
+//				private Long id;
+//				private Geschmack geschmack;
+//				private Rezeptart rezeptart;
+//				private Mitarbeiter mitarbeiter;
+//			private String name;
+//				private String kommentar;
+//				private int portion;
+//			private boolean aufwand;
+//			private boolean favorit;
+//			private Date erstellt;
+//				private List<RezeptHasArtikel> artikel;
+				
 				Rezept rezept = new Rezept();
 
 				rezept.setName(nameInput);
@@ -411,13 +425,23 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 					}
 				}
+				
+				
+				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
+				ausgArtikel=bicArtikel.getItemIds();
+				rezept.setArtikel(ausgArtikel);
+				
+				try {
+					Rezeptverwaltung.getInstance().saveArtikel(rezept);
+				} catch (ConnectException | DAOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				Notification notification = new Notification(
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				System.out.println(ausgArtikel.size());
-
 			}
 		});
 
@@ -532,7 +556,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 				Label message = new Label(notification);
 
-				Button okButton = new Button(IConstants.BUTTON_OK);
+				Button okButton = new Button(IConstants.BUTTON_ADD);
 
 				VerticalLayout dialogContent = new VerticalLayout();
 				dialogContent.setSizeFull();

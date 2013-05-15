@@ -35,7 +35,7 @@ public class RezeptHasArtikel {
 
 	@Override
 	public String toString() {
-		return "artikel " + artikel.getId();
+		return "artikel " + artikel.getId()+menge+mengeneinheit+"   "+artikel.getName();
 	}
 
 	public double getMenge() {

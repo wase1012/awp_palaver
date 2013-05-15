@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -42,6 +44,8 @@ public class MenueComponent extends CustomComponent{
 	private List<String> fehlermeldungen;
 	private List<Regel> FehlerRegeln;
 	
+	String descNotification;
+	
 	
 	
 	public List<Regel> getFehlerRegeln() {
@@ -61,10 +65,23 @@ public class MenueComponent extends CustomComponent{
 		if(fehlermeldungen!=null && fehlermeldungen.size()>0){
 			btFehler.setVisible(true);
 			String desc="";
+			descNotification="";
 			for (String s : fehlermeldungen){
 				desc+=s;
+				descNotification+=s;
 			}
 			btFehler.setDescription(desc);
+			
+			btFehler.addClickListener(new ClickListener() {
+
+				// Click-Listener Fehler-Buttons
+				@Override
+				public void buttonClick(ClickEvent event) {
+					Notification notification = new Notification(descNotification);
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+				}
+			});
 		}
 		else btFehler.setVisible(false);
 		
@@ -118,8 +135,8 @@ public class MenueComponent extends CustomComponent{
 		this.isChanged = isChanged;
 	}
 	
-	public void addFehlerRegel(Regel regel) {
-		if (regel == null){
+	public void addFehlerRegel(Regel menueplanRegel) {
+		if (menueplanRegel == null){
 			return;
 		}
 		
@@ -127,23 +144,36 @@ public class MenueComponent extends CustomComponent{
 			FehlerRegeln = new ArrayList<>();
 		}
 		
-		if (FehlerRegeln.indexOf(regel)>=0){
+		if (FehlerRegeln.indexOf(menueplanRegel)>=0){
 			return;
 		}
 		
-		FehlerRegeln.add(regel);
+		FehlerRegeln.add(menueplanRegel);
 		
 		btFehler.setVisible(true);
 		
 		String desc = "<html>";
+		descNotification = "";
 		
 		for (Regel r : FehlerRegeln){
 			desc += r.getFehlermeldung() + "<br>";
+			descNotification += r.getFehlermeldung();
 		}
 		
 		desc += "</html>";
 		
 		btFehler.setDescription(desc);
+		
+		btFehler.addClickListener(new ClickListener() {
+
+			// Click-Listener Fehler-Buttons
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Notification notification = new Notification(descNotification);
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+			}
+		});
 	}
 
 	// Konstruktor für Menükomponente 

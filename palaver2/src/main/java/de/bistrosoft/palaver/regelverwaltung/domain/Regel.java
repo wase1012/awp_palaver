@@ -35,32 +35,32 @@ public class Regel {
 		return zeilen;
 	}
 	
-	public void setZeile(String rows) {
-		this.zeilen = rows;
+	public void setZeile(String zeilen) {
+		this.zeilen = zeilen;
 	}
 	
 	public String getSpalte() {
 		return spalten;
 	}
 	
-	public void setSpalte(String columns) {
-		this.spalten = columns;
+	public void setSpalte(String spalten) {
+		this.spalten = spalten;
 	}
 	
-	public List<Integer> getRows() {
+	public List<Integer> getZeilen() {
 		return zeilenlist;
 	}
 
-	public void setRows(List<Integer> rows) {
-		this.zeilenlist = rows;
+	public void setZeilen(List<Integer> zeilen) {
+		this.zeilenlist = zeilen;
 	}
 
-	public List<Integer> getColumns() {
+	public List<Integer> getSpalten() {
 		return spaltenlist;
 	}
 
-	public void setColumns(List<Integer> columns) {
-		this.spaltenlist = columns;
+	public void setSpalten(List<Integer> spalten) {
+		this.spaltenlist = spalten;
 	}
 	
 	public String getRegeltyp() {
@@ -157,14 +157,11 @@ public class Regel {
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
 		regeln.add(new Regel("Kategorie", r2, c2, "max", rw2,
-				"Es dürfen maximal 3 menüs einer Kat eingefügt werden", true));
+				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",true));
 
 		return regeln;
 	}
 
-	public void addMenueComponentWarnung(MenueComponent mc){
-
-	}
 	
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
@@ -174,15 +171,6 @@ public class Regel {
 		} 
 			
 	}
-	
-//	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
-//		if (regeltyp.equals("name")) {
-//			return checkName(mc, mp);
-//		} else if (regeltyp.equals("Kategorie")) {
-//			return checkKategorie(mc, mp);
-//		} else
-//			return true;
-//	}
 	
 	private Regel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
