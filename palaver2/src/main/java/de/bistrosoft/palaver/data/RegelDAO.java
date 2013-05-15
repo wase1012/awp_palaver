@@ -41,9 +41,7 @@ public class RegelDAO extends AbstractDAO {
 
 
 	public void createRegel(Regel regel) throws ConnectException, DAOException, SQLException{
-		System.out.println(MessageFormat.format(CREATE_REGEL, regel.getRows(),regel.getColumns(),regel.getRegeltyp(),
-				regel.getOperator(),regel.getKriterien(),regel.getFehlermeldung(),regel.getAktiv()));
-		put(MessageFormat.format(CREATE_REGEL, regel.getRows(),regel.getColumns(),regel.getRegeltyp(),
+		put(MessageFormat.format(CREATE_REGEL, regel.getZeile(),regel.getSpalte(),regel.getRegeltyp(),
 				regel.getOperator(),regel.getKriterien(),regel.getFehlermeldung(),regel.getAktiv()));
 	
 	}

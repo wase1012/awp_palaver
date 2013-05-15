@@ -35,32 +35,32 @@ public class Regel {
 		return zeilen;
 	}
 	
-	public void setZeile(String rows) {
-		this.zeilen = rows;
+	public void setZeile(String zeilen) {
+		this.zeilen = zeilen;
 	}
 	
 	public String getSpalte() {
 		return spalten;
 	}
 	
-	public void setSpalte(String columns) {
-		this.spalten = columns;
+	public void setSpalte(String spalten) {
+		this.spalten = spalten;
 	}
 	
-	public List<Integer> getRows() {
+	public List<Integer> getZeilen() {
 		return zeilenlist;
 	}
 
-	public void setRows(List<Integer> rows) {
-		this.zeilenlist = rows;
+	public void setZeilen(List<Integer> zeilen) {
+		this.zeilenlist = zeilen;
 	}
 
-	public List<Integer> getColumns() {
+	public List<Integer> getSpalten() {
 		return spaltenlist;
 	}
 
-	public void setColumns(List<Integer> columns) {
-		this.spaltenlist = columns;
+	public void setSpalten(List<Integer> spalten) {
+		this.spaltenlist = spalten;
 	}
 	
 	public String getRegeltyp() {
