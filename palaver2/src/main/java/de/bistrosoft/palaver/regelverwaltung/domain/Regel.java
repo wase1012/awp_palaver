@@ -157,14 +157,11 @@ public class Regel {
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
 		regeln.add(new Regel("Kategorie", r2, c2, "max", rw2,
-				"Es dürfen maximal 3 menüs einer Kat eingefügt werden", true));
+				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",true));
 
 		return regeln;
 	}
 
-	public void addMenueComponentWarnung(MenueComponent mc){
-
-	}
 	
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
@@ -174,15 +171,6 @@ public class Regel {
 		} 
 			
 	}
-	
-//	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
-//		if (regeltyp.equals("name")) {
-//			return checkName(mc, mp);
-//		} else if (regeltyp.equals("Kategorie")) {
-//			return checkKategorie(mc, mp);
-//		} else
-//			return true;
-//	}
 	
 	private Regel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();

@@ -442,21 +442,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-
-				
-				System.out.println("##########################");
-				System.out.println(ausgArtikel.size());
-//				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
-//				ausgArtikel=bicArtikel.getItemIds();
-				System.out.println(ausgArtikel.size());
-				
-				for(RezeptHasArtikel a : ausgArtikel){
-					System.out.println(a);
-				}
-
-				System.out.println(ausgArtikel.size());
-
-
 			}
 		});
 

@@ -104,10 +104,6 @@
 //		return regeln;
 //	}
 //
-//	public void addMenueComponentWarnung(MenueComponent mc) {
-//
-//	}
-//
 //	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 //		if (regeltyp.equals("name")) {
 //			mc.addFehlerRegel(checkName(mc, mp));
@@ -116,15 +112,6 @@
 //		}
 //
 //	}
-//
-//	// public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
-//	// if (regeltyp.equals("name")) {
-//	// return checkName(mc, mp);
-//	// } else if (regeltyp.equals("Kategorie")) {
-//	// return checkKategorie(mc, mp);
-//	// } else
-//	// return true;
-//	// }
 //
 //	private MenueplanRegel checkKategorie(MenueComponent mc,
 //			MenueplanGridLayout mp) {
