@@ -276,7 +276,7 @@ public class RezeptDAO extends AbstractDAO {
 		List<RezeptHasArtikel> rha = rezept.getArtikel();
 		System.out.println(rha.size());
 		for (RezeptHasArtikel a : rha){
-			String rez = "1";//rezept.getId().toString();
+			String rez = rezept.getId().toString();
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = "1";

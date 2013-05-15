@@ -28,12 +28,12 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.util.customFilter;
 import de.bistrosoft.palaver.util.customFilterDecorator;
 
 /**
- * @author Michael Marschall 
- * Jan Lauinger - Rezeptart hinzufügen
+ * @author Michael Marschall Jan Lauinger - Rezeptart hinzufügen
  * 
  */
 public class RezeptartEinst extends VerticalLayout implements View {
@@ -44,11 +44,13 @@ public class RezeptartEinst extends VerticalLayout implements View {
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
+	private Label dummy = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
+			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Rezeptart");
 
 	private Button speichern = new Button("Speichern");
-	private Button verwerfen = new Button("Verwerfen");
 
 	private String nameInput;
 	private FilterTable table;
@@ -57,17 +59,18 @@ public class RezeptartEinst extends VerticalLayout implements View {
 		super();
 		table = new FilterTable();
 		name.setWidth("100%");
-		// table.setSizeFull();
+		table.setSizeFull();
 		table.setSelectable(true);
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
-		
+
 		box.setWidth("300px");
 		box.setSpacing(true);
 
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		box.addComponent(dummy);
 		box.addComponent(ueberschrift);
 		box.addComponent(name);
 
@@ -80,10 +83,8 @@ public class RezeptartEinst extends VerticalLayout implements View {
 		name.setInputPrompt(nameInput);
 		name.setMaxLength(150);
 
-		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
-		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 
 		name.addValueChangeListener(new ValueChangeListener() {
 			public void valueChange(final ValueChangeEvent event) {
@@ -97,12 +98,12 @@ public class RezeptartEinst extends VerticalLayout implements View {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Geschmack geschmack = new Geschmack();
-				geschmack.setName(nameInput);
+				Rezeptart rezeptart = new Rezeptart();
+				rezeptart.setName(nameInput);
 
 				try {
-					Geschmackverwaltung.getInstance()
-							.createGeschmack(geschmack);
+					Rezeptartverwaltung.getInstance()
+							.createRezeptart(rezeptart);
 
 				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
@@ -112,21 +113,8 @@ public class RezeptartEinst extends VerticalLayout implements View {
 						"Rezeptart wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-
-			}
-		});
-
-		verwerfen.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				felderLeeren();
-
-				Notification.show("Rezeptart wurde verworfen",
-						Type.TRAY_NOTIFICATION);
-			}
-
-			private void felderLeeren() {
-				name.setValue("");
+				
+				ViewHandler.getInstance().switchView(RezeptartEinst.class);
 
 			}
 		});
@@ -142,13 +130,12 @@ public class RezeptartEinst extends VerticalLayout implements View {
 				| SQLException e) {
 			e.printStackTrace();
 		}
-		this.addComponent(table);
+		box.addComponent(table);
 
 	}
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
 
 	}
 }

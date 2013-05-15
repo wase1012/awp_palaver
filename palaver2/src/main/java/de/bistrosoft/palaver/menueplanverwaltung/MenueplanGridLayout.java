@@ -276,6 +276,15 @@ public class MenueplanGridLayout extends CustomComponent {
 		layout.addComponent(comp, col, row);
 		pruefeRegeln(comp);	
 	}
+	
+	public void vertauscheMenue(Component sourceComp, Component comp, Integer col, Integer row) {	
+		layout.removeComponent(sourceComp);
+		layout.removeComponent(comp);
+		layout.addComponent(sourceComp,col,row);
+
+		layout.setComponentAlignment(sourceComp, Alignment.MIDDLE_CENTER);
+
+	}
 
 	public void pruefeRegeln(MenueComponent mc) {
 		System.out.println("1");
