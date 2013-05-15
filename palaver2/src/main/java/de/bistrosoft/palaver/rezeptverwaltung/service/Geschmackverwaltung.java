@@ -27,11 +27,18 @@ public class Geschmackverwaltung extends GeschmackDAO {
 		}
 		return instance;
 	}
-	
+
 	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
 		List<Geschmack> result = null;
 		result = super.getAllGeschmack();
+		return result;
+	}
+
+	public List<Geschmack> getAllGeschmackAktiv() throws ConnectException,
+			DAOException, SQLException {
+		List<Geschmack> result = null;
+		result = super.getAllGeschmackAktiv();
 		return result;
 	}
 
