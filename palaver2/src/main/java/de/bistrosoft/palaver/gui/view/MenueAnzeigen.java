@@ -122,7 +122,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 			Label.CONTENT_XHTML);
 
     
-	private Table fussnoten = new Table("Fussnoten");
+	private Table fussnoten = new Table();
 	
 
 	List<Rezept> listrezept = new ArrayList<Rezept>();
@@ -152,7 +152,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		hauptgericht.setWidth("100%");
 		beilage1.setWidth("100%");
 		beilage2.setWidth("100%");
-		fussnoten.setWidth("100%");
+		
 		menuename.setWidth("100%");
 	
 		
@@ -190,9 +190,9 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		box.addComponent(dummy3);
 		box1.addComponent(uBeilage2);
 		box1.addComponent(beilage2);
-		horizont2.addComponent(uFussnoten);
-		horizont2.addComponent(fussnoten);
-		horizont3.addComponent(change);
+		box1.addComponent(uFussnoten);
+		box1.addComponent(fussnoten);
+		box1.addComponent(change);
 		
 //		
 		// ///////////////////////////////////
@@ -222,7 +222,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	
 		//fussnoten.setImmediate(true);
 	    fussnoten.addContainerProperty("Fussnote", String.class, null);
-		fussnoten.setWidth("300");
+		fussnoten.setWidth("200");
 		load();
 
 		
@@ -387,11 +387,12 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		fussnoten.setContainerDataSource(container);
 		fussnoten.setVisibleColumns(new Object[] { "name"});
 		fussnoten.sort(new Object[] { "name" }, new boolean[] { true });
+		fussnoten.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 	} catch (IllegalArgumentException | ConnectException | DAOException
 			| SQLException e) {
 		e.printStackTrace();
 	}
-	horizont2.addComponent(fussnoten);
+	//box1.addComponent(fussnoten);
 	
 	
 //	for ( Fussnote fn1: fussnote) {
