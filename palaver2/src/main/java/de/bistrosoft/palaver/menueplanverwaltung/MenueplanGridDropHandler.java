@@ -102,16 +102,16 @@ public class MenueplanGridDropHandler extends
             	comp.isChanged(true);
             	comp.setCol(sourceColumn);
             	comp.setRow(sourceRow);
-            	menueplan.pruefeRegeln(comp);
             	comp.pruefeRegeln(menueplan);
+            	menueplan.pruefeRegeln(comp);
             }
             if(sourceComp instanceof MenueComponent){
             	MenueComponent comp = (MenueComponent) sourceComp;
             	comp.isChanged(true);
             	comp.setCol(destColumn);
             	comp.setRow(destRow);
-            	menueplan.pruefeRegeln(comp);
             	comp.pruefeRegeln(menueplan);
+            	menueplan.pruefeRegeln(comp);
             }
         }
     }
