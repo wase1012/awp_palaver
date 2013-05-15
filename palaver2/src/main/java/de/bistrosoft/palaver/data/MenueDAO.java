@@ -17,7 +17,8 @@ public class MenueDAO extends AbstractDAO {
 	private final String ID = "id";
 	private final static String NAME = "name";
 	private final static String KOCH = "koch";
-
+    private final String GET_HAUPTGERICHT = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = true) AND (menue_has_rezept.menue_id = {0})";
+    private final String GET_Beilagen = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = false) AND (menue_has_rezept.menue_id = {0})";
 	private final String GET_ALL_MENUES = "SELECT * FROM menue";
 	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0} ";
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
@@ -56,6 +57,42 @@ ResultSet set = get(GET_REZEPTE_BY_MENUE);
 
 while (set.next()) {
 	list.add(new Rezept(set.getLong("id")));
+}
+
+return list;
+}
+	
+	public String getHauptgerichtByMenue(Long id) throws ConnectException, DAOException,
+	SQLException {
+Rezept list = null;
+ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+
+while (set.next()) {
+	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			.getRezeptartById(set.getLong("rezeptart_fk")),
+			GeschmackDAO.getInstance().getGeschmackById(
+					set.getLong("geschmack_fk")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null, set.getInt("portion"));
+}
+
+return list.getName();
+}
+	
+	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException, DAOException,
+	SQLException {
+		List<Rezept> list = new ArrayList<Rezept>();
+ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
+
+while (set.next()) {
+	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			.getRezeptartById(set.getLong("rezeptart_fk")),
+			GeschmackDAO.getInstance().getGeschmackById(
+					set.getLong("geschmack_fk")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null, set.getInt("portion")));
 }
 
 return list;

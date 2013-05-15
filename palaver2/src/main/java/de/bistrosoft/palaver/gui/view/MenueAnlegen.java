@@ -493,7 +493,7 @@ if (menuename.getValue() != null) {
 					e.printStackTrace();
 				}
 				
-				MenueHasRezept mhr = new MenueHasRezept(menue1, rezept);
+				MenueHasRezept mhr = new MenueHasRezept(menue1, rezept, true);
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr);
@@ -524,7 +524,7 @@ Rezept rezept1 = new Rezept();
 				}
 				
 //				 if (rezept1 != null) {
-				MenueHasRezept mhr1 = new MenueHasRezept(menue1, rezept1);
+				MenueHasRezept mhr1 = new MenueHasRezept(menue1, rezept1, false);
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr1);
@@ -549,7 +549,7 @@ Rezept rezept2 = new Rezept();
 					e.printStackTrace();
 				}
 				
-				MenueHasRezept mhr2 = new MenueHasRezept(menue1, rezept2);
+				MenueHasRezept mhr2 = new MenueHasRezept(menue1, rezept2, false);
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr2);
@@ -602,7 +602,7 @@ Rezept rezept2 = new Rezept();
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
 				ersteller.addItem(e.getId());
-				ersteller.setItemCaption(e.getId(), e.getName());
+				ersteller.setItemCaption(e.getId(), e.getVorname());
 
 			}
 //

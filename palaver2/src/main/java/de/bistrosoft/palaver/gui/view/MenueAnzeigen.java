@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -57,6 +58,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewDataObject;
 import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
@@ -65,29 +67,48 @@ import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 public class MenueAnzeigen extends VerticalLayout implements View {
 
 	private VerticalLayout box = new VerticalLayout();
+	private VerticalLayout box1 = new VerticalLayout();
 	private HorizontalLayout horizont1 = new HorizontalLayout();
 	private HorizontalLayout horizont2 = new HorizontalLayout();
 	private HorizontalLayout horizont3 = new HorizontalLayout();
 
+	Menue menue;
 	
-	
-	
+	Integer z = 0;
 	
 	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü Anzeigen</font><b></pre>",
 			Label.CONTENT_XHTML);
 
 	
-    private TextField menuename = new TextField("Menuename");
-    private ComboBox ersteller = new ComboBox("Menueersteller");
-	private ComboBox hauptgericht = new ComboBox("Hauptgericht");
-	private ComboBox beilage1 = new ComboBox("Beilage 1");
-	private ComboBox beilage2 = new ComboBox("Beilage 2");
+    private TextField menuename = new TextField();
+    private TextField ersteller = new TextField();
+	private TextField hauptgericht = new TextField();
+	private TextField beilage1 = new TextField();
+	private TextField beilage2 = new TextField();
+	private Table tabel = new Table("Fussnoten");
+	
+	private Label uMenuename = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menuename</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uErsteller = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Koch</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uHauptgericht = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Hauptgericht</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uBeilage1 = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Beilage1</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uBeilage2 = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Beilage2</font><b></pre>",
+			Label.CONTENT_XHTML);
+	
     
 	private TwinColSelect fussnoten = new TwinColSelect("Fussnoten");
 	
 
-	
+	List<Rezept> listrezept = new ArrayList<Rezept>();
 	
 	
 	private String hauptgerichtInput;
@@ -114,7 +135,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		beilage2.setWidth("100%");
 		fussnoten.setWidth("100%");
 		menuename.setWidth("100%");
-      
+	
 		
 		
 		
@@ -132,7 +153,19 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		box.setComponentAlignment(horizont1, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(horizont2, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(horizont3, Alignment.MIDDLE_CENTER);
-		
+		horizont1.addComponent(box1);
+		horizont1.setComponentAlignment(box1, Alignment.MIDDLE_CENTER);
+		box1.addComponent(ueberschrift);
+		box1.addComponent(uMenuename);
+		box1.addComponent(menuename);
+		box1.addComponent(uErsteller);
+		box1.addComponent(ersteller);
+		box1.addComponent(uHauptgericht);
+		box1.addComponent(hauptgericht);
+		box1.addComponent(uBeilage1);
+		box1.addComponent(beilage1);
+		box1.addComponent(uBeilage2);
+		box1.addComponent(beilage2);
 		
 //		
 		// ///////////////////////////////////
@@ -146,21 +179,20 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 
 		hauptgericht.setImmediate(true);
 		hauptgericht.setInputPrompt(hauptgerichtInput);
-		hauptgericht.setNullSelectionAllowed(false);
+		
 	
 		menuename.setImmediate(true);
 		menuename.setInputPrompt(menuenameInput);
 		ersteller.setImmediate(true);
 		ersteller.setInputPrompt(erstellerInput);
-		ersteller.setNullSelectionAllowed(false);
+		
 		beilage1.setImmediate(true);
 		beilage1.setInputPrompt(beilage1Input);	
-		beilage1.setNullSelectionAllowed(false);
+		
 
 		beilage2.setImmediate(true);
 		beilage2.setInputPrompt(beilage2Input);
-		beilage2.setNullSelectionAllowed(false);
-
+	
 		fussnoten.setImmediate(true);
 	
 		
@@ -235,58 +267,92 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 
 
 	public void load() {
-		try {
-			
-			
-			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
-					.getAllMitarbeiter();
-			for (Mitarbeiter e : mitarbeiter) {
-				ersteller.addItem(e.getId());
-				ersteller.setItemCaption(e.getId(), e.getName());
-
-			}
-//
-			List<Rezept> rezept = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept) {
-				hauptgericht.addItem(e.getId());
-				hauptgericht.setItemCaption(e.getId(), e.getName());
-			}
-//
-			List<Rezept> rezept1 = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept1) {
-				// mitarbeiterCb.addItem(e);
-				beilage1.addItem(e.getId());
-				beilage1.setItemCaption(e.getId(), e.getName());
-			}
-			
-			List<Rezept> rezept2 = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept2) {
-				// mitarbeiterCb.addItem(e);
-				beilage2.addItem(e.getId());
-				beilage2.setItemCaption(e.getId(), e.getName());
-			}
-			
-			List<Fussnote> fussnote = Fussnotenverwaltung.getInstance().getAllFussnote();
-			for (Fussnote e : fussnote) {
-				fussnoten.addItem(e.getId());
-				fussnoten.setItemCaption(e.getId(), e.getName());
-			}
-			
-			
-
-		} catch (ConnectException | DAOException | SQLException e) {
-			e.printStackTrace();
-		}
+		
 	
 
 
 	}
 	@Override
-	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
-		
+	public void getViewParam(ViewData data)
+	{
+	menue = new Menue();
+	menue = (Menue) ((ViewDataObject<?>)data).getData();
+
+
+
+	menuename.setValue(menue.getName());
+	menuename.setReadOnly(true);
+	ersteller.setValue(menue.getKochname());
+	ersteller.setReadOnly(true);
+	try {
+		hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtByMenue(menue.getId()));
+	} catch (ReadOnlyException | ConnectException | DAOException | SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	try {
+		listrezept = MenueDAO.getInstance().getBeilagenByMenue(menue.getId());
+	} catch (ConnectException | DAOException | SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	if(listrezept != null) {
+		z = listrezept.size();
+	System.out.println(z);
+	if(z < 1){
+	//	System.out.println("wwwww");
+	}
+	
+	else {
+		Integer j = 0;
+		if(z == 2){
+			
+			for (Rezept x : listrezept) {
+				
+				if(j == 0) {
+					beilage1.setValue(x.getName());
+					j = j + 1;
+				}
+				else{
+					beilage2.setValue(x.getName());
+					
+				}
+				
+			}
+			
+			
+		}
+		else{
+			for (Rezept t : listrezept) {
+				beilage1.setValue(t.getName());
+			//	System.out.println("eine");
+			}
+		}
+	}
+	}
+	else {
+	//	System.out.println("sssssss");
+	}
+	hauptgericht.setReadOnly(true);
+	beilage1.setReadOnly(true);
+	beilage2.setReadOnly(true);
+//	if(listrezept.isEmpty() != true) {
+//		
+//		
+//		
+//	}
+//	artnr.setValue(artikel.getArtikelnr());
+//	preis.setValue(artikel.getPreis() + "");
+//	lieferant.select(artikel.getLieferant());
+//	mengeneinheit.select(artikel.getMengeneinheit());
+//	kategorie.select(artikel.getKategorie());
+//	bestellung.setValue(artikel.getBestellgroesse() + "");
+//	standard.setValue(artikel.isStandard());
+//	grundbedarf.setValue(artikel.isGrundbedarf());
+//	bio.setValue(artikel.isBio());
+//	lebensmittel.setValue(artikel.isLebensmittel());
+//	durchschnitt.setValue(artikel.getDurchschnitt() + "");
 	}
 }
