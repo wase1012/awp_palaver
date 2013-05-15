@@ -40,10 +40,20 @@ public class MenueComponent extends CustomComponent{
 	private Menue menue;
 	private Boolean isChanged;
 	private Button btFehler;
+	
 	private List<String> fehlermeldungen;
+	private List<MenueplanRegel> FehlerRegeln;
 	
 	
 	
+	public List<MenueplanRegel> getFehlerRegeln() {
+		return FehlerRegeln;
+	}
+
+	public void setFehlerRegeln(List<MenueplanRegel> fehlerRegeln) {
+		FehlerRegeln = fehlerRegeln;
+	}
+
 	public List<String> getFehlermeldungen() {
 		return fehlermeldungen;
 	}
@@ -108,6 +118,34 @@ public class MenueComponent extends CustomComponent{
 
 	public void isChanged(Boolean isChanged) {
 		this.isChanged = isChanged;
+	}
+	
+	public void addFehlerRegel(MenueplanRegel regel) {
+		if (regel == null){
+			return;
+		}
+		
+		if(FehlerRegeln == null){
+			FehlerRegeln = new ArrayList<>();
+		}
+		
+		if (FehlerRegeln.indexOf(regel)>=0){
+			return;
+		}
+		
+		FehlerRegeln.add(regel);
+		
+		btFehler.setVisible(true);
+		
+		String desc = "<html>";
+		
+		for (MenueplanRegel r : FehlerRegeln){
+			desc += r.getFehlermeldung() + "<br>";
+		}
+		
+		desc += "</html>";
+		
+		btFehler.setDescription(desc);
 	}
 
 	// Konstruktor für Menükomponente 

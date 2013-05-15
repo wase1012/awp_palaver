@@ -41,6 +41,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
+	List<MenueplanRegel> regeln = MenueplanRegel.getTestRegeln();
 
 	public Menueplan getMenueplan() {
 		return menueplan;
@@ -285,7 +286,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	public void pruefeRegeln(MenueComponent mc) {
 		System.out.println("1");
 		// Lade Regeln
-		List<MenueplanRegel> regeln = MenueplanRegel.getTestRegeln();
+		
 		// gehe Regeln durch und Prüfe falls Regel passt
 		for (MenueplanRegel r : regeln) {
 			System.out.println("2");

@@ -30,6 +30,55 @@ public class MenueplanRegel {
 		this.regelwerte = regelwerte;
 		this.fehlermeldung = fehlermeldung;
 	}
+	
+
+	public List<Integer> getRows() {
+		return rows;
+	}
+
+	public void setRows(List<Integer> rows) {
+		this.rows = rows;
+	}
+
+	public List<Integer> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(List<Integer> columns) {
+		this.columns = columns;
+	}
+
+	public String getRegeltyp() {
+		return regeltyp;
+	}
+
+	public void setRegeltyp(String regeltyp) {
+		this.regeltyp = regeltyp;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public List<String> getRegelwerte() {
+		return regelwerte;
+	}
+
+	public void setRegelwerte(List<String> regelwerte) {
+		this.regelwerte = regelwerte;
+	}
+
+	public String getFehlermeldung() {
+		return fehlermeldung;
+	}
+
+	public void setFehlermeldung(String fehlermeldung) {
+		this.fehlermeldung = fehlermeldung;
+	}
 
 	// Testdaten
 	public static List<MenueplanRegel> getTestRegeln() {
@@ -51,21 +100,34 @@ public class MenueplanRegel {
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
 		regeln.add(new MenueplanRegel("Kategorie", r2, c2, "max", rw2,
-				"Es dürfen maximal 3 menüs einer Kat eingefügt werden"));
+				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden"));
 
 		return regeln;
 	}
+	
+	public void addMenueComponentWarnung(MenueComponent mc){
 
-	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
-		if (regeltyp.equals("name")) {
-			return checkName(mc, mp);
-		} else if (regeltyp.equals("Kategorie")) {
-			return checkKategorie(mc, mp);
-		} else
-			return true;
 	}
 
-	private Boolean checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
+	public void check(MenueComponent mc, MenueplanGridLayout mp) {
+		if (regeltyp.equals("name")) {
+			mc.addFehlerRegel(checkName(mc, mp));
+		} else if (regeltyp.equals("Kategorie")) {
+			mc.addFehlerRegel(checkKategorie(mc, mp));
+		} 
+			
+	}
+	
+//	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
+//		if (regeltyp.equals("name")) {
+//			return checkName(mc, mp);
+//		} else if (regeltyp.equals("Kategorie")) {
+//			return checkKategorie(mc, mp);
+//		} else
+//			return true;
+//	}
+
+	private MenueplanRegel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 		if (menue.getRezepte() != null) {
 			if (operator.equals("enthält nicht")) {
@@ -73,10 +135,8 @@ public class MenueplanRegel {
 					if (regelwerte.indexOf(rez.getRezeptart().getId()
 							.toString()) == -1) {
 						System.out.println(fehlermeldung);
-						List<String> fehlermeldungen = new ArrayList<>();
-						fehlermeldungen.add(fehlermeldung);
-						mc.setFehlermeldungen(fehlermeldungen);
-						return false;
+						
+						return this;
 					}
 				}
 			} else if (operator.equals("enthält")) {
@@ -84,10 +144,8 @@ public class MenueplanRegel {
 					if (regelwerte.indexOf(rez.getRezeptart().getId()
 							.toString()) >= 0) {
 						System.out.println(fehlermeldung);
-						List<String> fehlermeldungen = new ArrayList<>();
-						fehlermeldungen.add(fehlermeldung);
-						mc.setFehlermeldungen(fehlermeldungen);
-						return false;
+						
+						return this;
 					}
 				}
 			} else if (operator.equals("max")) {
@@ -109,48 +167,35 @@ public class MenueplanRegel {
 									++count;
 									if (count > maxValue) {
 										System.out.println(fehlermeldung);
-										List<String> fehlermeldungen = new ArrayList<>();
-										fehlermeldungen.add(fehlermeldung);
-										mc.setFehlermeldungen(fehlermeldungen);
-										return false;
+										
+										return this;
 									}
 								}
-
 							}
 						}
 					}
 				}
-			}
+			} 
 		}
-		return true;
+		return null;
 	}
 
-	private Boolean checkName(MenueComponent mc, MenueplanGridLayout mp) {
+	private MenueplanRegel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		Boolean isOk = true;
+		
 		if (operator.equals("enthält nicht")) {
 			if (regelwerte.indexOf(menue.getName()) == -1) {
 				System.out.println(fehlermeldung);
-				List<String> fehlermeldungen = new ArrayList<>();
-				fehlermeldungen.add(fehlermeldung);
-				mc.setFehlermeldungen(fehlermeldungen);
-				isOk = false;
+				
+				return this;
 			}
 		} else if (operator.equals("enthält")) {
 			if (regelwerte.indexOf(menue.getName()) >= 0) {
 				System.out.println(fehlermeldung);
-				List<String> fehlermeldungen = new ArrayList<>();
-				fehlermeldungen.add(fehlermeldung);
-				mc.setFehlermeldungen(fehlermeldungen);
-				isOk = false;
+
+				return this;
 			}
-			// for (String rw : regelwerte) {
-			// if (rw.equals(menue.getName())) {
-			// System.out.println(fehlermeldung);
-			// return true;
-			// }
-			// }
 		}
-		return isOk;
+		return null;
 	}
 }
