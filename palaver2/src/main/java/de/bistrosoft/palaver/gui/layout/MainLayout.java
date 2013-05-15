@@ -8,7 +8,7 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.gui.view.Fussnoten;
+import de.bistrosoft.palaver.gui.view.FussnoteEinst;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
@@ -140,7 +140,7 @@ public class MainLayout extends VerticalLayout implements Command {
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
 			break;
 		case IConstants.MENU_FUSSNOTE:
-			ViewHandler.getInstance().switchView(Fussnoten.class);
+			ViewHandler.getInstance().switchView(FussnoteEinst.class);
 			break;
 		case IConstants.MENU_GESCHMACK:
 			ViewHandler.getInstance().switchView(GeschmackEinst.class);
