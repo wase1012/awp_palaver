@@ -35,6 +35,7 @@ import de.bistrosoft.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.bistrosoft.palaver.data.ArtikelDAO;
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
@@ -87,13 +88,16 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	private TextField hauptgericht = new TextField();
 	private TextField beilage1 = new TextField();
 	private TextField beilage2 = new TextField();
-	private Table tabel = new Table("Fussnoten");
+	private Table tabel = new Table();
 	
 	private Label uMenuename = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menuename</font><b></pre>",
 			Label.CONTENT_XHTML);
 	private Label uErsteller = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Koch</font><b></pre>",
+			Label.CONTENT_XHTML);
+	private Label uFussnoten = new Label(
+			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnoten</font><b></pre>",
 			Label.CONTENT_XHTML);
 	private Label uHauptgericht = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Hauptgericht</font><b></pre>",
@@ -118,11 +122,11 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 			Label.CONTENT_XHTML);
 
     
-	private TwinColSelect fussnoten = new TwinColSelect("Fussnoten");
+	private Table fussnoten = new Table("Fussnoten");
 	
 
 	List<Rezept> listrezept = new ArrayList<Rezept>();
-	
+	List<Fussnote> fussnote = new ArrayList<Fussnote>();
 	
 	private String hauptgerichtInput;
 	private String beilage1Input;
@@ -139,6 +143,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 
 	private Button btAdd = new Button("Add");
 	private Button change = new Button("Menü ändern");
+	BeanItemContainer<Fussnote> container1;
 
 	public MenueAnzeigen() {
 		super();
@@ -185,12 +190,14 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		box.addComponent(dummy3);
 		box1.addComponent(uBeilage2);
 		box1.addComponent(beilage2);
+		horizont2.addComponent(uFussnoten);
+		horizont2.addComponent(fussnoten);
 		horizont3.addComponent(change);
 		
 //		
 		// ///////////////////////////////////
 		BeanItemContainer<RezeptHasArtikel> container;
-
+        BeanItemContainer<Fussnote> fussnotecontainer;
 		
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
@@ -213,9 +220,9 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		beilage2.setImmediate(true);
 		beilage2.setInputPrompt(beilage2Input);
 	
-		fussnoten.setImmediate(true);
-	
-		
+		//fussnoten.setImmediate(true);
+	    fussnoten.addContainerProperty("Fussnote", String.class, null);
+		fussnoten.setWidth("300");
 		load();
 
 		
@@ -365,6 +372,37 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	else {
 	//	System.out.println("sssssss");
 	}
+	
+//	try {
+//		fussnote = FussnoteDAO.getInstance().getFussnoteByMenue(menue.getId());
+//	} catch (ConnectException | DAOException | SQLException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+	
+	BeanItemContainer<Fussnote> container;
+	try {
+		container = new BeanItemContainer<Fussnote>(Fussnote.class,
+				Fussnotenverwaltung.getInstance().getFussnoteByMenue(menue.getId()));
+		fussnoten.setContainerDataSource(container);
+		fussnoten.setVisibleColumns(new Object[] { "name"});
+		fussnoten.sort(new Object[] { "name" }, new boolean[] { true });
+	} catch (IllegalArgumentException | ConnectException | DAOException
+			| SQLException e) {
+		e.printStackTrace();
+	}
+	horizont2.addComponent(fussnoten);
+	
+	
+//	for ( Fussnote fn1: fussnote) {
+//		
+//		System.out.println(fn1.getId());
+//		System.out.println(fn1.getName());
+//		
+//		fussnoten.addItem(fn1.getId());
+//		fussnoten.setItemCaption(fn1.getId(), fn1.getName().toString());
+//	}
+	
 	hauptgericht.setReadOnly(true);
 	beilage1.setReadOnly(true);
 	beilage2.setReadOnly(true);

@@ -32,6 +32,7 @@ public class FussnoteDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_FUSSNOTE_BY_ID = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
+	private final static String GET_FUSSNOTE_BY_MENUE = "Select fussnote.id, fussnote.name, fussnote.abkuerzung from fussnote JOIN menue_has_fussnote On menue_has_fussnote.fussnote_fk = fussnote.id WHERE menue_has_fussnote.menue_fk = {0}";
 
 	public FussnoteDAO() {
 		super();
@@ -55,6 +56,17 @@ public class FussnoteDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	public List<Fussnote> getFussnoteByMenue(Long id) throws ConnectException,
+	DAOException, SQLException {
+List<Fussnote> list = new ArrayList<Fussnote>();
+ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_MENUE, id));
+while (set.next()) {
+	list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
+			.getString(ABKUERZUNG)));
+}
+return list;
+}
 
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
