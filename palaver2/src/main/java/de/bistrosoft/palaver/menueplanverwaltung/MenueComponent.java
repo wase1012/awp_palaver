@@ -157,7 +157,7 @@ public class MenueComponent extends CustomComponent{
 		
 		for (Regel r : FehlerRegeln){
 			desc += r.getFehlermeldung() + "<br>";
-			descNotification += r.getFehlermeldung();
+			descNotification += r.getFehlermeldung() + "\n\r";
 		}
 		
 		desc += "</html>";
