@@ -30,23 +30,23 @@ public class Regel {
 	public Regel() {
 
 	}
-	
+
 	public String getZeile() {
 		return zeilen;
 	}
-	
+
 	public void setZeile(String zeilen) {
 		this.zeilen = zeilen;
 	}
-	
+
 	public String getSpalte() {
 		return spalten;
 	}
-	
+
 	public void setSpalte(String spalten) {
 		this.spalten = spalten;
 	}
-	
+
 	public List<Integer> getZeilen() {
 		return zeilenlist;
 	}
@@ -62,7 +62,7 @@ public class Regel {
 	public void setSpalten(List<Integer> spalten) {
 		this.spaltenlist = spalten;
 	}
-	
+
 	public String getRegeltyp() {
 		return regeltyp;
 	}
@@ -103,9 +103,9 @@ public class Regel {
 		this.aktiv = aktiv;
 	}
 
-	public Regel(String regeltyp, String zeilen,
-			String spalten, String operator, String kriterien,
-			String fehlermeldung, Boolean aktiv) {
+	public Regel(String regeltyp, String zeilen, String spalten,
+			String operator, String kriterien, String fehlermeldung,
+			Boolean aktiv) {
 		this.regeltyp = regeltyp;
 		this.zeilen = zeilen;
 		this.spalten = spalten;
@@ -113,21 +113,21 @@ public class Regel {
 		this.kriterien = kriterien;
 		this.fehlermeldung = fehlermeldung;
 		this.aktiv = aktiv;
-		
-//		String [] s = rows.split(",");
-//		for (String row : s) {
-//			rowslist.add(Integer.valueOf(s.toString()));
-//		}
-//		
-//		String [] a = columns.split(",");
-//		for (String column : a) {
-//			columnslist.add(Integer.valueOf(a.toString()));
-//		}
+
+		// String [] s = rows.split(",");
+		// for (String row : s) {
+		// rowslist.add(Integer.valueOf(s.toString()));
+		// }
+		//
+		// String [] a = columns.split(",");
+		// for (String column : a) {
+		// columnslist.add(Integer.valueOf(a.toString()));
+		// }
 	}
-	
-	public Regel(String regeltyp, List<Integer> zeilen, 
-			List<Integer> spalten, String operator, List<String> kriterien,
-			String fehlermeldung, Boolean aktiv) {
+
+	public Regel(String regeltyp, List<Integer> zeilen, List<Integer> spalten,
+			String operator, List<String> kriterien, String fehlermeldung,
+			Boolean aktiv) {
 		this.regeltyp = regeltyp;
 		this.zeilenlist = zeilen;
 		this.spaltenlist = spalten;
@@ -146,8 +146,14 @@ public class Regel {
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("Pommes");
-		regeln.add(new Regel("name", r, c, "enthält", rw,
-				"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden! ", true));
+		regeln.add(new Regel(
+				"name",
+				r,
+				c,
+				"enthält",
+				rw,
+				"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden! ",
+				true));
 
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -156,22 +162,27 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Kategorie", r2, c2, "max", rw2,
-				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",true));
+		regeln.add(new Regel(
+				"Kategorie",
+				r2,
+				c2,
+				"max",
+				rw2,
+				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",
+				true));
 
 		return regeln;
 	}
 
-	
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
 		} else if (regeltyp.equals("Kategorie")) {
 			mc.addFehlerRegel(checkKategorie(mc, mp));
-		} 
-			
+		}
+
 	}
-	
+
 	private Regel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 		if (menue.getRezepte() != null) {
@@ -180,7 +191,7 @@ public class Regel {
 					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) == -1) {
 						System.out.println(fehlermeldung);
-						
+
 						return this;
 					}
 				}
@@ -189,7 +200,7 @@ public class Regel {
 					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) >= 0) {
 						System.out.println(fehlermeldung);
-						
+
 						return this;
 					}
 				}
@@ -199,40 +210,50 @@ public class Regel {
 				try {
 					maxValue = Integer.parseInt(kriterienlist.get(0));
 				} catch (NumberFormatException e) {
-				      //do something! anything to handle the exception.
+					// do something! anything to handle the exception.
 				}
-				
+
 				DDGridLayout grid = mp.layout;
 				for (int col = 0; col < grid.getColumns(); ++col) {
 					for (int row = 0; row < grid.getRows(); ++row) {
-						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0) && (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
 								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
 								if (mc.getMenue().getRezepte().get(0).getRezeptart().equals(tmp.getMenue().getRezepte().get(0).getRezeptart())) {
-									++count;
-									if (count > maxValue) {
-										System.out.println(fehlermeldung);
-										
-										return this;
+									
+									if (tmp.getFehlerRegeln() != null) {
+										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+											++count;
+											if (count > maxValue) {
+												System.out.println(fehlermeldung);
+												return this;
+											}
+										}
+									} else {
+										++count;
+										if (count > maxValue) {
+											System.out.println(fehlermeldung);
+											return this;
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-			} 
+			}
 		}
 		return null;
 	}
 
-
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		
+
 		if (operator.equals("enthält nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 				System.out.println(fehlermeldung);
-				
+
 				return this;
 			}
 		} else if (operator.equals("enthält")) {
@@ -244,25 +265,26 @@ public class Regel {
 		}
 		return null;
 	}
-	
-	public static void speichern(String regeltyp, String zeile, String spalte,
-			String operator, String kriterium, String fehlermeldung, Boolean aktiv){
-    	
-    	Regel regel = new Regel();
-    	
-    	regel.setZeile(zeile);
-    	regel.setSpalte(spalte);
-    	regel.setRegeltyp(regeltyp);
-    	regel.setOperator(operator);
-    	regel.setKriterien(kriterium);
-    	regel.setFehlermeldung(fehlermeldung);
-    	regel.setAktiv(aktiv);
-    	
-			try {
-				Regelverwaltung.getInstance().createRegel(regel);
-			} catch (ConnectException | DAOException | SQLException e) {
-				e.printStackTrace();
-			} 
 
-    }
+	public static void speichern(String regeltyp, String zeile, String spalte,
+			String operator, String kriterium, String fehlermeldung,
+			Boolean aktiv) {
+
+		Regel regel = new Regel();
+
+		regel.setZeile(zeile);
+		regel.setSpalte(spalte);
+		regel.setRegeltyp(regeltyp);
+		regel.setOperator(operator);
+		regel.setKriterien(kriterium);
+		regel.setFehlermeldung(fehlermeldung);
+		regel.setAktiv(aktiv);
+
+		try {
+			Regelverwaltung.getInstance().createRegel(regel);
+		} catch (ConnectException | DAOException | SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

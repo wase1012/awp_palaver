@@ -52,7 +52,7 @@ public class Fussnotenverwaltung extends FussnoteDAO {
 
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
-		dao.createFussnote(fussnote);
+		super.createFussnote(fussnote);
 	}
 
 	public void updateFussnote(Fussnote fussnote) throws ConnectException,
