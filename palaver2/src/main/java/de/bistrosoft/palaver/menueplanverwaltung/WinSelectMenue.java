@@ -212,6 +212,8 @@ public class WinSelectMenue extends Window {
         	        }
                 }
                 
+                menueplan.removeMenue(destComp);
+                
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
 				String s = textfields.get(1).getValue();
@@ -226,15 +228,10 @@ public class WinSelectMenue extends Window {
 				rezepte.add(rez);
 				menue.setRezepte(rezepte);
 				
-				// Aktuelle Menükomponente aus Plan löschen
-				menueGrid.removeComponent(destComp);
-				
 				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
 				MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
-				menueGrid.addComponent(menueComp, sourceColumn, sourceRow);
+				menueplan.addMenue(menueComp, sourceColumn, sourceRow);
 				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
-				
-				menueplan.pruefeRegeln(menueComp);
 									
 				// Window schließen
 				subwindow.close();

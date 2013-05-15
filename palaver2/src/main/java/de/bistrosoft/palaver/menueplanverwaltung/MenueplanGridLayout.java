@@ -266,22 +266,15 @@ public class MenueplanGridLayout extends CustomComponent {
 		Menueplanverwaltung.getInstance().persist(menueplan);
 	}
 
-	@SuppressWarnings("unused")
-	public void ersetzen(Component comp, int col, int row) {
-		Integer compRow = -1;
-		Integer compColumn = -1;
+	public void removeMenue(Component destComp) {
 
-		// final int COLUMNS = layout.getColumns();
-		// final int ROWS = layout.getRows();
+		this.layout.removeComponent(destComp);
+	}
+	
+	public void addMenue(MenueComponent comp, Integer col, Integer row) {
 
-		for (int i = 0; i < ROWS; i++) {
-			for (int s = 0; s < COLUMNS; s++) {
-				if (comp.equals(layout.getComponent(col, row))) {
-					compColumn = col;
-					compRow = row;
-				}
-			}
-		}
+		layout.addComponent(comp, col, row);
+		pruefeRegeln(comp);
 	}
 
 	public void pruefeRegeln(MenueComponent mc) {
@@ -295,10 +288,10 @@ public class MenueplanGridLayout extends CustomComponent {
 		// gehe Regeln durch und Prüfe falls Regel passt
 		for (Regel r : regeln) {
 			System.out.println("2");
-			if (r.getRows().indexOf(mc.row) >= 0 || r.getRows().indexOf(-1) >= 0) {
+			if (r.getZeilen().indexOf(mc.row) >= 0 || r.getZeilen().indexOf(-1) >= 0) {
 				System.out.println("3");
-				if (r.getColumns().indexOf(mc.col) >= 0
-						|| r.getColumns().indexOf(-1) >= 0) {
+				if (r.getSpalten().indexOf(mc.col) >= 0
+						|| r.getSpalten().indexOf(-1) >= 0) {
 					System.out.println("Prüfe");
 					r.check(mc,this);
 				}

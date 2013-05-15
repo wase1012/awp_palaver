@@ -43,14 +43,13 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
 	} 
     
     table.setContainerDataSource(container);
-    table.setVisibleColumns(new Object[] {"rows", "columns", "regeltyp", "operator", "kriterien", "fehlermeldung", "aktiv"});
+    table.setVisibleColumns(new Object[] {"zeile", "spalte", "regeltyp", "operator", "kriterien", "fehlermeldung"});
     box.setSpacing(true);
     box.addComponent(table);
     unten.addComponent(bt);
     box.addComponent(unten);
     box.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
-   
-//    v.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
+
     
     bt.addClickListener(new ClickListener() {
 		
