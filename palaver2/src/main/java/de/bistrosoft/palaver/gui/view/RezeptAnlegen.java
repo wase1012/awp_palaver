@@ -305,6 +305,19 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				
+//				private Long id;
+//				private Geschmack geschmack;
+//				private Rezeptart rezeptart;
+//				private Mitarbeiter mitarbeiter;
+//			private String name;
+//				private String kommentar;
+//				private int portion;
+//			private boolean aufwand;
+//			private boolean favorit;
+//			private Date erstellt;
+//				private List<RezeptHasArtikel> artikel;
+				
 				Rezept rezept = new Rezept();
 
 				rezept.setName(nameInput);
@@ -405,17 +418,33 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 					}
 				}
+				
+				
+				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
+				ausgArtikel=bicArtikel.getItemIds();
+				rezept.setArtikel(ausgArtikel);
+				
+				try {
+					Rezeptverwaltung.getInstance().saveArtikel(rezept);
+				} catch (ConnectException | DAOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				Notification notification = new Notification(
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				
-				
-//				System.out.println(ausgArtikel.size());
+				System.out.println("##########################");
+				System.out.println(ausgArtikel.size());
 //				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
 //				ausgArtikel=bicArtikel.getItemIds();
-//				System.out.println(ausgArtikel.size());
+				System.out.println(ausgArtikel.size());
+				
+				for(RezeptHasArtikel a : ausgArtikel){
+					System.out.println(a);
+				}
 
 			}
 		});
