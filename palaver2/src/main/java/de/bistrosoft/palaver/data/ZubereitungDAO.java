@@ -32,6 +32,7 @@ public class ZubereitungDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_ZUBEREITUNG_BY_ID = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
+	private static final String GET_ZUBEREITUNG_BY_REZEPT = "Select zubereitung.id, zubereitung.name From zubereitung Join rezept_has_zubereitung On zubereitung.id = rezept_has_zubereitung.zubereitung_fk WHERE rezept_has_zubereitung.rezept_fk = {0}";
 	public ZubereitungDAO() {
 		super();
 	}
@@ -53,6 +54,16 @@ public class ZubereitungDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	public List<Zubereitung> getZubereitungByRezept(Long id) throws ConnectException,
+	DAOException, SQLException {
+List<Zubereitung> list = new ArrayList<Zubereitung>();
+ResultSet set = get(MessageFormat.format(GET_ZUBEREITUNG_BY_REZEPT, id));
+while (set.next()) {
+	list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
+}
+return list;
+}
 
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
@@ -105,4 +116,6 @@ public class ZubereitungDAO extends AbstractDAO {
 		}
 		put(MessageFormat.format(DELETE_ZUBEREITUNG_BY_ID, id));
 	}
+
+	
 }
