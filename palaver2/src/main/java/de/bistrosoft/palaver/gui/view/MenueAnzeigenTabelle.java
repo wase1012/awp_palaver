@@ -36,7 +36,8 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button showFilter;
 	private Menue menue;
-
+	private Menue menue1;
+ private String i;
 	public MenueAnzeigenTabelle() {
 		super();
 
@@ -53,23 +54,35 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
 
+		
 		table.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					menue = (Menue) event.getProperty().getValue();
+					
 				}
 
 			}
 		});
+		
+		
 
 		table.addItemClickListener(new ItemClickListener() {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
+				
+				
+				
+				if(event.isDoubleClick()){
 				ViewHandler.getInstance().switchView(MenueAnzeigen.class,
 						new ViewDataObject<Menue>(menue));
+				}
+				else {
+					
+				}
 
 			}
 		});
