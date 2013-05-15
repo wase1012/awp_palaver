@@ -26,6 +26,7 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
 	Table table = new Table();
 	Button bt = new Button("Neue Regel");
 	HorizontalLayout box = new HorizontalLayout();
+	VerticalLayout oben = new VerticalLayout();
 	VerticalLayout unten = new VerticalLayout();
 	 
     public RegelnAnzeigen() {
@@ -45,7 +46,8 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
     table.setContainerDataSource(container);
     table.setVisibleColumns(new Object[] {"zeile", "spalte", "regeltyp", "operator", "kriterien", "fehlermeldung"});
     box.setSpacing(true);
-    box.addComponent(table);
+    oben.addComponent(table);
+    box.addComponent(oben);
     unten.addComponent(bt);
     box.addComponent(unten);
     box.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
