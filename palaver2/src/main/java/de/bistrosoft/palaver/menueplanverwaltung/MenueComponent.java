@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -43,6 +48,9 @@ public class MenueComponent extends CustomComponent{
 	
 	private List<String> fehlermeldungen;
 	private List<Regel> FehlerRegeln;
+
+	List<Fussnote> fns;
+	String fn;
 	
 	String descNotification;
 	
@@ -191,9 +199,22 @@ public class MenueComponent extends CustomComponent{
 		setCompositionRoot(vl);
 		
 		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
+		try {
+			fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(menue.getId());
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fn="";
+		for(Fussnote f: fns){
+			fn = fn+" ("+f.getAbkuerzung().toString()+")";
+		}
+
 		@SuppressWarnings("deprecation")
-		Label lbText = new Label("<div align=center>"+ menue.getName() +"</div>", Label.CONTENT_XHTML);
+		Label lbText = new Label("<div align=center>"+ menue.getName() +"<BR>"+fn+"</div>", Label.CONTENT_XHTML);
 		vl.addComponent(lbText);
+		
+		
 		
 //		// Horizontales Layout erstellen
 //		HorizontalLayout hlProp = new HorizontalLayout();
