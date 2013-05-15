@@ -7,6 +7,22 @@ CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET dec8 COLLATE dec8_sw
 USE `palaver` ;
 
 
+-- -----------------------------------------------------
+-- Table `palaver`.`regel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`regel` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`regel` (
+  id INT NOT NULL AUTO_INCREMENT,
+  `zeile` VARCHAR(50) ,
+  `spalte` VARCHAR(50)  ,
+  `regeltyp` VARCHAR(45) ,
+  `operator` VARCHAR(45) ,
+  `kriterien` VARCHAR(100) ,
+  `fehlermeldung` VARCHAR(100) ,
+  `aktiv` BOOLEAN ,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `palaver`.`mitarbeiter`
