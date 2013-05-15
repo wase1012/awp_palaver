@@ -42,7 +42,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
-	List<MenueplanRegel> regeln = MenueplanRegel.getTestRegeln();
+	List<Regel> regeln = Regel.getTestRegeln();
 
 	public Menueplan getMenueplan() {
 		return menueplan;

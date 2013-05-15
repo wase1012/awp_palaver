@@ -30,20 +30,37 @@ public class Regel {
 	public Regel() {
 
 	}
-	public String getRows() {
+	
+	public String getZeile() {
 		return zeilen;
 	}
-
-	public void setRows(String zeilen) {
-		this.zeilen = zeilen;
+	
+	public void setZeile(String rows) {
+		this.zeilen = rows;
 	}
-
-	public String getColumns() {
+	
+	public String getSpalte() {
 		return spalten;
 	}
+	
+	public void setSpalte(String columns) {
+		this.spalten = columns;
+	}
+	
+	public List<Integer> getRows() {
+		return zeilenlist;
+	}
 
-	public void setColumns(String spalten) {
-		this.spalten = spalten;
+	public void setRows(List<Integer> rows) {
+		this.zeilenlist = rows;
+	}
+
+	public List<Integer> getColumns() {
+		return spaltenlist;
+	}
+
+	public void setColumns(List<Integer> columns) {
+		this.spaltenlist = columns;
 	}
 	
 	public String getRegeltyp() {
@@ -145,38 +162,47 @@ public class Regel {
 		return regeln;
 	}
 
-	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
-		if (regeltyp.equals("name")) {
-			return checkName(mc, mp);
-		} else if (regeltyp.equals("Kategorie")) {
-			return checkKategorie(mc, mp);
-		} else
-			return true;
-	}
+	public void addMenueComponentWarnung(MenueComponent mc){
 
-	private Boolean checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
+	}
+	
+	public void check(MenueComponent mc, MenueplanGridLayout mp) {
+		if (regeltyp.equals("name")) {
+			mc.addFehlerRegel(checkName(mc, mp));
+		} else if (regeltyp.equals("Kategorie")) {
+			mc.addFehlerRegel(checkKategorie(mc, mp));
+		} 
+			
+	}
+	
+//	public Boolean check(MenueComponent mc, MenueplanGridLayout mp) {
+//		if (regeltyp.equals("name")) {
+//			return checkName(mc, mp);
+//		} else if (regeltyp.equals("Kategorie")) {
+//			return checkKategorie(mc, mp);
+//		} else
+//			return true;
+//	}
+	
+	private Regel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 		if (menue.getRezepte() != null) {
 			if (operator.equals("enthält nicht")) {
 				for (Rezept rez : menue.getRezepte()) {
-					if (kriterien.indexOf(rez.getRezeptart().getId()
+					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) == -1) {
 						System.out.println(fehlermeldung);
-						List<String> fehlermeldungen = new ArrayList<>();
-						fehlermeldungen.add(fehlermeldung);
-						mc.setFehlermeldungen(fehlermeldungen);
-						return false;
+						
+						return this;
 					}
 				}
 			} else if (operator.equals("enthält")) {
 				for (Rezept rez : menue.getRezepte()) {
-					if (kriterien.indexOf(rez.getRezeptart().getId()
+					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) >= 0) {
 						System.out.println(fehlermeldung);
-						List<String> fehlermeldungen = new ArrayList<>();
-						fehlermeldungen.add(fehlermeldung);
-						mc.setFehlermeldungen(fehlermeldungen);
-						return false;
+						
+						return this;
 					}
 				}
 			} else if (operator.equals("max")) {
@@ -191,56 +217,44 @@ public class Regel {
 				DDGridLayout grid = mp.layout;
 				for (int col = 0; col < grid.getColumns(); ++col) {
 					for (int row = 0; row < grid.getRows(); ++row) {
-						if ((zeilen.indexOf(row) >= 0 || zeilen.indexOf(-1) >= 0) && (spalten.indexOf(col) >= 0 || spalten.indexOf(-1) >= 0)) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0) && (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
 								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
 								if (mc.getMenue().getRezepte().get(0).getRezeptart().equals(tmp.getMenue().getRezepte().get(0).getRezeptart())) {
 									++count;
 									if (count > maxValue) {
 										System.out.println(fehlermeldung);
-										List<String> fehlermeldungen = new ArrayList<>();
-										fehlermeldungen.add(fehlermeldung);
-										mc.setFehlermeldungen(fehlermeldungen);
-										return false;
+										
+										return this;
 									}
 								}
-
 							}
 						}
 					}
 				}
-			}
+			} 
 		}
-		return true;
+		return null;
 	}
 
-	private Boolean checkName(MenueComponent mc, MenueplanGridLayout mp) {
+
+	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		Boolean isOk = true;
+		
 		if (operator.equals("enthält nicht")) {
-			if (kriterien.indexOf(menue.getName()) == -1) {
+			if (kriterienlist.indexOf(menue.getName()) == -1) {
 				System.out.println(fehlermeldung);
-				List<String> fehlermeldungen = new ArrayList<>();
-				fehlermeldungen.add(fehlermeldung);
-				mc.setFehlermeldungen(fehlermeldungen);
-				isOk = false;
+				
+				return this;
 			}
 		} else if (operator.equals("enthält")) {
-			if (kriterien.indexOf(menue.getName()) >= 0) {
+			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 				System.out.println(fehlermeldung);
-				List<String> fehlermeldungen = new ArrayList<>();
-				fehlermeldungen.add(fehlermeldung);
-				mc.setFehlermeldungen(fehlermeldungen);
-				isOk = false;
+
+				return this;
 			}
-			// for (String rw : regelwerte) {
-			// if (rw.equals(menue.getName())) {
-			// System.out.println(fehlermeldung);
-			// return true;
-			// }
-			// }
 		}
-		return isOk;
+		return null;
 	}
 	
 	public static void speichern(String regeltyp, String zeile, String spalte,
@@ -248,8 +262,8 @@ public class Regel {
     	
     	Regel regel = new Regel();
     	
-    	regel.setRows(zeile);
-    	regel.setColumns(spalte);
+    	regel.setZeile(zeile);
+    	regel.setSpalte(spalte);
     	regel.setRegeltyp(regeltyp);
     	regel.setOperator(operator);
     	regel.setKriterien(kriterium);
