@@ -159,6 +159,11 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	}
 
+	public void updateRezept(Rezept rezept) throws ConnectException,
+			DAOException, SQLException {
+		super.updateRezept(rezept);
+	}
+
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws
 	// ConnectException,
 	// DAOException, SQLException {

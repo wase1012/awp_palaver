@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.dom4j.bean.BeanAttribute;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
@@ -36,14 +33,18 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
+import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.data.ZubereitungDAO;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
@@ -58,7 +59,7 @@ import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.ViewDataObject;
 import de.bistrosoft.palaver.util.ViewHandler;
-
+import de.hska.awp.palaver2.util.IConstants;
 
 /**
  * @author Jan Lauinger
@@ -72,6 +73,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	private VerticalLayout eins = new VerticalLayout();
 	private VerticalLayout zwei = new VerticalLayout();
 	private VerticalLayout dummy = new VerticalLayout();
+	private HorizontalLayout control = new HorizontalLayout();
 
 	Rezept rezept;
 
@@ -101,6 +103,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button zutatneu = new Button("Zutaten hinzufuegen");
+	private Button update = new Button(IConstants.BUTTON_SAVE);
 
 	private String nameInput;
 	private String portionInput;
@@ -112,6 +115,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	public String valueString = new String();
 
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
+	List<Zubereitung> listzubereitung = new ArrayList<Zubereitung>();
 
 	List<RezeptHasArtikel> artikel = new ArrayList<>();
 
@@ -140,8 +144,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 		mitarbeiterCb.setWidth("100%");
 		mitarbeiterCb.setImmediate(true);
-//		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
-//		mitarbeiterCb.setNullSelectionAllowed(false);
+		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
+		mitarbeiterCb.setNullSelectionAllowed(false);
 
 		rezeptartCb.setWidth("100%");
 		rezeptartCb.setImmediate(true);
@@ -186,10 +190,14 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		// box.addComponent(btAdd);
 		box.addComponent(kommentar);
 
-		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+
+		control.addComponent(verwerfen);
+		control.addComponent(speichern);
 
 		tblArtikel.setSizeUndefined();
 		tblArtikel.setSelectable(true);
@@ -222,11 +230,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 			}
 		});
-
-		control.addComponent(verwerfen);
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
-		verwerfen.setIcon(new ThemeResource("img/cross.ico"));
 
 		name.addValueChangeListener(new ValueChangeListener() {
 
@@ -265,12 +268,10 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				kommentarInput = valueString;
 			}
 		});
-		
-		verwerfen.addClickListener(new ClickListener()
-		{
+
+		verwerfen.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event)
-			{
+			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().returnToDefault();
 			}
 		});
@@ -317,11 +318,18 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				rezept.setErstellt(date2);
 
 				try {
-					rezept.setGeschmack(GeschmackDAO.getInstance().getGeschmackById(Long.parseLong(geschmackInput.toString())));
+					rezept.setGeschmack(GeschmackDAO.getInstance()
+							.getGeschmackById(
+									Long.parseLong(geschmackInput.toString())));
 				} catch (NumberFormatException | ConnectException
 						| DAOException | SQLException e1) {
 					e1.printStackTrace();
 				}
+
+				// rezept.setGeschmack((Geschmack) geschmackCb.getValue());
+				// rezept.setMitarbeiter((Mitarbeiter)
+				// mitarbeiterCb.getValue());
+				// rezept.setRezeptart((Rezeptart) rezeptartCb.getValue());
 
 				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance()
@@ -364,10 +372,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					List<String> ZubereitungId = Arrays.asList(valueString
 							.substring(1, valueString.length() - 1).split(
 									"\\s*,\\s*"));
-					// for (String s : ZubereitungId) {
-					// // System.out.println(s);
-					// }
-					// valueString.split
+
 					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
 
 					for (String sId : ZubereitungId) {
@@ -410,12 +415,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				
-				
-//				System.out.println(ausgArtikel.size());
-//				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
-//				ausgArtikel=bicArtikel.getItemIds();
-//				System.out.println(ausgArtikel.size());
+				System.out.println(ausgArtikel.size());
 
 			}
 		});
@@ -470,25 +470,155 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	public void getViewParam(ViewData data) {
 
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
-		
-		load();
 
+		control.replaceComponent(speichern, update);
+
+		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		update.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				rezept.setName(name.getValue());
+
+				try {
+					rezept.setGeschmack(GeschmackDAO.getInstance()
+							.getGeschmackById(
+									Long.parseLong(geschmackInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					rezept.setRezeptart(RezeptartDAO.getInstance()
+							.getRezeptartById(
+									Long.parseLong(rezeptartInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					rezept.setMitarbeiter(MitarbeiterDAO
+							.getInstance()
+							.getMitarbeiterById(
+									Long.parseLong(mitarbeiterInput.toString())));
+				} catch (NumberFormatException | ConnectException
+						| DAOException | SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				rezept.setKommentar(kommentar.getValue());
+				rezept.setAufwand(aufwand.getValue());
+				rezept.setFavorit(favorit.getValue());
+
+				// Änderungsdatum erfassen
+				java.util.Date date = new java.util.Date();
+				Date date3 = new Date(date.getTime());
+				rezept.setErstellt(date3);
+
+				String notification = "Rezept gespeichert";
+
+				final Window dialog = new Window();
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
+
+				Label message = new Label(notification);
+
+				Button okButton = new Button(IConstants.BUTTON_OK);
+
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton,
+						Alignment.BOTTOM_RIGHT);
+
+				UI.getCurrent().addWindow(dialog);
+
+				okButton.addClickListener(new ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						UI.getCurrent().removeWindow(dialog);
+						ViewHandler.getInstance().switchView(
+								RezeptAnlegen.class);
+					}
+				});
+
+				try {
+					Rezeptverwaltung.getInstance().updateRezept(rezept);
+				} catch (ConnectException | DAOException e) {
+					e.printStackTrace();
+					notification = e.toString();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+
+		/**
+		 * Daten in Felder schreiben
+		 */
 
 		ueberschrift.setValue("Rezept bearbeiten");
 
 		name.setValue(rezept.getName());
-		name.setEnabled(false);
 
-		mitarbeiterCb.select(rezept.getMitarbeiter().getName());
-		mitarbeiterCb.setEnabled(false);
+		try {
+			listzubereitung = ZubereitungDAO.getInstance()
+					.getZubereitungByRezept(rezept.getId());
+		} catch (ConnectException | DAOException | SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
+		if (listzubereitung != null) {
 
-		rezeptartCb.setValue(rezept.getRezeptart().getName());
-		rezeptartCb.setEnabled(false);
+			for (Zubereitung zb : listzubereitung) {
 
-		geschmackCb.setValue(rezept.getGeschmack().getName());
-		geschmackCb.setEnabled(false);
+				zubereitung.select(zb.getId());
+			}
 
+		} else {
+
+		}
+
+		try {
+			mitarbeiterCb.setValue(MitarbeiterDAO.getInstance()
+					.getMitarbeiterByRezept(rezept.getId()).getId());
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			geschmackCb.setValue(GeschmackDAO.getInstance()
+					.getGeschmackByRezept(rezept.getId()).getId());
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			rezeptartCb.setValue(RezeptartDAO.getInstance()
+					.getRezeptartByRezept(rezept.getId()).getId());
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		portion.setValue("30");
 		kommentar.setValue(rezept.getKommentar());
 		favorit.setValue(rezept.getFavorit());
 		aufwand.setValue(rezept.getAufwand());
