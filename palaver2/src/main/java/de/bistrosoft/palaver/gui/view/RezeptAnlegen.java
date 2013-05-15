@@ -42,6 +42,7 @@ import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
@@ -563,6 +564,63 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+				try {
+					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
+				} catch (ConnectException | DAOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		        
+				
+				
+			
+				if (zubereitung.getValue().toString() != "[]") {
+					List<String> ZubereitungId = Arrays.asList(valueString
+							.substring(1, valueString.length() - 1).split(
+									"\\s*,\\s*"));
+
+					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
+
+					for (String sId : ZubereitungId) {
+						Long id = null;
+						try {
+							id = Long.parseLong(sId.trim());
+
+						} catch (NumberFormatException nfe) {
+
+						}
+
+						Zubereitung zubereitung1 = null;
+						try {
+
+							zubereitung1 = Zubereitungverwaltung.getInstance()
+									.getZubereitungById(id);
+							//
+							RezeptHasZubereitung a = new RezeptHasZubereitung(
+									zubereitung1, rezept);
+							zubereitunglist.add(a);
+						} catch (ConnectException | DAOException | SQLException e) {
+							e.printStackTrace();
+						}
+
+					}
+					System.out.println(zubereitunglist);
+					for (RezeptHasZubereitung i : zubereitunglist) {
+
+						try {
+							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
+						} catch (ConnectException | DAOException | SQLException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+				}
+				else {
+					System.out.println("zubereitungsliste ist leer");
+				}
 
 			}
 		});
@@ -617,7 +675,13 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
+		
+		
+		
+		
+		
+		
+		
 		portion.setValue("30");
 		kommentar.setValue(rezept.getKommentar());
 		favorit.setValue(rezept.getFavorit());

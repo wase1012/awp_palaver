@@ -282,5 +282,12 @@ public class RezeptDAO extends AbstractDAO {
 				+ rezept.getId();
 		this.put(INSERT_QUERY);
 	}
+	
+	public void ZubereitungenDelete(Rezept rezept1)
+			throws ConnectException, DAOException, SQLException {
+		String DELETE_QUERY = "DELETE  from rezept_has_zubereitung WHERE rezept_fk = " + rezept1.getId() + ";";
+
+		this.put(DELETE_QUERY);
+	}
 
 }
