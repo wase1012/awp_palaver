@@ -56,6 +56,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.IConstants;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
 import de.bistrosoft.palaver.util.ViewDataObject;
@@ -103,7 +104,19 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	private Label uBeilage2 = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Beilage2</font><b></pre>",
 			Label.CONTENT_XHTML);
-	
+	private Label dummy = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy1 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy2 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+	private Label dummy3 = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
+
     
 	private TwinColSelect fussnoten = new TwinColSelect("Fussnoten");
 	
@@ -125,6 +138,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	private Button neuRezept = new Button("neues Rezept anlegen");
 
 	private Button btAdd = new Button("Add");
+	private Button change = new Button("Menü ändern");
 
 	public MenueAnzeigen() {
 		super();
@@ -145,8 +159,9 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		box.addComponent(ueberschrift);
-		box.addComponent(menuename);
-		box.addComponent(ersteller);
+		
+		
+		
 		box.addComponent(horizont1);
 		box.addComponent(horizont2);
 		box.addComponent(horizont3);
@@ -158,14 +173,19 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		box1.addComponent(ueberschrift);
 		box1.addComponent(uMenuename);
 		box1.addComponent(menuename);
+		box.addComponent(dummy);
 		box1.addComponent(uErsteller);
 		box1.addComponent(ersteller);
+		box.addComponent(dummy1);
 		box1.addComponent(uHauptgericht);
 		box1.addComponent(hauptgericht);
+		box.addComponent(dummy2);
 		box1.addComponent(uBeilage1);
 		box1.addComponent(beilage1);
+		box.addComponent(dummy3);
 		box1.addComponent(uBeilage2);
 		box1.addComponent(beilage2);
+		horizont3.addComponent(change);
 		
 //		
 		// ///////////////////////////////////
@@ -255,6 +275,16 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 				valueString = String
 						.valueOf(event.getProperty().getValue());
 
+			}
+		});	
+		
+		
+		
+		change.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(MenueAendern.class,
+						new ViewDataObject<Menue>(menue));
 			}
 		});	
 		

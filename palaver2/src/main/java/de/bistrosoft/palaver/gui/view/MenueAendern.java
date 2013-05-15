@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -57,6 +58,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.View;
 import de.bistrosoft.palaver.util.ViewData;
+import de.bistrosoft.palaver.util.ViewDataObject;
 import de.bistrosoft.palaver.util.ViewHandler;
 import de.bistrosoft.palaver.gui.view.WinSelectArtikel;
 
@@ -82,7 +84,7 @@ public class MenueAendern extends VerticalLayout implements View {
 	private VerticalLayout b2 = new VerticalLayout();
 	private VerticalLayout b3 = new VerticalLayout();
 	
-	
+	Menue menue2;
 	
 	
 	private Label ueberschrift = new Label(
@@ -605,6 +607,8 @@ Rezept rezept2 = new Rezept();
 
 
 	public void load() {
+		System.out.println("load");
+		
 		try {
 			
 			
@@ -612,41 +616,41 @@ Rezept rezept2 = new Rezept();
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
 				ersteller.addItem(e.getId());
-				ersteller.setItemCaption(e.getId(), e.getName());
+				ersteller.setItemCaption(e.getId(), e.getVorname());
 
 			}
+////
+//			List<Rezept> rezept = Rezeptverwaltung.getInstance()
+//					.getAllRezepteM();
+//			for (Rezept e : rezept) {
+//				hauptgericht.addItem(e.getId());
+//				hauptgericht.setItemCaption(e.getId(), e.getName());
+//			}
+////
+//			List<Rezept> rezept1 = Rezeptverwaltung.getInstance()
+//					.getAllRezepteM();
+//			for (Rezept e : rezept1) {
+//				// mitarbeiterCb.addItem(e);
+//				beilage1.addItem(e.getId());
+//				beilage1.setItemCaption(e.getId(), e.getName());
+//			}
+//			
+//			List<Rezept> rezept2 = Rezeptverwaltung.getInstance()
+//					.getAllRezepteM();
+//			for (Rezept e : rezept2) {
+//				// mitarbeiterCb.addItem(e);
+//				beilage2.addItem(e.getId());
+//				beilage2.setItemCaption(e.getId(), e.getName());
+//			}
+//			
+//			List<Fussnote> fussnote = Fussnotenverwaltung.getInstance().getAllFussnote();
+//			for (Fussnote e : fussnote) {
+//				fussnoten.addItem(e.getId());
+//				fussnoten.setItemCaption(e.getId(), e.getName());
+//			}
+//			
+//			
 //
-			List<Rezept> rezept = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept) {
-				hauptgericht.addItem(e.getId());
-				hauptgericht.setItemCaption(e.getId(), e.getName());
-			}
-//
-			List<Rezept> rezept1 = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept1) {
-				// mitarbeiterCb.addItem(e);
-				beilage1.addItem(e.getId());
-				beilage1.setItemCaption(e.getId(), e.getName());
-			}
-			
-			List<Rezept> rezept2 = Rezeptverwaltung.getInstance()
-					.getAllRezepteM();
-			for (Rezept e : rezept2) {
-				// mitarbeiterCb.addItem(e);
-				beilage2.addItem(e.getId());
-				beilage2.setItemCaption(e.getId(), e.getName());
-			}
-			
-			List<Fussnote> fussnote = Fussnotenverwaltung.getInstance().getAllFussnote();
-			for (Fussnote e : fussnote) {
-				fussnoten.addItem(e.getId());
-				fussnoten.setItemCaption(e.getId(), e.getName());
-			}
-			
-			
-
 		} catch (ConnectException | DAOException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -656,7 +660,24 @@ Rezept rezept2 = new Rezept();
 	}
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		menue2 = new Menue();
+		menue2 = (Menue) ((ViewDataObject<?>)data).getData();
+
+		try {
+			System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+		} catch (ConnectException | DAOException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		menuename.setValue(menue2.getName());
+		try {
+			ersteller.setValue(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+		} catch (ReadOnlyException | ConnectException | DAOException
+				| SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }
