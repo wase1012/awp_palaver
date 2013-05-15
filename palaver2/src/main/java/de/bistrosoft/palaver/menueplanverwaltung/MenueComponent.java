@@ -69,6 +69,7 @@ public class MenueComponent extends CustomComponent{
 	}
 
 	public void setFehlermeldungen(List<String> fehlermeldungen) {
+		btFehler.setVisible(true);
 		this.fehlermeldungen = fehlermeldungen;
 		if(fehlermeldungen!=null && fehlermeldungen.size()>0){
 			btFehler.setVisible(true);
@@ -153,6 +154,7 @@ public class MenueComponent extends CustomComponent{
 		}
 		
 		if (FehlerRegeln.indexOf(regel)>=0){
+			btFehler.setVisible(true);
 			return;
 		}
 		
@@ -336,6 +338,19 @@ public class MenueComponent extends CustomComponent{
 //		vl.setComponentAlignment(btDelete, Alignment.BOTTOM_RIGHT);
 		vl.setHeight("90px");
 		
+		
+	}
+	
+	public void pruefeRegeln(MenueplanGridLayout mp) {
+		System.out.println("1");
+		btFehler.setVisible(false);
+		if(FehlerRegeln!=null){
+			List<Regel> tmpRegeln = FehlerRegeln; 
+			FehlerRegeln=null;
+			for (Regel r : tmpRegeln) {
+				r.check(this, mp); 
+			}
+		}
 		
 	}
 }

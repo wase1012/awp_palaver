@@ -274,7 +274,8 @@ public class MenueplanGridLayout extends CustomComponent {
 	public void addMenue(MenueComponent comp, Integer col, Integer row) {
 		
 		layout.addComponent(comp, col, row);
-		pruefeRegeln(comp);	
+		pruefeRegeln(comp);
+		
 	}
 	
 	public void vertauscheMenue(Component sourceComp, Component comp, Integer col, Integer row) {	
@@ -288,17 +289,8 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	public void pruefeRegeln(MenueComponent mc) {
 		System.out.println("1");
-		
-		// gehe Regeln durch und Prüfe falls Regel passt
 		for (Regel r : regeln) {
-			System.out.println("2");
-			if (r.getZeilen().indexOf(mc.row) >= 0 || r.getZeilen().indexOf(-1) >= 0) {
-				System.out.println("3");
-				if (r.getSpalten().indexOf(mc.col) >= 0 || r.getSpalten().indexOf(-1) >= 0) {
-					System.out.println("Prüfe");
-					r.check(mc,this);
-				}
-			}
+			r.check(mc, this); 
 		}
 	}
 }

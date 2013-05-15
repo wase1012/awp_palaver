@@ -175,6 +175,22 @@ public class Regel {
 	}
 
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
+//		if (regeltyp.equals("name")) {
+//			mc.addFehlerRegel(checkName(mc, mp));
+//		} else if (regeltyp.equals("Kategorie")) {
+//			mc.addFehlerRegel(checkKategorie(mc, mp));
+//		}
+		if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
+			System.out.println("3");
+			if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
+				System.out.println("Prüfe");
+				this.findeRegel(mc,mp);
+			}
+		}
+
+	}
+	
+	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
 		} else if (regeltyp.equals("Kategorie")) {
