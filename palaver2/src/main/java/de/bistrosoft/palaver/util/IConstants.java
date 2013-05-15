@@ -29,6 +29,8 @@ public interface IConstants {
 	public final String MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
 	public final String MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
 
+	public final String MENU_REGEL = "Regeln";
+	
 	public final String MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	public final String MENU_FUSSNOTE = "Fussnoten";
 	public final String MENU_GESCHMACK = "Geschmäcker";

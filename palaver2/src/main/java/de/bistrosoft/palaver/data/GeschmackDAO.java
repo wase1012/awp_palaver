@@ -33,6 +33,7 @@ public class GeschmackDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_GESCHMACK_BY_ID = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
+	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
 
 	public GeschmackDAO() {
 		super();
@@ -59,6 +60,15 @@ public class GeschmackDAO extends AbstractDAO {
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = get(MessageFormat.format(GET_GESCHMACK_BY_ID, id));
+		while (set.next()) {
+			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
+		}
+		return geschmack;
+	}
+
+	public Geschmack getGeschmackByRezept(Long id) throws ConnectException,
+			DAOException, SQLException {
+		ResultSet set = get(MessageFormat.format(GET_GESCHMACK_BY_REZEPT, id));
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
 		}

@@ -79,6 +79,23 @@ while (set.next()) {
 
 return list.getName();
 }
+	public Rezept getHauptgerichtMenue(Long id) throws ConnectException, DAOException,
+	SQLException {
+Rezept list = null;
+ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+
+while (set.next()) {
+	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			.getRezeptartById(set.getLong("rezeptart_fk")),
+			GeschmackDAO.getInstance().getGeschmackById(
+					set.getLong("geschmack_fk")), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null, set.getInt("portion"));
+}
+
+return list;
+}
 	
 	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
@@ -119,16 +136,15 @@ return list;
 	public void createMenue(Menue menue) throws ConnectException, DAOException,
 			SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
-				+ ")" + "VALUES" + "('" + menue.getName() + "','"
-				+ menue.getKoch().getId() + "')";
+				+ ")" + " VALUES" + "('" + menue.getName() + "',"
+				+ menue.getKoch().getId() + ")";
 		this.put(INSERT_QUERY);
 	}
 	
 	public void updateMenue(Menue menue) throws ConnectException, DAOException,
 	SQLException {
-String INSERT_QUERY = "UPDATE " + TABLE + "(" + NAME + "," + KOCH
-		+ ")" + "VALUES" + "('" + menue.getName() + "','"
-		+ menue.getKoch().getId() + "' WHERE menue_fk = " + menue.getId() + ")";
+String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '" +  menue.getName() + "' ," + KOCH + " = "
+		+ menue.getKoch().getId() + " WHERE menue.id = " + menue.getId() + ";";
 this.put(INSERT_QUERY);
 }
 
@@ -157,14 +173,14 @@ this.put(INSERT_QUERY);
 	
 	public void FussnoteDelete(Menue menue1)
 			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY = "DELETE * from menue_has_fussnote WHERE menue_fk = " + menue1.getId() + ";";
+		String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = " + menue1.getId() + ";";
 
 		this.put(DELETE_QUERY);
 	}
 	
 	public void RezepteDelete(Menue menue1)
 			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY = "DELETE * from menue_has_rezept WHERE menue_fk = " + menue1.getId() + ";";
+		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = " + menue1.getId() + ";";
 
 		this.put(DELETE_QUERY);
 	}

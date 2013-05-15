@@ -13,6 +13,7 @@ import de.bistrosoft.palaver.gui.view.GeschmackEinst;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
+import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
@@ -93,6 +94,10 @@ public class MainLayout extends VerticalLayout implements Command {
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_AKTUELL, this);
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
 
+		MenuItem regelItem = menu.addItem(
+				IConstants.MENU_REGEL, this);
+
+		
 		MenuItem bestellungItem = menu.addItem(
 				IConstants.MENU_BESTELLUNG_HEADLINE, null);
 
@@ -151,6 +156,9 @@ public class MainLayout extends VerticalLayout implements Command {
 			break;
 		case IConstants.MENU_MENUE_SUCHEN:
 			ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
+			break;
+		case IConstants.MENU_REGEL:
+			ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
 			break;
 		default:
 			ViewHandler.getInstance().switchView(DefaultView.class);

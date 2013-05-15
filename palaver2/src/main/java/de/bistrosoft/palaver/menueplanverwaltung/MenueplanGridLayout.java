@@ -26,6 +26,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -41,7 +42,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
-	List<MenueplanRegel> regeln = MenueplanRegel.getTestRegeln();
+	List<Regel> regeln = Regel.getTestRegeln();
 
 	public Menueplan getMenueplan() {
 		return menueplan;
@@ -286,14 +287,18 @@ public class MenueplanGridLayout extends CustomComponent {
 	public void pruefeRegeln(MenueComponent mc) {
 		System.out.println("1");
 		// Lade Regeln
+
+		List<Regel> regeln = Regel.getTestRegeln();
+
 		
+
 		// gehe Regeln durch und Prüfe falls Regel passt
-		for (MenueplanRegel r : regeln) {
+		for (Regel r : regeln) {
 			System.out.println("2");
-			if (r.rows.indexOf(mc.row) >= 0 || r.rows.indexOf(-1) >= 0) {
+			if (r.getRows().indexOf(mc.row) >= 0 || r.getRows().indexOf(-1) >= 0) {
 				System.out.println("3");
-				if (r.columns.indexOf(mc.col) >= 0
-						|| r.columns.indexOf(-1) >= 0) {
+				if (r.getColumns().indexOf(mc.col) >= 0
+						|| r.getColumns().indexOf(-1) >= 0) {
 					System.out.println("Prüfe");
 					r.check(mc,this);
 				}

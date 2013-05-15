@@ -10,6 +10,12 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
+LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/regel.csv'
+INTO TABLE regel
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 LINES;
+
 LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/kategorie.csv'
 INTO TABLE kategorie
 FIELDS TERMINATED BY ';'

@@ -5,17 +5,14 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -23,6 +20,7 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -42,15 +40,15 @@ public class MenueComponent extends CustomComponent{
 	private Button btFehler;
 	
 	private List<String> fehlermeldungen;
-	private List<MenueplanRegel> FehlerRegeln;
+	private List<Regel> FehlerRegeln;
 	
 	
 	
-	public List<MenueplanRegel> getFehlerRegeln() {
+	public List<Regel> getFehlerRegeln() {
 		return FehlerRegeln;
 	}
 
-	public void setFehlerRegeln(List<MenueplanRegel> fehlerRegeln) {
+	public void setFehlerRegeln(List<Regel> fehlerRegeln) {
 		FehlerRegeln = fehlerRegeln;
 	}
 
@@ -120,8 +118,8 @@ public class MenueComponent extends CustomComponent{
 		this.isChanged = isChanged;
 	}
 	
-	public void addFehlerRegel(MenueplanRegel regel) {
-		if (regel == null){
+	public void addFehlerRegel(Regel menueplanRegel) {
+		if (menueplanRegel == null){
 			return;
 		}
 		
@@ -129,17 +127,17 @@ public class MenueComponent extends CustomComponent{
 			FehlerRegeln = new ArrayList<>();
 		}
 		
-		if (FehlerRegeln.indexOf(regel)>=0){
+		if (FehlerRegeln.indexOf(menueplanRegel)>=0){
 			return;
 		}
 		
-		FehlerRegeln.add(regel);
+		FehlerRegeln.add(menueplanRegel);
 		
 		btFehler.setVisible(true);
 		
 		String desc = "<html>";
 		
-		for (MenueplanRegel r : FehlerRegeln){
+		for (Regel r : FehlerRegeln){
 			desc += r.getFehlermeldung() + "<br>";
 		}
 		
