@@ -219,7 +219,6 @@ public class MenueplanGridLayout extends CustomComponent {
 										window.setModal(true);
 										window.setWidth("50%");
 										window.setHeight("50%");
-
 									}
 								}
 							}
@@ -267,8 +266,9 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 
 	public void removeMenue(Component destComp) {
-
+		System.out.println("Ja, hier!!!");
 		this.layout.removeComponent(destComp);
+		this.pruefeMenueRegeln();
 	}
 	
 	public void addMenue(MenueComponent comp, Integer col, Integer row) {
@@ -291,6 +291,18 @@ public class MenueplanGridLayout extends CustomComponent {
 		System.out.println("1");
 		for (Regel r : regeln) {
 			r.check(mc, this); 
+		}
+	}
+	
+	public void pruefeMenueRegeln(){
+		for (int col = 0; col < COLUMNS; ++col) {
+			for (int row = 0; row < ROWS; ++row) {
+				Component comp=layout.getComponent(col, row);
+				if(comp instanceof MenueComponent){
+					MenueComponent menue = (MenueComponent) comp;
+					menue.pruefeRegeln(this);
+				}
+			}
 		}
 	}
 }

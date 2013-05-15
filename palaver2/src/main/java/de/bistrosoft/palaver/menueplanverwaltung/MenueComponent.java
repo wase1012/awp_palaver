@@ -306,8 +306,8 @@ public class MenueComponent extends CustomComponent{
 				                    }		                    
 				                	
 				                	//aktuelle Menükomponente löschen
-				                	menueGrid.removeComponent(comp);
-				                	
+//				                	menueGrid.removeComponent(comp);
+				                	menueplan.removeMenue(comp);
 				                	//ADD Button hinzufügen
 				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
