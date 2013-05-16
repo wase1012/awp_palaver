@@ -44,13 +44,15 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
 	} 
     
     table.setContainerDataSource(container);
+    table.setSelectable(true);
     table.setVisibleColumns(new Object[] {"zeile", "spalte", "regeltyp", "operator", "kriterien", "fehlermeldung"});
-    box.setSpacing(true);
-    oben.addComponent(table);
-    box.addComponent(oben);
+    oben.addComponents(table);
+    oben.setSpacing(true);
+    box.addComponents(oben);
     unten.addComponent(bt);
-    box.addComponent(unten);
-    box.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
+    oben.addComponent(unten);
+    box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
+    oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
 
     
     bt.addClickListener(new ClickListener() {
@@ -64,6 +66,8 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
     		window.setHeight("60%");
 		}
 	});
+    
+    table.refreshRowCache();
     
     }
     
