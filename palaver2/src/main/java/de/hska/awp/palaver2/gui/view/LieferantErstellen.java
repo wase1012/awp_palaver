@@ -38,18 +38,21 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class LieferantErstellen extends VerticalLayout implements View
 {
 	private HorizontalLayout	box = new HorizontalLayout();
+	private VerticalLayout		fenster = new VerticalLayout();
+	
+	private Label				headline;
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("StaÃŸe");
+	private TextField			strasse = new TextField("Straße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
 	private TextArea			notiz = new TextArea("Notiz");
-	private CheckBox			mehrereliefertermine = new CheckBox("mehrereliefertermine");
+	private CheckBox			mehrereliefertermine = new CheckBox("mehrere Liefertermine");
 	
 	private String nameInput;
 	private String strasseInput;
@@ -74,6 +77,9 @@ public class LieferantErstellen extends VerticalLayout implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
+		headline = new Label("Neuer Lieferant");
+		headline.setStyleName("ViewHeadline");
+		
 		name.setWidth("100%");
 		bezeichnung.setWidth("100%");
 		kundennummer.setWidth("100%");
@@ -84,12 +90,12 @@ public class LieferantErstellen extends VerticalLayout implements View
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
 		notiz.setWidth("100%");
+		notiz.setHeight("92px");
 		notiz.setRows(3);
 		mehrereliefertermine.setWidth("100%");
 		
-		box.setWidth("900px");
-		box.setHeight("90%");
-		box.setSpacing(true);
+		fenster.setWidth("900px");
+		fenster.setSpacing(true);
 		
 		VerticalLayout links = new VerticalLayout();
 		links.setWidth("250px");
@@ -103,6 +109,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 		rechts.setWidth("250px");
 		rechts.setSpacing(true);
 		
+		box.setWidth("900px");
+		box.setSpacing(true);
 		box.addComponent(links);
 		box.addComponent(mitte);
 		
@@ -130,8 +138,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		
-		rechts.addComponent(control);
-		rechts.setComponentAlignment(control, Alignment.TOP_CENTER);
+		mitte.addComponent(control);
+		mitte.setComponentAlignment(control, Alignment.TOP_CENTER);
 		
 //		rechts.addComponent(verwerfen);
 //		rechts.addComponent(speichern);
@@ -140,8 +148,14 @@ public class LieferantErstellen extends VerticalLayout implements View
 		speichern.setEnabled(false);
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+		fenster.addComponent(headline);
+		fenster.setComponentAlignment(headline, Alignment.MIDDLE_CENTER);
+		fenster.addComponent(box);
+		fenster.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+		this.addComponent(fenster);
+		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
 		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
@@ -296,6 +310,14 @@ public class LieferantErstellen extends VerticalLayout implements View
             }
         });
         
+    verwerfen.addClickListener(new ClickListener() {
+		
+		@Override
+		public void buttonClick(ClickEvent event) {
+			ViewHandler.getInstance().returnToDefault();
+			
+		}
+	});
         	
 	speichern.addClickListener(new ClickListener()
 	{			

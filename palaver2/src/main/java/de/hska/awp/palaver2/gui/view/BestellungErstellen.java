@@ -179,6 +179,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
 		
+		fenster.addComponent(lieferdatum);
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
 		fenster.addComponent(control);
@@ -220,6 +221,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
 			}
 		});
 		
