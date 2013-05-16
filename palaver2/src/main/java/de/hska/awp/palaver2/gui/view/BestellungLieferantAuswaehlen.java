@@ -15,6 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
@@ -36,7 +37,9 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 	private HorizontalLayout	box = new HorizontalLayout();
 	private VerticalLayout mitte = new VerticalLayout();
 	private Button			showFilter;
+	private Button 		bestellen = new Button("bestellen");
 	private Lieferant 		lieferant;
+	private Label			headline = new Label("Alle Lieferanten mit Artikeln");
 	
 	public BestellungLieferantAuswaehlen()	{
 		
@@ -44,23 +47,29 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 		
 		this.setSizeFull();
 		this.setMargin(true);
-		this.addComponent(box);
+		this.addComponent(mitte);
+		this.setComponentAlignment(mitte, Alignment.MIDDLE_CENTER);
 		
-		box.setSizeFull();
+		box.setWidth("100%");
+		
+		mitte.setWidth("400px");
+		mitte.setSpacing(true);
 		box.setSpacing(true);
 		
-		mitte.setSizeFull();
-		box.setSpacing(true);
-		
-		box.addComponent(mitte);
+		headline.setStyleName("ViewHeadline");
 		
 		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
 		showFilter.setIcon(new ThemeResource("img/filter.ico"));
 		
+		box.addComponent(headline);
+		box.setComponentAlignment(headline, Alignment.BOTTOM_LEFT);
+		box.addComponent(showFilter);
+		box.setComponentAlignment(showFilter, Alignment.BOTTOM_RIGHT);
+		box.setExpandRatio(headline, 1);
+		
 		table = new FilterTable();
-		table.setCaption("Alle Lieferanten mit Artikeln");
 		table.setStyleName("palaverTable");
-		table.setWidth("400px");
+		table.setSizeFull();
 		table.setFilterBarVisible(false);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
@@ -72,6 +81,11 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			public void valueChange(ValueChangeEvent event) {
 				if(event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
+					bestellen.setEnabled(true);
+				}
+				else 
+				{
+					bestellen.setEnabled(false);
 				}
 			}
 		});
@@ -80,7 +94,7 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if(event.isDoubleClick()){
-					ViewHandler.getInstance().switchView(ManuelleBestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
+					bestellen.click();
 				}
 				
 			}
@@ -100,11 +114,23 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			e.printStackTrace();
 		}	
 		
-		mitte.addComponent(showFilter);
-		mitte.setComponentAlignment(showFilter, Alignment.MIDDLE_CENTER);
+		mitte.addComponent(box);
 		mitte.addComponent(table);
 		mitte.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
 		mitte.setExpandRatio(table, 1);
+		mitte.addComponent(bestellen);
+		mitte.setComponentAlignment(bestellen, Alignment.BOTTOM_RIGHT);
+		
+		bestellen.setEnabled(false);
+		
+		bestellen.addClickListener(new ClickListener()
+		{
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				ViewHandler.getInstance().switchView(ManuelleBestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
+			}
+		});
 		
 		showFilter.addClickListener(new ClickListener()
 		{
