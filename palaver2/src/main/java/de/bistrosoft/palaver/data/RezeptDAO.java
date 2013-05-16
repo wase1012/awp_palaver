@@ -25,6 +25,8 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String AUFWAND = "aufwand";
 	private final static String FAVORIT = "favorit";
 	private final static String ERSTELLT = "erstellt";
+	private final static String REZEPTHASARTIKEL = "rezept_has_artikel";
+	private final static String REZEPTFK = "rezept_fk";
 
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
@@ -33,6 +35,8 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
 	private final static String GET_REZEPTE_BY_GESCHMACK = "SELECT * FROM rezept WHERE geschmack_fk = {0};";
 	private final static String SAVE_ARTIKEL = "INSERT INTO rezept_has_artikel VALUES ({0},{1},{2},{3})";
+	private final static String GET_REZEPTHASARTIKEL_BY_REZEPT_ID = "SELECT * FROM "
+			+ REZEPTHASARTIKEL + " WHERE " + REZEPTFK + " = {0}";
 
 	Rezept rezept;
 
@@ -212,6 +216,20 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
+	public List<RezeptHasArtikel> getAllArtikelByRezeptId1(Long rezeptID)
+			throws ConnectException, DAOException, SQLException {
+		List<RezeptHasArtikel> rha = new ArrayList<RezeptHasArtikel>();
+		ResultSet set = get(MessageFormat.format(GET_REZEPTHASARTIKEL_BY_REZEPT_ID,rezeptID));
+		while (set.next()) {
+			rha.add(new RezeptHasArtikel(RezeptDAO.getInstance().getRezeptById(
+					set.getLong("rezept_fk")), ArtikelDAO.getInstance()
+					.getArtikelById(set.getLong("artikel_fk")), MengeneinheitDAO
+					.getInstance().getMengeneinheitById(set.getLong("einheit")), set
+					.getDouble("menge")));
+		}
+		return rha;
+	}
+
 	public List<Rezept> getRezeptebyGeschmack(Geschmack geschmack)
 			throws ConnectException, DAOException, SQLException {
 		List<Rezept> rezept = new ArrayList<Rezept>();
@@ -269,40 +287,41 @@ public class RezeptDAO extends AbstractDAO {
 		this.put(INSERT_QUERY);
 
 	}
-	
-	public void saveArtikel(Rezept rezept) throws ConnectException, DAOException,
-	SQLException {
+
+	public void saveArtikel(Rezept rezept) throws ConnectException,
+			DAOException, SQLException {
 		System.out.println("saveArtikel");
 		List<RezeptHasArtikel> rha = rezept.getArtikel();
 		System.out.println(rha.size());
-		for (RezeptHasArtikel a : rha){
+		for (RezeptHasArtikel a : rha) {
 			String rez = rezept.getId().toString();
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = "1";
-			
-			put(MessageFormat.format(SAVE_ARTIKEL,rez,artikel_fk,menge,me));
+
+			put(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk, menge, me));
 		}
 	}
 
 	public void updateRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "UPDATE rezept SET name = '" + rezept.getName()
-				+ "'," + "rezeptart_fk=" + rezept.getRezeptart().getId()
-				+ "," + "kommentar='" + rezept.getKommentar() + "',"
-				+ "portion=" + rezept.getPortion() + ","
-				+ "geschmack_fk = " + rezept.getGeschmack().getId() + ","
-				+ "mitarbeiter_fk = " + rezept.getMitarbeiter().getId() + ","
-				+ "aufwand=" + Util.convertBoolean(rezept.getAufwand()) + ","
-				+ "erstellt='" + rezept.getErstellt() + "'," + "favorit="
+				+ "'," + "rezeptart_fk=" + rezept.getRezeptart().getId() + ","
+				+ "kommentar='" + rezept.getKommentar() + "'," + "portion="
+				+ rezept.getPortion() + "," + "geschmack_fk = "
+				+ rezept.getGeschmack().getId() + "," + "mitarbeiter_fk = "
+				+ rezept.getMitarbeiter().getId() + "," + "aufwand="
+				+ Util.convertBoolean(rezept.getAufwand()) + "," + "erstellt='"
+				+ rezept.getErstellt() + "'," + "favorit="
 				+ Util.convertBoolean(rezept.getFavorit()) + " WHERE id = "
 				+ rezept.getId();
 		this.put(INSERT_QUERY);
 	}
-	
-	public void ZubereitungenDelete(Rezept rezept1)
-			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY = "DELETE  from rezept_has_zubereitung WHERE rezept_fk = " + rezept1.getId() + ";";
+
+	public void ZubereitungenDelete(Rezept rezept1) throws ConnectException,
+			DAOException, SQLException {
+		String DELETE_QUERY = "DELETE  from rezept_has_zubereitung WHERE rezept_fk = "
+				+ rezept1.getId() + ";";
 
 		this.put(DELETE_QUERY);
 	}

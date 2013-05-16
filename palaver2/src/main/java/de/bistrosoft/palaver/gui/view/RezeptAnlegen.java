@@ -119,7 +119,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 	List<Zubereitung> listzubereitung = new ArrayList<Zubereitung>();
-
 	List<RezeptHasArtikel> artikel = new ArrayList<>();
 
 	// private Button btAdd = new Button("Add");
@@ -207,9 +206,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		tblArtikel.setMultiSelect(true);
 		tblArtikel.setImmediate(true);
 		tblArtikel.setEditable(true);
-		tblArtikel.addContainerProperty("Name", String.class, null);
-		tblArtikel.addContainerProperty("Menge", Long.class, null);
-		tblArtikel.setEditable(true);
+		tblArtikel.setVisible(false);
 
 		zutatneu.addClickListener(new ClickListener() {
 			@Override
@@ -220,6 +217,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				window.setModal(true);
 				window.setWidth("50%");
 				window.setHeight("50%");
+				tblArtikel.setVisible(true);
 
 				// ar.getId(ArtikelDAO.getInstance().getArtikelById(Long.parseLong(ausgArtikel.toString()))));
 				// for( String k: WinSelectArtikel.ArtId )
@@ -309,19 +307,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
-//				private Long id;
-//				private Geschmack geschmack;
-//				private Rezeptart rezeptart;
-//				private Mitarbeiter mitarbeiter;
-//			private String name;
-//				private String kommentar;
-//				private int portion;
-//			private boolean aufwand;
-//			private boolean favorit;
-//			private Date erstellt;
-//				private List<RezeptHasArtikel> artikel;
-				
+
 				Rezept rezept = new Rezept();
 
 				rezept.setName(nameInput);
@@ -374,8 +360,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					e.printStackTrace();
 				}
 
-				
-				
 				// / Liste der Zubereitungen
 				Rezept rez = null;
 				try {
@@ -428,12 +412,12 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 					}
 				}
-				
-				
-				BeanItemContainer<RezeptHasArtikel> bicArtikel= (BeanItemContainer<RezeptHasArtikel>) tblArtikel.getContainerDataSource();
-				ausgArtikel=bicArtikel.getItemIds();
+
+				BeanItemContainer<RezeptHasArtikel> bicArtikel = (BeanItemContainer<RezeptHasArtikel>) tblArtikel
+						.getContainerDataSource();
+				ausgArtikel = bicArtikel.getItemIds();
 				rez.setArtikel(ausgArtikel);
-				
+
 				try {
 					Rezeptverwaltung.getInstance().saveArtikel(rez);
 				} catch (ConnectException | DAOException | SQLException e) {
@@ -537,6 +521,13 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					e1.printStackTrace();
 				}
 
+				// try {
+				// rezept.setArtikel(Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId()));
+				// } catch (ConnectException | DAOException | SQLException e2) {
+				// // TODO Auto-generated catch block
+				// e2.printStackTrace();
+				// }
+
 				rezept.setKommentar(kommentar.getValue());
 				rezept.setAufwand(aufwand.getValue());
 				rezept.setFavorit(favorit.getValue());
@@ -591,18 +582,14 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
+
 				try {
 					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
 				} catch (ConnectException | DAOException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		        
-				
-				
-			
+
 				if (zubereitung.getValue().toString() != "[]") {
 					List<String> ZubereitungId = Arrays.asList(valueString
 							.substring(1, valueString.length() - 1).split(
@@ -644,8 +631,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						}
 
 					}
-				}
-				else {
+				} else {
 					System.out.println("zubereitungsliste ist leer");
 				}
 
@@ -657,7 +643,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		 */
 
 		ueberschrift.setValue("Rezept bearbeiten");
-
+		tblArtikel.setVisible(true);
 		name.setValue(rezept.getName());
 
 		try {
@@ -683,7 +669,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			mitarbeiterCb.setValue(MitarbeiterDAO.getInstance()
 					.getMitarbeiterByRezept(rezept.getId()).getId());
 		} catch (ConnectException | DAOException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -691,7 +676,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			geschmackCb.setValue(GeschmackDAO.getInstance()
 					.getGeschmackByRezept(rezept.getId()).getId());
 		} catch (ConnectException | DAOException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -699,14 +683,35 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			rezeptartCb.setValue(RezeptartDAO.getInstance()
 					.getRezeptartByRezept(rezept.getId()).getId());
 		} catch (ConnectException | DAOException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
-		
+
+		BeanItemContainer<RezeptHasArtikel> artikelcontainer;
+		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
+
+		try {
+			list = Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(
+					rezept.getId());
+		} catch (ConnectException | DAOException | SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		try {
+			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
+					RezeptHasArtikel.class, list);
+			tblArtikel.setContainerDataSource(artikelcontainer);
+			tblArtikel.setVisibleColumns(new Object[] { "artikelName", "menge" });
+			tblArtikel.sort(new Object[] { "artikelName" },
+					new boolean[] { true });
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+
+		}
+
+		// ausgArtikel = list;
+
+		rezept.setArtikel(list);
+
 		portion.setValue("30");
 		kommentar.setValue(rezept.getKommentar());
 		favorit.setValue(rezept.getFavorit());

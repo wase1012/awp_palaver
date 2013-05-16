@@ -23,6 +23,7 @@ import de.bistrosoft.palaver.lieferantenverwaltung.domain.Lieferant;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 
 public class Artikel implements java.io.Serializable {
+
 	private static final long serialVersionUID = 6557876739298794189L;
 
 	private Long id;
@@ -220,5 +221,10 @@ public class Artikel implements java.io.Serializable {
 
 	public void setLebensmittel(boolean lebensmittel) {
 		this.lebensmittel = lebensmittel;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
