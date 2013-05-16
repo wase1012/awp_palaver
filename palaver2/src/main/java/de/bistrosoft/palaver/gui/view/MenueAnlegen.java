@@ -97,6 +97,9 @@ public class MenueAnlegen extends VerticalLayout implements View {
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
+	private Label ueberschrift2 = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue ändern</font><b></pre>",
+			Label.CONTENT_XHTML);
 
 	private Label dummy = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
@@ -599,7 +602,7 @@ Rezept rezept2 = new Rezept();
 				
 				
 				
-				ViewHandler.getInstance().switchView(MenueAnlegen.class);
+			
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
@@ -680,6 +683,7 @@ Rezept rezept2 = new Rezept();
 		menue2 = new Menue();
 		menue2 = (Menue) ((ViewDataObject<?>)data).getData();
 		control.replaceComponent(speichern, update);
+		box.replaceComponent(ueberschrift, ueberschrift2);
 		
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		
@@ -887,7 +891,7 @@ Rezept rezept2 = new Rezept();
 				
 				
 				
-				ViewHandler.getInstance().switchView(MenueAendern.class);
+				
 				Notification notification = new Notification("Menue wurde geaendert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
