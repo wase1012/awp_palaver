@@ -61,7 +61,6 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					rezept = (Rezept) event.getProperty().getValue();
-					System.out.println(rezept);
 				}
 
 			}
