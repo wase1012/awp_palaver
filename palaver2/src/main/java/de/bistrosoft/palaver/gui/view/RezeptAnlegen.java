@@ -720,6 +720,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		// kommentar.addValueChangeListener(this);
 		nameInput = name.getValue();
 		portionInput = portion.getValue();
+		kommentarInput = kommentar.getValue();
 
 		if (name.getValue() == "" || name.getValue() == null
 				&& portion.getValue() == null || portion.getValue() == ""
