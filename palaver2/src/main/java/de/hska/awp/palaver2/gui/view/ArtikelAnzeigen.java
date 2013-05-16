@@ -17,8 +17,10 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -42,11 +44,15 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 @SuppressWarnings("serial")
 public class ArtikelAnzeigen extends VerticalLayout  implements View
 {
-	private FilterTable		table;
+	private FilterTable			table;
 	
-	private Button			showFilter;
+	private Button				showFilter;
 	
-	private Artikel			artikel;
+	private Label				headline;
+	
+	private HorizontalLayout	head;
+	
+	private Artikel				artikel;
 	
 	public ArtikelAnzeigen()
 	{
@@ -58,8 +64,19 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
 		showFilter.setIcon(new ThemeResource("img/filter.ico"));
 		
+		headline = new Label("Alle Artikel");
+		headline.setStyleName("ViewHeadline");
+		
+		head = new HorizontalLayout();
+		head.setWidth("100%");
+		
+		head.addComponent(headline);
+		head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
+		head.addComponent(showFilter);
+		head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		head.setExpandRatio(headline, 1);
+		
 		table = new FilterTable();
-		table.setCaption("Alle Artikel");
 		table.setStyleName("palaverTable");
 		table.setSizeFull();
 		table.setFilterBarVisible(false);
@@ -127,8 +144,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			e.printStackTrace();
 		}	
 		
-		this.addComponent(showFilter);
-		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		this.addComponent(head);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		
