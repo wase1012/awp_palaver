@@ -7,12 +7,12 @@ import java.math.BigDecimal;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
-
 public class RezeptHasArtikel {
 
 	private Artikel artikel;
 	private double menge;
 	private Mengeneinheit mengeneinheit;
+	private Rezept rezept;
 
 	public RezeptHasArtikel() {
 		super();
@@ -25,9 +25,19 @@ public class RezeptHasArtikel {
 		this.menge = menge;
 	}
 
+	public RezeptHasArtikel(Rezept rezept, Artikel artikel,
+			Mengeneinheit mengeneinheit, double menge) {
+		this.rezept = rezept;
+		this.artikel = artikel;
+		this.menge = menge;
+		this.mengeneinheit = mengeneinheit;
+
+	}
+
 	@Override
 	public String toString() {
-		return "artikel " + artikel.getId();
+		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "
+				+ artikel.getName();
 	}
 
 	public double getMenge() {
@@ -43,7 +53,7 @@ public class RezeptHasArtikel {
 	public String getArtikelName() {
 		return this.artikel.getName();
 	}
-	
+
 	public Long getArtikelId() {
 		return this.artikel.getId();
 	}

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator;
-import com.vaadin.data.validator.AbstractStringValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
@@ -17,9 +15,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -38,17 +37,22 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class LieferantErstellen extends VerticalLayout implements View
 {
-	private VerticalLayout	box = new VerticalLayout();
+	private HorizontalLayout	box = new HorizontalLayout();
+	private VerticalLayout		fenster = new VerticalLayout();
+	
+	private Label				headline;
 	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("StaßŸe");
+	private TextField			strasse = new TextField("Straße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
+	private TextArea			notiz = new TextArea("Notiz");
+	private CheckBox			mehrereliefertermine = new CheckBox("mehrere Liefertermine");
 	
 	private String nameInput;
 	private String strasseInput;
@@ -59,6 +63,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private String faxInput;
 	private String bezInput;
 	private String knrInput;
+	private String notizInput;
 	
 	private Lieferant lieferant = new Lieferant();
 
@@ -72,6 +77,9 @@ public class LieferantErstellen extends VerticalLayout implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
+		headline = new Label("Neuer Lieferant");
+		headline.setStyleName("ViewHeadline");
+		
 		name.setWidth("100%");
 		bezeichnung.setWidth("100%");
 		kundennummer.setWidth("100%");
@@ -81,39 +89,73 @@ public class LieferantErstellen extends VerticalLayout implements View
 		email.setWidth("100%");
 		telefon.setWidth("100%");
 		fax.setWidth("100%");
+		notiz.setWidth("100%");
+		notiz.setHeight("92px");
+		notiz.setRows(3);
+		mehrereliefertermine.setWidth("100%");
 		
-		
-		box.setWidth("300px");
-		box.setSpacing(true);
+		fenster.setWidth("900px");
+		fenster.setSpacing(true);
 		
 		VerticalLayout links = new VerticalLayout();
-		links.setWidth("300px");
+		links.setWidth("250px");
 		links.setSpacing(true);
+		
+		VerticalLayout mitte = new VerticalLayout();
+		mitte.setWidth("250px");
+		mitte.setSpacing(true);
+		
+		VerticalLayout rechts = new VerticalLayout();
+		rechts.setWidth("250px");
+		rechts.setSpacing(true);
+		
+		box.setWidth("900px");
+		box.setSpacing(true);
 		box.addComponent(links);
+		box.addComponent(mitte);
+		
 		
 		links.addComponent(name);
 		links.addComponent(bezeichnung);
 		links.addComponent(kundennummer);
 		links.addComponent(strasse);
-		links.addComponent(plz);
-		links.addComponent(ort);
-		links.addComponent(email);
-		links.addComponent(telefon);
-		links.addComponent(fax);
+		mitte.addComponent(plz);
+		mitte.addComponent(ort);
+		mitte.addComponent(email);
+		mitte.addComponent(telefon);
+		rechts.addComponent(fax);
+		rechts.addComponent(notiz);
+		rechts.addComponent(mehrereliefertermine);
+		
+		box.addComponent(rechts);
 		
 		HorizontalLayout control = new HorizontalLayout();
-//		control.setWidth("100%");
+		control.setWidth("100%");
 		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-		
+//		box.addComponent(control);
+//		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+//		
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		
+		mitte.addComponent(control);
+		mitte.setComponentAlignment(control, Alignment.TOP_CENTER);
+		
+//		rechts.addComponent(verwerfen);
+//		rechts.addComponent(speichern);
+		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		speichern.setEnabled(false);
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+		fenster.addComponent(headline);
+		fenster.setComponentAlignment(headline, Alignment.MIDDLE_CENTER);
+		fenster.addComponent(box);
+		fenster.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+		this.addComponent(fenster);
+		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
 		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
@@ -132,7 +174,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		strasse.setMaxLength(45);
 		
 //        Validator postalCodeValidator = new AbstractStringValidator(
-//                "Bitte gÃ¼ltige PLZ eingeben.") {
+//                "Bitte gültige PLZ eingeben.") {
 //			@Override
 //			protected boolean isValidValue(String value) {
 //                return value.matches("[1-9][0-9]{4}");
@@ -159,13 +201,22 @@ public class LieferantErstellen extends VerticalLayout implements View
 		fax.setInputPrompt(faxInput);
 		fax.setMaxLength(45);
 		
+		notiz.setImmediate(true);
+		notiz.setInputPrompt(notizInput);
+		notiz.setMaxLength(300);
         name.addValueChangeListener(new ValueChangeListener() {
-
+       
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());
-
                 nameInput = valueString;
+        		if (name.isValid() == true) {
+        			speichern.setEnabled(true);
+        		}
+        		else {
+        			speichern.setEnabled(false);
+        		}
+
             }
         });
         
@@ -248,6 +299,25 @@ public class LieferantErstellen extends VerticalLayout implements View
                 faxInput = valueString;
             }
         });
+        
+        notiz.addValueChangeListener(new ValueChangeListener() {
+
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
+
+                notizInput = valueString;
+            }
+        });
+        
+    verwerfen.addClickListener(new ClickListener() {
+		
+		@Override
+		public void buttonClick(ClickEvent event) {
+			ViewHandler.getInstance().returnToDefault();
+			
+		}
+	});
         	
 	speichern.addClickListener(new ClickListener()
 	{			
@@ -286,9 +356,9 @@ public class LieferantErstellen extends VerticalLayout implements View
 			lieferant.setEmail(emailInput);
 			lieferant.setTelefon(telefonInput);
 			lieferant.setFax(faxInput);
-//			lieferant.setAnsprechpartner();
-			
-			
+			lieferant.setNotiz(notizInput);
+			lieferant.setMehrereliefertermine(mehrereliefertermine.getValue());
+				
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
 			} catch (ConnectException | DAOException | SQLException e) {

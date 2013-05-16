@@ -24,7 +24,7 @@ public class DefaultView extends VerticalLayout implements View
 		super();
 		this.setSizeFull();
 		
-		Image content = new Image(null, new ThemeResource("img/palaverschild.jpeg"));
+		Image content = new Image(null, new ThemeResource("../img/palaverschild.jpeg"));
 		this.addComponent(content);
 		this.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 	}

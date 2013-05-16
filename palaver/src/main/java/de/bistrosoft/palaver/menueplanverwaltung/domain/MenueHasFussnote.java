@@ -1,31 +1,40 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
+
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 
 public class MenueHasFussnote implements java.io.Serializable {
 
-	private MenueHasFussnoteId id;
+	private MenueHasFussnoteId menueHasFussnoteId;
 	private Fussnote fussnote;
 	private Menue menue;
 
 	public MenueHasFussnote() {
 	}
 
-	public MenueHasFussnote(MenueHasFussnoteId id, Fussnote fussnote,
+	public MenueHasFussnote(MenueHasFussnoteId menueHasFussnoteId, Fussnote fussnote,
 			Menue menue) {
-		this.id = id;
+		this.menueHasFussnoteId = menueHasFussnoteId;
+		this.fussnote = fussnote;
+		this.menue = menue;
+	}
+	
+	public MenueHasFussnote( Fussnote fussnote,
+			Menue menue) {
+		
 		this.fussnote = fussnote;
 		this.menue = menue;
 	}
 
+	
+
 	public MenueHasFussnoteId getId() {
-		return this.id;
+		return this.menueHasFussnoteId;
 	}
-
-	public void setId(MenueHasFussnoteId id) {
-		this.id = id;
+	public void setId(Long id) {
+		this.menueHasFussnoteId = menueHasFussnoteId;
 	}
-
+	
 	public Fussnote getFussnote() {
 		return this.fussnote;
 	}
@@ -34,6 +43,7 @@ public class MenueHasFussnote implements java.io.Serializable {
 		this.fussnote = fussnote;
 	}
 
+	
 	public Menue getMenue() {
 		return this.menue;
 	}

@@ -16,11 +16,11 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 
 public class WinSelectArtikel extends Window {
 	
@@ -45,8 +45,7 @@ public class WinSelectArtikel extends Window {
 			List<RezeptHasArtikel> ausgArtikel;
 			
 			
-			public WinSelectArtikel(Table tblArtikel,
-					List<RezeptHasArtikel> nAusgArtikel) {
+			public WinSelectArtikel(Table tblArtikel, List<RezeptHasArtikel> nAusgArtikel) {
 				artikelcol.setMultiSelect(true);
 				artikelcol.setSizeFull();
 				initLayout();

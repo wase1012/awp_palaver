@@ -31,7 +31,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class KategorieErstellen extends VerticalLayout  implements View{
 
-private VerticalLayout	box = new VerticalLayout();
+	private VerticalLayout	box = new VerticalLayout();
 	
 	private TextField		name = new TextField("Name");
 	private String			nameText;
@@ -65,7 +65,7 @@ private VerticalLayout	box = new VerticalLayout();
 		
 		name.setImmediate(true);
 		name.setMaxLength(15);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
@@ -83,7 +83,7 @@ private VerticalLayout	box = new VerticalLayout();
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
 				} catch (ConnectException | DAOException | SQLException e) {
-					throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 			}
@@ -91,7 +91,7 @@ private VerticalLayout	box = new VerticalLayout();
 
 
         name.addValueChangeListener(new ValueChangeListener() {
-
+        	
             public void valueChange(final ValueChangeEvent event) {
                 final String valueString = String.valueOf(event.getProperty()
                         .getValue());

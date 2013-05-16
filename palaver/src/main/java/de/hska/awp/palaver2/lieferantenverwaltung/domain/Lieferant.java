@@ -23,7 +23,7 @@ public class Lieferant implements java.io.Serializable {
 	private String telefon;
 	private String fax;
 	private String notiz;
-	private Boolean mehrereliefertermine;
+	private boolean mehrereliefertermine;
 
 	public Lieferant() {
 	}
@@ -162,7 +162,7 @@ public class Lieferant implements java.io.Serializable {
 	/**
 	 * @param mehrereLiefertermine the mehrereLiefertermine to set
 	 */
-	public void setMehrereLiefertermine(Boolean mehrereLiefertermine) {
+	public void setMehrereliefertermine(Boolean mehrereLiefertermine) {
 		this.mehrereliefertermine = mehrereLiefertermine;
 	}
 
@@ -172,6 +172,9 @@ public class Lieferant implements java.io.Serializable {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -184,10 +187,7 @@ public class Lieferant implements java.io.Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kundennummer == null) ? 0 : kundennummer.hashCode());
-		result = prime
-				* result
-				+ ((mehrereliefertermine == null) ? 0 : mehrereliefertermine
-						.hashCode());
+		result = prime * result + (mehrereliefertermine ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((notiz == null) ? 0 : notiz.hashCode());
 		result = prime * result + ((ort == null) ? 0 : ort.hashCode());
@@ -197,6 +197,9 @@ public class Lieferant implements java.io.Serializable {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -237,11 +240,7 @@ public class Lieferant implements java.io.Serializable {
 				return false;
 		} else if (!kundennummer.equals(other.kundennummer))
 			return false;
-		if (mehrereliefertermine == null)
-		{
-			if (other.mehrereliefertermine != null)
-				return false;
-		} else if (!mehrereliefertermine.equals(other.mehrereliefertermine))
+		if (mehrereliefertermine != other.mehrereliefertermine)
 			return false;
 		if (name == null)
 		{
@@ -281,5 +280,6 @@ public class Lieferant implements java.io.Serializable {
 			return false;
 		return true;
 	}
+
 
 }

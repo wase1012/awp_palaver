@@ -12,6 +12,8 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
@@ -31,10 +33,13 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 @SuppressWarnings("serial")
 public class LieferantAnzeigen extends VerticalLayout  implements View {
 
-		private FilterTable		table;
+		private FilterTable			table;
 		
-		private Button			showFilter;
-		private Lieferant 		lieferant;
+		private Button				showFilter;
+		private Label				headline;
+		
+		private HorizontalLayout 	head;
+		private Lieferant 			lieferant;
 		
 		public LieferantAnzeigen()
 		{
@@ -46,8 +51,19 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
 			showFilter.setIcon(new ThemeResource("img/filter.ico"));
 			
+			headline = new Label("Alle Lieferanten");
+			headline.setStyleName("ViewHeadline");
+			
+			head = new HorizontalLayout();
+			head.setWidth("100%");
+			
+			head.addComponent(headline);
+			head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
+			head.addComponent(showFilter);
+			head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+			head.setExpandRatio(headline, 1);
+			
 			table = new FilterTable();
-			table.setCaption("Alle Lieferanten");
 			table.setStyleName("palaverTable");
 			table.setSizeFull();
 			table.setFilterBarVisible(false);
@@ -80,7 +96,7 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			{
 				container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
 				table.setContainerDataSource(container);
-				table.setVisibleColumns(new Object[] {"name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax"});
+				table.setVisibleColumns(new Object[] {"name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax", "notiz"});
 				table.sort(new Object[] {"name"}, new boolean[] {true});
 			} 
 			catch (IllegalArgumentException | ConnectException | DAOException
@@ -89,8 +105,7 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 				e.printStackTrace();
 			}	
 			
-			this.addComponent(showFilter);
-			this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+			this.addComponent(head);
 			this.addComponent(table);
 			this.setExpandRatio(table, 1);
 			

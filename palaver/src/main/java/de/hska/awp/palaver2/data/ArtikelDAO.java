@@ -9,6 +9,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -34,8 +36,8 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String 		GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
 	private final static String 		GET_MENGENEINHEIT_BY_ID = "SELECT * FROM Mengeneinheit WHERE id = {0}";
-	private final static String 		GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
-	private final static String 		GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
+	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
+	private final static String GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
 	
 	public ArtikelDAO()
 	{
@@ -91,6 +93,19 @@ public class ArtikelDAO extends AbstractDAO
 		return list;
 	}
 	
+	public List<Artikel> getAllArtikelName() throws ConnectException,
+	DAOException, SQLException {
+List<Artikel> list = new ArrayList<Artikel>();
+
+ResultSet set = get(GET_ALL_ARTIKLES_NAME);
+
+while (set.next()) {
+	list.add(new Artikel(set.getLong("id"), set.getString("name")));
+}
+
+return list;
+}
+	
 	/**
 	 * Die Methode getAllArtikelByLieferantId liefert ein Ergebniss zurück bei der Suche
 	 * nach einem Artikel anhang der LieferantId in der Datenbank.
@@ -109,7 +124,7 @@ public class ArtikelDAO extends AbstractDAO
 		while(set.next())
 		{
 			list.add(new Artikel(set.getLong("id"),
-								new Mengeneinheit(),
+								getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 								getKategorieById(set.getLong("kategorie_fk")),
 								getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
@@ -408,20 +423,5 @@ public class ArtikelDAO extends AbstractDAO
 		}
 
 		return me;
-	}
-	
-	public List<Artikel> getAllArtikelName() throws ConnectException,
-													DAOException, SQLException 
-	{
-		List<Artikel> list = new ArrayList<Artikel>();
-
-		ResultSet set = get(GET_ALL_ARTIKLES_NAME);
-
-		while (set.next()) 
-		{
-			list.add(new Artikel(set.getLong("id"), set.getString("name")));
-		}
-
-		return list;
 	}
 }

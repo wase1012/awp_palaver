@@ -68,6 +68,10 @@ public class Bestellposition implements java.io.Serializable {
 	public void setArtikel(Artikel artikel) {
 		this.artikel = artikel;
 	}
+	
+	public String getArtikelName() {
+		return this.artikel.getName();
+	}
 
 	public Bestellung getBestellung() {
 		return this.bestellung;

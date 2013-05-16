@@ -79,6 +79,21 @@ public class BestellungData
 		this.durchschnitt.setImmediate(true);
 		this.kantine.setImmediate(true);
 		
+		this.freitag.setMinValue(0);
+		this.montag.setMinValue(0);
+		this.freitag.setManualInputAllowed(false);
+		this.montag.setManualInputAllowed(false);
+		
+		this.gesamt.addValueChangeListener(new ValueChangeListener()
+		{
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				montag.setMaxValue(getInt(gesamt.getValue()));
+				freitag.setMaxValue(getInt(gesamt.getValue()));
+			}
+		});
+		
 		this.durchschnitt.addValueChangeListener(new ValueChangeListener()
 		{	
 			@Override
@@ -90,11 +105,44 @@ public class BestellungData
 		
 		this.kantine.addValueChangeListener(new ValueChangeListener()
 		{
-			
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
 				valueChangeEvent();
+			}
+		});
+		
+		this.freitag.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				if (freitag.getValue() >= getInt(gesamt.getValue()))
+				{
+					freitag.setValue(getInt(gesamt.getValue()));
+					montag.setValue(0);
+				}
+				else 
+				{
+					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
+				}
+			}
+		});
+		
+		this.montag.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				if (montag.getValue() >= getInt(gesamt.getValue()))
+				{
+					montag.setValue(getInt(gesamt.getValue()));
+					freitag.setValue(0);
+				}
+				else
+				{
+					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
+				}
 			}
 		});
 	}
@@ -229,5 +277,19 @@ public class BestellungData
 		{
 			gesamt.setValue("Invalid");
 		}
+	}
+	
+	public static Integer getInt(String str) {
+		Integer nummer = null;
+		try
+		{
+			nummer = Integer.parseInt(str);
+
+		}
+		catch (NumberFormatException e)
+		{
+
+		}
+		return nummer;
 	}
 }

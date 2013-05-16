@@ -23,9 +23,9 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
-import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
@@ -95,7 +95,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 				final int woche = curWeek.getWeek();
 				if (week < woche) {
 					// nur gespeicherte Pläne
-					if (Menueplanverwaltung.getInstance().getMenueplanByWeek(
+					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
 							new Week(week, year)) == null) {
 						Notification notification = new Notification(
 								"Kein Menüplan vorhanden.");

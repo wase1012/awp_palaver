@@ -30,6 +30,8 @@ public class MitarbeiterDAO extends AbstractDAO {
 	private static final String GET_MITARBEITER_BY_NAME = "SELECT * FROM Mitarbeiter WHERE name = {0}";
 	private static final String CREATE_MITARBEITER = "INSERT INTO Mitarbeiter (`id`,`name`,`vorname`,"
 			+ "`email`,`passwort`,`eintrittsdatum`,`austrittsdatum`)VALUES({0})";
+	private final static String GET_MITARBEITER_BY_MENUE = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN menue  on menue.koch = mitarbeiter.id WHERE menue.id = {0}";
+	private final static String GET_MITARBEITER_BY_REZEPT = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN rezept  on rezept.mitarbeiter_fk = mitarbeiter.id WHERE rezept.id = {0}";
 
 	public MitarbeiterDAO() {
 		super();
@@ -45,7 +47,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Mitarbeiter mitarbeiter = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
+		ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
 		while (set.next()) {
 			mitarbeiter = new Mitarbeiter(set.getLong("id"),
@@ -53,12 +55,35 @@ public class MitarbeiterDAO extends AbstractDAO {
 		}
 		return mitarbeiter;
 	}
+	public Mitarbeiter getMitarbeiterByMenue(Long id) throws ConnectException,
+	DAOException, SQLException {
+Mitarbeiter mitarbeiter = null;
+ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_MENUE, id));
+
+while (set.next()) {
+	mitarbeiter = new Mitarbeiter(set.getLong("id"),
+			set.getString("name"), set.getString("vorname"));
+}
+return mitarbeiter;
+}
+	
+	public Mitarbeiter getMitarbeiterByRezept(Long id) throws ConnectException,
+	DAOException, SQLException {
+Mitarbeiter mitarbeiter = null;
+ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_MENUE, id));
+
+while (set.next()) {
+	mitarbeiter = new Mitarbeiter(set.getLong("id"),
+			set.getString("name"), set.getString("vorname"));
+}
+return mitarbeiter;
+}
 
 	public List<Mitarbeiter> getMitarbeiterByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
 
-		ResultSet set = getManaged(GET_MITARBEITER_BY_NAME + name + "'%'");
+		ResultSet set = get(GET_MITARBEITER_BY_NAME + name + "'%'");
 
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"),
@@ -72,7 +97,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 			DAOException, SQLException {
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
 
-		ResultSet set = getManaged(GET_ALL_MITARBEITER);
+		ResultSet set = get(GET_ALL_MITARBEITER);
 
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set

@@ -221,14 +221,14 @@ height: 30px;
 }
 
 .v-table-cell-content-check {
-	background-image:url('img/check.ico');
+	background-image:url('img/tick_circle.ico');
 	background-position:center center;
 	background-repeat: no-repeat;
 	font-size: 0px;
 }
 
 .v-table-cell-content-cross {
-	background-image:url('img/false.ico');
+	background-image:url('img/cross_circle.ico');
 	background-position:center center;
 	background-repeat: no-repeat;
 	font-size: 0px;

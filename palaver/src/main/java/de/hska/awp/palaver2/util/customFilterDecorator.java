@@ -28,12 +28,12 @@ public class customFilterDecorator implements FilterDecorator {
 //            return value ? "Validated" : "Not validated";
 //        }
         // returning null will output default value
-        return "";
+        return value ? "Ja" : "Nein";
 	}
 
 	@Override
 	public Resource getBooleanFilterIcon(Object propertyId, boolean value) {
-		return value ? new ThemeResource("icons/table/status-green.png") : new ThemeResource("icons/table/status-red.png");
+		return value ? new ThemeResource("img/tick_circle.ico") : new ThemeResource("img/cross_circle.ico");
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 // Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
-
 public class MenueHasFussnoteId implements java.io.Serializable {
 
 	/**

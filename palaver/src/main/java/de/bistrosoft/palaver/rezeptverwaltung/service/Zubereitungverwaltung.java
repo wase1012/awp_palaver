@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.ZubereitungDAO;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 
 /**
  * @author Michael Marschall
@@ -51,7 +51,7 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 
 	public void createZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
-		dao.createZubereitung(zubereitung);
+		super.createZubereitung(zubereitung);
 	}
 
 	public void updateZubereitung(Zubereitung zubereitung)

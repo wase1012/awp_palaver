@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
@@ -9,6 +11,8 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.server.Page;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -18,13 +22,18 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -46,13 +55,19 @@ public class WinSelectMenue extends Window {
 	Component destComp;
 	int destRow;
 	int destCol;
+	MenueplanGridLayout menueplan;
 	DDGridLayout menueGrid;
 
 	BeanItemContainer<Menue>  menueContainer;
-
+	
+	// Horizontales und vertikales Layout anlegen
+	HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+	VerticalLayout leftLayout = new VerticalLayout();
+	
 	// Konstruktor 
-	public WinSelectMenue(DDGridLayout nMenueGrid,Component nDestComp,int nDestRow, int nDestCol) {
-		menueGrid = nMenueGrid;
+	public WinSelectMenue(MenueplanGridLayout nMenuePlan,Component nDestComp,int nDestRow, int nDestCol) {
+		menueplan = nMenuePlan;
+		menueGrid=menueplan.layout;
 		destComp=nDestComp;
 		destCol = nDestCol;
 		destRow = nDestRow;
@@ -71,9 +86,6 @@ public class WinSelectMenue extends Window {
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		setContent(splitPanel);
 
-		// Horizontales und vertikales Layout anlegen
-		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-		VerticalLayout leftLayout = new VerticalLayout();
 		
 		// Splitpanel die Layouts zufügen
 		splitPanel.addComponent(leftLayout);
@@ -145,7 +157,7 @@ public class WinSelectMenue extends Window {
 
 		// Info im Suchfeld setzen
 		searchField.setInputPrompt("Menü suchen");
-
+			
 		// TextChangeEvent wird ausgelöst, wenn bei der Eingabe eine Pause ist
 		searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
 
@@ -203,21 +215,47 @@ public class WinSelectMenue extends Window {
         	        }
                 }
                 
+                menueplan.removeMenue(destComp);
+                
 				// Menübezeichnung des ausgewählten Menüs
 				String titel = textfields.get(0).getValue();
 				String s = textfields.get(1).getValue();
 				Long id = Long.parseLong(s.trim());
 				String k = textfields.get(2).getValue();
 //				Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(id)
-				Menue menue = new Menue(id,titel,k);
-				// Aktuelle Menükomponente aus Plan löschen
-				menueGrid.removeComponent(destComp);
+//				Menue menue = null;
+				try {
+					Menue menue = Menueverwaltung.getInstance().getMenueByName(titel);
+					// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+					MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
+					menueplan.addMenue(menueComp, sourceColumn, sourceRow);
+					menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
+									
+//					System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DAOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				Menue menue = new Menue(id,titel,k);
+				//Testrezeptdaten
+//				Rezept rez = new Rezept(1L);
+//				rez.setRezeptart(new Rezeptart(3L,""));
+//				List<Rezept> rezepte = new ArrayList<>();
+//				rezepte.add(rez);
+//				menue.setRezepte(rezepte);
 				
-				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
-				MenueComponent menueComp = new MenueComponent(menue, menueGrid, sourceRow, sourceColumn,true);
-				menueGrid.addComponent(menueComp, sourceColumn, sourceRow);
-				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
-				
+//				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+//				MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
+//				menueplan.addMenue(menueComp, sourceColumn, sourceRow);
+//				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
+//								
+//				System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
 				// Window schließen
 				subwindow.close();
 		}
@@ -254,6 +292,20 @@ public class WinSelectMenue extends Window {
 				editorLayout.setVisible(menueId != null);
 			}
 		});
+		
+		// bei Ändern Komponente aus Menüplan selektieren
+		if (menueGrid.getComponent(destCol, destRow).toString().contains("de.bistrosoft.palaver.menueplanverwaltung.MenueComponent")){
+			Integer MenueSelected = new Integer (((MenueComponent) menueGrid.getComponent(destCol, destRow)).getMenue().getId().intValue());
+			Integer Index = new Integer(0);
+			for (int i = 0; i < menueList.getItemIds().size(); i++) {
+				if(menueContainer.getIdByIndex(i).getId().intValue() == MenueSelected){
+					Index = i;
+				}
+			}
+			menueList.select(menueContainer.getIdByIndex(Index));
+
+		}
+		
 	}
 
 }

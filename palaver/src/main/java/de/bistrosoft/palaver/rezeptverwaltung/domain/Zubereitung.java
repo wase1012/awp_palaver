@@ -103,7 +103,8 @@ public class Zubereitung implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return name;
+		return ""+id +"";
 	}
+	
 
 }

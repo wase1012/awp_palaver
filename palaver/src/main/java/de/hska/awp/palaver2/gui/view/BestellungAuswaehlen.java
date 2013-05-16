@@ -7,6 +7,8 @@ import java.util.List;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -32,9 +34,9 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout rechts = new VerticalLayout();
 	
-	private Table liefTable = new Table();
-	private Lieferant lieferant = null;
-	private Button bestellen = new Button("bestellen");
+	private Table 		liefTable = new Table();
+	private Lieferant 	lieferant = null;
+	private Button 		bestellen = new Button("bestellen");
 	
 	public BestellungAuswaehlen() {
 		super();
@@ -46,10 +48,13 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 		liefTable.setSizeFull();
 		liefTable.setSelectable(true);
 		
+		bestellen.setEnabled(false);
+		
+		rechts.setSpacing(true);
 		rechts.addComponent(liefTable);
 		rechts.addComponent(bestellen);
 		rechts.setComponentAlignment(liefTable, Alignment.MIDDLE_RIGHT);
-		rechts.setComponentAlignment(bestellen, Alignment.MIDDLE_RIGHT);
+		rechts.setComponentAlignment(bestellen, Alignment.BOTTOM_RIGHT);
 		
 		box.addComponent(rechts);
 		
@@ -64,7 +69,6 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 		}
 		try {
 			list = Bestellverwaltung.getInstance().getAllLieferantenByArtikellist(artList);
-			System.out.println(list);
 		} catch (ConnectException | DAOException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,6 +87,24 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 				if(event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
 				}
+				if(event.getProperty().getValue() == null) {
+					bestellen.setEnabled(false);
+				}
+				else {
+					bestellen.setEnabled(true);
+				}
+			}
+		});
+		
+		liefTable.addItemClickListener(new ItemClickListener()
+		{
+			@Override
+			public void itemClick(ItemClickEvent event)
+			{
+				if (event.isDoubleClick())
+				{
+					bestellen.click();
+				}
 			}
 		});
 		
@@ -90,7 +112,7 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(BestellungAnzeigen.class, new ViewDataObject<Lieferant>(lieferant));
+				ViewHandler.getInstance().switchView(BestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
 				
 			}
 		});

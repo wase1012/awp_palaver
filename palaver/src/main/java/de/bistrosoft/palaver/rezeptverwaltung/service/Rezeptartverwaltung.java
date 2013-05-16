@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 
 /**
  * @author Michael Marschall
@@ -51,7 +51,7 @@ public class Rezeptartverwaltung extends RezeptartDAO {
 
 	public void createRezeptart(Rezeptart rezeptart) throws ConnectException,
 			DAOException, SQLException {
-		dao.createRezeptart(rezeptart);
+		super.createRezeptart(rezeptart);
 	}
 
 	public void updateRezeptart(Rezeptart rezeptart) throws ConnectException,

@@ -3,12 +3,12 @@ package de.bistrosoft.palaver.menueplanverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 
 public class Menueplanverwaltung extends MenueplanDAO {
 
@@ -25,10 +25,10 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		return instance;
 	}
 	
-	public Menueplan getMenueplanByWeek(Week week){
+	public Menueplan getMenueplanByWeekWithItems(Week week){
 		Menueplan mpl=null;
 		try {
-			mpl = super.getMenueplanByWeek(week);
+			mpl = super.getMenueplanByWeekWithItems(week);
 		} catch (ConnectException | DAOException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		if(menueplan.getId()==null){
 			try {
 				super.createMenueplan(menueplan);
-				menueplan.setId(super.getMenueplanByWeek(menueplan.getWeek()).getId());
+				menueplan.setId(super.getMenueplanByWeekWithItems(menueplan.getWeek()).getId());
 			} catch (ConnectException | DAOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

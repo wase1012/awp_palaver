@@ -1,173 +1,127 @@
-/**
- * Created by Sebastian Walz
- * 06.05.2013 12:17:45
- */
 package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.Transferable;
-import com.vaadin.event.dd.DragAndDropEvent;
-import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.acceptcriteria.AcceptAll;
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
+import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.util.BestellungData;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
+
+/**
+ * 
+ * @author PhilippT
+ *
+ */
 
 @SuppressWarnings("serial")
-public class BestellungAnzeigen extends VerticalLayout implements View
-{
-	private Table 								bestellungTable;
+public class BestellungAnzeigen extends VerticalLayout implements View{
 	
-	private FilterTable							artikelTable;
+	private HorizontalLayout 	fenster = new HorizontalLayout();
 	
-	private HorizontalLayout					form;
+	private FilterTable 		bestellungen = new FilterTable("Bestellung");
+	private FilterTable			bpositionen = new FilterTable("Bestellpositionen");
 	
-	private Lieferant 							lieferant;
+	private Bestellung 			bestellung;
 	
-	private BeanItemContainer<BestellungData> 	containerBestellung;
-	private BeanItemContainer<Artikel> 			containerArtikel;
-	
-	public BestellungAnzeigen()
-	{
+	public BestellungAnzeigen () {
 		super();
 		
 		this.setSizeFull();
 		this.setMargin(true);
 		
-		form = new HorizontalLayout();
-		form.setSizeFull();
+		fenster.setSizeFull();
+		fenster.setSpacing(true);
+		fenster.addComponentAsFirst(bestellungen);
+		fenster.addComponent(bpositionen);
 		
-		this.addComponent(form);
+		bestellungen.setSizeFull();
+		bpositionen.setSizeFull();
 		
-		bestellungTable = new Table();
-		bestellungTable.setSizeFull();
-		bestellungTable.setStyleName("palaverTable");
+		fenster.setExpandRatio(bestellungen, 1);
+		fenster.setExpandRatio(bpositionen, 2);
 		
-		artikelTable = new FilterTable();
-		artikelTable.setSizeFull();
-		artikelTable.setStyleName("palaverTable");
-		artikelTable.setFilterBarVisible(true);
-		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
-		/**
-		 * Darg n Drop
-		 */
-		artikelTable.setDropHandler(new DropHandler()
+		bestellungen.setSelectable(true);
+		bestellungen.setFilterBarVisible(true);
+		
+		bpositionen.setImmediate(true);
+		bpositionen.setFilterBarVisible(true);
+		bpositionen.setVisible(false);
+		
+		BeanItemContainer<Bestellung> container;
+		try
 		{
-			/**
-			 * Prueft, ob das Element verschoben werden darf.
-			 */
-			@Override
-			public AcceptCriterion getAcceptCriterion()
-			{
-				return AcceptAll.get();
-			}
+			container = new BeanItemContainer<Bestellung>(Bestellung.class, Bestellverwaltung.getInstance().getAllBestellungen());
+			bestellungen.setContainerDataSource(container);
+			bestellungen.setVisibleColumns(new Object[] {"lieferant", "datum", "lieferdatum"});
+			bestellungen.sort(new Object[] {"id"}, new boolean[] {true});
+		} 
+		catch (IllegalArgumentException | ConnectException | DAOException
+				| SQLException e)
+		{
+			e.printStackTrace();
+		}		
+		
+		bestellungen.addValueChangeListener(new ValueChangeListener() {
 			
-			/**
-			 * Bestellposition loeschen und Artikel wieder in Liste setzen.
-			 */
 			@Override
-			public void drop(DragAndDropEvent event)
-			{
-				Transferable t = event.getTransferable();
-				BestellungData selected = (BestellungData) t.getData("itemId");
-				containerBestellung.removeItem(selected);
-				containerArtikel.addItem(selected.getBestellungArtikel());
-				artikelTable.markAsDirty();
-				bestellungTable.markAsDirty();
+			public void valueChange(ValueChangeEvent event) {
+				if(event.getProperty().getValue() != null) {
+					bestellung = (Bestellung) event.getProperty().getValue();
+				}
+				
 			}
 		});
 		
-		bestellungTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
-		/**
-		 * Drag n Drop
-		 */
-		bestellungTable.setDropHandler(new DropHandler()
-		{
-			/**
-			 * Prueft, ob das Element verschoben werden darf.
-			 */
-			@Override
-			public AcceptCriterion getAcceptCriterion()
-			{
-				return AcceptAll.get();
-			}
+		bestellungen.addItemClickListener(new ItemClickListener() {
 			
-			/**
-			 * Verschiebt einen Artikel in die Bestellliste.
-			 */
 			@Override
-			public void drop(DragAndDropEvent event)
-			{
-				Transferable t = event.getTransferable();
-				Artikel selected = (Artikel) t.getData("itemId");
-				containerArtikel.removeItem(selected);
-				containerBestellung.addItem(new BestellungData(selected));
-				artikelTable.markAsDirty();
-				bestellungTable.markAsDirty();
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					bpositionen.setVisible(true);
+					BeanItemContainer<Bestellposition> bpcontainer;
+					try
+					{
+						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
+						bpositionen.setContainerDataSource(bpcontainer);
+						bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt"});
+						bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
+		
+					} 
+					catch (IllegalArgumentException | ConnectException | DAOException
+							| SQLException e)
+					{
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		
-		form.addComponent(bestellungTable);
-		form.addComponent(artikelTable);
-		
-		form.setExpandRatio(bestellungTable, 2);
-		form.setExpandRatio(artikelTable, 1);
-		form.setSpacing(true);
+		this.addComponent(fenster);
+		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
+	}
+	@Override
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Uebergibt den Lieferanten und fuellt die Tabellen
-	 */
-	@Override
-	public void getViewParam(ViewData data)
-	{
-		lieferant = (Lieferant) ((ViewDataObject<?>)data).getData();
-		
-		bestellungTable.setCaption("Bestellung " + lieferant.getName());
-		artikelTable.setCaption("Artikel");
-		
-		List<BestellungData> list = new ArrayList<BestellungData>();
-		List<Artikel> artikel = new ArrayList<Artikel>();
-//		list.add(new BestellungData("Mehl", "1 KG", new Kategorie(1L, "Grundbedarf"), 10, 20));
-		List<Artikel> artikelListe = null;
-		try
-		{
-			artikelListe = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(lieferant.getId());
-		} catch (ConnectException | DAOException | SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for (Artikel e : artikelListe)
-		{
-//			list.add(new BestellungData(e));
-			artikel.add(e);
-		}
-		
-		containerBestellung = new BeanItemContainer<BestellungData>(BestellungData.class, list);
-		bestellungTable.setContainerDataSource(containerBestellung);
-		bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "freitag", "montag"});
-		
-		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
-		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
-	}
 }
