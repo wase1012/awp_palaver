@@ -67,7 +67,7 @@ return mitarbeiter;
 	public Mitarbeiter getMitarbeiterByRezept(Long id) throws ConnectException,
 	DAOException, SQLException {
 Mitarbeiter mitarbeiter = null;
-ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_MENUE, id));
+ResultSet set = get(MessageFormat.format(GET_MITARBEITER_BY_REZEPT, id));
 
 while (set.next()) {
 	mitarbeiter = new Mitarbeiter(set.getLong("id"),
