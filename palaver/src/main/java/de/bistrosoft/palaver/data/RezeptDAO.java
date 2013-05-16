@@ -98,7 +98,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getAllRezepte() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-		ResultSet set = get(GET_ALL_REZEPTS);
+		ResultSet set = getManaged(GET_ALL_REZEPTS);
 		;
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), GeschmackDAO.getInstance()
@@ -119,7 +119,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getAllRezepteM() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-		ResultSet set = get(GET_ALL_REZEPTS);
+		ResultSet set = getManaged(GET_ALL_REZEPTS);
 		;
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -151,7 +151,7 @@ public class RezeptDAO extends AbstractDAO {
 
 	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
 			SQLException {
-		ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_ID, id));
 
 		while (set.next()) {
 			rezept = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -169,7 +169,7 @@ public class RezeptDAO extends AbstractDAO {
 	public Rezept getRezept1(Long id) throws ConnectException, DAOException,
 			SQLException {
 		Rezept result = null;
-		ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_ID, id));
 
 		while (set.next()) {
 			result = new Rezept(set.getLong("id"));
@@ -182,7 +182,7 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		Rezept result = null;
 
-		ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_NAME, NAME));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_NAME, NAME));
 
 		while (set.next()) {
 			result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -200,7 +200,7 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		Rezept result = null;
 
-		ResultSet set = get(MessageFormat.format(GET_REZEPT_BY_NAME, "name"));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_NAME, "name"));
 
 		while (set.next()) {
 			result = new Rezept(set.getLong("id"));
@@ -212,7 +212,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getAllArtikelByRezeptId(int rezeptID)
 			throws ConnectException, DAOException, SQLException {
 		List<Rezept> rezept = new ArrayList<Rezept>();
-		ResultSet set = get(GET_ARTIKEL_REZEPT_BY_ID);
+		ResultSet set = getManaged(GET_ARTIKEL_REZEPT_BY_ID);
 		while (set.next()) {
 			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
 					set.getLong("id")), GeschmackDAO.getInstance()
@@ -226,7 +226,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<RezeptHasArtikel> getAllArtikelByRezeptId1(Long rezeptID)
 			throws ConnectException, DAOException, SQLException {
 		List<RezeptHasArtikel> rha = new ArrayList<RezeptHasArtikel>();
-		ResultSet set = get(MessageFormat.format(GET_REZEPTHASARTIKEL_BY_REZEPT_ID,rezeptID));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTHASARTIKEL_BY_REZEPT_ID,rezeptID));
 		while (set.next()) {
 			rha.add(new RezeptHasArtikel(RezeptDAO.getInstance().getRezeptById(
 					set.getLong("rezept_fk")), ArtikelDAO.getInstance()
@@ -240,7 +240,7 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getRezeptebyGeschmack(Geschmack geschmack)
 			throws ConnectException, DAOException, SQLException {
 		List<Rezept> rezept = new ArrayList<Rezept>();
-		ResultSet set = get(GET_REZEPTE_BY_GESCHMACK);
+		ResultSet set = getManaged(GET_REZEPTE_BY_GESCHMACK);
 		while (set.next()) {
 			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
 					set.getLong("id")), GeschmackDAO.getInstance()
@@ -335,7 +335,7 @@ public class RezeptDAO extends AbstractDAO {
 
 	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException, DAOException, SQLException {
 		List<Rezept> rezepte=new ArrayList<>();
-		ResultSet set =get("select rezept_id from menue_has_rezept where menue_id="+menue.getId());
+		ResultSet set =getManaged("select rezept_id from menue_has_rezept where menue_id="+menue.getId());
 		
 		while (set.next()) {
 			Long rezId=set.getLong("rezept_id");

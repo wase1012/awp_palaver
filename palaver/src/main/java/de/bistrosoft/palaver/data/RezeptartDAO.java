@@ -52,7 +52,7 @@ public class RezeptartDAO extends AbstractDAO {
 	public List<Rezeptart> getAllRezeptart() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezeptart> list = new ArrayList<Rezeptart>();
-		ResultSet set = get(GET_ALL_REZEPTART);
+		ResultSet set = getManaged(GET_ALL_REZEPTART);
 		while (set.next()) {
 			list.add(new Rezeptart(set.getLong(ID), set.getString(NAME)));
 		}
@@ -61,7 +61,7 @@ public class RezeptartDAO extends AbstractDAO {
 
 	public Rezeptart getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = get(MessageFormat.format(GET_REZEPTART_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_ID, id));
 		while (set.next()) {
 			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
 		}
@@ -70,7 +70,7 @@ public class RezeptartDAO extends AbstractDAO {
 
 	public Rezeptart getRezeptartByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = get(MessageFormat.format(GET_REZEPTART_BY_REZEPT, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_REZEPT, id));
 		while (set.next()) {
 			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
 		}
@@ -81,7 +81,7 @@ public class RezeptartDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Rezeptart> list = new ArrayList<Rezeptart>();
 
-		ResultSet set = get(GET_REZEPTART_BY_NAME + name + "%'");
+		ResultSet set = getManaged(GET_REZEPTART_BY_NAME + name + "%'");
 
 		while (set.next()) {
 			list.add(new Rezeptart(set.getLong(ID), set.getString(NAME)));

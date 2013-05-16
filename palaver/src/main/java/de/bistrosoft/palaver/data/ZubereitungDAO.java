@@ -51,7 +51,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
-		ResultSet set = get(GET_ALL_ZUBEREITUNG);
+		ResultSet set = getManaged(GET_ALL_ZUBEREITUNG);
 		while (set.next()) {
 			list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
 		}
@@ -61,7 +61,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	public List<Zubereitung> getZubereitungByRezept(Long id) throws ConnectException,
 	DAOException, SQLException {
 List<Zubereitung> list = new ArrayList<Zubereitung>();
-ResultSet set = get(MessageFormat.format(GET_ZUBEREITUNG_BY_REZEPT, id));
+ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_REZEPT, id));
 while (set.next()) {
 	list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
 }
@@ -70,7 +70,7 @@ return list;
 
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = get(MessageFormat.format(GET_ZUBEREITUNG_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID, id));
 		while (set.next()) {
 			zubereitung = new Zubereitung(set.getLong(ID), set.getString(NAME));
 		}
@@ -81,7 +81,7 @@ return list;
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
 
-		ResultSet set = get(GET_ZUBEREITUNG_BY_NAME + name + "%'");
+		ResultSet set = getManaged(GET_ZUBEREITUNG_BY_NAME + name + "%'");
 
 		while (set.next()) {
 			list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));

@@ -31,7 +31,7 @@ public class RegelDAO extends AbstractDAO {
 	DAOException, SQLException {
 		List<Regel> list = new ArrayList<Regel>();
 
-		ResultSet set = get(GET_ALL_REGELN);
+		ResultSet set = getManaged(GET_ALL_REGELN);
 
 		while (set.next()) {
 			list.add(new Regel(set.getString("regeltyp"), set.getString("zeile"), set.getString("spalte"), 

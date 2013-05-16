@@ -97,7 +97,7 @@ public class ArtikelDAO extends AbstractDAO
 	DAOException, SQLException {
 List<Artikel> list = new ArrayList<Artikel>();
 
-ResultSet set = get(GET_ALL_ARTIKLES_NAME);
+ResultSet set = getManaged(GET_ALL_ARTIKLES_NAME);
 
 while (set.next()) {
 	list.add(new Artikel(set.getLong("id"), set.getString("name")));

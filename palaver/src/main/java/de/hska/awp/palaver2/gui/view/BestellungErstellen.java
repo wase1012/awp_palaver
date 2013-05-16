@@ -12,7 +12,10 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.server.UserError;
 import com.vaadin.data.Container;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -83,6 +86,22 @@ public class BestellungErstellen extends VerticalLayout implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
+		lieferdatum.setVisible(false);
+		lieferdatum.setImmediate(true);
+		lieferdatum.addValueChangeListener(new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				java.util.Date date2 = new java.util.Date();
+				if(date2.before(lieferdatum.getValue()) == false || lieferdatum.getValue() == null) {
+					speichern.setEnabled(false);
+				}
+				else {
+					speichern.setEnabled(true);
+				}
+			}
+		});
+		
 		fenster = new VerticalLayout();
 		fenster.setSizeFull();
 		
@@ -96,6 +115,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 		
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
+		speichern.setEnabled(false);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
@@ -207,15 +227,22 @@ public class BestellungErstellen extends VerticalLayout implements View
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
 				
-				String testDatum = "Freitag";
-				
 				java.util.Date date2 = new java.util.Date();
 				Date date = new Date(date2.getTime());
 				bestellung = new Bestellung();
 				bestellung.setLieferant(lieferant);
 				bestellung.setDatum(date);
-				bestellung.setLieferdatum(testDatum);
 				bestellung.setBestellpositionen(bestellpositionen);
+				
+				String testDatum = "Freitag";
+				if(lieferant.getMehrereliefertermine() == true) {
+					bestellung.setLieferdatum(testDatum);
+				}
+				else {
+					bestellung.setLieferdatum(lieferdatum.getValue().toString());				
+				}
+				
+				
 				try {
 					Bestellverwaltung.getInstance().createBestellung(bestellung);
 				} catch (ConnectException | DAOException | SQLException
@@ -268,8 +295,8 @@ public class BestellungErstellen extends VerticalLayout implements View
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
 		
-		if(lieferant.getMehrereliefertermine() == true) {
-			lieferdatum.setVisible(false);
+		if(lieferant.getMehrereliefertermine() == false) {
+			lieferdatum.setVisible(true);
 		}
 	}
 }

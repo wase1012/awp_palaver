@@ -94,7 +94,10 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 			public void valueChange(ValueChangeEvent event) {
 				java.util.Date date2 = new java.util.Date();
 				if(date2.before(lieferdatum.getValue()) == false || lieferdatum.getValue() == null) {
-					lieferdatum.setRequiredError("Bitte gültiges Datum eingeben");
+					speichern.setEnabled(false);
+				}
+				else {
+					speichern.setEnabled(true);
 				}
 			}
 		});
@@ -112,6 +115,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 		
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
+		speichern.setEnabled(false);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
@@ -237,8 +241,16 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 				bestellung = new Bestellung();
 				bestellung.setLieferant(lieferant);
 				bestellung.setDatum(date);
-				bestellung.setLieferdatum(lieferdatum.getValue().toString());
 				bestellung.setBestellpositionen(bestellpositionen);
+				
+				String testDatum = "Freitag";
+				if(lieferant.getMehrereliefertermine() == true) {
+					bestellung.setLieferdatum(testDatum);
+				}
+				else {
+					bestellung.setLieferdatum(lieferdatum.getValue().toString());				
+				}
+				
 				try {
 					Bestellverwaltung.getInstance().createBestellung(bestellung);
 				} catch (ConnectException | DAOException | SQLException
@@ -288,7 +300,6 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 		} else {
 			bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt"});
 			lieferdatum.setVisible(true);
-			lieferdatum.setRequired(true);
 		}
 		
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);

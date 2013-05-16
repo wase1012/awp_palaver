@@ -42,7 +42,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Menue> getAllMenues() throws ConnectException, DAOException,
 			SQLException {
 		List<Menue> list = new ArrayList<Menue>();
-		ResultSet set = get(GET_ALL_MENUES);
+		ResultSet set = getManaged(GET_ALL_MENUES);
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong(ID), set.getString("name"),
@@ -57,7 +57,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Rezept> getRezepteByMenue() throws ConnectException, DAOException,
 	SQLException {
 List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = get(GET_REZEPTE_BY_MENUE);
+ResultSet set = getManaged(GET_REZEPTE_BY_MENUE);
 
 while (set.next()) {
 	list.add(new Rezept(set.getLong("id")));
@@ -69,7 +69,7 @@ return list;
 	public String getHauptgerichtByMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 Rezept list = null;
-ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 while (set.next()) {
 	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -86,7 +86,7 @@ return list.getName();
 	public Rezept getHauptgerichtMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 Rezept list = null;
-ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 while (set.next()) {
 	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -104,7 +104,7 @@ return list;
 	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
+ResultSet set = getManaged(MessageFormat.format(GET_Beilagen, id));
 
 while (set.next()) {
 	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -127,7 +127,7 @@ return list;
 		Menue result = null;
 		String name="'"+namemenue+"'";
 		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
-		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, name));
+		ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_NAME, name));
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),

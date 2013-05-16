@@ -191,6 +191,7 @@ public class MenueplanGridLayout extends CustomComponent {
 					mc.setMenueGrid(layout);
 					mc.setMenueplan(this);
 					layout.addComponent(mc, mc.getCol(), mc.getRow());
+					this.pruefeRegeln(mc);
 				}
 			}
 		}

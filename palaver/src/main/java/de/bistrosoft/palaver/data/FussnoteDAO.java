@@ -52,7 +52,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
-		ResultSet set = get(GET_ALL_FUSSNOTE);
+		ResultSet set = getManaged(GET_ALL_FUSSNOTE);
 		while (set.next()) {
 			list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
 					.getString(ABKUERZUNG)));
@@ -63,7 +63,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public List<Fussnote> getFussnoteByMenue(Long id) throws ConnectException,
 	DAOException, SQLException {
 List<Fussnote> list = new ArrayList<Fussnote>();
-ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_MENUE, id));
+ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_MENUE, id));
 while (set.next()) {
 	list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
 			.getString(ABKUERZUNG)));
@@ -73,7 +73,7 @@ return list;
 
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
 		while (set.next()) {
 			fussnote = new Fussnote(set.getLong(ID), set.getString(NAME),
 					set.getString(ABKUERZUNG));
@@ -96,7 +96,7 @@ return list;
 	DAOException, SQLException {
 Fussnote result = null;
 
-ResultSet set = get(MessageFormat.format(GET_FUSSNOTE_BY_NAME, NAME));
+ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME, NAME));
 
 while (set.next()) {
 	result = new Fussnote(set.getLong("id"), set.getString("name"), set.getString("abkuerzung"));

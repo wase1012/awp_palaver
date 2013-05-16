@@ -51,7 +51,7 @@ public class MenueplanDAO extends AbstractDAO {
 	
 	public Menueplan getMenueplanByWeekWithItems(Week week) throws ConnectException, DAOException, SQLException{
 		Menueplan menueplan = null;
-		ResultSet setMpl = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
+		ResultSet setMpl = getManaged(MessageFormat.format(GET_MENUEPLAN_BY_WEEK, week.getWeek(),week.getYear()));
 		
 		while (setMpl.next()) {
 			menueplan = new Menueplan(setMpl.getLong(ID),week);
@@ -116,7 +116,7 @@ public class MenueplanDAO extends AbstractDAO {
 	public List<MenueplanItem> getItemsForMenueplan(Long menuplanID) throws ConnectException, DAOException, SQLException{
 		List<MenueplanItem> items = new ArrayList<MenueplanItem>();
 		
-		ResultSet set = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menuplanID));
+		ResultSet set = getManaged(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menuplanID));
 		
 		while (set.next()) {
 			Long id = set.getLong("id");
