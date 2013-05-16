@@ -288,7 +288,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					Button			löschen = new Button(IConstants.BUTTON_LÃ–SCHEN);
+					Button			loeschen = new Button(IConstants.BUTTON_LÃ–SCHEN);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -311,13 +311,13 @@ public class LieferantSuche extends VerticalLayout  implements View{
 
 					HorizontalLayout control = new HorizontalLayout();
 					control.setSpacing(true);
-					control.addComponent(löschen);
+					control.addComponent(loeschen);
 					control.addComponent(verwerfen);
 					control.addComponent(speichern);
 					
 					speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 					verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-					löschen.setIcon(new ThemeResource(IConstants.ICON_DELETE));
+					loeschen.setIcon(new ThemeResource(IConstants.ICON_DELETE));
 					
 					layout.addComponent(feld);
 					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
@@ -349,7 +349,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						}
 					});
 					
-					löschen.addClickListener(new ClickListener(){
+					loeschen.addClickListener(new ClickListener(){
 						
 						@Override
 						public void buttonClick(ClickEvent event) {
