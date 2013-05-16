@@ -145,15 +145,8 @@ public class Regel {
 		List<Integer> c = new ArrayList<Integer>();
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
-		rw.add("Pommes");
-		regeln.add(new Regel(
-				"name",
-				r,
-				c,
-				"enthält",
-				rw,
-				"Es darf kein Menü namens Pommes in Zeile 1 eingefügt werden! ",
-				true));
+		rw.add("3");
+		regeln.add(new Regel("Kategorie",r,c,"enthält nicht",rw,"Nur Fleischgerichte!",true));
 
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -162,14 +155,7 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel(
-				"Kategorie",
-				r2,
-				c2,
-				"max",
-				rw2,
-				"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",
-				true));
+		regeln.add(new Regel("Kategorie",r2,c2,	"max",rw2,"Es dürfen maximal 3 menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",	true));
 
 		return regeln;
 	}
