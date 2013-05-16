@@ -15,8 +15,6 @@ import java.util.List;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.validator.IntegerValidator;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -38,22 +36,18 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
-import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -132,13 +126,10 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 		name.setWidth("100%");
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator(
-				"Bezeichnung zu lang oder zu kurz: {0}", 2, 150, false));
 		name.setInputPrompt(nameInput);
 
 		portion.setWidth("100%");
 		portion.setImmediate(true);
-		portion.addValidator(new IntegerValidator("Keine Zahl! {0}"));
 		portion.setInputPrompt(portionInput);
 
 		zubereitung.setWidth("100%");
@@ -161,8 +152,6 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
-		kommentar.addValidator(new StringLengthValidator(
-				"Bezeichnung zu lang oder zu kurz: {0}", 2, 1000, false));
 
 		aufwand.setWidth("100%");
 		favorit.setWidth("100%");
@@ -700,7 +689,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
 					RezeptHasArtikel.class, list);
 			tblArtikel.setContainerDataSource(artikelcontainer);
-			tblArtikel.setVisibleColumns(new Object[] { "artikelName", "menge" });
+			tblArtikel
+					.setVisibleColumns(new Object[] { "artikelName", "menge" });
 			tblArtikel.sort(new Object[] { "artikelName" },
 					new boolean[] { true });
 		} catch (IllegalArgumentException e) {
