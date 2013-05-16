@@ -186,6 +186,7 @@ DROP TABLE IF EXISTS `palaver`.`geschmack` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
+  `inaktiv` BOOLEAN ,
   PRIMARY KEY (`id`) )
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
