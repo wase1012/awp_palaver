@@ -1,10 +1,10 @@
-id,name,koch
-1,Pommes,1
-2,Kartoffelsalat,2
-3,Pasta,3
-4,Lasagne,1
-5,Schnitzel,2
-6,Salat,3
-7,"Persischer Spinatreis mit Hummus und Walnussjoghurt",1
-8,"Schweinebraten mit Spätzle und Salat",2
-9,"Persischer Spinatreis mit Hummus",1
+id;name;koch
+1;Pommes;1
+2;Kartoffelsalat;2
+3;Pasta;3
+4;Lasagne;1
+5;Schnitzel;2
+6;Salat;3
+7;"Persischer Spinatreis mit Hummus und Walnussjoghurt";1
+8;"Schweinebraten mit Spätzle und Salat";2
+9;"Persischer Spinatreis mit Hummus";1
