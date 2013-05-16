@@ -65,7 +65,8 @@ import de.hska.awp.palaver2.util.IConstants;
  * 
  */
 @SuppressWarnings("serial")
-public class RezeptAnlegen extends VerticalLayout implements View {
+public class RezeptAnlegen extends VerticalLayout implements View,
+		ValueChangeListener {
 
 	private VerticalLayout box = new VerticalLayout();
 	private HorizontalLayout hol = new HorizontalLayout();
@@ -191,6 +192,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		speichern.setEnabled(false);
 
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
@@ -226,75 +228,41 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 			}
 		});
 
-		name.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				nameInput = valueString;
-			}
-		});
-
-		portion.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				portionInput = valueString;
-			}
-		});
-
+		name.addValueChangeListener(this);
+		portion.addValueChangeListener(this);
 		zubereitung.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
-
 			}
 		});
-
-		kommentar.addValueChangeListener(new ValueChangeListener() {
-
+		geschmackCb.addValueChangeListener(new ValueChangeListener() {
+			@Override
 			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				kommentarInput = valueString;
+				valueString = String.valueOf(event.getProperty().getValue());
+				geschmackInput = valueString;
 			}
 		});
+		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				valueString = String.valueOf(event.getProperty().getValue());
+				rezeptartInput = valueString;
+			}
+		});
+		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				valueString = String.valueOf(event.getProperty().getValue());
+				mitarbeiterInput = valueString;
+			}
+		});
+		kommentar.addValueChangeListener(this);
 
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().returnToDefault();
-			}
-		});
-		geschmackCb.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				geschmackInput = valueString;
-			}
-		});
-		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				rezeptartInput = valueString;
-			}
-		});
-		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				mitarbeiterInput = valueString;
 			}
 		});
 
@@ -423,7 +391,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+				ViewHandler.getInstance().switchView(
+						RezeptAnzeigenTabelle.class);
 			}
 		});
 
@@ -635,7 +604,8 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde geändert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+				ViewHandler.getInstance().switchView(
+						RezeptAnzeigenTabelle.class);
 			}
 
 		});
@@ -735,6 +705,31 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		}
 		favorit.setValue(rezept.getFavorit());
 		aufwand.setValue(rezept.getAufwand());
+
+	}
+
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		// TODO Auto-generated method stub
+		// name.addValueChangeListener(this);
+		// portion.addValueChangeListener(this);
+		// zubereitung.addValueChangeListener(this);
+		// geschmackCb.addValueChangeListener(this);
+		// rezeptartCb.addValueChangeListener(this);
+		// mitarbeiterCb.addValueChangeListener(this);
+		// kommentar.addValueChangeListener(this);
+		nameInput = name.getValue();
+		portionInput = portion.getValue();
+
+		if (name.getValue() == "" || name.getValue() == null
+				&& portion.getValue() == null || portion.getValue() == ""
+				&& geschmackCb.getValue() == "" || geschmackCb.getValue() == null
+				&& rezeptartCb.getValue() == ""	|| rezeptartCb.getValue() == null
+				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
+			speichern.setEnabled(false);
+		} else {
+			speichern.setEnabled(true);
+		}
 
 	}
 }
