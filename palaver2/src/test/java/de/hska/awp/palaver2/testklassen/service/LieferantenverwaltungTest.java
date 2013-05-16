@@ -86,7 +86,7 @@ public class LieferantenverwaltungTest {
 		final Boolean termine = true;
 		lf.setName(name);
 		lf.setTelefon(tel);
-		lf.setMehrereLiefertermine(termine);
+		lf.setMehrereliefertermine(termine);
 		try{
 	    lv.createLieferant(lf);
 		}
@@ -125,7 +125,7 @@ public class LieferantenverwaltungTest {
 			exception = true;
 		}
 		lf.setName(neuerName);
-		lf.setMehrereLiefertermine(termine);
+		lf.setMehrereliefertermine(termine);
 		
 		try{
 		lv.updateLieferant(lf);
