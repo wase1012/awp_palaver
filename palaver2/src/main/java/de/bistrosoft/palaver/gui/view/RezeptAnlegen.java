@@ -444,7 +444,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 		try {
 			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
-					.getAllGeschmack();
+					.getAllGeschmackAktiv();
 			for (Geschmack e : geschmack) {
 				geschmackCb.addItem(e.getId());
 				geschmackCb.setItemCaption(e.getId(), e.getName());
