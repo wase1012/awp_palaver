@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -38,6 +39,7 @@ import de.bistrosoft.palaver.data.ConnectException;
 import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
@@ -78,11 +80,14 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
+	private Label ueberschrift2 = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
+			Label.CONTENT_XHTML);
 	private Label d1 = new Label("<div>&nbsp;&nbsp;&nbsp;</div>",
 			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Bezeichnung");
-	private TextField portion = new TextField("Portion");
+	private TextField portion = new TextField("%");
 
 	private TwinColSelect zubereitung = new TwinColSelect("Zubereitung");
 
@@ -473,6 +478,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
 
 		control.replaceComponent(speichern, update);
+		box.replaceComponent(ueberschrift, ueberschrift2);
 
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		update.addClickListener(new ClickListener() {
@@ -537,30 +543,30 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 				dialog.setResizable(false);
 				dialog.setStyleName("dialog-window");
 
-				Label message = new Label(notification);
-
-				Button okButton = new Button(IConstants.BUTTON_ADD);
-
-				VerticalLayout dialogContent = new VerticalLayout();
-				dialogContent.setSizeFull();
-				dialogContent.setMargin(true);
-				dialog.setContent(dialogContent);
-
-				dialogContent.addComponent(message);
-				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton,
-						Alignment.BOTTOM_RIGHT);
-
-				UI.getCurrent().addWindow(dialog);
-
-				okButton.addClickListener(new ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(
-								RezeptAnlegen.class);
-					}
-				});
+				// Label message = new Label(notification);
+				//
+				// Button okButton = new Button(IConstants.BUTTON_ADD);
+				//
+				// VerticalLayout dialogContent = new VerticalLayout();
+				// dialogContent.setSizeFull();
+				// dialogContent.setMargin(true);
+				// dialog.setContent(dialogContent);
+				//
+				// dialogContent.addComponent(message);
+				// dialogContent.addComponent(okButton);
+				// dialogContent.setComponentAlignment(okButton,
+				// Alignment.BOTTOM_RIGHT);
+				//
+				// UI.getCurrent().addWindow(dialog);
+				//
+				// okButton.addClickListener(new ClickListener() {
+				// @Override
+				// public void buttonClick(ClickEvent event) {
+				// UI.getCurrent().removeWindow(dialog);
+				// ViewHandler.getInstance().switchView(
+				// RezeptAnlegen.class);
+				// }
+				// });
 
 				try {
 					Rezeptverwaltung.getInstance().updateRezept(rezept);
@@ -624,16 +630,28 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 					System.out.println("zubereitungsliste ist leer");
 				}
 
+				Notification notification1 = new Notification(
+						"Rezept wurde geändert!");
+				notification1.setDelayMsec(500);
+				notification1.show(Page.getCurrent());
 			}
+
 		});
 
 		/**
 		 * Daten in Felder schreiben
 		 */
 
-		ueberschrift.setValue("Rezept bearbeiten");
 		tblArtikel.setVisible(true);
-		name.setValue(rezept.getName());
+
+		try {
+			name.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId())
+					.getName().toString());
+		} catch (ReadOnlyException | ConnectException | DAOException
+				| SQLException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 
 		try {
 			listzubereitung = ZubereitungDAO.getInstance()
@@ -702,8 +720,17 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 
 		rezept.setArtikel(list);
 
-		portion.setValue("30");
-		kommentar.setValue(rezept.getKommentar());
+		portion.setValue("100");
+		// kommentar.setValue(rezept.getKommentar());
+
+		try {
+			kommentar.setValue(RezeptDAO.getInstance()
+					.getRezeptById(rezept.getId()).getKommentar().toString());
+		} catch (ReadOnlyException | ConnectException | DAOException
+				| SQLException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		favorit.setValue(rezept.getFavorit());
 		aufwand.setValue(rezept.getAufwand());
 
