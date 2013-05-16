@@ -423,6 +423,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 			}
 		});
 
@@ -634,6 +635,7 @@ public class RezeptAnlegen extends VerticalLayout implements View {
 						"Rezept wurde geändert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
+				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 			}
 
 		});
