@@ -153,7 +153,7 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("geschmack_fk")), MitarbeiterDAO
 							.getInstance().getMitarbeiterById(
 									set.getLong("mitarbeiter_fk")),
-					set.getString("name"), null, set.getInt("portion"));
+					set.getString("name"), set.getString("kommentar"), set.getInt("portion"));
 		}
 
 		return rezept;

@@ -35,7 +35,7 @@ public class GeschmackDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_GESCHMACK_BY_ID = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
-	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
+	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
 
 	public GeschmackDAO() {
 		super();
