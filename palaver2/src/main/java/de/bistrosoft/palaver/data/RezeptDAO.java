@@ -6,10 +6,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
 
 public class RezeptDAO extends AbstractDAO {
@@ -324,6 +326,19 @@ public class RezeptDAO extends AbstractDAO {
 				+ rezept1.getId() + ";";
 
 		this.put(DELETE_QUERY);
+	}
+
+	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException, DAOException, SQLException {
+		List<Rezept> rezepte=new ArrayList<>();
+		ResultSet set =get("select rezept_id from menue_has_rezept where menue_id="+menue.getId());
+		
+		while (set.next()) {
+			Long rezId=set.getLong("rezept_id");
+			Rezept rez = Rezeptverwaltung.getInstance().getRezeptById(rezId);
+			rezepte.add(rez);
+		}
+		
+		return rezepte;
 	}
 
 }

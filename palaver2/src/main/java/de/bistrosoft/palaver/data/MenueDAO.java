@@ -10,6 +10,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -20,7 +21,7 @@ public class MenueDAO extends AbstractDAO {
     private final String GET_HAUPTGERICHT = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = true) AND (menue_has_rezept.menue_id = {0})";
     private final String GET_Beilagen = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = false) AND (menue_has_rezept.menue_id = {0})";
 	private final String GET_ALL_MENUES = "SELECT * FROM menue";
-	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0} ";
+	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0}";
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
 	private static final String GET_REZEPTE_BY_MENUE = "SELECT * FROM rezept JOIN menue_has_rezept ON rezept.id = menue_has_rezept.rezept_fk WHERE menue_has_rezept.menue_fk = {0}";
 
@@ -121,15 +122,17 @@ return list;
 	public Menue getMenueByName(String namemenue) throws ConnectException,
 			DAOException, SQLException {
 		Menue result = null;
-
-		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, NAME));
+		String name="'"+namemenue+"'";
+		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
+		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, name));
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("koch")));
 		}
-
+		List<Rezept> rezepte = Rezeptverwaltung.getInstance().getRezepteByMenue(result);
+		result.setRezepte(rezepte);
 		return result;
 	}
 

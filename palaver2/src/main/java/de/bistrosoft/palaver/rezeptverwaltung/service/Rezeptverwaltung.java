@@ -15,6 +15,7 @@ import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -168,6 +169,16 @@ public class Rezeptverwaltung extends RezeptDAO {
 	public void updateRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		super.updateRezept(rezept);
+	}
+
+	public List<Rezept> getRezepteByMenue(Menue menue) {
+		try {
+			super.getRezepteByMenue(menue);
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws

@@ -1,4 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.bistrosoft.palaver.data.ConnectException;
+import de.bistrosoft.palaver.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -220,19 +223,39 @@ public class WinSelectMenue extends Window {
 				Long id = Long.parseLong(s.trim());
 				String k = textfields.get(2).getValue();
 //				Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(id)
-				Menue menue = new Menue(id,titel,k);
-				//Testrezeptdaten
-				Rezept rez = new Rezept(1L);
-				rez.setRezeptart(new Rezeptart(3L,""));
-				List<Rezept> rezepte = new ArrayList<>();
-				rezepte.add(rez);
-				menue.setRezepte(rezepte);
-				
-				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
-				MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
-				menueplan.addMenue(menueComp, sourceColumn, sourceRow);
-				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
+//				Menue menue = null;
+				try {
+					Menue menue = Menueverwaltung.getInstance().getMenueByName(titel);
+					// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+					MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
+					menueplan.addMenue(menueComp, sourceColumn, sourceRow);
+					menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
 									
+//					System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DAOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				Menue menue = new Menue(id,titel,k);
+				//Testrezeptdaten
+//				Rezept rez = new Rezept(1L);
+//				rez.setRezeptart(new Rezeptart(3L,""));
+//				List<Rezept> rezepte = new ArrayList<>();
+//				rezepte.add(rez);
+//				menue.setRezepte(rezepte);
+				
+//				// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+//				MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
+//				menueplan.addMenue(menueComp, sourceColumn, sourceRow);
+//				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
+//								
+//				System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
 				// Window schließen
 				subwindow.close();
 		}

@@ -140,14 +140,23 @@ public class Regel {
 	// Testdaten
 	public static List<Regel> getTestRegeln() {
 		List<Regel> regeln = new ArrayList<Regel>();
+		
 		List<Integer> r = new ArrayList<Integer>();
 		r.add(2);
 		List<Integer> c = new ArrayList<Integer>();
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("3");
-		regeln.add(new Regel("Kategorie",r,c,"enthält nicht",rw,"Nur Fleischgerichte!",true));
-
+		regeln.add(new Regel("Kategorie",r,c,"enthält nicht",rw,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
+		
+		List<Integer> r3 = new ArrayList<Integer>();
+		r3.add(2);
+		List<Integer> c3 = new ArrayList<Integer>();
+		c3.add(-1);
+		List<String> rw3 = new ArrayList<String>();
+		rw3.add("Schweinebraten mit Spätzle und Salat");
+		regeln.add(new Regel("name",r3,c3,"enthält nicht",rw3,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
+		
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
 		r2.add(4);
