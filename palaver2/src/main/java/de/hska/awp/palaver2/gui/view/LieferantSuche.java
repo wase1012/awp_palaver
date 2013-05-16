@@ -53,7 +53,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			telefon = new TextField("Telefon");
 	private TextField			fax = new TextField("Telefax");
 	private TextArea			notiz = new TextArea("Notiz");
-	private CheckBox			mehrereliefertermine = new CheckBox("mehrereliefertermine");
+	private CheckBox			mehrereliefertermine = new CheckBox("mehrere Liefertermine");
 	
 	private Button				okButton = new Button("Ok");
 	private Button 				ansprAdd = new Button(IConstants.BUTTON_ADD);
@@ -97,7 +97,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		
 
 		ansprechpartner.setWidth("100%");
-		ansprechpartner.setHeight("150px");
+		ansprechpartner.setHeight("230px");
 		
 		
 		box.setWidth("900px");
@@ -140,8 +140,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		knoepfe.addComponent(okButton);
 		knoepfe.addComponentAsFirst(updateB);
 		updateB.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
-		rechts.addComponent(knoepfe);
-		rechts.setComponentAlignment(knoepfe, Alignment.BOTTOM_RIGHT);
+		mitte.addComponent(knoepfe);
+		mitte.setComponentAlignment(knoepfe, Alignment.BOTTOM_RIGHT);
 		
         okButton.addClickListener(new ClickListener() {
 			
@@ -227,8 +227,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 				
 				knoNeu.addComponent(verwerfen);
 				knoNeu.addComponent(speichern);
-				rechts.addComponent(knoNeu);
-				rechts.setComponentAlignment(knoNeu, Alignment.BOTTOM_RIGHT);
+				mitte.addComponent(knoNeu);
+				mitte.setComponentAlignment(knoNeu, Alignment.BOTTOM_RIGHT);
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -256,7 +256,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (ConnectException | DAOException | SQLException e) {
-							throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
@@ -437,7 +437,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
 							} catch (ConnectException | DAOException | SQLException e) {
 								System.out.println(e);
-//								throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+//								throw new NullPointerException("Bitte gültige Werte eingeben");
 
 							}				
 							
@@ -504,7 +504,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setCaption("Ansprechpartner hinzufÃ¼gen");
+			anspr.setCaption("Ansprechpartner hinzufügen");
 			
 			UI.getCurrent().addWindow(anspr);
 			
@@ -579,7 +579,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (ConnectException | DAOException | SQLException e) {
 						System.out.println(e);
-						throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+						throw new NullPointerException("Bitte gültige Werte eingeben");
 
 					}				
 					
