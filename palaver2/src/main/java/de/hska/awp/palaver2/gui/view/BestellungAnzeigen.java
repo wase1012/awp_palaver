@@ -53,6 +53,12 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 		fenster.addComponentAsFirst(bestellungen);
 		fenster.addComponent(bpositionen);
 		
+		bestellungen.setSizeFull();
+		bpositionen.setSizeFull();
+		
+		fenster.setExpandRatio(bestellungen, 1);
+		fenster.setExpandRatio(bpositionen, 2);
+		
 		bestellungen.setSelectable(true);
 		bestellungen.setFilterBarVisible(true);
 		
