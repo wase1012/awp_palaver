@@ -48,10 +48,10 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 	private Table table;
 	
 	private TextField			name = new TextField("Name");
-	private TextField			kurz = new TextField("KÃ¼rzle");
+	private TextField			kurz = new TextField("Kürzel");
 	
 	private TextField			nameUp = new TextField("Name");
-	private TextField			kurzUp = new TextField("KÃ¼rzle");
+	private TextField			kurzUp = new TextField("Kürzel");
 	
 	private String				nameText;
 	private String				kurzText;
@@ -93,7 +93,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Mengeneinheit hinzufÃ¼gen");
+					mengNeu.setCaption("Mengeneinheit hinzufügen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -129,12 +129,12 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					nameUp.setImmediate(true);
 					nameUp.setValue(mengeUpdate.getName());
 					nameUp.setMaxLength(15);
-					nameUp.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 					
 					kurzUp.setImmediate(true);
 					kurzUp.setValue(mengeUpdate.getKurz());
 					kurzUp.setMaxLength(4);	
-					kurzUp.addValidator(new StringLengthValidator("Bitte gÃ¼ltiges KÃ¼rzel eingeben", 1,4, false));
+					kurzUp.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 					
 					verwerfen.addClickListener(new ClickListener() {
 						
@@ -154,7 +154,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 							try {
 								Mengeneinheitverwaltung.getInstance().updateMengeneinheit(mengeUpdate);
 							} catch (ConnectException | DAOException | SQLException e) {
-								throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+								throw new NullPointerException("Bitte gültige Werte eingeben");
 							}
 							UI.getCurrent().removeWindow(mengNeu);
 							ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
@@ -219,7 +219,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Mengeneinheit hinzufÃ¼gen");
+				mengNeu.setCaption("Mengeneinheit hinzufügen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -254,11 +254,11 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(15);
-				name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 				
 				kurz.setImmediate(true);
 				kurz.setMaxLength(4);	
-				kurz.addValidator(new StringLengthValidator("Bitte gÃ¼ltiges KÃ¼rzel eingeben", 1,4, false));
+				kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -279,7 +279,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						try {
 							Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 						} catch (ConnectException | DAOException | SQLException e) {
-							throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						UI.getCurrent().removeWindow(mengNeu);
 						ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);

@@ -63,7 +63,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("BestellgrÃ¶ÃŸe");
+	private TextField			bestellung = new TextField("BestellgrößŸe");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -126,7 +126,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		bestellung.setWidth("100%");
 		bestellung.setImmediate(true);
-		bestellung.addValidator(new CustomDoubleValidator("Ungï¿½ltige Bestellgrï¿½ßŸe: {0}"));
+		bestellung.addValidator(new CustomDoubleValidator("Ungültige BestellgrößŸe: {0}"));
 		
 		lieferant.setWidth("100%");
 		

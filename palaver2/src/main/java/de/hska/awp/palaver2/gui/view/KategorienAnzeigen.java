@@ -80,7 +80,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Kategorie hinzufÃ¼gen");
+					mengNeu.setCaption("Kategorie hinzufügen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -114,7 +114,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					nameUp.setImmediate(true);
 					nameUp.setValue(kategorieUpdate.getName());
 					nameUp.setMaxLength(45);
-					nameUp.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,45, false));
+					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
 					
 					verwerfen.addClickListener(new ClickListener() {
 						
@@ -133,7 +133,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 							try {
 								Kategorienverwaltung.getInstance().updateKategorie(kategorieUpdate);
 							} catch (ConnectException | DAOException | SQLException e) {
-								throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+								throw new NullPointerException("Bitte gültige Werte eingeben");
 							}
 							UI.getCurrent().removeWindow(mengNeu);
 							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
@@ -194,7 +194,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Kategorie hinzufÃ¼gen");
+				mengNeu.setCaption("Kategorie hinzufügen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -227,7 +227,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(45);
-				name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,45, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -247,7 +247,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 						try {
 							Kategorienverwaltung.getInstance().createNewKategorie(me);
 						} catch (ConnectException | DAOException | SQLException e) {
-							throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						UI.getCurrent().removeWindow(mengNeu);
 						ViewHandler.getInstance().switchView(KategorienAnzeigen.class);

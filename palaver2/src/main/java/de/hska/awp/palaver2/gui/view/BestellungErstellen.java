@@ -22,6 +22,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -63,7 +64,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 	
 	private Lieferant 							lieferant;
 	
-	private TextField							lieferdatum;
+	private DateField							lieferdatum = new DateField("Lieferdatum");
 	
 	private List<Bestellposition>				bestellpositionen;
 	private List<BestellungData>				bestellData = new ArrayList<BestellungData>();;
@@ -73,6 +74,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 	
 	private BeanItemContainer<BestellungData> 	containerBestellung;
 	private BeanItemContainer<Artikel> 			containerArtikel;
+	
 	
 	public BestellungErstellen()
 	{
@@ -178,7 +180,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 		form.setExpandRatio(bestellungTable, 2);
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
-		
+
 		fenster.addComponent(lieferdatum);
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
@@ -265,5 +267,9 @@ public class BestellungErstellen extends VerticalLayout implements View
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
+		
+		if(lieferant.getMehrereliefertermine() == true) {
+			lieferdatum.setVisible(false);
+		}
 	}
 }
