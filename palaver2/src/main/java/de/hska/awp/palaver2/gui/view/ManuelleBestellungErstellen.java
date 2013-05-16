@@ -94,7 +94,10 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 			public void valueChange(ValueChangeEvent event) {
 				java.util.Date date2 = new java.util.Date();
 				if(date2.before(lieferdatum.getValue()) == false || lieferdatum.getValue() == null) {
-					lieferdatum.setComponentError(new UserError("Bitte gültiges Datum eingeben"));
+					speichern.setEnabled(false);
+				}
+				else {
+					speichern.setEnabled(true);
 				}
 			}
 		});
@@ -112,6 +115,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 		
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
+		speichern.setEnabled(false);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
