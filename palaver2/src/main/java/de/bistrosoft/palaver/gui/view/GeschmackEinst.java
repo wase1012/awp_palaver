@@ -47,10 +47,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private static final long serialVersionUID = 2474121007841510011L;
 
 	private VerticalLayout box = new VerticalLayout();
-	private VerticalLayout box1 = new VerticalLayout();
-	private HorizontalLayout horizont = new HorizontalLayout();
-	private VerticalLayout d1 = new VerticalLayout();
-	private HorizontalLayout d2 = new HorizontalLayout();
+
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
@@ -60,39 +57,36 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private Button speichern = new Button("Speichern");
 	private Button aktiv = new Button("Aktiv");
 	private Button loeschen = new Button("Inaktiv");
-	
+
 	private Boolean inaktiv = true;
- Geschmack geschmack2;
+	Geschmack geschmack2;
 
 	private Label dummy = new Label(
-			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
 			Label.CONTENT_XHTML);
-
+	
 	private String nameInput;
 	private FilterTable table;
+	private Label hinweis = new Label( "<pre><font size='3' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"><b>Bedeutung:</b> false: aktiv | true: inaktiv</font></pre>",
+			Label.CONTENT_XHTML);;
 
 	public GeschmackEinst() {
 		super();
 		table = new FilterTable();
 		name.setWidth("100%");
-		// table.setSizeFull();
+		table.setSizeFull();
 		table.setSelectable(true);
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
+		
 
 		box.setWidth("300px");
 		box.setSpacing(true);
 
-		this.addComponent(d2);
-		this.setComponentAlignment(d2, Alignment.MIDDLE_CENTER);
-		d2.addComponent(dummy);
-		this.addComponent(horizont);
-		this.setComponentAlignment(horizont, Alignment.MIDDLE_CENTER);
-		horizont.addComponent(box1);
-		horizont.addComponent(d1);
-		d1.addComponent(dummy);
-		horizont.addComponent(box);
+		this.addComponent(box);
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		box.addComponent(dummy);
 		box.addComponent(ueberschrift);
 		box.addComponent(name);
 
@@ -111,9 +105,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		speichern.setIcon(new ThemeResource("img/save.ico"));
 		aktiv.setIcon(new ThemeResource("img/plus.ico"));
 		loeschen.setIcon(new ThemeResource("img/cross.ico"));
-		
-		
-
 
 		name.addValueChangeListener(new ValueChangeListener() {
 			public void valueChange(final ValueChangeEvent event) {
@@ -123,7 +114,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				nameInput = valueString;
 			}
 		});
-		
 
 		BeanItemContainer<Geschmack> container;
 		try {
@@ -136,15 +126,14 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				| SQLException e) {
 			e.printStackTrace();
 		}
-		box1.addComponent(table);
-		
+		box.addComponent(table);
+		box.addComponent(hinweis);
+
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Geschmack geschmack = new Geschmack();
-//				geschmack.setId(GeschmackDAO.getInstance().getGeschmackByName1(Long.parseLong(nameInput.toString())));
 				geschmack.setName(nameInput);
-
 				try {
 					Geschmackverwaltung.getInstance()
 							.createGeschmack(geschmack);
@@ -168,26 +157,19 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				Geschmack geschmack = new Geschmack();
 				Geschmack geschmack1 = new Geschmack();
 
-				//		geschmack.setId()
 				geschmack.setInaktiv(inaktiv);
 				geschmack.setName(nameInput);
 				try {
-					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(geschmack2.getId());
+					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(
+							geschmack2.getId());
 				} catch (ConnectException | DAOException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println(geschmack);
-				System.out.println(geschmack1);
-				System.out.println(nameInput);
-
-			
-//				final Boolean inaktiv = true;
-//				geschmack.setInaktiv(inaktiv);
-
-  				try {Geschmackverwaltung.getInstance()
-							.updateGeschmackAktiv(geschmack1);
-											} catch (ConnectException | DAOException | SQLException e) {
+				try {
+					Geschmackverwaltung.getInstance().updateGeschmackAktiv(
+							geschmack1);
+				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
 				}
 
@@ -196,24 +178,23 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(GeschmackEinst.class);
- 			
+
 			}
 		});
-		
-		/////////////////////////////
 
-		
-		loeschen.addClickListener(new ClickListener(){
+		// ///////////////////////////
+
+		loeschen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				Geschmack geschmack = new Geschmack();
 				Geschmack geschmack1 = new Geschmack();
 
-				//		geschmack.setId()
 				geschmack.setInaktiv(inaktiv);
 				geschmack.setName(nameInput);
 				try {
-					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(geschmack2.getId());
+					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(
+							geschmack2.getId());
 				} catch (ConnectException | DAOException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -222,13 +203,10 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				System.out.println(geschmack1);
 				System.out.println(nameInput);
 
-			
-//				final Boolean inaktiv = true;
-//				geschmack.setInaktiv(inaktiv);
-
-  				try {Geschmackverwaltung.getInstance()
-							.updateGeschmackInaktiv(geschmack1);
-											} catch (ConnectException | DAOException | SQLException e) {
+				try {
+					Geschmackverwaltung.getInstance().updateGeschmackInaktiv(
+							geschmack1);
+				} catch (ConnectException | DAOException | SQLException e) {
 					e.printStackTrace();
 				}
 
@@ -237,7 +215,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(GeschmackEinst.class);
- 			
+
 			}
 		});
 		table.addValueChangeListener(new ValueChangeListener() {
@@ -251,41 +229,20 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 			}
 		});
-		
+
 		table.addItemClickListener(new ItemClickListener() {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				
-				
-				
-				if(event.isDoubleClick()){
-				name.setValue(geschmack2.getName());
-				}
-				else {
-					
+
+				if (event.isDoubleClick()) {
+					name.setValue(geschmack2.getName());
+				} else {
+
 				}
 
 			}
 		});
-
-		
-//		private void GeschmackLoeschen(//ID setzen) {
-//			
-//		}
-//
-//		BeanItemContainer<Geschmack> container;
-//		try {
-//			container = new BeanItemContainer<Geschmack>(Geschmack.class,
-//					Geschmackverwaltung.getInstance().getAllGeschmack());
-//			table.setContainerDataSource(container);
-//			table.setVisibleColumns(new Object[] { "id", "name" });
-//			table.sort(new Object[] { "name" }, new boolean[] { true });
-//		} catch (IllegalArgumentException | ConnectException | DAOException
-//				| SQLException e) {
-//			e.printStackTrace();
-//		}
-//		box1.addComponent(table);
 
 	}
 
