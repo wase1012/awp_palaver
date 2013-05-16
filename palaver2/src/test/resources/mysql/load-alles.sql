@@ -108,5 +108,10 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
+LOAD DATA LOCAL INFILE 'C:/Users/Android/git/awp_palaver/palaver2/src/test/resources/mysql/menue_has_rezept.csv'
+INTO TABLE menue_has_rezept
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 LINES;
 
 -- vergesst nicht den pfad anzupassen

@@ -131,7 +131,7 @@ DROP TABLE IF EXISTS `palaver`.`menue` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
   `koch` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
 --  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
