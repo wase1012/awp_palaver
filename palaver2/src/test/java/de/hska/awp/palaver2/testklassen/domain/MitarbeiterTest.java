@@ -89,7 +89,7 @@ public class MitarbeiterTest extends AbstractTest{
 
 		List<Mitarbeiter> list = null;
 		
-			list = mdao.getMitarbeiterByRollenFK(id);
+			list = mdao.getMitarbeiterByRollenId(id);
 		
 
 		assertThat(list.isEmpty(), is(false));
