@@ -4,7 +4,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.RollenDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.AbstractTest;
 
@@ -24,14 +22,12 @@ public class RollenTest extends AbstractTest{
     @Test
     public void getRollenById() throws Exception {
     	
-    	Long id = Long.valueOf(1);
+    	Long id = Long.valueOf("1");
 
 		Rollen rolle = null;
-		try {
+		
 			rolle = rdao.getRollenById(id);
-		} catch (ConnectException | DAOException | SQLException e) {
-			throw new NullPointerException("Die Rolle konnte nicht gefunden werden");
-		} 
+		
 
 		assertThat(rolle.getId(), is(id));
 		
@@ -60,6 +56,7 @@ public class RollenTest extends AbstractTest{
 		}
 		assertThat(list.isEmpty(), is(false));
 		assertThat(exception, is(false));
+		System.out.println(list);
 	}
     
     @Test

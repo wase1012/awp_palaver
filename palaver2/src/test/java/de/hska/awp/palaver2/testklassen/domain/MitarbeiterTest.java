@@ -83,15 +83,15 @@ public class MitarbeiterTest extends AbstractTest{
     }
     
     @Test
-    public void getMitarbeiterByRollenFK() throws Exception {
+    public void getMitarbeiterByRollenId() throws Exception {
     	
-    	Long id = Long.valueOf(2);
+    	Long id = Long.valueOf(1);
 
-		List<Mitarbeiter> list = null;
+		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
 		
 			list = mdao.getMitarbeiterByRollenId(id);
 		
-
+		System.out.print(list);
 		assertThat(list.isEmpty(), is(false));
 		
     }

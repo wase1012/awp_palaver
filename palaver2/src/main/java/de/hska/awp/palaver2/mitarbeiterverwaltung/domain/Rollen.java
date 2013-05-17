@@ -20,6 +20,7 @@ public class Rollen implements java.io.Serializable {
 
 	public Rollen(Long id, String name, List<Mitarbeiter> mitarbeiters) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.mitarbeiters = mitarbeiters;
 	}
