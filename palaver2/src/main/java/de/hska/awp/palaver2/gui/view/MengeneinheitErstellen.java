@@ -68,11 +68,11 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 		
 		name.setImmediate(true);
 		name.setMaxLength(15);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 		
 		kurz.setImmediate(true);
 		kurz.setMaxLength(4);	
-		kurz.addValidator(new StringLengthValidator("Bitte gÃ¼ltiges KÃ¼rzel eingeben", 1,4, false));
+		kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			
@@ -92,7 +92,7 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 				try {
 					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 				} catch (ConnectException | DAOException | SQLException e) {
-					throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 			}
