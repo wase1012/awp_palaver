@@ -27,8 +27,9 @@ public class MitarbeiterDAO extends AbstractDAO{
 	private static final String		GET_MITARBEITER_BY_ID = "SELECT * FROM Mitarbeiter WHERE id = {0}";
 	private static final String 	GET_MITARBEITER_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
-	private static final String 	GET_MITARBEITER_BY_ROLLEN_FK = "SELECT mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname, mitarbeiter.email, mitarbeiter.eintrittsdatum, " +
-			"mitarbeiter.austrittsdatum FROM mitarbeiter JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk where rollen_fk =";
+	private static final String GET_MITARBEITER_BY_ROLLEN_ID = "SELECT * FROM mitarbeiter " +
+			"JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk " +
+			"join rollen on mitarbeiter_has_rollen.rollen_fk = rollen.id where rollen.id = {0}";
 	
 	private static MitarbeiterDAO instance = null;
 
@@ -87,13 +88,11 @@ public class MitarbeiterDAO extends AbstractDAO{
 		}
 		
 		//TODO
-		public List<Mitarbeiter> getMitarbeiterByRollenFK(Long id) throws ConnectException, DAOException, SQLException{
+		public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException{
 			
 			List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
 			
-			ResultSet set = getManaged(GET_MITARBEITER_BY_ROLLEN_FK + id);
-			
-			if(set==null){System.out.print("warum geht der scheiss nicht");};
+			ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ROLLEN_ID, id));
 			
 			while (set.next()) {
 				list.add(new Mitarbeiter(set.getLong("id"),
