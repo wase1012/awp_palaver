@@ -8,15 +8,28 @@ import java.util.List;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
-/*
- * @Author PhilippT
+/**
+ * 
+ * @author Christian Barth
+ *
  */
 public class RollenDAO extends AbstractDAO {
 
+	private final static String 		TABLE = "rollen";
+	private final static String 		ID = "id";
+	private final static String			NAME = "name";
 	private final static String			GET_ALL_ROLLEN = "SELECT * FROM rollen";
-	private final static String			GET_ROLLE_BY_ID = "SELECT * FROM rollen where id = {0}";
-	private final static String			GET_ROLLE_BY_NAME = "SELECT * FROM rollen where name = '{0}'";
-	private final static String			PUT_ROLLE = "INSERT INTO rolle(`id`,`name`)VALUES({0})";
+	private final static String			GET_ROLLE_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
+	private final static String			GET_ROLLEN_BY_MITARBEITER_FK = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
+	
+	private static RollenDAO instance = null;
+
+	public static RollenDAO getInstance() {
+		if (instance == null) {
+			instance = new RollenDAO();
+		}
+		return instance;
+	}
 	
 	public RollenDAO()
 	{
@@ -32,8 +45,8 @@ public class RollenDAO extends AbstractDAO {
 		while(set.next())
 		{
 			list.add(new Rollen(set.getLong("id"),
-								set.getString("name")
-								));
+								set.getString("name"),
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenFK(set.getLong("id"))));
 		}
 		
 		return list;
@@ -41,20 +54,58 @@ public class RollenDAO extends AbstractDAO {
 	
 	public Rollen getRollenById(Long id) throws ConnectException, DAOException, SQLException {
 		
-		if(id ==null) {
-			return null;
-		}
 		Rollen rolle = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_ROLLE_BY_ID, id));
 
 		while(set.next())
 		{
 			rolle = new Rollen(set.getLong("id"),
-								set.getString("name")
+								set.getString("name"),
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenFK(set.getLong("id"))
 								);
 		}
 		return rolle;
 		 
+	}
+	
+	public List<Rollen> getRollenByMitarbeiterFK(Long id)
+			throws ConnectException, DAOException, SQLException {
+
+		List<Rollen> list = new ArrayList<Rollen>();
+
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_ROLLEN_BY_MITARBEITER_FK, id));
+
+		while (set.next()) {
+			list.add(new Rollen(set.getLong("id"), set.getString("name")));
+
+		}
+
+		return list;
+
+	}
+	
+	/**
+	 * Die Methode erzeugt eine Rolle in der Datenbank.
+	 * 
+	 * @param ansprechpartner
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public void createRollen(Rollen rolle) throws ConnectException,
+			DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ")"
+				+ "VALUES" + "('" + rolle.getName() + "')";
+		this.putManaged(INSERT_QUERY);
+	}
+	
+	public void updateRollen(Rollen rolle) throws ConnectException,
+			DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
+				+ rolle.getName() + "' WHERE " + ID + "='"
+				+ rolle.getId() + "'";
+		this.putManaged(UPDATE_QUERY);
 	}
 	
 }
