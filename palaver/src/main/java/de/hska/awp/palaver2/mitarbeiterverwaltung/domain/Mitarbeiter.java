@@ -121,5 +121,6 @@ public class Mitarbeiter implements java.io.Serializable {
 				+ ", eintrittsdatum=" + eintrittsdatum + ", austrittsdatum="
 				+ austrittsdatum + "]";
 	}
+	
 
 }

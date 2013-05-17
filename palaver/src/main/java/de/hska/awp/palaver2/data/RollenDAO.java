@@ -19,7 +19,7 @@ public class RollenDAO extends AbstractDAO {
 	private final static String 		ID = "id";
 	private final static String			NAME = "name";
 	private final static String			GET_ALL_ROLLEN = "SELECT * FROM rollen";
-	private final static String			GET_ROLLE_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
+	private static final String			GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
 	private final static String			GET_ROLLEN_BY_MITARBEITER_FK = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 	
 	private static RollenDAO instance = null;
@@ -46,7 +46,7 @@ public class RollenDAO extends AbstractDAO {
 		{
 			list.add(new Rollen(set.getLong("id"),
 								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenFK(set.getLong("id"))));
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id"))));
 		}
 		
 		return list;
@@ -55,13 +55,13 @@ public class RollenDAO extends AbstractDAO {
 	public Rollen getRollenById(Long id) throws ConnectException, DAOException, SQLException {
 		
 		Rollen rolle = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_ROLLE_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ROLLEN_BY_ID, id));
 
 		while(set.next())
 		{
 			rolle = new Rollen(set.getLong("id"),
 								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenFK(set.getLong("id"))
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id"))
 								);
 		}
 		return rolle;
