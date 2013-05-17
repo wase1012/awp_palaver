@@ -58,5 +58,11 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 
 		super.createMitarbeiter(mitarbeiter);
 	}
+	
+	public void updateMitarbeiter(Mitarbeiter mitarbeiter)
+			throws ConnectException, DAOException, SQLException {
+
+		super.updateMitarbeiter(mitarbeiter);
+	}
 
 }
