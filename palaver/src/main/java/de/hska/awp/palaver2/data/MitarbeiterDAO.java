@@ -58,7 +58,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
 								));
 		}
 		return list;
@@ -81,13 +81,12 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
 								);
 		}
 		return mitarbeiter;
 		}
 		
-		//TODO
 		public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException{
 			
 			List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
@@ -120,7 +119,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 				list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set
 						.getString(VORNAME), set.getString(EMAIL), set
 						.getString(PASSWORT), set.getString(EINTRITTSDATUM),
-						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong(ID))));
+						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID))));
 			}
 			
 			return list;

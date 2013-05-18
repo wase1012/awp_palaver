@@ -20,7 +20,7 @@ public class RollenDAO extends AbstractDAO {
 	private final static String			NAME = "name";
 	private final static String			GET_ALL_ROLLEN = "SELECT * FROM rollen";
 	private static final String			GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
-	private final static String			GET_ROLLEN_BY_MITARBEITER_FK = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
+	private final static String			GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 	
 	private static RollenDAO instance = null;
 
@@ -68,13 +68,13 @@ public class RollenDAO extends AbstractDAO {
 		 
 	}
 	
-	public List<Rollen> getRollenByMitarbeiterFK(Long id)
+	public List<Rollen> getRollenByMitarbeiterId(Long id)
 			throws ConnectException, DAOException, SQLException {
 
 		List<Rollen> list = new ArrayList<Rollen>();
 
 		ResultSet set = getManaged(MessageFormat.format(
-				GET_ROLLEN_BY_MITARBEITER_FK, id));
+				GET_ROLLEN_BY_MITARBEITER_ID, id));
 
 		while (set.next()) {
 			list.add(new Rollen(set.getLong("id"), set.getString("name")));

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.hska.awp.palaver2.mitarbeiterverwaltung.service;
 
 import java.sql.SQLException;
@@ -51,6 +48,15 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 			DAOException, SQLException {
 		Mitarbeiter mitarbeiter = super.getMitarbeiterById(id);
 		return mitarbeiter;
+	}
+	
+	public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException{
+		
+		List<Mitarbeiter> result = null;
+
+		result = super.getMitarbeiterByRollenId(id);
+
+		return result;
 	}
 
 	public void createMitarbeiter(Mitarbeiter mitarbeiter)
