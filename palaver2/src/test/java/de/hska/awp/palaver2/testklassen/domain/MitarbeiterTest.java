@@ -12,6 +12,7 @@ import org.junit.Test;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.data.RollenDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.AbstractTest;
@@ -20,6 +21,7 @@ import de.hska.awp.palaver2.util.AbstractTest;
 public class MitarbeiterTest extends AbstractTest{
 
 	private MitarbeiterDAO mdao = new MitarbeiterDAO();
+	private RollenDAO rdao = new RollenDAO();
 	
     @Test
     public void getMitarbeiterById() throws Exception {
@@ -71,6 +73,12 @@ public class MitarbeiterTest extends AbstractTest{
     	m.setPasswort("1234");
     	m.setEintrittsdatum("heute");
     	m.setAustrittsdatum("morgen");
+    	
+    	Rollen rolle = null;
+    		rolle = rdao.getRollenById(Long.valueOf("1"));
+    	m.addRollen(rolle);
+    		rolle = rdao.getRollenById(Long.valueOf("2"));
+    	m.addRollen(rolle);
     	try
 		{
     	mdao.createMitarbeiter(m);
@@ -78,6 +86,28 @@ public class MitarbeiterTest extends AbstractTest{
 		catch (ConnectException | DAOException | SQLException e)
 		{
 			throw new Exception("createMitarbeiter hat nicht funktioniert");
+		}
+    	
+    }
+    
+    @Test
+    public void updateMitarbeiter() throws Exception {
+    	
+    	Mitarbeiter m = mdao.getMitarbeiterById(Long.valueOf("1"));
+    	m.setName("updateTestMitarbeiter");
+    	   	
+    	Rollen rolle = null;
+    		rolle = rdao.getRollenById(Long.valueOf("1"));
+    	m.addRollen(rolle);
+    		rolle = rdao.getRollenById(Long.valueOf("2"));
+    	m.addRollen(rolle);
+    	try
+		{
+    	mdao.updateMitarbeiter(m);
+		} 
+		catch (ConnectException | DAOException | SQLException e)
+		{
+			throw new Exception("updateMitarbeiter hat nicht funktioniert");
 		}
     	
     }

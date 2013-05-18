@@ -128,12 +128,22 @@ public class NachrichtDAO extends AbstractDAO {
 		
 		}
 
+		if(nachricht.getEmpfaengerRolle() == null) {
+			throw new NullPointerException("keine getEmpfaengerRolle übergeben");
+		
+		}
+		
+		if(nachricht.getMitarbeiterBySenderFk() == null) {
+			throw new NullPointerException("keine getMitarbeiterBySenderFk übergeben");
+		
+		}
+		
 //		put(CREATE_NACHRICHT + nachricht.getNachricht() + "," + 
 //									nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId());
 		
 		String anlegen = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
 							+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
-		putManaged(anlegen); 
+		this.putManaged(anlegen); 
 
 	}
 	

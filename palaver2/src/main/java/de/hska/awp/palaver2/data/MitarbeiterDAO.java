@@ -8,10 +8,9 @@ import java.util.List;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
-/*
- * @Author PhilippT
+/**
+ * @Author Christian Barth
  */
-
 public class MitarbeiterDAO extends AbstractDAO{
 	
 	private final static String 		TABLE = "mitarbeiter";
@@ -58,7 +57,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
 								));
 		}
 		return list;
@@ -81,13 +80,12 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
 								);
 		}
 		return mitarbeiter;
 		}
 		
-		//TODO
 		public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException{
 			
 			List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
@@ -120,7 +118,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 				list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set
 						.getString(VORNAME), set.getString(EMAIL), set
 						.getString(PASSWORT), set.getString(EINTRITTSDATUM),
-						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterFK(set.getLong(ID))));
+						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID))));
 			}
 			
 			return list;
@@ -135,6 +133,18 @@ public class MitarbeiterDAO extends AbstractDAO{
 					+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort()
 					+ "','" + mitarbeiter.getEintrittsdatum() + "','" + mitarbeiter.getAustrittsdatum() + "')";
 			this.putManaged(INSERT_QUERY);
+			
+			List<Mitarbeiter> mitarbeiterlist= getAllMitarbeiter();
+			
+			Mitarbeiter mitarbeiterdb = getMitarbeiterById(mitarbeiterlist.get(mitarbeiterlist.size() - 1).getId());
+			
+			if(mitarbeiter.getRollen()!=null){
+				for(int i = 0; i < mitarbeiter.getRollen().size(); i++){
+					
+					MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiterdb, mitarbeiter.getRollen().get(i));
+					
+				}
+			}
 		}
 		
 		public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException,
@@ -147,6 +157,15 @@ public class MitarbeiterDAO extends AbstractDAO{
 					+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum()
 				    + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
 			this.putManaged(UPDATE_QUERY);
+			
+			if(mitarbeiter.getRollen()!=null){
+				for(int i = 0; i < mitarbeiter.getRollen().size(); i++){
+					if(MitarbeiterHasRollenDAO.getInstance().getMitarbeiterHasRollenByMitarbeiterAndRolle(mitarbeiter, mitarbeiter.getRollen().get(i))==null){
+						MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+					}
+				}
+			}
+				
 		}
 	
 }

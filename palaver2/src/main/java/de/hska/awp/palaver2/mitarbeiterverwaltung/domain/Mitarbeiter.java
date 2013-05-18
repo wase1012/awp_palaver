@@ -18,6 +18,17 @@ public class Mitarbeiter implements java.io.Serializable {
 	public Mitarbeiter() {
 		super();
 	}
+	
+	public Mitarbeiter(String name, String vorname, String email,
+			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen) {
+		this.name = name;
+		this.vorname = vorname;
+		this.email = email;
+		this.passwort = passwort;
+		this.eintrittsdatum = eintrittsdatum;
+		this.austrittsdatum = austrittsdatum;
+		this.rollen = rollen;
+	}
 
 	public Mitarbeiter(Long id, String name, String vorname, String email,
 			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen) {

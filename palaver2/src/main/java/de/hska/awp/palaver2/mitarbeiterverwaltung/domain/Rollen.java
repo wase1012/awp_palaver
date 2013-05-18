@@ -13,7 +13,13 @@ public class Rollen implements java.io.Serializable {
 	public Rollen() {
 	}
 
+	public Rollen(String name) {
+		super();
+		this.name = name;
+	}
+	
 	public Rollen(Long id,String name) {
+		super();
 		this.id = id;
 		this.name = name;
 	}
