@@ -8,10 +8,9 @@ import java.util.List;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
-/*
- * @Author PhilippT
+/**
+ * @Author Christian Barth
  */
-
 public class MitarbeiterDAO extends AbstractDAO{
 	
 	private final static String 		TABLE = "mitarbeiter";
@@ -134,6 +133,18 @@ public class MitarbeiterDAO extends AbstractDAO{
 					+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort()
 					+ "','" + mitarbeiter.getEintrittsdatum() + "','" + mitarbeiter.getAustrittsdatum() + "')";
 			this.putManaged(INSERT_QUERY);
+			
+			List<Mitarbeiter> mitarbeiterlist= getAllMitarbeiter();
+			
+			Mitarbeiter mitarbeiterdb = getMitarbeiterById(mitarbeiterlist.get(mitarbeiterlist.size() - 1).getId());
+			
+			if(mitarbeiter.getRollen()!=null){
+				for(int i = 0; i < mitarbeiter.getRollen().size(); i++){
+					
+					MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiterdb, mitarbeiter.getRollen().get(i));
+					
+				}
+			}
 		}
 		
 		public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException,
@@ -146,6 +157,14 @@ public class MitarbeiterDAO extends AbstractDAO{
 					+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum()
 				    + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
 			this.putManaged(UPDATE_QUERY);
+			
+			if(mitarbeiter.getRollen()!=null){
+				for(int i = 0; i < mitarbeiter.getRollen().size(); i++){
+					if(MitarbeiterHasRollenDAO.getInstance().getMitarbeiterHasRollenByMitarbeiterAndRolle(mitarbeiter, mitarbeiter.getRollen().get(i))==null){
+						MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+					}
+				}
+			}
 		}
 	
 }
