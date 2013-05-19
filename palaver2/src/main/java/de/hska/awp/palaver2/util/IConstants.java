@@ -12,6 +12,9 @@ public interface IConstants
 	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
+//	public final String		MENU_MITARBEITER_HEADLINE = "Mitarbeiter";
+//	public final String		MENU_MITARBEITER_ANZEIGEN = "Alle Mitarbeiter";
+//	public final String     MENU_MITARBEITER_NEU = "Mitarbeiter anlegen";
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";
 	public final String		MENU_ARTIKEL_NEU = "Artikel anlegen";
 	public final String		MENU_ARTIKEL_ANZEIGEN = "Alle Artikel";
@@ -33,12 +36,12 @@ public interface IConstants
 	public final String 	MENU_REZEPT_NEU = "Anlegen";
 	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
 	public final String 	MENU_REZEPT_AENDERN = "Ã„ndern";
-	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
-	public final String 	MENU_MENUPLAN_HEADLINE = "Menüplan";
-	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
-	public final String 	MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
+	public final String 	MENU_REZEPT_LOESCHEN = "Lï¿½schen";
+	public final String 	MENU_MENUPLAN_HEADLINE = "Menï¿½plan";
+	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller Menï¿½plan";
+	public final String 	MENU_MENUPLAN_HISTORIE = "Menï¿½plan-Historie";
 	public final String 	MENU_FUSSNOTE = "Fussnoten";
-	public final String 	MENU_GESCHMACK = "Geschmäcker";
+	public final String 	MENU_GESCHMACK = "Geschmï¿½cker";
 	public final String 	MENU_REZEPTART = "Rezeptarten";
 	public final String 	MENU_ZUBEREITUNG = "Zubereitungen";
 	public final String		MENU_LOGOUT = "Logout";
@@ -48,11 +51,11 @@ public interface IConstants
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
 	public final String		BUTTON_SAVE = "Speichern";
 	public final String		BUTTON_DISCARD = "Verwerfen";
-	public final String		BUTTON_ADD = "Hinzufügen";
+	public final String		BUTTON_ADD = "Hinzufï¿½gen";
 	public final String		BUTTON_NEW = "Neu";
 	public final String		BUTTON_EDIT = "Bearbeiten";
 	public final String		BUTTON_OK = "OK";
-	public final String		BUTTON_LÃ–SCHEN = "Löschen";
+	public final String		BUTTON_LÃ–SCHEN = "Lï¿½schen";
 	public final String		BUTTON_JA = "Ja";
 	public final String 	BUTTON_NEIN = "Nein";
 	
