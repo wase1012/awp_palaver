@@ -153,7 +153,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 							mengeUpdate.setKurz(kurzUp.getValue());
 							try {
 								Mengeneinheitverwaltung.getInstance().updateMengeneinheit(mengeUpdate);
-							} catch (ConnectException | DAOException | SQLException e) {
+							} catch (Exception e) {
 								throw new NullPointerException("Bitte gültige Werte eingeben");
 							}
 							UI.getCurrent().removeWindow(mengNeu);
@@ -199,8 +199,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 			table.setVisibleColumns(new Object[] { "name", "kurz"});
 			table.sort(new Object[] {"id"}, new boolean[] {true});
 		} 
-		catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}	
@@ -278,7 +277,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						me.setKurz(kurzText);
 						try {
 							Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						UI.getCurrent().removeWindow(mengNeu);

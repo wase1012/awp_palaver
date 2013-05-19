@@ -119,7 +119,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	private List<RezeptHasArtikel> ausgArtikel = new ArrayList<RezeptHasArtikel>();
 	List<Zubereitung> listzubereitung = new ArrayList<Zubereitung>();
-	List<RezeptHasArtikel> artikel = new ArrayList<>();
+	List<RezeptHasArtikel> artikel = new ArrayList<RezeptHasArtikel>();
 
 	// private Button btAdd = new Button("Add");
 
@@ -285,8 +285,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					rezept.setGeschmack(GeschmackDAO.getInstance()
 							.getGeschmackById(
 									Long.parseLong(geschmackInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 
@@ -299,8 +298,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					rezept.setRezeptart(RezeptartDAO.getInstance()
 							.getRezeptartById(
 									Long.parseLong(rezeptartInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				rezept.setKommentar(kommentarInput);
@@ -310,15 +308,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							.getInstance()
 							.getMitarbeiterById(
 									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 
 				try {
 					Rezeptverwaltung.getInstance().createRezept(rezept);
 
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -328,7 +325,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					System.out.println(nameInput);
 					rez = Rezeptverwaltung.getInstance().getRezeptByName1(
 							nameInput);
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				System.out.println(rez);
@@ -357,7 +354,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							RezeptHasZubereitung a = new RezeptHasZubereitung(
 									zubereitung1, rez);
 							zubereitunglist.add(a);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 
@@ -367,7 +364,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 						try {
 							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 
 							e.printStackTrace();
 						}
@@ -382,7 +379,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 				try {
 					Rezeptverwaltung.getInstance().saveArtikel(rez);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -436,7 +433,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				zubereitung.setItemCaption(z.getId(), z.getName());
 			}
 
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -460,8 +457,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					rezept.setGeschmack(GeschmackDAO.getInstance()
 							.getGeschmackById(
 									Long.parseLong(geschmackInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -470,8 +466,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					rezept.setRezeptart(RezeptartDAO.getInstance()
 							.getRezeptartById(
 									Long.parseLong(rezeptartInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -481,8 +476,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							.getInstance()
 							.getMitarbeiterById(
 									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 
@@ -540,17 +534,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 				try {
 					Rezeptverwaltung.getInstance().updateRezept(rezept);
-				} catch (ConnectException | DAOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					notification = e.toString();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
 
 				try {
 					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -580,7 +571,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							RezeptHasZubereitung a = new RezeptHasZubereitung(
 									zubereitung1, rezept);
 							zubereitunglist.add(a);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 
@@ -590,7 +581,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 						try {
 							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 
 							e.printStackTrace();
 						}
@@ -619,8 +610,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			name.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId())
 					.getName().toString());
-		} catch (ReadOnlyException | ConnectException | DAOException
-				| SQLException e3) {
+		} catch (Exception e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
@@ -628,7 +618,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			listzubereitung = ZubereitungDAO.getInstance()
 					.getZubereitungByRezept(rezept.getId());
-		} catch (ConnectException | DAOException | SQLException e2) {
+		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
@@ -647,21 +637,21 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			mitarbeiterCb.setValue(MitarbeiterDAO.getInstance()
 					.getMitarbeiterByRezept(rezept.getId()).getId());
-		} catch (ConnectException | DAOException | SQLException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 		try {
 			geschmackCb.setValue(GeschmackDAO.getInstance()
 					.getGeschmackByRezept(rezept.getId()).getId());
-		} catch (ConnectException | DAOException | SQLException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 		try {
 			rezeptartCb.setValue(RezeptartDAO.getInstance()
 					.getRezeptartByRezept(rezept.getId()).getId());
-		} catch (ConnectException | DAOException | SQLException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
@@ -671,7 +661,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			list = Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(
 					rezept.getId());
-		} catch (ConnectException | DAOException | SQLException e2) {
+		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 
@@ -698,8 +688,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			kommentar.setValue(RezeptDAO.getInstance()
 					.getRezeptById(rezept.getId()).getKommentar().toString());
-		} catch (ReadOnlyException | ConnectException | DAOException
-				| SQLException e3) {
+		} catch (Exception e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}

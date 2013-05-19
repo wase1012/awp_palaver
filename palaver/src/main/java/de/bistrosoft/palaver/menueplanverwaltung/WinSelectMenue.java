@@ -43,7 +43,7 @@ public class WinSelectMenue extends Window {
 	
 	private Table menueList = new Table();
 	private TextField searchField = new TextField();
-	private ArrayList<TextField> textfields = new ArrayList<>();
+	private ArrayList<TextField> textfields = new ArrayList<TextField>();
 	private Button addNewmenueButton = new Button("Neu");
 	private Button ok = new Button("Auswählen");
 	private FormLayout editorLayout = new FormLayout();

@@ -82,7 +82,7 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 				ka.setName(nameText);
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);

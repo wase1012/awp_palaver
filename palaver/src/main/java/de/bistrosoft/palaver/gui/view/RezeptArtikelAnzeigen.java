@@ -55,8 +55,7 @@ public class RezeptArtikelAnzeigen extends VerticalLayout {
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

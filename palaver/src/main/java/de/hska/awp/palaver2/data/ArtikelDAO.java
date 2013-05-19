@@ -35,7 +35,7 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String			GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
 	private final static String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String 		GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
-	private final static String 		GET_MENGENEINHEIT_BY_ID = "SELECT * FROM Mengeneinheit WHERE id = {0}";
+	private final static String 		GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
 	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
 	private final static String GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
 	

@@ -74,8 +74,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 			bestellungen.setVisibleColumns(new Object[] {"lieferant", "datum", "lieferdatum"});
 			bestellungen.sort(new Object[] {"id"}, new boolean[] {true});
 		} 
-		catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}		
@@ -106,8 +105,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 						bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
 		
 					} 
-					catch (IllegalArgumentException | ConnectException | DAOException
-							| SQLException e)
+					catch (Exception e)
 					{
 						e.printStackTrace();
 					}

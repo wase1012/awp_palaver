@@ -130,7 +130,7 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 
 		try {
 			result = super.getAnsprechpartnerByLieferant(lieferant);
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

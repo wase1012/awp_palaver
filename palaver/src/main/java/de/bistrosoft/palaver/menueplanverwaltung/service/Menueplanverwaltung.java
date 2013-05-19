@@ -29,7 +29,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		Menueplan mpl=null;
 		try {
 			mpl = super.getMenueplanByWeekWithItems(week);
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -42,14 +42,14 @@ public class Menueplanverwaltung extends MenueplanDAO {
 			try {
 				super.createMenueplan(menueplan);
 				menueplan.setId(super.getMenueplanByWeekWithItems(menueplan.getWeek()).getId());
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		try {
 			super.deleteItemsByMenueplan(menueplan);
-		} catch (ConnectException | DAOException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -58,7 +58,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 
 			try {
 				super.createMenueForMenueplan(menueplan, mc.getMenue(), mc.getCol(), mc.getRow());
-			} catch (ConnectException | DAOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -68,7 +68,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 	public void deleteItemsByMenueplan(Menueplan mpl){
 		try {
 			super.deleteItemsByMenueplan(mpl);
-		} catch (ConnectException | DAOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

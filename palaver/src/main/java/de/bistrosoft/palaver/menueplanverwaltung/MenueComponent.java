@@ -150,7 +150,7 @@ public class MenueComponent extends CustomComponent{
 		}
 		
 		if(FehlerRegeln == null){
-			FehlerRegeln = new ArrayList<>();
+			FehlerRegeln = new ArrayList<Regel>();
 		}
 		
 		if (FehlerRegeln.indexOf(regel)>=0){
@@ -203,7 +203,7 @@ public class MenueComponent extends CustomComponent{
 		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
 		try {
 			fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(menue.getId());
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

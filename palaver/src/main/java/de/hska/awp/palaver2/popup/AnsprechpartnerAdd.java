@@ -103,7 +103,7 @@ public class AnsprechpartnerAdd extends UI {
 		
 		try {
 			lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
-		} catch (ConnectException | DAOException | SQLException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -120,7 +120,7 @@ public class AnsprechpartnerAdd extends UI {
 				ans.setLieferant(lieferant);
 				try {
 					Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}				
 			}

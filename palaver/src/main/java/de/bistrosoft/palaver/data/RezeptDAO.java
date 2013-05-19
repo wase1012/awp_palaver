@@ -334,7 +334,7 @@ public class RezeptDAO extends AbstractDAO {
 	}
 
 	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException, DAOException, SQLException {
-		List<Rezept> rezepte=new ArrayList<>();
+		List<Rezept> rezepte=new ArrayList<Rezept>();
 		ResultSet set =getManaged("select rezept_id from menue_has_rezept where menue_id="+menue.getId());
 		
 		while (set.next()) {

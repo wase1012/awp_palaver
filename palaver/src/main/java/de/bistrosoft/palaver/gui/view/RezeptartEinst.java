@@ -105,7 +105,7 @@ public class RezeptartEinst extends VerticalLayout implements View {
 					Rezeptartverwaltung.getInstance()
 							.createRezeptart(rezeptart);
 
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -126,8 +126,7 @@ public class RezeptartEinst extends VerticalLayout implements View {
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		box.addComponent(table);

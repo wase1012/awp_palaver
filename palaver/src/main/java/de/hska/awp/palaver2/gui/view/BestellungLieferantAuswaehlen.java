@@ -108,8 +108,7 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			table.setVisibleColumns(new Object[] {"name"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
 		} 
-		catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}	

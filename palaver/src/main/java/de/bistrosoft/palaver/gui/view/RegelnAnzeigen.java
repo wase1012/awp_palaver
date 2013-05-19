@@ -39,7 +39,7 @@ public class RegelnAnzeigen extends VerticalLayout implements View{
         
     try {
 		container = new BeanItemContainer<Regel>(Regel.class, RegelDAO.getInstance().getAllRegeln());
-	} catch (IllegalArgumentException | ConnectException | DAOException | SQLException e) {
+	} catch (Exception e) {
 		e.printStackTrace();
 	} 
     

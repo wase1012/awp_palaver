@@ -40,8 +40,8 @@ public class WinSelectArtikel extends Window {
 			// BeanItemContainer<Artikel> artikelContainer;
 
 			private Table tblArtikel;
-			public static List<String> ArtId = new ArrayList<>();
-			public static List<String> ArtName = new ArrayList<>();
+			public static List<String> ArtId = new ArrayList<String>();
+			public static List<String> ArtName = new ArrayList<String>();
 			List<RezeptHasArtikel> ausgArtikel;
 			
 			
@@ -83,7 +83,7 @@ public class WinSelectArtikel extends Window {
 								RezeptHasArtikel a = new RezeptHasArtikel(artikel,
 										null, 1.1);
 								artikellist.add(a);
-							} catch (ConnectException | DAOException | SQLException e) {
+							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
@@ -119,7 +119,7 @@ public class WinSelectArtikel extends Window {
 						artikelcol.addItem(e.getId());
 						artikelcol.setItemCaption(e.getId(), e.getName());
 					}
-				} catch (ConnectException | SQLException | DAOException e) {
+				} catch (Exception e) {
 
 					e.printStackTrace();
 				}

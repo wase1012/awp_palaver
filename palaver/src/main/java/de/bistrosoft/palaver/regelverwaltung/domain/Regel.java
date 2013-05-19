@@ -293,7 +293,7 @@ public class Regel {
 
 		try {
 			Regelverwaltung.getInstance().createRegel(regel);
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

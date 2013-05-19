@@ -256,7 +256,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				{
 					Artikelverwaltung.getInstance().createArtikel(artikel);
 				} 
-				catch (ConnectException | DAOException e)
+				catch (Exception e)
 				{
 					e.printStackTrace();
 					notification = e.toString();
@@ -351,7 +351,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				mengeneinheit.addItem(e);
 			}
 		} 
-		catch (ConnectException | DAOException | SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -433,7 +433,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				{
 					Artikelverwaltung.getInstance().updateArtikel(artikel);
 				} 
-				catch (ConnectException | DAOException e)
+				catch (Exception e)
 				{
 					e.printStackTrace();
 					notification = e.toString();
@@ -526,7 +526,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				me.setKurz(kurzText);
 				try {
 					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				load();
@@ -611,7 +611,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				ka.setName(nameText);
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				load();
@@ -903,7 +903,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

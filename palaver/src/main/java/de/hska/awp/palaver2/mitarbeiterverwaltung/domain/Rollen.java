@@ -57,7 +57,7 @@ public class Rollen implements java.io.Serializable {
 	
 	public Rollen addMitarbeiter(Mitarbeiter mitarbeiter) {
 		if (mitarbeiters == null) {
-			mitarbeiters = new ArrayList<>();
+			mitarbeiters = new ArrayList<Mitarbeiter>();
 		}
 		mitarbeiters.add(mitarbeiter);
 		return this;

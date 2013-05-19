@@ -174,7 +174,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 	public List<Rezept> getRezepteByMenue(Menue menue) {
 		try {
 			super.getRezepteByMenue(menue);
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

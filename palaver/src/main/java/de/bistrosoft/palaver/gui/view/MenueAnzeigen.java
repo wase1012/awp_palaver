@@ -290,14 +290,14 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 	ersteller.setReadOnly(true);
 	try {
 		hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtByMenue(menue.getId()));
-	} catch (ReadOnlyException | ConnectException | DAOException | SQLException e) {
+	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
 	try {
 		listrezept = MenueDAO.getInstance().getBeilagenByMenue(menue.getId());
-	} catch (ConnectException | DAOException | SQLException e) {
+	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
@@ -355,8 +355,7 @@ public class MenueAnzeigen extends VerticalLayout implements View {
 		fussnoten.setVisibleColumns(new Object[] { "name"});
 		fussnoten.sort(new Object[] { "name" }, new boolean[] { true });
 		fussnoten.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
-	} catch (IllegalArgumentException | ConnectException | DAOException
-			| SQLException e) {
+	} catch (Exception e) {
 		e.printStackTrace();
 	}
 	//box1.addComponent(fussnoten);

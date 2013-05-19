@@ -119,7 +119,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	
 	public Mitarbeiter addRollen(Rollen rolle) {
 		if (rollen == null) {
-			rollen = new ArrayList<>();
+			rollen = new ArrayList<Rollen>();
 		}
 		rollen.add(rolle);
 		return this;

@@ -132,7 +132,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 							kategorieUpdate.setName(nameUp.getValue());
 							try {
 								Kategorienverwaltung.getInstance().updateKategorie(kategorieUpdate);
-							} catch (ConnectException | DAOException | SQLException e) {
+							} catch (Exception e) {
 								throw new NullPointerException("Bitte gültige Werte eingeben");
 							}
 							UI.getCurrent().removeWindow(mengNeu);
@@ -175,8 +175,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 			table.setVisibleColumns(new Object[] { "name"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
 		} 
-		catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}	
@@ -246,7 +245,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 						me.setName(nameText);
 						try {
 							Kategorienverwaltung.getInstance().createNewKategorie(me);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						UI.getCurrent().removeWindow(mengNeu);

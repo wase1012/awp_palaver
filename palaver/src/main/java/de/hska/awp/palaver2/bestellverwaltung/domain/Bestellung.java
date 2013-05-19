@@ -94,7 +94,7 @@ public class Bestellung implements java.io.Serializable {
 	
 	public Bestellung addBestellposition(Bestellposition bestellposition) {
 		if (bestellpositionen == null) {
-			bestellpositionen = new ArrayList<>();
+			bestellpositionen = new ArrayList<Bestellposition>();
 		}
 		bestellpositionen.add(bestellposition);
 		return this;

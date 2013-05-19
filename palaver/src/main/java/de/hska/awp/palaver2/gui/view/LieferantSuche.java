@@ -255,7 +255,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						lieferant.setMehrereliefertermine(mehrereliefertermine.getValue());
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							throw new NullPointerException("Bitte gültige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
@@ -403,7 +403,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 								public void buttonClick(ClickEvent event){
 									try {
 									Ansprechpartnerverwaltung.getInstance().deleteAnsprechpartner(ansprechpartnerBean.getId());
-									} catch (ConnectException | DAOException | SQLException e) {
+									} catch (Exception e) {
 									System.out.println(e);
 									}
 							
@@ -435,7 +435,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 							
 							try {
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
-							} catch (ConnectException | DAOException | SQLException e) {
+							} catch (Exception e) {
 								System.out.println(e);
 //								throw new NullPointerException("Bitte gültige Werte eingeben");
 
@@ -577,7 +577,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					ans.setLieferant(lieferant);
 					try {
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
-					} catch (ConnectException | DAOException | SQLException e) {
+					} catch (Exception e) {
 						System.out.println(e);
 						throw new NullPointerException("Bitte gültige Werte eingeben");
 
@@ -642,7 +642,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		if(lieferant.getId() == null) {
 			try {
 				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

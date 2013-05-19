@@ -4,12 +4,14 @@
 package de.hska.awp.palaver2.gui.layout;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -74,8 +76,15 @@ public class LoginForm extends VerticalLayout
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
-				Application.getInstance().setUsername(username.getValue());
-				UI.getCurrent().setContent(MainLayout.getInstance());
+				if (username.getValue().equals("demo") && password.getValue().equals("palaverapp"))
+				{
+					Application.getInstance().setUsername(username.getValue());
+					UI.getCurrent().setContent(MainLayout.getInstance());
+				}
+				else 
+				{
+					new Notification("Login Failed").show(Page.getCurrent());
+				}
 			}
 		});
 		

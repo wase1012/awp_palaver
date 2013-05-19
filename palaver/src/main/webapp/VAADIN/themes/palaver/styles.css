@@ -4,6 +4,11 @@
 	background: #ffffff url('img/header_links.jpg') no-repeat left top;
 }
 
+.palaver-header:HOVER {
+	cursor: pointer;
+	background: #ffffff url('img/header_links_over.jpg') no-repeat left top;
+}
+
 .v-app {
 	background: #f0fff0;
 }
@@ -16,7 +21,8 @@
 .v-button:FOCUS,
 .v-button:HOVER,
 .v-button:ACTIVE,
-.v-button.v-pressed {
+.v-button.v-pressed,
+.v-disabled.v-button {
 	height: 26px;
 	padding: 0 0 0 20px;
 	background-color: transparent;
@@ -30,7 +36,8 @@
 .v-button:FOCUS .v-button-wrap,
 .v-button:HOVER .v-button-wrap,
 .v-button:ACTIVE .v-button-wrap,
-.v-button.v-pressed .v-button-wrap {
+.v-button.v-pressed .v-button-wrap,
+.v-disabled.v-button .v-button-wrap {
 	display: block;
     height: 26px;
     padding: 4px 20px 0px 0px;
@@ -40,11 +47,13 @@
 }
 
 
-.v-button {
+.v-button,
+.v-disabled.v-button {
 	background-image: url(img/button/left.png);
 }
 
-.v-button-wrap {
+.v-button-wrap,
+.v-disabled.v-button .v-button-wrap {
     background-image: url(img/button/right.png);
 }
 

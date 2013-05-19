@@ -169,7 +169,7 @@ public class MenueplanGridLayout extends CustomComponent {
 					koch2.addItem(e.getId());
 					koch2.setItemCaption(e.getId(), e.getVorname());
 				}
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			koch1.setWidth("140px");
@@ -239,7 +239,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	public void speichern() {
 
 		// Extrahiere Menüs
-		List<MenueComponent> menues = new ArrayList<>();
+		List<MenueComponent> menues = new ArrayList<MenueComponent>();
 		for (int col = 0; col < COLUMNS; ++col) {
 			for (int row = 0; row < ROWS; ++row) {
 				Component comp = layout.getComponent(col, row);
@@ -255,7 +255,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 		// Extrahiere Köche
 		// TODO: Köche extrahieren
-		List<KochInMenueplan> koeche = new ArrayList<>();
+		List<KochInMenueplan> koeche = new ArrayList<KochInMenueplan>();
 		for (int col = 2; col < COLUMNS; ++col) {
 			VerticalLayout vl = (VerticalLayout) layout.getComponent(col, 1);
 			ComboBox cb1 = (ComboBox) vl.getComponent(0);

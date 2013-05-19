@@ -102,7 +102,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 				try {
 					Zubereitungverwaltung.getInstance().createZubereitung(zb);
 
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -123,8 +123,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		box.addComponent(table);

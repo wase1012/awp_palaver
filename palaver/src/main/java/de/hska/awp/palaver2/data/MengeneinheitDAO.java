@@ -18,9 +18,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	private final static String TABLE = "mengeneinheit";
 	private static MengeneinheitDAO instance = null;
 	private final static String GET_ALL_MENGENEINHEITEN = "SELECT * FROM "+ TABLE;
-	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM Mengeneinheit WHERE id = {0}";
-	private final static String GET_MENGENEINHEIT_BY_NAME = "SELECT * FROM Mengeneinheit WHERE name = '";
-	private final static String PUT_MENGENEINHEIT = "INSERT into Mengeneinheit (name, kurz) values (";
+	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
+	private final static String GET_MENGENEINHEIT_BY_NAME = "SELECT * FROM mengeneinheit WHERE name = '";
+	private final static String PUT_MENGENEINHEIT = "INSERT into mengeneinheit (name, kurz) values (";
 
 	/**
 	 * Konstruktor

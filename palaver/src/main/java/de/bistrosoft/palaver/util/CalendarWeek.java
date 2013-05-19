@@ -24,7 +24,7 @@ import java.util.Locale;
         
         public static ArrayList<GregorianCalendar> getDatesOfWeek(int week, int year) {
         	CalendarWeek cw = new CalendarWeek(week,year, Locale.GERMANY);
-        	ArrayList<GregorianCalendar> dates = new ArrayList<>();
+        	ArrayList<GregorianCalendar> dates = new ArrayList<GregorianCalendar>();
         	Date tmp = cw.getStart();
         	for (int i = 0;i<7;++i) {
         		GregorianCalendar cal= new GregorianCalendar();

@@ -122,7 +122,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 					Fussnotenverwaltung.getInstance()
 							.createFussnote(fn);
 
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -143,8 +143,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name", "abkuerzung" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		box.addComponent(table);

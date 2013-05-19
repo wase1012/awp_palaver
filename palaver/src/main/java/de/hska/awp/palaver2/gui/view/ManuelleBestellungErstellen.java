@@ -253,8 +253,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 				
 				try {
 					Bestellverwaltung.getInstance().createBestellung(bestellung);
-				} catch (ConnectException | DAOException | SQLException
-						| ParseException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -281,7 +280,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 		try
 		{
 			artikelListe = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(lieferant.getId());
-		} catch (ConnectException | DAOException | SQLException e)
+		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

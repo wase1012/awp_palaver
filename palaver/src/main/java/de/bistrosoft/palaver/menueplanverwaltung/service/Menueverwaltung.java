@@ -29,7 +29,7 @@ public class Menueverwaltung extends MenueDAO{
 	public List<Menue> getAllMenues() {
 		try {
 			return super.getAllMenues();
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;

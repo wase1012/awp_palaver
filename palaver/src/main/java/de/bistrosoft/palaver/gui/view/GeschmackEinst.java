@@ -122,8 +122,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name", "inaktiv" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		box.addComponent(table);
@@ -138,7 +137,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 					Geschmackverwaltung.getInstance()
 							.createGeschmack(geschmack);
 
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -162,14 +161,14 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				try {
 					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(
 							geschmack2.getId());
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				try {
 					Geschmackverwaltung.getInstance().updateGeschmackAktiv(
 							geschmack1);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -195,7 +194,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				try {
 					geschmack1 = GeschmackDAO.getInstance().getGeschmackById(
 							geschmack2.getId());
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -206,7 +205,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				try {
 					Geschmackverwaltung.getInstance().updateGeschmackInaktiv(
 							geschmack1);
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 

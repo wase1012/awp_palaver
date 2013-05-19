@@ -138,8 +138,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			table.setColumnWidth("grundbedarf", 80);
 			table.setColumnWidth("bio", 30);
 		} 
-		catch (IllegalArgumentException | ConnectException | DAOException
-				| SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}	

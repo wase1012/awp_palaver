@@ -403,8 +403,7 @@ if (menuename.getValue() != null) {
 					menue.setKoch(MitarbeiterDAO.getInstance()
 							.getMitarbeiterById(
 									Long.parseLong(erstellerInput.toString())));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
@@ -413,7 +412,7 @@ if (menuename.getValue() != null) {
 					Menueverwaltung.getInstance().updateMenue(menue);
 					
 					
-				} catch (ConnectException | DAOException | SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
@@ -429,13 +428,13 @@ if (menuename.getValue() != null) {
 				
 				try {
 					Menueverwaltung.getInstance().FussnoteDelete(menue2);
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				try {
 					Menueverwaltung.getInstance().RezepteDelete(menue2);
-				} catch (ConnectException | DAOException | SQLException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -472,7 +471,7 @@ if (menuename.getValue() != null) {
 							MenueHasFussnote a = new MenueHasFussnote(fussnote1,
 									menue2);
 							fussnotelist.add(a);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -484,7 +483,7 @@ if (menuename.getValue() != null) {
 						
 						try{
 						Menueverwaltung.getInstance().FussnoteAdd(i);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -502,8 +501,7 @@ if (menuename.getValue() != null) {
 				
 				try {
 					rezept = RezeptDAO.getInstance().getRezept1(Long.parseLong(hauptgerichtInput.toString()));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -512,7 +510,7 @@ if (menuename.getValue() != null) {
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr);
-					} catch (ConnectException | DAOException | SQLException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}		
@@ -532,8 +530,7 @@ Rezept rezept1 = new Rezept();
 				
 				try {
 					rezept1 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage1Input.toString()));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -543,7 +540,7 @@ Rezept rezept1 = new Rezept();
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr1);
-					} catch (ConnectException | DAOException | SQLException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -558,8 +555,7 @@ Rezept rezept2 = new Rezept();
 				
 				try {
 					rezept2 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage2Input.toString()));
-				} catch (NumberFormatException | ConnectException
-						| DAOException | SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -568,7 +564,7 @@ Rezept rezept2 = new Rezept();
 				
 				try{
 					Menueverwaltung.getInstance().RezepteAdd(mhr2);
-					} catch (ConnectException | DAOException | SQLException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -654,7 +650,7 @@ Rezept rezept2 = new Rezept();
 			
 			
 //
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	
@@ -668,7 +664,7 @@ Rezept rezept2 = new Rezept();
 		
 		try {
 			listfussnote = FussnoteDAO.getInstance().getFussnoteByMenue(menue2.getId());
-		} catch (ConnectException | DAOException | SQLException e2) {
+		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
@@ -687,7 +683,7 @@ Rezept rezept2 = new Rezept();
 
 		try {
 			System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
-		} catch (ConnectException | DAOException | SQLException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -695,22 +691,21 @@ Rezept rezept2 = new Rezept();
 		menuename.setValue(menue2.getName());
 		try {
 			ersteller.setValue(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
-		} catch (ReadOnlyException | ConnectException | DAOException
-				| SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
 			hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtMenue(menue2.getId()).getId());
-		} catch (ReadOnlyException | ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
 			listrezept = MenueDAO.getInstance().getBeilagenByMenue(menue2.getId());
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

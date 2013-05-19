@@ -361,7 +361,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 				
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -60,7 +60,7 @@ public class MenueplanDAO extends AbstractDAO {
 		if(menueplan!=null){
 			// TODO: Köche laden
 			
-			List<MenueComponent> menues = new ArrayList<>();
+			List<MenueComponent> menues = new ArrayList<MenueComponent>();
 			// TODO: Menüs laden
 			ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 			
