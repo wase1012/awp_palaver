@@ -45,14 +45,12 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command
 {
-	private static MainLayout		instance = null;
-	
 	private HorizontalLayout		header = new HorizontalLayout();
 	
 	private MenuBar					menu = new MenuBar();
 	private MenuItem 				username = null;
 	@SuppressWarnings("deprecation")
-	private MainLayout()
+	public MainLayout()
 	{
 		super();
 		
@@ -138,92 +136,99 @@ public class MainLayout extends VerticalLayout implements Command
 //		this.addComponent(new ArtikelErstellen());
 //		this.setExpandRatio(this.getComponent(2), 1);
 	}
-	
-	public static MainLayout getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new MainLayout();
-		}
-		return instance;
-	}
 
 	@Override
 	public void menuSelected(MenuItem selectedItem)
 	{
-		switch (selectedItem.getText())
+		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
 		{
-			case IConstants.MENU_ARTIKEL_NEU:
-				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-			break;
-			case IConstants.MENU_LIEFERANT_NEW:
-				ViewHandler.getInstance().switchView(LieferantErstellen.class);
-			break;
-			case IConstants.MENU_ARTIKEL_ANZEIGEN:
-				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
-			break;
-			case IConstants.MENU_LIEFERANT_ANZEIGEN:
-				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
-			break;
-//			case IConstants.MENU_MENGENEINHEIT_NEU:
-//				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
-//			break;
-			case IConstants.MENU_MENGENEINHEIT_ANZEIGEN:
-				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
-			break;
-			case IConstants.MENU_KATEGORIE_ANZEIGEN:
-				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-			break;
-			case IConstants.MENU_LOGOUT:
-				Application.getInstance().setUsername(null);
-				instance = null;
-				UI.getCurrent().setContent(new LoginForm());
-			break;
-			case IConstants.MENU_BESTELLUNG_NEW:
-				ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
-			break;
-			case IConstants.MENU_BESTELLUNG_NEW_RANDOM:
-				ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
-			break;
-			case IConstants.MENU_BESTELLUNG_ANZEIGEN:
-				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
-			break;
-			case IConstants.MENU_REZEPT_ANZEIGEN:
-				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
-				break;
-			case IConstants.MENU_REZEPT_NEU:
-				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
-				break;
-			case IConstants.MENU_MENUPLAN_AKTUELL:
-				ViewHandler.getInstance().switchView(Menueplan.class);
-				break;
-			case IConstants.MENU_MENUPLAN_HISTORIE:
-				ViewHandler.getInstance().switchView(MenueplanHistorie.class);
-				break;
-			case IConstants.MENU_FUSSNOTE:
-				ViewHandler.getInstance().switchView(FussnoteEinst.class);
-				break;
-			case IConstants.MENU_GESCHMACK:
-				ViewHandler.getInstance().switchView(GeschmackEinst.class);
-				break;
-			case IConstants.MENU_REZEPTART:
-				ViewHandler.getInstance().switchView(RezeptartEinst.class);
-				break;
-			case IConstants.MENU_ZUBEREITUNG:
-				ViewHandler.getInstance().switchView(ZubereitungEinst.class);
-				break;
-			case IConstants.MENU_MENUE_ANLEGEN:
-				ViewHandler.getInstance().switchView(MenueAnlegen.class);
-				break;
-			case IConstants.MENU_MENUE_SUCHEN:
-				ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
-				break;
-			case IConstants.MENU_REGEL:
-				ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
-				break;
-			default: 
-				ViewHandler.getInstance().switchView(DefaultView.class);
-			break;
+			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW))
+		{
+			ViewHandler.getInstance().switchView(LieferantErstellen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW))
+		{
+			ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
+		{
+			Application.getInstance().setUsername(null);
+			UI.getCurrent().close();
+			UI.getCurrent().setContent(new LoginForm());
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM))
+		{
+			ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
+		{
+			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_AKTUELL))
+		{
+			ViewHandler.getInstance().switchView(Menueplan.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
+		{
+			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE))
+		{
+			ViewHandler.getInstance().switchView(FussnoteEinst.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK))
+		{
+			ViewHandler.getInstance().switchView(GeschmackEinst.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_REZEPTART))
+		{
+			ViewHandler.getInstance().switchView(RezeptartEinst.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG))
+		{
+			ViewHandler.getInstance().switchView(ZubereitungEinst.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MENUE_ANLEGEN))
+		{
+			ViewHandler.getInstance().switchView(MenueAnlegen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MENUE_SUCHEN))
+		{
+			ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_REGEL))
+		{
+			ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
+		}
+		else 
+		{
+			ViewHandler.getInstance().returnToDefault();
 		}
 	}
 	

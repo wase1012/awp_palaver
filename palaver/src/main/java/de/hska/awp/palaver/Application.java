@@ -7,6 +7,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.gui.layout.LoginForm;
+import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * The Application's "main" class
@@ -15,9 +16,11 @@ import de.hska.awp.palaver2.gui.layout.LoginForm;
 @SuppressWarnings("serial")
 public class Application extends UI
 {
-    private static Application instance = null;
+    private static ThreadLocal<Application>	currentApplication	= new ThreadLocal<Application>();
     
-    private String username;
+    private String 							username;
+    
+    private MainLayout						layout = new MainLayout();
     
     /**
      * Zugriff auf "MAIN" Klasse und Session
@@ -25,11 +28,7 @@ public class Application extends UI
      */
     public static Application getInstance()
     {
-    	if (instance == null)
-    	{
-    		instance = new Application();
-    	}
-    	return instance;
+    	return currentApplication.get();
     }
 	
     /**
@@ -88,5 +87,10 @@ public class Application extends UI
 	public void setUsername(String username)
 	{
 		this.username = username;
+	}
+	
+	public MainLayout getLayout()
+	{
+		return layout;
 	}
 }
