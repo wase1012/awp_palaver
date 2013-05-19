@@ -3,8 +3,12 @@
  */
 package de.hska.awp.palaver2.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.gui.layout.DefaultView;
+import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * @author Sebastian
@@ -13,6 +17,7 @@ import de.hska.awp.palaver2.gui.layout.DefaultView;
 public class ViewHandler
 {
 	private static ViewHandler					instance = null;
+	private static final Logger					log = LoggerFactory.getLogger(ViewHandler.class.getName());
 	
 	private ViewHandler()
 	{
@@ -44,6 +49,7 @@ public class ViewHandler
 				Application.getInstance().getLayout().addComponent(view.newInstance());
 				Application.getInstance().getLayout().setExpandRatio(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1), 1);
 				current.getViewParam(data);
+				log.info("Switch View to: " + current.getClass());
 			}
 		} 
 		catch (Exception e)

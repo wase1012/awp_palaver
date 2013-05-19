@@ -3,6 +3,9 @@ package de.hska.awp.palaver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -21,6 +24,7 @@ public class Application extends UI
 {
     private static ThreadLocal<Application>	currentApplication	= new ThreadLocal<Application>();
     private static Application				instance = null;
+    private static final Logger				log					= LoggerFactory.getLogger(Application.class.getName());
     
     private String 							username;
     
@@ -50,7 +54,10 @@ public class Application extends UI
     protected void init(VaadinRequest request) 
     {
         setInstance(this);
-        System.out.println("IP : " + request.getRemoteHost() + " - " + request.getRemoteAddr());
+        log.info("**************************************************************");
+        log.info("New Session with following data:");
+        log.info("IP : " + request.getRemoteAddr());
+        log.info("**************************************************************");
 		Page.getCurrent().setTitle("PalaverApp");
 		
 		final VerticalLayout layout = new VerticalLayout();
@@ -100,6 +107,7 @@ public class Application extends UI
 	 */
 	public void setUsername(String username)
 	{
+		log.info("LOGIN USER: " + username);
 		this.username = username;
 	}
 	
@@ -119,7 +127,7 @@ public class Application extends UI
 		currentApplication.set(this);
 
 
-		System.out.println("IP : " +request.getRemoteAddr());
+		log.info("IP : " +request.getRemoteAddr());
 	}
 
 

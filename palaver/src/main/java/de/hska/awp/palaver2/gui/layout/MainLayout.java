@@ -3,6 +3,9 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
@@ -46,6 +49,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class MainLayout extends VerticalLayout implements Command
 {
 	private HorizontalLayout		header = new HorizontalLayout();
+	private static final Logger		log					= LoggerFactory.getLogger(MainLayout.class.getName());
 	
 	private MenuBar					menu = new MenuBar();
 	private MenuItem 				username = null;
@@ -170,9 +174,13 @@ public class MainLayout extends VerticalLayout implements Command
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
 		{
-			Application.getInstance().setUsername(null);
-			UI.getCurrent().close();
 			UI.getCurrent().setContent(new LoginForm());
+			Application.getInstance().setUsername(null);
+			UI.getCurrent().getSession().close();
+			UI.getCurrent().close();
+			log.info("**************************************************************");
+			log.info("LOGOUT");
+			log.info("**************************************************************");
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM))
 		{

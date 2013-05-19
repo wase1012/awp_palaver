@@ -26,9 +26,9 @@ public class MitarbeiterDAO extends AbstractDAO {
 	private final static String NAME = "name";
 
 	private static final String GET_ALL_MITARBEITER = "SELECT * FROM " + TABLE;
-	private static final String GET_MITARBEITER_BY_ID = "SELECT * FROM Mitarbeiter WHERE id = {0}";
-	private static final String GET_MITARBEITER_BY_NAME = "SELECT * FROM Mitarbeiter WHERE name = {0}";
-	private static final String CREATE_MITARBEITER = "INSERT INTO Mitarbeiter (`id`,`name`,`vorname`,"
+	private static final String GET_MITARBEITER_BY_ID = "SELECT * FROM mitarbeiter WHERE id = {0}";
+	private static final String GET_MITARBEITER_BY_NAME = "SELECT * FROM mitarbeiter WHERE name = {0}";
+	private static final String CREATE_MITARBEITER = "INSERT INTO mitarbeiter (`id`,`name`,`vorname`,"
 			+ "`email`,`passwort`,`eintrittsdatum`,`austrittsdatum`)VALUES({0})";
 	private final static String GET_MITARBEITER_BY_MENUE = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN menue  on menue.koch = mitarbeiter.id WHERE menue.id = {0}";
 	private final static String GET_MITARBEITER_BY_REZEPT = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN rezept  on rezept.mitarbeiter_fk = mitarbeiter.id WHERE rezept.id = {0}";
