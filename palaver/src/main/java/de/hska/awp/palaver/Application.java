@@ -1,5 +1,8 @@
 package de.hska.awp.palaver;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -17,10 +20,11 @@ import de.hska.awp.palaver2.gui.layout.MainLayout;
 public class Application extends UI
 {
     private static ThreadLocal<Application>	currentApplication	= new ThreadLocal<Application>();
+    private static Application				instance = null;
     
     private String 							username;
     
-    private MainLayout						layout = new MainLayout();
+    private MainLayout						layout;
     
     /**
      * Zugriff auf "MAIN" Klasse und Session
@@ -28,8 +32,16 @@ public class Application extends UI
      */
     public static Application getInstance()
     {
-    	return currentApplication.get();
+    	return instance;
     }
+    
+    private static void setInstance(Application application)
+	{
+		if (getInstance() == null)
+		{
+			instance = application;
+		}
+	}
 	
     /**
      * 
@@ -37,7 +49,9 @@ public class Application extends UI
 	@Override
     protected void init(VaadinRequest request) 
     {
-        Page.getCurrent().setTitle("PalaverApp");
+        setInstance(this);
+        System.out.println("IP : " + request.getRemoteHost() + " - " + request.getRemoteAddr());
+		Page.getCurrent().setTitle("PalaverApp");
 		
 		final VerticalLayout layout = new VerticalLayout();
 //        layout.setMargin(true);
@@ -93,4 +107,27 @@ public class Application extends UI
 	{
 		return layout;
 	}
+	
+	public void login(String username)
+	{
+		setUsername(username);
+		layout = new MainLayout();
+	}
+
+	public void onRequestStart(HttpServletRequest request, HttpServletResponse response)
+	{
+		currentApplication.set(this);
+
+
+		System.out.println("IP : " +request.getRemoteAddr());
+	}
+
+
+	public void onRequestEnd(HttpServletRequest request, HttpServletResponse response)
+	{
+		currentApplication.set(null);
+		currentApplication.remove();
+	}
+	
+	
 }

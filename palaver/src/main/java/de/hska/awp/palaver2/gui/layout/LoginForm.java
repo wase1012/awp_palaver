@@ -78,7 +78,7 @@ public class LoginForm extends VerticalLayout
 			{
 				if (username.getValue().equals("demo") && password.getValue().equals("palaverapp"))
 				{
-					Application.getInstance().setUsername(username.getValue());
+					Application.getInstance().login(username.getValue());
 					UI.getCurrent().setContent(Application.getInstance().getLayout());
 				}
 				else 
