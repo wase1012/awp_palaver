@@ -1,0 +1,498 @@
+id;artikelnr;name;bestellgröße;mengeneinheit_fk;preis;lieferant_fk;bio;kategorie_fk;standard;grundbedarf;durchschnitt;lebensmittel
+1;436427;Pecorino Romano 47 %;200;3;3.199;1;0;1;0;0;;1
+2;43281;Gorgonzola Intenso 48 % Ca. 1.5 Kg;1500;3;9.619;1;0;1;0;0;;1
+3;50661;Roquefort Societe 1/4 Laib Ca. 660 G;660;3;41.411;1;0;1;0;0;;1
+4;239990;Ziegenrolle Soignon 45 % 1 Kg Scheer;1000;3;14.489;1;0;1;0;0;;1
+5;56309;Ziegenrolle Frischkäse-Taler 200G;200;3;16.469;1;0;1;0;0;;1
+6;;Ziegen-Camembert-Rolle Ca. 200G;200;3;;1;0;1;0;0;;1
+7;437874;Appenzeller 1/4 Block;;10;;1;0;1;0;0;;1
+8;37659;Raclette Frz.45 % 1/4 Ca. 1.75 Kg;1750;3;9.726;1;0;1;0;0;;1
+9;439853;Tr Ricotta  40 % 1.5 Kg;1500;3;45.778;1;0;1;0;0;;1
+10;440231;Tr Mascarpone 80 % 1.5 Kg;1500;3;36.342;1;0;1;0;0;;1
+11;21665;Frischkaese Kraeuter 200 G G&G;200;3;0.68;1;0;1;0;0;;1
+12;;Hüttenkäse 1.5Kg;1500;3;;1;0;1;0;0;;1
+13;410361;Halloumi Griech Grillkaese 43 % 250 G;250;3;2.664;1;0;1;0;0;;1
+14;;Cheddar;;10;;1;0;1;0;0;;1
+15;;Gryere;;10;;1;0;1;0;0;;1
+16;46606;Buttermilch Frisch 500 G G&G;500;3;0.29;1;0;2;0;0;;1
+17;56149;Sahne Sauer 10 % 200 G G&G;200;3;0.369;1;0;2;0;0;;1
+18;437024;Schinken Serrano Gesch.500 G Kuehn;500;3;18.172;1;0;3;0;0;;1
+19;436804;Schmid`S  Nudelteig Rolle 1 Kg;1000;3;47.178;1;0;4;0;0;;1
+20;23199;Strudelteig 300 G Schmid;300;3;2.236;1;0;4;0;0;;1
+21;431953;Blaetterteig Tk 10X300G=3 Kg Frosta;3000;3;9.298;1;0;5;0;0;;1
+22;;Blaetterteig Rollen Frisch ;;10;;1;0;4;0;0;;1
+23;;Schupfnudeln Burger 2.5Kg;2500;3;;1;0;29;0;0;;1
+24;14298;Seelachsfil.Nat.Tk140/160G 5Kg Sw;5000;3;31.554;1;0;6;0;0;;1
+25;41411;Zanderfilet Natur Tk 170/230 G 5 Kg S;5000;3;85.589;1;0;6;0;0;;1
+26;50479;Lachsfilet Seiten 900-1400 G Siegfr;;10;15.75;1;0;6;0;0;;1
+27;442640;Rotbarschfilet Natur Tk 140/16 L.A.;;3;31.019;1;0;6;0;0;;1
+28;443205;Steinbeisserf. Natur 180/220 G 5 Kg S;5000;3;41.463;1;0;6;0;0;;1
+29;443188;Kabeljau Rückenfilet 180/200G    5Kg Kart.;5000;3;47.8;1;0;6;0;0;;1
+30;442713;Kabeljaufilet 160/180G 5Kg Karton;5000;3;;1;0;6;0;0;;1
+31;442638;Seelachs Rückenfilet 160/180G              5Kg Kart.;5000;3;34.8;1;0;6;0;0;;1
+32;432606;Frutti Di Mare Royal 1 Kg Tk Escal;1000;3;8.335;1;0;6;0;0;;1
+33;;Garnelen Ohne Darm. Geschält. Roh 1Kg;1000;3;;1;0;6;0;0;;1
+34;56565;Forellenfil.M.Haut Geraeuch.130G Ha;130;3;2.557;1;0;9;0;0;;1
+35;37460;Sardellenfil.In Oel 156 Ml Dittmann;156;6;2.878;1;0;9;0;0;;1
+36;441107;Markerbsen Mittelfein 2.5 Kg Tk West;2500;3;14.305;1;0;7;0;0;;1
+37;441112;Kaiserschoten 2.5 Kg Tk Westfro;2500;3;41.498;1;0;7;0;0;;1
+38;441167;Delikatessbohnen 8-9 Mm 2.5 Kg Tk Wf;2500;3;2.985;1;0;7;0;0;;1
+39;441172;Blattspinat Port. 2.5Kg Tk Westfro;2500;3;25.235;1;0;7;0;0;;1
+40;443696;Rosenkohl 15/25Mm 2.5 Kg Tk Westfro;2500;3;3.199;1;0;7;0;0;;1
+41;35535;Zuckererbsenschoten 1 Kg Bonduel;1000;3;21.702;1;0;7;0;0;;1
+42;20715;Steinpilze Halbiert Tk 1Kg Walhalla;1000;3;18.179;1;0;7;0;0;;1
+43;50696;Tortelli Frischkaese Tk 2 Kg Hilcona;2000;3;17.109;1;0;7;0;0;;1
+44;36366;Heidelbeeren Tk 2.5 Kg Golden Crown;2500;3;12.829;1;0;8;0;0;;1
+45;436725;Toast Butter 500 G Kornmark ;500;3;0.801;1;0;10;0;0;;1
+46;113388;Mandeln Ganz 200 G Backstube;200;3;13.881;1;0;11;0;0;;1
+47;171285;Mandeln Gestiftelt 1 Kg Insula;1000;3;8.549;1;0;11;0;0;;1
+48;449728;Kuerbiskerne Gruen 500 G Meienb.;500;3;18.019;1;0;11;0;0;;1
+49;447539;Cashewkerne Jumbo 500 G Meienb.;500;3;45.839;1;0;11;0;0;;1
+50;21971;Haselnusskerne Gehobelt 100 G Backst;100;3;1.069;1;0;11;0;0;;1
+51;;Walnusskerne 500G;500;3;;1;0;11;0;0;;1
+52;171339;Pinienkerne 500 G Insula;500;3;18.179;1;0;11;0;0;;1
+53;196222;Pistazien Gehackt 500 G Insula;500;3;14.22;1;0;11;0;0;;1
+54;30408;Sesamsaat 250G Bio Wertkost;250;3;1.069;1;0;11;0;0;;1
+55;449727;Sonnenblumenkerne 1Kg Meienburg;1000;3;43.525;1;0;11;0;0;;1
+56;18107;Kokosflocken 500 G Insula;500;3;1.915;1;0;11;0;0;;1
+57;;Erdnüsse Gesalzen Ca. 200G;200;3;;1;0;11;0;0;;1
+58;19363;Rosinen 500G Insula;500;3;1.915;1;0;12;0;0;;1
+59;18153;Aprikosen Getrocknet 200G Beutel;200;3;21.551;1;0;12;0;0;;1
+60;16440;Pflaumen Getrock.Entst.250 G Backst.;250;3;1.069;1;0;12;0;0;;1
+61;446163;Datteln Entsteint 500 G Meienburg;500;3;12.844;1;0;12;0;0;;1
+62;446279;Feigen Getrocknet 500G;500;3;;1;0;12;0;0;;1
+63;446148;Cranberries Getrocknet 400G Beutel;400;3;14.336;1;0;12;0;0;;1
+64;47057;Maronen Vorgeg.400 G Fr;400;3;3.627;1;0;12;0;0;;1
+65;32125;Steinpilze Getrocknet 500G Dose;500;3;;1;0;12;0;0;;1
+66;32129;Shitake Getrocknet 500G Dose;500;3;;1;0;12;0;0;;1
+67;53353;Tomaten Getrock.I.Oel 2850 G Casa Ri.;2850;3;19.249;1;0;12;0;0;;1
+68;44058;Tomaten Getrocknet 1 Kg Niklas;1000;3;41.338;1;0;12;0;0;;1
+69;109242;Puderzucker 10Kg;10000;3;;1;0;13;0;0;;1
+70;28926;Backpulver 1 Kg Meier;1000;3;2.129;1;0;13;0;0;;1
+71;438019;Pudding Vanille Z.K.1 Kg Ruf;1000;3;3.948;1;0;13;0;0;;1
+72;39503;Sahnesteif 1 Kg Oetker;1000;3;6.195;1;0;13;0;0;;1
+73;437876;Tortenguss Klar 1 Kg Ruf;1000;3;;1;0;13;0;0;;1
+74;403191;Tortenguss Rot 1Kg Ruf;1000;3;;1;0;13;0;0;;1
+75;15309;Nuss Nougat 200 G Backstube;200;3;1.808;1;0;13;0;0;;1
+76;83210;Marzipan Rohmasse 200 G Backstube;200;3;1.487;1;0;13;0;0;;1
+77;50043;Schokoladenblaettchen 1 Kg Insula;1000;3;6.623;1;0;13;0;0;;1
+78;350620;Kakaopulver Stark Entoelt 1 Kg Ins.;1000;3;6.944;1;0;13;0;0;;1
+79;50140;Kuvertüre Vollmilch     200G Edeka;200;3;0.962;1;0;13;0;0;;1
+80;;Blockschokolade  200G;200;3;;1;0;13;0;0;;1
+81;164775;Blaumohn 500 G Insula;500;3;2.129;1;0;13;0;0;;1
+82;93590;Kirschen Beleg Rot Ganz 1Kg Insula;1000;3;9.619;1;0;13;0;0;;1
+83;146487;Orangeat 100 G Backstube;100;3;0.555;1;0;13;0;0;;1
+84;;Schokopudding Pulver;;10;;1;0;13;0;0;;1
+85;78027;Mandarin Orangen 2650 Ml Topkauf;2650;6;5.125;1;0;14;0;0;;1
+86;177467;Ananas Scheiben Ca. 800G;800;3;;1;0;14;0;0;;1
+87;169947;Gelee Johannisb.Rot Extra 450 G;450;3;2.129;1;0;13;0;0;;1
+88;46119;Konf.Aprikose Extra 450 G G&G;450;3;0.99;1;0;13;0;0;;1
+89;27467;Erdnusscreme Creamy 350 G Ueltje;350;3;3.092;1;0;15;0;0;;1
+90;27451;Schokol.Weisse 100 G Milka;100;3;0.855;1;0;15;0;0;;1
+91;371054;Loeffelbiskuits 500 G Savoiardi;500;3;1.915;1;0;15;0;0;;1
+92;147626;Preiselbeeren Wild 370 Ml Val. L.A.;370;6;1.166;1;0;15;0;0;;1
+93;87922;Sauce Vanille Dessert 1L Lukull;1000;6;36.220;1;0;15;0;0;;1
+94;450039;Meringen Tropfen 125G;125;3;;1;0;15;0;0;;1
+95;48216;Süssstoffspender 1200 Tabl.;1200;8;;1;0;15;0;0;;1
+96;522653;Honig In Quetschflasche 500G Flasche;500;3;;1;0;15;0;0;;1
+97;;Feigenmarmelade Ca. 400 G;400;3;;1;0;15;0;0;;1
+98;;Orangenmarmelade Günstig Ca. 400G;400;3;;1;0;15;0;0;;1
+99;;Brauner Zucker 1Kg;1000;3;;1;0;15;0;0;;1
+100;59458;Reis Parboiled Langkorn 5Kg Topk:;5000;3;16.558;1;0;16;0;0;;1
+101;92825;Reis Risotto Arborio 1 Kg Riso;1000;3;19.054;1;0;16;0;0;;1
+102;449174;Reis Vollkorn Und Wild 5 Kg Ahama;5000;3;16.039;1;0;16;0;0;;1
+103;;Reis Rundkorn;;10;;1;0;16;0;0;;1
+104;16845;Lasagne Gelb 500 G Barilla;500;3;25.204;1;0;17;0;0;;1
+105;16500;Maccheroni 500 G Barilla Kurz;500;3;1.487;1;0;17;0;0;;1
+106;18056;Fussili Barilla 5Kg Beutel;5000;3;25.416;1;0;17;0;0;;1
+107;;Oricchiette Barilla 500G;500;3;;1;0;17;0;0;;1
+108;298975;Glasnudeln Lang 500 G Lungkow L.A.;500;3;2.129;1;0;17;0;0;;1
+109;51285;Haferflocken Günstig Zart 500G Paket;500;3;;1;0;18;0;0;;1
+110;449704;Couscous Mittelgrob 5 Kg Friess.;5000;3;36.342;1;0;18;0;0;;1
+111;109761;Griess Weichweizen 500 G Goldpuder;500;3;0.748;1;0;18;0;0;;1
+112;109631;Griess Hartweizen 500 G Goldpuder;500;3;0.79;1;0;18;0;0;;1
+113;449691;Hirse Ganz 2.5 Kg Friessinger;2500;3;21.641;1;0;18;0;0;;1
+114;;Graupen 500G;500;3;;1;0;18;0;0;;1
+115;48910;Püree Flocken 4Kg Pfanni;4000;3;41.530;1;0;29;0;0;;1
+116;48880;Linsen Rot Geschaelt 5 Kg Ahama;5000;3;11.759;1;0;19;0;0;;1
+117;668418;Linsen 500G Mm;500;3;1.166;1;0;19;0;0;;1
+118;;Belugalinsen 1Kg;1000;3;;1;0;19;0;0;;1
+119;123279;Kichererbsen 5 Kg Ahama;5000;3;12.829;1;0;19;0;0;;1
+120;447412;Hellriegel Franz. Berglinsen Dunkel;;10;28.946;1;0;19;0;0;;1
+121;50627;Kichererbsen 425 G Neutrale Ware;425;3;0.59;1;0;19;0;0;;1
+122;111368;Bohnen Weiss+Suppengruen 850 Ml;850;6;0.748;1;0;19;0;0;;1
+123;;Kidneybohnen Ca. 800G;800;3;;1;0;19;0;0;;1
+124;111375;Linsen Mit Suppengruen 850 Ml;850;3;0.748;1;0;19;0;0;;1
+125;147756;Bohnen Weisse 425 Ml Bonduelle;425;3;0.79;1;0;19;0;0;;1
+126;;Weisse Bohnen Trockenware 1Kg;1000;3;;1;0;19;0;0;;1
+127;436996;Rotkohl Rotessa 4250 Ml Hengstenberg;4250;6;6.302;1;0;20;0;0;;1
+128;;Sauerkraut Ca. 800G;800;3;;1;0;20;0;0;;1
+129;;Rote Bete Gegart;;10;;1;0;20;0;0;;1
+130;59077;Tomaten Geschaelt 2650 Ml Adria;2650;6;36.161;1;0;20;0;0;;1
+131;156262;Grobes Meersalz  5Kg Beutel;5000;3;;1;0;21;0;0;;1
+132;;Knoblauchpfeffer Ubena?;;10;;1;0;21;0;0;;1
+133;163253;Pfefferkoerner Schwarz 1200 Ml  Wib.;1200;6;15.55;1;0;21;0;0;;1
+134;163260;Pfeffer Schwarz Gem.1200 Ml  Wiberg;1200;6;15.65;1;0;21;0;0;;1
+135;184328;Koriander Gemahlen 470 Ml Wiberg;470;6;16.469;1;0;21;0;0;;1
+136;150097;Zimt Gemahlen 1200 Ml  Wiberg;1200;6;25.447;1;0;21;0;0;;1
+137;181961;Paprika Scharf 500 G Ubena;500;3;36.281;1;0;21;0;0;;1
+138;162991;Kurkuma 500G Wiberg;500;3;20.180;1;0;21;0;0;;1
+139;944325;Chili Sauce Chicken K+K Diamond;;10;41.519;1;0;21;0;0;;1
+140;48596;Harissa Pfefferschoten Paste 140 G;140;3;1.487;1;0;21;0;0;;1
+141;35209;Ketchup Tom.875 Ml Squeezeflasche;875;6;3.199;1;0;21;0;0;;1
+142;476454;Wasabi Paste 45G Tube;45;3;;1;0;21;0;0;;1
+143;527678;Tabasco Kleine Flasche;;10;;1;0;21;0;0;;1
+144;;Kapern Ca. 800G;800;3;;1;0;21;0;0;;1
+145;;Kürbiskernöl Ca. 300Ml;300;6;;1;0;21;0;0;;1
+146;116097;Eis Chocolat Chips 6L Moevenpik;6;5;41.509;1;0;22;0;0;;1
+147;116097;Eis Citronen Sorbet 6L Moevenpik;6;5;41.509;1;0;22;0;0;;1
+148;116097;Eis Maple Walnuts 6L Moevenpik;6;5;41.390;1;0;22;0;0;;1
+149;116097;Eis Quark Sauerkirsch 6L Schoeller;6;5;41.377;1;0;22;0;0;;1
+150;;Grappa Villa Mazzolini 40% 0.7L;0.7;5;;1;0;23;0;0;;1
+151;;Pott Rum 40 % 0.7L;0.7;5;;1;0;23;0;0;;1
+152;;Cognac Delaitre V.S. 40% 0.7L;0.7;5;;1;0;23;0;0;;1
+153;;Calvados;;10;;1;0;23;0;0;;1
+154;527436;Cidre Apfel Herb 4% 0.75L Rheinberg;0.75;5;43.466;1;0;23;0;0;;1
+155;112521;Sherry Fino Dry 15 % 0.75 L;0.75;5;2.878;1;0;23;0;0;;1
+156;155139;Marsala Fine I.P.Tro.17 % 1 L K1/2;1;5;24.228;1;0;23;0;0;;1
+157;32598;Kirschwasser Fashion 40% 1L Fies;1;5;10.689;1;0;23;0;0;;1
+158;65793;Ricard Pastis 45 % 0.7 L ;0.7;5;13.99;1;0;23;0;0;;1
+159;35280;Baileys Irish Cream 17 % 0.7 L ;0.7;5;18.203;1;0;23;0;0;;1
+160;190477;Amaretto Di Alfino21.5 % 0.7 L ;0.7;5;19.054;1;0;23;0;0;;1
+161;;Ramazotti 0.7L;0.7;5;;1;0;23;0;0;;1
+162;;Eierlikör 0.7L;0.7;5;;1;0;23;0;0;;1
+163;;Glühwein 6X 1L;1;5;;1;0;23;0;0;;1
+164;30033;Handschuh Einweg Latex Large 100Er;100;1;4.269;1;0;24;0;0;;1
+165;30034;Handschuh Einweg Latex Medium 100Er;100;1;4.269;1;0;24;0;0;;1
+166;;Gummihandschuhe Grösse M;;10;;1;0;24;0;0;;1
+167;;Gummihandschuhe Grösse S;;10;;1;0;24;0;0;;1
+168;50884;Spritzbeutel Kochfest 40 Cm 2Er;2;1;7.479;1;0;24;0;0;;1
+169;;Fettlöser Sprühflsche 1L;1;5;;1;0;24;0;0;;1
+170;472131;Pappteller 13X20 Cm 250Er Rpc;250;1;5.339;1;0;25;0;0;;1
+171;441958;Pappteller Wurst 9X15Cm 250Er Papst;250;1;4.269;1;0;25;0;0;;1
+172;;Einweg-Styropor-Teller Mit Deckel ;;10;;1;0;25;0;0;;1
+173;454764;Kögler Jumbo Trinkhalme 8X250 Mm Sch;;10;21.641;1;0;25;0;0;;1
+174;51122;Willi Becher 50 Cl /-/ 0.4L;0.4;5;0.738;1;0;25;0;0;;1
+175;;Ribo Becher To Go 0.3L Mit Deckel;0.3;5;;1;0;25;0;0;;1
+176;442123;Kugelschreiber 60Er Noname;60;1;30.286;1;0;26;0;0;;1
+177;;Tesafilm Rollen;;10;;1;0;26;0;0;;1
+178;52881;Ascher Klar Stapelbar;;10;1.017;1;0;26;0;0;;1
+179;453668;Feuchtwischmopp Tennessee 50 Cm;;10;25.294;1;0;27;0;0;;1
+180;;Antikal  Badreiniger Sprayflasche 1L;1;5;;1;0;27;0;0;;1
+181;;Backofenreiniger K2;;10;;1;0;27;0;0;;1
+182;;Hygienebeutel;;10;;1;0;27;0;0;;1
+183;;Linierte Ringbucheinlage Din A4 500 Blatt;500;9;;1;0;25;0;0;;1
+184;;Kalenderbücher Dina 5  Täglich;;10;;1;0;25;0;0;;1
+185;;Topfhandschuhe Paar;2;1;;1;0;24;0;0;;1
+186;;Kassenbericht Zweckform;;10;;1;0;28;0;0;;1
+187;;Din A 5 Blöcke Unliniert;;10;;1;0;28;0;0;;1
+188;191234;Teelichter 100Er  G&G;100;1;43.525;1;0;26;0;0;;1
+189;441944;Kreidemarker 5 Mm Weiss 5Er Zieher;5;1;21.817;1;0;26;0;0;;1
+190;24536;Sahne Konditor 33% 5Kg Swm;5000;3;0.014;1;0;2;0;0;;1
+191;45504;Sahne Schlag Frisch 30% 1L Hofgut;1;5;0.002;1;0;2;0;0;;1
+192;36456;Quark 40% 5Kg Campina;5000;3;0.012;1;0;2;0;0;;1
+193;116417;Jogh.Natur 3,5% 5Kg Mw Swwhf;5000;3;0.005;1;0;2;0;0;;1
+194;49176;Butter Marken Mildges.250 G G&G;250;3;0.001;1;0;2;0;0;;1
+195;28016;Butterschmalz 2,5Kg Butaris;2500;3;0.019;1;0;2;0;0;;1
+196;43540;Butter Kraeuter 250G Meggle;250;3;0.003;1;0;2;0;0;;1
+197;;Margarine 250G;250;3;;1;0;2;0;0;;1
+198;436426;Aggenstein Emmentaler Riegel 45% Ca;;1;0.005;1;0;1;0;0;;1
+199;436417;Tortenbrie 3Kg;3000;3;;1;0;1;0;0;;1
+200;38623;Cambozola Torte 70% Ca.2,2Kg;2200;3;0.012;1;0;1;0;0;;1
+201;64462;Schafskaese 50% Ca.2Kg Brebiol ;2000;3;0.011;1;0;1;0;0;;1
+202;89997;Mozzarella Brot 45%1Kg Galbani ;1000;3;0.008;1;0;1;0;0;;1
+203;21661;Frischkaese Natur 200G G&G;200;3;0.001;1;0;1;0;0;;1
+204;;Grana Padano Gerieben;;1;0.009;1;0;1;0;0;;1
+205;38435;Grana Padano 32% Ca.1Kg Maitre;1000;3;0.014;1;0;1;0;0;;1
+206;410174;Domsp.Creme Fraiche 30% 500Ml;500;6;0.002;1;0;2;0;0;;1
+207;49313;Maultasch. Gemuese 20X50G 1Kg Buerg;1000;3;0.005;1;0;29;0;0;;1
+208;24997;Raeucherlachs Echt 200 G Krone;200;3;0.003;1;0;9;0;0;;1
+209;51008;Schokol.Eszet Schnit.Vollm.75G;75;3;0.001;1;0;25;0;0;;1
+210;230276;Backpapier Grossrolle 100M Toppits;1;4;0.017;1;0;27;0;0;;1
+211;24358;Frischhaltefolie 30Cmx300M Box;1;4;0.006;1;0;27;0;0;;1
+212;60811;Topfreiniger Stark 4Er Scotch;1;1;0.003;1;0;27;0;0;;1
+213;313881;Topfreiniger Edelstahlspirale 40G;1;1;0.000;1;0;27;0;0;;1
+214;14406;Muellsack 120L 110X70 Bl.10Er;10;1;0.002;1;0;27;0;0;;1
+215;27513;Muellsack 60L 30Er Mit Zugband G&G;30;1;0.001;1;0;27;0;0;;1
+216;10482;Muellbeutel 35L 35Er G&G;35;1;;1;0;27;0;0;;1
+217;314778;Muellbeutel 20L Noname;1;1;;1;0;27;0;0;;1
+218;48903;Gefrierbeutel 6L Noname;1;1;;1;0;27;0;0;;1
+219;58406;Gefrierbeutel 3L Noname;1;1;;1;0;27;0;0;;1
+220;13921;Kuechentuecher 3Lg 4X51Bl G&G;;4;0.001;1;0;27;0;0;;1
+221;449628;Tortenspitzen Rund Weiß 37Cm 2 L.A.;;1;0.007;1;0;27;0;0;;1
+222;14702;Tortenunterlage 30 Cm 100Er Papstar;100;1;0.011;1;0;27;0;0;;1
+223;441068;Serv.Zt.33.1Lg.D-Blau1/4 500Er ;500;1;0.008;1;0;27;0;0;;1
+224;441074;Dessertdeckch.17.Ws4000Er Duni ;4000;1;0.016;1;0;27;0;0;;1
+225;48066;Vollwaschmittel 60Wl 4,8Kg G&G;4800;3;0.006;1;0;27;0;0;;1
+226;42498;Vanish Oxi Action Pow.Weiss 1Kg;1000;3;0.010;1;0;27;0;0;;1
+227;24087;Essigreiniger 1L G&G;1;5;0.001;1;0;27;0;0;;1
+228;49123;Wc Reiniger 1Ltr.G&G;1;5;;1;0;27;0;0;;1
+229;35118;Toipa 3Lag.8X200Bl Recycling G&G;1;4;0.002;1;0;27;0;0;;1
+230;447540;Nusskernmischung Extra 500G Mei;500;3;0.006;1;0;11;0;0;;1
+231;49760;Tomaten Pizza Ital.4250Ml Adria;4250;6;0.004;1;0;20;0;0;;1
+232;444200;Tomaten Passiert 1Kg La Belle;1000;3;0.001;1;0;20;0;0;;1
+233;49451;Tomatenmark Ital.Tuben 200G;200;3;0.001;1;0;20;0;0;;1
+234;131508;Pesto Alla Genovese 500G Tigullio;500;3;0.006;1;0;20;0;0;;1
+235;166337;Senf Suess Hausmach. 1Kg Haend;1000;3;0.003;1;0;20;0;0;;1
+236;278124;Senf Dijon Weiss Scharf 800Ml Clovi;800;6;0.005;1;0;20;0;0;;1
+237;445223;Meerrettich Sahne 240G Koch;240;3;0.002;1;0;20;0;0;;1
+238;462173;Gurken Dillschnitten Kuehne 670G;670;3; ;1;0;20;0;0;;1
+239;960642;Pepperoni Mild 370Ml ;370;3; ;1;0;20;0;0;;1
+240;60879;Mango Scheiben 446G Dole;446;3;0.001;1;0;20;0;0;;1
+241;14849;Aprikosen 1/2 Dunst 2650Ml Topkauf;2650;6;0.004;1;0;13;0;0;;1
+242;129284;Pfirsiche Dunst 1/2 2650Ml Topkauf;2650;6;0.003;1;0;13;0;0;;1
+243;19394;Birnen 1/2Frucht 2650 Ml Topkauf;2650;6;0.004;1;0;14;0;0;;1
+244;43809;Oel Sonnenblumen 10L Topkauf;10;5;0.015;1;0;30;0;0;;1
+245;46953;Oel Oliven Tresteroel 5L Bonoliva;5;5;0.015;1;0;30;0;0;;1
+246;150752;Essig Aceto Balsamico 1 L Wiberg;1;5;0.007;1;0;30;0;0;;1
+247;443855;Essig Aceto Balsamico  Bianco1L;1;5;;1;0;30;0;0;;1
+248;438448;Essig Weisswein 6 % 2 L Hengstenberg;2;5;0.005;1;0;30;0;0;;1
+249;444053;Speisesalz 10 Kg Friessinger;10000;3;0.005;1;0;30;0;0;;1
+250;463090;Mehl Weizen Typ405 1Kg G&G;1000;3;0.000;1;0;31;0;1;;1
+251;29183;Mehl Dinkel Type 630 1Kg Goldpuder;1000;3;0.002;1;0;31;0;0;;1
+252;440968;Friess Paniermehl Mutschelmehl 5Kg;5000;3;0.006;1;0;31;0;0;;1
+253;212018;Kartoffelmehl 500G Mm;500;3;0.001;1;0;31;0;0;;1
+254;196161;Mandeln Gehobelt 500G Insula;500;3;0.005;1;0;13;0;0;;1
+255;196185;Mandeln Gehackt 500G Insula;500;3;0.005;1;0;13;0;0;;1
+256;460492;Mandeln Gemahlen 1Kg Insula;1000;3;0.009;1;0;13;0;0;;1
+257;462485;Haselnusskerne Gehackt 100G Backstu;100;3;0.001;1;0;13;0;0;;1
+258;171308;Haselnusskerne Gemahl.1Kg Insu.;1000;3;0.010;1;0;13;0;0;;1
+259;;Schokol.Edel Bitter 50%100G Ritter;100;3;0.001;1;0;13;0;0;;1
+260;283355;Kokosnussmilch 1L Tetra Aroy-D;1;5;0.003;1;0;13;0;0;;1
+261;343073;Butter Nuss Schokos 1Kg Gruyters;1000;3;0.007;1;0;32;0;0;;1
+262;436700;Butter Gebaeck 1Kg Gruyters ;1000;3;0.007;1;0;32;0;0;;1
+263;62800;Deloba 1,7Kg Bahlsen ;1700;3;0.015;1;0;32;0;0;;1
+264;364360;Zucker Raffinade Fein 1Kg G&G;1000;3;0.001;1;0;21;0;0;;1
+265;13110;Kaffeesahne 10% 240X7,5G Mait. ;240;1;0.005;1;0;25;0;0;;1
+266;120133;Ovomaltine Nachfüllbeutel 500G;500;3;0.004;1;0;25;0;0;;1
+267;405002;Schattenmorellen O.St.720Ml Okis;720;6;0.001;1;0;13;0;0;;1
+268;196154;Krokant Haselnuss 500 G Insula;500;3;0.003;1;0;22;0;0;;1
+269;454436;Kögler Dekopicker Eisschirmchen 105;105;1;0.005;1;0;22;0;0;;1
+270;17483;Katjes Gr.Rattensch.Apf.200Er ;200;1;0.006;1;0;22;0;0;;1
+271;116141;Eis Creme Vanilla 6L Moevenpick;6;5;0.025;1;0;22;0;0;;1
+272;53691;Waffel Roell. 100 St. Tekr. Hohlhippen;100;1;0.005;1;0;22;0;0;;1
+273;60678;Eistüten 84 Stück Tekrum;84;1;0.009;1;0;22;0;0;;1
+274;523185;Eisschirmchen 170St Fackelmann;170;1;0.004;1;0;22;0;0;;1
+275;65571;Nudeln Band 20Mm F.Tag2,5Kg Jeremia;2500;3;0.009;1;0;17;0;0;;1
+276;299794;Nudelnester 4Mm 2,5Kg Fest Jeremias;2500;3;0.009;1;0;17;0;0;;1
+277;16289;Spaghetti No.5 5Kg Barilla;5000;3;0.010;1;0;17;0;0;;1
+278;16296;Tortiglioni No.83 5Kg Barilla;5000;3;0.010;1;0;17;0;0;;1
+279;17893;Penne Lisce No.71 5Kg Barilla;5000;3;0.010;1;0;17;0;0;;1
+280;938988;Bavette 5Kg Barilla;5000;3;;1;0;17;0;0;;1
+281;42219;Farfalle Nr.65 5Kg Barilla;5000;3;0.010;1;0;17;0;0;;1
+282;;Lasagne Blätter Barilla 500G;500;3;;1;0;17;0;0;;1
+283;438990;Gnocchi De Doge 500G La Cucina;500;3;0.002;1;0;29;0;0;;1
+284;11130;Basmati Reis 5Kg Ahama;5000;3;;1;0;16;0;0;;1
+285;36363;Himbeeren Tk 2,5Kg Golden Crown;2500;3;0.011;1;0;8;0;0;;1
+286;441353;Pflaumen 1/2 Frucht 2,5Kg Tk Dirafr;2500;3;0.005;1;0;8;0;0;;1
+287;441357;Johannisbeeren Rot 2.5Kg Tk Dirafro;2500;3;0.006;1;0;8;0;0;;1
+288;441363;Rhabarber Rot 2.5Kg Tk Dirafrost;2500;3;0.004;1;0;8;0;0;;1
+289;536372;Beerenteller Tk 2,5 Kg Golden Crown;2500;3;0.006;1;0;8;0;0;;1
+290;30172;Spargel geschält;;3;;2;1;33;0;0;;1
+291;5010;Auberginen;;3;;2;1;33;0;0;;1
+292;5030;Blumenkohl;;3;;2;1;33;0;0;;1
+293;5059;Bohne Breit;;3;;2;1;33;0;0;;1
+294;5090;Broccoli;;3;;2;1;33;0;0;;1
+295;5202;Chicoree;;3;;2;1;33;0;0;;1
+296;5220;Chinakohl;;3;;2;1;33;0;0;;1
+297;5351;Fenchel;;3;;2;1;33;0;0;;1
+298;5500;Gurken;;3;;2;1;33;0;0;;1
+299;5650;Grünkohl;;3;;2;1;33;0;0;;1
+300;5700;Ingwer;;3;;2;1;33;0;0;;1
+301;5804;Karotten;;3;;2;1;33;0;0;;1
+302;5850;Kartoffel Concordia;;3;;2;1;33;0;0;;1
+303;5851;Kartoffel Quarta;;3;;2;1;33;0;0;;1
+304;5852;Kartoffel Berber;;3;;2;1;33;0;0;;1
+305;5853;Kartoffel Cilena;;3;;2;1;33;0;0;;1
+306;5854;Kartoffel Jelli;;3;;2;1;33;0;0;;1
+307;5856;Kartoffel gew vorwiegend festkochend;;3;;2;1;33;0;0;;1
+308;5858;Kartoffel Drillinge;;3;;2;1;33;0;0;;1
+309;5860;Kartoffel Spunda;;3;;2;1;33;0;0;;1
+310;5861;Kartoffel gepackt;;3;;2;1;33;0;0;;1
+311;5862;Kartoffel Marabelle;;3;;2;1;33;0;0;;1
+312;5865;Süßkartoffel;;3;;2;1;33;0;0;;1
+313;5866;Kartoffel gew festkochend;;3;;2;1;33;0;0;;1
+314;5869;Kartoffel Galatina Siglinde;;3;;2;1;33;0;0;;1
+315;5871;Kartoffel Sieglinde;;3;;2;1;33;0;0;;1
+316;5873;Kartoffel Annabella;;3;;2;1;33;0;0;;1
+317;5900;Knoblauch 5 Kg Sack;5000;3;;2;1;33;0;0;;1
+318;5901;Knoblauch weiß 1Kg;1000;3;;2;1;33;0;0;;1
+319;5903;Knoblauch rosé;;3;;2;1;33;0;0;;1
+320;5910;Kohlrabi;;3;;2;1;33;0;0;;1
+321;6000;Bohnenkraut;;3;;2;1;33;0;0;;1
+322;6001;Basilikum;;3;;2;1;33;0;0;;1
+323;6003;Schnittlauch;;3;;2;1;33;0;0;;1
+324;6006;Minze;;3;;2;1;33;0;0;;1
+325;6007;Zitronenmelisse;;3;;2;1;33;0;0;;1
+326;6008;Dill;;3;;2;1;33;0;0;;1
+327;6009;Sauerampfer;;3;;2;1;33;0;0;;1
+328;6010;Majoran;;3;;2;1;33;0;0;;1
+329;6011;Kerbel;;3;;2;1;33;0;0;;1
+330;6012;Koriander;;3;;2;1;33;0;0;;1
+331;6014;Thymian;;3;;2;1;33;0;0;;1
+332;6015;Rosmarien;;3;;2;1;33;0;0;;1
+333;6018;Salbei;;3;;2;1;33;0;0;;1
+334;6021;Salbei Topf;;3;;2;1;33;0;0;;1
+335;6022;Kresse lose;;3;;2;1;33;0;0;;1
+336;6026;Oregano;;3;;2;1;33;0;0;;1
+337;6027;Basilikum Topf;;3;;2;1;33;0;0;;1
+338;6030;Bärlauch;;3;;2;1;33;0;0;;1
+339;6034;Liebstöckel;;3;;2;1;33;0;0;;1
+340;6037;Schnittlauch;;3;;2;1;33;0;0;;1
+341;6043;Kresse lose;;3;;2;1;33;0;0;;1
+342;6051;Hokkaido;;3;;2;1;33;0;0;;1
+343;6052;Butternuss Kübis;;3;;2;1;33;0;0;;1
+344;6053;Muskat Kürbis;;3;;2;1;33;0;0;;1
+345;6060;Weißkraut;;3;;2;1;33;0;0;;1
+346;6061;Rotkraut;;3;;2;1;33;0;0;;1
+347;6064;Spitzkraut;;3;;2;1;33;0;0;;1
+348;6066;Weißkraut;;3;;2;1;33;0;0;;1
+349;6100;Lauch;;3;;2;1;33;0;0;;1
+350;6120;Mangold;;3;;2;1;33;0;0;;1
+351;6124;Meerrettich;;3;;2;1;33;0;0;;1
+352;6130;gekochte Maroni;;3;;2;1;33;0;0;;1
+353;6200;Petersilie Kraus;;3;;2;1;33;0;0;;1
+354;6202;Petersilie Blatt;;3;;2;1;33;0;0;;1
+355;6210;Wurzelpetersilie;;3;;2;1;33;0;0;;1
+356;6215;Pastinaken;;3;;2;1;33;0;0;;1
+357;6231;Packchoi;;3;;2;1;33;0;0;;1
+358;6233;Endivien;;3;;2;1;33;0;0;;1
+359;6237;Rucola;;3;;2;1;33;0;0;;1
+360;6300;Paprika rot;;3;;2;1;33;0;0;;1
+361;6301;Paprika gelb;;3;;2;1;33;0;0;;1
+362;6302;Paprika grün;;3;;2;1;33;0;0;;1
+363;6340;Paprika Mix;;3;;2;1;33;0;0;;1
+364;6370;Peperoni rot;;3;;2;1;33;0;0;;1
+365;6500;Champignon weiß;;3;;2;1;33;0;0;;1
+366;6502;Austernpilze;;3;;2;1;33;0;0;;1
+367;6513;Champignon Riesen;;3;;2;1;33;0;0;;1
+368;6515;Kräuterseitlinge;;3;;2;1;33;0;0;;1
+369;6530;Pfifferlinge 1 Kg;1000;3;;2;1;33;0;0;;1
+370;6532;Pfifferlinge gewaschen 1,5 Kg;1500;3;;2;1;33;0;0;;1
+371;6535;Mischpilze;;3;;2;1;33;0;0;;1
+372;6600;Radieschen;;3;;2;1;33;0;0;;1
+373;6652;Rhabarber;;3;;2;1;33;0;0;;1
+374;6690;Rote Beete Bund;;3;;2;1;33;0;0;;1
+375;6691;Rote Beete lose;;3;;2;1;33;0;0;;1
+376;6693;Rote Beete gekocht;;3;;2;1;33;0;0;;1
+377;6810;Eichblatt weiß;;3;;2;1;33;0;0;;1
+378;6818;Frisee;;3;;2;1;33;0;0;;1
+379;6819;Romana;;3;;2;1;33;0;0;;1
+380;6820;Radicchio;;3;;2;1;33;0;0;;1
+381;6823;Feldsalat;;3;;2;1;33;0;0;;1
+382;6831;Eichblatt rot;;3;;2;1;33;0;0;;1
+383;6855;Wildkräutersalat;;3;;2;1;33;0;0;;1
+384;6916;Eichblatt weiß;;3;;2;1;33;0;0;;1
+385;6926;Frisee;;3;;2;1;33;0;0;;1
+386;6933;Radicchio;;3;;2;1;33;0;0;;1
+387;6935;Feldsalat;;3;;2;1;33;0;0;;1
+388;6942;Endivien;;3;;2;1;33;0;0;;1
+389;6950;Rucola;;3;;2;1;33;0;0;;1
+390;7006;Spargel grün;;3;;2;1;33;0;0;;1
+391;7010;Spargel weiß;;3;;2;1;33;0;0;;1
+392;7042;Roma Tomaten lose;;3;;2;1;33;0;0;;1
+393;7152;Grünspargel;;3;;2;1;33;0;0;;1
+394;7200;Sellerie lose;;3;;2;1;33;0;0;;1
+395;7204;Sellerie Bund;;3;;2;1;33;0;0;;1
+396;7210;Staudensellerie;;3;;2;1;33;0;0;;1
+397;7220;Schlotten;;3;;2;1;33;0;0;;1
+398;7240;Spinat;;3;;2;1;33;0;0;;1
+399;7242;Spinat Baby;;3;;2;1;33;0;0;;1
+400;7251;Schwarzwurzel;;3;;2;1;33;0;0;;1
+401;7301;Sojasprossen;;3;;2;1;33;0;0;;1
+402;7400;Tomaten lose;;3;;2;1;33;0;0;;1
+403;7408;Tomaten Rispe;;3;;2;1;33;0;0;;1
+404;7416;Cherry Tomaten Sweet Pearl;;3;;2;1;33;0;0;;1
+405;7428;Cocktail-Tomaten;;3;;2;1;33;0;0;;1
+406;7440;Roma Tomate;;3;;2;1;33;0;0;;1
+407;7444;Cherry Tomate;;3;;2;1;33;0;0;;1
+408;7449;Cherry Tomaten Petit Sweet;;3;;2;1;33;0;0;;1
+409;7454;Roma Tomaten;;3;;2;1;33;0;0;;1
+410;7457;Datterino Tomaten;;3;;2;1;33;0;0;;1
+411;7504;Saveol Rubis Tomaten;;3;;2;1;33;0;0;;1
+412;7701;Wirsing;;3;;2;1;33;0;0;;1
+413;7800;Zucchini;;3;;2;1;33;0;0;;1
+414;7811;Zucchini gelb;;3;;2;1;33;0;0;;1
+415;7900;Zwiebel;;3;;2;1;33;0;0;;1
+416;7902;Metzgerzwiebel;;3;;2;1;33;0;0;;1
+417;7905;Zwiebel rot;;3;;2;1;33;0;0;;1
+418;7906;E-Schalotten;;3;;2;1;33;0;0;;1
+419;1003;Cantaloup Melone;;3;;2;1;34;0;0;;1
+420;1005;Galia Melone;;3;;2;1;34;0;0;;1
+421;1007;Honigmelonen;;3;;2;1;34;0;0;;1
+422;101;Braeburn 7 Kg;7000;3;;2;1;34;0;0;;1
+423;1010;Netzmelonen;;3;;2;1;34;0;0;;1
+424;106;Granny Smith;;3;;2;1;34;0;0;;1
+425;107;Jonagold 7 Kg;7000;3;;2;1;34;0;0;;1
+426;1100;Mango ready to eat;;3;;2;1;34;0;0;;1
+427;1108;Mango 8er;;3;;2;1;34;0;0;;1
+428;114;Pinova;;3;;2;1;34;0;0;;1
+429;121;Braeburn;;3;;2;1;34;0;0;;1
+430;123;Elstar;;3;;2;1;34;0;0;;1
+431;127;Jonagold;;3;;2;1;34;0;0;;1
+432;128;Futji;;3;;2;1;34;0;0;;1
+433;134;Äpfel klein;;3;;2;1;34;0;0;;1
+434;137;Delbar;;3;;2;1;34;0;0;;1
+435;148;Elstar;;3;;2;1;34;0;0;;1
+436;154;Gala Äpfel;;3;;2;1;34;0;0;;1
+437;1603;Orangen;;3;;2;1;34;0;0;;1
+438;166;Aprikose;;3;;2;1;34;0;0;;1
+439;174;Mairac;;3;;2;1;34;0;0;;1
+440;1874;Pfirsich gelb;;3;;2;1;34;0;0;;1
+441;200;Avocado;;3;;2;1;34;0;0;;1
+442;201;Avocado ready to eat;;3;;2;1;34;0;0;;1
+443;2024;Papaya 8er;;3;;2;1;34;0;0;;1
+444;2027;Papaya ready to eat;;3;;2;1;34;0;0;;1
+445;203;Ananas Del Monte;;3;;2;1;34;0;0;;1
+446;204;Ananas;;3;;2;1;34;0;0;;1
+447;2041;Physalis;;3;;2;1;34;0;0;;1
+448;2051;Quitten;;3;;2;1;34;0;0;;1
+449;2055;Trauben weiß;;3;;2;1;34;0;0;;1
+450;2058;Quitten;;3;;2;1;34;0;0;;1
+451;206;Chiquita Bananen;;3;;2;1;34;0;0;;1
+452;207;Bananen Cobana;;3;;2;1;34;0;0;;1
+453;208;Bananen;;3;;2;1;34;0;0;;1
+454;210;Avocado;;3;;2;1;34;0;0;;1
+455;2205;Trauben weiß kernlos 4,5 Kg;4500;3;;2;1;34;0;0;;1
+456;2206;Trauben blau;;3;;2;1;34;0;0;;1
+457;2207;Trauben rose kernlso;;3;;2;1;34;0;0;;1
+458;2208;Trauben weißkernlos 8,2 Kg;8200;3;;2;1;34;0;0;;1
+459;2271;Trauben weiß Viktoria;;3;;2;1;34;0;0;;1
+460;2301;Trauben blau;;3;;2;1;34;0;0;;1
+461;2330;Trauben blau Ribol;;3;;2;1;34;0;0;;1
+462;264;Erdbeeren D;;3;;2;1;34;0;0;;1
+463;269;Erdbeeren;;3;;2;1;34;0;0;;1
+464;290;Johannisbeeren rot 500 gr;500;3;;2;1;34;0;0;;1
+465;3000;Zwetschgen;;3;;2;1;34;0;0;;1
+466;305;Johannisbeeren weiß 500 gr;500;3;;2;1;34;0;0;;1
+467;312;Heidelbeeren 250 gr;250;3;;2;1;34;0;0;;1
+468;3200;Zitronengras;;3;;2;1;34;0;0;;1
+469;401;Abate Fetel  Sandri;;3;;2;1;34;0;0;;1
+470;405;Abate Fetel;;3;;2;1;34;0;0;;1
+471;410;Rosada Birnen;;3;;2;1;34;0;0;;1
+472;421;Santa Maria Sandri;;3;;2;1;34;0;0;;1
+473;430;Williams Christ Birnen;;3;;2;1;34;0;0;;1
+474;431;Red Bartlet Sandri;;3;;2;1;34;0;0;;1
+475;433;Williams;;3;;2;1;34;0;0;;1
+476;441;Williams  Sandri;;3;;2;1;34;0;0;;1
+477;442;Conferemce Birnen;;3;;2;1;34;0;0;;1
+478;460;Alexander Lucas Birnen;;3;;2;1;34;0;0;;1
+479;465;Packhams Triumph Birnen;;3;;2;1;34;0;0;;1
+480;469;Forelle Birnen;;3;;2;1;34;0;0;;1
+481;472;Birnen Morettini;;3;;2;1;34;0;0;;1
+482;601;Clementinen Diamant;;3;;2;1;34;0;0;;1
+483;602;Clementinen Le Gamin;;3;;2;1;34;0;0;;1
+484;604;Clementinen Blatt Kado;;3;;2;1;34;0;0;;1
+485;611;Clementinen Brio;;3;;2;1;34;0;0;;1
+486;617;Clementinen;;3;;2;1;34;0;0;;1
+487;618;Clementine Nadorcott;;3;;2;1;34;0;0;;1
+488;701;Feigen;;3;;2;1;34;0;0;;1
+489;731;Granatäpfel;;3;;2;1;34;0;0;;1
+490;7404;Tomaten lose;;3;;2;1;34;0;0;;1
+491;813;Kirschen;;3;;2;1;34;0;0;;1
+492;814;Kirschen D;;3;;2;1;34;0;0;;1
+493;900;Kiwi;;3;;2;1;34;0;0;;1
+494;954;Kumquats;;3;;2;1;34;0;0;;1
+495;982;Limetten;;3;;2;1;34;0;0;;1
+496;;Testartikel1;;3;;1;1;34;0;0;10;1
+497;;Testartikel2;;3;;1;1;34;0;0;20;1

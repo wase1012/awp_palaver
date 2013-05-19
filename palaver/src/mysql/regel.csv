@@ -1,0 +1,6 @@
+id;zeile;spalte;regeltyp;operator;kriterien;fehlermeldung;aktiv
+1;3;;Kategorie;enthält nicht;Fleischgericht;In dieser Zeile darf nur ein Fleischgericht eingefügt werden!;1
+2;4, 5;;Kategorie;enthält nicht;Hauptgericht;In dieser Zeile darf nur ein Hauptgericht eingefügt werden!;1
+3;6;;Kategorie;enthält nicht;Pasta;In dieser Zeile darf nur ein Pastagericht eingefügt werden!;1
+4;7;;Kategorie;enthält nicht;Suppe, Salat;In dieser Zeile darf nur eine Suppe oder ein Salat eingefügt werden!;1
+5;8;;Kategorie;enthält nicht;Dessert;In dieser Zeile darf nur Dessert eingefügt werden!;1

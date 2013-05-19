@@ -1,0 +1,10 @@
+id; name; vorname; email; passwort; eintrittsdatum; austrittsdatum
+1;Saur;Shanta;a.s.saur@web.de;start;;
+2;Tolone;Bärbel;baerbeltolone@hotmail.com;start;;
+3;Eisele;Susu;susuhex@web.de;start;01.05.2003;
+4;Waltert;Yashoda;yashodawaltert@yahoo.de;start;01.01.1999;
+5;Klingler;Kai;KaiKlingler@googlemail.com;start;01.05.2010;
+6;Hugel;Hugi;hugi@wildewelt.com;start;01.02.2010;
+7;Gemein;Claudia;claudia.gemein@web.de;start;01.01.2012;
+8;Seither;Fabienne; fabienne@target-concerts.de;start;01.07.2006;
+9;Gastkoch;Gastkoch;;start;;
