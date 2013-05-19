@@ -12,6 +12,17 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import de.bistrosoft.palaver.gui.view.FussnoteEinst;
+import de.bistrosoft.palaver.gui.view.GeschmackEinst;
+import de.bistrosoft.palaver.gui.view.MenueAnlegen;
+import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
+import de.bistrosoft.palaver.gui.view.Menueplan;
+import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
+import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
+import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
+import de.bistrosoft.palaver.gui.view.RezeptartEinst;
+import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
@@ -177,6 +188,39 @@ public class MainLayout extends VerticalLayout implements Command
 			case IConstants.MENU_BESTELLUNG_ANZEIGEN:
 				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
 			break;
+			case IConstants.MENU_REZEPT_ANZEIGEN:
+				ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+				break;
+			case IConstants.MENU_REZEPT_NEU:
+				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+				break;
+			case IConstants.MENU_MENUPLAN_AKTUELL:
+				ViewHandler.getInstance().switchView(Menueplan.class);
+				break;
+			case IConstants.MENU_MENUPLAN_HISTORIE:
+				ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+				break;
+			case IConstants.MENU_FUSSNOTE:
+				ViewHandler.getInstance().switchView(FussnoteEinst.class);
+				break;
+			case IConstants.MENU_GESCHMACK:
+				ViewHandler.getInstance().switchView(GeschmackEinst.class);
+				break;
+			case IConstants.MENU_REZEPTART:
+				ViewHandler.getInstance().switchView(RezeptartEinst.class);
+				break;
+			case IConstants.MENU_ZUBEREITUNG:
+				ViewHandler.getInstance().switchView(ZubereitungEinst.class);
+				break;
+			case IConstants.MENU_MENUE_ANLEGEN:
+				ViewHandler.getInstance().switchView(MenueAnlegen.class);
+				break;
+			case IConstants.MENU_MENUE_SUCHEN:
+				ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
+				break;
+			case IConstants.MENU_REGEL:
+				ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
+				break;
 			default: 
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			break;
