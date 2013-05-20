@@ -58,6 +58,18 @@ public class Nachrichtenverwaltung extends NachrichtDAO {
 		
 	}
 	
+	public List<Nachricht> findNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
+		if(rid == null) {
+			return null;
+		}
+		
+		List<Nachricht> nachrichten = null;
+		nachrichten = super.getNachrichtByRolleId(rid);
+		
+		return nachrichten;
+		
+	}
+	
 	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException {
 		
 		final List<Nachricht> nachrichten = super.getAllNachricht();
