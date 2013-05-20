@@ -11,6 +11,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletService;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -123,11 +124,21 @@ public class Application extends UI
 		setUsername(username);
 		layout = new MainLayout();
 	}
+	
+	@Override
+	public void close()
+	{
+		log.info("Closing Application");
+		super.close();
+
+		super.getSession().close();
+		getPage().setLocation("/Logout");
+		instance = null;
+	}
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response)
 	{
 		currentApplication.set(this);
-
 		log.info("IP : " +request.getRemoteAddr());
 	}
 
