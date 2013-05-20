@@ -4,13 +4,16 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.RollenDAO;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.AbstractTest;
 
@@ -31,13 +34,13 @@ public class RollenTest extends AbstractTest{
 
 		assertThat(rolle.getId(), is(id));
 		
-//		List <Mitarbeiter> list = new ArrayList<Mitarbeiter>();
-//			
-//		list = rolle.getMitarbeiters();
-//		if(list==null){
-//			System.out.print("liste von Mitarbeitern ist leer");
-//		}
-//		assertThat(list.isEmpty(), is(false));
+		List <Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+			
+		list = rolle.getMitarbeiters();
+		if(list==null){
+			System.out.print("liste von Mitarbeitern ist leer");
+		}
+		assertThat(list.isEmpty(), is(false));
 		
     }
     
@@ -59,6 +62,8 @@ public class RollenTest extends AbstractTest{
 		System.out.println(list);
 	}
     
+    //Test funktioniert nur einmal, da Spalten unique sind und somit keine doppelten Rollen zulassen
+    @Ignore
     @Test
     public void createRollen() throws Exception {
     	
@@ -80,7 +85,7 @@ public class RollenTest extends AbstractTest{
 		List<Rollen> list = null;
 		Long id = Long.valueOf(1);
 		
-			list = rdao.getRollenByMitarbeiterFK(id);
+			list = rdao.getRollenByMitarbeiterId(id);
 			
 		assertThat(list.isEmpty(), is(false));
 		System.out.println(list);
