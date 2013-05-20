@@ -426,6 +426,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`bestellung` (
   `lieferant_fk` INT NOT NULL ,
   `datum` DATE NOT NULL ,
   `lieferdatum` VARCHAR(50) NULL ,
+  `bestellt` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `LIEFERANT_FK_idx` (`lieferant_fk` ASC) ,
   CONSTRAINT `LIEFERANT_FK`
@@ -450,6 +451,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`bestellposition` (
   `gesamt` INT NULL ,
   `freitag` INT NULL ,
   `montag` INT NULL ,
+  `geliefert` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `ARTIKEL_FK_idx` (`artikel_fk` ASC) ,
   INDEX `BESTELL_FK_idx` (`bestellung_fk` ASC) ,
