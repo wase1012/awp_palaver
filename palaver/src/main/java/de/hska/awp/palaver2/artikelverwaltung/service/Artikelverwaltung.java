@@ -2,19 +2,19 @@
  * Created by Sebastian Walz
  * 24.04.2013 16:08:18
  */
-package main.java.de.hska.awp.palaver2.artikelverwaltung.service;
+package de.hska.awp.palaver2.artikelverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import main.java.de.hska.awp.palaver2.data.ArtikelDAO;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.KategorieDAO;
-import main.java.de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.data.ArtikelDAO;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.KategorieDAO;
+import de.hska.awp.palaver2.data.MengeneinheitDAO;
 
 public class Artikelverwaltung extends ArtikelDAO {
 	private static Artikelverwaltung instance = null;

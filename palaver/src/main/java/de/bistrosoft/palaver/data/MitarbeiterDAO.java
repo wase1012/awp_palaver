@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.data;
+package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,11 +6,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import main.java.de.hska.awp.palaver2.data.AbstractDAO;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.hska.awp.palaver2.data.AbstractDAO;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
 /*
  * @Author PhilippT

@@ -2,7 +2,7 @@
  * Created by Christian Barth
  * 26.04.2013 - 09:32:35
  */
-package main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain;
+package de.hska.awp.palaver2.lieferantenverwaltung.domain;
 
 /**
  * Klasse Lieferant 

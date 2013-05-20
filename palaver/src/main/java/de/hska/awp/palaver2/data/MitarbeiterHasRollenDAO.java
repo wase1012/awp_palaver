@@ -1,4 +1,4 @@
-package main.java.de.hska.awp.palaver2.data;
+package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,9 +6,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.MitarbeiterHasRollen;
-import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.MitarbeiterHasRollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 public class MitarbeiterHasRollenDAO extends AbstractDAO{
 

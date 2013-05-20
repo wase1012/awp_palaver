@@ -2,7 +2,7 @@
  * Created by Sebastian
  * 17.04.2013 - 16:24:51
  */
-package main.java.de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -27,22 +27,22 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import main.java.de.hska.awp.palaver2.util.CustomDoubleValidator;
-import main.java.de.hska.awp.palaver2.util.IConstants;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.CustomDoubleValidator;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian Walz

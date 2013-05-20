@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.data;
+package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,18 +6,18 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import main.java.de.bistrosoft.palaver.util.Util;
-import main.java.de.hska.awp.palaver2.data.AbstractDAO;
-import main.java.de.hska.awp.palaver2.data.ArtikelDAO;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.Util;
+import de.hska.awp.palaver2.data.AbstractDAO;
+import de.hska.awp.palaver2.data.ArtikelDAO;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.MengeneinheitDAO;
 
 public class RezeptDAO extends AbstractDAO {
 

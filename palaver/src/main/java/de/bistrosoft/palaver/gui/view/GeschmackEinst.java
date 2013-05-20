@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.gui.view;
+package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 
@@ -24,19 +24,19 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.data.GeschmackDAO;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
-import main.java.de.hska.awp.palaver2.util.customFilter;
-import main.java.de.hska.awp.palaver2.util.customFilterDecorator;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Michael Marschall Jan Lauinger - Geschmack hinzufügen

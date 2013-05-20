@@ -2,15 +2,15 @@
  * Created by Christian Barth
  * 17.04.2013 - 14:54:02
  */
-package main.java.de.hska.awp.palaver2.lieferantenverwaltung.service;
+package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.LieferantDAO;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.LieferantDAO;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der Lieferanten und stellt für die GUI

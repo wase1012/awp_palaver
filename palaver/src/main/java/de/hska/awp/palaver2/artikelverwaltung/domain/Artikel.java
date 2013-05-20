@@ -1,9 +1,9 @@
 /**
  * Created by Sebastian Walz
  */
-package main.java.de.hska.awp.palaver2.artikelverwaltung.domain;
+package de.hska.awp.palaver2.artikelverwaltung.domain;
 
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 
 public class Artikel implements java.io.Serializable 

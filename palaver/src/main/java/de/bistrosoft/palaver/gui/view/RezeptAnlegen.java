@@ -4,7 +4,7 @@
  * 18.04.2013 - 21:21:58
  *
  */
-package main.java.de.bistrosoft.palaver.gui.view;
+package de.bistrosoft.palaver.gui.view;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -35,30 +35,30 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.data.GeschmackDAO;
-import main.java.de.bistrosoft.palaver.data.MitarbeiterDAO;
-import main.java.de.bistrosoft.palaver.data.RezeptDAO;
-import main.java.de.bistrosoft.palaver.data.RezeptartDAO;
-import main.java.de.bistrosoft.palaver.data.ZubereitungDAO;
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
-import main.java.de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.bistrosoft.palaver.data.RezeptDAO;
+import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.IConstants;
 
 /**
  * @author Jan Lauinger

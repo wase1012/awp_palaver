@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.gui.view;
+package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 
@@ -15,17 +15,17 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import main.java.de.hska.awp.palaver2.util.IConstants;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
-import main.java.de.hska.awp.palaver2.util.customFilter;
-import main.java.de.hska.awp.palaver2.util.customFilterDecorator;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Jan Lauinger
@@ -119,7 +119,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * main.java.de.hska.awp.palaver2.util.View#getViewParam(main.java.de.hska.awp.palaver2.util
+	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
 	 * .ViewData)
 	 */
 	@Override

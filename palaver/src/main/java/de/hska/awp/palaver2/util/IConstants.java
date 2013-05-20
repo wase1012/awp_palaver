@@ -2,14 +2,14 @@
  * Created by Sebastian Walz
  * 16.04.2013 14:54:32
  */
-package main.java.de.hska.awp.palaver2.util;
+package de.hska.awp.palaver2.util;
 
 public interface IConstants
 {
 	//1433
 	//3306
 	// DB Verbindung
-	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";

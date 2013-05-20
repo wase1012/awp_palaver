@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 02.05.2013 15:42:42
  */
-package main.java.de.hska.awp.palaver2.util;
+package de.hska.awp.palaver2.util;
 
 import com.vaadin.data.validator.AbstractStringValidator;
 

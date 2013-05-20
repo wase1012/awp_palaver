@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.util;
+package de.bistrosoft.palaver.util;
 
 public class Util {
 	public static Integer convertBoolean(Boolean bool) {

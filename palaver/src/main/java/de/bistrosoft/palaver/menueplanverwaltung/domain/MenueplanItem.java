@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.menueplanverwaltung.domain;
+package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 import java.awt.Component;
 

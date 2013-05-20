@@ -1,15 +1,15 @@
 /**
  * 
  */
-package main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.service;
+package de.bistrosoft.palaver.mitarbeiterverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.data.MitarbeiterDAO;
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 
 /**

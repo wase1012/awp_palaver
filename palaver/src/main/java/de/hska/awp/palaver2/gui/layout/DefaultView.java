@@ -2,15 +2,15 @@
  * Created by Sebastian
  * 17.04.2013 - 13:37:37
  */
-package main.java.de.hska.awp.palaver2.gui.layout;
+package de.hska.awp.palaver2.gui.layout;
 
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
 
 /**
  * @author Sebastian
@@ -30,7 +30,7 @@ public class DefaultView extends VerticalLayout implements View
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.de.hska.awp.palaver2.util.View#getViewParam(main.java.de.hska.awp.palaver2.util.ViewData)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
 	 */
 	@Override
 	public void getViewParam(ViewData data)

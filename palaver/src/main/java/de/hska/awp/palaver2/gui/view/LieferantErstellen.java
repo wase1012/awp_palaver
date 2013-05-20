@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 18.04.2013 15:41:31
  */
-package main.java.de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
@@ -24,15 +24,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import main.java.de.hska.awp.palaver2.util.IConstants;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class LieferantErstellen extends VerticalLayout implements View

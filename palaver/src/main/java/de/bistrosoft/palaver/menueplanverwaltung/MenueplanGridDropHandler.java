@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.menueplanverwaltung;
+package de.bistrosoft.palaver.menueplanverwaltung;
 
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.server.Sizeable;

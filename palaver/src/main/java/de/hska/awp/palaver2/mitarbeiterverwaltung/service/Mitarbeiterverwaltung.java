@@ -1,12 +1,12 @@
-package main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.service;
+package de.hska.awp.palaver2.mitarbeiterverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.MitarbeiterDAO;
-import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 
 public class Mitarbeiterverwaltung extends MitarbeiterDAO {

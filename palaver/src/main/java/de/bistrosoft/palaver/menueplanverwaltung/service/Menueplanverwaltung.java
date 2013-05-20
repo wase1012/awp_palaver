@@ -1,14 +1,14 @@
-package main.java.de.bistrosoft.palaver.menueplanverwaltung.service;
+package de.bistrosoft.palaver.menueplanverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.data.MenueplanDAO;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import main.java.de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.util.Week;
 
 public class Menueplanverwaltung extends MenueplanDAO {
 

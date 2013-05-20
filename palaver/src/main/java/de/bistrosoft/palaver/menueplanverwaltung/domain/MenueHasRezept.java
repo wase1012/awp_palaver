@@ -1,7 +1,7 @@
-package main.java.de.bistrosoft.palaver.menueplanverwaltung.domain;
+package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 public class MenueHasRezept implements java.io.Serializable {
 

@@ -1,4 +1,4 @@
-package main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
+package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
 
 import java.util.ArrayList;
 import java.util.List;

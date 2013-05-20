@@ -2,7 +2,7 @@
  * Created by Christian Barth
  * 06.05.2013 - 10:43:40
  */
-package main.java.de.hska.awp.palaver2.bestellverwaltung.service;
+package de.hska.awp.palaver2.bestellverwaltung.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -10,19 +10,19 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import main.java.de.bistrosoft.palaver.data.MenueplanDAO;
-//import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-//import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-//import main.java.de.bistrosoft.palaver.util.Week;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
-import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import main.java.de.hska.awp.palaver2.data.ArtikelDAO;
-import main.java.de.hska.awp.palaver2.data.BestellungDAO;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.LieferantDAO;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+//import de.bistrosoft.palaver.data.MenueplanDAO;
+//import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+//import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+//import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.data.ArtikelDAO;
+import de.hska.awp.palaver2.data.BestellungDAO;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.LieferantDAO;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Christian Barth

@@ -1,4 +1,4 @@
-package main.java.de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
@@ -22,17 +22,17 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import main.java.de.hska.awp.palaver2.util.IConstants;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class LieferantSuche extends VerticalLayout  implements View{
@@ -633,7 +633,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.de.hska.awp.palaver2.util.View#getViewParam(main.java.de.hska.awp.palaver2.util.ViewData)
+	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
 	 */
 	@Override
 	public void getViewParam(ViewData data)

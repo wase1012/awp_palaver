@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.menueplanverwaltung;
+package de.bistrosoft.palaver.menueplanverwaltung;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,15 +20,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import main.java.de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import main.java.de.bistrosoft.palaver.util.CalendarWeek;
-import main.java.de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.util.CalendarWeek;
+import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;

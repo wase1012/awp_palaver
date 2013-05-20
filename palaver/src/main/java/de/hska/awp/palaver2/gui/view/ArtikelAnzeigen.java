@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 24.04.2013 16:03:13
  */
-package main.java.de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
@@ -24,17 +24,17 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.util.IConstants;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
-import main.java.de.hska.awp.palaver2.util.customFilter;
-import main.java.de.hska.awp.palaver2.util.customFilterDecorator;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Sebastian Walz

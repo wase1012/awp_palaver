@@ -1,7 +1,7 @@
 /**
  * Created by Elena W
  */
-package main.java.de.hska.awp.palaver2.data;
+package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 /**
  * Klasse BestellungpositionDAO. Die Klasse stellt für die Bestellung alle notwendigen

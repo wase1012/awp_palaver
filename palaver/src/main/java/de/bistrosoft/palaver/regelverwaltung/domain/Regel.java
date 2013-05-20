@@ -1,17 +1,17 @@
-package main.java.de.bistrosoft.palaver.regelverwaltung.domain;
+package de.bistrosoft.palaver.regelverwaltung.domain;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import main.java.de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {

@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.gui.view;
+package de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.bistrosoft.palaver.data.MenueDAO;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.hska.awp.palaver2.util.ViewDataObject;
-import main.java.de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.MenueDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 
 @SuppressWarnings("serial")

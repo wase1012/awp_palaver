@@ -1,12 +1,12 @@
-package main.java.de.hska.awp.palaver2.artikelverwaltung.service;
+package de.hska.awp.palaver2.artikelverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.data.KategorieDAO;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.KategorieDAO;
 
 public class Kategorienverwaltung extends KategorieDAO {
 

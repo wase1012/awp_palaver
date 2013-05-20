@@ -1,7 +1,7 @@
 /**
  * 	Sebastian Walz
  */
-package main.java.de.hska.awp.palaver2.data;
+package de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.de.hska.awp.palaver2.data.ConnectException;
-import main.java.de.hska.awp.palaver2.data.DAOException;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import main.java.de.hska.awp.palaver2.util.Util;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.util.Util;
 
 /**
  * Klasse ArtikelDAO. Die Klasse stellt für den Artikel alle

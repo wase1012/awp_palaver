@@ -1,4 +1,4 @@
-package main.java.de.bistrosoft.palaver.gui.view;
+package de.bistrosoft.palaver.gui.view;
 
 //import org.vaadin.virkki.carousel.HorizontalCarousel;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
@@ -21,11 +21,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.Label;
 
-import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import main.java.de.bistrosoft.palaver.util.CalendarWeek;
-import main.java.de.hska.awp.palaver2.util.View;
-import main.java.de.hska.awp.palaver2.util.ViewData;
-import main.java.de.bistrosoft.palaver.util.Week;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.util.CalendarWeek;
+import de.hska.awp.palaver2.util.View;
+import de.hska.awp.palaver2.util.ViewData;
+import de.bistrosoft.palaver.util.Week;
 
 
 @SuppressWarnings("serial")
