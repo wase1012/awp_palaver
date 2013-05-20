@@ -21,6 +21,7 @@ public class Bestellposition implements java.io.Serializable {
 	private Integer gesamt;
 	private Integer freitag;
 	private Integer montag;
+	private boolean geliefert;
 
 	public Bestellposition() {
 		super();
@@ -33,7 +34,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param menge
 	 */
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, 
-			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag) {
+			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, boolean geliefert) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -43,18 +44,13 @@ public class Bestellposition implements java.io.Serializable {
 		this.gesamt = gesamt;
 		this.freitag = freitag;
 		this.montag = montag;
+		this.geliefert = geliefert;
 	}
-
-
-
 
 	public Long getId() {
 		return this.id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(Long id)
 	{
 		this.id = id;
@@ -77,7 +73,6 @@ public class Bestellposition implements java.io.Serializable {
 		return this.bestellung;
 	}
 
-	
 	public void setBestellung(Bestellung bestellung) {
 		this.bestellung = bestellung;
 	}
@@ -115,9 +110,6 @@ public class Bestellposition implements java.io.Serializable {
 		this.gesamt = gesamt;
 	}
 
-	/**
-	 * @return the freitag
-	 */
 	public Integer getFreitag() {
 		if(freitag==null){
 			freitag = 0;
@@ -125,16 +117,10 @@ public class Bestellposition implements java.io.Serializable {
 		return freitag;
 	}
 
-	/**
-	 * @param freitag the freitag to set
-	 */
 	public void setFreitag(Integer freitag) {
 		this.freitag = freitag;
 	}
 
-	/**
-	 * @return the montag
-	 */
 	public Integer getMontag() {
 		if(montag==null){
 			montag = 0;
@@ -142,11 +128,16 @@ public class Bestellposition implements java.io.Serializable {
 		return montag;
 	}
 
-	/**
-	 * @param montag the montag to set
-	 */
 	public void setMontag(Integer montag) {
 		this.montag = montag;
+	}
+
+	public boolean isGeliefert() {
+		return geliefert;
+	}
+
+	public void setGeliefert(boolean geliefert) {
+		this.geliefert = geliefert;
 	}
 
 

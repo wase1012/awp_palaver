@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.util.Util;
 
 /**
- * Klasse BestellungDAO. Die Klasse stellt fÃ¼r die Bestellung alle notwendigen
+ * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
  * Methoden bereit um auf die Datenbank zuzugreifen.
  * 
  * @author Elena W
@@ -24,7 +25,8 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String LIEFERANT_FK = "lieferant_fk";
 	private final static String DATUM = "datum";
 	private final static String LIEFERDATUM = "lieferdatum";
-
+	private final static String BESTELLT = "bestellt";
+	
 	private final static String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE;
 	private final static String GET_BESTELLUNG_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
@@ -45,7 +47,7 @@ public class BestellungDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAllBestellungen liefert alle in der Datenbank befindlichen
-	 * Bestellungen zurÃ¼ck ohne Bestellpositionen.
+	 * Bestellungen zurück ohne Bestellpositionen.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -59,13 +61,14 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
 					.getLieferantById(set.getLong(LIEFERANT_FK)), set
-					.getDate(DATUM), set.getString(LIEFERDATUM)));
+					.getDate(DATUM), set.getString(LIEFERDATUM),
+					set.getBoolean(BESTELLT)));
 		}
 		return list;
 	}
 
 	/**
-	 * Die Methode getBestellungById liefert ein Ergebnisse zurÃ¼ck bei der Suche
+	 * Die Methode getBestellungById liefert ein Ergebnisse zurück bei der Suche
 	 * nach einer Bestellung in der Datenbank inklusive Bestellpositionen.
 	 * 
 	 * @param id
@@ -83,9 +86,10 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), set.getString(LIEFERDATUM));
+					set.getDate(DATUM), set.getString(LIEFERDATUM), BestellpositionDAO.getInstance().
+					getBestellpositionenByBestellungId(set.getLong(ID)), set.getBoolean(BESTELLT));
 		}
-//		 BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id)
+		 
 		return bestellung;
 	}
 
@@ -106,10 +110,12 @@ public class BestellungDAO extends AbstractDAO {
 		}
 		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
-				+ DATUM  + "," + LIEFERDATUM + ")" + "VALUES" + "('"
+				+ DATUM  + "," + LIEFERDATUM + ","+ BESTELLT + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "','"
-				+ bestellung.getLieferdatum()+ "')";
+				+ bestellung.getLieferdatum() + "','"
+				+ Util.convertBoolean(bestellung.isBestellt())
+				+ "')";
 		this.putManaged(INSERT_QUERY);
 			
 		List<Bestellung> bestellungen = getAllBestellungen();
@@ -123,7 +129,7 @@ public class BestellungDAO extends AbstractDAO {
 		}
 		
 	}
-//TODO Bestellpositionen
+
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
 	 * 
@@ -137,7 +143,8 @@ public class BestellungDAO extends AbstractDAO {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + LIEFERANT_FK + "='"
 				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
 				+ bestellung.getDatum() + "'," + LIEFERDATUM + "='"
-				+ bestellung.getLieferdatum() + "' WHERE " + ID + "='"
+				+ bestellung.getLieferdatum() +  "'," + BESTELLT + "='"
+				+ Util.convertBoolean(bestellung.isBestellt()) + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 		

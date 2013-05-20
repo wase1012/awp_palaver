@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver2.util.Util;
 
 /**
- * Klasse BestellungpositionDAO. Die Klasse stellt für die Bestellung alle notwendigen
+ * Klasse BestellungpositionDAO. Die Klasse stellt f�r die Bestellung alle notwendigen
  * Methoden bereit um auf die Datenbank zuzugreifen.
  * 
  * @author Elena W
  * 
  */
 public class BestellpositionDAO extends AbstractDAO{
-	
 	
 	private static BestellpositionDAO instance = null;
 
@@ -33,6 +33,7 @@ public class BestellpositionDAO extends AbstractDAO{
 	private final static String GESAMT = "gesamt";
 	private final static String FREITAG = "freitag";
 	private final static String MONTAG = "montag";
+	private final static String GELIEFERT = "geliefert";
 
 	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
@@ -74,7 +75,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			bp = new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG));
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT));
 		}
 
 		return bp;
@@ -100,7 +101,7 @@ public class BestellpositionDAO extends AbstractDAO{
 			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
-					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG)));
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
 		}
 
 		return list;
@@ -118,14 +119,16 @@ public class BestellpositionDAO extends AbstractDAO{
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException,
 			DAOException, SQLException, ParseException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "("
-				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + "," + FREITAG + "," + MONTAG + ")"
+				+ ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT + "," + FREITAG + "," + MONTAG + "," + GELIEFERT + ")"
 				+ "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
 				+ bestellposition.getBestellung().getId() + "','"
 				+ bestellposition.getDurchschnitt() + "','"
 				+ bestellposition.getKantine() + "','"
 				+ bestellposition.getGesamt() + "','"
 				+ bestellposition.getFreitag() + "','"
-				+ bestellposition.getMontag() + "')";
+				+ bestellposition.getMontag() + "','"
+				+ Util.convertBoolean(bestellposition.isGeliefert())
+				+ "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -138,10 +141,6 @@ public class BestellpositionDAO extends AbstractDAO{
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	/* 
-	 * änderung von Mihail Boehm: Anführungszeichen wurde gelöscht, 
-	 * jetzt Update funktioniert
-	 */
 	public void updateBestellposition(Bestellposition bestellposition)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ARTIKEL_FK + "='"
@@ -151,7 +150,9 @@ public class BestellpositionDAO extends AbstractDAO{
 				+ "'," + KANTINE + "='" + bestellposition.getKantine() + "',"
 				+ GESAMT + "='" + bestellposition.getGesamt() + "'," + FREITAG
 				+ "='" + bestellposition.getFreitag() + "'," + MONTAG + "='"
-				+ bestellposition.getMontag() + "' WHERE " + ID
+				+ bestellposition.getMontag() + "'," + GELIEFERT + "='" 
+				+ Util.convertBoolean(bestellposition.isGeliefert())
+				+ "' WHERE " + ID
 				+ "='" + bestellposition.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}

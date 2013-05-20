@@ -20,17 +20,19 @@ public class Bestellung implements java.io.Serializable {
 	private Date datum;
 	private String lieferdatum;
 	private List<Bestellposition> bestellpositionen;
+	private boolean bestellt;
 	
 	public Bestellung() {
 		super();
 	}
 
-	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum, boolean bestellt) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
 		this.lieferdatum = lieferdatum;
+		this.bestellt = bestellt;
 	}
 
 	/**
@@ -39,13 +41,14 @@ public class Bestellung implements java.io.Serializable {
 	 * @param datum
 	 * @param bestellpositionen
 	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum, List<Bestellposition> bestellpositionen) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, String lieferdatum, List<Bestellposition> bestellpositionen, boolean bestellt) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
 		this.lieferdatum = lieferdatum;
 		this.bestellpositionen = bestellpositionen;
+		this.bestellt = bestellt;
 	}
 
 
@@ -70,16 +73,10 @@ public class Bestellung implements java.io.Serializable {
 		this.datum = datum;
 	}
 
-	/**
-	 * @return the lieferdatum
-	 */
 	public String getLieferdatum() {
 		return lieferdatum;
 	}
 
-	/**
-	 * @param lieferdatum the lieferdatum to set
-	 */
 	public void setLieferdatum(String lieferdatum) {
 		this.lieferdatum = lieferdatum;
 	}
@@ -98,6 +95,14 @@ public class Bestellung implements java.io.Serializable {
 		}
 		bestellpositionen.add(bestellposition);
 		return this;
+	}
+
+	public boolean isBestellt() {
+		return bestellt;
+	}
+
+	public void setBestellt(boolean bestellt) {
+		this.bestellt = bestellt;
 	}
 
 	/* (non-Javadoc)
