@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.gui.layout.DefaultView;
-import de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * @author Sebastian
@@ -35,7 +34,23 @@ public class ViewHandler
 	
 	public void switchView(Class<? extends View> view)
 	{
-		switchView(view, null); 
+		try
+		{
+			if (view != null)
+			{
+				View current = view.newInstance();
+				Application.getInstance().getLayout().removeComponent(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1));
+				Application.getInstance().getLayout().addComponent(current);
+				Application.getInstance().getLayout().setExpandRatio(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1), 1);
+				log.info("Switch View to: " + current.getClass());
+			}
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			Application.getInstance().getLayout().addComponent(new DefaultView());
+			Application.getInstance().getLayout().setExpandRatio(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1), 1);
+		}
 	}
 	
 	public void switchView(Class<? extends View> view, ViewData data)
@@ -46,10 +61,10 @@ public class ViewHandler
 			{
 				View current = view.newInstance();
 				Application.getInstance().getLayout().removeComponent(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1));
-				Application.getInstance().getLayout().addComponent(view.newInstance());
+				Application.getInstance().getLayout().addComponent(current);
 				Application.getInstance().getLayout().setExpandRatio(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1), 1);
 				current.getViewParam(data);
-				log.info("Switch View to: " + current.getClass());
+				log.info("Switch View to: " + current.getClass() + " with data: " + data);
 			}
 		} 
 		catch (Exception e)
@@ -57,7 +72,7 @@ public class ViewHandler
 			e.printStackTrace();
 			Application.getInstance().getLayout().addComponent(new DefaultView());
 			Application.getInstance().getLayout().setExpandRatio(Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() -1), 1);
-		} 
+		}
 	}
 	
 	public void returnToDefault()

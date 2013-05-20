@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServletService;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -126,7 +128,6 @@ public class Application extends UI
 	{
 		currentApplication.set(this);
 
-
 		log.info("IP : " +request.getRemoteAddr());
 	}
 
@@ -136,6 +137,4 @@ public class Application extends UI
 		currentApplication.set(null);
 		currentApplication.remove();
 	}
-	
-	
 }
