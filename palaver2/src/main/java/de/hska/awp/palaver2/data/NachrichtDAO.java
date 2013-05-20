@@ -20,6 +20,7 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 public class NachrichtDAO extends AbstractDAO {
 	
+	private static NachrichtDAO instance = null;
 	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
 	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
 	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
@@ -29,6 +30,13 @@ public class NachrichtDAO extends AbstractDAO {
 	public NachrichtDAO()
 	{
 		super();
+	}
+	
+	public static NachrichtDAO getInstance() {
+		if (instance == null) {
+			instance = new NachrichtDAO();
+		}
+		return instance;
 	}
 	
 	/**
