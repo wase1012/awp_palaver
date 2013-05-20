@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.menueplanverwaltung;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import main.java.de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 

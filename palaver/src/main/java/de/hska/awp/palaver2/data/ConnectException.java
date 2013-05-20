@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 public class ConnectException extends Exception {
 

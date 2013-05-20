@@ -5,4 +5,4 @@
  * @author Sebastian
  *
  */
-package de.hska.awp.palaver2.gui.layout;
+package main.java.de.hska.awp.palaver2.gui.layout;

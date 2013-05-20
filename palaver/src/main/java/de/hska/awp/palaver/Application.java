@@ -1,4 +1,4 @@
-package de.hska.awp.palaver;
+package main.java.de.hska.awp.palaver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +12,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.gui.layout.LoginForm;
-import de.hska.awp.palaver2.gui.layout.MainLayout;
+import main.java.de.hska.awp.palaver2.gui.layout.LoginForm;
+import main.java.de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * The Application's "main" class

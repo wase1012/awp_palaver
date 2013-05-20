@@ -5,4 +5,4 @@
  * @author Android
  *
  */
-package de.bistrosoft.palaver.menueplanverwaltung.service;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung.service;

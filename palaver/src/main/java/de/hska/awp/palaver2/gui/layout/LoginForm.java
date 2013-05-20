@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hska.awp.palaver2.gui.layout;
+package main.java.de.hska.awp.palaver2.gui.layout;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
@@ -18,7 +18,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-import de.hska.awp.palaver.Application;
+import main.java.de.hska.awp.palaver.Application;
 
 /**
  * @author Sebastian

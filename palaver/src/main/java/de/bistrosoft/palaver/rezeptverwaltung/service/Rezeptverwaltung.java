@@ -1,28 +1,28 @@
 /**
  * 
  */
-package de.bistrosoft.palaver.rezeptverwaltung.service;
+package main.java.de.bistrosoft.palaver.rezeptverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.data.ArtikelDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.data.FussnoteDAO;
-import de.bistrosoft.palaver.data.GeschmackDAO;
-import de.bistrosoft.palaver.data.RezeptDAO;
-import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.data.ZubereitungDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import main.java.de.hska.awp.palaver2.data.ArtikelDAO;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.data.FussnoteDAO;
+import main.java.de.bistrosoft.palaver.data.GeschmackDAO;
+import main.java.de.bistrosoft.palaver.data.RezeptDAO;
+import main.java.de.bistrosoft.palaver.data.RezeptartDAO;
+import main.java.de.bistrosoft.palaver.data.ZubereitungDAO;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 
 /**
  * @author Jan Lauinger

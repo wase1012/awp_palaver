@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
+package main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
 
 public class MitarbeiterHasRollen {
 	

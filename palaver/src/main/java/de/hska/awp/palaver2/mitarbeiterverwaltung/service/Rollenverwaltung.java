@@ -2,15 +2,15 @@
  * Created by Christian Barth
  * 18.05.2013 - 10:14:28
  */
-package de.hska.awp.palaver2.mitarbeiterverwaltung.service;
+package main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.RollenDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.hska.awp.palaver2.data.RollenDAO;
+import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 /**
  * @author Christian Barth

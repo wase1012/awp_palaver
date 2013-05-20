@@ -5,4 +5,4 @@
  * @author Android
  *
  */
-package de.bistrosoft.palaver.mitarbeiterverwaltung.service;
+package main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.service;

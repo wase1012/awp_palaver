@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 06.05.2013 12:11:49
  */
-package de.hska.awp.palaver2.util;
+package main.java.de.hska.awp.palaver2.util;
 
 import org.vaadin.risto.stepper.IntStepper;
 
@@ -10,8 +10,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.TextField;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 
 public class BestellungData
 {

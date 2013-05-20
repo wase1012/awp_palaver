@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 
@@ -19,17 +19,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
-import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewHandler;
-import de.hska.awp.palaver2.util.customFilter;
-import de.hska.awp.palaver2.util.customFilterDecorator;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
+import main.java.de.hska.awp.palaver2.util.View;
+import main.java.de.hska.awp.palaver2.util.ViewData;
+import main.java.de.hska.awp.palaver2.util.ViewHandler;
+import main.java.de.hska.awp.palaver2.util.customFilter;
+import main.java.de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Michael Marschall

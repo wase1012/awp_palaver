@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.popup;
+package main.java.de.hska.awp.palaver2.popup;
 
 import java.sql.SQLException;
 
@@ -16,13 +16,13 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import de.hska.awp.palaver2.util.IConstants;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import main.java.de.hska.awp.palaver2.util.IConstants;
 
 /**
  * 

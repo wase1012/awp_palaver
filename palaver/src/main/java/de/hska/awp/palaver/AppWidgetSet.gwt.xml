@@ -42,4 +42,14 @@
     -->
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
 
+
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+
+    <inherits name="main.java.de.hska.awp.palaver.AppWidgetSet" />
+
+    <inherits name="org.vaadin.risto.stepper.widgetset.StepperWidgetset" />
+
+    <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
+
+    <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
 </module>

@@ -1,6 +1,6 @@
 
  
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;
 
 import com.vaadin.client.ui.Action;
 import com.vaadin.ui.Alignment;

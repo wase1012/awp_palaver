@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 24.04.2013 20:12:03
  */
-package de.hska.awp.palaver2.gui.view;
+package main.java.de.hska.awp.palaver2.gui.view;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 import com.mysql.jdbc.Driver;
 
-import de.hska.awp.palaver2.util.IConstants;
+import main.java.de.hska.awp.palaver2.util.IConstants;
 
 public class Connector 
 {

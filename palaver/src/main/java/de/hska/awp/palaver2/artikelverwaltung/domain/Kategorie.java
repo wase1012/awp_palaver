@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.artikelverwaltung.domain;
+package main.java.de.hska.awp.palaver2.artikelverwaltung.domain;
 
 /**
  * Klasse Kategorie

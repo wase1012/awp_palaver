@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
+import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import main.java.de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 
 /**

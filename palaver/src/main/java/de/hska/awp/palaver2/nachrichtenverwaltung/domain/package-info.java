@@ -5,4 +5,4 @@
  * @author PhilippT
  *
  */
-package de.hska.awp.palaver2.nachrichtenverwaltung.domain;
+package main.java.de.hska.awp.palaver2.nachrichtenverwaltung.domain;

@@ -1,7 +1,7 @@
 /**
  * Sebastian Walz
  */
-package de.hska.awp.palaver2.gui.layout;
+package main.java.de.hska.awp.palaver2.gui.layout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,31 +15,31 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.MenuBar.MenuItem;
 
-import de.bistrosoft.palaver.gui.view.FussnoteEinst;
-import de.bistrosoft.palaver.gui.view.GeschmackEinst;
-import de.bistrosoft.palaver.gui.view.MenueAnlegen;
-import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.Menueplan;
-import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
-import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
-import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
-import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.RezeptartEinst;
-import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
-import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
-import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
-import de.hska.awp.palaver2.gui.view.BestellungErstellen;
-import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
-import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
-import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
-import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
-import de.hska.awp.palaver2.gui.view.LieferantErstellen;
-import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
-import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
-import de.hska.awp.palaver2.util.IConstants;
-import de.hska.awp.palaver2.util.ViewHandler;
+import main.java.de.bistrosoft.palaver.gui.view.FussnoteEinst;
+import main.java.de.bistrosoft.palaver.gui.view.GeschmackEinst;
+import main.java.de.bistrosoft.palaver.gui.view.MenueAnlegen;
+import main.java.de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
+import main.java.de.bistrosoft.palaver.gui.view.Menueplan;
+import main.java.de.bistrosoft.palaver.gui.view.MenueplanHistorie;
+import main.java.de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
+import main.java.de.bistrosoft.palaver.gui.view.RezeptAnlegen;
+import main.java.de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
+import main.java.de.bistrosoft.palaver.gui.view.RezeptartEinst;
+import main.java.de.bistrosoft.palaver.gui.view.ZubereitungEinst;
+import main.java.de.hska.awp.palaver.Application;
+import main.java.de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
+import main.java.de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import main.java.de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
+import main.java.de.hska.awp.palaver2.gui.view.BestellungErstellen;
+import main.java.de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
+import main.java.de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
+import main.java.de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
+import main.java.de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
+import main.java.de.hska.awp.palaver2.gui.view.LieferantErstellen;
+import main.java.de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
+import main.java.de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
+import main.java.de.hska.awp.palaver2.util.IConstants;
+import main.java.de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian

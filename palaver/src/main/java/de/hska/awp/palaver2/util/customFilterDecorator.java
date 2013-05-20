@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.util;
+package main.java.de.hska.awp.palaver2.util;
 
 import java.text.DateFormat;
 import java.util.Locale;

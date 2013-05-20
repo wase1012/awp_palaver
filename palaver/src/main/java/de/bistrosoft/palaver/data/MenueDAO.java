@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.data;
+package main.java.de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,14 +6,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import main.java.de.hska.awp.palaver2.data.AbstractDAO;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;

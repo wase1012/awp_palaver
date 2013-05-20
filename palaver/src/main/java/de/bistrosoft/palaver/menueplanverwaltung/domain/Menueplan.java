@@ -1,11 +1,11 @@
-package de.bistrosoft.palaver.menueplanverwaltung.domain;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.bistrosoft.palaver.util.Week;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
+import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import main.java.de.bistrosoft.palaver.util.Week;
 
 public class Menueplan {
 	private Long id;

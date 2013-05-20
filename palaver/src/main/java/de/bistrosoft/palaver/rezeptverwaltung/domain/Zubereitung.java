@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.rezeptverwaltung.domain;
+package main.java.de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 // Generated 24.04.2013 16:47:07 by Hibernate Tools 4.0.0
 

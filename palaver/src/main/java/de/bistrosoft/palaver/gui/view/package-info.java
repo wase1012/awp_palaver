@@ -8,4 +8,4 @@
  * @author Jan Lauinger
  *
  */
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;

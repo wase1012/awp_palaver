@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -10,10 +10,10 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import main.java.de.hska.awp.palaver2.util.View;
+import main.java.de.hska.awp.palaver2.util.ViewData;
+import main.java.de.hska.awp.palaver2.util.ViewDataObject;
 
 public class RezeptAnzeigen extends VerticalLayout implements View {
 

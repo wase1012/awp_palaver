@@ -1,11 +1,11 @@
-package de.bistrosoft.palaver.rezeptverwaltung.domain;
+package main.java.de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 // Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
 public class RezeptHasArtikel {
 

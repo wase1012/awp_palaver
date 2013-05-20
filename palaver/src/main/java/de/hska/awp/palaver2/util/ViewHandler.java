@@ -1,14 +1,14 @@
 /**
  * Created by Sebastian Walz
  */
-package de.hska.awp.palaver2.util;
+package main.java.de.hska.awp.palaver2.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.gui.layout.DefaultView;
-import de.hska.awp.palaver2.gui.layout.MainLayout;
+import main.java.de.hska.awp.palaver.Application;
+import main.java.de.hska.awp.palaver2.gui.layout.DefaultView;
+import main.java.de.hska.awp.palaver2.gui.layout.MainLayout;
 
 /**
  * @author Sebastian

@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.regelverwaltung;
+package main.java.de.bistrosoft.palaver.regelverwaltung;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -15,7 +15,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import main.java.de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 
 @SuppressWarnings("serial")
 public class WinCreateRegel extends Window {

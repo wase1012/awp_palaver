@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 16.04.2013 14:54:32
  */
-package de.hska.awp.palaver2.util;
+package main.java.de.hska.awp.palaver2.util;
 
 public interface IConstants
 {

@@ -1,9 +1,9 @@
-package de.bistrosoft.palaver.menueplanverwaltung.domain;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 import java.util.List;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 public class Menue {
 	private Long id;

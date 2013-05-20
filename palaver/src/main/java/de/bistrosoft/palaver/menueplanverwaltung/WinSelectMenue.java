@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.menueplanverwaltung;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +28,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import main.java.de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -294,7 +294,7 @@ public class WinSelectMenue extends Window {
 		});
 		
 		// bei Ändern Komponente aus Menüplan selektieren
-		if (menueGrid.getComponent(destCol, destRow).toString().contains("de.bistrosoft.palaver.menueplanverwaltung.MenueComponent")){
+		if (menueGrid.getComponent(destCol, destRow).toString().contains("main.java.de.bistrosoft.palaver.menueplanverwaltung.MenueComponent")){
 			Integer MenueSelected = new Integer (((MenueComponent) menueGrid.getComponent(destCol, destRow)).getMenue().getId().intValue());
 			Integer Index = new Integer(0);
 			for (int i = 0; i < menueList.getItemIds().size(); i++) {

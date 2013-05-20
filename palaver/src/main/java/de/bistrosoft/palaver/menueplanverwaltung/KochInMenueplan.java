@@ -1,6 +1,6 @@
-package de.bistrosoft.palaver.menueplanverwaltung;
+package main.java.de.bistrosoft.palaver.menueplanverwaltung;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class KochInMenueplan {
 	private Mitarbeiter koch;

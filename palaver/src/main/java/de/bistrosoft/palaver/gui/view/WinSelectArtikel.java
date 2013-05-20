@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 
 public class WinSelectArtikel extends Window {
 	

@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.artikelverwaltung.domain;
+package main.java.de.hska.awp.palaver2.artikelverwaltung.domain;
 /**
  * @author bach1014
  * @edit Mihail Boehm 27.04.2013

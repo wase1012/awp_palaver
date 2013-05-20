@@ -1,12 +1,12 @@
-package de.hska.awp.palaver2.artikelverwaltung.service;
+package main.java.de.hska.awp.palaver2.artikelverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.hska.awp.palaver2.data.MengeneinheitDAO;
 
 public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 

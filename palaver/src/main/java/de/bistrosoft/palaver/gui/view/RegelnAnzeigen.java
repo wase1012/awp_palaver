@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.gui.view;
+package main.java.de.bistrosoft.palaver.gui.view;
 
 import java.sql.SQLException;
 import com.vaadin.data.util.BeanItemContainer;
@@ -11,13 +11,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.data.RegelDAO;
-import de.bistrosoft.palaver.regelverwaltung.WinCreateRegel;
-import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.bistrosoft.palaver.data.RegelDAO;
+import main.java.de.bistrosoft.palaver.regelverwaltung.WinCreateRegel;
+import main.java.de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import main.java.de.hska.awp.palaver2.util.View;
+import main.java.de.hska.awp.palaver2.util.ViewData;
 
 @SuppressWarnings("serial")
 public class RegelnAnzeigen extends VerticalLayout implements View{

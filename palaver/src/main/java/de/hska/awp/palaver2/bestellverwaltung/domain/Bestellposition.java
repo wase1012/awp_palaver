@@ -1,6 +1,6 @@
-package de.hska.awp.palaver2.bestellverwaltung.domain;
+package main.java.de.hska.awp.palaver2.bestellverwaltung.domain;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
 
 

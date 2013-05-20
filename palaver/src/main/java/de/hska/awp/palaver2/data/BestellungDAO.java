@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen

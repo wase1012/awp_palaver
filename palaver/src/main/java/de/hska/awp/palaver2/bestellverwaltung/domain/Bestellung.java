@@ -1,10 +1,10 @@
-package de.hska.awp.palaver2.bestellverwaltung.domain;
+package main.java.de.hska.awp.palaver2.bestellverwaltung.domain;
 
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * @author Elena W

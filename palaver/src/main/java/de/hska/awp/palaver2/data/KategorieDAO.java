@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import main.java.de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 
 /**
  * @author Mihail Boehm

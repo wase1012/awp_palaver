@@ -1,14 +1,14 @@
-package de.hska.awp.palaver2.nachrichtenverwaltung.service;
+package main.java.de.hska.awp.palaver2.nachrichtenverwaltung.service;
 
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.NachrichtDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.hska.awp.palaver2.data.NachrichtDAO;
+import main.java.de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import main.java.de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 /**
  * @author PhilippT

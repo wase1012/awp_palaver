@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.util;
+package main.java.de.bistrosoft.palaver.util;
 
 public class Week {
 	private int week;

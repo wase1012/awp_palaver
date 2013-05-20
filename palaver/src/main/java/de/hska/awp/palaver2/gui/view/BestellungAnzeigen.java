@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.gui.view;
+package main.java.de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
@@ -15,16 +15,16 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import main.java.de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import main.java.de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
+import main.java.de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import main.java.de.hska.awp.palaver2.data.ConnectException;
+import main.java.de.hska.awp.palaver2.data.DAOException;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import main.java.de.hska.awp.palaver2.util.View;
+import main.java.de.hska.awp.palaver2.util.ViewData;
 
 /**
  * 

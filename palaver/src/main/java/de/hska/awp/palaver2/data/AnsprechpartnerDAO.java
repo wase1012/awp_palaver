@@ -2,7 +2,7 @@
  * Created by Christian Barth
  * 26.04.2013 - 08:32:35
  */
-package de.hska.awp.palaver2.data;
+package main.java.de.hska.awp.palaver2.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +10,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import main.java.de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
  * Klasse AnsprechpartnerDAO. Die Klasse stellt für den Ansprechpartner alle

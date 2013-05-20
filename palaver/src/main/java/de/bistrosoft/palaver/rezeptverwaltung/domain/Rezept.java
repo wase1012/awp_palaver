@@ -1,9 +1,9 @@
-package de.bistrosoft.palaver.rezeptverwaltung.domain;
+package main.java.de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 import java.sql.Date;
 import java.util.List;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import main.java.de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class Rezept implements java.io.Serializable {
 
