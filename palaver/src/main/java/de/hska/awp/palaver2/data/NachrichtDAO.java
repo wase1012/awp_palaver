@@ -10,6 +10,7 @@ import java.util.List;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
+import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 
 
 /**
@@ -23,12 +24,24 @@ public class NachrichtDAO extends AbstractDAO {
 	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
 	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
 	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
+	private static final String		GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM Nachricht WHERE empf_rolle_fk = {0}";
 	private static final String		CREATE_NACHRICHT = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values({0})";
 	private static final String		DELETE_NACHRICHT = "DELETE FROM Nachrichten WHERE id = {0}";
+	
+	private static NachrichtDAO 	instance = null;
 	
 	public NachrichtDAO()
 	{
 		super();
+	}
+	
+	public static NachrichtDAO getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new NachrichtDAO();
+		}
+		return instance;
 	}
 	
 	/**
@@ -87,6 +100,24 @@ public class NachrichtDAO extends AbstractDAO {
 		}
 		return list;
 		 
+	}
+	
+	public List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
+		
+		List<Nachricht> list = new ArrayList<Nachricht>();
+		
+		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ROLLE_ID, rid));
+		
+		while(set.next())
+		{
+			list.add(new Nachricht(set.getLong("id"),
+								set.getString("nachricht"),
+								new Mitarbeiter(),
+								new Rollen()
+								));
+		}
+		
+		return list;
 	}
 	
 	/**
