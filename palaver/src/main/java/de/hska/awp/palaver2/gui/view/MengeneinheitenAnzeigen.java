@@ -135,11 +135,13 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					mengNeu.setContent(layout);
 					
 					nameUp.setImmediate(true);
+					nameUp.setRequired(true);
 					nameUp.setValue(mengeUpdate.getName());
 					nameUp.setMaxLength(15);
 					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 					
 					kurzUp.setImmediate(true);
+					kurzUp.setRequired(true);
 					kurzUp.setValue(mengeUpdate.getKurz());
 					kurzUp.setMaxLength(4);	
 					kurzUp.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
@@ -240,6 +242,9 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				
 				name.setWidth("100%");
 				kurz.setWidth("100%");
+				
+				name.setRequired(true);
+				kurz.setRequired(true);
 
 				VerticalLayout feld = new VerticalLayout();
 			

@@ -84,16 +84,16 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private Artikel				artikel;
 	private String				nameText;
 	private String				kurzText;
-	private String nameInput;
-	private String strasseInput;
-	private String plzInput;
-	private String ortInput;
-	private String emailInput;
-	private String telefonInput;
-	private String faxInput;
-	private String bezInput;
-	private String knrInput;
-	private String notizInput;
+	private String 				nameInput;
+	private String 				strasseInput;
+	private String 				plzInput;
+	private String 				ortInput;
+	private String 				emailInput;
+	private String 				telefonInput;
+	private String 				faxInput;
+	private String 				bezInput;
+	private String				knrInput;
+	private String 				notizInput;
 	
 	/**
 	 * Der Konstruktor wird automatisch von dem ViewHandler aufgerufen. 
@@ -110,6 +110,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		name.setWidth("100%");
 		name.setImmediate(true);
+		name.setRequired(true);
 		name.addValidator(new StringLengthValidator("Name zu lang oder zu kurz: {0}",2,50,false));
 		
 		preis.setWidth("100%");
@@ -129,10 +130,13 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		bestellung.addValidator(new CustomDoubleValidator("Ungültige BestellgrößŸe: {0}"));
 		
 		lieferant.setWidth("100%");
+		lieferant.setRequired(true);
 		
 		mengeneinheit.setWidth("100%");
+		mengeneinheit.setRequired(true);
 		
 		kategorie.setWidth("100%");
+		kategorie.setRequired(true);
 		
 		durchschnitt.setEnabled(false);
 		

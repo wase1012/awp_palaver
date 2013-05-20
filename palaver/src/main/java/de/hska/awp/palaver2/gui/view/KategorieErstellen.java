@@ -65,6 +65,7 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 		
 		name.setImmediate(true);
 		name.setMaxLength(15);
+		name.setRequired(true);
 		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 		
 		verwerfen.addClickListener(new ClickListener() {

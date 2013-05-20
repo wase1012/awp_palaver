@@ -158,6 +158,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
+		name.setRequired(true);
 		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
