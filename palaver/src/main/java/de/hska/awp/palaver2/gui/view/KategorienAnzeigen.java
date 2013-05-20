@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -44,6 +45,8 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 	private TextField			nameUp = new TextField("Name");
 	private String				nameText;
 	
+	private Label				headline;
+	
 	private Kategorie		kategorieUpdate;
 	
 	public KategorienAnzeigen(){
@@ -57,6 +60,12 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 		table = new Table();
 		table.setSizeFull();
 		table.setSelectable(true);
+		
+		headline = new Label("Alle Kategorien");
+		headline.setStyleName("ViewHeadline");
+		
+		layout.addComponent(headline);
+		layout.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 		
 		table.addValueChangeListener(new ValueChangeListener() {
 

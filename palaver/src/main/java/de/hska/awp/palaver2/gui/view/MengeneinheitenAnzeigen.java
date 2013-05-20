@@ -13,6 +13,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -56,7 +57,8 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 	private String				nameText;
 	private String				kurzText;
 	
-	private Mengeneinheit 		mengeneinheit;
+	private Label				headline;
+	
 	private Mengeneinheit		mengeUpdate;
 	
 	public MengeneinheitenAnzeigen()
@@ -71,6 +73,12 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 		table = new Table();
 		table.setSizeFull();
 		table.setSelectable(true);
+		
+		headline = new Label("Alle Mengeneinheiten");
+		headline.setStyleName("ViewHeadline");
+		
+		layout.addComponent(headline);
+		layout.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 		
 		table.addValueChangeListener(new ValueChangeListener() {
 			
