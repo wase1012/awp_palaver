@@ -81,15 +81,17 @@ public class BestellungDAO extends AbstractDAO {
 			DAOException, SQLException {
 
 		Bestellung bestellung = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID,
+				id));
 
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), set.getString(LIEFERDATUM), BestellpositionDAO.getInstance().
-					getBestellpositionenByBestellungId(set.getLong(ID)), set.getBoolean(BESTELLT));
+					set.getDate(DATUM), set.getString(LIEFERDATUM),
+					BestellpositionDAO.getInstance().getBpByBestellungId(
+							set.getLong(ID)), set.getBoolean(BESTELLT));
 		}
-		 
+
 		return bestellung;
 	}
 

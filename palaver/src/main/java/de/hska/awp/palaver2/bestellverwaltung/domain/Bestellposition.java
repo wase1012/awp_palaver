@@ -46,6 +46,18 @@ public class Bestellposition implements java.io.Serializable {
 		this.montag = montag;
 		this.geliefert = geliefert;
 	}
+	
+	public Bestellposition(Long id, Artikel artikel, 
+			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, boolean geliefert) {
+		this.id = id;
+		this.artikel = artikel;
+		this.durchschnitt = durchschnitt;
+		this.kantine = kantine;
+		this.gesamt = gesamt;
+		this.freitag = freitag;
+		this.montag = montag;
+		this.geliefert = geliefert;
+	}
 
 	public Long getId() {
 		return this.id;

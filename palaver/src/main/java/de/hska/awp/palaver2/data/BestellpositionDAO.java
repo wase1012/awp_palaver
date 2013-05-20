@@ -107,6 +107,21 @@ public class BestellpositionDAO extends AbstractDAO{
 		return list;
 	}
 	
+	public List<Bestellposition> getBpByBestellungId(Long id)
+			throws ConnectException, DAOException, SQLException {
+		List<Bestellposition> list = new ArrayList<Bestellposition>();
+
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
+
+		while (set.next()) {
+			list.add(new Bestellposition(set.getLong(ID),
+					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
+		}
+
+		return list;
+	}
+	
 	/**
 	 * Die Methode erzeugt eine BEstellposition in der Datenbank.
 	 * 
