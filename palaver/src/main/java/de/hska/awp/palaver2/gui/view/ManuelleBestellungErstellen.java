@@ -299,6 +299,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 		} else {
 			bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt"});
 			lieferdatum.setVisible(true);
+			lieferdatum.setRequired(true);
 		}
 		
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);

@@ -521,6 +521,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			handyAnspr.setWidth("100%");
 			faxAnspr.setWidth("100%");
 			
+			name.setRequired(true);
+			
 			VerticalLayout feld = new VerticalLayout();
 		
 			feld.addComponent(nameAnspr);

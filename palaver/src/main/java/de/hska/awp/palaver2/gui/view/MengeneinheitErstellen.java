@@ -49,6 +49,9 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 		name.setWidth("100%");
 		kurz.setWidth("100%");
 		
+		name.setRequired(true);
+		kurz.setRequired(true);
+		
 		box.setSpacing(true);
 
 		this.addComponent(box);

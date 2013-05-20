@@ -296,6 +296,7 @@ public class BestellungErstellen extends VerticalLayout implements View
 		
 		if(lieferant.getMehrereliefertermine() == false) {
 			lieferdatum.setVisible(true);
+			lieferdatum.setRequired(true);
 		}
 	}
 }
