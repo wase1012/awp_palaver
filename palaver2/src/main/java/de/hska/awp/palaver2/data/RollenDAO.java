@@ -46,7 +46,8 @@ public class RollenDAO extends AbstractDAO {
 		{
 			list.add(new Rollen(set.getLong("id"),
 								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id"))));
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id"),
+								NachrichtDAO.getInstance().getNachrichtByRollenId(set.getLong("id")))));
 		}
 		
 		return list;
@@ -61,8 +62,8 @@ public class RollenDAO extends AbstractDAO {
 		{
 			rolle = new Rollen(set.getLong("id"),
 								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id"))
-								);
+								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id")),
+								NachrichtDAO.getInstance().getNachrichtByRollenId(set.getLong("id")));
 		}
 		return rolle;
 		 
