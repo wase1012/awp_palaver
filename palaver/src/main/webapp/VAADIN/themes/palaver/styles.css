@@ -17,6 +17,12 @@
 	background: #f0fff0;
 }
 
+.nachricht {
+	background: #FFA;
+	margin: 10px;
+	padding: 10px;
+}
+
 .v-button,
 .v-button:FOCUS,
 .v-button:HOVER,

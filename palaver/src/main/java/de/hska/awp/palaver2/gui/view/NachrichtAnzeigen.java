@@ -116,7 +116,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				nachrichtentext.setReadOnly(true);
 				
 				nachrichtverticallayout = new VerticalLayout();
-				
+				nachrichtverticallayout.setStyleName("nachricht");
 				nachrichtverticallayout.addComponent(von);			
 				nachrichtverticallayout.addComponent(nachrichtentext);
 				nachrichtverticallayout.addComponent(löschbutton);
