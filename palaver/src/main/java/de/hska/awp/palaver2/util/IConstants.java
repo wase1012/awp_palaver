@@ -9,7 +9,7 @@ public interface IConstants
 	//1433
 	//3306
 	// DB Verbindung
-	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+	public final String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	public final String		MENU_ARTIKEL_HEADLINE = "Artikel";
