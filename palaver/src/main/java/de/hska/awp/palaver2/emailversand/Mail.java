@@ -29,8 +29,10 @@ public class Mail
     public void EmailVersand(String to, String subject, String message)
     {
     	try {
-				MailActions.send(MailAccounts.GOOGLEMAIL, to, subject, message);
+				MailActions.send(MailAccounts.NACHRICHT, to, subject, message);
+				System.out.print("OK");
 			} catch (MessagingException e) {
+				System.out.print(e);
 				e.printStackTrace();
 			}
     }

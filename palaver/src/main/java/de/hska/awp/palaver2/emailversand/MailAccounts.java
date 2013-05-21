@@ -6,7 +6,7 @@ package de.hska.awp.palaver2.emailversand;
 public enum MailAccounts
 {
     // Hier bitte die ensprechenden Attribute jeweils anpassen
-    GOOGLEMAIL("smtp.googlemail.com", 25, "mihail.boehm", "***", "absender");
+    NACHRICHT("smtp.googlemail.com", 25, "mihail.boehm", "passwort", "absender");
     /*
     GMX("mail.gmx.net", 25, "login", "passwort", "absender"),
     ARCOR("mail.arcor.de", 25, "login", "passwort", "absender"),
