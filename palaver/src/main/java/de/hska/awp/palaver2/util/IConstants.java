@@ -51,6 +51,7 @@ public interface IConstants
 	public final String		BUTTON_SHOW_FILTER = "Filter anzeigen";
 	public final String		BUTTON_HIDE_FILTER = "Filter ausblenden";
 	public final String		BUTTON_SAVE = "Speichern";
+	public final String		BUTTON_SENDEN = "Senden";
 	public final String		BUTTON_DISCARD = "Verwerfen";
 	public final String		BUTTON_ADD = "Hinzufügen";
 	public final String		BUTTON_NEW = "Neu";

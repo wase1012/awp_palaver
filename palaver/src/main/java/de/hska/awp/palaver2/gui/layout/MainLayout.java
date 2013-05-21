@@ -27,12 +27,14 @@ import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.RezeptartEinst;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.BestellungErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
+import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
@@ -127,6 +129,7 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
 		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
+		einstellungItem.addItem("Email", this);
 		this.addComponent(menu);
 		
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
@@ -174,7 +177,13 @@ public class MainLayout extends VerticalLayout implements Command
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
 		{
-			Application.getInstance().close();
+			UI.getCurrent().setContent(new LoginForm());
+			Application.getInstance().setUsername(null);
+			UI.getCurrent().getSession().close();
+			UI.getCurrent().close();
+			log.info("**************************************************************");
+			log.info("LOGOUT");
+			log.info("**************************************************************");
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM))
 		{
@@ -227,6 +236,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_REGEL))
 		{
 			ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
+		}
+		else if(selectedItem.getText().equals("Email")) //Temp
+		{
+			ViewHandler.getInstance().switchView(EmailOhneBestellung.class);
 		}
 		else 
 		{
