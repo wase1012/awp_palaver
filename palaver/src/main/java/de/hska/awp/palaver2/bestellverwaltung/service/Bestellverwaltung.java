@@ -184,6 +184,37 @@ public class Bestellverwaltung extends BestellungDAO {
 		return list;
 	}
 	
+	/**
+	 * @param artList
+	 * @return
+	 * @throws SQLException 
+	 * @throws DAOException 
+	 * @throws ConnectException 
+	 */
+	@Deprecated
+	public List<Lieferant> getAllLieferantenByArtikellist(List<Artikel> artList) throws ConnectException, DAOException, SQLException
+	{
+		List<Lieferant> list = new ArrayList<Lieferant>();
+		Lieferant lieferant = null;
+		LieferantDAO ldao = new LieferantDAO();
+	
+		for (Artikel e : artList) {
+			lieferant = ldao.getLieferantByArtikelId(e.getId());
+			if (list.isEmpty() == true) {
+				list.add(lieferant);
+			} 
+			else {
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getId().equals(lieferant.getId()) == false) {
+						list.add(lieferant);
+					}
+				}
+			}
+
+		}
+		return list;
+	}
+	
 	
 	public List<Bestellposition> generateBestellpositionList(Week week) throws ConnectException, DAOException, SQLException
 	{
@@ -369,6 +400,13 @@ public class Bestellverwaltung extends BestellungDAO {
 		java.util.Date date2 = new java.util.Date();
 		Date date = new Date(date2.getTime());
 		b.setDatum(date);
+		
+		//TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
+		 // "17.05.2013" und "20.05.2013" ersetzen durch die genauen Liefertermine errechnet aus der week.
+		 if(lieferant.getMehrereliefertermine()==true){
+			 String text = "Freitag: " + "17.05.2013" + "Montag: " + "20.05.2013";
+			 b.setLieferdatum(text);
+		 }
 		
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		
