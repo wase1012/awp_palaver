@@ -225,4 +225,36 @@ public class Bestellverwaltung extends BestellungDAO {
 		}
 		return list;
 	}
+	
+//	public List<Bestellposition> generatingBestellpositionenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException {
+//
+//		List<Bestellposition> list = new ArrayList<Bestellposition>();
+//		
+//		Menueplan menueplan = MenueplanDAO.getInstance().getMenueplanByWeekWithItems(week);
+//		list = generatingBestellpostionenByMenueplan(menueplan);
+//		
+//		List<Artikel> gblist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+//		
+//		
+//		
+//		
+//
+//		return list;
+//	}
+//	
+//	public List<Bestellposition> generatingBestellpostionenByMenueplan(Menueplan mp){
+//		
+//		List<Bestellposition> list = new ArrayList<Bestellposition>();
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		return list;
+//	}
+	
+	
 }
