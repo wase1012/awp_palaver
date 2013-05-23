@@ -66,7 +66,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		
 		Panel panel = new Panel("Nachrichten");
-		panel.setHeight(100.0f, Unit.PERCENTAGE);
+		panel.setHeight("100%");
 
 	    final VerticalLayout contentLayout = new VerticalLayout();
 	    contentLayout.setWidth(400, Unit.PIXELS);
