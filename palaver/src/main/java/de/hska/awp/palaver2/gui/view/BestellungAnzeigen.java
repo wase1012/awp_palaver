@@ -1,7 +1,5 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
-
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -11,18 +9,12 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 
@@ -39,7 +31,6 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 	
 	private FilterTable 		bestellungen = new FilterTable("Bestellung");
 	private FilterTable			bpositionen = new FilterTable("Bestellpositionen");
-	
 	private Bestellung 			bestellung;
 	
 	public BestellungAnzeigen () {
@@ -99,11 +90,18 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 					BeanItemContainer<Bestellposition> bpcontainer;
 					try
 					{
-						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
-						bpositionen.setContainerDataSource(bpcontainer);
-						bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt"});
-						bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
-		
+						if(bestellung.getLieferant().getMehrereliefertermine()==false){
+							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
+							bpositionen.setContainerDataSource(bpcontainer);
+							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "geliefert"});
+							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
+						} else {
+							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
+							bpositionen.setContainerDataSource(bpcontainer);
+							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "freitag", "montag", "geliefert"});
+							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
+						}
+						
 					} 
 					catch (Exception e)
 					{
