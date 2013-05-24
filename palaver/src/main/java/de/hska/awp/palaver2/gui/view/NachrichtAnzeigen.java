@@ -4,31 +4,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextArea;
+import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
@@ -38,14 +36,20 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	private VerticalLayout nachrichtanzeigenlayout = new VerticalLayout();
 	private VerticalLayout nachrichterstellenlayout = new VerticalLayout();
 	
-	private VerticalLayout nachrichtverticallayout = new VerticalLayout();
-	private HorizontalLayout nachrichthorizontallayout = new HorizontalLayout();
+	private VerticalLayout nachrichtverticallayout = new VerticalLayout();	
+	HorizontalLayout nachrichterstellenlayoutbuttons = new HorizontalLayout();
 	
 	private Label von;
 	private Button löschbutton;
 	private TextArea nachrichtentext;
+	private TextArea neuernachrichtentext;
 	
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
+	private Nachricht nachricht = new Nachricht();
+	
+	private Rollen rolleInput;
+	private String neuernachrichtentextinput;
+	
 	
 	public NachrichtAnzeigen() throws ConnectException, DAOException, SQLException {
 		
@@ -145,12 +149,97 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		}else {
 			//TODO falls keine Nachrichten vorhanden sind
 		}
-	}
-
 	
-	@Override
-	public void getViewParam(ViewData data)
-	{
+		// RECHTE SEITE
+
+		Label label = new Label("Neue Nachricht");
+		label.setValue("Neue Nachricht");
+
+		nachrichterstellenlayout.addComponent(label);
+
+		final ComboBox combobox = new ComboBox();
+
+		combobox.setWidth("60%");
+		combobox.setImmediate(true);
+		// combobox.setInputPrompt(rolleInput);
+		combobox.setNullSelectionAllowed(false);
+		combobox.setRequired(true);
+
+		List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
+		for (Rollen i : rollen) {
+			combobox.addItem(i.getId());
+			combobox.setItemCaption(i.getId(), i.getName());
+		}
+
+		nachrichterstellenlayout.addComponent(combobox);
+
+		// combobox.addValueChangeListener(new ValueChangeListener() {
+		// @Override
+		// public void valueChange(final ValueChangeEvent event) {
+		// itemIdrolle = event.getProperty().getValue();
+		// }
+		// });
+
+		neuernachrichtentext = new TextArea();
+		neuernachrichtentext.setWidth("100%");
+		neuernachrichtentext.setRows(4);
+		neuernachrichtentext.setImmediate(true);
+		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
+
+		nachrichterstellenlayout.addComponent(neuernachrichtentext);
+
+		neuernachrichtentext.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				neuernachrichtentextinput = String.valueOf(event.getProperty()
+						.getValue());
+			}
+		});
+
+		Button speichern = new Button(IConstants.BUTTON_SAVE);
+		Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
+
+		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		
+		nachrichterstellenlayoutbuttons.addComponent(verwerfen);
+		nachrichterstellenlayoutbuttons.addComponent(speichern);
+
+		nachrichterstellenlayout.addComponent(nachrichterstellenlayoutbuttons);
+
+		speichern.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				nachricht.setNachricht(neuernachrichtentext.getValue());
+
+				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
+
+				// TODO
+				// nachricht.setMitarbeiterBySenderFk(mitarbeiterBySenderFk);
+
+				try {
+					Nachrichtenverwaltung.getInstance().createNachricht(
+							nachricht);
+				} catch (Exception e) {
+					throw new NullPointerException(
+							"Bitte gültige Werte eingeben");
+				}
+				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+			}
+		});
+
+		verwerfen.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+			}
+		});
+
 	}
 
+	@Override
+	public void getViewParam(ViewData data) {
+	}
 }
+
+
