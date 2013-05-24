@@ -18,9 +18,12 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
@@ -85,8 +88,21 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		
 		
 		//Nachrichtlayout zusammenbauen
+		//TODO Auskommentierten Text anzeigen, wenn getUser() funktioniert
 		try{
-		nl = Nachrichtenverwaltung.getInstance().getAllNachricht();
+//		Mitarbeiter m = Application.getInstance().getUser();
+//		List<Rollen> rlist = Rollenverwaltung.getInstance().getRollenByMitarbeiterId(m.getId());
+//		if(rlist!=null){
+//			for(int i = 0; i < rlist.size() ; i++){
+//				if(rlist.get(i).getNachrichten()!=null){
+//					for(int z = 0; i < rlist.get(i).getNachrichten().size();z++){
+//						nl.add(rlist.get(i).getNachrichten().get(z));
+//					}
+//				}
+//			}
+//			
+//		}
+			Nachrichtenverwaltung.getInstance().getAllNachricht();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -97,13 +113,10 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 								
 				von = new Label("Von:");
 				von.setWidth("100%");
-				//TODO
 				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
 				
 				
 				löschbutton = new Button();
-//				Image papierkorb = new Image();
-//				papierkorb.setSource(new ThemeResource(IConstants.ICON_DELETE));
 				löschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
 				String id = String.valueOf(nl.get(i).getId());
 				
@@ -213,8 +226,8 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
-				// TODO
-				// nachricht.setMitarbeiterBySenderFk(mitarbeiterBySenderFk);
+				// TODO Sollte später funktionieren, andernfalls Mitarbeiter über username suchen und setzen
+//				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {
 					Nachrichtenverwaltung.getInstance().createNachricht(
