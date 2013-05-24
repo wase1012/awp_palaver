@@ -50,19 +50,14 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
-	public void createBestellung(Bestellung bestellung, String lieferdatum)
+	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException, ParseException {
-			
-			bestellung.setLieferdatum(lieferdatum);
-			super.createBestellung(bestellung);
+		super.createBestellung(bestellung);
 	}
 
-	public void updateBestellung(Bestellung bestellung, String lieferdatum)
+	public void updateBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
-		
-		bestellung.setLieferdatum(lieferdatum);
 		super.updateBestellung(bestellung);
-
 	}
 	
 
@@ -400,13 +395,6 @@ public class Bestellverwaltung extends BestellungDAO {
 		java.util.Date date2 = new java.util.Date();
 		Date date = new Date(date2.getTime());
 		b.setDatum(date);
-		
-		//TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
-		 // "17.05.2013" und "20.05.2013" ersetzen durch die genauen Liefertermine errechnet aus der week.
-		 if(lieferant.getMehrereliefertermine()==true){
-			 String text = "Freitag: " + "17.05.2013" + "Montag: " + "20.05.2013";
-			 b.setLieferdatum(text);
-		 }
 		
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		
