@@ -8,9 +8,12 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
@@ -62,8 +65,24 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 		{
 			container = new BeanItemContainer<Bestellung>(Bestellung.class, Bestellverwaltung.getInstance().getAllBestellungen());
 			bestellungen.setContainerDataSource(container);
-			bestellungen.setVisibleColumns(new Object[] {"lieferant", "datum", "lieferdatum"});
+			bestellungen.setVisibleColumns(new Object[] {"bestellt", "lieferant", "datum", "lieferdatum"});
 			bestellungen.sort(new Object[] {"id"}, new boolean[] {true});
+			bestellungen.setCellStyleGenerator(new CellStyleGenerator()
+			{
+				
+				@Override
+				public String getStyle(CustomTable source, Object itemId, Object propertyId)
+				{
+					Bestellung b = (Bestellung) itemId;
+					if ("bestellt".equals(propertyId))
+					{
+						return b.isBestellt() ? "check" : "cross";
+					}
+
+					return "";
+				}
+			});
+			bestellungen.setColumnWidth("bestellt", 50);
 		} 
 		catch (Exception e)
 		{

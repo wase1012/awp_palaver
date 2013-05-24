@@ -31,6 +31,7 @@ import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
+import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
@@ -117,6 +118,7 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW, this);
+		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
 		MenuItem regelItem = menu.addItem(
@@ -190,6 +192,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM))
 		{
 			ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_BEARBEITEN))
+		{
+			ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN))
 		{
