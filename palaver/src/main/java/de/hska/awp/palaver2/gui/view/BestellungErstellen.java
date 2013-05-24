@@ -6,9 +6,11 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.tepi.filtertable.FilterTable;
 
@@ -23,10 +25,14 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -67,7 +73,9 @@ public class BestellungErstellen extends VerticalLayout implements View
 	
 	private Lieferant 							lieferant;
 	
-	private DateField							lieferdatum = new DateField("Lieferdatum");
+	private PopupDateField						datetime = new PopupDateField();
+	
+	private PopupDateField						datetime2 = new PopupDateField();
 	
 	private List<Bestellposition>				bestellpositionen;
 	private List<BestellungData>				bestellData = new ArrayList<BestellungData>();;
@@ -86,21 +94,42 @@ public class BestellungErstellen extends VerticalLayout implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
-		lieferdatum.setVisible(false);
-		lieferdatum.setImmediate(true);
-		lieferdatum.addValueChangeListener(new ValueChangeListener() {
-			
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				java.util.Date date2 = new java.util.Date();
-				if(date2.before(lieferdatum.getValue()) == false || lieferdatum.getValue() == null) {
-					speichern.setEnabled(false);
-				}
-				else {
-					speichern.setEnabled(true);
-				}
-			}
-		});
+		datetime.setVisible(false);
+		datetime.setImmediate(true);
+		datetime.setResolution(Resolution.DAY);
+		datetime.setTextFieldEnabled(false);
+		
+		datetime.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+            	java.util.Date date2 = new java.util.Date();
+            	if(date2.before(datetime.getValue()) == false ||datetime.getValue() == null) {
+        			speichern.setEnabled(false);
+        		}
+        		else {
+				speichern.setEnabled(true);
+        		}
+            }
+        });
+		
+		datetime2.setVisible(false);
+		datetime2.setImmediate(true);
+		datetime2.setResolution(Resolution.DAY);
+		datetime2.setTextFieldEnabled(false);
+	
+		datetime2.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+            	java.util.Date date2 = new java.util.Date();
+            	Date d = new Date(date2.getTime());
+            	if(datetime.getValue() == null || d.before(datetime2.getValue()) == false || datetime2.getValue() == null) {
+            		speichern.setEnabled(false);
+            		}
+            	else {
+            		speichern.setEnabled(true);
+            	}
+            }
+        });
 		
 		fenster = new VerticalLayout();
 		fenster.setSizeFull();
@@ -200,8 +229,14 @@ public class BestellungErstellen extends VerticalLayout implements View
 		form.setExpandRatio(bestellungTable, 2);
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
-
-		fenster.addComponent(lieferdatum);
+		
+		HorizontalLayout hl = new HorizontalLayout();
+		datetime.setCaption("Montag");
+		datetime2.setCaption("Freitag");
+		hl.addComponent(datetime);
+		hl.addComponent(datetime2);
+		fenster.addComponent(hl);
+		
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
 		fenster.addComponent(control);
@@ -234,15 +269,19 @@ public class BestellungErstellen extends VerticalLayout implements View
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
 				
-				String testDatum = "Freitag";
 				if(lieferant.getMehrereliefertermine() == true) {
-					bestellung.setLieferdatum(testDatum);
+					java.util.Date date3 = datetime.getValue();
+					Date datesql = new Date(date3.getTime());
+					java.util.Date date1 = datetime2.getValue();
+					Date datesql1 = new Date(date1.getTime());
+					bestellung.setLieferdatum("Montag: " + datesql.toString()+ " " + "Freitag: " + datesql1.toString());
 				}
 				else {
-					bestellung.setLieferdatum(lieferdatum.getValue().toString());				
+					java.util.Date date3 = datetime.getValue();
+					Date datesql = new Date(date3.getTime());
+					bestellung.setLieferdatum(datesql.toString());				
 				}
-				
-				
+
 				try {
 					Bestellverwaltung.getInstance().createBestellung(bestellung);
 				} catch (Exception e) {
@@ -295,8 +334,15 @@ public class BestellungErstellen extends VerticalLayout implements View
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
 		
 		if(lieferant.getMehrereliefertermine() == false) {
-			lieferdatum.setVisible(true);
-			lieferdatum.setRequired(true);
+			datetime.setCaption("Lieferdatum");
+			datetime.setVisible(true);
+			datetime.setRequired(true);
+			datetime2.setVisible(false);
+		} else {
+			datetime.setVisible(true);
+			datetime.setRequired(true);
+			datetime2.setVisible(true);
+			datetime2.setRequired(true);
 		}
 	}
 }
