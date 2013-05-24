@@ -327,8 +327,8 @@ public class MenueComponent extends CustomComponent{
 		vl.setComponentAlignment(btFehler, Alignment.TOP_RIGHT);
 		
 		HorizontalLayout hl = new HorizontalLayout();
-		btChange.setStyleName(Reindeer.BUTTON_SMALL);
-		btDelete.setStyleName(Reindeer.BUTTON_SMALL);
+		btChange.setStyleName(Reindeer.BUTTON_LINK);
+		btDelete.setStyleName(Reindeer.BUTTON_LINK);
 		hl.addComponent(btChange);
 		hl.addComponent(btDelete);
 		vl.addComponent(hl);

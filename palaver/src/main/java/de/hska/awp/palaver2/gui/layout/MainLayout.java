@@ -40,6 +40,7 @@ import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -130,6 +131,7 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
 		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
 		einstellungItem.addItem("Email", this);
+		einstellungItem.addItem("Nachrichten", this);
 		this.addComponent(menu);
 		
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
@@ -240,6 +242,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if(selectedItem.getText().equals("Email")) //Temp
 		{
 			ViewHandler.getInstance().switchView(EmailOhneBestellung.class);
+		}
+		else if (selectedItem.getText().equals("Nachrichten"))
+		{
+			ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
 		}
 		else 
 		{
