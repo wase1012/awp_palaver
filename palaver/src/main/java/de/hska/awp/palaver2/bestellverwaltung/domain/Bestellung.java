@@ -27,7 +27,7 @@ public class Bestellung implements java.io.Serializable {
 		super();
 	}
 
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, boolean bestellt, Date lieferdatum2) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, boolean bestellt) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
@@ -43,7 +43,7 @@ public class Bestellung implements java.io.Serializable {
 	 * @param datum
 	 * @param bestellpositionen
 	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, List<Bestellposition> bestellpositionen, boolean bestellt, Date lieferdatum2) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, List<Bestellposition> bestellpositionen, boolean bestellt) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;

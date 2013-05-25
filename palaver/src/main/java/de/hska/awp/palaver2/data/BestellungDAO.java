@@ -25,6 +25,7 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String LIEFERANT_FK = "lieferant_fk";
 	private final static String DATUM = "datum";
 	private final static String LIEFERDATUM = "lieferdatum";
+	private final static String LIEFERDATUM2 = "lieferdatum2";
 	private final static String BESTELLT = "bestellt";
 	
 	private final static String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE;
@@ -61,7 +62,7 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
 					.getLieferantById(set.getLong(LIEFERANT_FK)), set
-					.getDate(DATUM), set.getDate(LIEFERDATUM),
+					.getDate(DATUM), set.getDate(LIEFERDATUM),set.getDate(LIEFERDATUM2),
 					set.getBoolean(BESTELLT)));
 		}
 		return list;
@@ -87,7 +88,7 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), set.getDate(LIEFERDATUM),
+					set.getDate(DATUM), set.getDate(LIEFERDATUM), set.getDate(LIEFERDATUM2),
 					BestellpositionDAO.getInstance().getBpByBestellungId(
 							set.getLong(ID)), set.getBoolean(BESTELLT));
 		}
@@ -112,10 +113,11 @@ public class BestellungDAO extends AbstractDAO {
 		}
 		
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + ","
-				+ DATUM  + "," + LIEFERDATUM + ","+ BESTELLT + ")" + "VALUES" + "('"
+				+ DATUM  + "," + LIEFERDATUM + ","+ LIEFERDATUM2 + "," + BESTELLT + ")" + "VALUES" + "('"
 				+ bestellung.getLieferant().getId() + "','"
 				+ bestellung.getDatum() + "','"
 				+ bestellung.getLieferdatum() + "','"
+				+ bestellung.getLieferdatum2() + "','"
 				+ Util.convertBoolean(bestellung.isBestellt())
 				+ "')";
 		this.putManaged(INSERT_QUERY);
@@ -145,7 +147,8 @@ public class BestellungDAO extends AbstractDAO {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + LIEFERANT_FK + "='"
 				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
 				+ bestellung.getDatum() + "'," + LIEFERDATUM + "='"
-				+ bestellung.getLieferdatum() +  "'," + BESTELLT + "='"
+				+ bestellung.getLieferdatum() + LIEFERDATUM2 + "='"
+						+ bestellung.getLieferdatum2() +  "'," + BESTELLT + "='"
 				+ Util.convertBoolean(bestellung.isBestellt()) + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
