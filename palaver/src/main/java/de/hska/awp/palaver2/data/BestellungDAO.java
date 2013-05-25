@@ -214,4 +214,24 @@ public class BestellungDAO extends AbstractDAO {
 		
 	}
 
+	/**
+	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
+	 * 
+	 * @param bestellung
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public void updateBestellungOhneBP(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + LIEFERANT_FK + "='"
+				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
+				+ bestellung.getDatum() + "'," + LIEFERDATUM + "='"
+				+ bestellung.getLieferdatum() + "'," + LIEFERDATUM2 + "='"
+						+ bestellung.getLieferdatum2() +  "'," + BESTELLT + "='"
+				+ Util.convertBoolean(bestellung.isBestellt()) + "' WHERE " + ID + "='"
+				+ bestellung.getId() + "'";
+		this.putManaged(UPDATE_QUERY);
+	
+	}
 }

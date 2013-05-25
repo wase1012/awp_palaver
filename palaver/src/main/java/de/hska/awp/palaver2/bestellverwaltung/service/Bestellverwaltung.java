@@ -60,6 +60,11 @@ public class Bestellverwaltung extends BestellungDAO {
 		super.updateBestellung(bestellung);
 	}
 	
+	public void updateBestellungOhneBP(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException {
+		super.updateBestellungOhneBP(bestellung);
+	}
+	
 
 	/**
 	 * Die Methode liefert alle Bestellungen zurück.

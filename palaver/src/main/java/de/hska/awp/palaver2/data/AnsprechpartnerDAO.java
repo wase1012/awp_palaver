@@ -36,7 +36,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
-	private static final String DELETE_NACHRICHT = "DELETE FROM " + TABLE
+	private static final String DELETE_ANSPRECHPARTNER = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
 	private static final String GET_ANSPRECHPARTNER_BY_LIEFERANT = "SELECT * FROM " 
 			+ TABLE + " WHERE " + LIEFERANT_FK + "=";
@@ -184,7 +184,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 		if (id == null) {
 			throw new NullPointerException("kein Ansprechpartner übergeben");
 		}
-		putManaged(MessageFormat.format(DELETE_NACHRICHT, id));
+		putManaged(MessageFormat.format(DELETE_ANSPRECHPARTNER, id));
 	}
 
 	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) 

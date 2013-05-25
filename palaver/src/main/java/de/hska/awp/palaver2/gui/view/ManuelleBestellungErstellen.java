@@ -245,12 +245,11 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 			{
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
-				int ii = 0;
+				
 				for(int i = 0; i < (bestellpositionen.size()); i++){
 					
 					if(bestellpositionen.get(i).getGesamt()==0){
 						bestellpositionen.remove(i);
-						ii = ii + 1;
 					}
 				}
 				

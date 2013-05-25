@@ -67,6 +67,21 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		super.updateBestellposition(bestellposition);
 
 	}
+	
+	/**
+	 * Die Methode löscht eine Bestellposition.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
+	public void deleteBestellposition(Long id)
+			throws ConnectException, DAOException, SQLException {
+
+		super.deleteBestellposition(id);
+
+	}
+	
 	/**
 	 * Die Methode liefert eine Bestellposition anhand des Parameter id zurÃ¼ck.
 	 * 
@@ -94,4 +109,5 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		 }
 		 return bpen;
 	}
+	
 }

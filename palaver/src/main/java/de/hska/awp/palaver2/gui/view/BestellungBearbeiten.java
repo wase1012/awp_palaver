@@ -242,23 +242,21 @@ private Table 								bestellungTable;
 			{
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
-				int ii = 0;
+				
 				for(int i = 0; i < (bestellpositionen.size()); i++){
 					
 					if(bestellpositionen.get(i).getGesamt()==0){
 						bestellpositionen.remove(i);
-						ii = ii + 1;
 					}
 				}
-				System.out.print(bestellpositionen);
-				System.out.print(bestellung.getLieferant());
-				
+				System.out.print("ID der Bestellung:");
+				System.out.print(bestellung.getId());
 				java.util.Date date2 = new java.util.Date();
 				Date date = new Date(date2.getTime());
 				bestellung.setDatum(date);
-				bestellung.setBestellpositionen(bestellpositionen);
-				System.out.print(bestellung.getBestellpositionen().get(0).getArtikel());
-				if(bestellung.getLieferant().getMehrereliefertermine() == true) {
+			
+				if(bestellung.getLieferant().getMehrereliefertermine() == true) 
+				{
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
@@ -266,20 +264,46 @@ private Table 								bestellungTable;
 					bestellung.setLieferdatum(datesql);
 					bestellung.setLieferdatum2(datesql1);
 				}
-				else {
+				else 
+				{
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					bestellung.setLieferdatum(datesql);	
 					bestellung.setLieferdatum2(datesql);
 				}
 				
+				
+				
 				try {
-					Bestellverwaltung.getInstance().updateBestellung(bestellung);
+					
+					Bestellung b = Bestellverwaltung.getInstance().getBestellungById(bestellung.getId());
+					
+					for(int z = 0; z < b.getBestellpositionen().size(); z++){
+					
+						Bestellpositionverwaltung.getInstance().deleteBestellposition(b.getBestellpositionen().get(z).getId());
+					}
+						
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+				
+				try {
+				 for(int i = 0 ; i < bestellpositionen.size() ; i++){
+					 bestellpositionen.get(i).setBestellung(bestellung);
+					 Bestellpositionverwaltung.getInstance().createBestellposition(bestellpositionen.get(i));
+				 }
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				 
+				try {
+					Bestellverwaltung.getInstance().updateBestellungOhneBP(bestellung);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 		

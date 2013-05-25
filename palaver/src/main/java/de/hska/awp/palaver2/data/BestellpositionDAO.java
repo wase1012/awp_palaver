@@ -40,6 +40,8 @@ public class BestellpositionDAO extends AbstractDAO{
 	
 	private static final String GET_BESTELLPOSITIONEN_BY_BESTELLUNGID = "SELECT * FROM " + TABLE
 			+ " WHERE " + BESTELLUNG_FK + "= {0}";
+	private static final String DELETE_BESTELLPOSITION = "DELETE FROM " + TABLE
+			+ " WHERE id = {0}";
 
 	public BestellpositionDAO() {
 		super();
@@ -170,5 +172,14 @@ public class BestellpositionDAO extends AbstractDAO{
 				+ "' WHERE " + ID
 				+ "='" + bestellposition.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
+	}
+	
+	public void deleteBestellposition(Long id) throws ConnectException, DAOException, SQLException {
+		
+		if (id == null) {
+			throw new NullPointerException("kein ID übergeben");
+		}
+		putManaged(MessageFormat.format(DELETE_BESTELLPOSITION, id));
+		
 	}
 }
