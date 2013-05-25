@@ -33,6 +33,8 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE;
 	private final static String GET_BESTELLUNG_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
+	private final static String GET_ALL_BESTELLUNGEN_NOT_ORDERED = "SELECT * FROM " + TABLE
+			+ " WHERE " + BESTELLT + "= '0'";
 
 	public BestellungDAO() {
 		super();
@@ -69,6 +71,30 @@ public class BestellungDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	
+	/**
+	 * Die Methode liefert alle nicht bestellten Bestellungen zurück
+	 * 
+	 * @author Christian Barth
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public List<Bestellung> getAllBestellungenNotOrdered() throws ConnectException,
+			DAOException, SQLException {
+		List<Bestellung> list = new ArrayList<Bestellung>();
+		ResultSet set = getManaged(GET_ALL_BESTELLUNGEN_NOT_ORDERED);
+		while (set.next()) {
+			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
+					.getLieferantById(set.getLong(LIEFERANT_FK)), set
+					.getDate(DATUM), set.getDate(LIEFERDATUM), set
+					.getDate(LIEFERDATUM2), set.getBoolean(BESTELLT)));
+		}
+		return list;
+	}
+	
 	
 	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
 		
