@@ -80,6 +80,26 @@ public class Bestellverwaltung extends BestellungDAO {
 		return result;
 	}
 	
+	/**
+	 * Die Methode liefert alle Bestellungen, die noch nicht bestellt sind zurück.
+	 * @author Christian Barth
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * 
+	 * @return Bestellungen
+	 */
+	public List<Bestellung> getAllBestellungenNotOrdered()
+			throws ConnectException, DAOException, SQLException {
+
+		List<Bestellung> result = null;
+
+		result = super.getAllBestellungenNotOrdered();
+
+		return result;
+	}
+	
 	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
 		
 		List<Bestellung> result = null;
