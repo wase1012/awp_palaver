@@ -288,7 +288,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					Button			loeschen = new Button(IConstants.BUTTON_LÃ–SCHEN);
+					Button			loeschen = new Button(IConstants.BUTTON_LÖSCHEN);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
