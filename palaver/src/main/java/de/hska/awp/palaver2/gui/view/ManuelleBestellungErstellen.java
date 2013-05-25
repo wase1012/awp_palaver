@@ -260,17 +260,20 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 				bestellung.setLieferant(lieferant);
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
-				if(lieferant.getMehrereliefertermine() == true) {
+				if(lieferant.getMehrereliefertermine() == true) 
+				{
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
 					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum("Montag: " + datesql.toString()+ " " + "Freitag: " + datesql1.toString());
+					bestellung.setLieferdatum(datesql);
+					bestellung.setLieferdatum2(datesql1);
 				}
-				else {
+				else 
+				{
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
-					bestellung.setLieferdatum(datesql.toString());				
+					bestellung.setLieferdatum(datesql);				
 				}
 				
 				try {
