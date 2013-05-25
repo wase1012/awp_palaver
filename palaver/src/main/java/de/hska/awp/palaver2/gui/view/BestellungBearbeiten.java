@@ -258,16 +258,19 @@ private Table 								bestellungTable;
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
 				if(lieferant.getMehrereliefertermine() == true) {
+					//TODO Richtige
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
 					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum("Montag: " + datesql.toString()+ " " + "Freitag: " + datesql1.toString());
+					bestellung.setLieferdatum(datesql);
+					bestellung.setLieferdatum2(datesql1);
 				}
 				else {
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
-					bestellung.setLieferdatum(datesql.toString());				
+					bestellung.setLieferdatum(datesql);	
+					bestellung.setLieferdatum2(datesql);
 				}
 				
 				try {
@@ -323,10 +326,11 @@ private Table 								bestellungTable;
 		}
 		if(bestellung.getLieferant().getMehrereliefertermine()==false){
 			
-			datetime.setValue(bestellung.getLieferdatum().toString());
+			datetime.setValue(bestellung.getLieferdatum());
 			
 		} else {
-			//TODO
+			datetime.setValue(bestellung.getLieferdatum());
+			datetime2.setValue(bestellung.getLieferdatum2());
 		}
 		
 			

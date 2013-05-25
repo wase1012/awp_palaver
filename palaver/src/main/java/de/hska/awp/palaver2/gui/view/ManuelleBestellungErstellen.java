@@ -273,7 +273,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View
 				{
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
-					bestellung.setLieferdatum(datesql);				
+					bestellung.setLieferdatum(datesql);	
+					bestellung.setLieferdatum2(datesql);
 				}
 				
 				try {
