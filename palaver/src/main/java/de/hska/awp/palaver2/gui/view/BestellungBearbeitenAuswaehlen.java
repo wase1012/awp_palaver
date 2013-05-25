@@ -73,7 +73,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		BeanItemContainer<Bestellung> container;
 		try {
 			container = new BeanItemContainer<Bestellung>(Bestellung.class,
-					Bestellverwaltung.getInstance().getAllBestellungen());
+					Bestellverwaltung.getInstance().getAllBestellungenNotOrdered());
 			bestellungen.setContainerDataSource(container);
 			bestellungen.setVisibleColumns(new Object[] { "bestellt",
 					"lieferant", "datum", "lieferdatum" });

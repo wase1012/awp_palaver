@@ -231,7 +231,7 @@ private Table 								bestellungTable;
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);						
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);						
 			}
 		});
 		
@@ -250,15 +250,15 @@ private Table 								bestellungTable;
 						ii = ii + 1;
 					}
 				}
+				System.out.print(bestellpositionen);
+				System.out.print(bestellung.getLieferant());
 				
 				java.util.Date date2 = new java.util.Date();
 				Date date = new Date(date2.getTime());
-				bestellung = new Bestellung();
-				bestellung.setLieferant(lieferant);
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
-				if(lieferant.getMehrereliefertermine() == true) {
-					//TODO Richtige
+				System.out.print(bestellung.getBestellpositionen().get(0).getArtikel());
+				if(bestellung.getLieferant().getMehrereliefertermine() == true) {
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
@@ -274,7 +274,7 @@ private Table 								bestellungTable;
 				}
 				
 				try {
-					Bestellverwaltung.getInstance().createBestellung(bestellung);
+					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
