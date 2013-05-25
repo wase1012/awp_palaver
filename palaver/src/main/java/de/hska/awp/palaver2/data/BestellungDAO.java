@@ -110,8 +110,8 @@ public class BestellungDAO extends AbstractDAO {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		df.format(cal.getTime());
 		
-		String GET_BESTELLUNGENLTWEEKS = "select * from bestellung where datum > 'df'";
-		
+		String GET_BESTELLUNGENLTWEEKS = "select * from bestellung where datum > '" + df.format(cal.getTime()) + "'";
+		System.out.println(GET_BESTELLUNGENLTWEEKS);
 		ResultSet set = getManaged(GET_BESTELLUNGENLTWEEKS);
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
