@@ -154,9 +154,9 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 	
 	
-	public List<Bestellposition> generateBestellpositionList(Week week) throws ConnectException, DAOException, SQLException
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException
 	{
-		List<Bestellposition> list = new ArrayList<Bestellposition>();
+//		List<Bestellposition> list = new ArrayList<Bestellposition>();
 //		//1. Menueplan holen
 //		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
 //		//TODO
@@ -172,7 +172,6 @@ public class Bestellverwaltung extends BestellungDAO {
 //		int leer = 0;
 //		
 //		Bestellposition bpo = new Bestellposition();
-//		
 //		bpo.setArtikel(rha.get(0).getArtikel());
 //		bpo.setDurchschnitt(rha.get(0).getArtikel().getDurchschnitt());
 //		bpo.setFreitag(convertMenge(rha.get(0)) + bpo.getDurchschnitt());
@@ -182,9 +181,7 @@ public class Bestellverwaltung extends BestellungDAO {
 //		bpo.setGesamt(bpo.getKantine() + bpo.getDurchschnitt());
 //		list.add(bpo);
 //		
-//		
-//		
-//		for(int i = 0 ; i < rha.size() ; i++){
+//		for(int i = 1 ; i < rha.size() ; i++){
 //			Bestellposition bp = new Bestellposition();
 //			bp.setArtikel(rha.get(i).getArtikel());
 //			//5. Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
@@ -196,26 +193,20 @@ public class Bestellverwaltung extends BestellungDAO {
 //			bp.setMontag(leer);
 //			bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
 //			
-//			//7. Falls Liste leer dann hinzufügen, andernfalls prüfen ob Liste Artikel schon hat, 
-//			//   wenn ja dann vorhandenen Bestellposition ändern, bei nein Bestellposition hinzufügen
-//			if(list==null){
+//			boolean vorhanden = false;
+//			for(int z = 0 ; z < list.size() ; z++){
+//				if(bp.getArtikel().equals(list.get(z).getArtikel())){
+//					vorhanden = true;
+//					list.get(z).setFreitag(list.get(z).getFreitag()+bp.getFreitag());
+//					list.get(z).setGesamt(list.get(z).getGesamt()+bp.getFreitag()-bp.getDurchschnitt());
+//					list.get(z).setKantine(list.get(z).getKantine()+bp.getKantine());
+//				}	
+//			}
+//			if(vorhanden == false){
 //				list.add(bp);
 //			}
-//			else {
-//				boolean vorhanden = false;
-//				for(int z = 0 ; z < list.size() ; z++){
-//					if(bp.getArtikel().equals(list.get(z).getArtikel())){
-//						vorhanden = true;
-//						list.get(z).setFreitag(list.get(z).getFreitag()+bp.getFreitag());
-//						list.get(z).setGesamt(list.get(z).getGesamt()+bp.getFreitag()-bp.getDurchschnitt());
-//						list.get(z).setKantine(list.get(z).getKantine()+bp.getKantine());
-//					}	
-//				}
-//				if(vorhanden == false){
-//					list.add(bp);
-//				}
-//			}
 //		}
+//		
 //		
 //		//8. Get List<RezeptHasArtikel> von Menueplan für Mo,Di,Mi,Do aus der Woche
 //		//TODO
@@ -239,9 +230,9 @@ public class Bestellverwaltung extends BestellungDAO {
 //			if(vorhanden==false){
 //				Bestellposition bp = new Bestellposition();
 //				bp.setArtikel(rha.get(i).getArtikel());
-//				//5. Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
+//				//9.1 Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
 //				bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
-//				//6. Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
+//				//9.2 Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
 //				bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
 //				bp.setKantine(convertMenge(rha.get(i)));
 //				bp.setGeliefert(false);
@@ -277,8 +268,16 @@ public class Bestellverwaltung extends BestellungDAO {
 //			}
 //			
 //		}
-//			
-		return list;
+//		//12. Bestellung erzeugen und in der Datenbank abspeichern
+//		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(list);
+//		for (int i = 0; i < lieferanten.size(); i++) {
+//
+//			Bestellverwaltung.getInstance().createBestellung(
+//					generateBestellungByListOfBestellpositionAndByLieferant(
+//							lieferanten.get(i), list));
+//
+//		}
+		
 	}
 	
 	private int convertMenge(RezeptHasArtikel rha){
@@ -311,7 +310,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 	
 	
-	public List<Lieferant> getAllLieferantByListOfBestellposition(List<Bestellposition> bplist){
+	private List<Lieferant> getAllLieferantByListOfBestellposition(List<Bestellposition> bplist){
 		List<Lieferant> list = new ArrayList<Lieferant>();
 		list.add(bplist.get(0).getArtikel().getLieferant());
 		for(int i = 1 ; i < bplist.size(); i++){
@@ -330,7 +329,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		return list;
 	}
 	
-	public Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist ){
+	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist ){
 		
 		Bestellung b = new Bestellung();
 		b.setBestellt(false);
