@@ -22,6 +22,7 @@ public interface IConstants
 	public final String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	public final String		MENU_BESTELLUNG_NEW_RANDOM = "Neue manuelle Bestellung";
 	public final String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
+	public final String 	MENU_BESTELLUNG_BEARBEITEN = "Bestellung bearbeiten";
 	public final String 	MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen";
 	public final String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten";
 	public final String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
@@ -32,7 +33,7 @@ public interface IConstants
 	public final String 	MENU_REZEPT_HEADLINE = "Rezept";
 	public final String 	MENU_REZEPT_NEU = "Anlegen";
 	public final String 	MENU_REZEPT_ANZEIGEN = "Anzeigen";
-	public final String 	MENU_REZEPT_AENDERN = "Ã„ndern";
+	public final String 	MENU_REZEPT_AENDERN = "Ã?ndern";
 	public final String 	MENU_REZEPT_LOESCHEN = "Löschen";
 	public final String 	MENU_MENUPLAN_HEADLINE = "Menüplan";
 	public final String 	MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
@@ -57,7 +58,7 @@ public interface IConstants
 	public final String		BUTTON_NEW = "Neu";
 	public final String		BUTTON_EDIT = "Bearbeiten";
 	public final String		BUTTON_OK = "OK";
-	public final String		BUTTON_LÃ–SCHEN = "Löschen";
+	public final String		BUTTON_LÖSCHEN = "Löschen";
 	public final String		BUTTON_JA = "Ja";
 	public final String 	BUTTON_NEIN = "Nein";
 	
@@ -73,6 +74,8 @@ public interface IConstants
 	public final String		ICON_YES = "img/tick_circle.ico";
 	public final String		ICON_NO = "img/cross_circle.ico";
 	public final String		ICON_DELETE = "img/Delete.ico";
+
+	
 
 
 	
