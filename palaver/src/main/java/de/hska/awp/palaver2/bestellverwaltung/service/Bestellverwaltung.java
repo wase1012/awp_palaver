@@ -79,6 +79,15 @@ public class Bestellverwaltung extends BestellungDAO {
 
 		return result;
 	}
+	
+	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
+		
+		List<Bestellung> result = null;
+		
+		result = super.getBestellungenLTWeeks();
+		
+		return result;
+	}
 
 	/**
 	 * Die Methode liefert eine Bestellung anhand des Parameter id zurück.

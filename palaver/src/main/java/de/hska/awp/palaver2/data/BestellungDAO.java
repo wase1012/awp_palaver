@@ -1,10 +1,12 @@
 package de.hska.awp.palaver2.data;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
@@ -59,6 +61,30 @@ public class BestellungDAO extends AbstractDAO {
 			DAOException, SQLException {
 		List<Bestellung> list = new ArrayList<Bestellung>();
 		ResultSet set = getManaged(GET_ALL_BESTELLUNGEN);
+		while (set.next()) {
+			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
+					.getLieferantById(set.getLong(LIEFERANT_FK)), set
+					.getDate(DATUM), set.getDate(LIEFERDATUM),set.getDate(LIEFERDATUM2),
+					set.getBoolean(BESTELLT)));
+		}
+		return list;
+	}
+	
+	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
+		
+		List<Bestellung> list = new ArrayList<Bestellung>();
+		
+
+		java.util.Date date2 = new java.util.Date();
+		Date date = new Date(date2.getTime());
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DAY_OF_MONTH, -21);
+		
+		
+		String GET_BESTELLUNGENLTWEEKS = "";
+		
+		ResultSet set = getManaged(GET_BESTELLUNGENLTWEEKS);
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
 					.getLieferantById(set.getLong(LIEFERANT_FK)), set
