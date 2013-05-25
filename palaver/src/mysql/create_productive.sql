@@ -425,7 +425,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`bestellung` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `lieferant_fk` INT NOT NULL ,
   `datum` DATE NOT NULL ,
-  `lieferdatum` VARCHAR(50) NULL ,
+  `lieferdatum` DATE NULL ,
   `bestellt` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`) ,
   INDEX `LIEFERANT_FK_idx` (`lieferant_fk` ASC) ,
