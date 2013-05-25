@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -103,12 +104,13 @@ public class BestellungDAO extends AbstractDAO {
 
 		java.util.Date date2 = new java.util.Date();
 		Date date = new Date(date2.getTime());
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.add(Calendar.DAY_OF_MONTH, -21);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, -22);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		df.format(cal.getTime());
 		
-		
-		String GET_BESTELLUNGENLTWEEKS = "";
+		String GET_BESTELLUNGENLTWEEKS = "select * from bestellung where datum > 'df'";
 		
 		ResultSet set = getManaged(GET_BESTELLUNGENLTWEEKS);
 		while (set.next()) {
@@ -199,7 +201,7 @@ public class BestellungDAO extends AbstractDAO {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + LIEFERANT_FK + "='"
 				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
 				+ bestellung.getDatum() + "'," + LIEFERDATUM + "='"
-				+ bestellung.getLieferdatum() + LIEFERDATUM2 + "='"
+				+ bestellung.getLieferdatum() + "'," + LIEFERDATUM2 + "='"
 						+ bestellung.getLieferdatum2() +  "'," + BESTELLT + "='"
 				+ Util.convertBoolean(bestellung.isBestellt()) + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
