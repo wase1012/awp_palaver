@@ -19,6 +19,7 @@ public class Bestellung implements java.io.Serializable {
 	private Lieferant lieferant;
 	private Date datum;
 	private Date lieferdatum;
+	private Date lieferdatum2;
 	private List<Bestellposition> bestellpositionen;
 	private boolean bestellt;
 	
@@ -26,13 +27,14 @@ public class Bestellung implements java.io.Serializable {
 		super();
 	}
 
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, boolean bestellt) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, boolean bestellt, Date lieferdatum2) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
 		this.datum = datum;
 		this.lieferdatum = lieferdatum;
 		this.bestellt = bestellt;
+		this.lieferdatum2 = lieferdatum2;
 	}
 
 	/**
@@ -41,7 +43,7 @@ public class Bestellung implements java.io.Serializable {
 	 * @param datum
 	 * @param bestellpositionen
 	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, List<Bestellposition> bestellpositionen, boolean bestellt) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, List<Bestellposition> bestellpositionen, boolean bestellt, Date lieferdatum2) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
@@ -49,6 +51,7 @@ public class Bestellung implements java.io.Serializable {
 		this.lieferdatum = lieferdatum;
 		this.bestellpositionen = bestellpositionen;
 		this.bestellt = bestellt;
+		this.lieferdatum2 = lieferdatum2;
 	}
 
 
@@ -105,13 +108,24 @@ public class Bestellung implements java.io.Serializable {
 		this.bestellt = bestellt;
 	}
 
+	public Date getLieferdatum2() {
+		return lieferdatum2;
+	}
+
+	public void setLieferdatum2(Date lieferdatum2) {
+		this.lieferdatum2 = lieferdatum2;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Bestellung [id=" + id + ", lieferant=" + lieferant + ", datum="
-				+ datum + ", lieferdatum=" + lieferdatum + "]";
+				+ datum + ", lieferdatum=" + lieferdatum + ", lieferdatum2="
+				+ lieferdatum2 + ", bestellt=" + bestellt + "]";
 	}
+
+	
 
 }
