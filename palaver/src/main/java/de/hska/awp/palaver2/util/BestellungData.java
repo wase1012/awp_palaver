@@ -12,6 +12,7 @@ import com.vaadin.ui.TextField;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 public class BestellungData
 {
@@ -48,6 +49,26 @@ public class BestellungData
 		this.freitag.setValue(durchschnitt + kantine);
 		this.montag = new IntStepper();
 		this.montag.setValue(0);
+	}
+	
+	public BestellungData(Bestellposition bp)
+	{
+		super();
+		this.name = bp.getArtikelName();
+		this.gebinde = bp.getArtikel().getBestellgroesse()  + " " + bp.getArtikel().getMengeneinheit().getKurz();
+		this.kategorie = bp.getArtikel().getKategorie();
+		this.durchschnitt = new TextField();
+		this.durchschnitt.setValue(bp.getDurchschnitt().toString());
+		this.kantine = new TextField();
+		this.kantine.setValue(bp.getKantine().toString());
+		this.gesamt = new TextField();
+		this.gesamt.setValue(bp.getGesamt().toString());
+		this.gesamt.setEnabled(false);
+		this.freitag = new IntStepper();
+		this.freitag.setStyleName("stepper-palaver");
+		this.freitag.setValue(bp.getFreitag());
+		this.montag = new IntStepper();
+		this.montag.setValue(bp.getMontag());
 	}
 	
 	@SuppressWarnings("serial")
