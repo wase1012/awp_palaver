@@ -61,7 +61,7 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Bestellung(set.getLong(ID), LieferantDAO.getInstance()
 					.getLieferantById(set.getLong(LIEFERANT_FK)), set
-					.getDate(DATUM), set.getString(LIEFERDATUM),
+					.getDate(DATUM), set.getDate(LIEFERDATUM),
 					set.getBoolean(BESTELLT)));
 		}
 		return list;
@@ -87,7 +87,7 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
 					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), set.getString(LIEFERDATUM),
+					set.getDate(DATUM), set.getDate(LIEFERDATUM),
 					BestellpositionDAO.getInstance().getBpByBestellungId(
 							set.getLong(ID)), set.getBoolean(BESTELLT));
 		}

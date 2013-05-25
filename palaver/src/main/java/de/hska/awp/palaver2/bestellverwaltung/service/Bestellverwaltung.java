@@ -95,63 +95,6 @@ public class Bestellverwaltung extends BestellungDAO {
 		Bestellung bestellung = super.getBestellungById(id);
 		return bestellung;
 	}
-
-	//TODO
-	// Aufteilung Menge auf Durchschnitt und Kantine inkl. Berechnung Gesamt
-	// Umrechnung auf Gebindegroesse auf ganze Stück
-	// Aufteilung Menge auf Freitag und Montag
-	//TODO Input Week week muss noch erfolgen
-	public Bestellung generiereBestellungByLieferant(Lieferant lieferant) throws SQLException, ConnectException, DAOException{
-		
-		 //Input
-		 List<Artikel> artikellist = ArtikelDAO.getInstance().getArtikelByGrundbedarf();
-		 
-//		 List<Artikel> menueartikellist = MenueplanDAO.getIInstance().getMenueplanByWeek(week);
-		 
-		 
-		 //Bestellung anlegen
-		 Bestellung bestellung = new Bestellung();
-		 
-		 //TODO Lieferdatum nur dann berechnen, wenn es sich nicht um Edeka oder Schenk handelt
-		 // "17.05.2013" und "20.05.2013" ersetzen durch die genauen Liefertermine errechnet aus der week.
-		 if(lieferant.getMehrereliefertermine()==true){
-			 String text = "Freitag: " + "17.05.2013" + "Montag: " + "20.05.2013";
-			 bestellung.setLieferdatum(text);
-		 }
-		 
-		 //TODO Input sieht später anders aus.
-		 java.util.Date date2 = new java.util.Date();
-		 Date date = new Date(date2.getTime());
-		 bestellung.setDatum(date);
-		 bestellung.setLieferant(lieferant);
-		 
-		 
-		 //Bestellpositionen zusammenbauen aus den zwei Listen
-		 List<Bestellposition> bestellpositionen = new ArrayList<Bestellposition>();
-		 
-		 for(int i = 0 ; i < artikellist.size(); i++){
-			 Bestellposition bestellposition = new Bestellposition();
-			 bestellposition.setArtikel(artikellist.get(i));
-			 bestellposition.setDurchschnitt(artikellist.get(i).getDurchschnitt());
-			 //TODO die Menge auf Freitag und Montag aufteilen laut Menüplan
-//			 bestellposition.setFreitag(freitag);
-//			 bestellposition.setMontag(montag);
-			 //TODO die Menge vom Menüplan auslesen und setzen
-//			 bestellposition.setKantine(kantine);
-			 //TODO die Kantinemenge dazu addieren
-			 bestellposition.setGesamt(artikellist.get(i).getDurchschnitt());
-			
-			 bestellpositionen.add(bestellposition);
-			 
-		 }
-		 
-		 bestellung.setBestellpositionen(bestellpositionen);
-		 
-		
-		 return bestellung;
-	 }
-	
-
 	
 	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant)
 			throws ConnectException, DAOException, SQLException {
