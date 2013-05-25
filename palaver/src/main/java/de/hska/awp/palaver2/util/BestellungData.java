@@ -51,6 +51,7 @@ public class BestellungData
 		this.montag.setValue(0);
 	}
 	
+	@SuppressWarnings("serial")
 	public BestellungData(Bestellposition bp)
 	{
 		super();
@@ -69,6 +70,83 @@ public class BestellungData
 		this.freitag.setValue(bp.getFreitag());
 		this.montag = new IntStepper();
 		this.montag.setValue(bp.getMontag());
+		
+		this.durchschnitt.setWidth("50px");
+		this.kantine.setWidth("50px");
+		this.gesamt.setWidth("50px");
+		this.freitag.setWidth("50px");
+		this.montag.setWidth("50px");
+		
+		this.durchschnitt.setImmediate(true);
+		this.kantine.setImmediate(true);
+		
+		this.freitag.setMinValue(0);
+		this.montag.setMinValue(0);
+		this.freitag.setManualInputAllowed(false);
+		this.montag.setManualInputAllowed(false);
+		
+		
+		this.gesamt.addValueChangeListener(new ValueChangeListener()
+		{
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				montag.setMaxValue(getInt(gesamt.getValue()));
+				freitag.setMaxValue(getInt(gesamt.getValue()));
+			}
+		});
+		
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				valueChangeEvent();
+			}
+		});
+		
+		this.kantine.addValueChangeListener(new ValueChangeListener()
+		{
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				valueChangeEvent();
+			}
+		});
+		
+		this.freitag.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				if (freitag.getValue() >= getInt(gesamt.getValue()))
+				{
+					freitag.setValue(getInt(gesamt.getValue()));
+					montag.setValue(0);
+				}
+				else 
+				{
+					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
+				}
+			}
+		});
+		
+		this.montag.addValueChangeListener(new ValueChangeListener()
+		{	
+			@Override
+			public void valueChange(ValueChangeEvent event)
+			{
+				if (montag.getValue() >= getInt(gesamt.getValue()))
+				{
+					montag.setValue(getInt(gesamt.getValue()));
+					freitag.setValue(0);
+				}
+				else
+				{
+					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
+				}
+			}
+		});
 	}
 	
 	@SuppressWarnings("serial")
