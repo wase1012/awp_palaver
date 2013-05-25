@@ -25,7 +25,6 @@ public class BestellungData
 	private IntStepper 	freitag;
 	private IntStepper	montag;
 	private Artikel		artikel;
-	private Long id;
 	private boolean geliefert;
 	
 	/**
@@ -57,7 +56,6 @@ public class BestellungData
 	public BestellungData(Bestellposition bp)
 	{
 		super();
-		this.id = bp.getId();
 		this.artikel = bp.getArtikel();
 		this.geliefert = bp.isGeliefert();
 		this.name = bp.getArtikelName();
@@ -395,20 +393,6 @@ public class BestellungData
 
 		}
 		return nummer;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	/**

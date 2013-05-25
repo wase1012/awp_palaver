@@ -98,14 +98,14 @@ public class BestellpositionDAO extends AbstractDAO{
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
-
+		openConnection();
 		while (set.next()) {
 			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
-					BestellungDAO.getInstance().getBestellungById(set.getLong(BESTELLUNG_FK)),
+					BestellungDAO.getInstance().getBestellungByIdWithoutBP(set.getLong(BESTELLUNG_FK)),
 					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
 		}
-
+		closeConnection();
 		return list;
 	}
 	
@@ -114,13 +114,13 @@ public class BestellpositionDAO extends AbstractDAO{
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
-
+		openConnection();
 		while (set.next()) {
 			list.add(new Bestellposition(set.getLong(ID),
 					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
 					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
 		}
-
+		closeConnection();
 		return list;
 	}
 	

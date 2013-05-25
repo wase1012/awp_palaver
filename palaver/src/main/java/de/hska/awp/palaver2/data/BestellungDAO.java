@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
 /**
@@ -30,6 +32,20 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String LIEFERDATUM = "lieferdatum";
 	private final static String LIEFERDATUM2 = "lieferdatum2";
 	private final static String BESTELLT = "bestellt";
+	
+	private final static String TABLE2 = "bestellposition";
+	private final static String ARTIKEL_FK = "artikel_fk";
+	private final static String BESTELLUNG_FK = "bestellung_fk";
+	private final static String DURCHSCHNITT = "durchschnitt";
+	private final static String KANTINE = "kantine";
+	private final static String GESAMT = "gesamt";
+	private final static String FREITAG = "freitag";
+	private final static String MONTAG = "montag";
+	private final static String GELIEFERT = "geliefert";
+	
+	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
+	private static final String GET_BESTELLPOSITIONEN_BY_BESTELLUNGID = "SELECT * FROM " + TABLE2
+			+ " WHERE " + BESTELLUNG_FK + "= {0}";
 	
 	private final static String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE;
 	private final static String GET_BESTELLUNG_BY_ID = "SELECT * FROM " + TABLE
@@ -138,15 +154,54 @@ public class BestellungDAO extends AbstractDAO {
 		Bestellung bestellung = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID,
 				id));
-
+		
+		openConnection();
+		
 		while (set.next()) {
-			bestellung = new Bestellung(set.getLong(ID), LieferantDAO
-					.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)),
-					set.getDate(DATUM), set.getDate(LIEFERDATUM), set.getDate(LIEFERDATUM2),
-					BestellpositionDAO.getInstance().getBpByBestellungId(
-							set.getLong(ID)), set.getBoolean(BESTELLT));
+			bestellung = new Bestellung(set.getLong(ID), 
+					getLieferantById(set.getLong(LIEFERANT_FK)),
+					set.getDate(DATUM), 
+					set.getDate(LIEFERDATUM), 
+					set.getDate(LIEFERDATUM2),
+					getBestellpositionen(set.getLong(ID)),
+					set.getBoolean(BESTELLT));
 		}
+		
+		closeConnection();
+		
+		return bestellung;
+	}
+	
+	/**
+	 * Die Methode getBestellungById liefert ein Ergebnisse zurück bei der Suche
+	 * nach einer Bestellung in der Datenbank ohne Bestellpositionen.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public Bestellung getBestellungByIdWithoutBP(Long id) throws ConnectException,
+			DAOException, SQLException {
 
+		Bestellung bestellung = null;
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID,
+				id));
+		
+		openConnection();
+		
+		while (set.next()) {
+			bestellung = new Bestellung(set.getLong(ID), 
+					getLieferantById(set.getLong(LIEFERANT_FK)),
+					set.getDate(DATUM), 
+					set.getDate(LIEFERDATUM), 
+					set.getDate(LIEFERDATUM2),
+					set.getBoolean(BESTELLT));
+		}
+		
+		closeConnection();
+		
 		return bestellung;
 	}
 
@@ -233,5 +288,37 @@ public class BestellungDAO extends AbstractDAO {
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	
+	}
+	
+	private Lieferant getLieferantById(Long id) throws SQLException
+	{
+		Lieferant lieferant = null;
+		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
+
+		while (set.next()) 
+		{
+			lieferant = new Lieferant(set.getLong("id"), set.getString("name"),
+			set.getString("kundennummer"), set.getString("bezeichnung"),
+			set.getString("strasse"), set.getString("plz"),
+			set.getString("ort"), set.getString("email"),
+			set.getString("telefon"), set.getString("fax"), set.getString("notiz"), set.getBoolean("mehrereliefertermine"));
+		}
+
+			return lieferant;
+	}
+	
+	
+	private List<Bestellposition> getBestellpositionen(Long id) throws SQLException, ConnectException, DAOException
+	{
+		List<Bestellposition> list = new ArrayList<Bestellposition>();
+
+		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
+		
+		while (set.next()) {
+			list.add(new Bestellposition(set.getLong(ID),
+					ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
+					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG),set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
+		}
+		return list;
 	}
 }
