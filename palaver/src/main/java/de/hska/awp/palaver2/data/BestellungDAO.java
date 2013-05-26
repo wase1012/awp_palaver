@@ -166,9 +166,8 @@ public class BestellungDAO extends AbstractDAO {
 					getBestellpositionen(set.getLong(ID)),
 					set.getBoolean(BESTELLT));
 		}
-		
 		closeConnection();
-		
+				
 		return bestellung;
 	}
 	

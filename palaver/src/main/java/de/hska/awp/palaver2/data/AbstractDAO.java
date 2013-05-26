@@ -52,6 +52,26 @@ public abstract class AbstractDAO
 		return cache.getOriginal();
 	}
 	
+	@SuppressWarnings({ "resource", "restriction" })
+	protected synchronized ResultSet getMany(String querry) throws ConnectException, DAOException, SQLException 
+	{
+		
+
+		ResultSet result = null;
+		CachedRowSet cache = new CachedRowSetImpl();
+		try 
+		{
+			result = statement.executeQuery(querry);
+			cache.populate(result);	
+		} 
+		catch (Exception e) 
+		{
+			throw new DAOException("Statement error: " + querry + " caused by: " + e.toString());
+		}
+		
+		return cache.getOriginal();
+	}
+	
 	protected synchronized void putManaged(String querry) throws ConnectException, DAOException 
 	{
 		openConnection();

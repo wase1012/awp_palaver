@@ -110,4 +110,20 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		 return bpen;
 	}
 	
+	public List<Bestellposition> getBestellpositionenMitId(List<BestellungData> bestData) {
+		List<Bestellposition> bpen = new ArrayList<Bestellposition>();
+		 for( int i = 0; i < bestData.size(); ++i){
+			 Bestellposition bp = new Bestellposition();
+			 bp.setId(bestData.get(i).getId());
+			 bp.setArtikel(bestData.get(i).getBestellungArtikel());
+			 bp.setDurchschnitt(BestellungData.getInt(bestData.get(i).getDurchschnitt().getValue()));
+			 bp.setKantine(BestellungData.getInt(bestData.get(i).getKantine().getValue()));
+			 bp.setGesamt(BestellungData.getInt(bestData.get(i).getGesamt().getValue()));
+			 bp.setFreitag(bestData.get(i).getFreitag().getValue());
+			 bp.setMontag(bestData.get(i).getMontag().getValue());
+			 bpen.add(bp);
+		 }
+		 return bpen;
+	}
+	
 }

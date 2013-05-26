@@ -19,12 +19,13 @@ public class BestellungData
 	private String		name;
 	private	String		gebinde;
 	private Kategorie	kategorie;
-	private TextField	durchschnitt;
-	private TextField	kantine;
-	private TextField	gesamt;
-	private IntStepper 	freitag;
-	private IntStepper	montag;
+	private TextField	durchschnitt = new TextField();
+	private TextField	kantine = new TextField();;
+	private TextField	gesamt = new TextField();;
+	private IntStepper 	freitag = new IntStepper();
+	private IntStepper	montag = new IntStepper();
 	private Artikel		artikel;
+	private Long id;
 	private boolean geliefert;
 	
 	/**
@@ -38,17 +39,12 @@ public class BestellungData
 		this.name = name;
 		this.gebinde = gebinde;
 		this.kategorie = kategorie;
-		this.durchschnitt = new TextField();
 		this.durchschnitt.setValue(durchschnitt.toString());
-		this.kantine = new TextField();
 		this.kantine.setValue(kantine.toString());
-		this.gesamt = new TextField();
 		this.gesamt.setValue("" + (durchschnitt + kantine));
 		this.gesamt.setEnabled(false);
-		this.freitag = new IntStepper();
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(durchschnitt + kantine);
-		this.montag = new IntStepper();
 		this.montag.setValue(0);
 	}
 	
@@ -56,22 +52,18 @@ public class BestellungData
 	public BestellungData(Bestellposition bp)
 	{
 		super();
+		this.id = bp.getId();
 		this.artikel = bp.getArtikel();
 		this.geliefert = bp.isGeliefert();
 		this.name = bp.getArtikelName();
 		this.gebinde = bp.getArtikel().getBestellgroesse()  + " " + bp.getArtikel().getMengeneinheit().getKurz();
 		this.kategorie = bp.getArtikel().getKategorie();
-		this.durchschnitt = new TextField();
 		this.durchschnitt.setValue(bp.getDurchschnitt().toString());
-		this.kantine = new TextField();
 		this.kantine.setValue(bp.getKantine().toString());
-		this.gesamt = new TextField();
 		this.gesamt.setValue(bp.getGesamt().toString());
 		this.gesamt.setEnabled(false);
-		this.freitag = new IntStepper();
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(bp.getFreitag());
-		this.montag = new IntStepper();
 		this.montag.setValue(bp.getMontag());
 		
 		this.durchschnitt.setWidth("50px");
@@ -159,16 +151,11 @@ public class BestellungData
 		this.name = artikel.getName();
 		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheit().getKurz();
 		this.kategorie = artikel.getKategorie();
-		this.durchschnitt = new TextField();
 		this.durchschnitt.setValue(artikel.getDurchschnitt() + "");
-		this.kantine = new TextField();
 		this.kantine.setValue(0 + "");
-		this.gesamt = new TextField();
 		this.gesamt.setValue("" + artikel.getDurchschnitt());
 		this.gesamt.setEnabled(false);
-		this.freitag = new IntStepper();
 		this.freitag.setValue(artikel.getDurchschnitt());
-		this.montag = new IntStepper();
 		this.montag.setValue(0);
 		this.artikel = artikel;
 		
@@ -407,5 +394,19 @@ public class BestellungData
 	 */
 	public void setGeliefert(boolean geliefert) {
 		this.geliefert = geliefert;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

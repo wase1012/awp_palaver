@@ -241,7 +241,7 @@ private Table 								bestellungTable;
 			public void buttonClick(ClickEvent event)
 			{
 				bestellData = containerBestellung.getItemIds();
-				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
+				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
 				
 				for(int i = 0; i < (bestellpositionen.size()); i++){
 					
@@ -249,30 +249,24 @@ private Table 								bestellungTable;
 						bestellpositionen.remove(i);
 					}
 				}
-				System.out.print("ID der Bestellung:");
-				System.out.print(bestellung.getId());
-				java.util.Date date2 = new java.util.Date();
-				Date date = new Date(date2.getTime());
+				System.out.print("ID der bestellpositionen:");
+				System.out.print(bestellpositionen.get(0).getId());
+				java.util.Date dateutil = new java.util.Date();
+				Date date = new Date(dateutil.getTime());
 				bestellung.setDatum(date);
-			
+				dateutil = datetime.getValue();
+				Date datesql = new Date(dateutil.getTime());
+				bestellung.setLieferdatum(datesql);
 				if(bestellung.getLieferant().getMehrereliefertermine() == true) 
 				{
-					java.util.Date date3 = datetime.getValue();
-					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
 					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum(datesql);
 					bestellung.setLieferdatum2(datesql1);
 				}
 				else 
 				{
-					java.util.Date date3 = datetime.getValue();
-					Date datesql = new Date(date3.getTime());
-					bestellung.setLieferdatum(datesql);	
 					bestellung.setLieferdatum2(datesql);
 				}
-				
-				
 				
 				try {
 					
@@ -322,20 +316,15 @@ private Table 								bestellungTable;
 		
 		List<BestellungData> list = new ArrayList<BestellungData>();
 		List<Artikel> artikel = new ArrayList<Artikel>();
-		List<Artikel> artikelListe = null;
 		try
 		{
-			artikelListe = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
+			artikel = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		for (Artikel e : artikelListe)
-		{
-			artikel.add(e);
-		}
 		
 		containerBestellung = new BeanItemContainer<BestellungData>(BestellungData.class, list);
 		try
