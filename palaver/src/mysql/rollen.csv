@@ -1,4 +1,6 @@
 id; name; 
-1; Chef;
-2; Koch;
-3; Einkäufer;
+1;Administrator;
+2;Koch;
+3;Einkauf;
+4;Besteller;
+5;Speiseplan freigeben;
