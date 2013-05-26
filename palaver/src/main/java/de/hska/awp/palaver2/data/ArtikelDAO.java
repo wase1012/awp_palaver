@@ -158,13 +158,13 @@ return list;
 		Artikel result = null;
 		
 		ResultSet set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
-		
+		openConnection();
 		while(set.next())
 		{
 			result = new Artikel(set.getLong("id"),
-								MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong("mengeneinheit_fk")),
-								KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
-								LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")),
+								getMengeneinheitById(set.getLong("mengeneinheit_fk")),
+								getKategorieById(set.getLong("kategorie_fk")),
+								getLieferantById(set.getLong("lieferant_fk")),
 								set.getString("artikelnr"),
 								set.getString("name"),
 								set.getDouble("bestellgroesse"),
@@ -176,7 +176,7 @@ return list;
 								set.getBoolean("lebensmittel")
 								);
 		}
-		
+		closeConnection();
 		return result;
 	}
 	
