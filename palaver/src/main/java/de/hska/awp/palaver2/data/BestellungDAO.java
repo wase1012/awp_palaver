@@ -12,6 +12,7 @@ import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
@@ -249,9 +250,10 @@ public class BestellungDAO extends AbstractDAO {
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
+	 * @throws ParseException 
 	 */
 	public void updateBestellung(Bestellung bestellung)
-			throws ConnectException, DAOException, SQLException {
+			throws ConnectException, DAOException, SQLException, ParseException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + LIEFERANT_FK + "='"
 				+ bestellung.getLieferant().getId() + "'," + DATUM + "='"
 				+ bestellung.getDatum() + "'," + LIEFERDATUM + "='"
@@ -261,9 +263,35 @@ public class BestellungDAO extends AbstractDAO {
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 		
-		for(int i = 0 ; 0 < bestellung.getBestellpositionen().size() ; i++){
+		List<Bestellposition> bplist = BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(bestellung.getId());
+		List<Bestellposition> bebplist = new ArrayList<Bestellposition>();
+		bebplist = bestellung.getBestellpositionen();
+		
+		for(int i = 0 ; i < bplist.size() ; i++){
+			boolean vorhanden = false;
+			for(int z = 0 ; z < bebplist.size() ; z++){
+				if(bplist.get(i).getArtikel().getId().equals(bebplist.get(z).getArtikel().getId())){
+					vorhanden = true;
+					bebplist.get(z).setBestellung(bestellung);
+					BestellpositionDAO.getInstance().updateBestellposition(bebplist.get(z));
+					bebplist.remove(bebplist.get(z));
+				}
+				
+			}
+			if(vorhanden == false){
+				BestellpositionDAO.getInstance().deleteBestellposition(bplist.get(i).getId());
+			}
 			
-			BestellpositionDAO.getInstance().updateBestellposition(bestellung.getBestellpositionen().get(i));
+		}
+
+		if(bebplist != null){
+			for(Bestellposition bp : bebplist){
+				bp.setBestellung(bestellung);
+				BestellpositionDAO.getInstance().createBestellposition(bp);
+				
+			}
+			
+			
 		}
 		
 	}

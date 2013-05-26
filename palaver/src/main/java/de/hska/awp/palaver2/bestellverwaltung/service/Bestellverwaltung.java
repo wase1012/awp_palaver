@@ -56,7 +56,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 
 	public void updateBestellung(Bestellung bestellung)
-			throws ConnectException, DAOException, SQLException {
+			throws ConnectException, DAOException, SQLException, ParseException {
 		super.updateBestellung(bestellung);
 	}
 	

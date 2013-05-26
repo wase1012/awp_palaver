@@ -246,11 +246,11 @@ private Table 								bestellungTable;
 				for(int i = 0; i < (bestellpositionen.size()); i++){
 					
 					if(bestellpositionen.get(i).getGesamt()==0){
-						bestellpositionen.remove(i);
+						bestellpositionen.remove(bestellpositionen.get(i));
+						i = i - 1;
 					}
 				}
-				System.out.print("ID der bestellpositionen:");
-				System.out.print(bestellpositionen.get(0).getId());
+		
 				java.util.Date dateutil = new java.util.Date();
 				Date date = new Date(dateutil.getTime());
 				bestellung.setDatum(date);
@@ -268,35 +268,15 @@ private Table 								bestellungTable;
 					bestellung.setLieferdatum2(datesql);
 				}
 				
-				try {
-					
-					Bestellung b = Bestellverwaltung.getInstance().getBestellungById(bestellung.getId());
-					
-					for(int z = 0; z < b.getBestellpositionen().size(); z++){
-					
-						Bestellpositionverwaltung.getInstance().deleteBestellposition(b.getBestellpositionen().get(z).getId());
-					}
-						
-				} catch (Exception e){
-					e.printStackTrace();
-				}
+				bestellung.setBestellpositionen(bestellpositionen);
 				
 				try {
-				 for(int i = 0 ; i < bestellpositionen.size() ; i++){
-					 bestellpositionen.get(i).setBestellung(bestellung);
-					 Bestellpositionverwaltung.getInstance().createBestellposition(bestellpositionen.get(i));
-				 }
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				 
-				try {
-					Bestellverwaltung.getInstance().updateBestellungOhneBP(bestellung);
+					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
