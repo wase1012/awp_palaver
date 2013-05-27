@@ -22,6 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -32,6 +33,8 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -68,6 +71,8 @@ private Table 								bestellungTable;
 	
 	private BeanItemContainer<BestellungData> 	containerBestellung;
 	private BeanItemContainer<Artikel> 			containerArtikel;
+	
+	Label										l = new Label();
 	
 	public BestellungBearbeiten()
 	{
@@ -122,6 +127,7 @@ private Table 								bestellungTable;
 		
 		control = new HorizontalLayout();
 		control.setSpacing(true);
+		control.setSizeFull();
 		
 		this.addComponent(fenster);
 		
@@ -133,13 +139,19 @@ private Table 								bestellungTable;
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
+		control.addComponent(l);
+		control.setComponentAlignment(l, Alignment.TOP_LEFT);
 		control.addComponent(bestellenperemail);
 		control.setComponentAlignment(bestellenperemail, Alignment.TOP_RIGHT);
 		control.addComponent(verwerfen);
 		control.setComponentAlignment(verwerfen, Alignment.TOP_RIGHT);
 		control.addComponent(speichern);
 		control.setComponentAlignment(speichern, Alignment.TOP_RIGHT);	
-	
+		control.setExpandRatio(l, 7);
+		control.setExpandRatio(bestellenperemail, (float) 1.5);
+		control.setExpandRatio(verwerfen, 1);
+		control.setExpandRatio(speichern, 1);
+		
 		bestellungTable = new Table();
 		bestellungTable.setSizeFull();
 		bestellungTable.setStyleName("palaverTable");
@@ -217,14 +229,15 @@ private Table 								bestellungTable;
 		form.setSpacing(true);
 		
 		HorizontalLayout hl = new HorizontalLayout();
-		hl.setSpacing(true);
-		hl.setWidth("450px");
+		hl.setWidth("100%");
+		l.setWidth("100%");
 		datetime.setCaption("Montag");
 		datetime2.setCaption("Freitag");
 		hl.addComponent(datetime);
 		hl.setComponentAlignment(datetime, Alignment.TOP_LEFT);
 		hl.addComponent(datetime2);
-		hl.setComponentAlignment(datetime2, Alignment.TOP_CENTER);
+		hl.setComponentAlignment(datetime2, Alignment.TOP_LEFT);
+		
 		
 		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>"
 	                + "<ul>"
@@ -232,7 +245,11 @@ private Table 								bestellungTable;
 	                + "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr möglich!</li></ul>");
 		
 		hl.addComponent(bestellt);
-		hl.setComponentAlignment(bestellt, Alignment.BOTTOM_RIGHT);
+		hl.setComponentAlignment(bestellt, Alignment.BOTTOM_LEFT);
+		hl.setExpandRatio(datetime, 1);
+		hl.setExpandRatio(datetime2, 1);
+		hl.setExpandRatio(bestellt, 7);
+		
 		fenster.addComponent(hl);
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
@@ -419,5 +436,32 @@ private Table 								bestellungTable;
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] {"name", "artikelnr"});
+		
+		
+		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance()
+				.getAnsprechpartnerByLieferant(bestellung.getLieferant());
+		String text = "";
+		if(bestellung.getLieferant().getTelefon()!= null){
+			
+			if (alist != null) {
+				for (int i = 0; i < alist.size(); i++) {
+					text = text + alist.get(i).getName() + " ";
+					if(alist.get(i).getTelefon().length() > 4){
+						text = text + "Tel.: " +alist.get(i).getTelefon() + " ";
+					}
+					if (alist.get(i).getHandy().length() > 6) {
+						text = text + "Handy: " +alist.get(i).getHandy() + " ";
+					}	
+				}
+			} 
+			l.setValue(bestellung.getLieferant().getName() + " Tel: " + bestellung.getLieferant().getTelefon() 
+				+ " " + text);
+		}
+		else if(alist != null){
+			l.setValue("Ansprechpartner: " + text);
+		}
+		
+		
+		
 	}
 }
