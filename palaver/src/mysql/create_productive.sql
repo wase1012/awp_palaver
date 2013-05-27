@@ -38,7 +38,9 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`mitarbeiter` (
   `passwort` VARCHAR(45) NULL ,
   `eintrittsdatum` VARCHAR(45) NULL ,
   `austrittsdatum` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) )
+  `benutzername` VARCHAR(30) NOT NULL ,
+  PRIMARY KEY (`id`) , 
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 
