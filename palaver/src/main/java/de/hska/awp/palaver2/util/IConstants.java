@@ -61,6 +61,7 @@ public interface IConstants
 	public final String		BUTTON_LÖSCHEN = "Löschen";
 	public final String		BUTTON_JA = "Ja";
 	public final String 	BUTTON_NEIN = "Nein";
+	public final String		BUTTON_EMAILVERSAND = "Per Email versenden";
 	
 	// Icons fuer Knoepfe
 	public final String		BUTTON_DELETE_ICON = "img/delete.ico";
@@ -70,6 +71,7 @@ public interface IConstants
 	public final String 	BUTTON_NEW_ICON = "img/new.ico";
 	public final String 	BUTTON_EDIT_ICON = "img/edit.ico";
 	public final String		BUTTON_OK_ICON = "img/check.ico";
+//	public final String		BUTTON_EMAILVERSAND_ICON = "";
 	
 	public final String		ICON_YES = "img/tick_circle.ico";
 	public final String		ICON_NO = "img/cross_circle.ico";

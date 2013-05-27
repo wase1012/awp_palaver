@@ -18,6 +18,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
@@ -59,12 +60,14 @@ private Table 								bestellungTable;
 	
 	private PopupDateField						datetime = new PopupDateField();
 	private PopupDateField						datetime2 = new PopupDateField();
+	private CheckBox							bestellt = new CheckBox("Bestellung wurde bestellt");
 	
 	private List<Bestellposition>				bestellpositionen;
 	private List<BestellungData>				bestellData = new ArrayList<BestellungData>();;
 	
 	private Button								speichern;
 	private Button								verwerfen;
+	private Button								bestellenperemail;
 	
 	private BeanItemContainer<BestellungData> 	containerBestellung;
 	private BeanItemContainer<Artikel> 			containerArtikel;
@@ -85,12 +88,24 @@ private Table 								bestellungTable;
             @Override
             public void valueChange(final ValueChangeEvent event) {
             	java.util.Date date2 = new java.util.Date();
-            	if(date2.before(datetime.getValue()) == false ||datetime.getValue() == null) {
-        			speichern.setEnabled(false);
-        		}
-        		else {
-				speichern.setEnabled(true);
-        		}
+            	Date d = new Date(date2.getTime());
+            	if(bestellung.getLieferant().getMehrereliefertermine()==false){
+            		if(d.before(datetime.getValue()) == false ||datetime.getValue() == null) {
+            			speichern.setEnabled(false);
+            		}
+            		else {
+            			datetime2.setValue(datetime.getValue());
+            			speichern.setEnabled(true);
+            		}
+            	} else {
+            		if(d.before(datetime.getValue()) == false ||datetime.getValue() == null || d.before(datetime2.getValue()) == false) {
+            			speichern.setEnabled(false);
+            		} 
+            		else {
+            			speichern.setEnabled(true);
+            		}
+            	}
+            	
             }
         });
 		
@@ -104,7 +119,7 @@ private Table 								bestellungTable;
             public void valueChange(final ValueChangeEvent event) {
             	java.util.Date date2 = new java.util.Date();
             	Date d = new Date(date2.getTime());
-            	if(datetime.getValue() == null || d.before(datetime2.getValue()) == false || datetime2.getValue() == null) {
+            	if(datetime.getValue() == null || d.before(datetime.getValue()) == false ||  d.before(datetime2.getValue()) == false || datetime2.getValue() == null) {
             		speichern.setEnabled(false);
             		}
             	else {
@@ -126,11 +141,14 @@ private Table 								bestellungTable;
 		
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
+		bestellenperemail = new Button(IConstants.BUTTON_EMAILVERSAND);
 		speichern.setEnabled(false);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
+		control.addComponent(bestellenperemail);
+		control.setComponentAlignment(bestellenperemail, Alignment.TOP_RIGHT);
 		control.addComponent(verwerfen);
 		control.setComponentAlignment(verwerfen, Alignment.TOP_RIGHT);
 		control.addComponent(speichern);
@@ -213,10 +231,22 @@ private Table 								bestellungTable;
 		form.setSpacing(true);
 		
 		HorizontalLayout hl = new HorizontalLayout();
+		hl.setSpacing(true);
+		hl.setWidth("450px");
 		datetime.setCaption("Montag");
 		datetime2.setCaption("Freitag");
 		hl.addComponent(datetime);
+		hl.setComponentAlignment(datetime, Alignment.TOP_LEFT);
 		hl.addComponent(datetime2);
+		hl.setComponentAlignment(datetime2, Alignment.TOP_CENTER);
+		
+		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>"
+	                + "<ul>"
+	                + "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschließend die Bestellung abspeichern.</li>"
+	                + "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr möglich!</li></ul>");
+		
+		hl.addComponent(bestellt);
+		hl.setComponentAlignment(bestellt, Alignment.BOTTOM_RIGHT);
 		fenster.addComponent(hl);
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
@@ -271,11 +301,65 @@ private Table 								bestellungTable;
 				bestellung.setBestellpositionen(bestellpositionen);
 				
 				try {
+					bestellung.setBestellt(bestellt.getValue());
 					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+			}
+		});
+		
+		bestellenperemail.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+				bestellData = containerBestellung.getItemIds();
+				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
+				
+				for(int i = 0; i < (bestellpositionen.size()); i++){
+					
+					if(bestellpositionen.get(i).getGesamt()==0){
+						bestellpositionen.remove(bestellpositionen.get(i));
+						i = i - 1;
+					}
+				}
+		
+				java.util.Date dateutil = new java.util.Date();
+				Date date = new Date(dateutil.getTime());
+				bestellung.setDatum(date);
+				dateutil = datetime.getValue();
+				Date datesql = new Date(dateutil.getTime());
+				bestellung.setLieferdatum(datesql);
+				if(bestellung.getLieferant().getMehrereliefertermine() == true) 
+				{
+					java.util.Date date1 = datetime2.getValue();
+					Date datesql1 = new Date(date1.getTime());
+					bestellung.setLieferdatum2(datesql1);
+				}
+				else 
+				{
+					bestellung.setLieferdatum2(datesql);
+				}
+				
+				bestellung.setBestellpositionen(bestellpositionen);
+				
+				try {
+					bestellung.setBestellt(true);
+					Bestellverwaltung.getInstance().updateBestellung(bestellung);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//TODO EMAIL VERSENDEN
+				
+				
+				
+				
 				
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
@@ -320,6 +404,7 @@ private Table 								bestellungTable;
 		if(bestellung.getLieferant().getMehrereliefertermine()==false){
 			
 			datetime.setValue(bestellung.getLieferdatum());
+			datetime2.setValue(bestellung.getLieferdatum());
 			
 		} else {
 			datetime.setValue(bestellung.getLieferdatum());
@@ -330,7 +415,7 @@ private Table 								bestellungTable;
 		bestellungTable.setContainerDataSource(containerBestellung);
 		
 		if(bestellung.getLieferant().getMehrereliefertermine()==true){
-		bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "freitag", "montag"});
+		bestellungTable.setVisibleColumns(new Object[] {"name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag"});
 		datetime.setVisible(true);
 		datetime.setRequired(true);
 		datetime2.setVisible(true);
