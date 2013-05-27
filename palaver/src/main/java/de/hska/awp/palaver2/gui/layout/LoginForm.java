@@ -3,6 +3,8 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import java.sql.SQLException;
+
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
@@ -19,6 +21,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 /**
  * @author Sebastian
@@ -85,6 +91,27 @@ public class LoginForm extends VerticalLayout
 				{
 					new Notification("Login Failed").show(Page.getCurrent());
 				}
+//				try
+//				{
+//					Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByName(username.getValue()).get(0);
+//					if (current.getPasswort().equals(password.getValue()))
+//					{
+//						Application.getInstance().login(username.getValue());
+//						UI.getCurrent().setContent(Application.getInstance().getLayout());
+//					}
+//				} 
+//				catch (ConnectException e)
+//				{
+//					e.printStackTrace();
+//				} 
+//				catch (DAOException e)
+//				{
+//					e.printStackTrace();
+//				} 
+//				catch (SQLException e)
+//				{
+//					e.printStackTrace();
+//				}
 			}
 		});
 		

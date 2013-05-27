@@ -17,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.gui.layout.MainLayout;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 /**
  * The Application's "main" class
@@ -30,6 +31,7 @@ public class Application extends UI
     private static final Logger				log					= LoggerFactory.getLogger(Application.class.getName());
     
     private String 							username;
+    private Mitarbeiter						user;
     
     private MainLayout						layout;
     
@@ -112,6 +114,16 @@ public class Application extends UI
 	{
 		log.info("LOGIN USER: " + username);
 		this.username = username;
+	}
+	
+	public Mitarbeiter getUser()
+	{
+		return user;
+	}
+	
+	public void setUser(Mitarbeiter mitarbeiter)
+	{
+		this.user = mitarbeiter;
 	}
 	
 	public MainLayout getLayout()
