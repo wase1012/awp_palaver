@@ -85,23 +85,12 @@ private Table 								bestellungTable;
             @Override
             public void valueChange(final ValueChangeEvent event) {
             	java.util.Date date2 = new java.util.Date();
-            	Date d = new Date(date2.getTime());
-            	if(bestellung.getLieferant().getMehrereliefertermine()==false){
-            		if(d.before(datetime.getValue()) == false ||datetime.getValue() == null) {
-            			speichern.setEnabled(false);
-            		}
-            		else {
-            			datetime2.setValue(datetime.getValue());
-            			speichern.setEnabled(true);
-            		}
-            	} else {
-            		if(d.before(datetime.getValue()) == false ||datetime.getValue() == null || d.before(datetime2.getValue()) == false) {
-            			speichern.setEnabled(false);
-            		} 
-            		else {
-            			speichern.setEnabled(true);
-            		}
-            	}
+            	if(date2.before(datetime.getValue()) == false ||datetime.getValue() == null) {
+        			speichern.setEnabled(false);
+        		}
+        		else {
+				speichern.setEnabled(true);
+        		}
             	
             }
         });
