@@ -21,6 +21,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 	private final static String			PASSWORT = "passwort";
 	private final static String			EINTRITTSDATUM = "eintrittsdatum";
 	private final static String			AUSTRITTSDATUM = "austrittsdatum";
+	private final static String			BENUTZERNAME = "benutzername";
 	
 	private static final String		GET_ALL_MITARBEITER = "SELECT * FROM Mitarbeiter";
 	private static final String		GET_MITARBEITER_BY_ID = "SELECT * FROM Mitarbeiter WHERE id = {0}";
@@ -57,7 +58,8 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id")),
+								set.getString("benutzername")
 								));
 		}
 		return list;
@@ -80,7 +82,8 @@ public class MitarbeiterDAO extends AbstractDAO{
 								set.getString("passwort"),
 								set.getString("eintrittsdatum"),
 								set.getString("austrittsdatum"),
-								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id"))
+								RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong("id")),
+								set.getString("benutzername")
 								);
 		}
 		return mitarbeiter;
@@ -99,7 +102,8 @@ public class MitarbeiterDAO extends AbstractDAO{
 						set.getString("email"),
 						set.getString("passwort"),
 						set.getString("eintrittsdatum"),
-						set.getString("austrittsdatum")
+						set.getString("austrittsdatum"),
+						set.getString("benutzername")
 						));
 
 			}
@@ -118,7 +122,8 @@ public class MitarbeiterDAO extends AbstractDAO{
 				list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set
 						.getString(VORNAME), set.getString(EMAIL), set
 						.getString(PASSWORT), set.getString(EINTRITTSDATUM),
-						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID))));
+						set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID)),
+						set.getString(BENUTZERNAME)));
 			}
 			
 			return list;
@@ -127,11 +132,11 @@ public class MitarbeiterDAO extends AbstractDAO{
 		public void createMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
 			String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 					+ VORNAME + "," + EMAIL + "," + PASSWORT + "," + EINTRITTSDATUM
-					+ "," + AUSTRITTSDATUM + ")"
+					+ "," + AUSTRITTSDATUM +  "," + BENUTZERNAME + ")"
 					+ "VALUES" + "('" + mitarbeiter.getName() + "','"
 					+ mitarbeiter.getVorname() + "','"
 					+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort()
-					+ "','" + mitarbeiter.getEintrittsdatum() + "','" + mitarbeiter.getAustrittsdatum() + "')";
+					+ "','" + mitarbeiter.getEintrittsdatum() + "','" + mitarbeiter.getAustrittsdatum() + "','" + BENUTZERNAME + "')";
 			this.putManaged(INSERT_QUERY);
 			
 			List<Mitarbeiter> mitarbeiterlist= getAllMitarbeiter();
@@ -154,7 +159,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 					+ mitarbeiter.getVorname() + "'," + EMAIL + "='"
 					+ mitarbeiter.getEmail() + "'," + PASSWORT + "='"
 					+ mitarbeiter.getPasswort() + "'," + EINTRITTSDATUM + "='"
-					+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum()
+					+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum() + "'," + BENUTZERNAME + "='" + mitarbeiter.getBenutzername()
 				    + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
 			this.putManaged(UPDATE_QUERY);
 			

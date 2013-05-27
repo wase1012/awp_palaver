@@ -9,6 +9,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	private Long id;
 	private String name;
 	private String vorname;
+	private String benutzername;
 	private String email;
 	private String passwort;
 	private String eintrittsdatum;
@@ -20,7 +21,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	}
 	
 	public Mitarbeiter(String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen) {
+			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen, String benutzername) {
 		this.name = name;
 		this.vorname = vorname;
 		this.email = email;
@@ -28,10 +29,11 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.eintrittsdatum = eintrittsdatum;
 		this.austrittsdatum = austrittsdatum;
 		this.rollen = rollen;
+		this.benutzername = benutzername;
 	}
 
 	public Mitarbeiter(Long id, String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen) {
+			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen, String benutzername) {
 		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
@@ -40,10 +42,11 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.eintrittsdatum = eintrittsdatum;
 		this.austrittsdatum = austrittsdatum;
 		this.rollen = rollen;
+		this.benutzername = benutzername;
 	}
 
 	public Mitarbeiter(Long id, String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum) {
+			String passwort, String eintrittsdatum, String austrittsdatum, String benutzername) {
 		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
@@ -51,6 +54,7 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.passwort = passwort;
 		this.eintrittsdatum = eintrittsdatum;
 		this.austrittsdatum = austrittsdatum;
+		this.benutzername = benutzername;
 	}
 
 	public Long getId() {
@@ -123,6 +127,20 @@ public class Mitarbeiter implements java.io.Serializable {
 		}
 		rollen.add(rolle);
 		return this;
+	}
+
+	/**
+	 * @return the benutzername
+	 */
+	public String getBenutzername() {
+		return benutzername;
+	}
+
+	/**
+	 * @param benutzername the benutzername to set
+	 */
+	public void setBenutzername(String benutzername) {
+		this.benutzername = benutzername;
 	}
 
 	@Override

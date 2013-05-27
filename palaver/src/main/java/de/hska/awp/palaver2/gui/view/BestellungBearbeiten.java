@@ -306,23 +306,6 @@ private Table 								bestellungTable;
 						e.printStackTrace();
 					}
 				}
-				else {
-					try {
-						
-						Bestellverwaltung.getInstance().splitAndSaveBestellung(bestellung);
-						
-					} catch (Exception e) {
-						throw new NullPointerException("Die Aufteilung der Bestellung in Zwei Bestellungen ist gescheitert");
-						
-					}
-					
-					
-					
-				}
-				
-				
-				
-				
 				
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
