@@ -384,4 +384,34 @@ public class Bestellverwaltung extends BestellungDAO {
 		return b;
 	}
 	
+	public void splitAndSaveBestellung(Bestellung bestellung) throws ConnectException, DAOException, SQLException, ParseException{
+		
+		Bestellung bestellungmontag = new Bestellung();
+		Bestellung bestellungfreitag = new Bestellung();
+		List<Bestellposition> bplistmontag = new ArrayList<Bestellposition>();
+		List<Bestellposition> bplistfreitag = new ArrayList<Bestellposition>();
+		
+		bestellungmontag.setBestellt(bestellung.isBestellt());
+		bestellungmontag.setDatum(bestellung.getDatum());
+		bestellungmontag.setLieferant(bestellung.getLieferant());
+		bestellungmontag.setLieferdatum(bestellung.getLieferdatum2());
+		bestellungmontag.setLieferdatum2(bestellung.getLieferdatum2());
+		
+		bestellungfreitag.setBestellt(bestellung.isBestellt());
+		bestellungfreitag.setDatum(bestellung.getDatum());
+		bestellungfreitag.setLieferant(bestellung.getLieferant());
+		bestellungfreitag.setLieferdatum(bestellung.getLieferdatum2());
+		bestellungfreitag.setLieferdatum2(bestellung.getLieferdatum2());
+		
+		for(int i = 0 ; i < bestellung.getBestellpositionen().size(); i++){
+			
+			if(bestellung.getBestellpositionen().get(i).getMontag() > 0){
+				
+			}
+			
+		}
+		
+		
+	}
+	
 }

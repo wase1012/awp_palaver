@@ -18,13 +18,13 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -32,7 +32,6 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -55,8 +54,6 @@ private Table 								bestellungTable;
 	private HorizontalLayout					control;
 	
 	private Bestellung							bestellung;
-	
-	private Lieferant 							lieferant;
 	
 	private PopupDateField						datetime = new PopupDateField();
 	private PopupDateField						datetime2 = new PopupDateField();
@@ -300,13 +297,32 @@ private Table 								bestellungTable;
 				
 				bestellung.setBestellpositionen(bestellpositionen);
 				
-				try {
-					bestellung.setBestellt(bestellt.getValue());
-					Bestellverwaltung.getInstance().updateBestellung(bestellung);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if(bestellt.getValue()==false){
+					try {
+						bestellung.setBestellt(bestellt.getValue());
+						Bestellverwaltung.getInstance().updateBestellung(bestellung);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				else {
+					try {
+						
+						Bestellverwaltung.getInstance().splitAndSaveBestellung(bestellung);
+						
+					} catch (Exception e) {
+						throw new NullPointerException("Die Aufteilung der Bestellung in Zwei Bestellungen ist gescheitert");
+						
+					}
+					
+					
+					
+				}
+				
+				
+				
+				
 				
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
