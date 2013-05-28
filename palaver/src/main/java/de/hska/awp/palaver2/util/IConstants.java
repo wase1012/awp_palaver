@@ -62,6 +62,7 @@ public interface IConstants
 	public final String		BUTTON_JA = "Ja";
 	public final String 	BUTTON_NEIN = "Nein";
 	public final String		BUTTON_EMAILVERSAND = "Per Email versenden";
+	public final String		BUTTON_DOWNLOAD = "Download";
 	
 	// Icons fuer Knoepfe
 	public final String		BUTTON_DELETE_ICON = "img/delete.ico";
