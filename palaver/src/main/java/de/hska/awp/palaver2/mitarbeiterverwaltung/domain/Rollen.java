@@ -35,6 +35,12 @@ public class Rollen implements java.io.Serializable {
 		this.nachrichten = nachrichten;
 	}
 
+	public Rollen(Long id, String name, List<Nachricht> nachrichten) {
+		this.id = id;
+		this.name = name;
+		this.nachrichten = nachrichten;
+	}
+
 	public Long getId() {
 		return this.id;
 	}
@@ -92,7 +98,7 @@ public class Rollen implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Rollen [id=" + id + ", name=" + name + "]";
+		return name;
 	}
 
 }
