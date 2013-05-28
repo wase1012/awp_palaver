@@ -353,7 +353,7 @@ private Table 								bestellungTable;
 				bestellung.setBestellpositionen(bestellpositionen);
 				
 				try {
-					//bestellung.setBestellt(true);
+					bestellung.setBestellt(true);
 					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
 					e.printStackTrace();
