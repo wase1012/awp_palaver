@@ -43,14 +43,13 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	HorizontalLayout nachrichterstellenlayoutbuttons = new HorizontalLayout();
 	
 	private Label von;
-	private Button löschbutton;
+	private Button löschbutton = new Button();
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
 	
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
 	private Nachricht nachricht = new Nachricht();
 	
-	private Rollen rolleInput;
 	private String neuernachrichtentextinput;
 	
 	
@@ -89,24 +88,26 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		
 		//Nachrichtlayout zusammenbauen
 		//TODO Auskommentierten Text anzeigen, wenn getUser() funktioniert
-//		try{
+		try{
+			
 //		Mitarbeiter m = Application.getInstance().getUser();
-//		List<Rollen> rlist = m.getRollen();
-//		if(rlist!=null){
-//			for(int i = 0; i < rlist.size() ; i++){
-//				if(rlist.get(i).getNachrichten()!=null){
-//					for(int z = 0; i < rlist.get(i).getNachrichten().size();z++){
-//						nl.add(rlist.get(i).getNachrichten().get(z));
-//					}
-//				}
-//			}
-//			
-//		}
+		Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1"));
+		List<Rollen> rlist = m.getRollen();
+		if(rlist!=null){
+			for(int i = 0; i < rlist.size() ; i++){
+				if(rlist.get(i).getNachrichten()!=null){
+					for(int z = 0; z < rlist.get(i).getNachrichten().size();z++){
+						nl.add(rlist.get(i).getNachrichten().get(z));
+					}
+				}
+			}
+			
+		}
 //			Nachrichtenverwaltung.getInstance().getAllNachricht();
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		if(nl!=null){
 			for(int i = 0; i < nl.size(); i++){
@@ -116,40 +117,39 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
 				
 				
-				löschbutton = new Button();
-				löschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
+				final Button loeschbutton = new Button();
+				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
 				String id = String.valueOf(nl.get(i).getId());
 				
 				System.out.print("Id des Löschbutton beim setzen");
 				System.out.print("           ");
-				System.out.print(nl.get(i).getId());
+				System.out.print(id);
 				System.out.print("           ");
-				löschbutton.setId(id);
+				loeschbutton.setId(id);
 				
 				nachrichtentext = new TextArea("");
 				nachrichtentext.setWidth("100%");
 				nachrichtentext.setRows(4);
 				nachrichtentext.setValue(nl.get(i).getNachricht());
-				nachrichtentext.setReadOnly(true);
 				
 				nachrichtverticallayout = new VerticalLayout();
 				nachrichtverticallayout.setStyleName("nachricht");
 				nachrichtverticallayout.addComponent(von);			
 				nachrichtverticallayout.addComponent(nachrichtentext);
-				nachrichtverticallayout.addComponent(löschbutton);
-				nachrichtverticallayout.setComponentAlignment(löschbutton, Alignment.TOP_RIGHT);
+				nachrichtverticallayout.addComponent(loeschbutton);
+				nachrichtverticallayout.setComponentAlignment(loeschbutton, Alignment.TOP_RIGHT);
 				
 				contentLayout.addComponent(nachrichtverticallayout);
 				panel.setContent(contentLayout);
 				
-				löschbutton.addClickListener(new ClickListener()
+				loeschbutton.addClickListener(new ClickListener()
 				{
 					public void buttonClick(ClickEvent event){
 						try {
 							System.out.print("Id des Löschbutton beim löschen");
-							System.out.print(Long.valueOf(löschbutton.getId()));
+							System.out.print(Long.valueOf(loeschbutton.getId()));
 							System.out.print("    ");
-						Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(löschbutton.getId()));
+						Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
 						} catch (Exception e) {
 						System.out.println(e);
 						}
@@ -174,24 +174,15 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		combobox.setWidth("60%");
 		combobox.setImmediate(true);
-		// combobox.setInputPrompt(rolleInput);
 		combobox.setNullSelectionAllowed(false);
 		combobox.setRequired(true);
 
 		List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
 		for (Rollen i : rollen) {
-			combobox.addItem(i.getId());
-			combobox.setItemCaption(i.getId(), i.getName());
+			combobox.addItem(i);
 		}
 
 		nachrichterstellenlayout.addComponent(combobox);
-
-		// combobox.addValueChangeListener(new ValueChangeListener() {
-		// @Override
-		// public void valueChange(final ValueChangeEvent event) {
-		// itemIdrolle = event.getProperty().getValue();
-		// }
-		// });
 
 		neuernachrichtentext = new TextArea();
 		neuernachrichtentext.setWidth("100%");
@@ -230,6 +221,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 //				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {
+					nachricht.setMitarbeiterBySenderFk(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1")));
 					Nachrichtenverwaltung.getInstance().createNachricht(
 							nachricht);
 				} catch (Exception e) {
