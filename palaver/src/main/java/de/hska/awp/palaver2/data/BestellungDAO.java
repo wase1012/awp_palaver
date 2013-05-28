@@ -12,7 +12,6 @@ import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
