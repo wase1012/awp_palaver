@@ -1,5 +1,10 @@
 package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
 
+/**
+ * Die Klasse repräsentiert die Beziehungstabelle zwischen Mitarbeitern und Rollen.
+ * @author Christian Barth
+ *
+ */
 public class MitarbeiterHasRollen {
 	
 	private Long rollen_fk;
@@ -31,9 +36,6 @@ public class MitarbeiterHasRollen {
 		this.mitarbeiter_fk = mitarbeiter_fk;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "MitarbeiterHasRollen [rollen_fk=" + rollen_fk

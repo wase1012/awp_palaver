@@ -3,6 +3,11 @@ package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die Klasse spiegelt den Mitarbeiter wieder.
+ * @author Christian Barth
+ *
+ */
 public class Mitarbeiter implements java.io.Serializable {
 
 	private static final long serialVersionUID = -590239735735958622L;
@@ -129,16 +134,10 @@ public class Mitarbeiter implements java.io.Serializable {
 		return this;
 	}
 
-	/**
-	 * @return the benutzername
-	 */
 	public String getBenutzername() {
 		return benutzername;
 	}
 
-	/**
-	 * @param benutzername the benutzername to set
-	 */
 	public void setBenutzername(String benutzername) {
 		this.benutzername = benutzername;
 	}

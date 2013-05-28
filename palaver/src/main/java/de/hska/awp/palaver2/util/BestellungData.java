@@ -14,8 +14,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
-public class BestellungData
-{
+public class BestellungData {
 	private String		name;
 	private	String		gebinde;
 	private Kategorie	kategorie;
@@ -33,8 +32,7 @@ public class BestellungData
 	 * @param artnr
 	 * @param menge
 	 */
-	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine)
-	{
+	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine) {
 		super();
 		this.name = name;
 		this.gebinde = gebinde;
@@ -49,8 +47,7 @@ public class BestellungData
 	}
 	
 	@SuppressWarnings("serial")
-	public BestellungData(Bestellposition bp)
-	{
+	public BestellungData(Bestellposition bp) {
 		super();
 		this.id = bp.getId();
 		this.artikel = bp.getArtikel();
@@ -80,19 +77,22 @@ public class BestellungData
 		this.freitag.setManualInputAllowed(false);
 		this.montag.setManualInputAllowed(false);
 		
-		
-		this.gesamt.addValueChangeListener(new ValueChangeListener()
-		{
+		this.gesamt.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event) {
 				montag.setMaxValue(getInt(gesamt.getValue()));
 				freitag.setMaxValue(getInt(gesamt.getValue()));
 			}
 		});
 		
-		this.durchschnitt.addValueChangeListener(new ValueChangeListener()
-		{	
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {	
+			@Override
+			public void valueChange(ValueChangeEvent event)	{
+				valueChangeEvent();
+			}
+		});
+		
+		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
@@ -100,27 +100,14 @@ public class BestellungData
 			}
 		});
 		
-		this.kantine.addValueChangeListener(new ValueChangeListener()
-		{
+		this.freitag.addValueChangeListener(new ValueChangeListener() {	
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
-				valueChangeEvent();
-			}
-		});
-		
-		this.freitag.addValueChangeListener(new ValueChangeListener()
-		{	
-			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
-				if (freitag.getValue() >= getInt(gesamt.getValue()))
-				{
+			public void valueChange(ValueChangeEvent event)	{
+				if (freitag.getValue() >= getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
 				}
-				else 
-				{
+				else {
 					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
 				}
 			}
@@ -131,13 +118,11 @@ public class BestellungData
 			@Override
 			public void valueChange(ValueChangeEvent event)
 			{
-				if (montag.getValue() >= getInt(gesamt.getValue()))
-				{
+				if (montag.getValue() >= getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
 				}
-				else
-				{
+				else {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
 			}
@@ -145,8 +130,7 @@ public class BestellungData
 	}
 	
 	@SuppressWarnings("serial")
-	public BestellungData(Artikel artikel)
-	{
+	public BestellungData(Artikel artikel) {
 		super();
 		this.name = artikel.getName();
 		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheit().getKurz();
@@ -173,63 +157,49 @@ public class BestellungData
 		this.freitag.setManualInputAllowed(false);
 		this.montag.setManualInputAllowed(false);
 		
-		this.gesamt.addValueChangeListener(new ValueChangeListener()
-		{
+		this.gesamt.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event)	{
 				montag.setMaxValue(getInt(gesamt.getValue()));
 				freitag.setMaxValue(getInt(gesamt.getValue()));
 			}
 		});
 		
-		this.durchschnitt.addValueChangeListener(new ValueChangeListener()
-		{	
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {	
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event)	{
 				valueChangeEvent();
 			}
 		});
 		
-		this.kantine.addValueChangeListener(new ValueChangeListener()
-		{
+		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event)	{
 				valueChangeEvent();
 			}
 		});
 		
-		this.freitag.addValueChangeListener(new ValueChangeListener()
-		{	
+		this.freitag.addValueChangeListener(new ValueChangeListener() {	
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
-				if (freitag.getValue() >= getInt(gesamt.getValue()))
-				{
+			public void valueChange(ValueChangeEvent event)	{
+				if (freitag.getValue() >= getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
 				}
-				else 
-				{
+				else {
 					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
 				}
 			}
 		});
 		
-		this.montag.addValueChangeListener(new ValueChangeListener()
-		{	
+		this.montag.addValueChangeListener(new ValueChangeListener() {	
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
-				if (montag.getValue() >= getInt(gesamt.getValue()))
-				{
+			public void valueChange(ValueChangeEvent event) {
+				if (montag.getValue() >= getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
 				}
-				else
-				{
+				else {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
 			}
@@ -239,144 +209,121 @@ public class BestellungData
 	/**
 	 * @return the name
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 	/**
 	 * @return the artnr
 	 */
-	public String getGebinde()
-	{
+	public String getGebinde() {
 		return gebinde;
 	}
 	/**
 	 * @param artnr the artnr to set
 	 */
-	public void setGebinde(String artnr)
-	{
+	public void setGebinde(String artnr) {
 		this.gebinde = artnr;
 	}
 	/**
 	 * @return the menge
 	 */
-	public IntStepper getFreitag()
-	{
+	public IntStepper getFreitag() {
 		return freitag;
 	}
 	/**
 	 * @param menge the menge to set
 	 */
-	public void setFreitag(IntStepper menge)
-	{
+	public void setFreitag(IntStepper menge) {
 		this.freitag = menge;
 	}
 	/**
 	 * @return the kategorie
 	 */
-	public Kategorie getKategorie()
-	{
+	public Kategorie getKategorie() {
 		return kategorie;
 	}
 	/**
 	 * @param kategorie the kategorie to set
 	 */
-	public void setKategorie(Kategorie kategorie)
-	{
+	public void setKategorie(Kategorie kategorie) {
 		this.kategorie = kategorie;
 	}
 	/**
 	 * @return the durchschnitt
 	 */
-	public TextField getDurchschnitt()
-	{
+	public TextField getDurchschnitt() {
 		return durchschnitt;
 	}
 	/**
 	 * @param durchschnitt the durchschnitt to set
 	 */
-	public void setDurchschnitt(TextField durchschnitt)
-	{
+	public void setDurchschnitt(TextField durchschnitt) {
 		this.durchschnitt = durchschnitt;
 	}
 	/**
 	 * @return the kantine
 	 */
-	public TextField getKantine()
-	{
+	public TextField getKantine() {
 		return kantine;
 	}
 	/**
 	 * @param kantine the kantine to set
 	 */
-	public void setKantine(TextField kantine)
-	{
+	public void setKantine(TextField kantine) {
 		this.kantine = kantine;
 	}
 	/**
 	 * @return the gesamt
 	 */
-	public TextField getGesamt()
-	{
+	public TextField getGesamt() {
 		return gesamt;
 	}
 	/**
 	 * @param gesamt the gesamt to set
 	 */
-	public void setGesamt(TextField gesamt)
-	{
+	public void setGesamt(TextField gesamt) {
 		this.gesamt = gesamt;
 	}
 	/**
 	 * @return the montag
 	 */
-	public IntStepper getMontag()
-	{
+	public IntStepper getMontag() {
 		return montag;
 	}
 	/**
 	 * @param montag the montag to set
 	 */
-	public void setMontag(IntStepper montag)
-	{
+	public void setMontag(IntStepper montag) {
 		this.montag = montag;
 	}
 	
-	public Artikel getBestellungArtikel()
-	{
+	public Artikel getBestellungArtikel() {
 		return this.artikel;
 	}
 	
-	private void valueChangeEvent()
-	{
-		try
-		{
+	private void valueChangeEvent()	{
+		try {
 			Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
 			gesamt.setValue(gesammt + "");
 			freitag.setValue(gesammt);
 		}
-		catch (NumberFormatException e)
-		{
+		catch (NumberFormatException e) {
 			gesamt.setValue("Invalid");
 		}
 	}
 	
 	public static Integer getInt(String str) {
 		Integer nummer = null;
-		try
-		{
+		try {
 			nummer = Integer.parseInt(str);
-
 		}
-		catch (NumberFormatException e)
-		{
+		catch (NumberFormatException e) {
 
 		}
 		return nummer;

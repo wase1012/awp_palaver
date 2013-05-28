@@ -18,7 +18,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
@@ -43,7 +42,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	HorizontalLayout nachrichterstellenlayoutbuttons = new HorizontalLayout();
 	
 	private Label von;
-	private Button löschbutton = new Button();
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
 	
@@ -61,7 +59,8 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		this.setMargin(true);
 		this.addComponent(horizontallayout);
 		
-		horizontallayout.setWidth("900px");
+//		horizontallayout.setWidth("900px");
+		horizontallayout.setSizeFull();
 		horizontallayout.setHeight("90%");
 		horizontallayout.setSpacing(true);
 
@@ -72,6 +71,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		
 		Panel panel = new Panel("Nachrichten");
+		panel.setWidth("450px");
 		panel.setHeight("100%");
 
 	    final VerticalLayout contentLayout = new VerticalLayout();
@@ -79,10 +79,12 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	    contentLayout.setMargin(true);
 	    	      
 	    horizontallayout.addComponent(panel);
-	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_LEFT);
+//	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_LEFT);
+	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 	        
 		horizontallayout.addComponent(nachrichterstellenlayout);
-		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_RIGHT);
+//		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_RIGHT);
+		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_CENTER);
 		
 		
 		
@@ -131,6 +133,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				nachrichtentext.setWidth("100%");
 				nachrichtentext.setRows(4);
 				nachrichtentext.setValue(nl.get(i).getNachricht());
+				nachrichtentext.setReadOnly(true);
 				
 				nachrichtverticallayout = new VerticalLayout();
 				nachrichtverticallayout.setStyleName("nachricht");
@@ -221,6 +224,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 //				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {
+					//TODO
 					nachricht.setMitarbeiterBySenderFk(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1")));
 					Nachrichtenverwaltung.getInstance().createNachricht(
 							nachricht);

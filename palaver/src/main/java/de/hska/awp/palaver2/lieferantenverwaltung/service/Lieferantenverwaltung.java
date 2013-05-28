@@ -16,7 +16,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
  * Die Klasse ermöglicht die Verwaltung der Lieferanten und stellt für die GUI
  * Methoden bereit.
  * 
- * @author bach1014
+ * @author Christian Barth
  */
 public class Lieferantenverwaltung extends LieferantDAO {
 
