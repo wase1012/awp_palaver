@@ -41,6 +41,12 @@ public class Nachricht implements java.io.Serializable {
 
 	}
 
+	public Nachricht(Long id, String nachricht, Mitarbeiter mitarbeiterBySenderFk) {
+		this.id = id;
+		this.nachricht = nachricht;
+		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
+	
+	}
 
 	public Long getId() {
 		return this.id;

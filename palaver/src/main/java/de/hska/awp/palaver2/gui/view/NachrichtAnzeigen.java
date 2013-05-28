@@ -47,6 +47,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	
 	private String neuernachrichtentextinput;
 	
+	private int NACHRICHT_MAXLENGTH = 300;
 	
 	public NachrichtAnzeigen() {
 		
@@ -111,17 +112,11 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				von = new Label("Von:");
 				von.setWidth("100%");
 				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
-				
-				
+							
 				final Button loeschbutton = new Button();
 				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
-				String id = String.valueOf(nl.get(i).getId());
 				
-				System.out.print("Id des Löschbutton beim setzen");
-				System.out.print("           ");
-				System.out.print(id);
-				System.out.print("           ");
-				loeschbutton.setId(id);
+				loeschbutton.setId(String.valueOf(nl.get(i).getId()));
 				
 				nachrichtentext = new TextArea("");
 				nachrichtentext.setWidth("100%");
@@ -191,6 +186,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		neuernachrichtentext.setRows(4);
 		neuernachrichtentext.setImmediate(true);
 		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
+		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 

@@ -32,7 +32,7 @@ public class MitarbeiterDAO extends AbstractDAO{
 			"JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk " +
 			"join rollen on mitarbeiter_has_rollen.rollen_fk = rollen.id where rollen.id = {0}";
 	private static final String GET_MITARBEITER_BY_BENUTZERNAME = "SELECT * FROM mitarbeiter WHERE benutzername = '{0}'";
-	
+
 	private static MitarbeiterDAO instance = null;
 
 	public static MitarbeiterDAO getInstance() {
@@ -138,6 +138,39 @@ public class MitarbeiterDAO extends AbstractDAO{
 			return list;
 		 
 		}
+		
+		  /**
+	     * Die Methode liefer alle Mitarbeiter anhand einer Rollen ID zurück.
+	     * @param id
+	     * @return
+	     * @throws ConnectException
+	     * @throws DAOException
+	     * @throws SQLException
+	     */
+		public Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException{
+			
+			if(id ==null) {
+				return null;
+			}
+			Mitarbeiter mitarbeiter = null;
+			ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
+
+			while(set.next())
+			{
+				mitarbeiter = new Mitarbeiter(set.getLong("id"),
+									set.getString("name"),
+									set.getString("vorname"),
+									set.getString("email"),
+									set.getString("passwort"),
+									set.getString("eintrittsdatum"),
+									set.getString("austrittsdatum"),
+									set.getString("benutzername")
+									);
+			}
+			return mitarbeiter;
+		 
+		}
+		
 		
 		/**
 		 * Die Methode liefert einen Mitarbeiter anhand seines Namen zurück.
