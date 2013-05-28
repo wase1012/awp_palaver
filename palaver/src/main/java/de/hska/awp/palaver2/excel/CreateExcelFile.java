@@ -29,7 +29,7 @@ public class CreateExcelFile {
 		File file = null;
 		
 		try {
-			String filename = "excels/Bestellung_" + bestellung.getLieferant().getName() + "_id_" + bestellung.getId()+".xls";
+			String filename = "Bestellung_" + bestellung.getLieferant().getName() + "_id_" + bestellung.getId()+".xls";
 			HSSFWorkbook hwb = new HSSFWorkbook();
 			HSSFSheet sheet = hwb.createSheet("new sheet");
 
