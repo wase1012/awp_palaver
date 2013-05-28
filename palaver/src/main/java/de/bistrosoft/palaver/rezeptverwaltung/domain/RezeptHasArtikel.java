@@ -34,12 +34,6 @@ public class RezeptHasArtikel {
 
 	}
 
-	@Override
-	public String toString() {
-		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "
-				+ artikel.getName();
-	}
-
 	public double getMenge() {
 		return this.menge;
 
@@ -47,7 +41,6 @@ public class RezeptHasArtikel {
 
 	public void setMenge(double menge) {
 		this.menge = menge;
-		System.out.println(this.menge);
 	}
 
 	public String getArtikelName() {
@@ -62,13 +55,28 @@ public class RezeptHasArtikel {
 		this.artikel = artikel;
 	}
 
+	public Rezept getRezept() {
+		return this.rezept;
+	}
+
+	public void setRezept(Rezept rezept) {
+		this.rezept = rezept;
+	}
+
+	public Artikel getArtikel() {
+		return this.artikel;
+	}
+
+	@Override
+	public String toString() {
+		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "
+				+ artikel.getName();
+	}
+
 	// public void setRezeptart(Rezeptart rezeptart) {
 	// this.rezeptart = rezeptart;
 	// }
 
-	// public Artikel getArtikel() {
-	// return this.artikel;
-	// }
 	//
 	// public void setArtikel(Artikel artikel) {
 	// this.artikel = artikel;
