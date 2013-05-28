@@ -117,7 +117,7 @@ public class MainLayout extends VerticalLayout implements Command
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW, this);
+//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
@@ -140,7 +140,8 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem username = menu.addItem(getUser(), null);
 		username.setEnabled(false);
 		
-		DefaultView content = new DefaultView();
+//		DefaultView content = new DefaultView();
+		NachrichtAnzeigen content = new NachrichtAnzeigen();
 		this.addComponent(content);
 		this.setExpandRatio(content, 1);
 		

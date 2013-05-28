@@ -51,7 +51,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	private String neuernachrichtentextinput;
 	
 	
-	public NachrichtAnzeigen() throws ConnectException, DAOException, SQLException {
+	public NachrichtAnzeigen() {
 		
 		super();
 		
@@ -179,11 +179,16 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		combobox.setImmediate(true);
 		combobox.setNullSelectionAllowed(false);
 		combobox.setRequired(true);
-
-		List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
-		for (Rollen i : rollen) {
-			combobox.addItem(i);
+		try {
+			List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
+			for (Rollen i : rollen) {
+				combobox.addItem(i);
+			}
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
 		}
+		
 
 		nachrichterstellenlayout.addComponent(combobox);
 
