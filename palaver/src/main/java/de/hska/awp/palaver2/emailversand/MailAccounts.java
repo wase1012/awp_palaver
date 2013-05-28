@@ -6,14 +6,7 @@ package de.hska.awp.palaver2.emailversand;
 public enum MailAccounts
 {
     // Hier bitte die ensprechenden Attribute jeweils anpassen
-    NACHRICHT("smtp.googlemail.com", 25, "mihail.boehm", "passwort", "absender");
-    /*
-    GMX("mail.gmx.net", 25, "login", "passwort", "absender"),
-    ARCOR("mail.arcor.de", 25, "login", "passwort", "absender"),
-    WEB("smtp.web.de", 25, "login", "passwort", "absender"),
-    YAHOO("smtp.mail.yahoo.de", 25, "login", "passwort", "absender"),
-     Hier können weitere E-Mail Accounts als ENUM angelegt werden*/
-    
+    NACHRICHT("smtp.1und1.de", 25, "bestellung@cafepalaver.de", "bestellung", "bestellung@cafepalaver.de");
      
     private String smtpHost;
     private int port;

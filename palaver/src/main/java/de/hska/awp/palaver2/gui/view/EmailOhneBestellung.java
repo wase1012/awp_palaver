@@ -1,17 +1,18 @@
 package de.hska.awp.palaver2.gui.view;
 
+import java.io.File;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-
 import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -24,7 +25,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  *
  */
 @SuppressWarnings("serial")
-public class EmailOhneBestellung extends VerticalLayout implements View{
+public class EmailOhneBestellung extends VerticalLayout implements  View{
 	
 	private VerticalLayout		fenster = new VerticalLayout();
 	
@@ -37,17 +38,21 @@ public class EmailOhneBestellung extends VerticalLayout implements View{
 	private String empfaengerInput;
 	private String betreffInput;
 	private String nachrichtInput;
+	private String anhang = null;
 	
 	private Button			senden = new Button(IConstants.BUTTON_SENDEN);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
-	
+	Panel root;         // Root element for contained components.
+    Panel imagePanel;   // Panel that contains the uploaded image.
+    File  file;         // File to write to.
 	
 	public EmailOhneBestellung() {
 		super();
 		this.setSizeFull();
 		
 		this.setMargin(true);
+
 		
 		headline = new Label("Email senden");
 		headline.setStyleName("ViewHeadline");
@@ -112,7 +117,7 @@ public class EmailOhneBestellung extends VerticalLayout implements View{
 			public void buttonClick(ClickEvent event)
 			{
 				Mail mail = Mail.getInstance();
-				mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput);
+				mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
 			}
 		});
 		
@@ -131,5 +136,4 @@ public class EmailOhneBestellung extends VerticalLayout implements View{
 		// TODO Auto-generated method stub
 		
 	}
-
 }
