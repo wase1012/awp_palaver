@@ -353,20 +353,19 @@ private Table 								bestellungTable;
 				bestellung.setBestellpositionen(bestellpositionen);
 				
 				try {
-					bestellung.setBestellt(true);
+					//bestellung.setBestellt(true);
 					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 				//TODO EMAIL VERSENDEN
 				
+				ViewHandler.getInstance().switchView(EmailMitBestellung.class, new ViewDataObject<Bestellung>(bestellung));
 				
 				
 				
-				
-				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+				//ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 		
