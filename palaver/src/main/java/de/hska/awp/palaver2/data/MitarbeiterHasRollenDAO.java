@@ -10,6 +10,11 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.MitarbeiterHasRollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
+/**
+ * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt MitarbeiterHasRollen bereit.
+ * @author Christian Barth
+ *
+ */
 public class MitarbeiterHasRollenDAO extends AbstractDAO{
 
 	private static MitarbeiterHasRollenDAO instance = null;
@@ -18,8 +23,10 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 	private final static String MITARBEITER_FK = "mitarbeiter_fk";
 	private final static String ROLLEN_FK = "rollen_fk";
 	private final static String GET_ALL_MITARBEITER_HAS_ROLLEN = "SELECT * FROM mitarbeiter_has_rollen";
-	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
-	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
+	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen " +
+			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
+	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen " +
+			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
 	
 	public MitarbeiterHasRollenDAO() {
 		super();
@@ -32,6 +39,13 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 		return instance;
 	}
 	
+	/**
+	 * Die Methode liefert alle MitarbeiterHasRollen zurück.
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<MitarbeiterHasRollen> getAllMitarbeiterHasRollen() throws ConnectException, DAOException, SQLException
 	{
 		List<MitarbeiterHasRollen> list = new ArrayList<MitarbeiterHasRollen>();
@@ -45,7 +59,15 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 		return list;
 	}
 	
-	public MitarbeiterHasRollen getMitarbeiterHasRollenByMitarbeiterAndRolle(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException, DAOException, SQLException
+	/**
+	 * Die Methode liefert alle MitarbeiterHasRollen anhand eines Mitarbeiter und einer Rolle zurück.
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public MitarbeiterHasRollen getMitarbeiterHasRollenByMitarbeiterAndRolle(Mitarbeiter mitarbeiter, Rollen rolle) 
+			throws ConnectException, DAOException, SQLException
 	{
 		MitarbeiterHasRollen mitarbeiterhasrollen = new MitarbeiterHasRollen();
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE, mitarbeiter.getId(), rolle.getId()));		
@@ -58,7 +80,14 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 		return mitarbeiterhasrollen;
 	}
 	
-	
+	/**
+	 * Die Methode erzeugt einen MitarbeiterHasRollen in der Datenbank.
+	 * @param mitarbeiter
+	 * @param rolle
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void createMitarbeiterHasRollen(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException, DAOException, SQLException {
 		
 		
@@ -69,6 +98,14 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 		this.putManaged(INSERT_QUERY);
 	}	
 	
+	/**
+	 * Die Methode löscht einen MitarbeiterHasRollen in der Datenbank.
+	 * @param mitarbeiter
+	 * @param rolle
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void deleteMitarbeiterHasRollen(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException,
 			DAOException, SQLException {
 
