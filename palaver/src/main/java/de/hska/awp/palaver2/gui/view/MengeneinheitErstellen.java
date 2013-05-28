@@ -1,10 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,8 +13,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -34,8 +29,6 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 	
 	private TextField		name = new TextField("Name");
 	private TextField		kurz = new TextField("Kurz");
-	private String			nameText;
-	private String			kurzText;
 	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -66,16 +59,12 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);	
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		speichern.setEnabled(false);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
-		name.setMaxLength(15);
-		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
-		
 		kurz.setImmediate(true);
-		kurz.setMaxLength(4);	
-		kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			
@@ -90,8 +79,8 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 			public void buttonClick(ClickEvent event)
 			{
 				Mengeneinheit me = new Mengeneinheit();
-				me.setName(nameText);
-				me.setKurz(kurzText);
+				me.setName(name.getValue());
+				me.setKurz(kurz.getValue());
 				try {
 					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 				} catch (Exception e) {
@@ -102,24 +91,23 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 		});
 
 
-        name.addValueChangeListener(new ValueChangeListener() {
-
-            public void valueChange(final ValueChangeEvent event) {
-                final String valueString = String.valueOf(event.getProperty()
-                        .getValue());
-
-                nameText = valueString;
-            }
-        });
-        
-        kurz.addValueChangeListener(new ValueChangeListener() {
-            @Override
-            public void valueChange(final ValueChangeEvent event) {
-                final String valueString = String.valueOf(event.getProperty()
-                        .getValue());
-                kurzText = valueString;
-            }
-        });
+        ValueChangeListener vcl = new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if(name.isValid() == false || kurz.isValid() == false )
+				{
+					speichern.setEnabled(false);
+				}
+				else
+				{
+					speichern.setEnabled(true);
+				}
+				
+			}
+		};
+		name.addValueChangeListener(vcl);
+		kurz.addValueChangeListener(vcl);
 	}
 
 	/* (non-Javadoc)

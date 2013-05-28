@@ -23,6 +23,8 @@ import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * 
@@ -64,10 +66,14 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 		
 		bestellungen.setSelectable(true);
 		bestellungen.setFilterBarVisible(true);
+		bestellungen.setFilterGenerator(new customFilter());
+		bestellungen.setFilterDecorator(new customFilterDecorator());
 		
 		bpositionen.setImmediate(true);
 		bpositionen.setFilterBarVisible(true);
 		bpositionen.setVisible(false);
+		bpositionen.setFilterGenerator(new customFilter());
+		bpositionen.setFilterDecorator(new customFilterDecorator());
 		
 		BeanItemContainer<Bestellung> container;
 		try
@@ -118,16 +124,49 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 					BeanItemContainer<Bestellposition> bpcontainer;
 					try
 					{
-						if(bestellung.getLieferant().getMehrereliefertermine()==false){
+						if(bestellung.getLieferant().getMehrereliefertermine()==false)
+						{
 							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
 							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "geliefert"});
+							bpositionen.setVisibleColumns(new Object[] {"artikelName","bestellgroesse", "durchschnitt", "kantine", "gesamt", "geliefert"});
 							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
-						} else {
+							bpositionen.setCellStyleGenerator(new CellStyleGenerator()
+							{
+								
+								@Override
+								public String getStyle(CustomTable source, Object itemId, Object propertyId)
+								{
+									Bestellposition bp = (Bestellposition) itemId;
+									if ("geliefert".equals(propertyId))
+									{
+										return bp.isGeliefert() ? "check" : "cross";
+									}
+
+									return "";
+								}
+							});
+						} 
+						else 
+						{
 							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
 							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "freitag", "montag", "geliefert"});
+							bpositionen.setVisibleColumns(new Object[] {"artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt", "freitag", "montag", "geliefert"});
 							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
+							bpositionen.setCellStyleGenerator(new CellStyleGenerator()
+							{
+								
+								@Override
+								public String getStyle(CustomTable source, Object itemId, Object propertyId)
+								{
+									Bestellposition bp = (Bestellposition) itemId;
+									if ("geliefert".equals(propertyId))
+									{
+										return bp.isGeliefert() ? "check" : "cross";
+									}
+
+									return "";
+								}
+							});
 						}
 						
 					} 

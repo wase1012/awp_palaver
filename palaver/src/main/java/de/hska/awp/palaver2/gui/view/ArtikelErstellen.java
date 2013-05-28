@@ -4,17 +4,16 @@
  */
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
@@ -25,7 +24,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
@@ -33,11 +31,8 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
-import de.hska.awp.palaver2.util.CustomDoubleValidator;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -51,8 +46,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
  *	uebergeben, werde die Daten automatisch in die Felder geschrieben und anstatt einen neuen 
  *	Artikel anzulegen wird er geaendert.
  */
-@SuppressWarnings({ "serial", "deprecation" })
-public class ArtikelErstellen extends VerticalLayout implements View
+@SuppressWarnings({ "serial" })
+public class ArtikelErstellen extends VerticalLayout implements View, ValueChangeListener
 {
 	private VerticalLayout		box = new VerticalLayout();
 	private HorizontalLayout 	control = new HorizontalLayout();
@@ -80,10 +75,10 @@ public class ArtikelErstellen extends VerticalLayout implements View
 	private Button				addMengeneinheit = new Button(IConstants.BUTTON_NEW);
 	private Button				addKategorie = new Button(IConstants.BUTTON_NEW);
 	private Button				update = new Button(IConstants.BUTTON_SAVE);
+	private Button				meSpeichern = new Button(IConstants.BUTTON_SAVE);
+	private Button				kaSpeichern = new Button(IConstants.BUTTON_SAVE);
 	
 	private Artikel				artikel;
-	private String				nameText;
-	private String				kurzText;
 	private String 				nameInput;
 	private String 				strasseInput;
 	private String 				plzInput;
@@ -111,11 +106,10 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		name.setWidth("100%");
 		name.setImmediate(true);
 		name.setRequired(true);
-		name.addValidator(new StringLengthValidator("Name zu lang oder zu kurz: {0}",2,50,false));
+		name.addValueChangeListener(this);
 		
 		preis.setWidth("100%");
 		preis.setImmediate(true);
-		preis.addValidator(new CustomDoubleValidator("Ungï¿½ltiger Preis: {0}"));
 		
 		artnr.setWidth("100%");
 		artnr.setImmediate(true);
@@ -123,20 +117,26 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		
 		durchschnitt.setWidth("100%");
 		durchschnitt.setImmediate(true);
-		durchschnitt.addValidator(new IntegerValidator("Keine Zahl! {0}"));
 		
 		bestellung.setWidth("100%");
 		bestellung.setImmediate(true);
-		bestellung.addValidator(new CustomDoubleValidator("Ungültige BestellgrößŸe: {0}"));
+		bestellung.setRequired(true);
+		bestellung.addValueChangeListener(this);
 		
 		lieferant.setWidth("100%");
 		lieferant.setRequired(true);
+		lieferant.setImmediate(true);
+		lieferant.addValueChangeListener(this);
 		
 		mengeneinheit.setWidth("100%");
 		mengeneinheit.setRequired(true);
+		mengeneinheit.setImmediate(true);
+		mengeneinheit.addValueChangeListener(this);
 		
 		kategorie.setWidth("100%");
 		kategorie.setRequired(true);
+		kategorie.setImmediate(true);
+		kategorie.addValueChangeListener(this);
 		
 		durchschnitt.setEnabled(false);
 		
@@ -212,6 +212,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
+		speichern.setEnabled(false);
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -242,7 +243,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			{
 				Artikel artikel = new Artikel();
 				artikel.setArtikelnr(artnr.getValue());
-				artikel.setBestellgroesse(Double.parseDouble(bestellung.getValue()));
+				artikel.setBestellgroesse((bestellung.getValue() == "") ? 0.0 : Double.parseDouble(bestellung.getValue()));
 				artikel.setBio(bio.getValue());
 				artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer.parseInt(durchschnitt.getValue()) : 0);
 				artikel.setGrundbedarf(grundbedarf.getValue());
@@ -251,7 +252,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 				artikel.setLieferant((Lieferant) lieferant.getValue());
 				artikel.setMengeneinheit((Mengeneinheit) mengeneinheit.getValue());
 				artikel.setName(name.getValue());
-				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',', '.')));
+				artikel.setPreis((preis.getValue() == "") ? 0F : Float.parseFloat(preis.getValue().replace(',', '.')));
 				artikel.setStandard(standard.getValue());
 				
 				String notification = "Artikel gespeichert";
@@ -476,10 +477,9 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		VerticalLayout	box = new VerticalLayout();
 		VerticalLayout  frame = new VerticalLayout();
 		
-		TextField		name = new TextField("Name");
-		TextField		kurz = new TextField("Kurz");
+		final TextField		name = new TextField("Name");
+		final TextField		kurz = new TextField("Kurz");
 		
-		Button			speichern = new Button(IConstants.BUTTON_SAVE);
 		Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 		
 		name.setWidth("100%");
@@ -501,17 +501,19 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);	
 		control.addComponent(verwerfen);
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		control.addComponent(meSpeichern);
+		
+		meSpeichern.setEnabled(false);
+		meSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
 		name.setMaxLength(15);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+		name.setRequired(true);
 		
 		kurz.setImmediate(true);
 		kurz.setMaxLength(4);	
-		kurz.addValidator(new StringLengthValidator("Bitte gÃ¼ltiges KÃ¼rzel eingeben", 1,4, false));
+		kurz.setRequired(true);
 		
 		verwerfen.addClickListener(new ClickListener() {
 			
@@ -521,17 +523,17 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			}
 		});
 
-		speichern.addClickListener(new ClickListener()
+		meSpeichern.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
 			{
 				Mengeneinheit me = new Mengeneinheit();
-				me.setName(nameText);
-				me.setKurz(kurzText);
+				me.setName(name.getValue());
+				me.setKurz(kurz.getValue());
 				try {
 					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 				} catch (Exception e) {
-					throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				load();
 				UI.getCurrent().removeWindow(win);
@@ -539,24 +541,23 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		});
 
 
-        name.addValueChangeListener(new ValueChangeListener() {
-
-            public void valueChange(final ValueChangeEvent event) {
-                final String valueString = String.valueOf(event.getProperty()
-                        .getValue());
-
-                nameText = valueString;
-            }
-        });
-        
-        kurz.addValueChangeListener(new ValueChangeListener() {
-            @Override
-            public void valueChange(final ValueChangeEvent event) {
-                final String valueString = String.valueOf(event.getProperty()
-                        .getValue());
-                kurzText = valueString;
-            }
-        });
+        ValueChangeListener vcl = new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if(name.isValid() == false || kurz.isValid() == false )
+				{
+					meSpeichern.setEnabled(false);
+				}
+				else
+				{
+					meSpeichern.setEnabled(true);
+				}
+				
+			}
+		};
+		name.addValueChangeListener(vcl);
+		kurz.addValueChangeListener(vcl);
 	}
 	
 	private void addKategorie()
@@ -570,12 +571,11 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		VerticalLayout	box = new VerticalLayout();
 		VerticalLayout  frame = new VerticalLayout();
 		
-		TextField		name = new TextField("Name");
+		final TextField		kaname = new TextField("Name");
 		
-		Button			speichern = new Button(IConstants.BUTTON_SAVE);
 		Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 		
-		name.setWidth("100%");	
+		kaname.setWidth("100%");	
 		box.setSpacing(true);
 		
 		frame.setSizeFull();
@@ -584,7 +584,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 
 		frame.addComponent(box);
 		frame.setComponentAlignment(box, Alignment.MIDDLE_CENTER);		
-		box.addComponent(name);
+		box.addComponent(kaname);
 	
 		HorizontalLayout control = new HorizontalLayout();
 		control.setSpacing(true);
@@ -592,13 +592,14 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);	
 		control.addComponent(verwerfen);
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		control.addComponent(kaSpeichern);
+		kaSpeichern.setEnabled(false);
+		kaSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
-		name.setImmediate(true);
-		name.setMaxLength(15);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+		kaname.setImmediate(true);
+		kaname.setMaxLength(15);
+		kaname.setRequired(true);
 		
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
@@ -607,16 +608,16 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			}
 		});
 
-		speichern.addClickListener(new ClickListener()
+		kaSpeichern.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
 			{
 				Kategorie ka = new Kategorie();
-				ka.setName(nameText);
+				ka.setName(kaname.getValue());
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
 				} catch (Exception e) {
-					throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+					throw new NullPointerException("Bitte gültige Werte eingeben");
 				}
 				load();
 				UI.getCurrent().removeWindow(win);
@@ -624,14 +625,18 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		});
 
 
-        name.addValueChangeListener(new ValueChangeListener() {
+		kaname.addValueChangeListener(new ValueChangeListener() {
         	
-            public void valueChange(final ValueChangeEvent event) {
-                final String valueString = String.valueOf(event.getProperty()
-                        .getValue());
-
-                nameText = valueString;
-            }
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+        		if (kaname.isValid() == true) {
+        			kaSpeichern.setEnabled(true);
+        		}
+        		else {
+        			kaSpeichern.setEnabled(false);
+        		}
+				
+			}
         });
 	}
 	
@@ -767,7 +772,7 @@ public class ArtikelErstellen extends VerticalLayout implements View
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gÃ¼ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);
@@ -925,5 +930,22 @@ public class ArtikelErstellen extends VerticalLayout implements View
 			UI.getCurrent().removeWindow(win);
 		}
 	});
+	}
+
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		
+		if(name.getValue() == "" || name.getValue() == null || bestellung.getValue() == "" ||
+				 bestellung.getValue() == null || lieferant.getValue() == null ||
+				 lieferant.getValue() == "" || mengeneinheit.getValue() == null || mengeneinheit.getValue() == "" ||
+				 kategorie.getValue() == null || kategorie.getValue() == "") 
+		{
+			speichern.setEnabled(false);
+		}
+		else 
+		{
+			speichern.setEnabled(true);
+		}
+		
 	}
 }
