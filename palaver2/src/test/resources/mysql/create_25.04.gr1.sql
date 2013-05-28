@@ -133,9 +133,24 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`menue` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `koch` INT NOT NULL ,
+  `geschmack_fk` INT NULL ,
+  `rezeptart_fk` INT NOT NULL ,
+`aufwand` BOOLEAN NULL ,
+ `favorit` BOOLEAN  NULL ,
   PRIMARY KEY (`id`) ,
 --  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_menue_mitarbeiter1_idx` (`koch` ASC) ,
+   INDEX `fk_geschmack1_idx` (`geschmack_fk` ASC) ,
+   CONSTRAINT `fk_geschmack1`
+    FOREIGN KEY (`geschmack_fk` )
+    REFERENCES `palaver`.`geschmack` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+     CONSTRAINT `fk_rezept_rezeptart12`
+    FOREIGN KEY (`rezeptart_fk` )
+    REFERENCES `palaver`.`rezeptart` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_menue_mitarbeiter1`
     FOREIGN KEY (`koch` )
     REFERENCES `palaver`.`mitarbeiter` (`id` )
