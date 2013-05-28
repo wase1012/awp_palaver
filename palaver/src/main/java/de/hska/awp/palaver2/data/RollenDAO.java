@@ -78,7 +78,8 @@ public class RollenDAO extends AbstractDAO {
 				GET_ROLLEN_BY_MITARBEITER_ID, id));
 
 		while (set.next()) {
-			list.add(new Rollen(set.getLong("id"), set.getString("name")));
+			list.add(new Rollen(set.getLong("id"), set.getString("name"), 
+					NachrichtDAO.getInstance().getNachrichtByRolleId(set.getLong("id"))));
 
 		}
 
