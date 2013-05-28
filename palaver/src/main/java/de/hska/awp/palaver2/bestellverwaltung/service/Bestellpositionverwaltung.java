@@ -16,7 +16,7 @@ import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 /**
- * Die Klasse ermÃ¶glicht die Verwaltung der BEstellpositionen und stellt fÃ¼r die GUI
+ * Die Klasse ermöglicht die Verwaltung der BEstellpositionen und stellt für die GUI
  * Methoden bereit.
  * 
  * @author Elena W
@@ -36,6 +36,7 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		}
 		return instance;
 	}
+	
 	/**
 	 * Die Methode erzeugt eine Bestellposition.
 	 * 
@@ -49,7 +50,6 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		try {
 			super.createBestellposition(bestellposition);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -95,6 +95,12 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		return bestellposition;
 	}
 	
+	/**
+	 * Die Methode wandelt eine Liste von BestellungData Objekten um in eine Liste mit Bestellpositionen. 
+	 * Verwendet wird die Methode beim erstellen einer Manuellen Bestellung.
+	 * @param bestData
+	 * @return
+	 */
 	public List<Bestellposition> getBestellpositionen(List<BestellungData> bestData) {
 		List<Bestellposition> bpen = new ArrayList<Bestellposition>();
 		 for( int i = 0; i < bestData.size(); ++i){
@@ -110,6 +116,13 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 		 return bpen;
 	}
 	
+	/**
+	 * Die Methode wandelt eine Liste von BestellungData Objekten um in eine Liste mit Bestellpositionen.
+	 * Verwendet wird die Methode um die Bestellung mit seinen Bestellpositionen 
+	 * an der Oberfläche darstellen zu können.
+	 * @param bestData
+	 * @return
+	 */
 	public List<Bestellposition> getBestellpositionenMitId(List<BestellungData> bestData) {
 		List<Bestellposition> bpen = new ArrayList<Bestellposition>();
 		 for( int i = 0; i < bestData.size(); ++i){

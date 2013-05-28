@@ -10,18 +10,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
-//import de.bistrosoft.palaver.data.MenueplanDAO;
-//import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-//import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-//import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ArtikelDAO;
@@ -30,6 +21,10 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+//import de.bistrosoft.palaver.data.MenueplanDAO;
+//import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+//import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+//import de.bistrosoft.palaver.util.Week;
 
 /**
  * @author Christian Barth
@@ -50,16 +45,28 @@ public class Bestellverwaltung extends BestellungDAO {
 		return instance;
 	}
 
+	/**
+	 * Die Methode erzeugt eine Bestellung mit seinen Bestellposition.
+	 * @auhtor Christian Barth
+	 */
 	public void createBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException, ParseException {
 		super.createBestellung(bestellung);
 	}
 
+	/**
+	 * Die Methode aktualisiert eine Bestellung mit seinen Bestellposition.
+	 * @auhtor Christian Barth
+	 */
 	public void updateBestellung(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException, ParseException {
 		super.updateBestellung(bestellung);
 	}
 	
+	/**
+	 * Die Methode aktualisiert eine Bestellung ohne die Bestellpositionen zu berücksichtigen.
+	 * @author Christian Barth
+	 */
 	public void updateBestellungOhneBP(Bestellung bestellung)
 			throws ConnectException, DAOException, SQLException {
 		super.updateBestellungOhneBP(bestellung);
@@ -67,14 +74,13 @@ public class Bestellverwaltung extends BestellungDAO {
 	
 
 	/**
-	 * Die Methode liefert alle Bestellungen zurÃ¼ck.
+	 * Die Methode liefert alle Bestellungen zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 * @return List<Bestellung>
 	 */
-
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
 
@@ -105,6 +111,14 @@ public class Bestellverwaltung extends BestellungDAO {
 		return result;
 	}
 	
+	/**
+	 * Die Methode liefert die Bestellungen der letzten 3 Wochen zurück.
+	 * @author Philipp Tunggul
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return
+	 */
 	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
 		
 		List<Bestellung> result = null;
@@ -115,8 +129,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 
 	/**
-	 * Die Methode liefert eine Bestellung anhand des Parameter id zurÃ¼ck.
-	 * 
+	 * Die Methode liefert eine Bestellung anhand des Parameter id zurück.
 	 * @param id 
 	 * @throws SQLException
 	 * @throws DAOException
@@ -130,6 +143,14 @@ public class Bestellverwaltung extends BestellungDAO {
 		return bestellung;
 	}
 	
+	/**
+	 * Die Methode liefert alle Artikel von einem Lieferanten zurück.
+	 * @param lieferant
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant)
 			throws ConnectException, DAOException, SQLException {
 		List<Artikel> list = null;
@@ -139,7 +160,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 
 	/**
-	 * Die Methode gibt eine Liste mit Lieferanten zurÃ¼ck anhand einer Artikelliste,
+	 * Die Methode gibt eine Liste mit Lieferanten zurück anhand einer Artikelliste,
 	 * wobei jedoch nur jeder Lieferant nur einmal in der Liste erscheint.
 	 * @author Christian Barth
 	 * @param artikellist
@@ -157,37 +178,14 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 	
 	/**
-	 * @param artList
-	 * @return
-	 * @throws SQLException 
-	 * @throws DAOException 
-	 * @throws ConnectException 
+	 * Die Methode generiert alle Bestellungen anhand dem Menüplan 
+	 * und dem Grundbedarf und speichert anschließend diese in der Datenbank
+	 * author Christian Barth
+	 * @param week
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
 	 */
-	@Deprecated
-	public List<Lieferant> getAllLieferantenByArtikellist(List<Artikel> artList) throws ConnectException, DAOException, SQLException
-	{
-		List<Lieferant> list = new ArrayList<Lieferant>();
-		Lieferant lieferant = null;
-		LieferantDAO ldao = new LieferantDAO();
-	
-		for (Artikel e : artList) {
-			lieferant = ldao.getLieferantByArtikelId(e.getId());
-			if (list.isEmpty() == true) {
-				list.add(lieferant);
-			} 
-			else {
-				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i).getId().equals(lieferant.getId()) == false) {
-						list.add(lieferant);
-					}
-				}
-			}
-
-		}
-		return list;
-	}
-	
-	
 	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException
 	{
 //		List<Bestellposition> list = new ArrayList<Bestellposition>();
@@ -314,6 +312,12 @@ public class Bestellverwaltung extends BestellungDAO {
 		
 	}
 	
+	/**
+	 * Die Methode berechnet die Menge der zu bestellenden Artikel und rundet diese auf.
+	 * author Christian Barth
+	 * @param rha
+	 * @return
+	 */
 	private int convertMenge(RezeptHasArtikel rha){
 		int bm = 0;
 //		//Math.ceil wird immer auf ganze Zahl aufgerundet
@@ -321,6 +325,12 @@ public class Bestellverwaltung extends BestellungDAO {
 		return bm;
 	}
 	
+	/**
+	 * Die Methode addiert die Mengen gleicher Artikel zusammen.
+	 * author Christian Barth
+	 * @param rhalist
+	 * @return
+	 */
 	private List<RezeptHasArtikel> mengeAddSameArtikel(List<RezeptHasArtikel> rhalist){
 		
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
@@ -343,7 +353,13 @@ public class Bestellverwaltung extends BestellungDAO {
 		return list;
 	}
 	
-	
+	/**
+	 * Die Methode gibt alle Lieferanten zurück, die mit mindestens einem Artikel in der
+	 * Bestellpositionliste vertreten sind.
+	 * author Christian Barth
+	 * @param bplist
+	 * @return
+	 */
 	private List<Lieferant> getAllLieferantByListOfBestellposition(List<Bestellposition> bplist){
 		List<Lieferant> list = new ArrayList<Lieferant>();
 		list.add(bplist.get(0).getArtikel().getLieferant());
@@ -363,6 +379,13 @@ public class Bestellverwaltung extends BestellungDAO {
 		return list;
 	}
 	
+	/**
+	 * Die Methode generiert eine Bestellung für einen Lieferanten.
+	 * author Christian Barth
+	 * @param lieferant
+	 * @param bplist
+	 * @return
+	 */
 	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist ){
 		
 		Bestellung b = new Bestellung();

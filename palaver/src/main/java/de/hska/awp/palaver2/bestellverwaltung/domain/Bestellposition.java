@@ -80,6 +80,10 @@ public class Bestellposition implements java.io.Serializable {
 	public String getArtikelName() {
 		return this.artikel.getName();
 	}
+	
+	public Double getBestellgroesse() {
+		return this.artikel.getBestellgroesse();
+	}
 
 	public Bestellung getBestellung() {
 		return this.bestellung;

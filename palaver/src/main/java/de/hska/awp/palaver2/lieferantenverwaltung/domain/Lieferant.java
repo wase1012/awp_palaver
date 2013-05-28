@@ -58,7 +58,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getName() {
-		if(name== null){ name = ""; }
+		if(name == null) { 
+			name = ""; 
+		}
 		return this.name;
 	}
 
@@ -67,7 +69,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getKundennummer() {
-		if(kundennummer== null){ kundennummer = ""; }
+		if (kundennummer == null) { 
+			kundennummer = ""; 
+		}
 		return this.kundennummer;
 	}
 
@@ -76,7 +80,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getBezeichnung() {
-		if(bezeichnung== null){ bezeichnung = ""; }
+		if (bezeichnung == null) { 
+			bezeichnung = ""; 
+		}
 		return this.bezeichnung;
 	}
 
@@ -85,7 +91,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getStrasse() {
-		if(strasse== null){ strasse = ""; }
+		if (strasse == null) { 
+			strasse = ""; 
+		}
 		return this.strasse;
 	}
 
@@ -94,7 +102,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getPlz() {
-		if(plz== null){ plz = ""; }
+		if (plz == null) { 
+			plz = ""; 
+		}
 		return this.plz;
 	}
 
@@ -103,7 +113,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getOrt() {
-		if(ort== null){ ort = ""; }
+		if (ort == null) { 
+			ort = ""; 
+		}
 		return this.ort;
 	}
 
@@ -112,7 +124,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getEmail() {
-		if(email== null){ email = ""; }
+		if (email == null) { 
+			email = ""; 
+		}
 		return this.email;
 	}
 
@@ -121,7 +135,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getTelefon() {
-		if(telefon== null){ telefon = ""; }
+		if (telefon == null) { 
+			telefon = ""; 
+		}
 		return this.telefon;
 	}
 
@@ -130,7 +146,9 @@ public class Lieferant implements java.io.Serializable {
 	}
 
 	public String getFax() {
-		if(fax== null){ fax = ""; }
+		if (fax == null) { 
+			fax = ""; 
+		}
 		return this.fax;
 	}
 
@@ -214,7 +232,8 @@ public class Lieferant implements java.io.Serializable {
 		{
 			if (other.bezeichnung != null)
 				return false;
-		} else if (!bezeichnung.equals(other.bezeichnung))
+		} 
+		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
 		if (email == null)
 		{
@@ -226,19 +245,22 @@ public class Lieferant implements java.io.Serializable {
 		{
 			if (other.fax != null)
 				return false;
-		} else if (!fax.equals(other.fax))
+		} 
+		else if (!fax.equals(other.fax))
 			return false;
 		if (id == null)
 		{
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} 
+		else if (!id.equals(other.id))
 			return false;
 		if (kundennummer == null)
 		{
 			if (other.kundennummer != null)
 				return false;
-		} else if (!kundennummer.equals(other.kundennummer))
+		} 
+		else if (!kundennummer.equals(other.kundennummer))
 			return false;
 		if (mehrereliefertermine != other.mehrereliefertermine)
 			return false;
@@ -246,37 +268,43 @@ public class Lieferant implements java.io.Serializable {
 		{
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} 
+		else if (!name.equals(other.name))
 			return false;
 		if (notiz == null)
 		{
 			if (other.notiz != null)
 				return false;
-		} else if (!notiz.equals(other.notiz))
+		} 
+		else if (!notiz.equals(other.notiz))
 			return false;
 		if (ort == null)
 		{
 			if (other.ort != null)
 				return false;
-		} else if (!ort.equals(other.ort))
+		} 
+		else if (!ort.equals(other.ort))
 			return false;
 		if (plz == null)
 		{
 			if (other.plz != null)
 				return false;
-		} else if (!plz.equals(other.plz))
+		} 
+		else if (!plz.equals(other.plz))
 			return false;
 		if (strasse == null)
 		{
 			if (other.strasse != null)
 				return false;
-		} else if (!strasse.equals(other.strasse))
+		} 
+		else if (!strasse.equals(other.strasse))
 			return false;
 		if (telefon == null)
 		{
 			if (other.telefon != null)
 				return false;
-		} else if (!telefon.equals(other.telefon))
+		} 
+		else if (!telefon.equals(other.telefon))
 			return false;
 		return true;
 	}

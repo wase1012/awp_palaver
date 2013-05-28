@@ -5,7 +5,6 @@
 package de.hska.awp.palaver2.lieferantenverwaltung.service;
 
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.AnsprechpartnerDAO;
