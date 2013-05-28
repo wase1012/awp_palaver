@@ -3,8 +3,6 @@ package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
-
 /**
  * Die Klasse spiegelt den Mitarbeiter wieder.
  * @author Christian Barth
