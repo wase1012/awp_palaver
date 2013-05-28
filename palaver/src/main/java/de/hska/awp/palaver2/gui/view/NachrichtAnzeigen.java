@@ -1,6 +1,5 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +17,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -59,7 +56,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		this.setMargin(true);
 		this.addComponent(horizontallayout);
 		
-//		horizontallayout.setWidth("900px");
 		horizontallayout.setSizeFull();
 		horizontallayout.setHeight("90%");
 		horizontallayout.setSpacing(true);
@@ -79,12 +75,10 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	    contentLayout.setMargin(true);
 	    	      
 	    horizontallayout.addComponent(panel);
-//	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_LEFT);
 	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 	        
 		horizontallayout.addComponent(nachrichterstellenlayout);
-//		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_RIGHT);
-		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_CENTER);
+		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_LEFT);
 		
 		
 		
