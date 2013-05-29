@@ -77,6 +77,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		name.setWidth("100%");
 		vorname.setWidth("100%");
 		email.setWidth("100%");
+		passwort.setWidth("100%");
 		eintrittsdatum.setWidth("100%");
 		austrittsdatum.setWidth("100%");
 		benutzername.setWidth("100%");
@@ -145,7 +146,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		name.setMaxLength(45);
 		
 		vorname.setImmediate(true);
-		vorname.setInputPrompt(vornameInput);
+		vorname.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3,45, false));
 		vorname.setMaxLength(45);
 		
 		email.setImmediate(true);
