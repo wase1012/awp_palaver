@@ -29,11 +29,13 @@ public class Mail {
 	 * @param message
 	 *            Text
 	 */
-	public void EmailVersand(String to, String subject, String message,
+	public boolean EmailVersand(String to, String subject, String message,
 			String anhang) {
+		boolean ergebnis = false;
 		if (anhang == null) {
 			try {
 				MailActions.sendOhneAnhang(MailAccounts.NACHRICHT, to, subject, message);
+				ergebnis = true;
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
@@ -41,9 +43,11 @@ public class Mail {
 		{
 			try {
 				MailActions.sendMitAnhang(MailAccounts.NACHRICHT, to, subject, message, anhang);
+				ergebnis = true;
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
 		}
+		return ergebnis;
 	}
 }
