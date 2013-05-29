@@ -31,6 +31,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String ERSTELLT = "erstellt";
 	private final static String REZEPTHASARTIKEL = "rezept_has_artikel";
 	private final static String REZEPTFK = "rezept_fk";
+	private final static String MENUE = "menue";
 
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
@@ -198,11 +199,11 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
-				+ MITARBEITER + "," + ERSTELLT + ")" + " VALUES" + "('"
+				+ MITARBEITER + "," + ERSTELLT + "," + MENUE + ")" + " VALUES" + "('"
 				+ rezept.getName() + "','" + rezept.getRezeptart().getId()
 				+ "','" + rezept.getKommentar() + "','" + rezept.getPortion()
 				+ "','" + rezept.getMitarbeiter().getId() + "','"
-				+ rezept.getErstellt() + "')";
+				+ rezept.getErstellt() + rezept.getMenue() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 

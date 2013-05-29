@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.user.client.ui.RadioButton;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -27,6 +28,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -95,6 +97,13 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private ComboBox mitarbeiterCb = new ComboBox("Koch");
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
 
+	// private RadioButton menueRb = new RadioButton("Menü");
+	// private RadioButton hauptgerichtRb = new RadioButton("Rezeptart");
+	// private RadioButton beilageRb = new RadioButton("Beilage");
+
+	private CheckBox menueCbx = new CheckBox("Rezept als Menü speichern");
+	private OptionGroup rezeptartOg = new OptionGroup();
+
 	public static Table tblArtikel = new Table("Zutaten");
 
 	private TextArea kommentar = new TextArea("Kommentar");
@@ -110,6 +119,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private String geschmackInput;
 	private String rezeptartInput;
 	private String mitarbeiterInput;
+	private String menueInput;
 
 	public String valueString = new String();
 
@@ -125,6 +135,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
+
+		rezeptartOg.addItem("Hauptgericht");
+		rezeptartOg.addItem("Beilage");
+
+		rezeptartOg.select(2);
+		rezeptartOg.setNullSelectionAllowed(false);
+		rezeptartOg.setHtmlContentAllowed(true);
+		rezeptartOg.setImmediate(true);
 
 		name.setWidth("100%");
 		name.setImmediate(true);
@@ -159,7 +177,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		box.addComponent(name);
 		box.addComponent(portion);
 		box.addComponent(mitarbeiterCb);
-		box.addComponent(rezeptartCb);
+		box.addComponent(rezeptartOg);
+
 		box.addComponent(zubereitung);
 		box.addComponent(hol);
 		box.setComponentAlignment(hol, Alignment.MIDDLE_CENTER);
@@ -170,6 +189,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		box.addComponent(tblArtikel);
 		box.addComponent(zutatneu);
 		box.addComponent(kommentar);
+		box.addComponent(menueCbx);
 
 		control.setSpacing(true);
 		box.addComponent(control);
@@ -209,7 +229,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				valueString = String.valueOf(event.getProperty().getValue());
 			}
 		});
-		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+		rezeptartOg.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
@@ -221,6 +241,13 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
 				mitarbeiterInput = valueString;
+			}
+		});
+		menueCbx.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				valueString = String.valueOf(event.getProperty().getValue());
+				menueInput = valueString;
 			}
 		});
 		kommentar.addValueChangeListener(this);
@@ -235,112 +262,117 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				if (menueInput == "true") {
+					System.out.println("Menue If zweig");
+					System.out.println(rezeptartInput);
+				} else {
 
-				Rezept rezept = new Rezept();
+					Rezept rezept = new Rezept();
 
-				rezept.setName(nameInput);
+					rezept.setName(nameInput);
 
-				java.util.Date date = new java.util.Date();
-				Date date2 = new Date(date.getTime());
+					java.util.Date date = new java.util.Date();
+					Date date2 = new Date(date.getTime());
 
-				rezept.setErstellt(date2);
+					rezept.setErstellt(date2);
 
-				try {
-					rezept.setRezeptart(RezeptartDAO.getInstance()
-							.getRezeptartById(
-									Long.parseLong(rezeptartInput.toString())));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				rezept.setKommentar(kommentarInput);
-				rezept.setPortion(Integer.parseInt(portionInput.toString()));
-				try {
-					rezept.setMitarbeiter(MitarbeiterDAO
-							.getInstance()
-							.getMitarbeiterById(
-									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-				try {
-					Rezeptverwaltung.getInstance().createRezept(rezept);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				// / Liste der Zubereitungen
-				Rezept rez = null;
-				try {
-					System.out.println(nameInput);
-					rez = Rezeptverwaltung.getInstance().getRezeptByName1(
-							nameInput);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				System.out.println(rez);
-				if (zubereitung.getValue().toString() != "[]") {
-					List<String> ZubereitungId = Arrays.asList(valueString
-							.substring(1, valueString.length() - 1).split(
-									"\\s*,\\s*"));
-
-					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
-
-					for (String sId : ZubereitungId) {
-						Long id = null;
-						try {
-							id = Long.parseLong(sId.trim());
-
-						} catch (NumberFormatException nfe) {
-
-						}
-
-						Zubereitung zubereitung1 = null;
-						try {
-
-							zubereitung1 = Zubereitungverwaltung.getInstance()
-									.getZubereitungById(id);
-							//
-							RezeptHasZubereitung a = new RezeptHasZubereitung(
-									zubereitung1, rez);
-							zubereitunglist.add(a);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
+					try {
+						rezept.setRezeptart(RezeptartDAO.getInstance()
+								.getRezeptartByNameB(rezeptartInput));
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
-					System.out.println(zubereitunglist);
-					for (RezeptHasZubereitung i : zubereitunglist) {
-
-						try {
-							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
-						} catch (Exception e) {
-
-							e.printStackTrace();
-						}
-
+					rezept.setKommentar(kommentarInput);
+					rezept.setPortion(Integer.parseInt(portionInput.toString()));
+					try {
+						rezept.setMitarbeiter(MitarbeiterDAO.getInstance()
+								.getMitarbeiterById(
+										Long.parseLong(mitarbeiterInput
+												.toString())));
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
+
+					try {
+						Rezeptverwaltung.getInstance().createRezept(rezept);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					// / Liste der Zubereitungen
+					Rezept rez = null;
+					try {
+						System.out.println(nameInput);
+						rez = Rezeptverwaltung.getInstance().getRezeptByName1(
+								nameInput);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					System.out.println(rez);
+					if (zubereitung.getValue().toString() != "[]") {
+						List<String> ZubereitungId = Arrays.asList(valueString
+								.substring(1, valueString.length() - 1).split(
+										"\\s*,\\s*"));
+
+						List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
+
+						for (String sId : ZubereitungId) {
+							Long id = null;
+							try {
+								id = Long.parseLong(sId.trim());
+
+							} catch (NumberFormatException nfe) {
+
+							}
+
+							Zubereitung zubereitung1 = null;
+							try {
+
+								zubereitung1 = Zubereitungverwaltung
+										.getInstance().getZubereitungById(id);
+								//
+								RezeptHasZubereitung a = new RezeptHasZubereitung(
+										zubereitung1, rez);
+								zubereitunglist.add(a);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+						}
+						System.out.println(zubereitunglist);
+						for (RezeptHasZubereitung i : zubereitunglist) {
+
+							try {
+								Rezeptverwaltung.getInstance()
+										.ZubereitungAdd(i);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+
+						}
+					}
+
+					BeanItemContainer<RezeptHasArtikel> bicArtikel = (BeanItemContainer<RezeptHasArtikel>) tblArtikel
+							.getContainerDataSource();
+					ausgArtikel = bicArtikel.getItemIds();
+					rez.setArtikel(ausgArtikel);
+
+					try {
+						Rezeptverwaltung.getInstance().saveArtikel(rez);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					Notification notification = new Notification(
+							"Rezept wurde gespeichert!");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+					ViewHandler.getInstance().switchView(
+							RezeptAnzeigenTabelle.class);
 				}
-
-				BeanItemContainer<RezeptHasArtikel> bicArtikel = (BeanItemContainer<RezeptHasArtikel>) tblArtikel
-						.getContainerDataSource();
-				ausgArtikel = bicArtikel.getItemIds();
-				rez.setArtikel(ausgArtikel);
-
-				try {
-					Rezeptverwaltung.getInstance().saveArtikel(rez);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				Notification notification = new Notification(
-						"Rezept wurde gespeichert!");
-				notification.setDelayMsec(500);
-				notification.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(
-						RezeptAnzeigenTabelle.class);
 			}
 		});
 
@@ -436,7 +468,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				} catch (Exception e) {
 					e.printStackTrace();
 					notification = e.toString();
-				} 
+				}
 
 				try {
 					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
@@ -602,8 +634,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		if (name.getValue() == "" || name.getValue() == null
 				&& portion.getValue() == null || portion.getValue() == ""
-				&& rezeptartCb.getValue() == ""	|| rezeptartCb.getValue() == null
-				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
+				&& rezeptartCb.getValue() == ""
+				|| rezeptartCb.getValue() == null
+				&& mitarbeiterCb.getValue() == ""
+				|| mitarbeiterCb.getValue() == null) {
 			speichern.setEnabled(false);
 		} else {
 			speichern.setEnabled(true);

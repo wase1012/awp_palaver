@@ -17,6 +17,7 @@ public class Rezept implements java.io.Serializable {
 	private int portion;
 	private Date erstellt;
 	private List<RezeptHasArtikel> artikel;
+	private Boolean menue;
 
 	public List<RezeptHasArtikel> getArtikel() {
 		return artikel;
@@ -69,6 +70,14 @@ public class Rezept implements java.io.Serializable {
 
 	}
 
+	public Boolean getMenue() {
+		return menue;
+	}
+
+	public void setMenue(Boolean menue) {
+		this.menue = menue;
+	}
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -194,5 +203,7 @@ public class Rezept implements java.io.Serializable {
 	public String toString() {
 		return "" + id + "";
 	}
+
+
 
 }
