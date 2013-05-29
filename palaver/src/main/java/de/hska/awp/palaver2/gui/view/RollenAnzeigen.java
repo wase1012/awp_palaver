@@ -1,14 +1,11 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,15 +13,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -41,12 +35,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class RollenAnzeigen extends VerticalLayout implements View {
 
 	private VerticalLayout layout = new VerticalLayout();
-	private Button hinzufuegen = new Button(IConstants.BUTTON_ADD);
 	private Table table;
 
-	private TextField name = new TextField("Name");
 	private TextField nameup = new TextField("Name");
-	private String nameText;
 
 	private Label headline;
 
@@ -149,15 +140,6 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 						}
 					});
 
-					nameup.addValueChangeListener(new ValueChangeListener() {
-
-						public void valueChange(final ValueChangeEvent event) {
-							final String valueString = String.valueOf(event.getProperty().getValue());
-
-							nameText = valueString;
-						}
-					});
-
 				}
 
 			}
@@ -165,10 +147,6 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 
 		layout.addComponent(table);
 		layout.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
-		layout.addComponent(hinzufuegen);
-		layout.setComponentAlignment(hinzufuegen, Alignment.MIDDLE_RIGHT);
-
-		hinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 
 		BeanItemContainer<Rollen> container;
 		try {
@@ -183,99 +161,6 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 		this.addComponent(layout);
 		this.setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
 
-		hinzufuegen.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				final Window mengNeu = new Window();
-				mengNeu.setClosable(false);
-				mengNeu.setWidth("400px");
-				mengNeu.setHeight("270px");
-				mengNeu.setModal(true);
-				mengNeu.center();
-				mengNeu.setResizable(false);
-				mengNeu.setCaption("Rolle hinzufügen");
-
-				UI.getCurrent().addWindow(mengNeu);
-
-				VerticalLayout layout = new VerticalLayout();
-				layout.setMargin(true);
-				layout.setWidth("100%");
-				layout.setSpacing(true);
-
-				final Button speichern = new Button(IConstants.BUTTON_SAVE);
-				Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
-
-				name.setWidth("100%");
-
-				VerticalLayout feld = new VerticalLayout();
-
-				feld.addComponent(name);
-
-				HorizontalLayout control = new HorizontalLayout();
-				control.setSpacing(true);
-				control.addComponent(verwerfen);
-				control.addComponent(speichern);
-				speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-				verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-
-				layout.addComponent(feld);
-				layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
-				layout.addComponent(control);
-				layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
-				mengNeu.setContent(layout);
-
-				name.setImmediate(true);
-				name.setMaxLength(45);
-				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4, 45, false));
-			
-				verwerfen.addClickListener(new ClickListener() {
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().removeWindow(mengNeu);
-						ViewHandler.getInstance().switchView(RollenAnzeigen.class);
-					}
-				});
-
-				speichern.addClickListener(new ClickListener() {
-					public void buttonClick(ClickEvent event) {
-						Rollen rolle = new Rollen();
-						rolle.setName(nameText);
-						String namedb = null;
-						try {
-							namedb = Rollenverwaltung.getInstance().getRollenByName(nameText).getName();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-						if (namedb == null) {
-							try {
-								Rollenverwaltung.getInstance().createRollen(rolle);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							UI.getCurrent().removeWindow(mengNeu);
-							ViewHandler.getInstance().switchView(RollenAnzeigen.class);
-						} else {
-							UI.getCurrent().removeWindow(mengNeu);
-							new Notification("Die Rolle ist bereits vorhanden!").show(Page.getCurrent());
-							ViewHandler.getInstance().switchView(RollenAnzeigen.class);
-						}
-					}
-				});
-
-				name.addValueChangeListener(new ValueChangeListener() {
-
-					public void valueChange(final ValueChangeEvent event) {
-						final String valueString = String.valueOf(event.getProperty().getValue());
-
-						nameText = valueString;
-
-					}
-				});
-
-			}
-		});
 	}
 
 	@Override
