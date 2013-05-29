@@ -29,7 +29,7 @@ public class RezeptartDAO extends AbstractDAO {
 			+ " WHERE " + ID + "={0}";
 	private static final String GET_REZEPTART_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String GET_REZEPTART_BY_NAMEB = "SELECT * FROM rezeptart WHERE rezeptart.name = '{0}'";
+	private static final String GET_REZEPTART_BY_NAMEB = "SELECT * FROM rezeptart WHERE rezeptart.name = {0}";
 	private static final String DELETE_REZEPTART_BY_NAME = "DELETE FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_REZEPTART_BY_ID = "DELETE FROM " + TABLE
@@ -85,8 +85,9 @@ public class RezeptartDAO extends AbstractDAO {
 	public Rezeptart getRezeptartByNameB(String name) throws ConnectException,
 			DAOException, SQLException {
 		Rezeptart rezeptart = null;
+		String name2 = "'"+name+"'";
 		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_NAMEB,
-				name));
+				name2));
 		System.out.println(GET_REZEPTART_BY_NAMEB + NAME);
 		while (set.next()) {
 			rezeptart = new Rezeptart(set.getLong("id"), set.getString("name"));

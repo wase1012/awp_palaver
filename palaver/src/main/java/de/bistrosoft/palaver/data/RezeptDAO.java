@@ -41,7 +41,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
 	// private final static String GET_REZEPTE_BY_GESCHMACK =
 	// "SELECT * FROM rezept WHERE geschmack_fk = {0};";
-	private final static String SAVE_ARTIKEL = "INSERT INTO rezept_has_artikel VALUES ({0},{1},{2},{3})";
+	private final static String SAVE_ARTIKEL = "INSERT INTO rezept_has_artikel VALUES ({0},{1},{2},{3},1)";
 	private final static String GET_REZEPTHASARTIKEL_BY_REZEPT_ID = "SELECT * FROM "
 			+ REZEPTHASARTIKEL + " WHERE " + REZEPTFK + " = {0}";
 
@@ -102,8 +102,8 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getInt("portion"));
-			List<RezeptHasArtikel> artikel = Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId());
-			rezept.setArtikel(artikel);
+//			List<RezeptHasArtikel> artikel = Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId());
+//			rezept.setArtikel(artikel);
 		}
 
 		return rezept;
@@ -202,11 +202,13 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
-				+ MITARBEITER + "," + ERSTELLT + "," + MENUE + ")" + " VALUES" + "('"
-				+ rezept.getName() + "','" + rezept.getRezeptart().getId()
+				+ MITARBEITER + "," + ERSTELLT + ")" + " VALUES" + "('"
+				+ rezept.getName() 
+				+ "','" + 1
+				//TODO: rezeptart
 				+ "','" + rezept.getKommentar() + "','" + rezept.getPortion()
 				+ "','" + rezept.getMitarbeiter().getId() + "','"
-				+ rezept.getErstellt() + rezept.getMenue() + "')";
+				+ rezept.getErstellt()   + "')";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -217,7 +219,7 @@ public class RezeptDAO extends AbstractDAO {
 				+ rezeptHasZubereitung.getRezept()
 				+ ", "
 				+ rezeptHasZubereitung.getZubereitung() + ")";
-		this.putManaged(INSERT_QUERY);
+
 
 	}
 
@@ -231,7 +233,9 @@ public class RezeptDAO extends AbstractDAO {
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = "1";
-
+			
+			System.out.println(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
+					menge, me));
 			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
 					menge, me));
 		}
