@@ -32,7 +32,8 @@ public class MitarbeiterDAO extends AbstractDAO {
 			+ "`email`,`passwort`,`eintrittsdatum`,`austrittsdatum`)VALUES({0})";
 	private final static String GET_MITARBEITER_BY_MENUE = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN menue  on menue.koch = mitarbeiter.id WHERE menue.id = {0}";
 	private final static String GET_MITARBEITER_BY_REZEPT = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN rezept  on rezept.mitarbeiter_fk = mitarbeiter.id WHERE rezept.id = {0}";
-
+	private final static String GET_MITARBEITER_BY_KUCHENREZEPT = "Select mitarbeiter.id, mitarbeiter.name, mitarbeiter.vorname from mitarbeiter JOIN kuchenrezept  on kuchenrezept.mitarbeiter_fk = mitarbeiter.id WHERE kuchenrezept.id = {0}";
+	
 	public MitarbeiterDAO() {
 		super();
 	}
@@ -113,5 +114,17 @@ return mitarbeiter;
 				+ "(name,vorname) VALUES('" + mitarbeiter.getName() + "','"
 				+ mitarbeiter.getVorname() + "');";
 		this.putManaged(INSERT_QUERY);
+	}
+	
+	public Mitarbeiter getMitarbeiterByKuchenrezept(Long id) throws ConnectException,
+	DAOException, SQLException {
+		Mitarbeiter mitarbeiter = null;
+		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_KUCHENREZEPT, id));
+
+		while (set.next()) {
+			mitarbeiter = new Mitarbeiter(set.getLong("id"),
+			set.getString("name"), set.getString("vorname"));
+		}
+		return mitarbeiter;
 	}
 }
