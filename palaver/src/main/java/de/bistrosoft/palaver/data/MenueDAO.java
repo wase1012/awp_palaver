@@ -22,8 +22,8 @@ public class MenueDAO extends AbstractDAO {
 	private final String ID = "id";
 	private final static String NAME = "name";
 	private final static String KOCH = "koch";
-    private final String GET_HAUPTGERICHT = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = true) AND (menue_has_rezept.menue_id = {0})";
-    private final String GET_Beilagen = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = false) AND (menue_has_rezept.menue_id = {0})";
+	private final String GET_HAUPTGERICHT = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = true) AND (menue_has_rezept.menue_id = {0})";
+	private final String GET_Beilagen = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = false) AND (menue_has_rezept.menue_id = {0})";
 	private final String GET_ALL_MENUES = "SELECT * FROM menue";
 	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0}";
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
@@ -54,92 +54,85 @@ public class MenueDAO extends AbstractDAO {
 
 		return list;
 	}
-	
-	public List<Rezept> getRezepteByMenue() throws ConnectException, DAOException,
-	SQLException {
-List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = get(GET_REZEPTE_BY_MENUE);
 
-while (set.next()) {
-	list.add(new Rezept(set.getLong("id")));
-}
-
-return list;
-}
-	
-	public String getHauptgerichtByMenue(Long id) throws ConnectException, DAOException,
-	SQLException {
-Rezept list = null;
-ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
-
-while (set.next()) {
-	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-			.getRezeptartById(set.getLong("rezeptart_fk")),
-			GeschmackDAO.getInstance().getGeschmackById(
-					set.getLong("geschmack_fk")), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-					.getString("name"), null, set.getInt("portion"));
-}
-
-return list.getName();
-}
-	public Rezept getHauptgerichtMenue(Long id) throws ConnectException, DAOException,
-	SQLException {
-Rezept list = null;
-ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
-
-while (set.next()) {
-	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-			.getRezeptartById(set.getLong("rezeptart_fk")),
-			GeschmackDAO.getInstance().getGeschmackById(
-					set.getLong("geschmack_fk")), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-					.getString("name"), null, set.getInt("portion"));
-}
-
-return list;
-}
-	
-	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException, DAOException,
-	SQLException {
+	public List<Rezept> getRezepteByMenue() throws ConnectException,
+			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
+		ResultSet set = get(GET_REZEPTE_BY_MENUE);
 
-while (set.next()) {
-	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-			.getRezeptartById(set.getLong("rezeptart_fk")),
-			GeschmackDAO.getInstance().getGeschmackById(
-					set.getLong("geschmack_fk")), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
+		while (set.next()) {
+			list.add(new Rezept(set.getLong("id")));
+		}
+
+		return list;
+	}
+
+	public String getHauptgerichtByMenue(Long id) throws ConnectException,
+			DAOException, SQLException {
+		Rezept list = null;
+		ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+
+		while (set.next()) {
+			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), null, set.getInt("portion"));
+		}
+
+		return list.getName();
+	}
+
+	public Rezept getHauptgerichtMenue(Long id) throws ConnectException,
+			DAOException, SQLException {
+		Rezept list = null;
+		ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+
+		while (set.next()) {
+			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), null, set.getInt("portion"));
+		}
+
+		return list;
+	}
+
+	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException,
+			DAOException, SQLException {
+		List<Rezept> list = new ArrayList<Rezept>();
+		ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
+
+		while (set.next()) {
+			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-					.getString("name"), null, set.getInt("portion")));
-}
+							.getString("name"), null, set.getInt("portion")));
+		}
 
-return list;
-}
-	
-	
-	
+		return list;
+	}
 
 	public Menue getMenueByName(String namemenue) throws ConnectException,
 			DAOException, SQLException {
 		Menue result = null;
-		String name="'"+namemenue+"'";
+		String name = "'" + namemenue + "'";
 		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
 		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, name));
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")),
-					GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk")),
-					MenueartDAO.getInstance().getMenueartById(set.getLong("rezeptart_fk")),
-					set.getBoolean("aufwand"),
-					set.getBoolean("favorit")
-					);
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("koch")), GeschmackDAO.getInstance()
+							.getGeschmackById(set.getLong("geschmack_fk")),
+					MenueartDAO.getInstance().getMenueartById(
+							set.getLong("rezeptart_fk")),
+					set.getBoolean("aufwand"), set.getBoolean("favorit"));
 		}
-		List<Rezept> rezepte = Rezeptverwaltung.getInstance().getRezepteByMenue(result);
+		List<Rezept> rezepte = Rezeptverwaltung.getInstance()
+				.getRezepteByMenue(result);
 		result.setRezepte(rezepte);
 		return result;
 	}
@@ -147,27 +140,35 @@ return list;
 	public void createMenue(Menue menue) throws ConnectException, DAOException,
 			SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
-				+ ", geschmack_fk, menueart_fk, aufwand, favorit)" + " VALUES" + "('" + menue.getName() + "',"
-				+ menue.getKoch().getId() + ", " + menue.getGeschmack().getId() + ", " + menue.getMenueart().getId() + ", "
-				+ Util.convertBoolean(menue.getAufwand()) + ", " + Util.convertBoolean(menue.getFavorit()) + ")";
+				+ ", geschmack_fk, menueart_fk, aufwand, favorit)" + " VALUES"
+				+ "('" + menue.getName() + "'," + menue.getKoch().getId()
+				+ ", " + menue.getGeschmack().getId() + ", "
+				+ menue.getMenueart().getId() + ", "
+				+ Util.convertBoolean(menue.getAufwand()) + ", "
+				+ Util.convertBoolean(menue.getFavorit()) + ")";
 		this.putManaged(INSERT_QUERY);
 	}
-	
-	public void createRezeptAlsMenue(Menue menue) throws ConnectException, DAOException,
-	SQLException {
-String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
-		+ ")" + " VALUES" + "('" + menue.getName() + "',"
-		+ menue.getKoch().getId() + ")";
-this.putManaged(INSERT_QUERY);
-}
-	
+
+	public void createRezeptAlsMenue(Menue menue) throws ConnectException,
+			DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
+				+ ")" + " VALUES" + "('" + menue.getName() + "',"
+				+ menue.getKoch().getId() + ")";
+		this.putManaged(INSERT_QUERY);
+	}
+
 	public void updateMenue(Menue menue) throws ConnectException, DAOException,
-	SQLException {
-String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '" +  menue.getName() + "' ," + KOCH + " = "
-		+ menue.getKoch().getId() + " WHERE menue.id = " + menue.getId() + ", geschmack_fk = " + menue.getGeschmack().getId() + ", menueart_fk = " + menue.getMenueart().getId() + ", aufwand = "
-		+ Util.convertBoolean(menue.getAufwand()) + ", favorit = " + Util.convertBoolean(menue.getFavorit()) + " ;";
-this.putManaged(INSERT_QUERY);
-}
+			SQLException {
+		String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
+				+ menue.getName() + "' ," + KOCH + " = "
+				+ menue.getKoch().getId() + " WHERE menue.id = "
+				+ menue.getId() + ", geschmack_fk = "
+				+ menue.getGeschmack().getId() + ", menueart_fk = "
+				+ menue.getMenueart().getId() + ", aufwand = "
+				+ Util.convertBoolean(menue.getAufwand()) + ", favorit = "
+				+ Util.convertBoolean(menue.getFavorit()) + " ;";
+		this.putManaged(INSERT_QUERY);
+	}
 
 	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
 			throws ConnectException, DAOException, SQLException {
@@ -185,23 +186,26 @@ this.putManaged(INSERT_QUERY);
 				+ "("
 				+ menueHasRezept.getMenue()
 				+ ", "
-				+ menueHasRezept.getRezept() + ", "
-				+ menueHasRezept.getHauptgericht() +")";
+				+ menueHasRezept.getRezept()
+				+ ", "
+				+ menueHasRezept.getHauptgericht() + ")";
 		this.putManaged(INSERT_QUERY);
 	}
-	
-	///
-	
-	public void FussnoteDelete(Menue menue1)
-			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = " + menue1.getId() + ";";
+
+	// /
+
+	public void FussnoteDelete(Menue menue1) throws ConnectException,
+			DAOException, SQLException {
+		String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = "
+				+ menue1.getId() + ";";
 
 		this.putManaged(DELETE_QUERY);
 	}
-	
-	public void RezepteDelete(Menue menue1)
-			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = " + menue1.getId() + ";";
+
+	public void RezepteDelete(Menue menue1) throws ConnectException,
+			DAOException, SQLException {
+		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = "
+				+ menue1.getId() + ";";
 
 		this.putManaged(DELETE_QUERY);
 	}
