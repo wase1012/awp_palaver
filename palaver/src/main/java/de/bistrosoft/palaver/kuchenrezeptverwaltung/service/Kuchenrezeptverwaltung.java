@@ -114,8 +114,7 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 	
 	public void saveArtikel(Kuchenrezept kuchenrezept) throws ConnectException,
 			DAOException, SQLException {
-		
-		super.saveArtikel(kuchenrezept);	
+		super.saveArtikel(kuchenrezept);
 	}
 
 	public List<Artikel> getAllArtikelByKuchenrezeptId() throws ConnectException,
