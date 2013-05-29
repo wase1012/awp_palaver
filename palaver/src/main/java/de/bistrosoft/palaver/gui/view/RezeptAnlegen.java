@@ -1,6 +1,6 @@
 /**
  * 
- * Jan Lauinger -> FAIL
+ * Jan Lauinger
  * 18.04.2013 - 21:21:58
  *
  */
@@ -169,7 +169,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		dummy.addComponent(d1);
 		box.addComponent(tblArtikel);
 		box.addComponent(zutatneu);
-		// box.addComponent(btAdd);
 		box.addComponent(kommentar);
 
 		control.setSpacing(true);

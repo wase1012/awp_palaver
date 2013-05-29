@@ -3,7 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS `palaver` ;
-CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET 'UTF8' COLLATE uft8_bin ;
+CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET 'UTF8' COLLATE utf8_bin ;
 USE `palaver` ;
 
 
@@ -242,27 +242,18 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `rezeptart_fk` INT NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
   `portion` INT NOT NULL ,
-  `geschmack_fk` INT NULL ,
   `mitarbeiter_fk` INT NULL ,
-   `aufwand` BOOLEAN NULL ,
    `erstellt` TIMESTAMP NULL ,
-    `favorit` BOOLEAN  NULL ,
   PRIMARY KEY (`id`) ,
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_rezept_rezeptart1_idx` (`rezeptart_fk` ASC) ,
-  INDEX `fk_geschmack_idx` (`geschmack_fk` ASC) ,
   INDEX `fk_mitarbeiter_idx` (`mitarbeiter_fk` ASC) ,
   CONSTRAINT `fk_rezept_rezeptart1`
     FOREIGN KEY (`rezeptart_fk` )
     REFERENCES `palaver`.`rezeptart` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_geschmack`
-    FOREIGN KEY (`geschmack_fk` )
-    REFERENCES `palaver`.`geschmack` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mitarbeiter`
+   CONSTRAINT `fk_mitarbeiter`
     FOREIGN KEY (`mitarbeiter_fk` )
     REFERENCES `palaver`.`mitarbeiter` (`id` )
     ON DELETE NO ACTION
