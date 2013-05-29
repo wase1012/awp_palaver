@@ -13,6 +13,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -100,6 +101,8 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getInt("portion"));
+			List<RezeptHasArtikel> artikel = Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId());
+			rezept.setArtikel(artikel);
 		}
 
 		return rezept;

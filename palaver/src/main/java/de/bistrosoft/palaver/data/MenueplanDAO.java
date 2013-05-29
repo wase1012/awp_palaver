@@ -14,6 +14,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -58,11 +60,11 @@ public class MenueplanDAO extends AbstractDAO {
 		}	
 		
 		if(menueplan!=null){
-			// TODO: KÃ¶che laden
+			// TODO: Köche laden
 			
 			List<MenueComponent> menues = new ArrayList<MenueComponent>();
-			// TODO: MenÃ¼s laden
-			ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
+			// TODO: Menüs laden
+			ResultSet setMenues = getManaged(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 			
 			while (setMenues.next()) {
 				Long id = setMenues.getLong("id");
@@ -72,6 +74,9 @@ public class MenueplanDAO extends AbstractDAO {
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
+				//Rezepte hinzufügen
+				List<Rezept> rezepte = Rezeptverwaltung.getInstance().getRezepteByMenue(menue);
+				menue.setRezepte(rezepte);
 				MenueComponent menueComp = new MenueComponent(menue, null, null, row, col, false);
 				menues.add(menueComp);
 			}
