@@ -25,6 +25,8 @@ import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.RezeptartEinst;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.emailversand.Mail;
@@ -114,6 +116,11 @@ public class MainLayout extends VerticalLayout implements Command
 				null);
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_AKTUELL, this);
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
+		
+		MenuItem kuchenverwaltungItem = menu.addItem(IConstants.MENU_KUCHENVERWALTUNG_HEADLINE,
+				null);
+		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANLEGEN, this);
+		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANZEIGEN, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
@@ -217,6 +224,14 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
 		{
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN))
+		{
+			ViewHandler.getInstance().switchView(KuchenrezeptAnlegen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE))
 		{

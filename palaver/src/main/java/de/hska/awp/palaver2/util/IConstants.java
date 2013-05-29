@@ -9,7 +9,7 @@ public interface IConstants
 	//1433
 	//3306
 	// DB Verbindung
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -38,6 +38,9 @@ public interface IConstants
 	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
 	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
 	String 		MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
+	 String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
+	 String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
+	 String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
