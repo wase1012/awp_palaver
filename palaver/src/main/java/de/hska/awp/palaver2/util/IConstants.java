@@ -72,6 +72,7 @@ public interface IConstants
 	String 	BUTTON_NEW_ICON = "img/new.ico";
 	String 	BUTTON_EDIT_ICON = "img/edit.ico";
 	String		BUTTON_OK_ICON = "img/check.ico";
+	String		BUTTON_EXCEL_ICON = "img/excel1.ico";
 //	String		BUTTON_EMAILVERSAND_ICON = "";
 	
 	String		ICON_YES = "img/tick_circle.ico";
