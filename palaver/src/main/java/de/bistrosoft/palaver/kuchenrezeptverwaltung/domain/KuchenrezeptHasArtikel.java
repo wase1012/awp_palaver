@@ -4,6 +4,7 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
 import java.math.BigDecimal;
 
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
@@ -60,6 +61,18 @@ public class KuchenrezeptHasArtikel {
 	public void setArtike(Artikel artikel) {
 		this.artikel = artikel;
 	}
+	
+//	public Kuchenrezept getKuchenrezept() {
+//		return this.kuchenrezept;
+//	}
+//
+//	public void setKuchenrezept(Kuchenrezept kuchenrezept) {
+//		this.kuchenrezept = kuchenrezept;
+//	}
+//
+//	public Artikel getArtikel() {
+//		return this.artikel;
+//	}
 
 	// public void setRezeptart(Rezeptart rezeptart) {
 	// this.rezeptart = rezeptart;

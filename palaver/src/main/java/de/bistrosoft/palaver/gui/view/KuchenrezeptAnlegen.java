@@ -192,6 +192,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		});
 
 		speichern.addClickListener(new ClickListener() {
+			@SuppressWarnings("null")
 			@Override
 			public void buttonClick(ClickEvent event) {
 
@@ -221,12 +222,21 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					e.printStackTrace();
 				}
 
-//				// / Liste der Zubereitungen
-				Kuchenrezept rez = null;
 
+				Kuchenrezept rez = null;
+				try {
+					System.out.println(nameInput);
+					rez = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(
+							nameInput);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				@SuppressWarnings("unchecked")
 				BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) tblArtikel
 						.getContainerDataSource();
 				ausgArtikel = bicArtikel.getItemIds();
+				System.out.println(ausgArtikel);
 				rez.setArtikel(ausgArtikel);
 
 				try {
