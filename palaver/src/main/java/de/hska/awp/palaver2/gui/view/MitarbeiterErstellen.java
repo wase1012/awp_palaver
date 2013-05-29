@@ -294,7 +294,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 							
 			try {
 				Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
-			} catch (ConnectException | DAOException | SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -203,7 +203,7 @@ public class MitarbeiterSuche extends VerticalLayout  implements View{
 						
 						try {
 							Mitarbeiterverwaltung.getInstance().updateMitarbeiter(mitarbeiter);
-						} catch (ConnectException | DAOException | SQLException e) {
+						} catch (Exception e) {
 							throw new NullPointerException("Bitte g�ltige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(MitarbeiterSuche.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
@@ -236,7 +236,7 @@ public class MitarbeiterSuche extends VerticalLayout  implements View{
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					Button			loeschen = new Button(IConstants.BUTTON_LÖSCHEN);
+					Button			loeschen = new Button(IConstants.BUTTON_DELETE);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -361,7 +361,7 @@ public class MitarbeiterSuche extends VerticalLayout  implements View{
 							
 							try {
 								Rollenverwaltung.getInstance().updateRollen(rollenBean);
-							} catch (ConnectException | DAOException | SQLException e) {
+							} catch (Exception e) {
 							System.out.println(e);
 								throw new NullPointerException("Bitte g�ltige Werte eingeben");
 
@@ -454,7 +454,7 @@ public class MitarbeiterSuche extends VerticalLayout  implements View{
 					rollen.setName(nameInput);
 					try {
 						Rollenverwaltung.getInstance().createRollen(rollen);
-					} catch (ConnectException | DAOException | SQLException e) {
+					} catch (Exception e) {
 						System.out.println(e);
 						throw new NullPointerException("Bitte g�ltige Werte eingeben");
 
@@ -521,7 +521,7 @@ public class MitarbeiterSuche extends VerticalLayout  implements View{
 			rollen.setVisibleColumns(new Object[] {"name"});
 			rollen.sort(new Object[] {"id"}, new boolean[] {true});
 			rollen.setColumnCollapsingAllowed(true);			
-		} catch (IllegalArgumentException | ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
