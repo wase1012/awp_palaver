@@ -11,6 +11,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.Util;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -42,7 +43,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Menue> getAllMenues() throws ConnectException, DAOException,
 			SQLException {
 		List<Menue> list = new ArrayList<Menue>();
-		ResultSet set = getManaged(GET_ALL_MENUES);
+		ResultSet set = get(GET_ALL_MENUES);
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong(ID), set.getString("name"),
@@ -57,7 +58,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Rezept> getRezepteByMenue() throws ConnectException, DAOException,
 	SQLException {
 List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = getManaged(GET_REZEPTE_BY_MENUE);
+ResultSet set = get(GET_REZEPTE_BY_MENUE);
 
 while (set.next()) {
 	list.add(new Rezept(set.getLong("id")));
@@ -69,7 +70,7 @@ return list;
 	public String getHauptgerichtByMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 Rezept list = null;
-ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
+ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 while (set.next()) {
 	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -86,7 +87,7 @@ return list.getName();
 	public Rezept getHauptgerichtMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 Rezept list = null;
-ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
+ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 while (set.next()) {
 	list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -104,7 +105,7 @@ return list;
 	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException, DAOException,
 	SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-ResultSet set = getManaged(MessageFormat.format(GET_Beilagen, id));
+ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
 
 while (set.next()) {
 	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -127,12 +128,16 @@ return list;
 		Menue result = null;
 		String name="'"+namemenue+"'";
 		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
-		ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_NAME, name));
+		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, name));
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
-							set.getLong("koch")));
+					MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")),
+					GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk")),
+					MenueartDAO.getInstance().getMenueartById(set.getLong("rezeptart_fk")),
+					set.getBoolean("aufwand"),
+					set.getBoolean("favorit")
+					);
 		}
 		List<Rezept> rezepte = Rezeptverwaltung.getInstance().getRezepteByMenue(result);
 		result.setRezepte(rezepte);
@@ -142,15 +147,25 @@ return list;
 	public void createMenue(Menue menue) throws ConnectException, DAOException,
 			SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
-				+ ")" + " VALUES" + "('" + menue.getName() + "',"
-				+ menue.getKoch().getId() + ")";
+				+ ", geschmack_fk, menueart_fk, aufwand, favorit)" + " VALUES" + "('" + menue.getName() + "',"
+				+ menue.getKoch().getId() + ", " + menue.getGeschmack().getId() + ", " + menue.getMenueart().getId() + ", "
+				+ Util.convertBoolean(menue.getAufwand()) + ", " + Util.convertBoolean(menue.getFavorit()) + ")";
 		this.putManaged(INSERT_QUERY);
 	}
+	
+	public void createRezeptAlsMenue(Menue menue) throws ConnectException, DAOException,
+	SQLException {
+String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
+		+ ")" + " VALUES" + "('" + menue.getName() + "',"
+		+ menue.getKoch().getId() + ")";
+this.putManaged(INSERT_QUERY);
+}
 	
 	public void updateMenue(Menue menue) throws ConnectException, DAOException,
 	SQLException {
 String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '" +  menue.getName() + "' ," + KOCH + " = "
-		+ menue.getKoch().getId() + " WHERE menue.id = " + menue.getId() + ";";
+		+ menue.getKoch().getId() + " WHERE menue.id = " + menue.getId() + ", geschmack_fk = " + menue.getGeschmack().getId() + ", menueart_fk = " + menue.getMenueart().getId() + ", aufwand = "
+		+ Util.convertBoolean(menue.getAufwand()) + ", favorit = " + Util.convertBoolean(menue.getFavorit()) + " ;";
 this.putManaged(INSERT_QUERY);
 }
 
