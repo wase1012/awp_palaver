@@ -99,7 +99,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout  implements View {
 			{
 				container = new BeanItemContainer<Mitarbeiter>(Mitarbeiter.class, Mitarbeiterverwaltung.getInstance().getAllMitarbeiter());
 				table.setContainerDataSource(container);
-				table.setVisibleColumns(new Object[] {"name", "vorname", "email", "passwort", "eintrittsdatum", "austrittsdatum", "benutzername"});
+				table.setVisibleColumns(new Object[] {"name", "vorname", "email", "eintrittsdatum", "austrittsdatum", "benutzername"});
 				table.sort(new Object[] {"name"}, new boolean[] {true});
 			} 
 			catch (Exception e)
