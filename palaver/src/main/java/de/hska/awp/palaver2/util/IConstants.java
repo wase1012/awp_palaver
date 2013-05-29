@@ -6,10 +6,12 @@ package de.hska.awp.palaver2.util;
 
 public interface IConstants
 {
-	//1433
-	//3306
+
 	// DB Verbindung
+//  Team1
 	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+//  Team2
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -30,6 +32,7 @@ public interface IConstants
 	String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten";
 	String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
 	String		MENU_KATEGORIE_ANZEIGEN = "Alle Kategorien";
+	String		MENU_ROLLEN_ANZEIGEN = "Alle Rollen anzeigen";
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Anlegen";
 	String 		MENU_REZEPT_ANZEIGEN = "Anzeigen";

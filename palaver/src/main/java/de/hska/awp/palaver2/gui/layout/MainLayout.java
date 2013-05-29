@@ -44,6 +44,7 @@ import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
+import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -135,6 +136,7 @@ public class MainLayout extends VerticalLayout implements Command
 //		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
+		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
@@ -268,6 +270,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals("Nachrichten"))
 		{
 			ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_ROLLEN_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(RollenAnzeigen.class);
 		}
 		else 
 		{
