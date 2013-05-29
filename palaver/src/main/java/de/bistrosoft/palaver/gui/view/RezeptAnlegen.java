@@ -94,10 +94,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	private ComboBox mitarbeiterCb = new ComboBox("Koch");
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
-	private ComboBox geschmackCb = new ComboBox("Geschmack");
-
-	private CheckBox favorit = new CheckBox("Favorit");
-	private CheckBox aufwand = new CheckBox("Aufwand");
 
 	public static Table tblArtikel = new Table("Zutaten");
 
@@ -151,16 +147,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		rezeptartCb.setInputPrompt(rezeptartInput);
 		rezeptartCb.setNullSelectionAllowed(false);
 
-		geschmackCb.setWidth("100%");
-		geschmackCb.setImmediate(true);
-		geschmackCb.setInputPrompt(geschmackInput);
-		geschmackCb.setNullSelectionAllowed(false);
-
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
-
-		aufwand.setWidth("100%");
-		favorit.setWidth("100%");
 
 		box.setWidth("300px");
 		box.setSpacing(true);
@@ -172,15 +160,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		box.addComponent(portion);
 		box.addComponent(mitarbeiterCb);
 		box.addComponent(rezeptartCb);
-		box.addComponent(geschmackCb);
 		box.addComponent(zubereitung);
 		box.addComponent(hol);
 		box.setComponentAlignment(hol, Alignment.MIDDLE_CENTER);
 		hol.addComponent(eins);
 		hol.addComponent(dummy);
 		hol.addComponent(zwei);
-		eins.addComponent(favorit);
-		zwei.addComponent(aufwand);
 		dummy.addComponent(d1);
 		box.addComponent(tblArtikel);
 		box.addComponent(zutatneu);
@@ -214,17 +199,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				window.setWidth("50%");
 				window.setHeight("50%");
 				tblArtikel.setVisible(true);
-
-				// ar.getId(ArtikelDAO.getInstance().getArtikelById(Long.parseLong(ausgArtikel.toString()))));
-				// for( String k: WinSelectArtikel.ArtId )
-				// {
-				//
-				// artikelT.addItem(new Object[] {
-				// k, 3500}, new Integer(k));
-				//
-				// Notification.show(k);
-				// }
-
 			}
 		});
 
@@ -234,13 +208,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
-			}
-		});
-		geschmackCb.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				valueString = String.valueOf(event.getProperty().getValue());
-				geschmackInput = valueString;
 			}
 		});
 		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
@@ -273,26 +240,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				Rezept rezept = new Rezept();
 
 				rezept.setName(nameInput);
-				rezept.setAufwand(aufwand.getValue());
-				rezept.setFavorit(favorit.getValue());
 
 				java.util.Date date = new java.util.Date();
 				Date date2 = new Date(date.getTime());
 
 				rezept.setErstellt(date2);
-
-				try {
-					rezept.setGeschmack(GeschmackDAO.getInstance()
-							.getGeschmackById(
-									Long.parseLong(geschmackInput.toString())));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-				// rezept.setGeschmack((Geschmack) geschmackCb.getValue());
-				// rezept.setMitarbeiter((Mitarbeiter)
-				// mitarbeiterCb.getValue());
-				// rezept.setRezeptart((Rezeptart) rezeptartCb.getValue());
 
 				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance()
@@ -398,20 +350,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	public void load() {
 
-		geschmackCb.removeAllItems();
 		mitarbeiterCb.removeAllItems();
 		rezeptartCb.removeAllItems();
 		zubereitung.removeAllItems();
 
 		try {
-			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
-					.getAllGeschmackAktiv();
-			for (Geschmack e : geschmack) {
-				geschmackCb.addItem(e.getId());
-				geschmackCb.setItemCaption(e.getId(), e.getName());
-
-			}
-
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
@@ -454,15 +397,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				rezept.setName(name.getValue());
 
 				try {
-					rezept.setGeschmack(GeschmackDAO.getInstance()
-							.getGeschmackById(
-									Long.parseLong(geschmackInput.toString())));
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				try {
 					rezept.setRezeptart(RezeptartDAO.getInstance()
 							.getRezeptartById(
 									Long.parseLong(rezeptartInput.toString())));
@@ -480,16 +414,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					e1.printStackTrace();
 				}
 
-				// try {
-				// rezept.setArtikel(Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId()));
-				// } catch (ConnectException | DAOException | SQLException e2) {
-				// // TODO Auto-generated catch block
-				// e2.printStackTrace();
-				// }
-
 				rezept.setKommentar(kommentar.getValue());
-				rezept.setAufwand(aufwand.getValue());
-				rezept.setFavorit(favorit.getValue());
 
 				// Änderungsdatum erfassen
 				java.util.Date date = new java.util.Date();
@@ -506,31 +431,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				dialog.center();
 				dialog.setResizable(false);
 				dialog.setStyleName("dialog-window");
-
-				// Label message = new Label(notification);
-				//
-				// Button okButton = new Button(IConstants.BUTTON_ADD);
-				//
-				// VerticalLayout dialogContent = new VerticalLayout();
-				// dialogContent.setSizeFull();
-				// dialogContent.setMargin(true);
-				// dialog.setContent(dialogContent);
-				//
-				// dialogContent.addComponent(message);
-				// dialogContent.addComponent(okButton);
-				// dialogContent.setComponentAlignment(okButton,
-				// Alignment.BOTTOM_RIGHT);
-				//
-				// UI.getCurrent().addWindow(dialog);
-				//
-				// okButton.addClickListener(new ClickListener() {
-				// @Override
-				// public void buttonClick(ClickEvent event) {
-				// UI.getCurrent().removeWindow(dialog);
-				// ViewHandler.getInstance().switchView(
-				// RezeptAnlegen.class);
-				// }
-				// });
 
 				try {
 					Rezeptverwaltung.getInstance().updateRezept(rezept);
@@ -642,13 +542,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 
 		try {
-			geschmackCb.setValue(GeschmackDAO.getInstance()
-					.getGeschmackByRezept(rezept.getId()).getId());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		try {
 			rezeptartCb.setValue(RezeptartDAO.getInstance()
 					.getRezeptartByRezept(rezept.getId()).getId());
 		} catch (Exception e1) {
@@ -692,9 +585,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
-		favorit.setValue(rezept.getFavorit());
-		aufwand.setValue(rezept.getAufwand());
-
 	}
 
 	@Override
@@ -713,7 +603,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		if (name.getValue() == "" || name.getValue() == null
 				&& portion.getValue() == null || portion.getValue() == ""
-				&& geschmackCb.getValue() == "" || geschmackCb.getValue() == null
 				&& rezeptartCb.getValue() == ""	|| rezeptartCb.getValue() == null
 				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
 			speichern.setEnabled(false);
