@@ -100,13 +100,35 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 			}
 			
 		}
-//			Nachrichtenverwaltung.getInstance().getAllNachricht();
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		if(nl!=null){
+			
+			//Sortieren der Nachrichten nach der größten ID
+			final List<Nachricht> neu = new ArrayList<Nachricht>();
+			if (nl != null) {
+				for (int z = 0; z < nl.size(); z++) {
+					long zahl = 0;
+					int ind = 0;
+					for (int i = 0; i < nl.size(); i++) {
+						if (zahl < nl.get(i).getId()) {
+							zahl = nl.get(i).getId();
+							ind = i;
+						}
+					}
+
+					neu.add(nl.get(ind));
+					nl.remove(ind);
+					z = z - 1;
+				}
+			}
+
+			nl = neu;
+			
 			for(int i = 0; i < nl.size(); i++){
 								
 				von = new Label("Von:");

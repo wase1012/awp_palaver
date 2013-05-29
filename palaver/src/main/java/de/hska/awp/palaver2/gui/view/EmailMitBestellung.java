@@ -38,7 +38,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class EmailMitBestellung extends VerticalLayout implements View {
-		//Upload.Receiver, 
+	// Upload.Receiver,
 
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -72,7 +72,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		betreff.setWidth("45%");
 		nachricht.setWidth("100%");
 		nachricht.setHeight("250px");
-		
+
 		download.setVisible(false);
 		download.setIcon(new ThemeResource(IConstants.BUTTON_EXCEL_ICON));
 
@@ -96,7 +96,6 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
-		
 
 		empfaenger.addValueChangeListener(new ValueChangeListener() {
 
@@ -129,37 +128,34 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Mail mail = Mail.getInstance();
-				boolean result = mail.EmailVersand(empfaengerInput, betreffInput,
-				nachrichtInput, anhang);
-				if(result == true){					
+				boolean result = mail.EmailVersand(empfaengerInput,
+						betreffInput, nachrichtInput, anhang);
+				if (result == true) {
 					try {
-						senden.setIcon(new ThemeResource(IConstants.BUTTON_OK_ICON));
+						senden.setIcon(new ThemeResource(
+								IConstants.BUTTON_OK_ICON));
 						bestellung.setBestellt(true);
-						Bestellverwaltung.getInstance().updateBestellung(bestellung);
-					} catch (ConnectException e) {
-						e.printStackTrace();
-					} catch (DAOException e) {
-						e.printStackTrace();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					} catch (ParseException e) {
+						Bestellverwaltung.getInstance().updateBestellungOhneBP(
+								bestellung);
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
 		});
-		
+
 		download.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+
 			}
 		});
-		
+
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+				ViewHandler.getInstance().switchView(
+						BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 	}
@@ -170,10 +166,9 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		empfaengerInput = bestellung.getLieferant().getEmail();
 		empfaenger.setValue(empfaengerInput);
 		// Create excel
-		CreateExcelFile cef = CreateExcelFile.getInstance();		
+		CreateExcelFile cef = CreateExcelFile.getInstance();
 		this.anhang = cef.Create(bestellung);
-		if(this.anhang != null)
-		{
+		if (this.anhang != null) {
 			download.setVisible(true);
 			Resource res = new FileResource(new File(anhang));
 			FileDownloader fd = new FileDownloader(res);
@@ -181,27 +176,22 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		}
 	}
 
-	/* Callback method to begin receiving the upload.
-	@Override
-	public OutputStream receiveUpload(String filename, String MIMEType) {
-		// Generiren EXCEL
-
-		// Speichern
-
-		// Attach
-
-		FileOutputStream fos = null; // Output stream to write to
-		file = new File(filename);
-		this.anhang = file.getAbsolutePath();
-		try {
-			// Open the file for writing.
-			fos = new FileOutputStream(file);
-		} catch (final java.io.FileNotFoundException e) {
-			// Error while opening the file. Not reported here.
-			e.printStackTrace();
-			return null;
-		}
-
-		return fos; // Return the output stream to write to
-	}*/
+	/*
+	 * Callback method to begin receiving the upload.
+	 * 
+	 * @Override public OutputStream receiveUpload(String filename, String
+	 * MIMEType) { // Generiren EXCEL
+	 * 
+	 * // Speichern
+	 * 
+	 * // Attach
+	 * 
+	 * FileOutputStream fos = null; // Output stream to write to file = new
+	 * File(filename); this.anhang = file.getAbsolutePath(); try { // Open the
+	 * file for writing. fos = new FileOutputStream(file); } catch (final
+	 * java.io.FileNotFoundException e) { // Error while opening the file. Not
+	 * reported here. e.printStackTrace(); return null; }
+	 * 
+	 * return fos; // Return the output stream to write to }
+	 */
 }

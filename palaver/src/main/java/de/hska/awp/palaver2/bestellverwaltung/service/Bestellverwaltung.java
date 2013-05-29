@@ -10,9 +10,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ArtikelDAO;
@@ -185,130 +188,131 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
+	 * @throws ParseException 
 	 */
-	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException, ParseException
 	{
-//		List<Bestellposition> list = new ArrayList<Bestellposition>();
-//		//1. Menueplan holen
-//		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
-//		//TODO
-//		//2. Das kleinsten Datum auslesen und setzen
-//		Date kleinstedatum = null;
-//		//3. Get List<RezeptHasArtikel> von Menueplan mit großten datum aus der Woche (Freitag)
-//		//TODO
-//		List<RezeptHasArtikel> rhafreitag = null;
-//		//3.1 Liste aufbereiten und doppelt Artikel zusammenfügen und Menge addieren um später Rundungsfehler zu minimieren
-//		List<RezeptHasArtikel> rha = mengeAddSameArtikel(rhafreitag);
-//		
-//		//4. Füge List<RezeptHasArtikel> von Menueplan mit kleinste datum in List<Bestellposition>
-//		int leer = 0;
-//		
-//		Bestellposition bpo = new Bestellposition();
-//		bpo.setArtikel(rha.get(0).getArtikel());
-//		bpo.setDurchschnitt(rha.get(0).getArtikel().getDurchschnitt());
-//		bpo.setFreitag(convertMenge(rha.get(0)) + bpo.getDurchschnitt());
-//		bpo.setKantine(convertMenge(rha.get(0)));
-//		bpo.setGeliefert(false);
-//		bpo.setMontag(leer);
-//		bpo.setGesamt(bpo.getKantine() + bpo.getDurchschnitt());
-//		list.add(bpo);
-//		
-//		for(int i = 1 ; i < rha.size() ; i++){
-//			Bestellposition bp = new Bestellposition();
-//			bp.setArtikel(rha.get(i).getArtikel());
-//			//5. Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
-//			bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
-//			//6. Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
-//			bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
-//			bp.setKantine(convertMenge(rha.get(i)));
-//			bp.setGeliefert(false);
-//			bp.setMontag(leer);
-//			bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
-//			
-//			boolean vorhanden = false;
-//			for(int z = 0 ; z < list.size() ; z++){
-//				if(bp.getArtikel().equals(list.get(z).getArtikel())){
-//					vorhanden = true;
-//					list.get(z).setFreitag(list.get(z).getFreitag()+bp.getFreitag());
-//					list.get(z).setGesamt(list.get(z).getGesamt()+bp.getFreitag()-bp.getDurchschnitt());
-//					list.get(z).setKantine(list.get(z).getKantine()+bp.getKantine());
-//				}	
-//			}
-//			if(vorhanden == false){
-//				list.add(bp);
-//			}
-//		}
-//		
-//		
-//		//8. Get List<RezeptHasArtikel> von Menueplan für Mo,Di,Mi,Do aus der Woche
-//		//TODO
-//		List<RezeptHasArtikel> rhamobisdo = null;
-//		//8.1 
-//		rha = mengeAddSameArtikel(rhamobisdo);
-//		//9. Wenn Artikel vorhanden, dann vorhandenen verändern(Menge addieren), andersfalls
-//		// neue Bestellposition hinzufügen
-//		for(int i = 0 ; i < rha.size() ; i++){
-//			boolean vorhanden = false;
-//			for(int z = 0 ; z < list.size() ; z++){
-//				
-//				if(rha.get(i).getArtikel().equals(list.get(z).getArtikel())){
-//					vorhanden = true;
-//					list.get(z).setMontag(list.get(z).getMontag() + convertMenge(rha.get(i)));
-//					list.get(z).setGesamt(list.get(z).getGesamt() + convertMenge(rha.get(i)));
-//					list.get(z).setKantine(list.get(z).getKantine() + convertMenge(rha.get(i)));
-//					
-//				}	
-//			}
-//			if(vorhanden==false){
-//				Bestellposition bp = new Bestellposition();
-//				bp.setArtikel(rha.get(i).getArtikel());
-//				//9.1 Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
-//				bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
-//				//9.2 Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
-//				bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
-//				bp.setKantine(convertMenge(rha.get(i)));
-//				bp.setGeliefert(false);
-//				bp.setMontag(leer);
-//				bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
-//
-//				list.add(bp);
-//			}
-//		}
-//		
-//		//10. Artikel mit Grundbedarf auslesen
-//		List<Artikel> alist = Artikelverwaltung.getInstance().getArtikelByGrundbedarf();
-//		
-//		//11. Artikel überprüfen ob schon vorhanden in List<Bestellposition> list, wenn nein hinzufügen,
-//		//falls ja nichts machen, da ja der durchschnitt schon vorhanden ist
-//		for(int i = 0 ; i < alist.size() ; i++){
-//			boolean vorhanden = false;
-//			for(int z = 0 ; z < list.size() ; z++){
-//				if(alist.get(i).equals(list.get(z).getArtikel())){
-//					vorhanden = true;	
-//				}
-//			}
-//			if(vorhanden = false){
-//				Bestellposition bp = new Bestellposition();
-//				bp.setArtikel(alist.get(i));
-//				bp.setDurchschnitt(alist.get(i).getDurchschnitt());
-//				bp.setFreitag(bp.getDurchschnitt());
-//				bp.setKantine(leer);
-//				bp.setGeliefert(false);
-//				bp.setMontag(leer);
-//				bp.setGesamt(bp.getDurchschnitt());
-//				list.add(bp);
-//			}
-//			
-//		}
-//		//12. Bestellung erzeugen und in der Datenbank abspeichern
-//		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(list);
-//		for (int i = 0; i < lieferanten.size(); i++) {
-//
-//			Bestellverwaltung.getInstance().createBestellung(
-//					generateBestellungByListOfBestellpositionAndByLieferant(
-//							lieferanten.get(i), list));
-//
-//		}
+		List<Bestellposition> list = new ArrayList<Bestellposition>();
+		//1. Menueplan holen
+		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
+		//TODO
+		//2. Das kleinsten Datum auslesen und setzen
+		Date kleinstedatum = null;
+		//3. Get List<RezeptHasArtikel> von Menueplan mit großten datum aus der Woche (Freitag)
+		//TODO
+		List<RezeptHasArtikel> rhafreitag = null;
+		//3.1 Liste aufbereiten und doppelt Artikel zusammenfügen und Menge addieren um später Rundungsfehler zu minimieren
+		List<RezeptHasArtikel> rha = mengeAddSameArtikel(rhafreitag);
+		
+		//4. Füge List<RezeptHasArtikel> von Menueplan mit kleinste datum in List<Bestellposition>
+		int leer = 0;
+		
+		Bestellposition bpo = new Bestellposition();
+		bpo.setArtikel(rha.get(0).getArtikel());
+		bpo.setDurchschnitt(rha.get(0).getArtikel().getDurchschnitt());
+		bpo.setFreitag(convertMenge(rha.get(0)) + bpo.getDurchschnitt());
+		bpo.setKantine(convertMenge(rha.get(0)));
+		bpo.setGeliefert(false);
+		bpo.setMontag(leer);
+		bpo.setGesamt(bpo.getKantine() + bpo.getDurchschnitt());
+		list.add(bpo);
+		
+		for(int i = 1 ; i < rha.size() ; i++){
+			Bestellposition bp = new Bestellposition();
+			bp.setArtikel(rha.get(i).getArtikel());
+			//5. Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
+			bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
+			//6. Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
+			bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
+			bp.setKantine(convertMenge(rha.get(i)));
+			bp.setGeliefert(false);
+			bp.setMontag(leer);
+			bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
+			
+			boolean vorhanden = false;
+			for(int z = 0 ; z < list.size() ; z++){
+				if(bp.getArtikel().equals(list.get(z).getArtikel())){
+					vorhanden = true;
+					list.get(z).setFreitag(list.get(z).getFreitag()+bp.getFreitag());
+					list.get(z).setGesamt(list.get(z).getGesamt()+bp.getFreitag()-bp.getDurchschnitt());
+					list.get(z).setKantine(list.get(z).getKantine()+bp.getKantine());
+				}	
+			}
+			if(vorhanden == false){
+				list.add(bp);
+			}
+		}
+		
+		
+		//8. Get List<RezeptHasArtikel> von Menueplan für Mo,Di,Mi,Do aus der Woche
+		//TODO
+		List<RezeptHasArtikel> rhamobisdo = null;
+		//8.1 
+		rha = mengeAddSameArtikel(rhamobisdo);
+		//9. Wenn Artikel vorhanden, dann vorhandenen verändern(Menge addieren), andersfalls
+		// neue Bestellposition hinzufügen
+		for(int i = 0 ; i < rha.size() ; i++){
+			boolean vorhanden = false;
+			for(int z = 0 ; z < list.size() ; z++){
+				
+				if(rha.get(i).getArtikel().equals(list.get(z).getArtikel())){
+					vorhanden = true;
+					list.get(z).setMontag(list.get(z).getMontag() + convertMenge(rha.get(i)));
+					list.get(z).setGesamt(list.get(z).getGesamt() + convertMenge(rha.get(i)));
+					list.get(z).setKantine(list.get(z).getKantine() + convertMenge(rha.get(i)));
+					
+				}	
+			}
+			if(vorhanden==false){
+				Bestellposition bp = new Bestellposition();
+				bp.setArtikel(rha.get(i).getArtikel());
+				//9.1 Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
+				bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
+				//9.2 Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
+				bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
+				bp.setKantine(convertMenge(rha.get(i)));
+				bp.setGeliefert(false);
+				bp.setMontag(leer);
+				bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
+
+				list.add(bp);
+			}
+		}
+		
+		//10. Artikel mit Grundbedarf auslesen
+		List<Artikel> alist = Artikelverwaltung.getInstance().getArtikelByGrundbedarf();
+		
+		//11. Artikel überprüfen ob schon vorhanden in List<Bestellposition> list, wenn nein hinzufügen,
+		//falls ja nichts machen, da ja der durchschnitt schon vorhanden ist
+		for(int i = 0 ; i < alist.size() ; i++){
+			boolean vorhanden = false;
+			for(int z = 0 ; z < list.size() ; z++){
+				if(alist.get(i).equals(list.get(z).getArtikel())){
+					vorhanden = true;	
+				}
+			}
+			if(vorhanden = false){
+				Bestellposition bp = new Bestellposition();
+				bp.setArtikel(alist.get(i));
+				bp.setDurchschnitt(alist.get(i).getDurchschnitt());
+				bp.setFreitag(bp.getDurchschnitt());
+				bp.setKantine(leer);
+				bp.setGeliefert(false);
+				bp.setMontag(leer);
+				bp.setGesamt(bp.getDurchschnitt());
+				list.add(bp);
+			}
+			
+		}
+		//12. Bestellung erzeugen und in der Datenbank abspeichern
+		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(list);
+		for (int i = 0; i < lieferanten.size(); i++) {
+
+			Bestellverwaltung.getInstance().createBestellung(
+					generateBestellungByListOfBestellpositionAndByLieferant(
+							lieferanten.get(i), list));
+
+		}
 		
 	}
 	
@@ -320,8 +324,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 */
 	private int convertMenge(RezeptHasArtikel rha){
 		int bm = 0;
-//		//Math.ceil wird immer auf ganze Zahl aufgerundet
-//		bm = (int)Math.ceil(rha.getMenge()/rha.getArtikel().getBestellgroesse());
+		//Math.ceil wird immer auf ganze Zahl aufgerundet
+		bm = (int)Math.ceil(rha.getMenge()/rha.getArtikel().getBestellgroesse());
 		return bm;
 	}
 	
@@ -334,21 +338,21 @@ public class Bestellverwaltung extends BestellungDAO {
 	private List<RezeptHasArtikel> mengeAddSameArtikel(List<RezeptHasArtikel> rhalist){
 		
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
-//		list.add(rhalist.get(0));
-//		
-//		for(int i = 1 ; i < rhalist.size(); i++){
-//			boolean vorhanden = false;
-//			for(int z = 0 ; z < list.size(); z++){
-//				if(list.get(z).getArtikel.equals(rhalist.get(i).getArtikel())){
-//					list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
-//					vorhanden = true;
-//				}
-//				
-//			}
-//			if(vorhanden==false){
-//				list.add(rhalist.get(i));
-//			}
-//		}
+		list.add(rhalist.get(0));
+		
+		for(int i = 1 ; i < rhalist.size(); i++){
+			boolean vorhanden = false;
+			for(int z = 0 ; z < list.size(); z++){
+				if(list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())){
+					list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
+					vorhanden = true;
+				}
+				
+			}
+			if(vorhanden==false){
+				list.add(rhalist.get(i));
+			}
+		}
 		
 		return list;
 	}

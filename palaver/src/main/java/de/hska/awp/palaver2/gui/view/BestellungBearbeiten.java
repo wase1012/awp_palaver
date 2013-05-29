@@ -1,6 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,8 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
@@ -341,8 +345,12 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				}
 
 				bestellung.setBestellpositionen(bestellpositionen);
-				// bestellung.setBestellt(true);
-				// Bestellverwaltung.getInstance().updateBestellung(bestellung);
+				try {
+					Bestellverwaltung.getInstance()
+							.updateBestellung(bestellung);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				// TODO EMAIL VERSENDEN
 				ViewHandler.getInstance().switchView(EmailMitBestellung.class,
 						new ViewDataObject<Bestellung>(bestellung));

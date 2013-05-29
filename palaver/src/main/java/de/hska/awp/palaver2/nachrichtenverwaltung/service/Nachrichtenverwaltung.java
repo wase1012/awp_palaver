@@ -14,12 +14,9 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
  * @author PhilippT
  *
  */
-
 public class Nachrichtenverwaltung extends NachrichtDAO {
 	
-	private static final long serialVersionUID = -5520738420154763865L;
-	
-	private static Nachrichtenverwaltung 	instance = null;
+	private static Nachrichtenverwaltung instance = null;
 	
 	private Nachrichtenverwaltung()
 	{

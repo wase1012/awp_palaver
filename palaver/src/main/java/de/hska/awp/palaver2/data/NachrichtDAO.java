@@ -75,7 +75,6 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	
 	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
 		
 		if(rolle ==null) {
@@ -97,6 +96,14 @@ public class NachrichtDAO extends AbstractDAO {
 		 
 	}
 	
+	/**
+	 * Methode um alle Nachrichten zu einer RolleId zu bekommen.
+	 * @param rolle
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 		
 		List<Nachricht> list = new ArrayList<Nachricht>();

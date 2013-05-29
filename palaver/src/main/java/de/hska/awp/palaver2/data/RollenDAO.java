@@ -15,12 +15,12 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
  */
 public class RollenDAO extends AbstractDAO {
 
-	private final static String 		TABLE = "rollen";
-	private final static String 		ID = "id";
-	private final static String			NAME = "name";
-	private final static String			GET_ALL_ROLLEN = "SELECT * FROM rollen";
-	private static final String			GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
-	private final static String			GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on " +
+	private final static String TABLE = "rollen";
+	private final static String ID = "id";
+	private final static String	NAME = "name";
+	private final static String	GET_ALL_ROLLEN = "SELECT * FROM rollen";
+	private final static String	GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
+	private final static String	GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on " +
 			"rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 	
 	private static RollenDAO instance = null;
@@ -62,7 +62,7 @@ public class RollenDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Die Methode liefert ein Mitarbeiter anhand seiner ID zurück.
+	 * Die Methode liefert ein Rolle anhand seiner ID zurück.
 	 * @author Christian Barth
 	 * @param id
 	 * @return

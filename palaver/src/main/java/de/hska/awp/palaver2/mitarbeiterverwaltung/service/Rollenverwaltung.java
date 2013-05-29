@@ -55,7 +55,7 @@ public class Rollenverwaltung extends RollenDAO{
 		result = super.getRollenByMitarbeiterId(id);
 
 		return result;
-	}
+	}	
 
 	public void createRollen(Rollen rolle)
 			throws ConnectException, DAOException, SQLException {

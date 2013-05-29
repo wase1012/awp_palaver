@@ -6,10 +6,12 @@ package de.hska.awp.palaver2.util;
 
 public interface IConstants
 {
-	//1433
-	//3306
+
 	// DB Verbindung
+//  Team1
 	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+//  Team2
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -18,6 +20,9 @@ public interface IConstants
 	String		MENU_LIEFERANT_HEADLINE = "Lieferant";
 	String		MENU_LIEFERANT_NEW = "Lieferant anlegen";
 	String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
+	String		MENU_MITARBEITER_HEADLINE = "Mitarbeiter";
+	String		MENU_MITARBEITER_ANZEIGEN = "Alle Mitarbeiter";
+	String      MENU_MITARBEITER_NEU = "Mitarbeiter anlegen";
 	String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	String		MENU_BESTELLUNG_NEW_RANDOM = "Neue manuelle Bestellung";
@@ -30,25 +35,26 @@ public interface IConstants
 	String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten";
 	String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
 	String		MENU_KATEGORIE_ANZEIGEN = "Alle Kategorien";
+	String		MENU_ROLLEN_ANZEIGEN = "Alle Rollen anzeigen";
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Anlegen";
 	String 		MENU_REZEPT_ANZEIGEN = "Anzeigen";
-	String 		MENU_REZEPT_AENDERN = "Ã„ndern";
-	String 		MENU_REZEPT_LOESCHEN = "LÃ¶schen";
-	String 		MENU_MENUPLAN_HEADLINE = "MenÃ¼plan";
-	String 		MENU_MENUPLAN_AKTUELL = "Aktueller MenÃ¼plan";
-	String 		MENU_MENUPLAN_HISTORIE = "MenÃ¼plan-Historie";
-	 String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
-	 String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
-	 String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
+	String 		MENU_REZEPT_AENDERN = "Ändern";
+	String 		MENU_REZEPT_LOESCHEN = "Löschen";
+	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
+	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
+	String 		MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
+	String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
+	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
+	String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
 	String 		MENU_FUSSNOTE = "Fussnoten";
-	String 		MENU_GESCHMACK = "GeschmÃ¤cker";
+	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
 	String		MENU_LOGOUT = "Logout";
-	String 		MENU_MENUE_HEADLINE = "MenÃ¼";
-	String 		MENU_MENUE_ANLEGEN = " MenÃ¼ anlegen";
-	String 		MENU_MENUE_SUCHEN = " MenÃ¼ suchen";
+	String 		MENU_MENUE_HEADLINE = "Menü";
+	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
+	String 		MENU_MENUE_SUCHEN = " Menü suchen";
 	String 		MENU_REGEL = "Regeln";
 	
 	// Beschriftungen fuer Knoepfe
@@ -57,11 +63,11 @@ public interface IConstants
 	String		BUTTON_SAVE = "Speichern";
 	String		BUTTON_SENDEN = "Senden";
 	String		BUTTON_DISCARD = "Verwerfen";
-	String		BUTTON_ADD = "HinzufÃ¼gen";
+	String		BUTTON_ADD = "Hinzufügen";
 	String		BUTTON_NEW = "Neu";
 	String		BUTTON_EDIT = "Bearbeiten";
 	String		BUTTON_OK = "OK";
-	String		BUTTON_DELETE = "LÃ¶schen";
+	String		BUTTON_DELETE = "Löschen";
 	String		BUTTON_JA = "Ja";
 	String 		BUTTON_NEIN = "Nein";
 	String		BUTTON_EMAILVERSAND = "Per Email versenden";
