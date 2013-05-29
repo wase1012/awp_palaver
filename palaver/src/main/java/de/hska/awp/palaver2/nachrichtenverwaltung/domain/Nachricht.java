@@ -1,9 +1,5 @@
 package de.hska.awp.palaver2.nachrichtenverwaltung.domain;
 
-// Generated 21.04.2013 16:08:42 by PhilippT 
-
-
-
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
@@ -13,11 +9,8 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 public class Nachricht implements java.io.Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1291141882464373163L;
-	
+
 	private Long id;
 	private Mitarbeiter mitarbeiterBySenderFk;
 	private Rollen empfaengerRolle;
@@ -26,14 +19,12 @@ public class Nachricht implements java.io.Serializable {
 	public Nachricht() {
 	}
 
-	public Nachricht(Mitarbeiter mitarbeiterBySenderFk,
-			Rollen empfaengerRolle) {
+	public Nachricht(Mitarbeiter mitarbeiterBySenderFk, Rollen empfaengerRolle) {
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
 		this.empfaengerRolle = empfaengerRolle;
 	}
 
-	public Nachricht(Long id, String nachricht, Mitarbeiter mitarbeiterBySenderFk,
-			Rollen empfaengerRolle) {
+	public Nachricht(Long id, String nachricht, Mitarbeiter mitarbeiterBySenderFk, Rollen empfaengerRolle) {
 		this.id = id;
 		this.nachricht = nachricht;
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
@@ -45,7 +36,7 @@ public class Nachricht implements java.io.Serializable {
 		this.id = id;
 		this.nachricht = nachricht;
 		this.mitarbeiterBySenderFk = mitarbeiterBySenderFk;
-	
+
 	}
 
 	public Long getId() {
@@ -68,8 +59,7 @@ public class Nachricht implements java.io.Serializable {
 		return this.empfaengerRolle;
 	}
 
-	public void setEmpfaengerRolle(
-			Rollen empfaengerRolle) {
+	public void setEmpfaengerRolle(Rollen empfaengerRolle) {
 		this.empfaengerRolle = empfaengerRolle;
 	}
 
@@ -81,50 +71,9 @@ public class Nachricht implements java.io.Serializable {
 		this.nachricht = nachricht;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Nachricht [id=" + id + ", nachricht=" + nachricht + "]";
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((nachricht == null) ? 0 : nachricht.hashCode());
-		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Nachricht other = (Nachricht) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (nachricht == null) {
-			if (other.nachricht != null)
-				return false;
-		} else if (!nachricht.equals(other.nachricht))
-			return false;
-		return true;
 	}
 
 }
