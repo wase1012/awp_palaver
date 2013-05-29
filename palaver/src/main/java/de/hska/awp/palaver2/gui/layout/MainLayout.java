@@ -43,6 +43,8 @@ import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
+import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
 import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
 import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
 import de.hska.awp.palaver2.util.IConstants;
@@ -103,6 +105,10 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
+		
+		MenuItem mitarbeiterItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
+		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
+		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
 		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
 				null);
@@ -169,6 +175,10 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(LieferantErstellen.class);
 		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU))
+		{
+			ViewHandler.getInstance().switchView(MitarbeiterErstellen.class);
+		}
 		else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
@@ -176,6 +186,11 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+			
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN))
 		{

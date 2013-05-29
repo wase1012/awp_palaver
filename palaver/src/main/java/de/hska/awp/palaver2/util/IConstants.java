@@ -20,6 +20,9 @@ public interface IConstants
 	String		MENU_LIEFERANT_HEADLINE = "Lieferant";
 	String		MENU_LIEFERANT_NEW = "Lieferant anlegen";
 	String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten";
+	String		MENU_MITARBEITER_HEADLINE = "Mitarbeiter";
+	String		MENU_MITARBEITER_ANZEIGEN = "Alle Mitarbeiter";
+	String      MENU_MITARBEITER_NEU = "Mitarbeiter anlegen";
 	String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	String		MENU_BESTELLUNG_NEW_RANDOM = "Neue manuelle Bestellung";
