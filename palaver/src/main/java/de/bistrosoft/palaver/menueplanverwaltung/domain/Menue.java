@@ -64,6 +64,10 @@ public class Menue {
 		this.koch=koch;
 	}
 	
+	public Menue(Long id){
+		this.id=id;
+	}
+	
 	public Menue(Long id, String name, Mitarbeiter koch, Geschmack geschmack, Menueart menueart, Boolean aufwand, Boolean favorit){
 		this.id=id;
 		this.name=name;
