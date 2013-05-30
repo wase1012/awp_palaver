@@ -44,6 +44,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String SAVE_ARTIKEL = "INSERT INTO rezept_has_artikel VALUES ({0},{1},{2},{3},1)";
 	private final static String GET_REZEPTHASARTIKEL_BY_REZEPT_ID = "SELECT * FROM "
 			+ REZEPTHASARTIKEL + " WHERE " + REZEPTFK + " = {0}";
+	private static final String GET_ALL_REZEPT_TABELLE = "SELECT * FROM " + TABLE;
 
 	Rezept rezept;
 
@@ -70,6 +71,22 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), set.getString("kommentar"), set
 							.getInt("portion")));
+		}
+		return list;
+	}
+	
+	public List<Rezept> getAllRezepteTabelle() throws ConnectException, DAOException,
+	SQLException {
+		List<Rezept> list = new ArrayList<Rezept>();
+		ResultSet set = getManaged(GET_ALL_REZEPT_TABELLE);
+		
+		while (set.next()) {
+			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")), set
+							.getString("name"), set.getString("kommentar"), set
+							.getInt("portion"), set.getDate("erstellt")));
 		}
 		return list;
 	}
