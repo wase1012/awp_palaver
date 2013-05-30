@@ -129,7 +129,7 @@ public class MenueDAO extends AbstractDAO {
 							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
 					MenueartDAO.getInstance().getMenueartById(
-							set.getLong("rezeptart_fk")),
+							set.getLong("menueart_fk")),
 					set.getBoolean("aufwand"), set.getBoolean("favorit"));
 		}
 		List<Rezept> rezepte = Rezeptverwaltung.getInstance()
