@@ -206,9 +206,7 @@ public class MenueDAO extends AbstractDAO {
 				+ menueHasRezept.getMenue()
 				+ ", "
 				+ menueHasRezept.getRezept()
-				+ ", true" + ")";
-				
-//				+ menueHasRezept.getHauptgericht() + ")";
+				+ "," + menueHasRezept.getHauptgericht() + ")";
 		this.putManaged(INSERT_QUERY);
 	}
 
