@@ -191,12 +191,32 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws ParseException 
 	 */
 	//Week week als input
-	public void generateAllBestellungenByMenueplanAndGrundbedarf() throws ConnectException, DAOException, SQLException, ParseException
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException, ParseException
 	{
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		//1. Menueplan holen
-//		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
-//		mp.getMenues().get(index).getMenue().getRezepte().getArtikel();
+		System.out.println("Woche: ");
+		System.out.println(week);
+		
+		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
+		System.out.println("Menüplan: ");
+		System.out.println(mp);
+		
+		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
+		for(int i = 0 ; i < mp.getMenues().size() ; i++){
+			if(mp.getMenues().get(i).col==5){
+				for(int j = 0 ; j < mp.getMenues().get(i).getMenue().getRezepte().size() ; j++){
+				
+					for(int z = 0 ; z  < mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().size(); z++) {
+						rhafreitag.add(mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().get(z));
+					}
+				
+				}
+			}
+		}
+		System.out.println("RezeptHasArtikelliste: ");
+		System.out.println(rhafreitag);
+		
 		//TODO
 		//2. Das kleinsten Datum auslesen und setzen
 //		Date kleinstedatum = null;
@@ -205,10 +225,10 @@ public class Bestellverwaltung extends BestellungDAO {
 //		List<RezeptHasArtikel> rhafreitag = null;
 		
 		//TODO TESTDATEN
-		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
+//		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
 		
 		
-		for(long i = 1 ; i < 100 ; i++) {
+		for(long i = 1 ; i < 10 ; i++) {
 		RezeptHasArtikel  rha = new RezeptHasArtikel();
 		rha.setArtike(Artikelverwaltung.getInstance().getArtikelById(i));
 		rha.setMenge(Double.valueOf("2000"));
@@ -278,10 +298,13 @@ public class Bestellverwaltung extends BestellungDAO {
 		for(long i = 133 ; i < 144 ; i++) {
 			RezeptHasArtikel  rha2 = new RezeptHasArtikel();
 			rha2.setArtike(Artikelverwaltung.getInstance().getArtikelById(i));
-			rha2.setMenge(Double.valueOf("5"));
+			rha2.setMenge(Double.valueOf("250"));
 			rhamobisdo.add(rha2);
 			}
-		
+		RezeptHasArtikel  rha3 = new RezeptHasArtikel();
+		rha3.setArtike(Artikelverwaltung.getInstance().getArtikelById(Long.valueOf("1")));
+		rha3.setMenge(Double.valueOf("250"));
+		rhamobisdo.add(rha3);
 		
 		
 		
@@ -307,10 +330,10 @@ public class Bestellverwaltung extends BestellungDAO {
 				//9.1 Umrechen der Menge Menge/Bestellgröße durch die Methode convertBestellmenge
 				bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
 				//9.2 Setzen der Menge auf Freitag und Durchschnitt hinzuaddieren
-				bp.setFreitag(convertMenge(rha.get(i))+bp.getDurchschnitt());
+				bp.setFreitag(leer);
 				bp.setKantine(convertMenge(rha.get(i)));
 				bp.setGeliefert(false);
-				bp.setMontag(leer);
+				bp.setMontag(convertMenge(rha.get(i))+bp.getDurchschnitt());
 				bp.setGesamt(bp.getKantine()+bp.getDurchschnitt());
 
 				list.add(bp);

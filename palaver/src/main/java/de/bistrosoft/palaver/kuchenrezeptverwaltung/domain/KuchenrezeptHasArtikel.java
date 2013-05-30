@@ -14,6 +14,7 @@ public class KuchenrezeptHasArtikel {
 	private double menge;
 	private Mengeneinheit mengeneinheit;
 	private Kuchenrezept kuchenrezept;
+	private String artikelname;
 
 	public KuchenrezeptHasArtikel() {
 		super();
@@ -33,6 +34,14 @@ public class KuchenrezeptHasArtikel {
 		this.menge = menge;
 		this.mengeneinheit = mengeneinheit;
 	}
+	
+	public KuchenrezeptHasArtikel(Artikel a){
+		this.artikel=a;
+		this.mengeneinheit=a.getMengeneinheit();
+		this.menge=1.0;
+		this.kuchenrezept=null; 
+		this.artikelname=a.getName();
+	}
 
 	@Override
 	public String toString() {
@@ -47,11 +56,14 @@ public class KuchenrezeptHasArtikel {
 
 	public void setMenge(double menge) {
 		this.menge = menge;
-		System.out.println(this.menge);
 	}
 
-	public String getArtikelName() {
-		return this.artikel.getName();
+	public String getArtikelname() {
+		return this.artikelname;
+	}
+	
+	public String getEinheit() {
+		return this.mengeneinheit.getName();
 	}
 
 	public Long getArtikelId() {
@@ -61,18 +73,18 @@ public class KuchenrezeptHasArtikel {
 	public void setArtike(Artikel artikel) {
 		this.artikel = artikel;
 	}
-	
-//	public Kuchenrezept getKuchenrezept() {
-//		return this.kuchenrezept;
-//	}
-//
-//	public void setKuchenrezept(Kuchenrezept kuchenrezept) {
-//		this.kuchenrezept = kuchenrezept;
-//	}
-//
-//	public Artikel getArtikel() {
-//		return this.artikel;
-//	}
+
+	public Kuchenrezept getKuchenrezept() {
+		return this.kuchenrezept;
+	}
+
+	public void setKuchenrezept(Kuchenrezept kuchenrezept) {
+		this.kuchenrezept = kuchenrezept;
+	}
+
+	public Artikel getArtikel() {
+		return this.artikel;
+	}
 
 	// public void setRezeptart(Rezeptart rezeptart) {
 	// this.rezeptart = rezeptart;
