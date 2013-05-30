@@ -88,7 +88,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 					Menueverwaltung.getInstance().getAllMenues());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name",
-					"kochname" });
+					"kochname", "geschmackname", "menueartname" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
