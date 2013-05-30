@@ -382,6 +382,7 @@ DROP TABLE IF EXISTS `palaver`.`menue_has_rezept` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue_has_rezept` (
   `menue_id` INT NOT NULL ,
   `rezept_id` INT NOT NULL ,
+  `hauptgericht` boolean,
   PRIMARY KEY (`menue_id`, `rezept_id`) ,
   INDEX `fk_menue_has_rezept_rezept1_idx` (`rezept_id` ASC) ,
   INDEX `fk_menue_has_rezept_menue1_idx` (`menue_id` ASC) ,
