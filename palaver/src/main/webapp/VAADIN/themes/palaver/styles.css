@@ -248,3 +248,15 @@ height: 30px;
 	background-repeat: no-repeat;
 	font-size: 0px;
 }
+
+.v-table-row-status-1 {
+    background: #8dcd34;
+}
+
+.v-table-row-status-2 {
+    background: #f6b014;
+}
+
+.v-table-row-status-none {
+    background: none;
+}
