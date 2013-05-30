@@ -42,6 +42,7 @@ public class Menueplan extends VerticalLayout implements View{
 	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week+1, year);
 	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week-1, year);
 	
+	
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
@@ -198,7 +199,6 @@ public class Menueplan extends VerticalLayout implements View{
 //		carousel.addComponent(curMenueplan);
 //		carousel.addComponent(nextMenueplan);
 //		box.addComponent(carousel);
-		
 	}
 	
 	public static void switchMenueplan(){

@@ -11,6 +11,8 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -299,9 +301,8 @@ public class RezeptDAO extends AbstractDAO {
 	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException,
 	DAOException, SQLException {
 List<Rezept> rezepte = new ArrayList<Rezept>();
-ResultSet set = getManaged("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and rez.id = "
+ResultSet set = getManaged("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and mhr.menue_id = "
 		+ menue.getId());
-System.out.println("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and rez.id = " + menue.getId());
 while (set.next()) {
 	Rezept rez = new Rezept();
 	Long id = set.getLong("id");
@@ -310,10 +311,10 @@ while (set.next()) {
 	rez.setName(name);
 	List<RezeptHasArtikel> artikel = ladeArtikelFuerRezept(rez);
 	rez.setArtikel(artikel);
+	Rezeptart rezArt = Rezeptartverwaltung.getInstance().getRezeptartById(set.getLong("rezeptart_fk"));
+	rez.setRezeptart(rezArt);
 	rezepte.add(rez);
-	System.out.println("Rezeptname "+name);
 }
-
 return rezepte;
 }
 
@@ -332,7 +333,6 @@ while (set.next()) {
 	a.setMengeneinheit(me);
 	rha.add(a);
 }
-System.out.println("######################"+rha.size());
 return rha;
 }
 

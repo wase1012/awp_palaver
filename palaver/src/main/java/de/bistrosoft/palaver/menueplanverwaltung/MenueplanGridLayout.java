@@ -54,8 +54,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year) {
-		menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
-				new Week(week, year));
+		menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
 		if (menueplan == null) {
 			menueplan = new Menueplan(new Week(week, year));
 		}
@@ -267,7 +266,6 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 
 	public void removeMenue(Component destComp) {
-		System.out.println("Ja, hier!!!");
 		this.layout.removeComponent(destComp);
 		this.pruefeMenueRegeln();
 	}
@@ -290,7 +288,6 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 
 	public void pruefeRegeln(MenueComponent mc) {
-		System.out.println("1");
 		for (Regel r : regeln) {
 			r.check(mc, this); 
 		}

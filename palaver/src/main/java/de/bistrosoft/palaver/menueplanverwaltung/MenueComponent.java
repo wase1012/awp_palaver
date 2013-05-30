@@ -342,7 +342,6 @@ public class MenueComponent extends CustomComponent{
 	}
 	
 	public void pruefeRegeln(MenueplanGridLayout mp) {
-		System.out.println("1");
 		btFehler.setVisible(false);
 		if(FehlerRegeln!=null){
 			List<Regel> tmpRegeln = FehlerRegeln; 
