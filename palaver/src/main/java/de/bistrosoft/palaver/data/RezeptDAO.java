@@ -13,7 +13,10 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -278,19 +281,59 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(DELETE_QUERY);
 	}
 
+//	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException,
+//			DAOException, SQLException {
+//		List<Rezept> rezepte = new ArrayList<Rezept>();
+//		ResultSet set = getManaged("select rezept_id from menue_has_rezept where menue_id="
+//				+ menue.getId());
+//
+//		while (set.next()) {
+//			Long rezId = set.getLong("rezept_id");
+//			Rezept rez = Rezeptverwaltung.getInstance().getRezeptById(rezId);
+//			rezepte.add(rez);
+//		}
+//
+//		return rezepte;
+//	}
+	
 	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException,
-			DAOException, SQLException {
-		List<Rezept> rezepte = new ArrayList<Rezept>();
-		ResultSet set = getManaged("select rezept_id from menue_has_rezept where menue_id="
-				+ menue.getId());
+	DAOException, SQLException {
+List<Rezept> rezepte = new ArrayList<Rezept>();
+ResultSet set = getManaged("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and rez.id = "
+		+ menue.getId());
+System.out.println("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and rez.id = " + menue.getId());
+while (set.next()) {
+	Rezept rez = new Rezept();
+	Long id = set.getLong("id");
+	String name = set.getString("name");
+	rez.setId(id);
+	rez.setName(name);
+	List<RezeptHasArtikel> artikel = ladeArtikelFuerRezept(rez);
+	rez.setArtikel(artikel);
+	rezepte.add(rez);
+	System.out.println("Rezeptname "+name);
+}
 
-		while (set.next()) {
-			Long rezId = set.getLong("rezept_id");
-			Rezept rez = Rezeptverwaltung.getInstance().getRezeptById(rezId);
-			rezepte.add(rez);
-		}
+return rezepte;
+}
 
-		return rezepte;
-	}
+public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez) throws ConnectException, DAOException, SQLException {
+List<RezeptHasArtikel> rha = new ArrayList<RezeptHasArtikel>();
+
+ResultSet set = getManaged("select * from rezept_has_artikel where rezept_fk="+rez.getId());
+
+while (set.next()) {
+	RezeptHasArtikel a = new RezeptHasArtikel();
+	a.setRezept(rez);
+	a.setMenge(set.getDouble("menge"));
+	Artikel artikel = Artikelverwaltung.getInstance().getArtikelById(set.getLong("artikel_fk"));
+	a.setArtike(artikel);
+	Mengeneinheit me = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(set.getLong("einheit"));
+	a.setMengeneinheit(me);
+	rha.add(a);
+}
+System.out.println("######################"+rha.size());
+return rha;
+}
 
 }

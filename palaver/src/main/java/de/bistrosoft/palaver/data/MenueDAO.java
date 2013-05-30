@@ -49,7 +49,7 @@ public class MenueDAO extends AbstractDAO {
 			list.add(new Menue(set.getLong("id"), set.getString("name"),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("koch")).getName(), GeschmackDAO.getInstance()
-							.getGeschmackById(set.getLong("geschmack")).getName(),
+							.getGeschmackById(set.getLong("geschmack_fk")).getName(),
 					MenueartDAO.getInstance().getMenueartById(
 							set.getLong("menueart")).getName()));
 					

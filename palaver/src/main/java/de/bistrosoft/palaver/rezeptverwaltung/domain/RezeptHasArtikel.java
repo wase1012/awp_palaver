@@ -9,6 +9,8 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
 public class RezeptHasArtikel {
 
+
+
 	private Artikel artikel;
 	private double menge;
 	private Mengeneinheit mengeneinheit;
@@ -17,6 +19,22 @@ public class RezeptHasArtikel {
 
 	public RezeptHasArtikel() {
 		super();
+	}
+	
+	public Mengeneinheit getMengeneinheit() {
+		return mengeneinheit;
+	}
+
+	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
+		this.mengeneinheit = mengeneinheit;
+	}
+
+	public void setArtikel(Artikel artikel) {
+		this.artikel = artikel;
+	}
+
+	public void setArtikelname(String artikelname) {
+		this.artikelname = artikelname;
 	}
 
 	public RezeptHasArtikel(Artikel artikel, Mengeneinheit mengeneinheit,

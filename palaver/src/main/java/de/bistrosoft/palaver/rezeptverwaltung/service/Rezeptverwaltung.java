@@ -180,6 +180,23 @@ public class Rezeptverwaltung extends RezeptDAO {
 		}
 		return null;
 	}
+	
+	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez) {
+		try {
+			return super.ladeArtikelFuerRezept(rez);
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws
 	// ConnectException,
