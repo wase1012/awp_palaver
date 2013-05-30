@@ -256,7 +256,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (Exception e) {
-							throw new NullPointerException("Bitte gültige Werte eingeben");
+							throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
@@ -288,7 +288,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					Button			loeschen = new Button(IConstants.BUTTON_LÖSCHEN);
+					Button			loeschen = new Button(IConstants.BUTTON_DELETE);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -437,7 +437,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
 							} catch (Exception e) {
 								System.out.println(e);
-//								throw new NullPointerException("Bitte gültige Werte eingeben");
+//								throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
 
 							}				
 							
@@ -504,7 +504,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setCaption("Ansprechpartner hinzufügen");
+			anspr.setCaption("Ansprechpartner hinzufï¿½gen");
 			
 			UI.getCurrent().addWindow(anspr);
 			
@@ -581,7 +581,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (Exception e) {
 						System.out.println(e);
-						throw new NullPointerException("Bitte gültige Werte eingeben");
+						throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
 
 					}				
 					
