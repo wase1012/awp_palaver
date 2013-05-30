@@ -98,6 +98,7 @@ public class LoginForm extends VerticalLayout
 				else 
 				{
 					new Notification("Login Failed").show(Page.getCurrent());
+					username.focus();
 				}
 
 //				try

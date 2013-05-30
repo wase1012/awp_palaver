@@ -158,6 +158,9 @@
 	padding-bottom: 10px;
 }
 
+.v-caption-palaverTable2 .v-captiontext {
+	font-size: 12px;
+}
 
 .menueplan-grid {
  margin: 0px;
@@ -247,4 +250,16 @@ height: 30px;
 	background-position:center center;
 	background-repeat: no-repeat;
 	font-size: 0px;
+}
+
+.v-table-row-status-1 {
+    background: #8dcd34;
+}
+
+.v-table-row-status-2 {
+    background: #f6b014;
+}
+
+.v-table-row-status-none {
+    background: none;
 }
