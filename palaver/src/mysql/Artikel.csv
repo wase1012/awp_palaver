@@ -248,7 +248,7 @@ id;artikelnr;name;bestellgröße;mengeneinheit_fk;preis;lieferant_fk;bio;kategorie
 247;443855;Essig Aceto Balsamico  Bianco1L;1;5;;1;0;30;0;0;;1;
 248;438448;Essig Weisswein 6 % 2 L Hengstenberg;2;5;0.005;1;0;30;0;0;;1;
 249;444053;Speisesalz 10 Kg Friessinger;10000;3;0.005;1;0;30;0;0;;1;
-250;463090;Mehl Weizen Typ405 1Kg G&G;1000;3;0.000;1;0;31;0;1;;1;
+250;463090;Mehl Weizen Typ405 1Kg G&G;1000;3;0.000;1;0;31;0;0;;1;
 251;29183;Mehl Dinkel Type 630 1Kg Goldpuder;1000;3;0.002;1;0;31;0;0;;1;
 252;440968;Friess Paniermehl Mutschelmehl 5Kg;5000;3;0.006;1;0;31;0;0;;1;
 253;212018;Kartoffelmehl 500G Mm;500;3;0.001;1;0;31;0;0;;1;
