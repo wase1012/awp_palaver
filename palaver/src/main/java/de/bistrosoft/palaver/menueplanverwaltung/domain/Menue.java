@@ -16,25 +16,44 @@ public class Menue {
 	private List<Rezept> rezepte;
 	private Mitarbeiter koch;
 	private String kochname;
+	private String geschmackname;
+	private String menueartname;
 	private Boolean hauptgericht;
 	private Geschmack geschmack;
 	private Menueart menueart;
 	private boolean aufwand;
 	private boolean favorit;
 	
+	public Menue(Long id, String name, String kochname, String geschmackname, String menueartname){
+		this.id = id;
+		this.name = name;
+		this.kochname = kochname;
+		this.geschmackname = geschmackname;
+		this.menueartname = menueartname;
+	}
+	
 	public Menue(Long id, String name, String koch){
-		this.id=id;
-		this.name=name;
-		this.kochname=koch;
+		this.id = id;
+		this.name = name;
+		this.kochname = koch;
 	}
 	public Menue(Long id, String name, String koch, Geschmack geschmack, Menueart menueart, Boolean aufwand, Boolean favorit){
-		this.id=id;
-		this.name=name;
-		this.kochname=koch;
+		this.id = id;
+		this.name = name;
+		this.kochname = koch;
 		this.geschmack = geschmack;
 		this.menueart = menueart;
 		this.aufwand = aufwand;
 		this.favorit = favorit;
+	}
+	
+	public Menue(Long id, String name, String koch,Menueart menueart,  Geschmack geschmack){
+		this.id=id;
+		this.name=name;
+		this.kochname=koch;
+		this.menueart = menueart;
+		this.geschmack = geschmack;
+		
 	}
 	
 	
@@ -82,6 +101,22 @@ public class Menue {
 
 	public void setKochname(String kochname) {
 		this.kochname = kochname;
+	}
+	
+	public String getGeschmackname() {
+		return geschmackname;
+	}
+
+	public void setGeschmackame(String geschmackname) {
+		this.geschmackname = geschmackname;
+	}
+	
+	public String getMenueartame() {
+		return menueartname;
+	}
+
+	public void setMenueartname(String menueartname) {
+		this.menueartname = menueartname;
 	}
 	
 	public Boolean getHauptgericht() {

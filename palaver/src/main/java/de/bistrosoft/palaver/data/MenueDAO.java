@@ -43,13 +43,16 @@ public class MenueDAO extends AbstractDAO {
 	public List<Menue> getAllMenues() throws ConnectException, DAOException,
 			SQLException {
 		List<Menue> list = new ArrayList<Menue>();
-		ResultSet set = get(GET_ALL_MENUES);
+		ResultSet set = getManaged(GET_ALL_MENUES);
 
 		while (set.next()) {
-			list.add(new Menue(set.getLong(ID), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch"))
-							.getVorname()));
+			list.add(new Menue(set.getLong("id"), set.getString("name"),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("koch")).getName(), GeschmackDAO.getInstance()
+							.getGeschmackById(set.getLong("geschmack")).getName(),
+					MenueartDAO.getInstance().getMenueartById(
+							set.getLong("menueart")).getName()));
+					
 		}
 
 		return list;
@@ -58,7 +61,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Rezept> getRezepteByMenue() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-		ResultSet set = get(GET_REZEPTE_BY_MENUE);
+		ResultSet set = getManaged(GET_REZEPTE_BY_MENUE);
 
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id")));
@@ -70,7 +73,7 @@ public class MenueDAO extends AbstractDAO {
 	public String getHauptgerichtByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Rezept list = null;
-		ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 		while (set.next()) {
 			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -86,7 +89,7 @@ public class MenueDAO extends AbstractDAO {
 	public Rezept getHauptgerichtMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Rezept list = null;
-		ResultSet set = get(MessageFormat.format(GET_HAUPTGERICHT, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 		while (set.next()) {
 			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -102,7 +105,7 @@ public class MenueDAO extends AbstractDAO {
 	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
-		ResultSet set = get(MessageFormat.format(GET_Beilagen, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_Beilagen, id));
 
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
@@ -120,7 +123,7 @@ public class MenueDAO extends AbstractDAO {
 		Menue result = null;
 		String name = "'" + namemenue + "'";
 		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
-		ResultSet set = get(MessageFormat.format(GET_MENUE_BY_NAME, name));
+		ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_NAME, name));
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
@@ -146,6 +149,7 @@ public class MenueDAO extends AbstractDAO {
 				+ menue.getMenueart().getId() + ", "
 				+ Util.convertBoolean(menue.getAufwand()) + ", "
 				+ Util.convertBoolean(menue.getFavorit()) + ")";
+		System.out.println(INSERT_QUERY);
 		this.putManaged(INSERT_QUERY);
 	}
 

@@ -41,6 +41,8 @@ import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -138,7 +140,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private TwinColSelect fussnoten = new TwinColSelect("Fussnoten");
 	
 	
-	private ComboBox rezeptartCb = new ComboBox("Menueart");
+	private ComboBox menueartCb = new ComboBox("Menueart");
 	private ComboBox geschmackCb = new ComboBox("Geschmack");
 
 	private CheckBox favorit = new CheckBox("Favorit");
@@ -170,7 +172,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	
 	private String geschmackInput;
-	private String rezeptartInput;
+	private String menueartInput;
 	
 	
 	/////
@@ -240,7 +242,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		box.addComponent(ueberschrift);
 		box.addComponent(menuename);
 		box.addComponent(ersteller);
-		box.addComponent(rezeptartCb);
+		box.addComponent(menueartCb);
 		box.addComponent(geschmackCb);
 		box.addComponent(cbs);
 		box.setComponentAlignment(cbs, Alignment.MIDDLE_CENTER);
@@ -545,11 +547,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				geschmackInput = valueString;
 			}
 		});
-		rezeptartCb.addValueChangeListener(new ValueChangeListener() {
+		menueartCb.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
-				rezeptartInput = valueString;
+				menueartInput = valueString;
 			}
 		});
 		
@@ -667,7 +669,8 @@ if (menuename.getValue() != null) {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				
+				System.out.println(geschmackInput);
+				System.out.println("kurz vor geschmack");
 				try {
 					menue.setGeschmack(GeschmackDAO.getInstance()
 							.getGeschmackById(
@@ -675,15 +678,17 @@ if (menuename.getValue() != null) {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				
+				System.out.println("menueartInput");
+				System.out.println("kurz vor menueart");
 				try {
 					menue.setMenueart(MenueartDAO.getInstance()
 							.getMenueartById(
-									Long.parseLong(rezeptartInput.toString())));
+									Long.parseLong(menueartInput.toString())));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
+				System.out.println("kurz vor speichern");
 				
 				try {
 					Menueverwaltung.getInstance().createMenue(menue);
@@ -694,7 +699,8 @@ if (menuename.getValue() != null) {
 				}
 				
 /// Liste der Fussnoten
-				
+				System.out.println("Name des Menu");
+				System.out.println(menuenameInput);
 				Menue menue1 = null;
 				try {
 					menue1 = Menueverwaltung.getInstance().getMenueByName(menuenameInput);
@@ -702,8 +708,8 @@ if (menuename.getValue() != null) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
+				System.out.println("name des geholten menu");
+				System.out.println(menue1.getName());
 				
 
 				if(fussnoten.getValue().toString() != "[]"){
@@ -712,6 +718,7 @@ if (menuename.getValue() != null) {
 					for (String s : FussnoteId) {
 	//					System.out.println(s);
 					}
+					
 					// valueString.split
 					BeanItemContainer<MenueHasFussnote> fussnotencontainer;
 					List<MenueHasFussnote> fussnotelist = new ArrayList<MenueHasFussnote>();
@@ -850,7 +857,7 @@ System.out.println(beilage2Input);
 				Notification notification = new Notification("Menue wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
+			//	ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
 				//System.out.println(ausgArtikel.size());
 					}
 					else{
@@ -892,11 +899,11 @@ System.out.println(beilage2Input);
 
 				}
 				
-				List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
-						.getAllRezeptart();
-				for (Rezeptart e : rezeptart) {
-					rezeptartCb.addItem(e.getId());
-					rezeptartCb.setItemCaption(e.getId(), e.getName());
+				List<Menueart> menueart = Menueartverwaltung.getInstance()
+						.getAllMenueart();
+				for (Menueart e : menueart) {
+					menueartCb.addItem(e.getId());
+					menueartCb.setItemCaption(e.getId(), e.getName());
 				}
 
 			
@@ -1018,7 +1025,7 @@ if (menuename.getValue() != null) {
 				try {
 					menue.setMenueart(MenueartDAO.getInstance()
 							.getMenueartById(
-									Long.parseLong(rezeptartInput.toString())));
+									Long.parseLong(menueartInput.toString())));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
