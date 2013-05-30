@@ -29,6 +29,7 @@ public interface IConstants
 	String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
 	String 		MENU_BESTELLUNG_BEARBEITEN = "Bestellung bearbeiten";
 	String 		MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen";
+	String		MENU_BESTELLUNG_GENERATE = "Bestellung generieren aus dem Menüplan";
 	String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten";
 	String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
 	String		MENU_NACHRICHT_HEADLINE = "Nachrichten";

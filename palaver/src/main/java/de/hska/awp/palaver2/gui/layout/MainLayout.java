@@ -36,6 +36,7 @@ import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
+import de.hska.awp.palaver2.gui.view.BestellungGenerieren;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
 import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
@@ -131,7 +132,7 @@ public class MainLayout extends VerticalLayout implements Command
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
-//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW, this);
+		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
@@ -289,6 +290,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_ROLLEN_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(RollenAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_GENERATE))
+		{
+			ViewHandler.getInstance().switchView(BestellungGenerieren.class);
 		}
 		else 
 		{
