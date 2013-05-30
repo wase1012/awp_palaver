@@ -37,13 +37,20 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		form.setSpacing(true);
 		
 		form.addComponent(bg);
+		this.addComponent(form);
 		
 		bg.addClickListener(new ClickListener()
 		{
 			@SuppressWarnings("unchecked")
 			public void buttonClick(ClickEvent event)
 			{
+				try {
 				
+				Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 				ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
 			}

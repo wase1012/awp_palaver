@@ -190,17 +190,43 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws SQLException
 	 * @throws ParseException 
 	 */
-	public void generateAllBestellungenByMenueplanAndGrundbedarf(Week week) throws ConnectException, DAOException, SQLException, ParseException
+	//Week week als input
+	public void generateAllBestellungenByMenueplanAndGrundbedarf() throws ConnectException, DAOException, SQLException, ParseException
 	{
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		//1. Menueplan holen
-		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
+//		Menueplan mp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(week);
+//		mp.getMenues().get(index).getMenue().getRezepte().getArtikel();
 		//TODO
 		//2. Das kleinsten Datum auslesen und setzen
-		Date kleinstedatum = null;
+//		Date kleinstedatum = null;
 		//3. Get List<RezeptHasArtikel> von Menueplan mit großten datum aus der Woche (Freitag)
 		//TODO
-		List<RezeptHasArtikel> rhafreitag = null;
+//		List<RezeptHasArtikel> rhafreitag = null;
+		
+		//TODO TESTDATEN
+		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
+		
+		
+		for(long i = 1 ; i < 100 ; i++) {
+		RezeptHasArtikel  rha = new RezeptHasArtikel();
+		rha.setArtike(Artikelverwaltung.getInstance().getArtikelById(i));
+		rha.setMenge(Double.valueOf("2000"));
+		rhafreitag.add(rha);
+		}
+		//einen Doppelten Artikel erzeugen und hinzufügen.
+		RezeptHasArtikel  rha1 = new RezeptHasArtikel();
+		rha1.setArtike(Artikelverwaltung.getInstance().getArtikelById(Long.valueOf("1")));
+		rha1.setMenge(Double.valueOf("1000"));
+		rhafreitag.add(rha1);
+		
+		rha1.setArtike(Artikelverwaltung.getInstance().getArtikelById(Long.valueOf("369")));
+		rha1.setMenge(Double.valueOf("1000"));
+		rhafreitag.add(rha1);
+		
+		System.out.println(rhafreitag);
+		
+		
 		//3.1 Liste aufbereiten und doppelt Artikel zusammenfügen und Menge addieren um später Rundungsfehler zu minimieren
 		List<RezeptHasArtikel> rha = mengeAddSameArtikel(rhafreitag);
 		
@@ -246,7 +272,19 @@ public class Bestellverwaltung extends BestellungDAO {
 		
 		//8. Get List<RezeptHasArtikel> von Menueplan für Mo,Di,Mi,Do aus der Woche
 		//TODO
-		List<RezeptHasArtikel> rhamobisdo = null;
+		List<RezeptHasArtikel> rhamobisdo = new ArrayList<RezeptHasArtikel>();
+		
+		//TESTDATEN
+		for(long i = 133 ; i < 144 ; i++) {
+			RezeptHasArtikel  rha2 = new RezeptHasArtikel();
+			rha2.setArtike(Artikelverwaltung.getInstance().getArtikelById(i));
+			rha2.setMenge(Double.valueOf("5"));
+			rhamobisdo.add(rha2);
+			}
+		
+		
+		
+		
 		//8.1 
 		rha = mengeAddSameArtikel(rhamobisdo);
 		//9. Wenn Artikel vorhanden, dann vorhandenen verändern(Menge addieren), andersfalls
@@ -291,7 +329,7 @@ public class Bestellverwaltung extends BestellungDAO {
 					vorhanden = true;	
 				}
 			}
-			if(vorhanden = false){
+			if(vorhanden == false){
 				Bestellposition bp = new Bestellposition();
 				bp.setArtikel(alist.get(i));
 				bp.setDurchschnitt(alist.get(i).getDurchschnitt());
@@ -325,7 +363,10 @@ public class Bestellverwaltung extends BestellungDAO {
 	private int convertMenge(RezeptHasArtikel rha){
 		int bm = 0;
 		//Math.ceil wird immer auf ganze Zahl aufgerundet
+		if(rha.getArtikel().getBestellgroesse()!= 0 || rha.getArtikel().getBestellgroesse()!= null) {
 		bm = (int)Math.ceil(rha.getMenge()/rha.getArtikel().getBestellgroesse());
+		} 
+		
 		return bm;
 	}
 	
@@ -338,19 +379,27 @@ public class Bestellverwaltung extends BestellungDAO {
 	private List<RezeptHasArtikel> mengeAddSameArtikel(List<RezeptHasArtikel> rhalist){
 		
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
-		list.add(rhalist.get(0));
-		
-		for(int i = 1 ; i < rhalist.size(); i++){
-			boolean vorhanden = false;
-			for(int z = 0 ; z < list.size(); z++){
-				if(list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())){
-					list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
-					vorhanden = true;
+		if (rhalist != null) {
+			
+			System.out.println("MENGEADDSAMEARTIKEL INPUTLISTE:");
+			System.out.println("/n");
+			System.out.println(rhalist);
+
+			for (int i = 0; i < rhalist.size(); i++) {
+				boolean vorhanden = false;
+				if (i == 0) {
+					list.add(rhalist.get(i));
 				}
-				
-			}
-			if(vorhanden==false){
-				list.add(rhalist.get(i));
+				for (int z = 0; z < list.size(); z++) {
+					if (list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())) {
+						list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
+						vorhanden = true;
+					}
+
+				}
+				if (vorhanden == false) {
+					list.add(rhalist.get(i));
+				}
 			}
 		}
 		
@@ -398,6 +447,9 @@ public class Bestellverwaltung extends BestellungDAO {
 		java.util.Date date2 = new java.util.Date();
 		Date date = new Date(date2.getTime());
 		b.setDatum(date);
+		//TODO richtiges Lieferdatum einsetzen.
+		b.setLieferdatum(date);
+		b.setLieferdatum2(date);
 		
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		
