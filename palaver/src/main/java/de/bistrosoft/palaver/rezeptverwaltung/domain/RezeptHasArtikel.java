@@ -15,7 +15,7 @@ public class RezeptHasArtikel {
 	private double menge;
 	private Mengeneinheit mengeneinheit;
 	private Rezept rezept;
-	private String artikelname;
+//	private String artikelname;
 
 	public RezeptHasArtikel() {
 		super();
@@ -31,10 +31,6 @@ public class RezeptHasArtikel {
 
 	public void setArtikel(Artikel artikel) {
 		this.artikel = artikel;
-	}
-
-	public void setArtikelname(String artikelname) {
-		this.artikelname = artikelname;
 	}
 
 	public RezeptHasArtikel(Artikel artikel, Mengeneinheit mengeneinheit,
@@ -58,7 +54,6 @@ public class RezeptHasArtikel {
 		this.mengeneinheit=a.getMengeneinheit();
 		this.menge=1.0;
 		this.rezept=null; 
-		this.artikelname=a.getName();
 	}
 
 	public double getMenge() {
@@ -71,7 +66,7 @@ public class RezeptHasArtikel {
 	}
 
 	public String getArtikelname() {
-		return this.artikelname;
+		return this.artikel.getName();
 	}
 	
 	public String getEinheit() {
