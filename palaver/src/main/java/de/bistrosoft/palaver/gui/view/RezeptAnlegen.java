@@ -599,6 +599,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 
+		try {
+			rezept.setRezeptart(Rezeptartverwaltung.getInstance().getRezeptartByNameB(rezeptartInput));
+		} catch (ConnectException | DAOException | SQLException e2) {
+			e2.printStackTrace();
+		}
 		rezept.setErstellt(date2);
 		rezept.setKommentar(kommentarInput);
 		rezept.setPortion(Integer.parseInt(portionInput.toString()));

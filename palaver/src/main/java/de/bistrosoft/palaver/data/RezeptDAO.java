@@ -228,14 +228,13 @@ public class RezeptDAO extends AbstractDAO {
 				+ REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
 				+ MITARBEITER + "," + ERSTELLT + ")" + " VALUES" + "('"
 				+ rezept.getName() + "','"
-				+ 1
-				// TODO: rezeptart
+				+ rezept.getRezeptart().getId() 
 				+ "','" + rezept.getKommentar() + "','" + rezept.getPortion()
 				+ "','" + rezept.getMitarbeiter().getId() + "','"
 				+ rezept.getErstellt() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
-
+ 
 	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO rezept_has_zubereitung (rezept_fk, zubereitung_fk) VALUES"
