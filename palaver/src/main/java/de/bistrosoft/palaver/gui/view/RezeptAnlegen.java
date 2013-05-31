@@ -402,95 +402,97 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btUpdate.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				rezept.setName(name.getValue());
-
-				try {
-					rezept.setMitarbeiter(MitarbeiterDAO
-							.getInstance()
-							.getMitarbeiterById(
-									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-				// Änderungsdatum erfassen
-				java.util.Date date = new java.util.Date();
-				Date date3 = new Date(date.getTime());
-				rezept.setErstellt(date3);
-
-				final Window dialog = new Window();
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-
-				try {
-					Rezeptverwaltung.getInstance().updateRezept(rezept);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				try {
-					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-				if (zubereitung.getValue().toString() != "[]") {
-					List<String> ZubereitungId = Arrays.asList(valueString
-							.substring(1, valueString.length() - 1).split(
-									"\\s*,\\s*"));
-
-					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
-
-					for (String sId : ZubereitungId) {
-						Long id = null;
-						try {
-							id = Long.parseLong(sId.trim());
-
-						} catch (NumberFormatException nfe) {
-
-						}
-
-						Zubereitung zubereitung1 = null;
-						try {
-
-							zubereitung1 = Zubereitungverwaltung.getInstance()
-									.getZubereitungById(id);
-							//
-							RezeptHasZubereitung a = new RezeptHasZubereitung(
-									zubereitung1, rezept);
-							zubereitunglist.add(a);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-					}
-					System.out.println(zubereitunglist);
-					for (RezeptHasZubereitung i : zubereitunglist) {
-
-						try {
-							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
-						} catch (Exception e) {
-
-							e.printStackTrace();
-						}
-
-					}
-				} else {
-					System.out.println("zubereitungsliste ist leer");
-				}
-
-				Notification notification1 = new Notification(
-						"Rezept wurde geändert!");
-				notification1.setDelayMsec(500);
-				notification1.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(
-						RezeptAnzeigenTabelle.class);
+				speichern();
 			}
+//				rezept.setName(name.getValue());
+//
+//				try {
+//					rezept.setMitarbeiter(MitarbeiterDAO
+//							.getInstance()
+//							.getMitarbeiterById(
+//									Long.parseLong(mitarbeiterInput.toString())));
+//				} catch (Exception e1) {
+//					e1.printStackTrace();
+//				}
+//
+//				// Änderungsdatum erfassen
+//				java.util.Date date = new java.util.Date();
+//				Date date3 = new Date(date.getTime());
+//				rezept.setErstellt(date3);
+//
+//				final Window dialog = new Window();
+//				dialog.setClosable(false);
+//				dialog.setWidth("300px");
+//				dialog.setHeight("150px");
+//				dialog.setModal(true);
+//				dialog.center();
+//				dialog.setResizable(false);
+//				dialog.setStyleName("dialog-window");
+//
+//				try {
+//					Rezeptverwaltung.getInstance().updateRezept(rezept);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//				try {
+//					Rezeptverwaltung.getInstance().ZubereitungenDelete(rezept);
+//				} catch (Exception e1) {
+//					e1.printStackTrace();
+//				}
+//
+//				if (zubereitung.getValue().toString() != "[]") {
+//					List<String> ZubereitungId = Arrays.asList(valueString
+//							.substring(1, valueString.length() - 1).split(
+//									"\\s*,\\s*"));
+//
+//					List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
+//
+//					for (String sId : ZubereitungId) {
+//						Long id = null;
+//						try {
+//							id = Long.parseLong(sId.trim());
+//
+//						} catch (NumberFormatException nfe) {
+//
+//						}
+//
+//						Zubereitung zubereitung1 = null;
+//						try {
+//
+//							zubereitung1 = Zubereitungverwaltung.getInstance()
+//									.getZubereitungById(id);
+//							//
+//							RezeptHasZubereitung a = new RezeptHasZubereitung(
+//									zubereitung1, rezept);
+//							zubereitunglist.add(a);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//
+//					}
+//					System.out.println(zubereitunglist);
+//					for (RezeptHasZubereitung i : zubereitunglist) {
+//
+//						try {
+//							Rezeptverwaltung.getInstance().ZubereitungAdd(i);
+//						} catch (Exception e) {
+//
+//							e.printStackTrace();
+//						}
+//
+//					}
+//				} else {
+//					System.out.println("zubereitungsliste ist leer");
+//				}
+//
+//				Notification notification1 = new Notification(
+//						"Rezept wurde geändert!");
+//				notification1.setDelayMsec(500);
+//				notification1.show(Page.getCurrent());
+//				ViewHandler.getInstance().switchView(
+//						RezeptAnzeigenTabelle.class);
+//			}
 
 		});
 
@@ -528,14 +530,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		//
-		// try {
-		// rezeptartCb.setValue(RezeptartDAO.getInstance()
-		// .getRezeptartByRezept(rezept.getId()).getId());
-		// } catch (Exception e1) {
-		// e1.printStackTrace();
-		// }
-
+		
 		BeanItemContainer<RezeptHasArtikel> artikelcontainer;
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
 
@@ -545,7 +540,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-
+	
 		try {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
 					RezeptHasArtikel.class, list);
