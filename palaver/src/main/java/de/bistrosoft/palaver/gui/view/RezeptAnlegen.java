@@ -199,7 +199,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		this.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-		btSpeichern.setEnabled(false);
+		btSpeichern.setEnabled(true);
 
 		control.addComponent(btVerwerfen);
 		control.addComponent(btSpeichern);
@@ -577,18 +577,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		nameInput = name.getValue();
 		portionInput = portion.getValue();
 		kommentarInput = kommentar.getValue();
-
-		if (name.getValue() == "" || name.getValue() == null
-				&& portion.getValue() == null || portion.getValue() == ""
-				&& rezeptartCb.getValue() == ""
-				|| rezeptartCb.getValue() == null
-				&& mitarbeiterCb.getValue() == ""
-				|| mitarbeiterCb.getValue() == null) {
-			btSpeichern.setEnabled(false);
-		} else {
-			btSpeichern.setEnabled(true);
-		}
-
 	}
 
 	// Funktion zum Speichern eines Rezeptes
@@ -707,7 +695,15 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				notification.show(Page.getCurrent());
 			}
 		} else {
-			rezeptSpeichern();
+			if (nameInput == "" || portionInput == null || mitarbeiterInput == null
+					|| rezeptartInput == null) {
+				Notification notification = new Notification(
+						"Bitte alle Felder befüllen");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+			} else {
+				rezeptSpeichern();
+			}
 		}
 	}
 
