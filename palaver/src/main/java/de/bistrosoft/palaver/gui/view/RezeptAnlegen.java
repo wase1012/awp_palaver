@@ -615,12 +615,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		// Liste der Zubereitungen
 		Rezept rez = null;
 		try {
-			System.out.println(nameInput);
 			rez = Rezeptverwaltung.getInstance().getRezeptByName1(nameInput);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		System.out.println(rez);
 		if (zubereitung.getValue().toString() != "[]") {
 			List<String> ZubereitungId = Arrays.asList(valueString.substring(1,
 					valueString.length() - 1).split("\\s*,\\s*"));
@@ -650,7 +648,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				}
 
 			}
-			System.out.println(zubereitunglist);
 			for (RezeptHasZubereitung i : zubereitunglist) {
 
 				try {
@@ -688,9 +685,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				rezeptSpeichern();
 				rezeptAlsMenuSpeichern();
 				rezeptAlsHauptgerichtSpeichern();
+				System.out.println("Rezept wurde als Menü gespeichert");
 			} else {
 				Notification notification = new Notification(
-						"Rezept nur als Hauptgericht speicherbar!");
+						"Rezept für nur als Hauptgericht speicherbar!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -703,6 +701,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				notification.show(Page.getCurrent());
 			} else {
 				rezeptSpeichern();
+				System.out.println("Rezept wurde gespeichert");
 			}
 		}
 	}
