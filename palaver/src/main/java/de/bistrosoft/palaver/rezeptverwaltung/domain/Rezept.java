@@ -1,3 +1,6 @@
+/**
+ * Created by Michael Marschall
+ */
 package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 import java.sql.Date;
@@ -9,6 +12,7 @@ public class Rezept implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7984117576450240771L;
 
+	//Variablen
 	private Long id;
 	private Rezeptart rezeptart;
 	private Mitarbeiter mitarbeiter;
@@ -19,19 +23,13 @@ public class Rezept implements java.io.Serializable {
 	private List<RezeptHasArtikel> artikel;
 	private Boolean menue;
 
-	public List<RezeptHasArtikel> getArtikel() {
-		return artikel;
-	}
-
-	public void setArtikel(List<RezeptHasArtikel> artikel) {
-		this.artikel = artikel;
-	}
-
+	//Konstruktoren
 	public Rezept() {
 		super();
 	}
 
-	public Rezept(Rezeptart rezeptart, Mitarbeiter mitarbeiter, String name, String kommentar, int portion) {
+	public Rezept(Rezeptart rezeptart, Mitarbeiter mitarbeiter, String name,
+			String kommentar, int portion) {
 		super();
 		this.rezeptart = rezeptart;
 		this.mitarbeiter = mitarbeiter;
@@ -40,8 +38,8 @@ public class Rezept implements java.io.Serializable {
 		this.portion = portion;
 	}
 
-	public Rezept(Long id, Rezeptart rezeptart,
-			Mitarbeiter mitarbeiter, String name, String kommentar, int portion) {
+	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+			String name, String kommentar, int portion) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
@@ -51,9 +49,8 @@ public class Rezept implements java.io.Serializable {
 		this.portion = portion;
 	}
 
-	public Rezept(Long id, Rezeptart rezeptart,
-			Mitarbeiter mitarbeiter, String name, String kommentar,
-			int portion, Date erstellt) {
+	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+			String name, String kommentar, int portion, Date erstellt) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
@@ -67,9 +64,9 @@ public class Rezept implements java.io.Serializable {
 	public Rezept(Long id) {
 		super();
 		this.id = id;
-
 	}
-
+	
+	//Getter- und Setter
 	public Boolean getMenue() {
 		return menue;
 	}
@@ -77,7 +74,7 @@ public class Rezept implements java.io.Serializable {
 	public void setMenue(Boolean menue) {
 		this.menue = menue;
 	}
-	
+
 	public Long getId() {
 		return this.id;
 	}
@@ -134,6 +131,17 @@ public class Rezept implements java.io.Serializable {
 		this.erstellt = erstellt;
 	}
 
+	public List<RezeptHasArtikel> getArtikel() {
+		return artikel;
+	}
+
+	public void setArtikel(List<RezeptHasArtikel> artikel) {
+		this.artikel = artikel;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,6 +158,9 @@ public class Rezept implements java.io.Serializable {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -198,12 +209,12 @@ public class Rezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "" + id + "";
 	}
-
-
-
 }
