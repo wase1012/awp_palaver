@@ -23,11 +23,12 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
+ * Die View ermöglicht die Auswahl eines Kalendertags und die Generierung und Speicherung der
+ * Bestellungen zu der entsprechenden Kalenderwoche.
  * 
- * @author PhilippT
+ * @author Christian Barth
  * 
  */
-
 @SuppressWarnings("serial")
 public class BestellungGenerieren extends VerticalLayout implements View {
 

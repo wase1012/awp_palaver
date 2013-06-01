@@ -24,10 +24,6 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-//import de.bistrosoft.palaver.data.MenueplanDAO;
-//import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-//import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-//import de.bistrosoft.palaver.util.Week;
 
 /**
  * @author Christian Barth
@@ -184,8 +180,9 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	/**
 	 * Die Methode generiert alle Bestellungen anhand dem Menüplan und dem
-	 * Grundbedarf und speichert anschließend diese in der Datenbank author
-	 * Christian Barth
+	 * Grundbedarf und speichert anschließend diese in der Datenbank 
+	 * 
+	 * @author Christian Barth
 	 * 
 	 * @param week
 	 * @throws ConnectException
@@ -396,7 +393,9 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	/**
 	 * Die Methode berechnet die Menge der zu bestellenden Artikel und rundet
-	 * diese auf. author Christian Barth
+	 * diese auf. 
+	 * 
+	 * @author Christian Barth
 	 * 
 	 * @param rha
 	 * @return
@@ -412,8 +411,9 @@ public class Bestellverwaltung extends BestellungDAO {
 	}
 
 	/**
-	 * Die Methode addiert die Mengen gleicher Artikel zusammen. author
-	 * Christian Barth
+	 * Die Methode addiert die Mengen gleicher Artikel zusammen.
+	 *  
+	 * @author Christian Barth
 	 * 
 	 * @param rhalist
 	 * @return

@@ -7,14 +7,15 @@ import java.util.List;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
+ * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
+ * 
  * @author Elena W
- * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder
  */
 
 public class Bestellung implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = -4115989551813492575L;
-	
+
 	private Long id;
 	private Lieferant lieferant;
 	private Date datum;
@@ -22,11 +23,20 @@ public class Bestellung implements java.io.Serializable {
 	private Date lieferdatum2;
 	private List<Bestellposition> bestellpositionen;
 	private boolean bestellt;
-	
+
 	public Bestellung() {
 		super();
 	}
 
+	/**
+	 * @author Christian Barth
+	 * @param id
+	 * @param lieferant
+	 * @param datum
+	 * @param lieferdatum
+	 * @param lieferdatum2
+	 * @param bestellt
+	 */
 	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, boolean bestellt) {
 		super();
 		this.id = id;
@@ -38,12 +48,17 @@ public class Bestellung implements java.io.Serializable {
 	}
 
 	/**
+	 * @author Christian Barth
 	 * @param id
 	 * @param lieferant
 	 * @param datum
+	 * @param lieferdatum
+	 * @param lieferdatum2
 	 * @param bestellpositionen
+	 * @param bestellt
 	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, List<Bestellposition> bestellpositionen, boolean bestellt) {
+	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, List<Bestellposition> bestellpositionen,
+			boolean bestellt) {
 		super();
 		this.id = id;
 		this.lieferant = lieferant;
@@ -53,8 +68,6 @@ public class Bestellung implements java.io.Serializable {
 		this.bestellt = bestellt;
 		this.lieferdatum2 = lieferdatum2;
 	}
-
-
 
 	public Long getId() {
 		return this.id;
@@ -91,7 +104,7 @@ public class Bestellung implements java.io.Serializable {
 	public void setBestellpositionen(List<Bestellposition> bestellpositionen) {
 		this.bestellpositionen = bestellpositionen;
 	}
-	
+
 	public Bestellung addBestellposition(Bestellposition bestellposition) {
 		if (bestellpositionen == null) {
 			bestellpositionen = new ArrayList<Bestellposition>();
@@ -116,16 +129,10 @@ public class Bestellung implements java.io.Serializable {
 		this.lieferdatum2 = lieferdatum2;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Bestellung [id=" + id + ", lieferant=" + lieferant + ", datum="
-				+ datum + ", lieferdatum=" + lieferdatum + ", lieferdatum2="
+		return "Bestellung [id=" + id + ", lieferant=" + lieferant + ", datum=" + datum + ", lieferdatum=" + lieferdatum + ", lieferdatum2="
 				+ lieferdatum2 + ", bestellt=" + bestellt + "]";
 	}
-
-	
 
 }

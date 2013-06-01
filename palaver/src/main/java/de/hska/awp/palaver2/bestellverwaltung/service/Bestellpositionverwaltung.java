@@ -98,6 +98,7 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 	/**
 	 * Die Methode wandelt eine Liste von BestellungData Objekten um in eine Liste mit Bestellpositionen. 
 	 * Verwendet wird die Methode beim erstellen einer Manuellen Bestellung.
+	 * @author Philipp Tunggul
 	 * @param bestData
 	 * @return
 	 */
@@ -120,6 +121,7 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 	 * Die Methode wandelt eine Liste von BestellungData Objekten um in eine Liste mit Bestellpositionen.
 	 * Verwendet wird die Methode um die Bestellung mit seinen Bestellpositionen 
 	 * an der Oberfläche darstellen zu können.
+	 * @author Christian Barth
 	 * @param bestData
 	 * @return
 	 */
