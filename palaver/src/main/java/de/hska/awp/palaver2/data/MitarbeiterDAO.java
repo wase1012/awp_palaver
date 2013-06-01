@@ -211,7 +211,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + VORNAME + "," + EMAIL + "," + PASSWORT + "," + EINTRITTSDATUM + ","
 				+ AUSTRITTSDATUM + "," + BENUTZERNAME + ")" + "VALUES" + "('" + mitarbeiter.getName() + "','" + mitarbeiter.getVorname() + "','"
 				+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort() + "','" + mitarbeiter.getEintrittsdatum() + "','"
-				+ mitarbeiter.getAustrittsdatum() + "','" + BENUTZERNAME + "')";
+				+ mitarbeiter.getAustrittsdatum() + "','" + mitarbeiter.getBenutzername() + "')";
 		this.putManaged(INSERT_QUERY);
 
 		List<Mitarbeiter> mitarbeiterlist = getAllMitarbeiter();
