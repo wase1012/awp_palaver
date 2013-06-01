@@ -1,17 +1,13 @@
 package de.bistrosoft.palaver.regelverwaltung.domain;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
@@ -113,16 +109,6 @@ public class Regel {
 		this.kriterien = kriterien;
 		this.fehlermeldung = fehlermeldung;
 		this.aktiv = aktiv;
-
-		// String [] s = rows.split(",");
-		// for (String row : s) {
-		// rowslist.add(Integer.valueOf(s.toString()));
-		// }
-		//
-		// String [] a = columns.split(",");
-		// for (String column : a) {
-		// columnslist.add(Integer.valueOf(a.toString()));
-		// }
 	}
 
 	public Regel(String regeltyp, List<Integer> zeilen, List<Integer> spalten,
@@ -147,7 +133,7 @@ public class Regel {
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("3");
-		regeln.add(new Regel("Menueart",r,c,"enthält nicht",rw,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
+		regeln.add(new Regel("Menueart",r,c,"enthï¿½lt nicht",rw,"In Zeile 1 dï¿½rfen nur Fleischgerichte eingefï¿½gt werden!",true));
 		
 		List<Integer> r3 = new ArrayList<Integer>();
 		r3.add(2);
@@ -155,7 +141,7 @@ public class Regel {
 		c3.add(-1);
 		List<String> rw3 = new ArrayList<String>();
 		rw3.add("1");
-		regeln.add(new Regel("Geschmack",r3,c3,"enthält nicht",rw3,"Geschmack",true));
+		regeln.add(new Regel("Geschmack",r3,c3,"enthï¿½lt nicht",rw3,"Geschmack",true));
 		
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -164,7 +150,7 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es dürfen maximal 3 Menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",	true));
+		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es dï¿½rfen maximal 3 Menï¿½s einer Kat in den Zeilen 2 und 3 eingefï¿½gt werden",	true));
 
 		return regeln;
 	}
@@ -183,7 +169,7 @@ public class Regel {
 
 	}
 	
-//	Geschmack!, Fußnote, Zubereitung, Menueart!
+//	Geschmack!, Fuï¿½note, Zubereitung, Menueart!
 	
 	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
@@ -195,6 +181,69 @@ public class Regel {
 		}
 
 	}
+	
+	private Regel checkFussnote(MenueComponent mc, MenueplanGridLayout mp) {
+		Menue menue = mc.getMenue();
+		System.out.print(mc.col+"/");
+		System.out.print(mc.row+"/");
+		System.out.print("Geschmack/");
+		System.out.println(menue.getGeschmack());
+		if(menue.getMenueart()!=null){
+			if (operator.equals("enthï¿½lt nicht")) {	
+				for(Fussnote fs: menue.getFussnoten()){
+					if (kriterienlist.indexOf(fs.getName()) == -1) {
+						return this;
+					}
+				}
+			} else if (operator.equals("enthï¿½lt")) {
+				for(Fussnote fs: menue.getFussnoten()){
+					if (kriterienlist.indexOf(fs.getName()) >= 0) {
+						return this;
+					}
+				}
+			} else if (operator.equals("max")) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					// do something! anything to handle the exception.
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (int col = 0; col < grid.getColumns(); ++col) {
+					for (int row = 0; row < grid.getRows(); ++row) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							if (grid.getComponent(col, row) instanceof MenueComponent) {
+								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+								for(Fussnote fs : mc.getMenue().getFussnoten()){
+									if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
+										if (tmp.getFehlerRegeln() != null) {
+											if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+												++count;
+												if (count > maxValue) {
+													return this;
+												}
+											}
+										} else {
+											++count;
+											if (count > maxValue) {
+												return this;
+											}
+										}
+									}
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 
 	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
@@ -203,11 +252,11 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if(menue.getMenueart()!=null){
-			if (operator.equals("enthält nicht")) {
+			if (operator.equals("enthï¿½lt nicht")) {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
 						return this;
 				}
-			} else if (operator.equals("enthält")) {
+			} else if (operator.equals("enthï¿½lt")) {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
 						return this;
 					}
@@ -257,11 +306,11 @@ public class Regel {
 		System.out.print(mc.row+"/");
 		System.out.println(menue.getMenueart());
 		if(menue.getMenueart()!=null){
-			if (operator.equals("enthält nicht")) {
+			if (operator.equals("enthï¿½lt nicht")) {
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) == -1) {
 						return this;
 				}
-			} else if (operator.equals("enthält")) {
+			} else if (operator.equals("enthï¿½lt")) {
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) >= 0) {
 						return this;
 					}
@@ -308,12 +357,12 @@ public class Regel {
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 
-		if (operator.equals("enthält nicht")) {
+		if (operator.equals("enthï¿½lt nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 
 				return this;
 			}
-		} else if (operator.equals("enthält")) {
+		} else if (operator.equals("enthï¿½lt")) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
