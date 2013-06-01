@@ -10,10 +10,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import de.hska.awp.palaver2.emailversand.Mail;
+import de.hska.awp.palaver2.gui.layout.DefaultView;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -116,8 +119,40 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				final Window dialog = new Window();
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
+				
+				Label message = new Label("Email wurde gesendet");
+				
+				Button okButton = new Button("OK");
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+				
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+				
+				UI.getCurrent().addWindow(dialog);
+				
 				Mail mail = Mail.getInstance();
 				mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
+				
+				okButton.addClickListener(new ClickListener()
+				{	
+					@Override
+					public void buttonClick(ClickEvent event)
+					{
+						UI.getCurrent().removeWindow(dialog);
+						ViewHandler.getInstance().switchView(DefaultView.class);				}
+				});
 			}
 		});
 		

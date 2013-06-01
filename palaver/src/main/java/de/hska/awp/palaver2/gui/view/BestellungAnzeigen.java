@@ -11,14 +11,13 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CustomTable.CellStyleGenerator;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
@@ -27,6 +26,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
@@ -41,6 +41,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 	
 	private VerticalLayout		form	= new VerticalLayout();
 	private HorizontalLayout 	fenster = new HorizontalLayout();
+	private HorizontalLayout	control = new HorizontalLayout();
 	
 	private FilterTable 		bestellungen = new FilterTable("Bestellung");
 	private FilterTable			bpositionen = new FilterTable("Bestellpositionen");
@@ -50,6 +51,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 	private BeanItemContainer<Bestellposition> bpcontainer;
 	
 	private Button				allBestellungen = new Button("Alle Bestellungen");
+	private Button				zurueck = new Button("zurück");
 	
 	public BestellungAnzeigen () {
 		super();
@@ -216,15 +218,26 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 			}
 		});
 		
+		control.addComponent(zurueck);
+		control.addComponent(allBestellungen);
 		form.addComponent(fenster);
 		form.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
-		form.addComponent(allBestellungen);
-		form.setComponentAlignment(allBestellungen, Alignment.MIDDLE_RIGHT);
+		form.addComponent(control);
+		form.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		form.setExpandRatio(fenster, 9);
-		form.setExpandRatio(allBestellungen, 1);
+		form.setExpandRatio(control, 1);
 		
 		this.addComponent(form);
 		this.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
+		
+		zurueck.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
+				
+			}
+		});
 		
 		allBestellungen.addClickListener( new ClickListener() {
 			
