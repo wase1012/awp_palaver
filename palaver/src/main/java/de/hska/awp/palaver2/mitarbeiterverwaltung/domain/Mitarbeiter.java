@@ -5,8 +5,9 @@ import java.util.List;
 
 /**
  * Die Klasse spiegelt den Mitarbeiter wieder.
+ * 
  * @author Christian Barth
- *
+ * 
  */
 public class Mitarbeiter implements java.io.Serializable {
 
@@ -24,9 +25,9 @@ public class Mitarbeiter implements java.io.Serializable {
 	public Mitarbeiter() {
 		super();
 	}
-	
-	public Mitarbeiter(String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen, String benutzername) {
+
+	public Mitarbeiter(String name, String vorname, String email, String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen,
+			String benutzername) {
 		this.name = name;
 		this.vorname = vorname;
 		this.email = email;
@@ -37,8 +38,8 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.benutzername = benutzername;
 	}
 
-	public Mitarbeiter(Long id, String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum, List<Rollen> rollen, String benutzername) {
+	public Mitarbeiter(Long id, String name, String vorname, String email, String passwort, String eintrittsdatum, String austrittsdatum,
+			List<Rollen> rollen, String benutzername) {
 		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
@@ -50,8 +51,8 @@ public class Mitarbeiter implements java.io.Serializable {
 		this.benutzername = benutzername;
 	}
 
-	public Mitarbeiter(Long id, String name, String vorname, String email,
-			String passwort, String eintrittsdatum, String austrittsdatum, String benutzername) {
+	public Mitarbeiter(Long id, String name, String vorname, String email, String passwort, String eintrittsdatum, String austrittsdatum,
+			String benutzername) {
 		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
@@ -125,7 +126,7 @@ public class Mitarbeiter implements java.io.Serializable {
 	public void setRollen(List<Rollen> rollen) {
 		this.rollen = rollen;
 	}
-	
+
 	public Mitarbeiter addRollen(Rollen rolle) {
 		if (rollen == null) {
 			rollen = new ArrayList<Rollen>();
@@ -144,11 +145,8 @@ public class Mitarbeiter implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Mitarbeiter [id=" + id + ", name=" + name + ", vorname="
-				+ vorname + ", email=" + email + ", passwort=" + passwort
-				+ ", eintrittsdatum=" + eintrittsdatum + ", austrittsdatum="
-				+ austrittsdatum + "]";
+		return "Mitarbeiter [id=" + id + ", name=" + name + ", vorname=" + vorname + ", email=" + email + ", passwort=" + passwort
+				+ ", eintrittsdatum=" + eintrittsdatum + ", austrittsdatum=" + austrittsdatum + "]";
 	}
-	
 
 }
