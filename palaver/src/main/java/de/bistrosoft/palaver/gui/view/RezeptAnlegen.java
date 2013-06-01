@@ -129,6 +129,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private String rezeptartInput;
 	private String mitarbeiterInput;
 	private String menueInput;
+	private Object zutatenInput;
 	public String valueString = new String();
 
 	Rezept rezept;
@@ -624,7 +625,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					valueString.length() - 1).split("\\s*,\\s*"));
 
 			List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
-
 			for (String sId : ZubereitungId) {
 				Long id = null;
 				try {
@@ -649,14 +649,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 			}
 			for (RezeptHasZubereitung i : zubereitunglist) {
-
 				try {
 					Rezeptverwaltung.getInstance().ZubereitungAdd(i);
 				} catch (Exception e) {
 
 					e.printStackTrace();
 				}
-
 			}
 		}
 
@@ -665,7 +663,13 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				.getContainerDataSource();
 		ausgArtikel = bicArtikel.getItemIds();
 		rez.setArtikel(ausgArtikel);
-
+		if (ausgArtikel.isEmpty()) {
+			Notification notification = new Notification(
+					"Bitte Zutaten eintragen");
+			notification.setDelayMsec(500);
+			notification.show(Page.getCurrent());
+			return;
+		}
 		try {
 			Rezeptverwaltung.getInstance().saveArtikel(rez);
 		} catch (Exception e) {
@@ -693,15 +697,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				notification.show(Page.getCurrent());
 			}
 		} else {
-			if (nameInput == "" || portionInput == null || mitarbeiterInput == null
-					|| rezeptartInput == null) {
+			if (nameInput == "" || portionInput == null
+					|| mitarbeiterInput == null || rezeptartInput == null) {
 				Notification notification = new Notification(
 						"Bitte alle Felder befüllen");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			} else {
 				rezeptSpeichern();
-				System.out.println("Rezept wurde gespeichert");
+				// Plausibiltätasprüfung für Zutatenliste läuft in der Methode
+				// Speichern
 			}
 		}
 	}
