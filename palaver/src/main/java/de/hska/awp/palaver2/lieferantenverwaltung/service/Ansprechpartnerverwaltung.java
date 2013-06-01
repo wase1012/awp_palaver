@@ -14,7 +14,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * Die Klasse ermÃ¶glicht die Verwaltung der Ansprechpartner und stellt fÃ¼r die
+ * Die Klasse ermöglicht die Verwaltung der Ansprechpartner und stellt für die
  * GUI Methoden bereit.
  * 
  * @author Christian Barth
@@ -36,14 +36,13 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 	}
 
 	/**
-	 * Die Methode liefert alle Ansprechpartner zurÃ¼ck.
+	 * Die Methode liefert alle Ansprechpartner zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public List<Ansprechpartner> getAllAnsprechpartner()
-			throws ConnectException, DAOException, SQLException {
+	public List<Ansprechpartner> getAllAnsprechpartner() throws ConnectException, DAOException, SQLException {
 
 		List<Ansprechpartner> result = null;
 
@@ -53,15 +52,14 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 	}
 
 	/**
-	 * Die Methode liefert einen Ansprechpartner anhand des Parameter id zurÃ¼ck.
+	 * Die Methode liefert einen Ansprechpartner anhand des Parameter id zurück.
 	 * 
 	 * @param id
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public Ansprechpartner getAnsprechpartnerById(Long id)
-			throws ConnectException, DAOException, SQLException {
+	public Ansprechpartner getAnsprechpartnerById(Long id) throws ConnectException, DAOException, SQLException {
 		Ansprechpartner result = null;
 
 		result = super.getAnsprechpartnerById(id);
@@ -71,15 +69,14 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 
 	/**
 	 * Die Methode liefert einen oder mehrere Ansprechpartner anhand des
-	 * Parameter name zurÃ¼ck.
+	 * Parameter name zurück.
 	 * 
 	 * @param name
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public List<Ansprechpartner> getAnsprechpartnerByName(String name)
-			throws ConnectException, DAOException, SQLException {
+	public List<Ansprechpartner> getAnsprechpartnerByName(String name) throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> result = null;
 
 		result = super.getAnsprechpartnerByName(name);
@@ -94,8 +91,7 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public void createAnsprechpartner(Ansprechpartner ansprechpartner)
-			throws ConnectException, DAOException, SQLException {
+	public void createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
 		super.createAnsprechpartner(ansprechpartner);
 	}
 
@@ -106,31 +102,35 @@ public class Ansprechpartnerverwaltung extends AnsprechpartnerDAO {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public void updateAnsprechpartner(Ansprechpartner ansprechpartner)
-			throws ConnectException, DAOException, SQLException {
+	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
 		super.updateAnsprechpartner(ansprechpartner);
 	}
 
 	/**
-	 * Die Methode lÃ¶scht einen Ansprechpartner.
+	 * Die Methode löscht einen Ansprechpartner.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public void deleteAnsprechpartner(Long id) throws ConnectException,
-			DAOException, SQLException {
+	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException, SQLException {
 
 		super.deleteAnsprechpartner(id);
 	}
 
+	/**
+	 * Die Methode gibt alle Ansprechpartner von einem Lieferanten zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 */
 	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) {
 		List<Ansprechpartner> result = null;
 
 		try {
 			result = super.getAnsprechpartnerByLieferant(lieferant);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -29,8 +29,7 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Ansprechpartner(Long id, String name, String telefon, String handy,
-			String fax, Lieferant lieferant) {
+	public Ansprechpartner(Long id, String name, String telefon, String handy, String fax, Lieferant lieferant) {
 		this.id = id;
 		this.name = name;
 		this.telefon = telefon;
@@ -56,8 +55,9 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getName() {
-		if(name == null){
-			name = "";}
+		if (name == null) {
+			name = "";
+		}
 		return this.name;
 	}
 
@@ -66,8 +66,9 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getTelefon() {
-		if(telefon == null){
-			telefon = "";}
+		if (telefon == null) {
+			telefon = "";
+		}
 		return this.telefon;
 	}
 
@@ -76,8 +77,9 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getHandy() {
-		if(handy == null){
-			handy = "";}
+		if (handy == null) {
+			handy = "";
+		}
 		return this.handy;
 	}
 
@@ -86,8 +88,9 @@ public class Ansprechpartner implements java.io.Serializable {
 	}
 
 	public String getFax() {
-		if(fax == null){
-			fax = "";}
+		if (fax == null) {
+			fax = "";
+		}
 		return this.fax;
 	}
 
@@ -97,8 +100,7 @@ public class Ansprechpartner implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon="
-				+ telefon + ", handy=" + handy + ", fax=" + fax + "]";
+		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon=" + telefon + ", handy=" + handy + ", fax=" + fax + "]";
 	}
 
 }
