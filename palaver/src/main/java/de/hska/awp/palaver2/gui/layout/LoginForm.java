@@ -97,39 +97,41 @@ public class LoginForm extends VerticalLayout
 				}
 				else 
 				{
-					new Notification("Login Failed").show(Page.getCurrent());
-					username.focus();
-				}
-
-//				try
-//				{
-//					Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByName(username.getValue()).get(0);
-//					if (current.getPasswort().equals(Util.getMD5(password.getValue())))
-//					{
-//						Application.getInstance().login(username.getValue());
-//						UI.getCurrent().setContent(Application.getInstance().getLayout());
-//					}
-//				} 
-//				catch (ConnectException e)
-//				{
-//					log.error(e.toString());
-//				} 
-//				catch (DAOException e)
-//				{
-//					log.error(e.toString());
-//				} 
-//				catch (SQLException e)
-//				{
-//					log.error(e.toString());
-//				} 
-//				catch (UnsupportedEncodingException e)
-//				{
-//					log.error(e.toString());
-//				} 
-//				catch (NoSuchAlgorithmException e)
-//				{
-//					log.error(e.toString());
-//				}
+					try
+					{
+						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByName(username.getValue()).get(0);
+						if (current.getPasswort().equals(Util.getMD5(password.getValue())))
+						{
+							Application.getInstance().login(username.getValue());
+							UI.getCurrent().setContent(Application.getInstance().getLayout());
+						}
+						else
+						{
+							new Notification("Login Failed").show(Page.getCurrent());
+							username.focus();
+						}
+					} 
+					catch (ConnectException e)
+					{
+						log.error(e.toString());
+					} 
+					catch (DAOException e)
+					{
+						log.error(e.toString());
+					} 
+					catch (SQLException e)
+					{
+						log.error(e.toString());
+					} 
+					catch (UnsupportedEncodingException e)
+					{
+						log.error(e.toString());
+					} 
+					catch (NoSuchAlgorithmException e)
+					{
+						log.error(e.toString());
+					}
+				}	
 			}
 		});
 		

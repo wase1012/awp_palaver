@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
@@ -15,14 +16,17 @@ public class Menue {
 	private String name;
 	private List<Rezept> rezepte;
 	private Mitarbeiter koch;
+	private Boolean hauptgericht;
+	private Geschmack geschmack;
+	private boolean aufwand;
+	private boolean favorit;
+	private Menueart menueart;
+	
+	List<Fussnote> fussnoten;
+	
 	private String kochname;
 	private String geschmackname;
 	private String menueartname;
-	private Boolean hauptgericht;
-	private Geschmack geschmack;
-	private Menueart menueart;
-	private boolean aufwand;
-	private boolean favorit;
 	
 	public Menue(Long id, String name, String kochname, String geschmackname, String menueartname){
 		this.id = id;
@@ -89,6 +93,14 @@ public class Menue {
 	}
 
 	public Menue() {
+	}
+
+	public List<Fussnote> getFussnoten() {
+		return fussnoten;
+	}
+
+	public void setFussnoten(List<Fussnote> fussnoten) {
+		this.fussnoten = fussnoten;
 	}
 
 	public List<Rezept> getRezepte() {

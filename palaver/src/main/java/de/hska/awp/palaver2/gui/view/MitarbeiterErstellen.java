@@ -3,6 +3,8 @@
  */
 package de.hska.awp.palaver2.gui.view;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +44,7 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
@@ -312,7 +315,18 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 			mitarbeiter.setName(nameInput);
 			mitarbeiter.setVorname(vornameInput);
 			mitarbeiter.setEmail(emailInput);
-			mitarbeiter.setPasswort(passwortInput);
+			try
+			{
+				mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
+			} catch (UnsupportedEncodingException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (NoSuchAlgorithmException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 			mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 			mitarbeiter.setBenutzername(benutzernameInput);
