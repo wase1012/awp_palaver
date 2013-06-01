@@ -83,7 +83,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					ViewHandler.getInstance().switchView(MitarbeiterSuche.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
 				}
 
 			}
