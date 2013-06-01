@@ -96,6 +96,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
 			Label.CONTENT_XHTML);
+	private Label dummyl = new Label("<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
 
 	// TextFelder
 	private TextField name = new TextField("Bezeichnung");
@@ -189,10 +191,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlRezeptdetailsLinks.addComponent(portion);
 		vlRezeptdetailsLinks.addComponent(mitarbeiterCb);
 		vlRezeptdetailsLinks.addComponent(rezeptartOg);
+		vlRezeptdetailsLinks.addComponent(dummyl);
+		vlRezeptdetailsLinks.addComponent(menueCbx);
 
 		vlRezeptdetailsRechts.addComponent(zubereitung);
 		vlRezeptdetailsRechts.addComponent(kommentar);
-		box.addComponent(menueCbx);
+
 		hlRezeptZutaten.setSizeFull();
 
 		control.setSpacing(true);
