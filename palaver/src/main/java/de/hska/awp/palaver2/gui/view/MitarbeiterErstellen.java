@@ -86,11 +86,11 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		fenster.setSpacing(true);
 
 		VerticalLayout links = new VerticalLayout();
-		links.setWidth("250px");
+		links.setWidth("300px");
 		links.setSpacing(true);
 
 		VerticalLayout rechts = new VerticalLayout();
-		rechts.setWidth("250px");
+		rechts.setWidth("300px");
 		rechts.setSpacing(true);
 
 		box.setWidth("900px");
@@ -106,6 +106,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rechts.addComponent(eintrittsdatum);
 		rechts.addComponent(austrittsdatum);
 
+		rollen.setWidth("300px");
 		rollen.setRows(5);
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
