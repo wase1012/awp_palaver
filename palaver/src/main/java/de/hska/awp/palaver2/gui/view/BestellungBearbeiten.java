@@ -1,8 +1,6 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.sql.Date;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +33,6 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
@@ -92,8 +88,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				java.util.Date date2 = new java.util.Date();
-				if (date2.before(datetime.getValue()) == false
-						|| datetime.getValue() == null) {
+				if (date2.before(datetime.getValue()) == false || datetime.getValue() == null) {
 					speichern.setEnabled(false);
 				} else {
 					speichern.setEnabled(true);
@@ -112,9 +107,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			public void valueChange(final ValueChangeEvent event) {
 				java.util.Date date2 = new java.util.Date();
 				Date d = new Date(date2.getTime());
-				if (datetime.getValue() == null
-						|| d.before(datetime.getValue()) == false
-						|| d.before(datetime2.getValue()) == false
+				if (datetime.getValue() == null || d.before(datetime.getValue()) == false || d.before(datetime2.getValue()) == false
 						|| datetime2.getValue() == null) {
 					speichern.setEnabled(false);
 				} else {
@@ -236,8 +229,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		hl.addComponent(datetime2);
 		hl.setComponentAlignment(datetime2, Alignment.TOP_LEFT);
 
-		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>"
-				+ "<ul>"
+		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>" + "<ul>"
 				+ "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschließend die Bestellung abspeichern.</li>"
 				+ "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr möglich!</li></ul>");
 
@@ -261,17 +253,15 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(
-						BestellungBearbeitenAuswaehlen.class);
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 
 		speichern.addClickListener(new ClickListener() {
-			@SuppressWarnings("unchecked")
+
 			public void buttonClick(ClickEvent event) {
 				bestellData = containerBestellung.getItemIds();
-				bestellpositionen = Bestellpositionverwaltung.getInstance()
-						.getBestellpositionenMitId(bestellData);
+				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
 
 				for (int i = 0; i < (bestellpositionen.size()); i++) {
 
@@ -300,16 +290,13 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				if (bestellt.getValue() == false) {
 					try {
 						bestellung.setBestellt(bestellt.getValue());
-						Bestellverwaltung.getInstance().updateBestellung(
-								bestellung);
+						Bestellverwaltung.getInstance().updateBestellung(bestellung);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 
-				ViewHandler.getInstance().switchView(
-						BestellungBearbeitenAuswaehlen.class);
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 
@@ -319,8 +306,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 
 				bestellData = containerBestellung.getItemIds();
-				bestellpositionen = Bestellpositionverwaltung.getInstance()
-						.getBestellpositionenMitId(bestellData);
+				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
 
 				for (int i = 0; i < (bestellpositionen.size()); i++) {
 
@@ -346,14 +332,12 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 				bestellung.setBestellpositionen(bestellpositionen);
 				try {
-					Bestellverwaltung.getInstance()
-							.updateBestellung(bestellung);
+					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				// TODO EMAIL VERSENDEN
-				ViewHandler.getInstance().switchView(EmailMitBestellung.class,
-						new ViewDataObject<Bestellung>(bestellung));
+
+				ViewHandler.getInstance().switchView(EmailMitBestellung.class, new ViewDataObject<Bestellung>(bestellung));
 			}
 		});
 
@@ -366,27 +350,22 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 	public void getViewParam(ViewData data) {
 		bestellung = (Bestellung) ((ViewDataObject<?>) data).getData();
 
-		bestellungTable.setCaption("Bestellung "
-				+ bestellung.getLieferant().getName());
+		bestellungTable.setCaption("Bestellung " + bestellung.getLieferant().getName());
 		artikelTable.setCaption("Artikel");
 
 		List<BestellungData> list = new ArrayList<BestellungData>();
 		List<Artikel> artikel = new ArrayList<Artikel>();
 		try {
-			artikel = Artikelverwaltung.getInstance()
-					.getAllArtikelByLieferantId(
-							bestellung.getLieferant().getId());
+			artikel = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		containerBestellung = new BeanItemContainer<BestellungData>(
-				BestellungData.class, list);
+		containerBestellung = new BeanItemContainer<BestellungData>(BestellungData.class, list);
 		try {
 
-			for (Bestellposition bp : Bestellpositionverwaltung.getInstance()
-					.getBestellpositionenByBestellungId(bestellung.getId())) {
+			for (Bestellposition bp : Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId())) {
 
 				containerBestellung.addItem(new BestellungData(bp));
 			}
@@ -401,34 +380,44 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		} else {
 			datetime.setValue(bestellung.getLieferdatum());
 			datetime2.setValue(bestellung.getLieferdatum2());
+			datetime.addValueChangeListener(new ValueChangeListener() {
+				@Override
+				public void valueChange(final ValueChangeEvent event) {
+					java.util.Date date2 = new java.util.Date();
+					Date d = new Date(date2.getTime());
+					if (date2.before(datetime.getValue()) == false || datetime.getValue() == null || d.before(datetime2.getValue()) == false) {
+						speichern.setEnabled(false);
+					} else {
+						speichern.setEnabled(true);
+					}
+
+				}
+			});
+
 		}
 
 		bestellungTable.setContainerDataSource(containerBestellung);
 
 		if (bestellung.getLieferant().getMehrereliefertermine() == true) {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde",
-					"kategorie", "durchschnitt", "kantine", "gesamt", "montag",
-					"freitag" });
+			bestellungTable
+					.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde",
-					"kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(false);
 		}
 
-		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
-				artikel);
+		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
 		artikelTable.setVisibleColumns(new Object[] { "name", "artikelnr" });
 
-		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance()
-				.getAnsprechpartnerByLieferant(bestellung.getLieferant());
+		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";
 		if (bestellung.getLieferant().getTelefon() != null) {
 
@@ -436,16 +425,14 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				for (int i = 0; i < alist.size(); i++) {
 					text = text + alist.get(i).getName() + " ";
 					if (alist.get(i).getTelefon().length() > 4) {
-						text = text + "Tel.: " + alist.get(i).getTelefon()
-								+ " ";
+						text = text + "Tel.: " + alist.get(i).getTelefon() + " ";
 					}
 					if (alist.get(i).getHandy().length() > 6) {
 						text = text + "Handy: " + alist.get(i).getHandy() + " ";
 					}
 				}
 			}
-			l.setValue(bestellung.getLieferant().getName() + " Tel: "
-					+ bestellung.getLieferant().getTelefon() + " " + text);
+			l.setValue(bestellung.getLieferant().getName() + " Tel: " + bestellung.getLieferant().getTelefon() + " " + text);
 		} else if (alist != null) {
 			l.setValue("Ansprechpartner: " + text);
 		}

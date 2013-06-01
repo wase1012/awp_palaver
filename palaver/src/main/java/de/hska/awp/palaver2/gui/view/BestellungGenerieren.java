@@ -9,16 +9,14 @@ import java.util.Locale;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -58,50 +56,49 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		this.addComponent(form);
 
 		bg.addClickListener(new ClickListener() {
-			@SuppressWarnings("unchecked")
+
 			public void buttonClick(ClickEvent event) {
 				SimpleDateFormat sdf;
 				Calendar cal;
 				Date datum = null;
 				int week;
 				String sample = null;
-				
-				if(date.getValue()==null){
+
+				if (date.getValue() == null) {
 					Notification notification = new Notification("Es wurde kein Datum ausgewählt!");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				} else {
 					sample = date.getValue().toString();
-				
-				
-				sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
-				try {
-					datum = sdf.parse(sample);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				cal = Calendar.getInstance();
-				cal.setTime(datum);
-				week = cal.get(Calendar.WEEK_OF_YEAR);
-				@SuppressWarnings("deprecation")
-				int year = date.getValue().getYear() + 1900;
 
-				if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year)) == null) {
-					Notification notification = new Notification("Kein Menüplan vorhanden!");
-					notification.setDelayMsec(500);
-					notification.show(Page.getCurrent());
-				} else {
-
+					sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH);
 					try {
-
-						Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(new Week(week, year));
-
-					} catch (Exception e) {
+						datum = sdf.parse(sample);
+					} catch (ParseException e) {
 						e.printStackTrace();
 					}
+					cal = Calendar.getInstance();
+					cal.setTime(datum);
+					week = cal.get(Calendar.WEEK_OF_YEAR);
+					@SuppressWarnings("deprecation")
+					int year = date.getValue().getYear() + 1900;
 
-					ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
-				}
+					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year)) == null) {
+						Notification notification = new Notification("Kein Menüplan vorhanden!");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+					} else {
+
+						try {
+
+							Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(new Week(week, year));
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+					}
 				}
 			}
 		});
@@ -109,7 +106,6 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
 
 	}
 
