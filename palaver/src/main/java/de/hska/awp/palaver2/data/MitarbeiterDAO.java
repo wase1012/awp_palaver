@@ -192,7 +192,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT), set
-					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID)), set
+					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set
 					.getString(BENUTZERNAME)));
 		}
 
