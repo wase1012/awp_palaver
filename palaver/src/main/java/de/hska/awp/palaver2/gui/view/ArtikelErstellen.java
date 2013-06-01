@@ -545,7 +545,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if(name.isValid() == false || kurz.isValid() == false )
+				if (name.isValid() == false || kurz.isValid() == false )
 				{
 					meSpeichern.setEnabled(false);
 				}
