@@ -91,13 +91,13 @@ public class MitarbeiterDAO extends AbstractDAO {
 		Mitarbeiter mitarbeiter = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
-		openConnection();
+		
 		while (set.next()) {
 			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
 					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"),
 					getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername"));
 		}
-		closeConnection();
+		
 		return mitarbeiter;
 	}
 
@@ -242,12 +242,12 @@ public class MitarbeiterDAO extends AbstractDAO {
 				+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum() + "'," + BENUTZERNAME + "='"
 				+ mitarbeiter.getBenutzername() + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-
+		System.out.println(mitarbeiter.getRollen());
 		if (mitarbeiter.getRollen() != null) {
 			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
-				if (MitarbeiterHasRollenDAO.getInstance().getMitarbeiterHasRollenByMitarbeiterAndRolle(mitarbeiter, mitarbeiter.getRollen().get(i)) == null) {
-					MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
-				}
+				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+
 			}
 		}
 	}
@@ -264,7 +264,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 		List<Rollen> list = new ArrayList<Rollen>();
 
-		ResultSet set = getMany(MessageFormat.format(GET_ROLLEN_BY_MITARBEITER_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ROLLEN_BY_MITARBEITER_ID, id));
 
 		while (set.next()) {
 			list.add(new Rollen(set.getLong("id"), set.getString("name"), getNachrichtByRolleId(set.getLong("id"))));
@@ -287,7 +287,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 		List<Nachricht> list = new ArrayList<Nachricht>();
 
-		ResultSet set = getMany(MessageFormat.format(GET_NACHRICHT_BY_ROLLE_ID, rid));
+		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ROLLE_ID, rid));
 
 		while (set.next()) {
 			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), getMitarbeiterByIdForNachricht(set.getLong("sender_fk")),

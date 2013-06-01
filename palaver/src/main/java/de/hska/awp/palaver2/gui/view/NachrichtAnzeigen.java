@@ -29,7 +29,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueChangeListener {
+public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 	private HorizontalLayout horizontallayout = new HorizontalLayout();
 	private VerticalLayout nachrichtanzeigenlayout = new VerticalLayout();
@@ -45,12 +45,9 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
 	private Nachricht nachricht = new Nachricht();
 	
+	private String neuernachrichtentextinput;
+	
 	private int NACHRICHT_MAXLENGTH = 300;
-	
-	private ComboBox combobox = new ComboBox();
-	
-	Button speichern = new Button(IConstants.BUTTON_SAVE);
-	Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	
 	public NachrichtAnzeigen() {
 		
@@ -83,6 +80,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 	        
 		horizontallayout.addComponent(nachrichterstellenlayout);
 		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_LEFT);
+		
 		
 		
 		//Nachrichtlayout zusammenbauen
@@ -147,7 +145,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 				nachrichtentext.setRows(4);
 				nachrichtentext.setValue(nl.get(i).getNachricht());
 				nachrichtentext.setReadOnly(true);
-				nachrichtentext.setImmediate(true);
 				
 				nachrichtverticallayout = new VerticalLayout();
 				nachrichtverticallayout.setStyleName("nachricht");
@@ -187,6 +184,8 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 
 		nachrichterstellenlayout.addComponent(label);
 
+		final ComboBox combobox = new ComboBox();
+
 		combobox.setWidth("60%");
 		combobox.setImmediate(true);
 		combobox.setNullSelectionAllowed(false);
@@ -208,15 +207,22 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 		neuernachrichtentext.setWidth("100%");
 		neuernachrichtentext.setRows(4);
 		neuernachrichtentext.setImmediate(true);
+		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
 		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
-		neuernachrichtentext.setRequired(true);
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 
-		neuernachrichtentext.addValueChangeListener(this);
-		nachrichtentext.addValueChangeListener(this);
+		neuernachrichtentext.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				neuernachrichtentextinput = String.valueOf(event.getProperty()
+						.getValue());
+			}
+		});
 
-		speichern.setEnabled(false);
+		Button speichern = new Button(IConstants.BUTTON_SAVE);
+		Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
+
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
@@ -259,19 +265,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View, ValueCha
 
 	@Override
 	public void getViewParam(ViewData data) {
-	}
-
-	@Override
-	public void valueChange(ValueChangeEvent event) {
-		if (combobox.isValid() == false || neuernachrichtentext.isValid() == false) 
-		{
-			speichern.setEnabled(false);
-		}
-		else 
-		{
-			speichern.setEnabled(true);
-		}
-		
 	}
 }
 
