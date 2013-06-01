@@ -4,6 +4,10 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -17,17 +21,26 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -49,6 +62,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 	private TextField			eintrittsdatum = new TextField("Eintrittsdatum");
 	private TextField			austrittsdatum = new TextField("Austrittsdatum");
 	private TextField			benutzername = new TextField("Benutzername");
+	private TwinColSelect rollen = new TwinColSelect();
+	
 	
 	private String nameInput;
 	private String vornameInput;
@@ -60,6 +75,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 
 	
 	private Mitarbeiter mitarbeiter = new Mitarbeiter();
+	private List<Rollen> rollenlist = new ArrayList<Rollen>();
+	public String valueString = new String();
 
 	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
@@ -89,10 +106,6 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		links.setWidth("250px");
 		links.setSpacing(true);
 		
-		VerticalLayout mitte = new VerticalLayout();
-		mitte.setWidth("250px");
-		mitte.setSpacing(true);
-		
 		VerticalLayout rechts = new VerticalLayout();
 		rechts.setWidth("250px");
 		rechts.setSpacing(true);
@@ -100,33 +113,66 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		box.setWidth("900px");
 		box.setSpacing(true);
 		box.addComponent(links);
-		box.addComponent(mitte);
 		
 		
-		mitte.addComponent(name);
-		mitte.addComponent(vorname);		
-		mitte.addComponent(email);
-		mitte.addComponent(passwort);
-		mitte.addComponent(eintrittsdatum);
-		mitte.addComponent(austrittsdatum);	
-		mitte.addComponent(benutzername);
+		links.addComponent(name);
+		links.addComponent(vorname);
+		links.addComponent(benutzername);
+		links.addComponent(passwort);
+		links.addComponent(email);
+		
+		rechts.addComponent(eintrittsdatum);
+		rechts.addComponent(austrittsdatum);	
+		
+		
+		
+	      
+	        rollen.setRows(5);
+	        rollen.setNullSelectionAllowed(true);
+	        rollen.setMultiSelect(true);
+	        rollen.setImmediate(true);
+	        rollen.setLeftColumnCaption("Verfügbare Rollen");
+	        rollen.setRightColumnCaption("Ausgewählte Rollen");
+	        
+
+	        rollen.addValueChangeListener(new ValueChangeListener() {
+	            @Override
+	            public void valueChange(final ValueChangeEvent event) {
+	                final String valueString = String.valueOf(event.getProperty()
+	                        .getValue());
+	                System.out.print(valueString);
+	                System.out.print(event.getProperty()
+	                        .getValue());
+	            }
+	        });
+		
+	        try {
+				for (int i = 0; i < Rollenverwaltung.getInstance().getAllRollen().size(); i++) {
+					rollen.addItem(Rollenverwaltung.getInstance().getAllRollen().get(i).getId());
+					rollen.setItemCaption(Rollenverwaltung.getInstance().getAllRollen().get(i).getId(), Rollenverwaltung.getInstance().getAllRollen().get(i).getName());
+				}
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		
+		rechts.addComponent(rollen);
+		
+		
+		
+		
 		
 		box.addComponent(rechts);
 		
 		HorizontalLayout control = new HorizontalLayout();
 		control.setWidth("100%");
 		control.setSpacing(true);
-//		box.addComponent(control);
-//		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
-//		
+	
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		
-		mitte.addComponent(control);
-		mitte.setComponentAlignment(control, Alignment.TOP_CENTER);
-		
-//		rechts.addComponent(verwerfen);
-//		rechts.addComponent(speichern);
+		rechts.addComponent(control);
+		rechts.setComponentAlignment(control, Alignment.TOP_CENTER);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		speichern.setEnabled(false);
@@ -142,15 +188,15 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 		
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3,45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		vorname.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		passwort.setImmediate(true);
@@ -262,29 +308,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			final Window dialog = new Window();
-			dialog.setClosable(false);
-			dialog.setWidth("300px");
-			dialog.setHeight("150px");
-			dialog.setModal(true);
-			dialog.center();
-			dialog.setResizable(false);
-			dialog.setStyleName("dialog-window");
 			
-			Label message = new Label("Mitarbeiter gespeichert");
-			
-			Button okButton = new Button("OK");
-			
-			VerticalLayout dialogContent = new VerticalLayout();
-			dialogContent.setSizeFull();
-			dialogContent.setMargin(true);
-			dialog.setContent(dialogContent);
-			
-			dialogContent.addComponent(message);
-			dialogContent.addComponent(okButton);
-			dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-			
-			UI.getCurrent().addWindow(dialog);
 			mitarbeiter.setName(nameInput);
 			mitarbeiter.setVorname(vornameInput);
 			mitarbeiter.setEmail(emailInput);
@@ -292,29 +316,65 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 			mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 			mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 			mitarbeiter.setBenutzername(benutzernameInput);
+
+//			List<String> rollenId = null;
+//			if (rollen.getValue().toString() != "[]") {
+//				rollenId = Arrays.asList(valueString.substring(1,
+//						valueString.length() - 1).split("\\s*,\\s*"));
+//			
+//			}
+//			
+//			
+//			
+//			
+//			for (String sId : rollenId) {
+//				Long id = null;
+//				try {
+//					id = Long.parseLong(sId.trim());
+//
+//				} catch (NumberFormatException nfe) {
+//
+//				}
+//
+//				Rollen rollen = null;
+//				try {
+//					rollen = Rollenverwaltung.getInstance().getRollenById(id);
+//					rollenlist.add(rollen);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+			
+			
+			mitarbeiter.setRollen(rollenlist);
+			
+			
+			
+			
+			
+			
+			
+			
 							
 			try {
 				Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			okButton.addClickListener(new ClickListener()
-			{	
-				@Override
-				public void buttonClick(ClickEvent event)
-				{
-					UI.getCurrent().removeWindow(dialog);
-					ViewHandler.getInstance().switchView(MitarbeiterSuche.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));				}
-			});
+			
+					
+			ViewHandler.getInstance().switchView(MitarbeiterSuche.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+			
 		}
 	});
 	}
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 }
