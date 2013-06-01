@@ -91,13 +91,12 @@ public class MitarbeiterDAO extends AbstractDAO {
 		Mitarbeiter mitarbeiter = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
-		
 		while (set.next()) {
 			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
 					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"),
 					getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername"));
 		}
-		
+
 		return mitarbeiter;
 	}
 
@@ -192,8 +191,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT), set
-					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set
-					.getString(BENUTZERNAME)));
+					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set.getString(BENUTZERNAME)));
 		}
 
 		return list;
@@ -242,18 +240,20 @@ public class MitarbeiterDAO extends AbstractDAO {
 				+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum() + "'," + BENUTZERNAME + "='"
 				+ mitarbeiter.getBenutzername() + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-		System.out.println(mitarbeiter.getRollen());
 		if (mitarbeiter.getRollen() != null) {
 			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
-				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
-				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(mitarbeiter);
 
+			}
+			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
+				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
 			}
 		}
 	}
-	
+
 	/**
 	 * Die Methode liefert die Rollen zur einer Mitarbeiter ID zurück.
+	 * 
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -277,6 +277,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 	/**
 	 * Methode um alle Nachrichten zu einer RolleId zu bekommen.
+	 * 
 	 * @param rolle
 	 * @return
 	 * @throws ConnectException

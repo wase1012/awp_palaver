@@ -24,7 +24,7 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 	private final static String ROLLEN_FK = "rollen_fk";
 	private final static String GET_ALL_MITARBEITER_HAS_ROLLEN = "SELECT * FROM mitarbeiter_has_rollen";
 	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen " +
-			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
+			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0}";
 	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen " +
 			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
 	
@@ -106,14 +106,14 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void deleteMitarbeiterHasRollen(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException,
+	public void deleteMitarbeiterHasRollen(Mitarbeiter mitarbeiter) throws ConnectException,
 			DAOException, SQLException {
 
-		if (mitarbeiter == null|| rolle == null) {
+		if (mitarbeiter == null) {
 			throw new NullPointerException(
-					"Es wurde kein Mitarbeiter und/oder eine Rolle Ã¼bergeben");
+					"Es wurde kein Mitarbeiter übergeben");
 		}
-		putManaged(MessageFormat.format(DELETE, mitarbeiter.getId(), rolle.getId()));
+		putManaged(MessageFormat.format(DELETE, mitarbeiter.getId()));
 	}
 
 }
