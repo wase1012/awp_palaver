@@ -291,11 +291,12 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
 
+					
 					for (String sId : rollenId) {
 						Long id = null;
 						try {
 							id = Long.parseLong(sId.trim());
-
+							
 						} catch (NumberFormatException nfe) {
 
 						}
@@ -303,6 +304,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 						Rollen rollen = null;
 						try {
 							rollen = Rollenverwaltung.getInstance().getRollenById(id);
+							
 							rollenlist.add(rollen);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -310,11 +312,11 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 					}
 				}
-
+				
 				mitarbeiter.setRollen(rollenlist);
 
 				try {
-					Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+					Mitarbeiterverwaltung.getInstance().updateMitarbeiter(mitarbeiter);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
