@@ -147,15 +147,15 @@ public class Regel {
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("3");
-		regeln.add(new Regel("Kategorie",r,c,"enth√§lt nicht",rw,"In Zeile 1 d√ºrfen nur Fleischgerichte eingef√ºgt werden!",true));
+		regeln.add(new Regel("Menueart",r,c,"enth‰lt nicht",rw,"In Zeile 1 d¸rfen nur Fleischgerichte eingef¸gt werden!",true));
 		
-//		List<Integer> r3 = new ArrayList<Integer>();
-//		r3.add(2);
-//		List<Integer> c3 = new ArrayList<Integer>();
-//		c3.add(-1);
-//		List<String> rw3 = new ArrayList<String>();
-//		rw3.add("Schweinebraten mit Sp√§tzle und Salat");
-//		regeln.add(new Regel("name",r3,c3,"enth√§lt nicht",rw3,"In Zeile 1 d√ºrfen nur Fleischgerichte eingef√ºgt werden!",true));
+		List<Integer> r3 = new ArrayList<Integer>();
+		r3.add(2);
+		List<Integer> c3 = new ArrayList<Integer>();
+		c3.add(-1);
+		List<String> rw3 = new ArrayList<String>();
+		rw3.add("1");
+		regeln.add(new Regel("Geschmack",r3,c3,"enth‰lt nicht",rw3,"Geschmack",true));
 		
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -164,7 +164,7 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Kategorie",r2,c2,	"max",rw2,"Es d√ºrfen maximal 3 men√ºs einer Kat in den Zeilen 2 und 3 eingef√ºgt werden",	true));
+		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es d¸rfen maximal 3 Men¸s einer Kat in den Zeilen 2 und 3 eingef¸gt werden",	true));
 
 		return regeln;
 	}
@@ -172,8 +172,8 @@ public class Regel {
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 //		if (regeltyp.equals("name")) {
 //			mc.addFehlerRegel(checkName(mc, mp));
-//		} else if (regeltyp.equals("Kategorie")) {
-//			mc.addFehlerRegel(checkKategorie(mc, mp));
+//		} else if (regeltyp.equals("Menueart")) {
+//			mc.addFehlerRegel(checkMenueart(mc, mp));
 //		}
 		if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
 			if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
@@ -183,34 +183,34 @@ public class Regel {
 
 	}
 	
+//	Geschmack!, Fuﬂnote, Zubereitung, Menueart!
+	
 	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
 		if (regeltyp.equals("name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
-		} else if (regeltyp.equals("Kategorie")) {
-			mc.addFehlerRegel(checkKategorie(mc, mp));
+		} else if (regeltyp.equals("Menueart")) {
+			mc.addFehlerRegel(checkMenueart(mc, mp));
+		} else if (regeltyp.equals("Geschmack")) {
+			mc.addFehlerRegel(checkGeschmack(mc, mp));
 		}
 
 	}
 
-	private Regel checkKategorie(MenueComponent mc, MenueplanGridLayout mp) {
+	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		if (menue.getRezepte() != null) {
-			if (operator.equals("enth√§lt nicht")) {
-				for (Rezept rez : menue.getRezepte()) {
-					if (kriterienlist.indexOf(rez.getRezeptart().getId()
-							.toString()) == -1) {
-
+		System.out.print(mc.col+"/");
+		System.out.print(mc.row+"/");
+		System.out.print("Geschmack/");
+		System.out.println(menue.getGeschmack());
+		if(menue.getMenueart()!=null){
+			if (operator.equals("enth‰lt nicht")) {
+					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
+						return this;
+				}
+			} else if (operator.equals("enth‰lt")) {
+					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
 						return this;
 					}
-				}
-			} else if (operator.equals("enth√§lt")) {
-				for (Rezept rez : menue.getRezepte()) {
-					if (kriterienlist.indexOf(rez.getRezeptart().getId()
-							.toString()) >= 0) {
-
-						return this;
-					}
-				}
 			} else if (operator.equals("max")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -227,8 +227,61 @@ public class Regel {
 								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
 								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-								if (mc.getMenue().getRezepte().get(0).getRezeptart().equals(tmp.getMenue().getRezepte().get(0).getRezeptart())) {
-									
+								if (mc.getMenue().getGeschmack().equals(tmp.getMenue().getGeschmack())) {
+									if (tmp.getFehlerRegeln() != null) {
+										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+											++count;
+											if (count > maxValue) {
+												return this;
+											}
+										}
+									} else {
+										++count;
+										if (count > maxValue) {
+											return this;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private Regel checkMenueart(MenueComponent mc, MenueplanGridLayout mp) {
+		Menue menue = mc.getMenue();
+		System.out.print(mc.col+"/");
+		System.out.print(mc.row+"/");
+		System.out.println(menue.getMenueart());
+		if(menue.getMenueart()!=null){
+			if (operator.equals("enth‰lt nicht")) {
+					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) == -1) {
+						return this;
+				}
+			} else if (operator.equals("enth‰lt")) {
+					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) >= 0) {
+						return this;
+					}
+			} else if (operator.equals("max")) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					// do something! anything to handle the exception.
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (int col = 0; col < grid.getColumns(); ++col) {
+					for (int row = 0; row < grid.getRows(); ++row) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							if (grid.getComponent(col, row) instanceof MenueComponent) {
+								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+								if (mc.getMenue().getMenueart().equals(tmp.getMenue().getMenueart())) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
@@ -255,12 +308,12 @@ public class Regel {
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 
-		if (operator.equals("enth√§lt nicht")) {
+		if (operator.equals("enth‰lt nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 
 				return this;
 			}
-		} else if (operator.equals("enth√§lt")) {
+		} else if (operator.equals("enth‰lt")) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
