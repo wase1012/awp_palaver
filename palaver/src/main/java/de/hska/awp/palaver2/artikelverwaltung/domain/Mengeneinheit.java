@@ -1,9 +1,11 @@
 package de.hska.awp.palaver2.artikelverwaltung.domain;
-/**
- * @author bach1014
- * @edit Mihail Boehm 27.04.2013
- */
 
+/**
+ * Die Klasse spiegelt die Mengeneinheit wieder.
+ * 
+ * @author Christian Barth
+ * 
+ */
 public class Mengeneinheit implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5210068506937506344L;
@@ -15,11 +17,7 @@ public class Mengeneinheit implements java.io.Serializable {
 	public Mengeneinheit() {
 		super();
 	}
-	/**
-	 * @param id
-	 * @param name
-	 * @param kurz
-	 */
+
 	public Mengeneinheit(Long id, String name, String kurz) {
 		this.id = id;
 		this.name = name;
@@ -29,7 +27,7 @@ public class Mengeneinheit implements java.io.Serializable {
 	public Long getId() {
 		return this.id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -50,18 +48,11 @@ public class Mengeneinheit implements java.io.Serializable {
 		this.kurz = kurz;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
 		return name;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,9 +63,6 @@ public class Mengeneinheit implements java.io.Serializable {
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

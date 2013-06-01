@@ -68,7 +68,7 @@ public class BestellungAuswaehlen extends VerticalLayout implements View {
 			e1.printStackTrace();
 		}
 		try {
-			list = Bestellverwaltung.getInstance().getAllLieferantenByArtikellist(artList);
+//			list = Bestellverwaltung.getInstance().getAllLieferantenByArtikellist(artList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

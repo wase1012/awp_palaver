@@ -2,20 +2,20 @@ package de.hska.awp.palaver2.bestellverwaltung.domain;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 
-
-
 /**
+ * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank
+ * wieder.
+ * 
  * @author Elena W
- * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank wieder
  */
-	
+
 public class Bestellposition implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1291141881234373163L;
 
 	private Long id;
 	private Artikel artikel;
-	private Bestellung bestellung;	
+	private Bestellung bestellung;
 	private Integer durchschnitt;
 	private Integer kantine;
 	private Integer gesamt;
@@ -28,13 +28,19 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	/**
+	 * @author Christian Barth
 	 * @param id
 	 * @param artikel
 	 * @param bestellung
-	 * @param menge
+	 * @param durchschnitt
+	 * @param kantine
+	 * @param gesamt
+	 * @param freitag
+	 * @param montag
+	 * @param geliefert
 	 */
-	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, 
-			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, boolean geliefert) {
+	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag,
+			Integer montag, boolean geliefert) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -46,9 +52,20 @@ public class Bestellposition implements java.io.Serializable {
 		this.montag = montag;
 		this.geliefert = geliefert;
 	}
-	
-	public Bestellposition(Long id, Artikel artikel, 
-			Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag, boolean geliefert) {
+
+	/**
+	 * @author Christian Barth
+	 * @param id
+	 * @param artikel
+	 * @param durchschnitt
+	 * @param kantine
+	 * @param gesamt
+	 * @param freitag
+	 * @param montag
+	 * @param geliefert
+	 */
+	public Bestellposition(Long id, Artikel artikel, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag,
+			boolean geliefert) {
 		this.id = id;
 		this.artikel = artikel;
 		this.durchschnitt = durchschnitt;
@@ -63,8 +80,7 @@ public class Bestellposition implements java.io.Serializable {
 		return this.id;
 	}
 
-	public void setId(Long id)
-	{
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -72,13 +88,16 @@ public class Bestellposition implements java.io.Serializable {
 		return this.artikel;
 	}
 
-	
 	public void setArtikel(Artikel artikel) {
 		this.artikel = artikel;
 	}
-	
+
 	public String getArtikelName() {
 		return this.artikel.getName();
+	}
+
+	public Double getBestellgroesse() {
+		return this.artikel.getBestellgroesse();
 	}
 
 	public Bestellung getBestellung() {
@@ -90,7 +109,7 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getDurchschnitt() {
-		if(durchschnitt==null){
+		if (durchschnitt == null) {
 			durchschnitt = 0;
 		}
 		return durchschnitt;
@@ -101,7 +120,7 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getKantine() {
-		if(kantine==null){
+		if (kantine == null) {
 			kantine = 0;
 		}
 		return kantine;
@@ -112,7 +131,7 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getGesamt() {
-		if(gesamt==null){
+		if (gesamt == null) {
 			gesamt = 0;
 		}
 		return gesamt;
@@ -123,7 +142,7 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getFreitag() {
-		if(freitag==null){
+		if (freitag == null) {
 			freitag = 0;
 		}
 		return freitag;
@@ -134,7 +153,7 @@ public class Bestellposition implements java.io.Serializable {
 	}
 
 	public Integer getMontag() {
-		if(montag==null){
+		if (montag == null) {
 			montag = 0;
 		}
 		return montag;
@@ -151,6 +170,5 @@ public class Bestellposition implements java.io.Serializable {
 	public void setGeliefert(boolean geliefert) {
 		this.geliefert = geliefert;
 	}
-
 
 }

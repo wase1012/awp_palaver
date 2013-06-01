@@ -14,7 +14,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * Klasse AnsprechpartnerDAO. Die Klasse stellt fÃ¼r den Ansprechpartner alle
+ * Klasse AnsprechpartnerDAO. Die Klasse stellt für den Ansprechpartner alle
  * notwendigen Methoden bereit um auf die Datenbank zuzugreifen.
  * 
  * @author Christian Barth
@@ -57,7 +57,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAllAnsprechpartner liefert alle in der Datenbank
-	 * befindlichen Ansprechpartner zurÃ¼ck.
+	 * befindlichen Ansprechpartner zurück.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -80,7 +80,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAnsprechpartnerByName liefert eins bis mehrere Ergebnisse
-	 * zurÃ¼ck bei der Suche nach einem Ansprechpartner in der Datenbank.
+	 * zurück bei der Suche nach einem Ansprechpartner in der Datenbank.
 	 * 
 	 * @param name
 	 * @return
@@ -105,7 +105,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getAnsprechpartnerById liefert eins Ergebnisse zurÃ¼ck bei der
+	 * Die Methode getAnsprechpartnerById liefert eins Ergebnisse zurück bei der
 	 * Suche nach einem Ansprechpartner in der Datenbank.
 	 * 
 	 * @param id
@@ -171,7 +171,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode lÃ¶scht einen Ansprechpartner in der Datenbank.
+	 * Die Methode löscht einen Ansprechpartner in der Datenbank.
 	 * 
 	 * @param id
 	 * @throws ConnectException
@@ -182,11 +182,19 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 			DAOException, SQLException {
 
 		if (id == null) {
-			throw new NullPointerException("kein Ansprechpartner Ã¼bergeben");
+			throw new NullPointerException("kein Ansprechpartner übergeben");
 		}
 		putManaged(MessageFormat.format(DELETE_ANSPRECHPARTNER, id));
 	}
 
+	/**
+	 * Die Methode gibt alle Ansprechpartner für einen Lieferanten zurück.
+	 * @param lieferant
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) 
 			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();

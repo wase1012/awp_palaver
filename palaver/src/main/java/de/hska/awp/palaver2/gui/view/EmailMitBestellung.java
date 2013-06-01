@@ -1,37 +1,30 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
+import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.excel.CreateExcelFile;
-import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -45,7 +38,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class EmailMitBestellung extends VerticalLayout implements View {
-		//Upload.Receiver, 
+	// Upload.Receiver,
 
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -66,7 +59,6 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button download = new Button(IConstants.BUTTON_DOWNLOAD);
 
-	@SuppressWarnings("deprecation")
 	public EmailMitBestellung() {
 		super();
 		this.setSizeFull();
@@ -80,8 +72,9 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		betreff.setWidth("45%");
 		nachricht.setWidth("100%");
 		nachricht.setHeight("250px");
-		
+
 		download.setVisible(false);
+		download.setIcon(new ThemeResource(IConstants.BUTTON_EXCEL_ICON));
 
 		fenster.setWidth("550px");
 		fenster.setSpacing(true);
@@ -93,7 +86,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		fenster.addComponent(nachricht);
 
 		HorizontalLayout control = new HorizontalLayout();
-		control.setWidth("100%");
+		control.setWidth("80%");
 		control.setSpacing(true);
 
 		control.addComponent(verwerfen);
@@ -103,11 +96,6 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
-		
-		
-		
-		
-		
 
 		empfaenger.addValueChangeListener(new ValueChangeListener() {
 
@@ -140,27 +128,34 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Mail mail = Mail.getInstance();
-				mail.EmailVersand(empfaengerInput, betreffInput,
-				nachrichtInput, anhang);
+				boolean result = mail.EmailVersand(empfaengerInput,
+						betreffInput, nachrichtInput, anhang);
+				if (result == true) {
+					try {
+						senden.setIcon(new ThemeResource(
+								IConstants.BUTTON_OK_ICON));
+						bestellung.setBestellt(true);
+						Bestellverwaltung.getInstance().updateBestellungOhneBP(
+								bestellung);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		});
-		
+
 		download.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-			
+
 			}
 		});
-		
-		
-		
 
 		verwerfen.addClickListener(new ClickListener() {
-
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().returnToDefault();
-
+				ViewHandler.getInstance().switchView(
+						BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 	}
@@ -171,10 +166,9 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		empfaengerInput = bestellung.getLieferant().getEmail();
 		empfaenger.setValue(empfaengerInput);
 		// Create excel
-		CreateExcelFile cef = CreateExcelFile.getInstance();		
+		CreateExcelFile cef = CreateExcelFile.getInstance();
 		this.anhang = cef.Create(bestellung);
-		if(this.anhang != null)
-		{
+		if (this.anhang != null) {
 			download.setVisible(true);
 			Resource res = new FileResource(new File(anhang));
 			FileDownloader fd = new FileDownloader(res);
@@ -182,27 +176,22 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 		}
 	}
 
-	/* Callback method to begin receiving the upload.
-	@Override
-	public OutputStream receiveUpload(String filename, String MIMEType) {
-		// Generiren EXCEL
-
-		// Speichern
-
-		// Attach
-
-		FileOutputStream fos = null; // Output stream to write to
-		file = new File(filename);
-		this.anhang = file.getAbsolutePath();
-		try {
-			// Open the file for writing.
-			fos = new FileOutputStream(file);
-		} catch (final java.io.FileNotFoundException e) {
-			// Error while opening the file. Not reported here.
-			e.printStackTrace();
-			return null;
-		}
-
-		return fos; // Return the output stream to write to
-	}*/
+	/*
+	 * Callback method to begin receiving the upload.
+	 * 
+	 * @Override public OutputStream receiveUpload(String filename, String
+	 * MIMEType) { // Generiren EXCEL
+	 * 
+	 * // Speichern
+	 * 
+	 * // Attach
+	 * 
+	 * FileOutputStream fos = null; // Output stream to write to file = new
+	 * File(filename); this.anhang = file.getAbsolutePath(); try { // Open the
+	 * file for writing. fos = new FileOutputStream(file); } catch (final
+	 * java.io.FileNotFoundException e) { // Error while opening the file. Not
+	 * reported here. e.printStackTrace(); return null; }
+	 * 
+	 * return fos; // Return the output stream to write to }
+	 */
 }

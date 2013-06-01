@@ -13,10 +13,10 @@ import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
- * Die Klasse ermÃ¶glicht die Verwaltung der Lieferanten und stellt fÃ¼r die GUI
+ * Die Klasse ermöglicht die Verwaltung der Lieferanten und stellt für die GUI
  * Methoden bereit.
  * 
- * @author bach1014
+ * @author Christian Barth
  */
 public class Lieferantenverwaltung extends LieferantDAO {
 
@@ -34,14 +34,13 @@ public class Lieferantenverwaltung extends LieferantDAO {
 	}
 
 	/**
-	 * Die Methode liefert alle Lieferanten zurÃ¼ck.
+	 * Die Methode liefert alle Lieferanten zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public List<Lieferant> getAllLieferanten() throws ConnectException,
-			DAOException, SQLException {
+	public List<Lieferant> getAllLieferanten() throws ConnectException, DAOException, SQLException {
 
 		List<Lieferant> result = null;
 
@@ -52,14 +51,13 @@ public class Lieferantenverwaltung extends LieferantDAO {
 
 	/**
 	 * Die Methode liefert einen oder mehrere Lieferanten anhand des Parameter
-	 * name zurÃ¼ck.
+	 * name zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public List<Lieferant> getLieferantenByName(String name)
-			throws ConnectException, DAOException, SQLException {
+	public List<Lieferant> getLieferantenByName(String name) throws ConnectException, DAOException, SQLException {
 
 		List<Lieferant> result = null;
 
@@ -69,35 +67,40 @@ public class Lieferantenverwaltung extends LieferantDAO {
 	}
 
 	/**
-	 * Die Methode liefert einen Lieferanten anhand des Parameter id zurÃ¼ck.
+	 * Die Methode liefert einen Lieferanten anhand des Parameter id zurück.
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public Lieferant getLieferantById(Long id) throws ConnectException,
-			DAOException, SQLException {
+	public Lieferant getLieferantById(Long id) throws ConnectException, DAOException, SQLException {
 		Lieferant lieferant = super.getLieferantById(id);
 		return lieferant;
 	}
 
-	public Lieferant getLastLieferant() throws ConnectException, DAOException,
-			SQLException {
+	/**
+	 * Die Methode liefert den letzten Lieferant in der Datenbank zurück.
+	 * 
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public Lieferant getLastLieferant() throws ConnectException, DAOException, SQLException {
 		List<Lieferant> lieferanten = super.getAllLieferanten();
 		return lieferanten.get(lieferanten.size() - 1);
 	}
-	
 
 	/**
 	 * Die Methode erzeugt einen Lieferant.
-	 * @return 
+	 * 
+	 * @return
 	 * 
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public void createLieferant(Lieferant lieferant) throws ConnectException,
-			DAOException, SQLException {
+	public void createLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
 
 		super.createLieferant(lieferant);
 	}
@@ -109,8 +112,7 @@ public class Lieferantenverwaltung extends LieferantDAO {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public void updateLieferant(Lieferant lieferant) throws ConnectException,
-			DAOException, SQLException {
+	public void updateLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
 
 		super.updateLieferant(lieferant);
 

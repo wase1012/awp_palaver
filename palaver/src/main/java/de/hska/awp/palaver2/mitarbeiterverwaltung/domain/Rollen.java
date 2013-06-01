@@ -5,6 +5,12 @@ import java.util.List;
 
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
+/**
+ * Die Klasse spiegelt die Rollen wieder.
+ * 
+ * @author Christian Barth
+ * 
+ */
 public class Rollen implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3366000000412110979L;
@@ -20,8 +26,8 @@ public class Rollen implements java.io.Serializable {
 		super();
 		this.name = name;
 	}
-	
-	public Rollen(Long id,String name) {
+
+	public Rollen(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,7 +70,7 @@ public class Rollen implements java.io.Serializable {
 	public void setMitarbeiters(List<Mitarbeiter> mitarbeiters) {
 		this.mitarbeiters = mitarbeiters;
 	}
-	
+
 	public Rollen addMitarbeiter(Mitarbeiter mitarbeiter) {
 		if (mitarbeiters == null) {
 			mitarbeiters = new ArrayList<Mitarbeiter>();
@@ -73,21 +79,14 @@ public class Rollen implements java.io.Serializable {
 		return this;
 	}
 
-
-	/**
-	 * @return the nachrichten
-	 */
 	public List<Nachricht> getNachrichten() {
 		return nachrichten;
 	}
 
-	/**
-	 * @param nachrichten the nachrichten to set
-	 */
 	public void setNachrichten(List<Nachricht> nachrichten) {
 		this.nachrichten = nachrichten;
 	}
-	
+
 	public Rollen addNachricht(Nachricht nachricht) {
 		if (nachricht == null) {
 			nachrichten = new ArrayList<Nachricht>();

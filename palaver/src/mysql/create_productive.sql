@@ -3,7 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS `palaver` ;
-CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET dec8 COLLATE dec8_swedish_ci ;
+CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET 'UTF8' COLLATE utf8_bin ;
 USE `palaver` ;
 
 
@@ -114,6 +114,18 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`fussnote` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `palaver`.`geschmack`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`geschmack` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `inaktiv` BOOLEAN ,
+  PRIMARY KEY (`id`) )
+ -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `palaver`.`zubereitung`
@@ -128,6 +140,17 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`zubereitung` (
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `palaver`.`menueart`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`menueart` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`menueart` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE_menueart` (`name` ASC) )
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `palaver`.`menue`
@@ -136,11 +159,26 @@ DROP TABLE IF EXISTS `palaver`.`menue` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
   `koch` INT NOT NULL ,
+  `geschmack_fk` INT NULL ,
+  `menueart_fk` INT NOT NULL ,
+`aufwand` BOOLEAN NULL ,
+ `favorit` BOOLEAN  NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+--  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_menue_mitarbeiter1_idx` (`koch` ASC) ,
+   INDEX `fk_geschmack1_idx` (`geschmack_fk` ASC) ,
+   CONSTRAINT `fk_geschmack1`
+    FOREIGN KEY (`geschmack_fk` )
+    REFERENCES `palaver`.`geschmack` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+     CONSTRAINT `fk_menue_menueart12`
+    FOREIGN KEY (`menueart_fk` )
+    REFERENCES `palaver`.`menueart` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_menue_mitarbeiter1`
     FOREIGN KEY (`koch` )
     REFERENCES `palaver`.`mitarbeiter` (`id` )
@@ -190,18 +228,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezeptart` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `palaver`.`geschmack`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `palaver`.`geschmack` ;
 
-CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  `inaktiv` BOOLEAN ,
-  PRIMARY KEY (`id`) )
- -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -215,27 +242,18 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `rezeptart_fk` INT NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
   `portion` INT NOT NULL ,
-  `geschmack_fk` INT NULL ,
   `mitarbeiter_fk` INT NULL ,
-   `aufwand` BOOLEAN NULL ,
    `erstellt` TIMESTAMP NULL ,
-    `favorit` BOOLEAN  NULL ,
   PRIMARY KEY (`id`) ,
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_rezept_rezeptart1_idx` (`rezeptart_fk` ASC) ,
-  INDEX `fk_geschmack_idx` (`geschmack_fk` ASC) ,
   INDEX `fk_mitarbeiter_idx` (`mitarbeiter_fk` ASC) ,
   CONSTRAINT `fk_rezept_rezeptart1`
     FOREIGN KEY (`rezeptart_fk` )
     REFERENCES `palaver`.`rezeptart` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_geschmack`
-    FOREIGN KEY (`geschmack_fk` )
-    REFERENCES `palaver`.`geschmack` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mitarbeiter`
+   CONSTRAINT `fk_mitarbeiter`
     FOREIGN KEY (`mitarbeiter_fk` )
     REFERENCES `palaver`.`mitarbeiter` (`id` )
     ON DELETE NO ACTION
@@ -364,6 +382,7 @@ DROP TABLE IF EXISTS `palaver`.`menue_has_rezept` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`menue_has_rezept` (
   `menue_id` INT NOT NULL ,
   `rezept_id` INT NOT NULL ,
+  `hauptgericht` boolean,
   PRIMARY KEY (`menue_id`, `rezept_id`) ,
   INDEX `fk_menue_has_rezept_rezept1_idx` (`rezept_id` ASC) ,
   INDEX `fk_menue_has_rezept_menue1_idx` (`menue_id` ASC) ,
@@ -526,8 +545,8 @@ DROP TABLE IF EXISTS `palaver`.`rezept_has_zubereitung` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_zubereitung` (
   `rezept_fk` INT NOT NULL ,
-  `zubereitung_fk` INT NULL ,
-  PRIMARY KEY (`rezept_fk`) ,
+  `zubereitung_fk` INT NOT NULL ,
+  PRIMARY KEY (`rezept_fk`, `zubereitung_fk` ) ,
   INDEX `fk_zubereitung_idx` (`zubereitung_fk` ASC) ,
   CONSTRAINT `fk_rezept`
     FOREIGN KEY (`rezept_fk` )
@@ -621,6 +640,102 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
     ON UPDATE NO ACTION
     )
 	ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palaver`.`kuchenrezept`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`kuchenrezept` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(200) NOT NULL ,
+  `kommentar` VARCHAR(1000) NULL ,
+  `mitarbeiter_fk` INT NULL ,
+  `erstellt` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) ,
+ -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+  INDEX `fk_mitarbeiter_kuchen_idx` (`mitarbeiter_fk` ASC) ,
+  CONSTRAINT `fk_mitarbeiter_kuchen`
+    FOREIGN KEY (`mitarbeiter_fk` )
+    REFERENCES `palaver`.`mitarbeiter` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palaver`.`kuchenrezept_has_artikel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`kuchenrezept_has_artikel` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept_has_artikel` (
+  `kuchenrezept_fk` INT NOT NULL AUTO_INCREMENT ,
+  `artikel_fk` INT NOT NULL ,
+  `menge` DECIMAL(10,4) NOT NULL ,
+  `einheit` INT NOT NULL ,
+  INDEX `fk_kuchenrezept_has_artikel_einheit_idx` (`einheit` ASC) ,
+  INDEX `fk_kuchenrezept_has_artikel_rezept_idx` (`kuchenrezept_fk` ASC) ,
+  INDEX `fk_kuchenrezept_has_artikel_ARTIKEL_idx` (`artikel_fk` ASC) ,
+  PRIMARY KEY (`kuchenrezept_fk`, `artikel_fk`) ,
+  CONSTRAINT `fk_kuchenrezept_has_artikel_rezept`
+    FOREIGN KEY (`kuchenrezept_fk` )
+    REFERENCES `palaver`.`kuchenrezept` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_kuchenrezept_has_artikel_einheit`
+    FOREIGN KEY (`einheit` )
+    REFERENCES `palaver`.`mengeneinheit` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_kuchenrezept_has_artikel_ARTIKEL`
+    FOREIGN KEY (`artikel_fk` )
+    REFERENCES `palaver`.`artikel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palaver`.`kuchenplan`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`kuchenplan` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenplan` (
+  id INT NOT NULL AUTO_INCREMENT,
+  `week` INT NOT NULL ,
+  `year` INT NOT NULL ,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palaver`.`kuchenplan_has_kuchenrezepte`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`kuchenplan_has_kuchenrezepte` ;
+
+CREATE TABLE IF NOT EXISTS `palaver`.`kuchenplan_has_kuchenrezepte` (
+	id INT NOT NULL AUTO_INCREMENT,
+	kuchenplan_fk INT NOT NULL,
+	kuchenrezept_fk INT NOT NULL,
+	spalte INT NOT NULL,
+	PRIMARY KEY (id),
+  CONSTRAINT `fk_kuchenplan_has_kuchenrezepte_kuchenplan`
+    FOREIGN KEY (`kuchenplan_fk` )
+    REFERENCES `palaver`.`kuchenplan` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION  ,
+  CONSTRAINT `fk_kuchenplan_has_kuchenrezepte_kuchenrezept`
+	FOREIGN KEY (`kuchenrezept_fk` )
+    REFERENCES `palaver`.`kuchenrezept` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    )
+	ENGINE = InnoDB;
+
+
+USE `palaver` ;
 
 
 USE `palaver` ;

@@ -4,6 +4,7 @@
 package de.bistrosoft.palaver.rezeptverwaltung.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -173,12 +174,29 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	public List<Rezept> getRezepteByMenue(Menue menue) {
 		try {
-			super.getRezepteByMenue(menue);
+			return super.getRezepteByMenue(menue);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez) {
+		try {
+			return super.ladeArtikelFuerRezept(rez);
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ArrayList<RezeptHasArtikel>();
 	}
 
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws

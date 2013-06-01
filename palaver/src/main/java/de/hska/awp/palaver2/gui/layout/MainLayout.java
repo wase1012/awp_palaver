@@ -25,6 +25,8 @@ import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.RezeptartEinst;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.emailversand.Mail;
@@ -34,6 +36,7 @@ import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
+import de.hska.awp.palaver2.gui.view.BestellungGenerieren;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
 import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
@@ -41,7 +44,10 @@ import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
+import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
 import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
+import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -101,6 +107,10 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
+		MenuItem mitarbeiterItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
+		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
+		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
+		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
 				null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
@@ -115,9 +125,14 @@ public class MainLayout extends VerticalLayout implements Command
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_AKTUELL, this);
 		menuplanItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
 		
+		MenuItem kuchenverwaltungItem = menu.addItem(IConstants.MENU_KUCHENVERWALTUNG_HEADLINE,
+				null);
+		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANLEGEN, this);
+		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANZEIGEN, this);
+		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW, this);
+		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
@@ -128,6 +143,7 @@ public class MainLayout extends VerticalLayout implements Command
 //		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
+		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
@@ -140,7 +156,8 @@ public class MainLayout extends VerticalLayout implements Command
 		MenuItem username = menu.addItem(getUser(), null);
 		username.setEnabled(false);
 		
-		DefaultView content = new DefaultView();
+//		DefaultView content = new DefaultView();
+		NachrichtAnzeigen content = new NachrichtAnzeigen();
 		this.addComponent(content);
 		this.setExpandRatio(content, 1);
 		
@@ -159,6 +176,10 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(LieferantErstellen.class);
 		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU))
+		{
+			ViewHandler.getInstance().switchView(MitarbeiterErstellen.class);
+		}
 		else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
@@ -166,6 +187,11 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+			
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN))
 		{
@@ -217,6 +243,14 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
 		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN))
+		{
+			ViewHandler.getInstance().switchView(KuchenrezeptAnlegen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
+		}
 		else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE))
 		{
 			ViewHandler.getInstance().switchView(FussnoteEinst.class);
@@ -252,6 +286,14 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals("Nachrichten"))
 		{
 			ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_ROLLEN_ANZEIGEN))
+		{
+			ViewHandler.getInstance().switchView(RollenAnzeigen.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_GENERATE))
+		{
+			ViewHandler.getInstance().switchView(BestellungGenerieren.class);
 		}
 		else 
 		{

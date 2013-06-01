@@ -8,7 +8,12 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
-
+/**
+ * Die Klasse ermöglicht die Verwaltung der Mitarbeiter.
+ * 
+ * @author Christian Barth
+ * 
+ */
 public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 
 	private static Mitarbeiterverwaltung instance = null;
@@ -24,8 +29,15 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 		return instance;
 	}
 
-	public List<Mitarbeiter> getAllMitarbeiter() throws ConnectException,
-			DAOException, SQLException {
+	/**
+	 * Die Methode liefert alle Mitarbeiter zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Mitarbeiter>
+	 */
+	public List<Mitarbeiter> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
 
 		List<Mitarbeiter> result = null;
 
@@ -34,8 +46,15 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 		return result;
 	}
 
-	public List<Mitarbeiter> getMitarbeiterByName(String name)
-			throws ConnectException, DAOException, SQLException {
+	/**
+	 * Die Methode liefert mehrere Mitarbeiter anhand ihres Namen zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Mitarbeiter>
+	 */
+	public List<Mitarbeiter> getMitarbeiterByName(String name) throws ConnectException, DAOException, SQLException {
 
 		List<Mitarbeiter> result = null;
 
@@ -44,14 +63,29 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 		return result;
 	}
 
-	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException,
-			DAOException, SQLException {
+	/**
+	 * Die Methode liefert einen Mitarbeiter anhand der Id zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return Mitarbeiter
+	 */
+	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException, DAOException, SQLException {
 		Mitarbeiter mitarbeiter = super.getMitarbeiterById(id);
 		return mitarbeiter;
 	}
-	
-	public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException{
-		
+
+	/**
+	 * Die Methode liefert alle Mitarbeiter zur einer RollenId zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Mitarbeiter>
+	 */
+	public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
+
 		List<Mitarbeiter> result = null;
 
 		result = super.getMitarbeiterByRollenId(id);
@@ -59,14 +93,18 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 		return result;
 	}
 
-	public void createMitarbeiter(Mitarbeiter mitarbeiter)
-			throws ConnectException, DAOException, SQLException {
+	/**
+	 * Die Methode erzeugt einen Mitarbeiter.
+	 */
+	public void createMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
 
 		super.createMitarbeiter(mitarbeiter);
 	}
-	
-	public void updateMitarbeiter(Mitarbeiter mitarbeiter)
-			throws ConnectException, DAOException, SQLException {
+
+	/**
+	 * Die Methode aktualisiert einen Mitarbeiter.
+	 */
+	public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
 
 		super.updateMitarbeiter(mitarbeiter);
 	}

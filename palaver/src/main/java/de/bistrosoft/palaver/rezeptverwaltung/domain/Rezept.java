@@ -1,3 +1,6 @@
+/**
+ * Created by Michael Marschall
+ */
 package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 import java.sql.Date;
@@ -9,104 +12,68 @@ public class Rezept implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7984117576450240771L;
 
+	//Variablen
 	private Long id;
-	private Geschmack geschmack;
 	private Rezeptart rezeptart;
 	private Mitarbeiter mitarbeiter;
 	private String name;
 	private String kommentar;
 	private int portion;
-	private boolean aufwand;
-	private boolean favorit;
 	private Date erstellt;
 	private List<RezeptHasArtikel> artikel;
+	private Boolean menue;
 
-	public List<RezeptHasArtikel> getArtikel() {
-		return artikel;
-	}
-
-	public void setArtikel(List<RezeptHasArtikel> artikel) {
-		this.artikel = artikel;
-	}
-
+	//Konstruktoren
 	public Rezept() {
 		super();
 	}
 
-	public Rezept(Rezeptart rezeptart, Geschmack geschmack,
-			Mitarbeiter mitarbeiter, String name, String kommentar, int portion) {
+	public Rezept(Rezeptart rezeptart, Mitarbeiter mitarbeiter, String name,
+			String kommentar, int portion) {
 		super();
 		this.rezeptart = rezeptart;
-		this.geschmack = geschmack;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.portion = portion;
 	}
 
-	public Rezept(Long id, Rezeptart rezeptart, Geschmack geschmack,
-			Mitarbeiter mitarbeiter, String name, String kommentar, int portion) {
+	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+			String name, String kommentar, int portion) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
-		this.geschmack = geschmack;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.portion = portion;
 	}
 
-	public Rezept(Long id, Geschmack geschmack, Rezeptart rezeptart,
-			Mitarbeiter mitarbeiter, String name, String kommentar,
-			int portion, boolean aufwand, Date erstellt, boolean favorit) {
+	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+			String name, String kommentar, int portion, Date erstellt) {
 		super();
 		this.id = id;
-		this.geschmack = geschmack;
 		this.rezeptart = rezeptart;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.portion = portion;
-		this.aufwand = aufwand;
 		this.erstellt = erstellt;
-		this.favorit = favorit;
 	}
 
 	public Rezept(Long id) {
 		super();
 		this.id = id;
-
+	}
+	
+	//Getter- und Setter
+	public Boolean getMenue() {
+		return menue;
 	}
 
-	// public Rezept(Rezeptart rezeptart2, Geschmack geschmack2, Mitarbeiter
-	// mitarbeiter2, String string) {
-	// }
-	//
-	// public Rezept(Rezeptart rezeptart, Geschmack geschmack, String name,
-	// Mitarbeiter mitarbeiter) {
-	// this.rezeptart = rezeptart;
-	// this.geschmack = geschmack;
-	// this.name = name;
-	// this.mitarbeiter = mitarbeiter;
-	// }
-	//
-	// public Rezept(Geschmack geschmack, Rezeptart rezeptart,
-	// Mitarbeiter mitarbeiter, String name, String kommentar,
-	// int portion, Set<Menue> menues,
-	// Set<RezeptHasFussnote> rezeptHasFussnotes,
-	// Set<RezeptHasArtikel> rezeptHasArtikels,
-	// RezeptHasZubereitung rezeptHasZubereitung) {
-	// this.geschmack = geschmack;
-	// this.rezeptart = rezeptart;
-	// this.mitarbeiter = mitarbeiter;
-	// this.name = name;
-	// this.kommentar = kommentar;
-	// this.portion = portion;
-	// // this.menues = menues;
-	// this.rezeptHasFussnotes = rezeptHasFussnotes;
-	// this.rezeptHasArtikels = rezeptHasArtikels;
-	// this.rezeptHasZubereitung = rezeptHasZubereitung;
-	// }
+	public void setMenue(Boolean menue) {
+		this.menue = menue;
+	}
 
 	public Long getId() {
 		return this.id;
@@ -114,14 +81,6 @@ public class Rezept implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Geschmack getGeschmack() {
-		return this.geschmack;
-	}
-
-	public void setGeschmack(Geschmack geschmack) {
-		this.geschmack = geschmack;
 	}
 
 	public Rezeptart getRezeptart() {
@@ -164,62 +123,6 @@ public class Rezept implements java.io.Serializable {
 		this.portion = portion;
 	}
 
-	// @PrePersist
-	// private void prePersist() {
-	// erstellt = new Date();
-	// }
-	//
-	// public Date getErzeugt() {
-	// return erstellt == null ? null : (Date) erstellt.clone();
-	// }
-	//
-	// public void setErzeugt() {
-	// this.erstellt = erstellt == null ? null : (Date) erstellt.clone();
-	// }
-
-	// @ManyToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name = "menue_has_rezept", catalog = "palaver", joinColumns =
-	// { @JoinColumn(name = "rezept_id", nullable = false, updatable = false) },
-	// inverseJoinColumns = { @JoinColumn(name = "menue_id", nullable = false,
-	// updatable = false) })
-	// public Set<Menue> getMenues() {
-	// return this.menues;
-	// }
-	//
-	// public void setMenues(Set<Menue> menues) {
-	// this.menues = menues;
-	// }
-
-	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "rezept")
-	// public Set<RezeptHasFussnote> getRezeptHasFussnotes() {
-	// return this.rezeptHasFussnotes;
-	// }
-	//
-	// public void setRezeptHasFussnotes(Set<RezeptHasFussnote>
-	// rezeptHasFussnotes) {
-	// this.rezeptHasFussnotes = rezeptHasFussnotes;
-	// }
-	//
-	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "rezept")
-	// public Set<RezeptHasArtikel> getRezeptHasArtikels() {
-	// return this.rezeptHasArtikels;
-	// }
-	//
-	// public void setRezeptHasArtikels(Set<RezeptHasArtikel> rezeptHasArtikels)
-	// {
-	// this.rezeptHasArtikels = rezeptHasArtikels;
-	// }
-	//
-	// @OneToOne(fetch = FetchType.LAZY, mappedBy = "rezept")
-	// public RezeptHasZubereitung getRezeptHasZubereitung() {
-	// return this.rezeptHasZubereitung;
-	// }
-	//
-	// public void setRezeptHasZubereitung(
-	// RezeptHasZubereitung rezeptHasZubereitung) {
-	// this.rezeptHasZubereitung = rezeptHasZubereitung;
-	// }
-
 	public Date getErstellt() {
 		return erstellt;
 	}
@@ -228,34 +131,21 @@ public class Rezept implements java.io.Serializable {
 		this.erstellt = erstellt;
 	}
 
-	public boolean getAufwand() {
-		return aufwand;
+	public List<RezeptHasArtikel> getArtikel() {
+		return artikel;
 	}
 
-	public void setAufwand(boolean aufwand) {
-		this.aufwand = aufwand;
+	public void setArtikel(List<RezeptHasArtikel> artikel) {
+		this.artikel = artikel;
 	}
 
-	public boolean getFavorit() {
-		return this.favorit;
-	}
-
-	public void setFavorit(boolean favorit) {
-		this.favorit = favorit;
-	}
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		// result = prime * result + ((artikel == null) ? 0 :
-		// artikel.hashCode());
-		// result = prime * result + (aufwand ? 1231 : 1237);
-		// result = prime * result
-		// + ((erstellt == null) ? 0 : erstellt.hashCode());
-		// result = prime * result + (favorit ? 1231 : 1237);
-		result = prime * result
-				+ ((geschmack == null) ? 0 : geschmack.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kommentar == null) ? 0 : kommentar.hashCode());
@@ -268,6 +158,9 @@ public class Rezept implements java.io.Serializable {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -282,19 +175,10 @@ public class Rezept implements java.io.Serializable {
 				return false;
 		} else if (!artikel.equals(other.artikel))
 			return false;
-		if (aufwand != other.aufwand)
-			return false;
 		if (erstellt == null) {
 			if (other.erstellt != null)
 				return false;
 		} else if (!erstellt.equals(other.erstellt))
-			return false;
-		if (favorit != other.favorit)
-			return false;
-		if (geschmack == null) {
-			if (other.geschmack != null)
-				return false;
-		} else if (!geschmack.equals(other.geschmack))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -325,10 +209,12 @@ public class Rezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "" + id + "";
 	}
-
 }

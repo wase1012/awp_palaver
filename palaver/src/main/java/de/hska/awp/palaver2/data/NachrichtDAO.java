@@ -6,11 +6,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
-import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 
 
 /**
@@ -21,12 +19,11 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 
 public class NachrichtDAO extends AbstractDAO {
 	
-	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM Nachrichten";
-	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM Nachrichten WHERE id = {0}";
-	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
-	private static final String		GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM Nachrichten WHERE empf_rolle_fk = {0}";
-	private static final String		CREATE_NACHRICHT = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values({0})";
-	private static final String		DELETE_NACHRICHT = "DELETE FROM Nachrichten WHERE id = {0}";
+	private static final String		GET_ALL_NACHRICHTEN = "SELECT * FROM nachrichten";
+	private static final String		GET_NACHRICHT_BY_ID = "SELECT * FROM nachrichten WHERE id = {0}";
+	private static final String		GET_NACHRICHT_BY_Rolle = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
+	private static final String		GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
+	private static final String		DELETE_NACHRICHT = "DELETE FROM nachrichten WHERE id = {0}";
 	
 	private static NachrichtDAO 	instance = null;
 	
@@ -35,10 +32,8 @@ public class NachrichtDAO extends AbstractDAO {
 		super();
 	}
 	
-	public static NachrichtDAO getInstance()
-	{
-		if (instance == null)
-		{
+	public static NachrichtDAO getInstance() {
+		if (instance == null) {
 			instance = new NachrichtDAO();
 		}
 		return instance;
@@ -80,7 +75,6 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	
 	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
 		
 		if(rolle ==null) {
@@ -102,6 +96,14 @@ public class NachrichtDAO extends AbstractDAO {
 		 
 	}
 	
+	/**
+	 * Methode um alle Nachrichten zu einer RolleId zu bekommen.
+	 * @param rolle
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 		
 		List<Nachricht> list = new ArrayList<Nachricht>();
@@ -112,7 +114,7 @@ public class NachrichtDAO extends AbstractDAO {
 		{
 			list.add(new Nachricht(set.getLong("id"),
 								set.getString("nachricht"),
-								new Mitarbeiter(),
+								MitarbeiterDAO.getInstance().getMitarbeiterByIdForNachricht(set.getLong("sender_fk")),
 								new Rollen()
 								));
 		}
@@ -155,32 +157,27 @@ public class NachrichtDAO extends AbstractDAO {
 			throws ConnectException, DAOException, SQLException {
 		
 		if(nachricht == null) {
-			throw new NullPointerException("keine Nachricht Ã¼bergeben");
+			throw new NullPointerException("keine Nachricht übergeben");
 		
 		}
-
-//		put(CREATE_NACHRICHT + nachricht.getNachricht() + "," + 
-//									nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId());
-		
-		String anlegen = "Insert into Nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
+		String anlegen = "Insert into nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "'," 
 							+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
 		putManaged(anlegen); 
 
 	}
 	
 	/** 
-	 * Methode um eine vorhandene Nachricht zu gegebener ID zu lÃ¶schen
+	 * Methode um eine vorhandene Nachricht zu gegebener ID zu löschen
 	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	
 	public void deleteNachricht(Long id) 
 			throws ConnectException, DAOException, SQLException {
 		
 		if(id == null) {
-			throw new NullPointerException("keine Nachricht Ã¼bergeben");
+			throw new NullPointerException("keine Nachricht übergeben");
 		}		
 		putManaged(MessageFormat.format(DELETE_NACHRICHT, id));
 	}

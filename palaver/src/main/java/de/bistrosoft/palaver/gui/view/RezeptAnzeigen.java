@@ -42,9 +42,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 	private Label uArt = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>",
 			Label.CONTENT_XHTML);
-	private Label uGeschmack = new Label(
-			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack</font><b></pre>",
-			Label.CONTENT_XHTML);
 	private Label uKommentar = new Label(
 			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>",
 			Label.CONTENT_XHTML);
@@ -63,7 +60,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 	private TextField rezeptersteller = new TextField();
 	private TextField portion = new TextField();
 	private TextField art = new TextField();
-	private TextField geschmack = new TextField();
 
 	// Tabellen
 	private Table zutaten = new Table();
@@ -71,10 +67,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 	// Textarea
 	private TextArea kommentar = new TextArea();
 	
-	// Checkbox
-	private CheckBox favorit = new CheckBox();
-	private CheckBox aufwand = new CheckBox();
-
 	// Button
 	private Button aendern = new Button("Rezept bearbeiten");
 
@@ -93,7 +85,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		rezeptersteller.setWidth("100%");
 		kommentar.setWidth("100%");
 		portion.setWidth("100%");
-		geschmack.setWidth("100%");
 		art.setWidth("100%");
 		oben.setSpacing(true);
 		links.setWidth("300px");
@@ -119,8 +110,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		links.addComponent(rezeptersteller);
 		links.addComponent(uPortion);
 		links.addComponent(portion);
-		links.addComponent(uGeschmack);
-		links.addComponent(geschmack);
 		links.addComponent(uArt);
 		links.addComponent(art);
 		links.addComponent(subBox);
@@ -140,9 +129,6 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		verticalunten.addComponent(uKommentar);
 		verticalunten.addComponent(kommentar);
 		verticalunten.addComponent(uFavorit);
-		verticalunten.addComponent(favorit);
-		verticalunten.addComponent(uAufwand);
-		verticalunten.addComponent(aufwand);
 	}
 
 	@Override
@@ -159,11 +145,8 @@ public class RezeptAnzeigen extends VerticalLayout implements View {
 		art.setValue(rezept.getRezeptart().getName());
 		art.setEnabled(false);
 		
-		geschmack.setValue(rezept.getGeschmack().getName());
-		
 		kommentar.setValue(rezept.getKommentar());
-		favorit.setValue(rezept.getFavorit());
-		aufwand.setValue(rezept.getAufwand());
+
 		
 		
 	}

@@ -46,7 +46,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("StaÃŸe");
+	private TextField			strasse = new TextField("Straße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -256,7 +256,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (Exception e) {
-							throw new NullPointerException("Bitte gültige Werte eingeben");
+							throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
@@ -288,7 +288,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					Button			loeschen = new Button(IConstants.BUTTON_LÖSCHEN);
+					Button			loeschen = new Button(IConstants.BUTTON_DELETE);
 					Button			speichern = new Button(IConstants.BUTTON_SAVE);
 					Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
 					
@@ -365,20 +365,17 @@ public class LieferantSuche extends VerticalLayout  implements View{
 							
 							HorizontalLayout layout = new HorizontalLayout();
 							layout.setMargin(true);
-//							layout.setWidth("300px");
 							layout.setSizeFull();
 							layout.setSpacing(true);
 							
 							VerticalLayout verticallayout = new VerticalLayout();
-//							verticallayout.setWidth("280px");
 														
-							Label label = new Label("Wollen Sie den Ansprechpartner wirklich lÃ¶schen?");
+							Label label = new Label("Wollen Sie den Ansprechpartner wirklich löschen?");
 							verticallayout.addComponent(label);
 							verticallayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 							
 							HorizontalLayout horizontallayout = new HorizontalLayout();
 							horizontallayout.setMargin(true);
-//							horizontallayout.setWidth("280px");
 							horizontallayout.setSpacing(true);
 							
 							Button ja = new Button(IConstants.BUTTON_JA);
@@ -437,7 +434,6 @@ public class LieferantSuche extends VerticalLayout  implements View{
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
 							} catch (Exception e) {
 								System.out.println(e);
-//								throw new NullPointerException("Bitte gültige Werte eingeben");
 
 							}				
 							
@@ -644,8 +640,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		if(lieferant.getId() == null) {
 			try {
 				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -692,8 +688,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			ansprechpartner.setColumnCollapsingAllowed(true);
 			ansprechpartner.setColumnCollapsed(handyAnspr, false);
 			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}

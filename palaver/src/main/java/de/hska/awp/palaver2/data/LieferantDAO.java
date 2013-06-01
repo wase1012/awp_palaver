@@ -14,7 +14,7 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
 /**
- * Klasse LieferantDAO. Die Klasse stellt fÃ¼r den Lieferant alle notwendigen
+ * Klasse LieferantDAO. Die Klasse stellt für den Lieferant alle notwendigen
  * Methoden bereit um auf die Datenbank zuzugreifen.
  * 
  * @author Christian Barth
@@ -50,7 +50,7 @@ public class LieferantDAO extends AbstractDAO {
 			" join " + TABLE_ARTIKEL + " on " + TABLE +"." + ID + " = " + TABLE_ARTIKEL + ".lieferant_fk" +
 			" where " + TABLE_ARTIKEL + "." + ID + " = {0}";
 	
-	private final static String GET_ALL_LIEFERANTEN_WITH_ARTIKEL_WITH_ID_AND_NAME = "SELECT Distinct lieferant.id, " +
+	private final static String GET_ALL_LIEFERANTEN_WITH_ARTIKEL = "SELECT Distinct lieferant.id, " +
 			"lieferant.name, lieferant.kundennummer, lieferant.bezeichnung, lieferant.strasse, lieferant.plz, lieferant.ort, " +
 			"lieferant.email, lieferant.telefon, lieferant.fax, lieferant.notiz, lieferant.mehrereliefertermine FROM lieferant " +
 			"join artikel on lieferant.id = artikel.lieferant_fk";
@@ -71,7 +71,7 @@ public class LieferantDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAllLieferanten liefert alle in der Datenbank befindlichen
-	 * Lieferanten zurÃ¼ck.
+	 * Lieferanten zurück.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -97,7 +97,7 @@ public class LieferantDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getLieferantenByName liefert eins bis mehrere Ergebnisse
-	 * zurÃ¼ck bei der Suche nach einem Lieferanten in der Datenbank.
+	 * zurück bei der Suche nach einem Lieferanten in der Datenbank.
 	 * 
 	 * @param name
 	 * @return
@@ -123,7 +123,7 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getLieferantById liefert ein Ergebnisse zurÃ¼ck bei der Suche
+	 * Die Methode getLieferantById liefert ein Ergebnisse zurück bei der Suche
 	 * nach einem Lieferant in der Datenbank.
 	 * 
 	 * @param id
@@ -150,7 +150,7 @@ public class LieferantDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Die Methode liefert ein Ergebnisse zurÃ¼ck bei der Suche
+	 * Die Methode liefert ein Ergebnisse zurück bei der Suche
 	 * nach einem Lieferant bei ArtikelId in der Datenbank.
 	 * 
 	 * @param id
@@ -219,11 +219,18 @@ public class LieferantDAO extends AbstractDAO {
 		this.putManaged(UPDATE_QUERY);
 	}
 
+	/**
+	 * Die Methode liefert
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException, SQLException {
 		
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
-		ResultSet set = getManaged(GET_ALL_LIEFERANTEN_WITH_ARTIKEL_WITH_ID_AND_NAME);
+		ResultSet set = getManaged(GET_ALL_LIEFERANTEN_WITH_ARTIKEL);
 
 		while (set.next()) {
 			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set

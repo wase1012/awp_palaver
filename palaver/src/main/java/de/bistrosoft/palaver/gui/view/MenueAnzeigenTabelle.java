@@ -88,7 +88,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 					Menueverwaltung.getInstance().getAllMenues());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name",
-					"kochname" });
+					"kochname", "geschmackname", "menueartname" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -118,13 +118,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
-	 * .ViewData)
-	 */
+	
 	@Override
 	public void getViewParam(ViewData data) {
 	}

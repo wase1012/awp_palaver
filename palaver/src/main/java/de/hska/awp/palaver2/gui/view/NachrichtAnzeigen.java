@@ -1,6 +1,5 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -43,7 +39,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	HorizontalLayout nachrichterstellenlayoutbuttons = new HorizontalLayout();
 	
 	private Label von;
-	private Button löschbutton = new Button();
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
 	
@@ -52,8 +47,9 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	
 	private String neuernachrichtentextinput;
 	
+	private int NACHRICHT_MAXLENGTH = 300;
 	
-	public NachrichtAnzeigen() throws ConnectException, DAOException, SQLException {
+	public NachrichtAnzeigen() {
 		
 		super();
 		
@@ -61,7 +57,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		this.setMargin(true);
 		this.addComponent(horizontallayout);
 		
-		horizontallayout.setWidth("900px");
+		horizontallayout.setSizeFull();
 		horizontallayout.setHeight("90%");
 		horizontallayout.setSpacing(true);
 
@@ -72,6 +68,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		
 		Panel panel = new Panel("Nachrichten");
+		panel.setWidth("450px");
 		panel.setHeight("100%");
 
 	    final VerticalLayout contentLayout = new VerticalLayout();
@@ -79,10 +76,10 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 	    contentLayout.setMargin(true);
 	    	      
 	    horizontallayout.addComponent(panel);
-	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_LEFT);
+	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 	        
 		horizontallayout.addComponent(nachrichterstellenlayout);
-		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_RIGHT);
+		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_LEFT);
 		
 		
 		
@@ -103,34 +100,51 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 			}
 			
 		}
-//			Nachrichtenverwaltung.getInstance().getAllNachricht();
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		if(nl!=null){
+			
+			//Sortieren der Nachrichten nach der größten ID
+			final List<Nachricht> neu = new ArrayList<Nachricht>();
+			if (nl != null) {
+				for (int z = 0; z < nl.size(); z++) {
+					long zahl = 0;
+					int ind = 0;
+					for (int i = 0; i < nl.size(); i++) {
+						if (zahl < nl.get(i).getId()) {
+							zahl = nl.get(i).getId();
+							ind = i;
+						}
+					}
+
+					neu.add(nl.get(ind));
+					nl.remove(ind);
+					z = z - 1;
+				}
+			}
+
+			nl = neu;
+			
 			for(int i = 0; i < nl.size(); i++){
 								
 				von = new Label("Von:");
 				von.setWidth("100%");
 				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
-				
-				
+							
 				final Button loeschbutton = new Button();
 				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
-				String id = String.valueOf(nl.get(i).getId());
 				
-				System.out.print("Id des Löschbutton beim setzen");
-				System.out.print("           ");
-				System.out.print(id);
-				System.out.print("           ");
-				loeschbutton.setId(id);
+				loeschbutton.setId(String.valueOf(nl.get(i).getId()));
 				
 				nachrichtentext = new TextArea("");
 				nachrichtentext.setWidth("100%");
 				nachrichtentext.setRows(4);
 				nachrichtentext.setValue(nl.get(i).getNachricht());
+				nachrichtentext.setReadOnly(true);
 				
 				nachrichtverticallayout = new VerticalLayout();
 				nachrichtverticallayout.setStyleName("nachricht");
@@ -176,11 +190,16 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		combobox.setImmediate(true);
 		combobox.setNullSelectionAllowed(false);
 		combobox.setRequired(true);
-
-		List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
-		for (Rollen i : rollen) {
-			combobox.addItem(i);
+		try {
+			List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
+			for (Rollen i : rollen) {
+				combobox.addItem(i);
+			}
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
 		}
+		
 
 		nachrichterstellenlayout.addComponent(combobox);
 
@@ -189,6 +208,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		neuernachrichtentext.setRows(4);
 		neuernachrichtentext.setImmediate(true);
 		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
+		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 
@@ -221,6 +241,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 //				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {
+					//TODO
 					nachricht.setMitarbeiterBySenderFk(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1")));
 					Nachrichtenverwaltung.getInstance().createNachricht(
 							nachricht);

@@ -3,7 +3,12 @@
  */
 package de.hska.awp.palaver2.gui.layout;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
@@ -25,6 +30,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.util.Util;
 
 /**
  * @author Sebastian
@@ -33,13 +39,15 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 @SuppressWarnings("serial")
 public class LoginForm extends VerticalLayout
 {
-	private HorizontalLayout form = new HorizontalLayout();
+	private static final Logger	log	= LoggerFactory.getLogger(LoginForm.class.getName());
 	
-	private Embedded logo;
-	private TextField username = new TextField("Benutzername");
-	private PasswordField password = new PasswordField("Password");
+	private HorizontalLayout 	form = new HorizontalLayout();
 	
-	private Button loginButton = new Button("Login");
+	private Embedded 			logo;
+	private TextField 			username = new TextField("Benutzername");
+	private PasswordField 		password = new PasswordField("Password");
+	
+	private Button 				loginButton = new Button("Login");
 	
 	public LoginForm()
 	{
@@ -90,11 +98,13 @@ public class LoginForm extends VerticalLayout
 				else 
 				{
 					new Notification("Login Failed").show(Page.getCurrent());
+					username.focus();
 				}
+
 //				try
 //				{
 //					Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByName(username.getValue()).get(0);
-//					if (current.getPasswort().equals(password.getValue()))
+//					if (current.getPasswort().equals(Util.getMD5(password.getValue())))
 //					{
 //						Application.getInstance().login(username.getValue());
 //						UI.getCurrent().setContent(Application.getInstance().getLayout());
@@ -102,15 +112,23 @@ public class LoginForm extends VerticalLayout
 //				} 
 //				catch (ConnectException e)
 //				{
-//					e.printStackTrace();
+//					log.error(e.toString());
 //				} 
 //				catch (DAOException e)
 //				{
-//					e.printStackTrace();
+//					log.error(e.toString());
 //				} 
 //				catch (SQLException e)
 //				{
-//					e.printStackTrace();
+//					log.error(e.toString());
+//				} 
+//				catch (UnsupportedEncodingException e)
+//				{
+//					log.error(e.toString());
+//				} 
+//				catch (NoSuchAlgorithmException e)
+//				{
+//					log.error(e.toString());
 //				}
 			}
 		});

@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -21,12 +22,14 @@ public class RezeptartDAO extends AbstractDAO {
 	private final static String ID = "id";
 	private final static String NAME = "name";
 	private final static String TABLE = "rezeptart";
+	private final static String HAUPT = "Hauptgericht";
 
 	private static final String GET_ALL_REZEPTART = "SELECT * FROM " + TABLE;
 	private static final String GET_REZEPTART_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
 	private static final String GET_REZEPTART_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
+	private static final String GET_REZEPTART_BY_NAMEB = "SELECT * FROM rezeptart WHERE rezeptart.name = {0}";
 	private static final String DELETE_REZEPTART_BY_NAME = "DELETE FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_REZEPTART_BY_ID = "DELETE FROM " + TABLE
@@ -61,7 +64,8 @@ public class RezeptartDAO extends AbstractDAO {
 
 	public Rezeptart getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat
+				.format(GET_REZEPTART_BY_ID, id));
 		while (set.next()) {
 			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
 		}
@@ -70,12 +74,40 @@ public class RezeptartDAO extends AbstractDAO {
 
 	public Rezeptart getRezeptartByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_REZEPT, id));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_REZEPTART_BY_REZEPT, id));
 		while (set.next()) {
 			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
 		}
 		return rezeptart;
 	}
+
+	public Rezeptart getRezeptartByNameB(String name) throws ConnectException,
+			DAOException, SQLException {
+		Rezeptart rezeptart = null;
+		String name2 = "'"+name+"'";
+		ResultSet set = getManaged(MessageFormat.format(GET_REZEPTART_BY_NAMEB,
+				name2));
+		System.out.println(GET_REZEPTART_BY_NAMEB + NAME);
+		while (set.next()) {
+			rezeptart = new Rezeptart(set.getLong("id"), set.getString("name"));
+
+		}
+		return rezeptart;
+	}
+
+//	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException,
+//			DAOException, SQLException {
+//		Mitarbeiter mitarbeiter = null;
+//		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID,
+//				id));
+//
+//		while (set.next()) {
+//			mitarbeiter = new Mitarbeiter(set.getLong("id"),
+//					set.getString("name"), set.getString("vorname"));
+//		}
+//		return mitarbeiter;
+//	}
 
 	public List<Rezeptart> getRezeptartByName(String name)
 			throws ConnectException, DAOException, SQLException {

@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
+import java.sql.SQLException;
+
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -21,8 +23,12 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * 
@@ -39,6 +45,9 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 	private FilterTable 		bestellungen = new FilterTable("Bestellung");
 	private FilterTable			bpositionen = new FilterTable("Bestellpositionen");
 	private Bestellung 			bestellung;
+	private Bestellposition		bestellposition;
+	
+	private BeanItemContainer<Bestellposition> bpcontainer;
 	
 	private Button				allBestellungen = new Button("Alle Bestellungen");
 	
@@ -64,10 +73,15 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 		
 		bestellungen.setSelectable(true);
 		bestellungen.setFilterBarVisible(true);
+		bestellungen.setFilterGenerator(new customFilter());
+		bestellungen.setFilterDecorator(new customFilterDecorator());
 		
 		bpositionen.setImmediate(true);
 		bpositionen.setFilterBarVisible(true);
 		bpositionen.setVisible(false);
+		bpositionen.setFilterGenerator(new customFilter());
+		bpositionen.setFilterDecorator(new customFilterDecorator());
+		bpositionen.setSelectable(true);
 		
 		BeanItemContainer<Bestellung> container;
 		try
@@ -115,21 +129,84 @@ public class BestellungAnzeigen extends VerticalLayout implements View{
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
 					bpositionen.setVisible(true);
-					BeanItemContainer<Bestellposition> bpcontainer;
 					try
 					{
-						if(bestellung.getLieferant().getMehrereliefertermine()==false){
+						if(bestellung.getLieferant().getMehrereliefertermine()==false)
+						{
 							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
+							bpcontainer.sort(new Object[] {"id"}, new boolean[] {true});
 							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "geliefert"});
+							bpositionen.setVisibleColumns(new Object[] {"artikelName","bestellgroesse", "durchschnitt", "kantine", "gesamt", "geliefert"});
 							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
-						} else {
+							bpositionen.setCellStyleGenerator(new CellStyleGenerator()
+							{
+								
+								@Override
+								public String getStyle(CustomTable source, Object itemId, Object propertyId)
+								{
+									Bestellposition bp = (Bestellposition) itemId;
+									return bp.isGeliefert() ? "status-1" : "status-none";
+								}
+							});
+						} 
+						else 
+						{
 							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance().getBestellpositionenByBestellungId(bestellung.getId()));
+							bpcontainer.sort(new Object[] {"id"}, new boolean[] {true});
 							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] {"artikelName", "durchschnitt", "kantine", "gesamt", "freitag", "montag", "geliefert"});
+							bpositionen.setVisibleColumns(new Object[] {"artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt", "freitag", "montag", "geliefert"});
 							bpositionen.sort(new Object[] {"id"}, new boolean[] {true});
+							bpositionen.setCellStyleGenerator(new CellStyleGenerator()
+							{
+								
+								@Override
+								public String getStyle(CustomTable source, Object itemId, Object propertyId)
+								{
+									Bestellposition bp = (Bestellposition) itemId;
+									return bp.isGeliefert() ? "status-1" : "status-none";
+								}
+							});
 						}
-						
+						bpositionen.addValueChangeListener(new ValueChangeListener()
+						{
+							@Override
+							public void valueChange(ValueChangeEvent event)
+							{
+								if(event.getProperty().getValue() != null) 
+								{
+									bestellposition = (Bestellposition) event.getProperty().getValue();
+									bestellposition.setGeliefert(!bestellposition.isGeliefert());
+									bpcontainer.removeItem(bestellposition);
+									bpcontainer.addBean(bestellposition);
+									bpcontainer.sort(new Object[] {"id"}, new boolean[] {true});
+									try
+									{
+										Bestellpositionverwaltung.getInstance().updateBestellposition(bestellposition);
+									} 
+									catch (ConnectException e)
+									{
+										e.printStackTrace();
+									} 
+									catch (DAOException e)
+									{
+										e.printStackTrace();
+									} 
+									catch (SQLException e)
+									{
+										e.printStackTrace();
+									}
+									bpositionen.markAsDirtyRecursive();
+								}
+							}
+						});
+						bpositionen.addItemClickListener(new ItemClickListener()
+						{
+							@Override
+							public void itemClick(ItemClickEvent event)
+							{
+								bpositionen.markAsDirty();
+							}
+						});
 					} 
 					catch (Exception e)
 					{

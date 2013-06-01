@@ -13,11 +13,13 @@ import de.hska.awp.palaver2.data.RollenDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 /**
+ * Die Klasse ermöglicht die Verwaltung der Rollen.
+ * 
  * @author Christian Barth
- *
+ * 
  */
-public class Rollenverwaltung extends RollenDAO{
-	
+public class Rollenverwaltung extends RollenDAO {
+
 	private static Rollenverwaltung instance = null;
 
 	private Rollenverwaltung() {
@@ -30,9 +32,16 @@ public class Rollenverwaltung extends RollenDAO{
 		}
 		return instance;
 	}
-	
-	public List<Rollen> getAllRollen() throws ConnectException,
-	DAOException, SQLException {
+
+	/**
+	 * Die Methode liefert alle Rollen zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Rollen>
+	 */
+	public List<Rollen> getAllRollen() throws ConnectException, DAOException, SQLException {
 
 		List<Rollen> result = null;
 
@@ -41,14 +50,28 @@ public class Rollenverwaltung extends RollenDAO{
 		return result;
 	}
 
-	public Rollen getRollenById(Long id) throws ConnectException,
-			DAOException, SQLException {
+	/**
+	 * Die Methode liefert eine Rollen anhand der Id zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return Rollen
+	 */
+	public Rollen getRollenById(Long id) throws ConnectException, DAOException, SQLException {
 		Rollen rolle = super.getRollenById(id);
 		return rolle;
 	}
 
-	public List<Rollen> getRollenByMitarbeiterId(Long id)
-			throws ConnectException, DAOException, SQLException {
+	/**
+	 * Die Methode liefert alle Rollen zu einer MitarbeiterId zurück.
+	 * 
+	 * @throws SQLException
+	 * @throws DAOException
+	 * @throws ConnectException
+	 * @return List<Rollen>
+	 */
+	public List<Rollen> getRollenByMitarbeiterId(Long id) throws ConnectException, DAOException, SQLException {
 
 		List<Rollen> result = null;
 
@@ -57,17 +80,20 @@ public class Rollenverwaltung extends RollenDAO{
 		return result;
 	}
 
-	public void createRollen(Rollen rolle)
-			throws ConnectException, DAOException, SQLException {
+	/**
+	 * Die Methode erzeugt eine Rollen.
+	 */
+	public void createRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
 
 		super.createRollen(rolle);
 	}
 
-	public void updateRollen(Rollen rolle)
-			throws ConnectException, DAOException, SQLException {
+	/**
+	 * Die Methode aktualisiert eine Rollen.
+	 */
+	public void updateRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
 
 		super.updateRollen(rolle);
 	}
-
 
 }

@@ -1,7 +1,5 @@
 package de.hska.awp.palaver2.gui.view;
 
-import java.sql.SQLException;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -11,6 +9,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -19,21 +18,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -137,14 +127,10 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					nameUp.setImmediate(true);
 					nameUp.setRequired(true);
 					nameUp.setValue(mengeUpdate.getName());
-					nameUp.setMaxLength(15);
-					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 					
 					kurzUp.setImmediate(true);
 					kurzUp.setRequired(true);
 					kurzUp.setValue(mengeUpdate.getKurz());
-					kurzUp.setMaxLength(4);	
-					kurzUp.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 					
 					verwerfen.addClickListener(new ClickListener() {
 						

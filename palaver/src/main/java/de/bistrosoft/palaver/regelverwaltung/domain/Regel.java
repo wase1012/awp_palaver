@@ -149,13 +149,13 @@ public class Regel {
 		rw.add("3");
 		regeln.add(new Regel("Kategorie",r,c,"enthält nicht",rw,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
 		
-		List<Integer> r3 = new ArrayList<Integer>();
-		r3.add(2);
-		List<Integer> c3 = new ArrayList<Integer>();
-		c3.add(-1);
-		List<String> rw3 = new ArrayList<String>();
-		rw3.add("Schweinebraten mit Spätzle und Salat");
-		regeln.add(new Regel("name",r3,c3,"enthält nicht",rw3,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
+//		List<Integer> r3 = new ArrayList<Integer>();
+//		r3.add(2);
+//		List<Integer> c3 = new ArrayList<Integer>();
+//		c3.add(-1);
+//		List<String> rw3 = new ArrayList<String>();
+//		rw3.add("Schweinebraten mit Spätzle und Salat");
+//		regeln.add(new Regel("name",r3,c3,"enthält nicht",rw3,"In Zeile 1 dürfen nur Fleischgerichte eingefügt werden!",true));
 		
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -176,9 +176,7 @@ public class Regel {
 //			mc.addFehlerRegel(checkKategorie(mc, mp));
 //		}
 		if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
-			System.out.println("3");
 			if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
-				System.out.println("Prüfe");
 				this.findeRegel(mc,mp);
 			}
 		}
@@ -201,7 +199,6 @@ public class Regel {
 				for (Rezept rez : menue.getRezepte()) {
 					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) == -1) {
-						System.out.println(fehlermeldung);
 
 						return this;
 					}
@@ -210,7 +207,6 @@ public class Regel {
 				for (Rezept rez : menue.getRezepte()) {
 					if (kriterienlist.indexOf(rez.getRezeptart().getId()
 							.toString()) >= 0) {
-						System.out.println(fehlermeldung);
 
 						return this;
 					}
@@ -237,14 +233,12 @@ public class Regel {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
 											if (count > maxValue) {
-												System.out.println(fehlermeldung);
 												return this;
 											}
 										}
 									} else {
 										++count;
 										if (count > maxValue) {
-											System.out.println(fehlermeldung);
 											return this;
 										}
 									}
@@ -263,13 +257,11 @@ public class Regel {
 
 		if (operator.equals("enthält nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
-				System.out.println(fehlermeldung);
 
 				return this;
 			}
 		} else if (operator.equals("enthält")) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
-				System.out.println(fehlermeldung);
 
 				return this;
 			}
