@@ -8,7 +8,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
@@ -180,7 +183,7 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	/**
 	 * Die Methode generiert alle Bestellungen anhand dem Menüplan und dem
-	 * Grundbedarf und speichert anschließend diese in der Datenbank 
+	 * Grundbedarf und speichert anschließend diese in der Datenbank
 	 * 
 	 * @author Christian Barth
 	 * 
@@ -385,7 +388,7 @@ public class Bestellverwaltung extends BestellungDAO {
 		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(list);
 		for (int i = 0; i < lieferanten.size(); i++) {
 
-			Bestellverwaltung.getInstance().createBestellung(generateBestellungByListOfBestellpositionAndByLieferant(lieferanten.get(i), list));
+			Bestellverwaltung.getInstance().createBestellung(generateBestellungByListOfBestellpositionAndByLieferant(lieferanten.get(i), list, week));
 
 		}
 
@@ -393,7 +396,7 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	/**
 	 * Die Methode berechnet die Menge der zu bestellenden Artikel und rundet
-	 * diese auf. 
+	 * diese auf.
 	 * 
 	 * @author Christian Barth
 	 * 
@@ -412,7 +415,7 @@ public class Bestellverwaltung extends BestellungDAO {
 
 	/**
 	 * Die Methode addiert die Mengen gleicher Artikel zusammen.
-	 *  
+	 * 
 	 * @author Christian Barth
 	 * 
 	 * @param rhalist
@@ -492,7 +495,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @param bplist
 	 * @return
 	 */
-	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist) {
+	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist, Week week) {
 
 		Bestellung b = new Bestellung();
 		b.setBestellt(false);
@@ -500,9 +503,24 @@ public class Bestellverwaltung extends BestellungDAO {
 		java.util.Date date2 = new java.util.Date();
 		Date date = new Date(date2.getTime());
 		b.setDatum(date);
-		// TODO richtiges Lieferdatum einsetzen.
-		b.setLieferdatum(date);
-		b.setLieferdatum2(date);
+
+		java.util.Date datemontag;
+		java.util.Date datefreitag;
+
+		final GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
+		calendar.clear();
+		calendar.set(Calendar.YEAR, week.getYear());
+		calendar.set(Calendar.WEEK_OF_YEAR, week.getWeek());
+
+		datemontag = calendar.getTime();
+		calendar.add(Calendar.DAY_OF_MONTH, 4);
+		datefreitag = calendar.getTime();
+
+		Date datemo = new Date(datemontag.getTime());
+		Date datefr = new Date(datefreitag.getTime());
+
+		b.setLieferdatum(datemo);
+		b.setLieferdatum2(datefr);
 
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
