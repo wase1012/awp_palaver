@@ -716,6 +716,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	private void rezeptAlsHauptgerichtSpeichern() {
+		if (ausgArtikel.isEmpty()) {
+			return;
+		}
 		Menue menue = new Menue();
 
 		menue.setName(nameInput);
@@ -734,6 +737,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	private void rezeptAlsMenuSpeichern() {
+		if (ausgArtikel.isEmpty()) {
+			return;
+		}
 		MenueHasRezept mhr = new MenueHasRezept();
 		try {
 			mhr.setMenue(MenueDAO.getInstance().getMenueIdByName(nameInput));
