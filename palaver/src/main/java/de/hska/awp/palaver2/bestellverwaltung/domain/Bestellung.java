@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.bestellverwaltung.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -84,6 +86,13 @@ public class Bestellung implements java.io.Serializable {
 	public Date getDatum() {
 		return this.datum;
 	}
+	
+	public String getDatumS() {
+		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		Date date = datum;
+		String s=df.format(date); 
+		return s;
+	}
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
@@ -91,6 +100,13 @@ public class Bestellung implements java.io.Serializable {
 
 	public Date getLieferdatum() {
 		return lieferdatum;
+	}
+	
+	public String getLieferdatumS() {
+		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		Date date = lieferdatum;
+		String s=df.format(date); 
+		return s;
 	}
 
 	public void setLieferdatum(Date lieferdatum) {
@@ -123,6 +139,13 @@ public class Bestellung implements java.io.Serializable {
 
 	public Date getLieferdatum2() {
 		return lieferdatum2;
+	}
+	
+	public String getLieferdatum2S() {
+		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		Date date = lieferdatum2;
+		String s=df.format(date); 
+		return s;
 	}
 
 	public void setLieferdatum2(Date lieferdatum2) {
