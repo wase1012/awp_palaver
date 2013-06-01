@@ -141,10 +141,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 	        rollen.addValueChangeListener(new ValueChangeListener() {
 	            @Override
 	            public void valueChange(final ValueChangeEvent event) {
-	                final String valueString = String.valueOf(event.getProperty()
-	                        .getValue());
-	                System.out.print(valueString);
-	                System.out.print(event.getProperty()
+	                valueString = String.valueOf(event.getProperty()
 	                        .getValue());
 	            }
 	        });
@@ -315,61 +312,52 @@ public class MitarbeiterErstellen extends VerticalLayout implements View
 			mitarbeiter.setName(nameInput);
 			mitarbeiter.setVorname(vornameInput);
 			mitarbeiter.setEmail(emailInput);
-			try
-			{
-				mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
-			} catch (UnsupportedEncodingException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (NoSuchAlgorithmException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			mitarbeiter.setPasswort(passwortInput);
+//			try
+//			{
+//				mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
+//			} catch (UnsupportedEncodingException e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (NoSuchAlgorithmException e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 			mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 			mitarbeiter.setBenutzername(benutzernameInput);
 
-//			List<String> rollenId = null;
-//			if (rollen.getValue().toString() != "[]") {
-//				rollenId = Arrays.asList(valueString.substring(1,
-//						valueString.length() - 1).split("\\s*,\\s*"));
-//			
-//			}
-//			
-//			
-//			
-//			
-//			for (String sId : rollenId) {
-//				Long id = null;
-//				try {
-//					id = Long.parseLong(sId.trim());
-//
-//				} catch (NumberFormatException nfe) {
-//
-//				}
-//
-//				Rollen rollen = null;
-//				try {
-//					rollen = Rollenverwaltung.getInstance().getRollenById(id);
-//					rollenlist.add(rollen);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//
-//			}
 			
+			//Listbuilder: ValueChangeListener gibt einen String der IDs zurück z.B. [1, 3]
+			//String auseinander nehmen und die Objekte anhand der ID suchen und der Liste hinzufügen
+			List<String> rollenId = null;
+			if (rollen.getValue().toString() != "[]") {
+				rollenId = Arrays.asList(valueString.substring(1,
+						valueString.length() - 1).split("\\s*,\\s*"));
+			
+			for (String sId : rollenId) {
+				Long id = null;
+				try {
+					id = Long.parseLong(sId.trim());
+
+				} catch (NumberFormatException nfe) {
+
+				}
+
+				Rollen rollen = null;
+				try {
+					rollen = Rollenverwaltung.getInstance().getRollenById(id);
+					rollenlist.add(rollen);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+			}
 			
 			mitarbeiter.setRollen(rollenlist);
-			
-			
-			
-			
-			
-			
-			
-			
 							
 			try {
 				Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
