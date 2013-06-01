@@ -90,6 +90,19 @@ public class LoginForm extends VerticalLayout
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				try
+				{
+					log.info("Password: " + Util.getMD5(password.getValue()));
+				} 
+				catch (UnsupportedEncodingException e1)
+				{
+					log.error(e1.toString());
+				} 
+				catch (NoSuchAlgorithmException e1)
+				{
+					log.error(e1.toString());
+				}
+				
 				if (username.getValue().equals("demo") && password.getValue().equals("palaverapp"))
 				{
 					Application.getInstance().login(username.getValue());
@@ -99,7 +112,7 @@ public class LoginForm extends VerticalLayout
 				{
 					try
 					{
-						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByName(username.getValue()).get(0);
+						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue()).get(0);
 						if (current.getPasswort().equals(Util.getMD5(password.getValue())))
 						{
 							Application.getInstance().login(username.getValue());
@@ -107,34 +120,49 @@ public class LoginForm extends VerticalLayout
 						}
 						else
 						{
-							new Notification("Login Failed").show(Page.getCurrent());
-							username.focus();
+							fail();
 						}
 					} 
 					catch (ConnectException e)
 					{
 						log.error(e.toString());
+						fail();
 					} 
 					catch (DAOException e)
 					{
 						log.error(e.toString());
+						fail();
 					} 
 					catch (SQLException e)
 					{
 						log.error(e.toString());
+						fail();
 					} 
 					catch (UnsupportedEncodingException e)
 					{
 						log.error(e.toString());
+						fail();
 					} 
 					catch (NoSuchAlgorithmException e)
 					{
 						log.error(e.toString());
+						fail();
+					}
+					catch (Exception e)
+					{
+						log.error(e.toString());
+						fail();
 					}
 				}	
 			}
 		});
 		
 		loginButton.setClickShortcut(KeyCode.ENTER);
+	}
+	
+	private void fail()
+	{
+		new Notification("Login Failed").show(Page.getCurrent());
+		username.focus();
 	}
 }
