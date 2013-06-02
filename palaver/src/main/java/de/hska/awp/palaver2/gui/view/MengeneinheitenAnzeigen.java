@@ -274,13 +274,49 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						Mengeneinheit me = new Mengeneinheit();
 						me.setName(nameText);
 						me.setKurz(kurzText);
+						String notification = "Mengeneinheit gespeichert";
 						try {
 							Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
 						} catch (Exception e) {
-							throw new NullPointerException("Bitte gültige Werte eingeben");
+							e.printStackTrace();
+							if(e.toString().contains("INSERT INTO mengeneinheit"))
+								notification = "diese Name oder dieses Kürzel sind bereits in der System vorhanden.";
+							else
+								notification = e.toString();
 						}
-						UI.getCurrent().removeWindow(mengNeu);
-						ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+						final Window dialog = new Window();
+						dialog.setClosable(false);
+						dialog.setWidth("300px");
+						dialog.setHeight("150px");
+						dialog.setModal(true);
+						dialog.center();
+						dialog.setResizable(false);
+						dialog.setStyleName("dialog-window");
+						
+						Label message = new Label(notification);
+						
+						Button okButton = new Button("OK");
+						
+						VerticalLayout dialogContent = new VerticalLayout();
+						dialogContent.setSizeFull();
+						dialogContent.setMargin(true);
+						dialog.setContent(dialogContent);
+						
+						dialogContent.addComponent(message);
+						dialogContent.addComponent(okButton);
+						dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+						
+						UI.getCurrent().addWindow(dialog);
+						
+						okButton.addClickListener(new ClickListener()
+						{	
+							@Override
+							public void buttonClick(ClickEvent event)
+							{
+								UI.getCurrent().removeWindow(dialog);
+								ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+							}
+						});
 					}
 				});
 
