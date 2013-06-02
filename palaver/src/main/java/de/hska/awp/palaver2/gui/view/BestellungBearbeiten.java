@@ -286,14 +286,13 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				}
 
 				bestellung.setBestellpositionen(bestellpositionen);
+				bestellung.setBestellt(bestellt.getValue());
 
-				if (bestellt.getValue() == false) {
-					try {
-						bestellung.setBestellt(bestellt.getValue());
-						Bestellverwaltung.getInstance().updateBestellung(bestellung);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				try {
+					bestellung.setBestellt(bestellt.getValue());
+					Bestellverwaltung.getInstance().updateBestellung(bestellung);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
