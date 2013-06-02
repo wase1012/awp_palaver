@@ -59,7 +59,7 @@ public class KuchenrezeptHasArtikel {
 	}
 
 	public String getArtikelname() {
-		return this.artikelname;
+		return this.artikel.getName();
 	}
 	
 	public String getEinheit() {

@@ -88,7 +88,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Bezeichnung");
-	private ComboBox mitarbeiterCb = new ComboBox("Bäcker");
+	private ComboBox mitarbeiterCb = new ComboBox("Bï¿½cker");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -369,7 +369,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				} 
 				
 				Notification notification1 = new Notification(
-						"Rezept wurde geändert!");
+						"Rezept wurde geï¿½ndert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(
@@ -412,9 +412,22 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		try {
 			artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
-					KuchenrezeptHasArtikel.class, list);
+					KuchenrezeptHasArtikel.class);
+			
+			zutatenTable = null;
+			zutatenTable = new Table();
+			zutatenTable.setSizeFull();
+			zutatenTable.setStyleName("palaverTable2");
+			zutatenTable.setImmediate(true);
+			
 			zutatenTable.setContainerDataSource(artikelcontainer);
 			zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge", "einheit" });
+			
+			for(KuchenrezeptHasArtikel kha : list){
+				containerArtikel.removeItem(kha);
+				System.out.println(kha.getArtikelname());
+				containerKuchenrezeptHasArtikel.addItem(kha);				
+			}
 			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
