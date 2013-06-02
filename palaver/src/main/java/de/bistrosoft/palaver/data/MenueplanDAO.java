@@ -14,7 +14,11 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.data.AbstractDAO;
@@ -60,10 +64,10 @@ public class MenueplanDAO extends AbstractDAO {
 		}	
 		
 		if(menueplan!=null){
-			// TODO: Köche laden
+			// TODO: Kï¿½che laden
 			
 			List<MenueComponent> menues = new ArrayList<MenueComponent>();
-			// TODO: Menüs laden
+			// TODO: Menï¿½s laden
 			ResultSet setMenues = getManaged(MessageFormat.format(GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 			
 			while (setMenues.next()) {
@@ -74,9 +78,13 @@ public class MenueplanDAO extends AbstractDAO {
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
-				//Rezepte hinzufügen
+				//Rezepte hinzufï¿½gen
 				List<Rezept> rezepte = Rezeptverwaltung.getInstance().getRezepteByMenue(menue);
 				menue.setRezepte(rezepte);
+				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance().getFussnoteByMenue(id);
+				menue.setFussnoten(fussnoten);
+				Geschmack geschmack = Geschmackverwaltung.getInstance().getGeschmackById(setMenues.getLong("geschmack_fk"));
+				menue.setGeschmack(geschmack);
 				MenueComponent menueComp = new MenueComponent(menue, null, null, row, col, false);
 				menues.add(menueComp);
 			}
