@@ -9,7 +9,9 @@ import java.util.List;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
 import de.hska.awp.palaver2.data.AbstractDAO;
@@ -134,6 +136,8 @@ public class MenueDAO extends AbstractDAO {
 					MenueartDAO.getInstance().getMenueartById(
 							set.getLong("menueart_fk")),
 					set.getBoolean("aufwand"), set.getBoolean("favorit"));
+			List<Fussnote> fussnoten=Fussnotenverwaltung.getInstance().getFussnoteByMenue(set.getLong("id"));
+			result.setFussnoten(fussnoten);
 		}
 		List<Rezept> rezepte = Rezeptverwaltung.getInstance()
 				.getRezepteByMenue(result);
