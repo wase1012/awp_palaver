@@ -112,7 +112,7 @@ public class LoginForm extends VerticalLayout
 				{
 					try
 					{
-						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue()).get(0);
+						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
 						if (current.getPasswort().equals(Util.getMD5(password.getValue())))
 						{
 							Application.getInstance().login(username.getValue());
