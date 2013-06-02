@@ -268,7 +268,6 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				mitarbeiter.setName(nameInput);
 				mitarbeiter.setVorname(vornameInput);
 				mitarbeiter.setEmail(emailInput);
-				mitarbeiter.setPasswort(passwortInput);
 				 try
 				 {
 				 mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
