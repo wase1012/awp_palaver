@@ -92,7 +92,7 @@ public class LoginForm extends VerticalLayout
 			{
 				try
 				{
-					log.info("Password: " + Util.getMD5(password.getValue()));
+					log.info("Password: " + Util.encryptPassword(password.getValue()));
 				} 
 				catch (UnsupportedEncodingException e1)
 				{
@@ -113,7 +113,7 @@ public class LoginForm extends VerticalLayout
 					try
 					{
 						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
-						if (current.getPasswort().equals(Util.getMD5(password.getValue())))
+						if (current.getPasswort() != null && current.getPasswort().equals(Util.encryptPassword(password.getValue())))
 						{
 							Application.getInstance().login(username.getValue());
 							UI.getCurrent().setContent(Application.getInstance().getLayout());

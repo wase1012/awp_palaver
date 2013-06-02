@@ -31,6 +31,7 @@ public class Util
 	 * @throws UnsupportedEncodingException
 	 * @throws NoSuchAlgorithmException
 	 */
+	@Deprecated
 	public static byte[] getMD5(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
 		byte[] bytesOfMessage = password.getBytes(ENCODING);
