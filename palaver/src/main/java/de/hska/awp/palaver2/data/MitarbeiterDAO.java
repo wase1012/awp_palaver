@@ -34,7 +34,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 	private static final String GET_MITARBEITER_BY_ROLLEN_ID = "SELECT * FROM mitarbeiter "
 			+ "JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk "
 			+ "join rollen on mitarbeiter_has_rollen.rollen_fk = rollen.id where rollen.id = {0}";
-	private static final String GET_MITARBEITER_BY_BENUTZERNAME = "SELECT * FROM mitarbeiter WHERE benutzername = '{0}'";
+	private static final String GET_MITARBEITER_BY_BENUTZERNAME = "SELECT * FROM " + TABLE + " WHERE " + BENUTZERNAME + " = '";
 
 	private static final String GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
 	private final static String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
@@ -183,18 +183,19 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Mitarbeiter> getMitarbeiterByBenutzername(String name) throws ConnectException, DAOException, SQLException {
+	public Mitarbeiter getMitarbeiterByBenutzername(String name) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+		Mitarbeiter mitarbeiter = new Mitarbeiter();
 
-		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_BENUTZERNAME, name));
+//		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_BENUTZERNAME, name));
+		ResultSet set = getManaged(GET_MITARBEITER_BY_BENUTZERNAME + name + "'");
 
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT), set
-					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set.getString(BENUTZERNAME)));
+			mitarbeiter = new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT), set
+					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set.getString(BENUTZERNAME));
 		}
 
-		return list;
+		return mitarbeiter;
 	}
 
 	/**
