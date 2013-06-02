@@ -589,6 +589,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		Rezept rezept = new Rezept();
 
 		rezept.setName(nameInput);
+		System.out.println("nameInput von speichern: " + nameInput);
 
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
@@ -597,14 +598,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			try {
 				rezept.setRezeptart(Rezeptartverwaltung.getInstance()
 						.getRezeptartByNameB(rezeptartInput));
-			} catch (ConnectException e2) {
-				e2.printStackTrace();
-			} catch (DAOException e2) {
-				e2.printStackTrace();
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			System.out.println("Rezeptart von speichern: " + rezeptartInput);
+	
 		rezept.setErstellt(date2);
 		rezept.setKommentar(kommentarInput);
 		rezept.setPortion(Integer.parseInt(portionInput.toString()));
