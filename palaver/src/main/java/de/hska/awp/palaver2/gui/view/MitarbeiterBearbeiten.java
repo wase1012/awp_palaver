@@ -25,6 +25,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -83,6 +84,14 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setWidth("100%");
 		benutzername.setWidth("100%");
 
+		name.setEnabled(false);
+		vorname.setEnabled(false);
+		email.setEnabled(false);
+		passwort.setEnabled(false);
+		eintrittsdatum.setEnabled(false);
+		austrittsdatum.setEnabled(false);
+		benutzername.setEnabled(false);
+
 		fenster.setWidth("900px");
 		fenster.setSpacing(true);
 
@@ -112,8 +121,9 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("Verfï¿½gbare Rollen");
-		rollen.setRightColumnCaption("Ausgewï¿½hlte Rollen");
+		rollen.setLeftColumnCaption("Verfügbare Rollen");
+		rollen.setRightColumnCaption("Ausgewählte Rollen");
+		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
 			@Override
@@ -160,19 +170,19 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -182,7 +192,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {
@@ -190,11 +200,6 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 			public void valueChange(final ValueChangeEvent event) {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 				nameInput = valueString;
-				if (name.isValid() == true) {
-					speichern.setEnabled(true);
-				} else {
-					speichern.setEnabled(false);
-				}
 
 			}
 		});
@@ -290,12 +295,11 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
 
-					
 					for (String sId : rollenId) {
 						Long id = null;
 						try {
 							id = Long.parseLong(sId.trim());
-							
+
 						} catch (NumberFormatException nfe) {
 
 						}
@@ -303,7 +307,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 						Rollen rollen = null;
 						try {
 							rollen = Rollenverwaltung.getInstance().getRollenById(id);
-							
+
 							rollenlist.add(rollen);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -311,7 +315,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 					}
 				}
-				
+
 				mitarbeiter.setRollen(rollenlist);
 
 				try {
@@ -347,12 +351,43 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setValue(mitarbeiter.getAustrittsdatum());
 
 		benutzername.setValue(mitarbeiter.getBenutzername());
-		
+
 		passwort.setValue(mitarbeiter.getPasswort());
 
 		for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
 			rollen.select(mitarbeiter.getRollen().get(i).getId());
 
 		}
+
+		// Berechtigung: Administrator darf Mitarbeiter bearbeiten und der
+		// eigene Mitarbeiter darf sich selber bearbeiten mit Ausnahme der Rollen
+		Mitarbeiter m = Application.getInstance().getUser();
+		if (m.getRollen() != null) {
+			for (int i = 0; i < m.getRollen().size(); i++) {
+				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {
+					name.setEnabled(true);
+					vorname.setEnabled(true);
+					email.setEnabled(true);
+					passwort.setEnabled(true);
+					eintrittsdatum.setEnabled(true);
+					austrittsdatum.setEnabled(true);
+					benutzername.setEnabled(true);
+					rollen.setEnabled(true);
+					speichern.setEnabled(true);
+				}
+
+			}
+		}
+		if (m.getId() == mitarbeiter.getId()) {
+			name.setEnabled(true);
+			vorname.setEnabled(true);
+			email.setEnabled(true);
+			passwort.setEnabled(true);
+			eintrittsdatum.setEnabled(true);
+			austrittsdatum.setEnabled(true);
+			benutzername.setEnabled(true);
+			speichern.setEnabled(true);
+		}
+
 	}
 }
