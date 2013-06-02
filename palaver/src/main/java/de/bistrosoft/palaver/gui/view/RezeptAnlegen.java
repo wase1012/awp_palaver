@@ -589,20 +589,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		Rezept rezept = new Rezept();
 
 		rezept.setName(nameInput);
-		System.out.println("nameInput von speichern: " + nameInput);
 
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 
-	
-			try {
-				rezept.setRezeptart(Rezeptartverwaltung.getInstance()
-						.getRezeptartByNameB(rezeptartInput));
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-			System.out.println("Rezeptart von speichern: " + rezeptartInput);
-	
+		try {
+			rezept.setRezeptart(Rezeptartverwaltung.getInstance()
+					.getRezeptartByNameB(rezeptartInput));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		rezept.setErstellt(date2);
 		rezept.setKommentar(kommentarInput);
 		rezept.setPortion(Integer.parseInt(portionInput.toString()));
@@ -612,13 +608,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							Long.parseLong(mitarbeiterInput.toString())));
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		}
-
-		try {
-			Rezeptverwaltung.getInstance().createRezept(rezept);
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		// Liste der Zubereitungen
@@ -671,15 +660,30 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				.getContainerDataSource();
 		ausgArtikel = bicArtikel.getItemIds();
 		rez.setArtikel(ausgArtikel);
+		String aus = "1";
 		if (ausgArtikel.isEmpty()) {
 			Notification notification = new Notification(
 					"Bitte Zutaten eintragen");
 			notification.setDelayMsec(500);
 			notification.show(Page.getCurrent());
+			aus = "2";
 			return;
 		}
+
 		try {
 			Rezeptverwaltung.getInstance().saveArtikel(rez);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			if (aus == "2") {
+				aus = "1";
+				return;
+			} else {
+				Rezeptverwaltung.getInstance().createRezept(rezept);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
