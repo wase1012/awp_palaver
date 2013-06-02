@@ -187,12 +187,12 @@ public class MitarbeiterDAO extends AbstractDAO {
 
 		Mitarbeiter mitarbeiter = new Mitarbeiter();
 
-//		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_BENUTZERNAME, name));
 		ResultSet set = getManaged(GET_MITARBEITER_BY_BENUTZERNAME + name + "'");
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT), set
-					.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)), set.getString(BENUTZERNAME));
+			mitarbeiter = new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL),
+					set.getString(PASSWORT), set.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), getRollenByMitarbeiterId(set.getLong(ID)),
+					set.getString(BENUTZERNAME));
 		}
 
 		return mitarbeiter;
