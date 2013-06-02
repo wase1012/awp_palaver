@@ -35,7 +35,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`mitarbeiter` (
   `name` VARCHAR(45) NOT NULL ,
   `vorname` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NULL ,
-  `passwort` VARCHAR(45) NULL ,
+  `passwort` VARCHAR(60) NULL ,
   `eintrittsdatum` VARCHAR(45) NULL ,
   `austrittsdatum` VARCHAR(45) NULL ,
   `benutzername` VARCHAR(30) NOT NULL ,

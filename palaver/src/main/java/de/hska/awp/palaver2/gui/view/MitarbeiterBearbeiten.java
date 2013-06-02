@@ -33,10 +33,11 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class MitarbeiterErstellen extends VerticalLayout implements View {
+public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -66,12 +67,12 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
-	public MitarbeiterErstellen() {
+	public MitarbeiterBearbeiten() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
 
-		headline = new Label("Neuer Mitarbeiter");
+		headline = new Label("Mitarbeiter bearbeiten");
 		headline.setStyleName("ViewHeadline");
 
 		name.setWidth("100%");
@@ -268,18 +269,15 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				mitarbeiter.setName(nameInput);
 				mitarbeiter.setVorname(vornameInput);
 				mitarbeiter.setEmail(emailInput);
-				 try
-				 {
-				 mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
-				 } catch (UnsupportedEncodingException e1)
-				 {
-				 // TODO Auto-generated catch block
-				 e1.printStackTrace();
-				 } catch (NoSuchAlgorithmException e1)
-				 {
-				 // TODO Auto-generated catch block
-				 e1.printStackTrace();
-				 }
+				try {
+					mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 				mitarbeiter.setBenutzername(benutzernameInput);
@@ -292,11 +290,12 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
 
+					
 					for (String sId : rollenId) {
 						Long id = null;
 						try {
 							id = Long.parseLong(sId.trim());
-
+							
 						} catch (NumberFormatException nfe) {
 
 						}
@@ -304,6 +303,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 						Rollen rollen = null;
 						try {
 							rollen = Rollenverwaltung.getInstance().getRollenById(id);
+							
 							rollenlist.add(rollen);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -311,11 +311,11 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 					}
 				}
-
+				
 				mitarbeiter.setRollen(rollenlist);
 
 				try {
-					Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+					Mitarbeiterverwaltung.getInstance().updateMitarbeiter(mitarbeiter);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -328,6 +328,31 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
+		mitarbeiter = (Mitarbeiter) ((ViewDataObject<?>) data).getData();
 
+		try {
+			mitarbeiter = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(mitarbeiter.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		name.setValue(mitarbeiter.getName());
+
+		vorname.setValue(mitarbeiter.getVorname());
+
+		email.setValue(mitarbeiter.getEmail());
+
+		eintrittsdatum.setValue(mitarbeiter.getEintrittsdatum());
+
+		austrittsdatum.setValue(mitarbeiter.getAustrittsdatum());
+
+		benutzername.setValue(mitarbeiter.getBenutzername());
+		
+		passwort.setValue(mitarbeiter.getPasswort());
+
+		for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
+			rollen.select(mitarbeiter.getRollen().get(i).getId());
+
+		}
 	}
 }

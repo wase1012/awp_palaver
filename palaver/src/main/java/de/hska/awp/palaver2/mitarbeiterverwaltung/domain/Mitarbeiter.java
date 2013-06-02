@@ -92,7 +92,12 @@ public class Mitarbeiter implements java.io.Serializable {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		if(email == null){
+			this.email = "";
+		} else {
+			this.email = email;
+		}
+		
 	}
 
 	public String getPasswort() {
@@ -108,7 +113,11 @@ public class Mitarbeiter implements java.io.Serializable {
 	}
 
 	public void setEintrittsdatum(String eintrittsdatum) {
-		this.eintrittsdatum = eintrittsdatum;
+		if(eintrittsdatum == null){
+			this.eintrittsdatum = "";
+		} else {
+			this.eintrittsdatum = eintrittsdatum;
+		}
 	}
 
 	public String getAustrittsdatum() {
@@ -116,7 +125,11 @@ public class Mitarbeiter implements java.io.Serializable {
 	}
 
 	public void setAustrittsdatum(String austrittsdatum) {
-		this.austrittsdatum = austrittsdatum;
+		if(austrittsdatum == null){
+			this.austrittsdatum = "";
+		} else {
+			this.austrittsdatum = austrittsdatum;
+		}
 	}
 
 	public List<Rollen> getRollen() {
