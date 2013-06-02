@@ -132,16 +132,16 @@ public class Regel {
 		List<Integer> c = new ArrayList<Integer>();
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
-		rw.add("3");
-		regeln.add(new Regel("Menueart",r,c,"enth�lt nicht",rw,"In Zeile 1 d�rfen nur Fleischgerichte eingef�gt werden!",true));
+		rw.add("Schweinebraten mit Spätzle und Salat");
+		regeln.add(new Regel("Name",r,c,"enth�lt nicht",rw,"In Zeile 1 d�rfen nur Fleischgerichte eingef�gt werden!",true));
 		
 		List<Integer> r3 = new ArrayList<Integer>();
 		r3.add(2);
 		List<Integer> c3 = new ArrayList<Integer>();
 		c3.add(-1);
 		List<String> rw3 = new ArrayList<String>();
-		rw3.add("1");
-		regeln.add(new Regel("Geschmack",r3,c3,"enth�lt nicht",rw3,"Geschmack",true));
+		rw3.add("deutsch");
+		regeln.add(new Regel("Geschmack",r3,c3,"enthält nicht",rw3,"Geschmack",true));
 		
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
@@ -172,12 +172,14 @@ public class Regel {
 //	Geschmack!, Fu�note, Zubereitung, Menueart!
 	
 	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
-		if (regeltyp.equals("name")) {
+		if (regeltyp.equals("Name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
 		} else if (regeltyp.equals("Menueart")) {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
+		} else if (regeltyp.equals("Fussnote")) {
+			mc.addFehlerRegel(checkFussnote(mc, mp));
 		}
 
 	}
@@ -188,7 +190,7 @@ public class Regel {
 		System.out.print(mc.row+"/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-		if(menue.getMenueart()!=null){
+		if(menue.getFussnoten()!=null){
 			if (operator.equals("enth�lt nicht")) {	
 				for(Fussnote fs: menue.getFussnoten()){
 					if (kriterienlist.indexOf(fs.getName()) == -1) {
@@ -246,13 +248,16 @@ public class Regel {
 
 
 	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
+		System.out.println("#Geschmack");
 		Menue menue = mc.getMenue();
 		System.out.print(mc.col+"/");
 		System.out.print(mc.row+"/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-		if(menue.getMenueart()!=null){
-			if (operator.equals("enth�lt nicht")) {
+		if(menue.getGeschmack()!=null){
+			if (operator.equals("enthält nicht")) {
+				System.out.println("ent nit");
+				System.out.println(menue.getGeschmack().getName().toString());
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
 						return this;
 				}

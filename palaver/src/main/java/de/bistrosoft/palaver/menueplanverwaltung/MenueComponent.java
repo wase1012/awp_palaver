@@ -86,9 +86,9 @@ public class MenueComponent extends CustomComponent{
 				// Click-Listener Fehler-Buttons
 				@Override
 				public void buttonClick(ClickEvent event) {
-					Notification notification = new Notification(descNotification);
-					notification.setDelayMsec(500);
-					notification.show(Page.getCurrent());
+//					Notification notification = new Notification(descNotification);
+//					notification.setDelayMsec(500);
+//					notification.show(Page.getCurrent());
 				}
 			});
 		}
@@ -323,7 +323,7 @@ public class MenueComponent extends CustomComponent{
 		btFehler.addStyleName("menueplan-regel");
 		btFehler.setWidth("20px");
 		vl.addComponent(btFehler);
-		btFehler.setVisible(false);
+		btFehler.setVisible(false); 
 		vl.setComponentAlignment(btFehler, Alignment.TOP_RIGHT);
 		
 		HorizontalLayout hl = new HorizontalLayout();
