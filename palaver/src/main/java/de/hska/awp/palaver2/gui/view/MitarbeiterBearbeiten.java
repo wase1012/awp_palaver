@@ -348,8 +348,8 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setValue(mitarbeiter.getAustrittsdatum());
 
 		benutzername.setValue(mitarbeiter.getBenutzername());
-
-		passwort.setValue(mitarbeiter.getBenutzername());
+		
+		passwort.setValue(mitarbeiter.getPasswort());
 
 		for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
 			rollen.select(mitarbeiter.getRollen().get(i).getId());
