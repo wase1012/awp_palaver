@@ -25,6 +25,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -82,6 +83,14 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		austrittsdatum.setWidth("100%");
 		benutzername.setWidth("100%");
 
+		name.setEnabled(false);
+		vorname.setEnabled(false);
+		email.setEnabled(false);
+		passwort.setEnabled(false);
+		eintrittsdatum.setEnabled(false);
+		austrittsdatum.setEnabled(false);
+		benutzername.setEnabled(false);
+
 		fenster.setWidth("900px");
 		fenster.setSpacing(true);
 
@@ -113,6 +122,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rollen.setImmediate(true);
 		rollen.setLeftColumnCaption("Verfügbare Rollen");
 		rollen.setRightColumnCaption("Ausgewählte Rollen");
+		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
 			@Override
@@ -189,11 +199,6 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 			public void valueChange(final ValueChangeEvent event) {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 				nameInput = valueString;
-				if (name.isValid() == true) {
-					speichern.setEnabled(true);
-				} else {
-					speichern.setEnabled(false);
-				}
 
 			}
 		});
@@ -268,18 +273,15 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				mitarbeiter.setName(nameInput);
 				mitarbeiter.setVorname(vornameInput);
 				mitarbeiter.setEmail(emailInput);
-				 try
-				 {
-				 mitarbeiter.setPasswort(Util.getMD5(passwortInput).toString());
-				 } catch (UnsupportedEncodingException e1)
-				 {
-				 // TODO Auto-generated catch block
-				 e1.printStackTrace();
-				 } catch (NoSuchAlgorithmException e1)
-				 {
-				 // TODO Auto-generated catch block
-				 e1.printStackTrace();
-				 }
+				try {
+					mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 				mitarbeiter.setBenutzername(benutzernameInput);
@@ -328,6 +330,25 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
+
+		// Berechtigung: Nur Administrator darf Mitarbeiter anlegen
+		Mitarbeiter m = Application.getInstance().getUser();
+		if (m.getRollen() != null) {
+			for (int i = 0; i < m.getRollen().size(); i++) {
+				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {
+					name.setEnabled(true);
+					vorname.setEnabled(true);
+					email.setEnabled(true);
+					passwort.setEnabled(true);
+					eintrittsdatum.setEnabled(true);
+					austrittsdatum.setEnabled(true);
+					benutzername.setEnabled(true);
+					rollen.setEnabled(true);
+					speichern.setEnabled(true);
+				}
+
+			}
+		}
 
 	}
 }
