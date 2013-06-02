@@ -88,7 +88,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Bezeichnung");
-	private ComboBox mitarbeiterCb = new ComboBox("Bï¿½cker");
+	private ComboBox mitarbeiterCb = new ComboBox("Bäcker");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -369,7 +369,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				} 
 				
 				Notification notification1 = new Notification(
-						"Rezept wurde geï¿½ndert!");
+						"Rezept wurde geändert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(
