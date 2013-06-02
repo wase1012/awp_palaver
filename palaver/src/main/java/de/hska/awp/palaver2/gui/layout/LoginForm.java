@@ -116,6 +116,7 @@ public class LoginForm extends VerticalLayout
 						if (current.getPasswort() != null && current.getPasswort().equals(Util.encryptPassword(password.getValue())))
 						{
 							Application.getInstance().login(username.getValue());
+							Application.getInstance().setUser(current);
 							UI.getCurrent().setContent(Application.getInstance().getLayout());
 						}
 						else
