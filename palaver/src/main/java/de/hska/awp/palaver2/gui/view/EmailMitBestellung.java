@@ -172,7 +172,8 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 					public void buttonClick(ClickEvent event)
 					{
 						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(DefaultView.class);				}
+						ViewHandler.getInstance().switchView(
+								BestellungBearbeitenAuswaehlen.class);				}
 				});
 			}
 		});
