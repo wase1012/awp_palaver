@@ -15,11 +15,15 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.gui.layout.DefaultView;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -42,6 +46,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 	private String betreffInput;
 	private String nachrichtInput;
 	private String anhang = null;
+	private Lieferant lieferant;
 	
 	private Button			senden = new Button(IConstants.BUTTON_SENDEN);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -168,7 +173,9 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		lieferant = (Lieferant) ((ViewDataObject<?>) data).getData();
+		empfaengerInput = lieferant.getEmail();
+		empfaenger.setValue(empfaengerInput);
 		
 	}
 }
