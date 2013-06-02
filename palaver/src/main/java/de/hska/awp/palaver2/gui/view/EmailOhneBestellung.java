@@ -46,6 +46,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 	private String betreffInput;
 	private String nachrichtInput;
 	private String anhang = null;
+	private boolean lieferanten = false;
 	private Lieferant lieferant;
 	
 	private Button			senden = new Button(IConstants.BUTTON_SENDEN);
@@ -156,7 +157,10 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 					public void buttonClick(ClickEvent event)
 					{
 						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(DefaultView.class);				}
+						if(lieferanten == false)
+							ViewHandler.getInstance().returnToDefault();
+						else
+							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));			}
 				});
 			}
 		});
@@ -165,8 +169,10 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().returnToDefault();
-				
+				if(lieferanten == false)
+					ViewHandler.getInstance().returnToDefault();
+				else
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				
 			}
 		});
 	}
@@ -176,6 +182,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 		lieferant = (Lieferant) ((ViewDataObject<?>) data).getData();
 		empfaengerInput = lieferant.getEmail();
 		empfaenger.setValue(empfaengerInput);
+		lieferanten = true;
 		
 	}
 }
