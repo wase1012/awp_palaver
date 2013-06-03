@@ -63,18 +63,18 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 		String fehlermeldunginput;
 		
 		BeanItemContainer<Zubereitung> zubereitungContainer;
-		BeanItemContainer<Fussnote> fuﬂnoteContainer;
+		BeanItemContainer<Fussnote> fussnoteContainer;
 		BeanItemContainer<Geschmack> geschmackContainer;
 		BeanItemContainer<Menueart> menueartContainer;
 		
-		List<String> operatorinhalt = Arrays.asList("enth‰lt", "enth‰lt nicht", "maximal");
-		List<String> regeltypinhalt = Arrays.asList("Zubereitung", "Fuﬂnote", "Geschmack", "Men¸art");
+		List<String> operatorinhalt = Arrays.asList("enth√§lt", "enth√§lt nicht", "maximal");
+		List<String> regeltypinhalt = Arrays.asList("Zubereitung", "Fu√ünote", "Geschmack", "Men√ºart");
 		List<String> zeileninhalt = Arrays.asList("Fleischgericht", "Hauptgericht", "Pastagericht", "Suppe/Salat", "Dessert");
 		List<String> spalteninhalt = Arrays.asList("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag");
 		BeanItemContainer<String> operatorcontainer = new BeanItemContainer<String>(String.class, operatorinhalt);
 		BeanItemContainer<String> regeltypcontainer = new BeanItemContainer<String>(String.class, regeltypinhalt);
 		
-		// Konstruktur der f¸r das bearbeiten einer Regel verwendet wird
+		// Konstruktur der f√ºr das bearbeiten einer Regel verwendet wird
 		public RegelAnlegen(Regel regel) {
 			label = new Label("Regel bearbeiten");
 			layout();
@@ -218,11 +218,11 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 					
 			try {
 				zubereitungContainer = new BeanItemContainer<Zubereitung>(Zubereitung.class, Zubereitungverwaltung.getInstance().getAllZubereitung());
-				fuﬂnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
+				fussnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
 				menueartContainer = new BeanItemContainer<Menueart>(Menueart.class, Menueartverwaltung.getInstance().getAllMenueart());
 				geschmackContainer = new BeanItemContainer<Geschmack>(Geschmack.class, Geschmackverwaltung.getInstance().getAllGeschmackAktiv());
 				
-				// Versuch container f¸r bearbeiten zu setzen
+				// Versuch container f√ºr bearbeiten zu setzen
 				List<Zubereitung> zube = Zubereitungverwaltung.getInstance().getAllZubereitung();
 				for(Zubereitung z: zube) {
 					System.out.println(regel.getKriterien() + z.getName());
@@ -235,13 +235,13 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 				if(regeltyp.getValue() == "Zubereitung") {
 					kriterien.setContainerDataSource(zubereitungContainer); 
 				}
-				if(regel.getRegeltyp() == "Fuﬂnote"){
-					kriterien.setContainerDataSource(fuﬂnoteContainer);
+				if(regel.getRegeltyp() == "Fu√ünote"){
+					kriterien.setContainerDataSource(fussnoteContainer);
 				}
 				if(regel.getRegeltyp() == "Geschmack") {
 					kriterien.setContainerDataSource(geschmackContainer);
 				}
-				if(regel.getRegeltyp() == "Men¸art") {
+				if(regel.getRegeltyp() == "Men√ºart") {
 					kriterien.setContainerDataSource(menueartContainer);
 				}
 			} catch (Exception e) {
@@ -285,20 +285,20 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 
 						try {
 							zubereitungContainer = new BeanItemContainer<Zubereitung>(Zubereitung.class, Zubereitungverwaltung.getInstance().getAllZubereitung());
-							fuﬂnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
+							fussnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
 							menueartContainer = new BeanItemContainer<Menueart>(Menueart.class, Menueartverwaltung.getInstance().getAllMenueart());
 							geschmackContainer = new BeanItemContainer<Geschmack>(Geschmack.class, Geschmackverwaltung.getInstance().getAllGeschmackAktiv());
 							
 							if(valueString == "Zubereitung") {
 								kriterien.setContainerDataSource(zubereitungContainer); 
 							}
-							if(valueString == "Fuﬂnote"){
-								kriterien.setContainerDataSource(fuﬂnoteContainer);
+							if(valueString == "Fu√ünote"){
+								kriterien.setContainerDataSource(fussnoteContainer);
 							}
 							if(valueString == "Geschmack") {
 								kriterien.setContainerDataSource(geschmackContainer);
 							}
-							if(valueString == "Men¸art") {
+							if(valueString == "Men√ºart") {
 								kriterien.setContainerDataSource(menueartContainer);
 							}
 						} catch (Exception e) {
@@ -366,7 +366,7 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 			
 			try {
 				zubereitungContainer = new BeanItemContainer<Zubereitung>(Zubereitung.class, Zubereitungverwaltung.getInstance().getAllZubereitung());
-				fuﬂnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
+				fussnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class, Fussnotenverwaltung.getInstance().getAllFussnote());
 				menueartContainer = new BeanItemContainer<Menueart>(Menueart.class, Menueartverwaltung.getInstance().getAllMenueart());
 				geschmackContainer = new BeanItemContainer<Geschmack>(Geschmack.class, Geschmackverwaltung.getInstance().getAllGeschmackAktiv());
 				
@@ -391,13 +391,13 @@ public class RegelAnlegen extends VerticalLayout implements View, ValueChangeLis
 				if(regeltyp.getValue() == "Zubereitung") {
 					kriterien.setContainerDataSource(zubereitungContainer); 
 				}
-				if(regeltyp.getValue() == "Fuﬂnote"){
-					kriterien.setContainerDataSource(fuﬂnoteContainer);
+				if(regeltyp.getValue() == "Fu√ünote"){
+					kriterien.setContainerDataSource(fussnoteContainer);
 				}
 				if(regeltyp.getValue() == "Geschmack") {
 					kriterien.setContainerDataSource(geschmackContainer);
 				}
-				if(regeltyp.getValue() == "Men¸art") {
+				if(regeltyp.getValue() == "Men√ºart") {
 					kriterien.setContainerDataSource(menueartContainer);
 				}
 			} catch (Exception e) {

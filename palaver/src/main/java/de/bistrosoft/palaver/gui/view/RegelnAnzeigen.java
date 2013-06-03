@@ -32,7 +32,7 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 	
 	Button bearbeiten = new Button(IConstants.BUTTON_EDIT);
 	Button neu = new Button(IConstants.BUTTON_NEW);
-	Button löschen = new Button (IConstants.BUTTON_DELETE);
+	Button loeschen = new Button (IConstants.BUTTON_DELETE);
 	Table table = new Table();
 	private Label label = new Label("Alle Regeln");
 	
@@ -84,13 +84,13 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
     oben.addComponents(label, table);
     oben.setSpacing(true);
     box.addComponents(oben);
-    löschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
-    löschen.setVisible(false);
+    loeschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
+    loeschen.setVisible(false);
     bearbeiten.setVisible(false);
     neu.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
     bearbeiten.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
     
-    unten.addComponents(neu, bearbeiten, löschen);
+    unten.addComponents(neu, bearbeiten, loeschen);
     oben.addComponent(unten);
     box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
     oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
@@ -116,12 +116,13 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 			}
 		});
     
+    
 	table.addItemClickListener(new ItemClickListener() {	
 		@Override
 		public void itemClick(ItemClickEvent event) {
 			
 			bearbeiten.setVisible(true);
-			löschen.setVisible(true);
+			loeschen.setVisible(true);
 			if(event.isDoubleClick()){
 				ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(regel));
 			}
@@ -139,12 +140,12 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		}
 	});
     
-    löschen.addClickListener(new ClickListener() {
+    loeschen.addClickListener(new ClickListener() {
 		
     	
 		@Override
 		public void buttonClick(final ClickEvent event) {
-			Regel.löschen(regel);
+			Regel.loeschen(regel);
 			ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
 			
 		}
