@@ -207,6 +207,16 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		zutatenTable.setContainerDataSource(containerKuchenrezeptHasArtikel);
 		zutatenTable.setVisibleColumns(new Object[] { "artikelname","menge", "einheit" });
 		zutatenTable.setEditable(true);
+		
+		hlRezeptZutaten.addComponent(zutatenTable);
+		hlRezeptZutaten.addComponent(artikelTable);
+
+		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
+		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
+		hlRezeptZutaten.setSpacing(true);
+		
+		artikelTable.setCaption("Artikel");
+		zutatenTable.setCaption("Zutatenliste");
 
 		/**
 		 * Drag n Drop
@@ -266,16 +276,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				zutatenTable.markAsDirty();
 			}
 		});
-
-		hlRezeptZutaten.addComponent(zutatenTable);
-		hlRezeptZutaten.addComponent(artikelTable);
-
-		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
-		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
-		hlRezeptZutaten.setSpacing(true);
-		
-		artikelTable.setCaption("Artikel");
-		zutatenTable.setCaption("Zutatenliste");
 
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
