@@ -550,64 +550,62 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
-		
-		
-//		try {
-//			artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
-//					KuchenrezeptHasArtikel.class);
-//			
-//			zutatenTable = null;
-//			zutatenTable = new Table();
-//			zutatenTable.setSizeFull();
-//			zutatenTable.setStyleName("palaverTable2");
-//			zutatenTable.setImmediate(true);
-//			
-//			zutatenTable.setContainerDataSource(artikelcontainer);
-//			zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge", "einheit" });
-//			
-//			for(KuchenrezeptHasArtikel kha : list){
-//				containerArtikel.removeItem(kha);
-//				System.out.println(kha.getArtikelname());
-//				containerKuchenrezeptHasArtikel.addItem(kha);				
-//			}
-//			
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//
-//		}
-//
-//		kuchenrezept.setArtikel(list);
-		
+
+		// try {
+		// artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
+		// KuchenrezeptHasArtikel.class);
+		//
+		// zutatenTable = null;
+		// zutatenTable = new Table();
+		// zutatenTable.setSizeFull();
+		// zutatenTable.setStyleName("palaverTable2");
+		// zutatenTable.setImmediate(true);
+		//
+		// zutatenTable.setContainerDataSource(artikelcontainer);
+		// zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge",
+		// "einheit" });
+		//
+		// for(KuchenrezeptHasArtikel kha : list){
+		// containerArtikel.removeItem(kha);
+		// System.out.println(kha.getArtikelname());
+		// containerKuchenrezeptHasArtikel.addItem(kha);
+		// }
+		//
+		// } catch (IllegalArgumentException e) {
+		// e.printStackTrace();
+		//
+		// }
+		//
+		// kuchenrezept.setArtikel(list);
+
 		try {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
 					RezeptHasArtikel.class);
-			
+
 			zutatenTable = null;
 			zutatenTable = new Table();
 			zutatenTable.setSizeFull();
 			zutatenTable.setStyleName("palaverTable2");
 			zutatenTable.setImmediate(true);
-			
+
 			zutatenTable.setContainerDataSource(artikelcontainer);
 			zutatenTable.setVisibleColumns(new Object[] { "artikelname",
 					"menge", "einheit" });
-			
-			
-			for(RezeptHasArtikel rha : list){
+
+			for (RezeptHasArtikel rha : list) {
 				containerArtikel.removeItem(rha);
 				System.out.println(rha.getArtikelname());
-				containerRezeptHasArtikel.addItem(rha);				
+				containerRezeptHasArtikel.addItem(rha);
 			}
-			
+
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 
 		}
 		rezept.setArtikel(list);
 
-//		rezeptart.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId()).getRezeptart().);
-		
+		// rezeptart.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId()).getRezeptart().);
+
 		portion.setValue("100");
 		try {
 			kommentar.setValue(RezeptDAO.getInstance()
@@ -626,42 +624,44 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 	}
-	
-			
-			
-//		
-//System.out.println("zutaten TAbelle vor container: " + zutatenTable );
-//		try {
-//			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
-//					RezeptHasArtikel.class, list);
-//			System.out.println("artikelcontainer vor set in container: " + artikelcontainer );
-//			System.out.println("zutatenTable vor set vor container: " + zutatenTable );
-//
-//			zutatenTable.setContainerDataSource(artikelcontainer);
-//			System.out.println("zutatenTable vor set nach container: " + zutatenTable );
-//
-//			zutatenTable.setVisibleColumns(new Object[] { "artikelname",
-//					"menge", "einheit" });
-//			System.out.println("artikelcontainer in container: " + artikelcontainer );
-//
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//
-//		}
-//		System.out.println("artikelcontainer nach container: " + zutatenTable );
-//
-//
-//		rezept.setArtikel(list);
-//
-//		portion.setValue("100");
-//
-//		try {
-//			kommentar.setValue(RezeptDAO.getInstance()
-//					.getRezeptById(rezept.getId()).getKommentar().toString());
-//		} catch (Exception e3) {
-//			e3.printStackTrace();
-//		}
-//	}
+
+	//
+	// System.out.println("zutaten TAbelle vor container: " + zutatenTable );
+	// try {
+	// artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
+	// RezeptHasArtikel.class, list);
+	// System.out.println("artikelcontainer vor set in container: " +
+	// artikelcontainer );
+	// System.out.println("zutatenTable vor set vor container: " + zutatenTable
+	// );
+	//
+	// zutatenTable.setContainerDataSource(artikelcontainer);
+	// System.out.println("zutatenTable vor set nach container: " + zutatenTable
+	// );
+	//
+	// zutatenTable.setVisibleColumns(new Object[] { "artikelname",
+	// "menge", "einheit" });
+	// System.out.println("artikelcontainer in container: " + artikelcontainer
+	// );
+	//
+	// } catch (IllegalArgumentException e) {
+	// e.printStackTrace();
+	//
+	// }
+	// System.out.println("artikelcontainer nach container: " + zutatenTable );
+	//
+	//
+	// rezept.setArtikel(list);
+	//
+	// portion.setValue("100");
+	//
+	// try {
+	// kommentar.setValue(RezeptDAO.getInstance()
+	// .getRezeptById(rezept.getId()).getKommentar().toString());
+	// } catch (Exception e3) {
+	// e3.printStackTrace();
+	// }
+	// }
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
@@ -747,37 +747,49 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				}
 			}
 		}
-
-		@SuppressWarnings("unchecked")
-		BeanItemContainer<RezeptHasArtikel> bicArtikel = (BeanItemContainer<RezeptHasArtikel>) zutatenTable
-				.getContainerDataSource();
-		ausgArtikel = bicArtikel.getItemIds();
-		rez.setArtikel(ausgArtikel);
 		String aus = "1";
-		if (ausgArtikel.isEmpty()) {
-			Notification notification = new Notification(
-					"Bitte Zutaten eintragen");
-			notification.setDelayMsec(500);
-			notification.show(Page.getCurrent());
-			aus = "2";
-			return;
-		}
-
-		try {
-			System.out.println("rezeptAnlegen speichern id: " + rezept.getId());
-			Rezeptverwaltung.getInstance().saveArtikel(rez);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		try {
 			if (aus == "2") {
 				aus = "1";
 				return;
 			} else {
 				Rezeptverwaltung.getInstance().createRezept(rezept);
-				System.out.println("rezeptAnlegen nach speichern createRezept id: " + rezept.getId());
+				System.out
+						.println("rezeptAnlegen nach speichern createRezept id: "
+								+ rezept.getId());
 
+			}
+			try {
+				rez = Rezeptverwaltung.getInstance().getRezeptByName1(nameInput);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			@SuppressWarnings("unchecked")
+			BeanItemContainer<RezeptHasArtikel> bicArtikel = (BeanItemContainer<RezeptHasArtikel>) zutatenTable
+					.getContainerDataSource();
+			System.out.println("ausgArtikel vor bicArtikel: " + ausgArtikel);
+			ausgArtikel = bicArtikel.getItemIds();
+			System.out.println("ausgArtikel: " + ausgArtikel);
+			System.out.println("rez: " + rez);
+			rez.setArtikel(ausgArtikel);
+
+			if (ausgArtikel.isEmpty()) {
+				Notification notification = new Notification(
+						"Bitte Zutaten eintragen");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+				aus = "2";
+				return;
+			}
+
+
+
+			try {
+				System.out.println("rezeptAnlegen speichern id: "
+						+ rezept.getId());
+				Rezeptverwaltung.getInstance().saveArtikel(rez);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		} catch (Exception e) {
@@ -801,10 +813,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				} else {
-				rezeptSpeichern();
-				rezeptAlsMenuSpeichern();
-				rezeptAlsHauptgerichtSpeichern();
-				System.out.println("Rezept wurde als Menü gespeichert");
+					rezeptSpeichern();
+					rezeptAlsMenuSpeichern();
+					rezeptAlsHauptgerichtSpeichern();
+					System.out.println("Rezept wurde als Menü gespeichert");
 				}
 			} else {
 				Notification notification = new Notification(
@@ -820,7 +832,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			} else {
-//				System.out.println("rezeptAnlegen in Methode speichern ID: " + rezept.getId());
+				// System.out.println("rezeptAnlegen in Methode speichern ID: "
+				// + rezept.getId());
 				rezeptSpeichern();
 				// Plausibiltätasprüfung für Zutatenliste läuft in der Methode
 				// Speichern
