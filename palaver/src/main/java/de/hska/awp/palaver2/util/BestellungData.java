@@ -88,14 +88,22 @@ public class BestellungData {
 		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueChangeEvent();
+
+				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+				gesamt.setValue(String.valueOf(gesammt));
+
+				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
+
 			}
 		});
 
 		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueChangeEvent();
+				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+				gesamt.setValue(String.valueOf(gesammt));
+
+				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
 			}
 		});
 
@@ -105,7 +113,8 @@ public class BestellungData {
 				if (freitag.getValue() >= getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
-				} else {
+				}
+				if (freitag.getValue() < getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
 				}
 			}
@@ -114,12 +123,16 @@ public class BestellungData {
 		this.montag.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if (montag.getValue() >= getInt(gesamt.getValue())) {
-					montag.setValue(getInt(gesamt.getValue()));
-					freitag.setValue(0);
-				} else {
+
+				if (montag.getValue() < 0) {
+					for (int i = montag.getValue(); i < 0; i++) {
+						montag.setValue(montag.getValue() + 1);
+					}
+				}
+				if (montag.getValue() < getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
+
 			}
 		});
 	}
@@ -163,14 +176,20 @@ public class BestellungData {
 		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueChangeEvent();
+				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+				gesamt.setValue(String.valueOf(gesammt));
+
+				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
 			}
 		});
 
 		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				valueChangeEvent();
+				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+				gesamt.setValue(String.valueOf(gesammt));
+
+				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
 			}
 		});
 
@@ -192,7 +211,13 @@ public class BestellungData {
 				if (montag.getValue() >= getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
-				} else {
+				}
+				if (montag.getValue() < 0) {
+					for (int i = montag.getValue(); i < 0; i++) {
+						montag.setValue(montag.getValue() + 1);
+					}
+				}
+				if (montag.getValue() < getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
 			}
@@ -321,16 +346,6 @@ public class BestellungData {
 
 	public Artikel getBestellungArtikel() {
 		return this.artikel;
-	}
-
-	private void valueChangeEvent() {
-		try {
-			Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
-			gesamt.setValue(gesammt + "");
-			montag.setValue(gesammt);
-		} catch (NumberFormatException e) {
-			gesamt.setValue("Invalid");
-		}
 	}
 
 	public static Integer getInt(String str) {
