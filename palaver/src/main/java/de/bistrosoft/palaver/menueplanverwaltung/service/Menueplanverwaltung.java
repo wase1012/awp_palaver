@@ -57,7 +57,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		for (MenueComponent mc : menueplan.getMenues()){
 
 			try {
-				super.createMenueForMenueplan(menueplan, mc.getMenue(), mc.getCol(), mc.getRow());
+				super.createMenueForMenueplan(menueplan, mc.getMenue(),mc.getAngezeigterName(), mc.getCol(), mc.getRow());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

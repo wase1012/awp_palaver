@@ -35,11 +35,11 @@ public class MenueplanDAO extends AbstractDAO {
 	private final String ID = "id";
 	
 	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE + " WHERE week = {0} AND year = {1,number,#}";
-	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*, mhm.spalte, mhm.zeile " +
+	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*,mhm.angezName, mhm.spalte, mhm.zeile " +
 							"FROM menue men, menueplan_has_menues mhm " +
 							"WHERE men.id = mhm.menue AND mhm.menueplan = {0}";
-	private final String CREATE_MENUE_FOR_MENUEPLAN ="INSERT INTO menueplan_has_menues (menueplan, menue, spalte, zeile) " +
-														"VALUES ({0},{1},{2},{3})";
+	private final String CREATE_MENUE_FOR_MENUEPLAN ="INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile) " +
+														"VALUES ({0},{1},{2},{3},{4})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
 //	private final String GET_MENUES_BY_MENUEPLAN = "";
@@ -85,7 +85,8 @@ public class MenueplanDAO extends AbstractDAO {
 				menue.setFussnoten(fussnoten);
 				Geschmack geschmack = Geschmackverwaltung.getInstance().getGeschmackById(setMenues.getLong("geschmack_fk"));
 				menue.setGeschmack(geschmack);
-				MenueComponent menueComp = new MenueComponent(menue, null, null, row, col, false);
+				String angezName=setMenues.getString("angezName");
+				MenueComponent menueComp = new MenueComponent(menue,angezName, null, null, row, col, false);
 				menues.add(menueComp);
 			}
 			menueplan.setMenues(menues);
@@ -159,8 +160,9 @@ public class MenueplanDAO extends AbstractDAO {
 		return menues;
 	}
 	
-	public void createMenueForMenueplan(Menueplan mpl, Menue menue, int col, int row) throws ConnectException, DAOException{
-		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN, mpl.getId(),menue.getId(),col,row));
+	public void createMenueForMenueplan(Menueplan mpl, Menue menue,String name, int col, int row) throws ConnectException, DAOException{
+		String strName = "'"+name+"'";
+		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN, mpl.getId(),menue.getId(),strName,col,row));
 		
 	}
 
