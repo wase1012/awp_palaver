@@ -3,6 +3,9 @@ package de.hska.awp.palaver2.gui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
@@ -30,6 +33,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class NachrichtAnzeigen extends VerticalLayout  implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(NachrichtAnzeigen.class.getName());
 
 	private HorizontalLayout horizontallayout = new HorizontalLayout();
 	private VerticalLayout nachrichtanzeigenlayout = new VerticalLayout();
@@ -103,12 +108,12 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 		
 		if(nl!=null){
 			
-			//Sortieren der Nachrichten nach der größten ID
+			//Sortieren der Nachrichten nach der grï¿½ï¿½ten ID
 			final List<Nachricht> neu = new ArrayList<Nachricht>();
 			if (nl != null) {
 				for (int z = 0; z < nl.size(); z++) {
@@ -160,12 +165,12 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				{
 					public void buttonClick(ClickEvent event){
 						try {
-							System.out.print("Id des Löschbutton beim löschen");
+							System.out.print("Id des Lï¿½schbutton beim lï¿½schen");
 							System.out.print(Long.valueOf(loeschbutton.getId()));
 							System.out.print("    ");
 						Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
 						} catch (Exception e) {
-						System.out.println(e);
+							log.error(e.toString());
 						}
 						
 					
@@ -197,7 +202,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 			}
 		} 
 		catch(Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 		
 
@@ -237,7 +242,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
-				// TODO Sollte später funktionieren, andernfalls Mitarbeiter über username suchen und setzen
+				// TODO Sollte spï¿½ter funktionieren, andernfalls Mitarbeiter ï¿½ber username suchen und setzen
 //				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {
@@ -246,8 +251,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 					Nachrichtenverwaltung.getInstance().createNachricht(
 							nachricht);
 				} catch (Exception e) {
-					throw new NullPointerException(
-							"Bitte gültige Werte eingeben");
+					log.error(e.toString());
 				}
 				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
 			}
