@@ -38,7 +38,7 @@ public class Menueverwaltung extends MenueDAO{
 	
 	public List<Menue> getAllMenuesTabelle() {
 		try {
-			return super.getAllMenues();
+			return super.getAllMenuesTabelle();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

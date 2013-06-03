@@ -59,6 +59,24 @@ public class MenueDAO extends AbstractDAO {
 
 		return list;
 	}
+	public List<Menue> getAllMenuesTabelle() throws ConnectException, DAOException,
+	SQLException {
+List<Menue> list = new ArrayList<Menue>();
+ResultSet set = getManaged(GET_ALL_MENUES);
+
+while (set.next()) {
+	list.add(new Menue(set.getLong("id"),
+			set.getString("name"),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")).getVorname(),
+			MenueartDAO.getInstance().getMenueartById(set.getLong("menueart_fk")),
+			GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk"))));
+			
+			
+
+}
+
+return list;
+}
 
 	public List<Rezept> getRezepteByMenue() throws ConnectException,
 			DAOException, SQLException {
