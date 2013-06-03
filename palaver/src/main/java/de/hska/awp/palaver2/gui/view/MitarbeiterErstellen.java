@@ -16,6 +16,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -23,6 +24,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
@@ -321,7 +323,20 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				mitarbeiter.setRollen(rollenlist);
 
 				try {
+					boolean vorhanden = false;
+					for (int i = 0; i < Mitarbeiterverwaltung.getInstance().getAllMitarbeiter().size(); i++) {
+						if (benutzernameInput.equals(Mitarbeiterverwaltung.getInstance().getAllMitarbeiter().get(i).getBenutzername())) {
+							vorhanden = true;
+						}
+					}
+					if(vorhanden == false) {
+					
 					Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+					} else {
+						Notification notification = new Notification("Der Benutzername ist bereits vorhanden!");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+					}
 				} catch (Exception e) {
 					log.error(e.toString());
 				}

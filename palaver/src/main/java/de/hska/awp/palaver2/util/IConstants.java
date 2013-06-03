@@ -74,6 +74,8 @@ public interface IConstants
 	String 		BUTTON_NEIN = "Nein";
 	String		BUTTON_EMAILVERSAND = "Per Email versenden";
 	String		BUTTON_DOWNLOAD = "Download";
+	String		BUTTON_BACK = "zurück";
+	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
 	
 	// Icons fuer Knoepfe
 	String		BUTTON_DELETE_ICON = "img/delete.ico";

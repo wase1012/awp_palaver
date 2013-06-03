@@ -227,6 +227,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		form.setSpacing(true);
 
 		HorizontalLayout hl = new HorizontalLayout();
+		hl.setSpacing(true);
 		hl.setWidth("100%");
 		l.setWidth("100%");
 		datetime.setCaption("Montag");

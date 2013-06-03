@@ -26,6 +26,7 @@ import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
@@ -46,15 +47,15 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 	private HorizontalLayout fenster = new HorizontalLayout();
 	private HorizontalLayout control = new HorizontalLayout();
 
-	private FilterTable bestellungen = new FilterTable("Bestellung");
+	private FilterTable bestellungen = new FilterTable("Bestellungen");
 	private FilterTable bpositionen = new FilterTable("Bestellpositionen");
 	private Bestellung bestellung;
 	private Bestellposition bestellposition;
 
 	private BeanItemContainer<Bestellposition> bpcontainer;
 
-	private Button allBestellungen = new Button("Alle Bestellungen");
-	private Button zurueck = new Button("zur�ck");
+	private Button allBestellungen = new Button(IConstants.BUTTON_ALL_ORDERS);
+	private Button zurueck = new Button(IConstants.BUTTON_BACK);
 
 	public BestellungAnzeigen() {
 		super();
@@ -71,7 +72,9 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 		fenster.addComponent(bpositionen);
 
 		bestellungen.setSizeFull();
+		bestellungen.setStyleName("palaverTable");
 		bpositionen.setSizeFull();
+		bpositionen.setStyleName("palaverTable");
 
 		fenster.setExpandRatio(bestellungen, 1);
 		fenster.setExpandRatio(bpositionen, 2);
