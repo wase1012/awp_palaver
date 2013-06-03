@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,11 +23,13 @@ import com.vaadin.ui.themes.BaseTheme;
 
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.bistrosoft.palaver.data.RegelDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -42,7 +45,9 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
-	List<Regel> regeln = Regel.getTestRegeln();
+//	List<Regel> regeln = Regel.getTestRegeln();
+	List<Regel> regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
+	 
 
 	public Menueplan getMenueplan() {
 		return menueplan;

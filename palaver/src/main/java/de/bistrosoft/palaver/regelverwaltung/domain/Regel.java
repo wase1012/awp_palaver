@@ -192,6 +192,10 @@ public class Regel {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
 		} else if (regeltyp.equals("Fussnote")) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
+		} else if (regeltyp.equals("Zubereitung")) {
+			mc.addFehlerRegel(checkZubereitung(mc, mp));
+		} else if (regeltyp.equals("Aufwand")) {
+			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
 
 	}
