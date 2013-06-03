@@ -185,6 +185,82 @@ public class Regel {
 
 	}
 	
+	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {
+		Menue menue = mc.getMenue();
+		System.out.print(mc.col+"/");
+		System.out.print(mc.row+"/");
+		System.out.print("Geschmack/");
+		System.out.println(menue.getGeschmack());
+//		if(menue.getFussnoten()!=null){
+			if (operator.equals("enthält nicht")) {	
+				System.out.println("#Fussnote: enthält nicht");
+				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
+					System.out.println("#Fussnote: not null"+menue.getFussnoten().size());
+					for(Fussnote fs: menue.getFussnoten()){
+						System.out.println("#Fussnote:"+ fs.getName());
+						if (kriterienlist.indexOf(fs.getName()) >= 0) {
+							System.out.println("#Fussnote: return "+ fs.getName());
+							return null;
+						} return this;
+					}
+				} else return this;
+				
+			} else if (operator.equals("enthält")) {
+				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
+					for(Fussnote fs: menue.getFussnoten()){
+						if (kriterienlist.indexOf(fs.getName()) == -1) {
+							return null;
+						}else return this;
+					}
+				} else return null;
+				
+			} else if (operator.equals("max")) {
+				if(menue.getFussnoten()!=null){
+					int count = 0;
+					int maxValue = Integer.MAX_VALUE;
+					try {
+						maxValue = Integer.parseInt(kriterienlist.get(0));
+					} catch (NumberFormatException e) {
+						// do something! anything to handle the exception.
+					}
+
+					DDGridLayout grid = mp.layout;
+					for(Fussnote fs : mc.getMenue().getFussnoten()){
+						count=0;
+					for (int col = 0; col < grid.getColumns(); ++col) {
+						for (int row = 0; row < grid.getRows(); ++row) {
+							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+									&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+								if (grid.getComponent(col, row) instanceof MenueComponent) {
+									MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+										if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
+											if (tmp.getFehlerRegeln() != null) {
+												if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+													++count;
+													if (count > maxValue) {
+														return this;
+													}
+												}
+											} 
+											else {
+												++count;
+												if (count > maxValue) {
+													return this;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} else return null;		
+			}
+//		}
+		return null;
+	}
+
+	
 	private Regel checkFussnote(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 		System.out.print(mc.col+"/");
