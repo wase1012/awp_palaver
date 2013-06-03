@@ -49,6 +49,8 @@ public class MenueComponent extends CustomComponent{
 	private List<String> fehlermeldungen;
 	private List<Regel> FehlerRegeln;
 
+	private String angezeigterName;
+	
 	List<Fussnote> fns;
 	String fn;
 	
@@ -56,6 +58,14 @@ public class MenueComponent extends CustomComponent{
 	
 	
 	
+	public String getAngezeigterName() {
+		return angezeigterName;
+	}
+
+	public void setAngezeigterName(String anzezeigterName) {
+		this.angezeigterName = anzezeigterName;
+	}
+
 	public List<Regel> getFehlerRegeln() {
 		return FehlerRegeln;
 	}
@@ -187,7 +197,7 @@ public class MenueComponent extends CustomComponent{
 	}
 
 	// Konstruktor für Menükomponente 
-	public MenueComponent(Menue menue, MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
+	public MenueComponent(Menue menue,String angezName, MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
 		this.isChanged = isChanged;
 		col = nCol;
 		row = nRow;
@@ -195,6 +205,7 @@ public class MenueComponent extends CustomComponent{
 		menueGrid = nMenueGrid;
 		comp = this;
 		this.setMenue(menue);
+		this.angezeigterName=angezName;
 		
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
@@ -213,7 +224,7 @@ public class MenueComponent extends CustomComponent{
 		}
 
 		@SuppressWarnings("deprecation")
-		Label lbText = new Label("<div align=center>"+ menue.getName() +"<BR>"+fn+"</div>", Label.CONTENT_XHTML);
+		Label lbText = new Label("<div align=center>"+ angezName +"<BR>"+fn+"</div>", Label.CONTENT_XHTML);
 		vl.addComponent(lbText);
 		
 		
