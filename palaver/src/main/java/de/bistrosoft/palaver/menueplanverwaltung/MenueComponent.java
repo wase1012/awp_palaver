@@ -319,7 +319,7 @@ public class MenueComponent extends CustomComponent{
 		
 		btFehler= new Button();
 		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
-		btFehler.setIcon(new ThemeResource("img/Menue.png"));
+		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
 //		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
 		btFehler.addStyleName("menueplan-regel");
 		btFehler.setWidth("20px");

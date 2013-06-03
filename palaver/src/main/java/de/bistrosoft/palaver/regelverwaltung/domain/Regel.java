@@ -408,6 +408,65 @@ public class Regel {
 		}
 		return null;
 	}
+	
+	private Regel checkAufwand(MenueComponent mc, MenueplanGridLayout mp) {
+		System.out.println("#Geschmack");
+		Menue menue = mc.getMenue();
+		System.out.print(mc.col+"/");
+		System.out.print(mc.row+"/");
+		System.out.print("Geschmack/");
+		System.out.println(menue.getGeschmack());
+		if(menue.getGeschmack()!=null){
+			if (operator.equals("//enthält nicht")) {
+				System.out.println("ent nit");
+				System.out.println(menue.getGeschmack().getName().toString());
+					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
+						return this;
+				}
+			} else if (operator.equals("//enthält")) {
+					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
+						return this;
+					}
+			} else if (operator.equals("max")) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					// do something! anything to handle the exception.
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (int col = 0; col < grid.getColumns(); ++col) {
+					for (int row = 0; row < grid.getRows(); ++row) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							if (grid.getComponent(col, row) instanceof MenueComponent) {
+								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+								if (mc.getMenue().getKoch().equals(tmp.getMenue().getKoch()) && mc.getMenue().getAufwand()) {
+									if (tmp.getFehlerRegeln() != null) {
+										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+											++count;
+											if (count > maxValue) {
+												return this;
+											}
+										}
+									} else {
+										++count;
+										if (count > maxValue) {
+											return this;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 
 	private Regel checkMenueart(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
