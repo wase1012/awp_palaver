@@ -1,5 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -33,16 +36,18 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 	
+	private static final Logger	log	= LoggerFactory.getLogger(MengeneinheitenAnzeigen.class.getName());
+	
 	private VerticalLayout layout = new VerticalLayout();
 	
 	private Button hinzufuegen = new Button(IConstants.BUTTON_ADD);
 	private Table table;
 	
 	private TextField			name = new TextField("Name");
-	private TextField			kurz = new TextField("Kürzel");
+	private TextField			kurz = new TextField("Kï¿½rzel");
 	
 	private TextField			nameUp = new TextField("Name");
-	private TextField			kurzUp = new TextField("Kürzel");
+	private TextField			kurzUp = new TextField("Kï¿½rzel");
 	
 	private String				nameText;
 	private String				kurzText;
@@ -91,7 +96,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Mengeneinheit hinzufügen");
+					mengNeu.setCaption("Mengeneinheit hinzufï¿½gen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -150,7 +155,8 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 							try {
 								Mengeneinheitverwaltung.getInstance().updateMengeneinheit(mengeUpdate);
 							} catch (Exception e) {
-								throw new NullPointerException("Bitte gültige Werte eingeben");
+//								throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+								log.error(e.toString());
 							}
 							UI.getCurrent().removeWindow(mengNeu);
 							ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
@@ -197,7 +203,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 		} 
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			log.error(e.toString());
 		}	
 		
 		this.addComponent(layout);
@@ -214,7 +220,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Mengeneinheit hinzufügen");
+				mengNeu.setCaption("Mengeneinheit hinzufï¿½gen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -252,11 +258,11 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(15);
-				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
+				name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 4,15, false));
 				
 				kurz.setImmediate(true);
 				kurz.setMaxLength(4);	
-				kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
+				kurz.addValidator(new StringLengthValidator("Bitte gï¿½ltiges Kï¿½rzel eingeben", 1,4, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -278,9 +284,9 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						try {
 							Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
 						} catch (Exception e) {
-							e.printStackTrace();
+							log.error(e.toString());
 							if(e.toString().contains("INSERT INTO mengeneinheit"))
-								notification = "diese Name oder dieses Kürzel sind bereits in der System vorhanden.";
+								notification = "diese Name oder dieses Kï¿½rzel sind bereits in der System vorhanden.";
 							else
 								notification = e.toString();
 						}
