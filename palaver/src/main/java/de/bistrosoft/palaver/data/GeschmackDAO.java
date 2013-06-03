@@ -65,7 +65,7 @@ public class GeschmackDAO extends AbstractDAO {
 	
 	public Geschmack getGeschmackByMenue(Long id) throws ConnectException,
 	DAOException, SQLException {
-ResultSet set = get(MessageFormat.format(GET_GESCHMACK_BY_MENUE, id));
+ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE, id));
 while (set.next()) {
 	geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
 			set.getBoolean(INAKTIV));

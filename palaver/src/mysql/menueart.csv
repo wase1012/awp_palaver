@@ -1,4 +1,8 @@
 id;name
-1;Hauptgericht
-2;Beilage 1
-3;Beilage 2
+1;Fleischgericht
+2;Hauptgericht
+3;Pasta
+4;Suppe
+5;Salat
+6;Dessert
+7;unbekannt
