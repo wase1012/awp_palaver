@@ -274,23 +274,27 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 				mitarbeiter.setName(nameInput);
 				mitarbeiter.setVorname(vornameInput);
 				mitarbeiter.setEmail(emailInput);
-				try {
-					mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
-				} catch (UnsupportedEncodingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NoSuchAlgorithmException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+
+				if (passwortInput.equals(mitarbeiter.getPasswort())) {
+					mitarbeiter.setPasswort(passwortInput);
+				} else {
+					try {
+						mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
+					} catch (UnsupportedEncodingException e1) {
+						e1.printStackTrace();
+					} catch (NoSuchAlgorithmException e1) {
+						e1.printStackTrace();
+					}
 				}
+
 				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 				mitarbeiter.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
-				// zurï¿½ck z.B. [1, 3]
+				// zurück z.B. [1, 3]
 				// String auseinander nehmen und die Objekte anhand der ID
-				// suchen und der Liste hinzufï¿½gen
+				// suchen und der Liste hinzufügen
 				List<String> rollenId = null;
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
@@ -360,7 +364,8 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		}
 
 		// Berechtigung: Administrator darf Mitarbeiter bearbeiten und der
-		// eigene Mitarbeiter darf sich selber bearbeiten mit Ausnahme der Rollen
+		// eigene Mitarbeiter darf sich selber bearbeiten mit Ausnahme der
+		// Rollen
 		Mitarbeiter m = Application.getInstance().getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
