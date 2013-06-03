@@ -43,9 +43,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class MitarbeiterErstellen extends VerticalLayout implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(MitarbeiterErstellen.class.getName());
-	
+
+	private static final Logger log = LoggerFactory.getLogger(MitarbeiterErstellen.class.getName());
+
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -207,6 +207,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 			public void valueChange(final ValueChangeEvent event) {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 				nameInput = valueString;
+				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
+					speichern.setEnabled(true);
+				}
 
 			}
 		});
@@ -217,6 +220,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				vornameInput = valueString;
+				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
+					speichern.setEnabled(true);
+				}
 			}
 		});
 
@@ -226,6 +232,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				emailInput = valueString;
+				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
+					speichern.setEnabled(true);
+				}
 			}
 		});
 
@@ -235,6 +244,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				passwortInput = valueString;
+				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
+					speichern.setEnabled(true);
+				}
 			}
 		});
 
@@ -290,6 +302,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				}
 				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
+
 				mitarbeiter.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
@@ -329,26 +342,22 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 							vorhanden = true;
 						}
 					}
-					if(vorhanden == false) {
-					
-					Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+					if (vorhanden == false) {
+
+						Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+						ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 					} else {
 						Notification notification = new Notification("Der Benutzername ist bereits vorhanden!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					}
+
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
 
-				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
-
 			}
 		});
-	}
-
-	@Override
-	public void getViewParam(ViewData data) {
 
 		// Berechtigung: Nur Administrator darf Mitarbeiter anlegen
 		Mitarbeiter m = Application.getInstance().getUser();
@@ -363,11 +372,15 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 					austrittsdatum.setEnabled(true);
 					benutzername.setEnabled(true);
 					rollen.setEnabled(true);
-					speichern.setEnabled(true);
+					speichern.setEnabled(false);
 				}
 
 			}
 		}
+	}
+
+	@Override
+	public void getViewParam(ViewData data) {
 
 	}
 }
