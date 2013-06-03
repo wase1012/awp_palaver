@@ -32,7 +32,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 
 	private VerticalLayout fenster = new VerticalLayout();
 	
-	private Button auswaehlen = new Button("ausw√§hlen");
+	private Button auswaehlen = new Button("ausw‰hlen");
 
 	private FilterTable bestellungen = new FilterTable("Bestellung");
 	private Bestellung bestellung;
