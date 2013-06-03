@@ -11,11 +11,13 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.MitarbeiterHasRollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 /**
- * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt MitarbeiterHasRollen bereit.
+ * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt
+ * MitarbeiterHasRollen bereit.
+ * 
  * @author Christian Barth
- *
+ * 
  */
-public class MitarbeiterHasRollenDAO extends AbstractDAO{
+public class MitarbeiterHasRollenDAO extends AbstractDAO {
 
 	private static MitarbeiterHasRollenDAO instance = null;
 
@@ -23,11 +25,10 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 	private final static String MITARBEITER_FK = "mitarbeiter_fk";
 	private final static String ROLLEN_FK = "rollen_fk";
 	private final static String GET_ALL_MITARBEITER_HAS_ROLLEN = "SELECT * FROM mitarbeiter_has_rollen";
-	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen " +
-			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0}";
-	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen " +
-			"WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
-	
+	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen " + "WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0}";
+	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen "
+			+ "WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
+
 	public MitarbeiterHasRollenDAO() {
 		super();
 	}
@@ -38,50 +39,46 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Die Methode liefert alle MitarbeiterHasRollen zurück.
+	 * 
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<MitarbeiterHasRollen> getAllMitarbeiterHasRollen() throws ConnectException, DAOException, SQLException
-	{
+	public List<MitarbeiterHasRollen> getAllMitarbeiterHasRollen() throws ConnectException, DAOException, SQLException {
 		List<MitarbeiterHasRollen> list = new ArrayList<MitarbeiterHasRollen>();
-		ResultSet set = getManaged(GET_ALL_MITARBEITER_HAS_ROLLEN);		
-		while(set.next())
-		{
-			list.add(new MitarbeiterHasRollen(set.getLong("mitarbeiter_fk"),
-					set.getLong("rollen_fk")
-								));
+		ResultSet set = getManaged(GET_ALL_MITARBEITER_HAS_ROLLEN);
+		while (set.next()) {
+			list.add(new MitarbeiterHasRollen(set.getLong("mitarbeiter_fk"), set.getLong("rollen_fk")));
 		}
 		return list;
 	}
-	
+
 	/**
-	 * Die Methode liefert alle MitarbeiterHasRollen anhand eines Mitarbeiter und einer Rolle zurück.
+	 * Die Methode liefert alle MitarbeiterHasRollen anhand eines Mitarbeiter
+	 * und einer Rolle zurück.
+	 * 
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public MitarbeiterHasRollen getMitarbeiterHasRollenByMitarbeiterAndRolle(Mitarbeiter mitarbeiter, Rollen rolle) 
-			throws ConnectException, DAOException, SQLException
-	{
+	public MitarbeiterHasRollen getMitarbeiterHasRollenByMitarbeiterAndRolle(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException,
+			DAOException, SQLException {
 		MitarbeiterHasRollen mitarbeiterhasrollen = new MitarbeiterHasRollen();
-		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE, mitarbeiter.getId(), rolle.getId()));		
-		while(set.next())
-		{
-			mitarbeiterhasrollen = new MitarbeiterHasRollen(set.getLong("mitarbeiter_fk"),
-					set.getLong("rollen_fk")
-								);
+		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE, mitarbeiter.getId(), rolle.getId()));
+		while (set.next()) {
+			mitarbeiterhasrollen = new MitarbeiterHasRollen(set.getLong("mitarbeiter_fk"), set.getLong("rollen_fk"));
 		}
 		return mitarbeiterhasrollen;
 	}
-	
+
 	/**
 	 * Die Methode erzeugt einen MitarbeiterHasRollen in der Datenbank.
+	 * 
 	 * @param mitarbeiter
 	 * @param rolle
 	 * @throws ConnectException
@@ -89,29 +86,25 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO{
 	 * @throws SQLException
 	 */
 	public void createMitarbeiterHasRollen(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException, DAOException, SQLException {
-		
-		
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + MITARBEITER_FK + ","
-				+ ROLLEN_FK + ")"
-				+ "VALUES" + "('" + mitarbeiter.getId() + "','"
+
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + MITARBEITER_FK + "," + ROLLEN_FK + ")" + "VALUES" + "('" + mitarbeiter.getId() + "','"
 				+ rolle.getId() + "')";
-		this.putManaged(INSERT_QUERY);
-	}	
-	
+		this.putManaged(INSERTQUERY);
+	}
+
 	/**
 	 * Die Methode löscht einen MitarbeiterHasRollen in der Datenbank.
+	 * 
 	 * @param mitarbeiter
 	 * @param rolle
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void deleteMitarbeiterHasRollen(Mitarbeiter mitarbeiter) throws ConnectException,
-			DAOException, SQLException {
+	public void deleteMitarbeiterHasRollen(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
 
 		if (mitarbeiter == null) {
-			throw new NullPointerException(
-					"Es wurde kein Mitarbeiter übergeben");
+			throw new NullPointerException("Es wurde kein Mitarbeiter übergeben");
 		}
 		putManaged(MessageFormat.format(DELETE, mitarbeiter.getId()));
 	}
