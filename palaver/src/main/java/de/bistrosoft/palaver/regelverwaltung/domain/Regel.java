@@ -1,6 +1,7 @@
 package de.bistrosoft.palaver.regelverwaltung.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.vaadin.server.Page;
@@ -120,6 +121,61 @@ public class Regel {
 		this.kriterien = kriterien;
 		this.fehlermeldung = fehlermeldung;
 		this.aktiv = aktiv;
+		this.kriterienlist=Arrays.asList(kriterien.split(", "));
+		
+		//Fülle List<Integer>
+		//Zeilen
+		int topRows=2;
+		List<String> strZeilen=Arrays.asList(zeilen.split(","));
+//		List<String> strZeilen=Arrays.asList(zeilen.split("\\s*,\\s*"));
+		zeilenlist=new ArrayList<Integer>();
+		for(String s : strZeilen){
+			switch (s.trim()) {
+			case "Fleischgericht":
+				zeilenlist.add(0+topRows);
+				break;
+			case "Hauptgericht":
+				zeilenlist.add(1+topRows);
+				zeilenlist.add(2+topRows);
+				break;
+			case "Pastagericht":
+				zeilenlist.add(3+topRows);
+				break;
+			case "Suppe/Salat":
+				zeilenlist.add(4+topRows);
+				break;
+			case "Dessert":
+				zeilenlist.add(5+topRows);
+				break;
+			default:
+				break;
+			}
+		}
+		//Spalten
+		int leftCols=1;
+		List<String> strSpalten=Arrays.asList(spalten.split(","));
+		spaltenlist=new ArrayList<Integer>();
+		for(String s : strSpalten){
+			switch (s.trim()) {
+			case "Montag":
+				spaltenlist.add(0+leftCols);
+				break;
+			case "Dienstag":
+				spaltenlist.add(1+leftCols);
+				break;
+			case "Mittwoch":
+				spaltenlist.add(2+leftCols);
+				break;
+			case "Donnerstag":
+				spaltenlist.add(3+leftCols);
+				break;
+			case "Freitag":
+				spaltenlist.add(4+leftCols);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public Regel(String regeltyp, List<Integer> zeilen, List<Integer> spalten,
@@ -189,11 +245,11 @@ public class Regel {
 		System.out.println("Count Fussnoten: "+mc.getMenue().getFussnoten().size());
 		if (regeltyp.equals("Name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
-		} else if (regeltyp.equals("Menueart")) {
+		} else if (regeltyp.equals("Menüart")) {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
-		} else if (regeltyp.equals("Fussnote")) {
+		} else if (regeltyp.equals("Fußnote")) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
 		} else if (regeltyp.equals("Zubereitung")) {
 			mc.addFehlerRegel(checkZubereitung(mc, mp));
@@ -300,10 +356,13 @@ public class Regel {
 				} else return this;
 				
 			} else if (operator.equals("enthält")) {
+				System.out.println("###enthält");
 				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
 					for(Fussnote fs: menue.getFussnoten()){
+						
+						System.out.println("#Fussnote:"+ fs.getName());
 						if (kriterienlist.indexOf(fs.getName()) == -1) {
-							return null;
+							
 						}else return this;
 					}
 				} else return null;
@@ -482,6 +541,7 @@ public class Regel {
 		System.out.println(menue.getMenueart());
 		if(menue.getMenueart()!=null){
 			if (operator.equals("enthält nicht")) {
+				System.out.println("!!!!!!!!"+menue.getMenueart().getName().toString());
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) == -1) {
 						return this;
 				}
@@ -541,6 +601,41 @@ public class Regel {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
+			}
+		} else if (operator.equals("max")) {
+			int count = 0;
+			int maxValue = Integer.MAX_VALUE;
+			try {
+				maxValue = Integer.parseInt(kriterienlist.get(0));
+			} catch (NumberFormatException e) {
+				// do something! anything to handle the exception.
+			}
+
+			DDGridLayout grid = mp.layout;
+			for (int col = 0; col < grid.getColumns(); ++col) {
+				for (int row = 0; row < grid.getRows(); ++row) {
+					if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
+							&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+						if (grid.getComponent(col, row) instanceof MenueComponent) {
+							MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+							if (mc.getMenue().getName().equals(tmp.getMenue().getName())) {
+								if (tmp.getFehlerRegeln() != null) {
+									if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+										++count;
+										if (count > maxValue) {
+											return this;
+										}
+									}
+								} else {
+									++count;
+									if (count > maxValue) {
+										return this;
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		return null;

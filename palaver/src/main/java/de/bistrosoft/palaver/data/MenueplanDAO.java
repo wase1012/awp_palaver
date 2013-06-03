@@ -11,8 +11,10 @@ import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
@@ -85,6 +87,7 @@ public class MenueplanDAO extends AbstractDAO {
 				menue.setFussnoten(fussnoten);
 				Geschmack geschmack = Geschmackverwaltung.getInstance().getGeschmackById(setMenues.getLong("geschmack_fk"));
 				menue.setGeschmack(geschmack);
+				Menueart menueart = Menueartverwaltung.getInstance().getMenueartById(setMenues.getLong("menueart_fk"));
 				String angezName=setMenues.getString("angezName");
 				MenueComponent menueComp = new MenueComponent(menue,angezName, null, null, row, col, false);
 				menues.add(menueComp);
