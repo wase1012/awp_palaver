@@ -556,8 +556,21 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		});
 	
 		//in diesen prozeduren werden die daten des Menues in die Felder uebertragen
+		try {
+			menue3 = MenueDAO.getInstance().getAllItemsForUpdate(menue2.getId());
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		fussnotenEinlesen(menue2);
-		normalEinlesen(menue2);
+		normalEinlesen(menue3);
 		beilagenEinlesen(menue2);
 
 		//die Merker werden geleert, wichtig dies darf erst nach den 
@@ -926,7 +939,7 @@ private void aendern() {
 			Menue m = menuetabelleSpeichern();
 	
 	try {
-		Menueverwaltung.getInstance().updateMenue(m);
+		Menueverwaltung.getInstance().updateMenue(m, menue2.getId());
 		
 	} catch (Exception e) {
 		e.printStackTrace();

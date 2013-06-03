@@ -77,6 +77,25 @@ while (set.next()) {
 
 return list;
 }
+	
+	public Menue getAllItemsForUpdate(Long id) throws ConnectException, DAOException,
+	SQLException {
+	Menue list = new Menue();
+	ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_ID, id));
+
+	while (set.next()) {
+	list = new Menue(set.getLong("id"),
+			set.getString("name"),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")).getVorname(),
+			GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk")),
+			MenueartDAO.getInstance().getMenueartById(set.getLong("menueart_fk")),
+			set.getBoolean("aufwand"),set.getBoolean("favorit"));
+			
+			
+
+	}
+	return list;
+	}
 
 	public List<Rezept> getRezepteByMenue() throws ConnectException,
 			DAOException, SQLException {
@@ -213,7 +232,7 @@ String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH + "," + M
 this.putManaged(INSERT_QUERY);
 }
 
-public void updateMenue(Menue menue) throws ConnectException, DAOException,
+public void updateMenue(Menue menue, Long mid) throws ConnectException, DAOException,
 	SQLException {
 String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
 		+ menue.getName() + "' ," + KOCH + " = "
@@ -222,7 +241,8 @@ String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
 		+ menue.getMenueart().getId() + ", aufwand = "
 		+ Util.convertBoolean(menue.getAufwand()) + ", favorit = "
 		+ Util.convertBoolean(menue.getFavorit()) + " WHERE menue.id = "
-		+ menue.getId() + ";";
+		+ mid + ";";
+System.out.println(INSERT_QUERY);
 this.putManaged(INSERT_QUERY);
 }
 
