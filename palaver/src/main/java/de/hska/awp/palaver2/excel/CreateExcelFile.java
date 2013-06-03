@@ -36,6 +36,7 @@ public class CreateExcelFile {
 		File file = null;
 		try {
 			boolean mehrereliefertermine = bestellung.getLieferant().getMehrereliefertermine();
+			String path = "/usr/share/palaver/";
 			String filename = ("bestellung"
 					+ bestellung.getLieferant().getName() + "id"
 					+ bestellung.getId() + ".xls").replaceAll(" ", "").toLowerCase();
@@ -122,8 +123,9 @@ public class CreateExcelFile {
 			rowEnde.createCell((short) 2).setCellValue("Bestellung an " + bestellung.getLieferant().getName() +
 					" am " + dateFormat.format(new Date()) + " erfolgt.");
 			
-			FileOutputStream fileOut = new FileOutputStream(filename);
-			file = new File(filename);
+			//Create Excel
+			FileOutputStream fileOut = new FileOutputStream(path + filename);
+			file = new File(path + filename);
 			hwb.write(fileOut);
 			fileOut.close();
 			System.out.println("Your excel file has been generated!");

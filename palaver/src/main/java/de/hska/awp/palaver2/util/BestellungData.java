@@ -311,7 +311,7 @@ public class BestellungData {
 		try {
 			Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
 			gesamt.setValue(gesammt + "");
-			freitag.setValue(gesammt);
+			montag.setValue(gesammt);
 		}
 		catch (NumberFormatException e) {
 			gesamt.setValue("Invalid");

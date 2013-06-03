@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -39,6 +40,7 @@ import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
@@ -505,12 +507,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		/**
 		 * Daten in Felder schreiben
 		 */
+		System.out.println("name zu rezept: " + name);
 		try {
 			name.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId())
 					.getName().toString());
 		} catch (Exception e3) {
 			e3.printStackTrace();
 		}
+		System.out.println("name zu rezept nach ca: " + name);
 
 		try {
 			listzubereitung = ZubereitungDAO.getInstance()
@@ -546,29 +550,118 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-
+		
+		
+		
+//		try {
+//			artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
+//					KuchenrezeptHasArtikel.class);
+//			
+//			zutatenTable = null;
+//			zutatenTable = new Table();
+//			zutatenTable.setSizeFull();
+//			zutatenTable.setStyleName("palaverTable2");
+//			zutatenTable.setImmediate(true);
+//			
+//			zutatenTable.setContainerDataSource(artikelcontainer);
+//			zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge", "einheit" });
+//			
+//			for(KuchenrezeptHasArtikel kha : list){
+//				containerArtikel.removeItem(kha);
+//				System.out.println(kha.getArtikelname());
+//				containerKuchenrezeptHasArtikel.addItem(kha);				
+//			}
+//			
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//
+//		}
+//
+//		kuchenrezept.setArtikel(list);
+		
 		try {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
-					RezeptHasArtikel.class, list);
+					RezeptHasArtikel.class);
+			
+			zutatenTable = null;
+			zutatenTable = new Table();
+			zutatenTable.setSizeFull();
+			zutatenTable.setStyleName("palaverTable2");
+			zutatenTable.setImmediate(true);
+			
 			zutatenTable.setContainerDataSource(artikelcontainer);
 			zutatenTable.setVisibleColumns(new Object[] { "artikelname",
 					"menge", "einheit" });
+			
+			
+			for(RezeptHasArtikel rha : list){
+				containerArtikel.removeItem(rha);
+				System.out.println(rha.getArtikelname());
+				containerRezeptHasArtikel.addItem(rha);				
+			}
+			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 
 		}
-
 		rezept.setArtikel(list);
 
+//		rezeptart.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId()).getRezeptart().);
+		
 		portion.setValue("100");
-
 		try {
 			kommentar.setValue(RezeptDAO.getInstance()
 					.getRezeptById(rezept.getId()).getKommentar().toString());
-		} catch (Exception e3) {
-			e3.printStackTrace();
+		} catch (ReadOnlyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
+			
+			
+//		
+//System.out.println("zutaten TAbelle vor container: " + zutatenTable );
+//		try {
+//			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
+//					RezeptHasArtikel.class, list);
+//			System.out.println("artikelcontainer vor set in container: " + artikelcontainer );
+//			System.out.println("zutatenTable vor set vor container: " + zutatenTable );
+//
+//			zutatenTable.setContainerDataSource(artikelcontainer);
+//			System.out.println("zutatenTable vor set nach container: " + zutatenTable );
+//
+//			zutatenTable.setVisibleColumns(new Object[] { "artikelname",
+//					"menge", "einheit" });
+//			System.out.println("artikelcontainer in container: " + artikelcontainer );
+//
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//
+//		}
+//		System.out.println("artikelcontainer nach container: " + zutatenTable );
+//
+//
+//		rezept.setArtikel(list);
+//
+//		portion.setValue("100");
+//
+//		try {
+//			kommentar.setValue(RezeptDAO.getInstance()
+//					.getRezeptById(rezept.getId()).getKommentar().toString());
+//		} catch (Exception e3) {
+//			e3.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
@@ -671,6 +764,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 
 		try {
+			System.out.println("rezeptAnlegen speichern id: " + rezept.getId());
 			Rezeptverwaltung.getInstance().saveArtikel(rez);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -682,6 +776,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				return;
 			} else {
 				Rezeptverwaltung.getInstance().createRezept(rezept);
+				System.out.println("rezeptAnlegen nach speichern createRezept id: " + rezept.getId());
+
 			}
 
 		} catch (Exception e) {
@@ -698,13 +794,21 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private void speichern() {
 		if (menueInput == "true") {
 			if (rezeptartInput == "Hauptgericht") {
+				if (nameInput == "" || portionInput == null
+						|| mitarbeiterInput == null || rezeptartInput == null) {
+					Notification notification = new Notification(
+							"Bitte alle Felder befüllen");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+				} else {
 				rezeptSpeichern();
 				rezeptAlsMenuSpeichern();
 				rezeptAlsHauptgerichtSpeichern();
 				System.out.println("Rezept wurde als Menü gespeichert");
+				}
 			} else {
 				Notification notification = new Notification(
-						"Rezept für nur als Hauptgericht speicherbar!");
+						"Rezept für Menue nur als Hauptgericht speicherbar!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -716,6 +820,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			} else {
+//				System.out.println("rezeptAnlegen in Methode speichern ID: " + rezept.getId());
 				rezeptSpeichern();
 				// Plausibiltätasprüfung für Zutatenliste läuft in der Methode
 				// Speichern

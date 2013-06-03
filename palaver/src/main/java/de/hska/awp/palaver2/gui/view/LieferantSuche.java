@@ -22,6 +22,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
@@ -60,6 +61,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private Button				updateB	= new Button(IConstants.BUTTON_EDIT);
 	private Button				speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button				verwerfen = new Button(IConstants.BUTTON_DISCARD);
+	private Button 				emailSenden = new Button("Email senden");
 	private Table 				ansprechpartner = new Table();
 	
 	private String				nameInput;
@@ -95,6 +97,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		notiz.setRows(5);
 		mehrereliefertermine.setWidth("100%");
 		
+		emailSenden.setEnabled(false);
 
 		ansprechpartner.setWidth("100%");
 		ansprechpartner.setHeight("230px");
@@ -139,6 +142,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 		rechts.addComponent(ansprechpartner);
 		knoepfe.addComponent(okButton);
 		knoepfe.addComponentAsFirst(updateB);
+		knoepfe.addComponent(emailSenden);
 		updateB.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
 		mitte.addComponent(knoepfe);
 		mitte.setComponentAlignment(knoepfe, Alignment.BOTTOM_RIGHT);
@@ -204,7 +208,14 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			}
 		});
         
-        
+        emailSenden.addClickListener(new ClickListener(){
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				System.out.print("HAllo");
+				ViewHandler.getInstance().switchView(EmailOhneBestellung.class, new ViewDataObject<Lieferant>(lieferant));
+			}
+		});
         
 		updateB.addClickListener(new ClickListener() {
 			
@@ -555,14 +566,15 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			faxAnspr.setInputPrompt(faxInput);
 			faxAnspr.setMaxLength(20);
 			
-			verwerfen.addClickListener(new ClickListener() {
-				
+			verwerfen.addClickListener(new ClickListener() {				
 				@Override
 				public void buttonClick(ClickEvent event) {
 					UI.getCurrent().removeWindow(anspr);							
 				}
 			});
 			  
+			
+			
 			speichern.addClickListener(new ClickListener()
 			{
 				public void buttonClick(ClickEvent event)
@@ -665,7 +677,10 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			
 		email.setValue(lieferant.getEmail());
 		email.setEnabled(false);
-			
+		if(!lieferant.getEmail().equals(""))
+			emailSenden.setEnabled(true);
+		
+		
 		telefon.setValue(lieferant.getTelefon());
 		telefon.setEnabled(false);
 			

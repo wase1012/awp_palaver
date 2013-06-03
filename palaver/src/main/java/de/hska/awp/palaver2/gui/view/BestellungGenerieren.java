@@ -43,14 +43,16 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		this.setMargin(true);
 
 		form.setSizeFull();
+		form.setHeight("200px");
 		form.setSpacing(true);
 
 		final PopupDateField date = new PopupDateField("Datum wählen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
+		date.setShowISOWeekNumbers(true);
 		form.addComponent(date);
-		form.setComponentAlignment(date, Alignment.TOP_CENTER);
+		form.setComponentAlignment(date, Alignment.MIDDLE_CENTER);
 
 		form.addComponent(bg);
 		form.setComponentAlignment(bg, Alignment.TOP_CENTER);

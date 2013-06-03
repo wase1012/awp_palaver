@@ -431,12 +431,12 @@ if (menuename.getValue() != null) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				try {
-					Menueverwaltung.getInstance().RezepteDelete(menue2);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					Menueverwaltung.getInstance().RezepteDelete(menue2);
+//				} catch (Exception e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				
 
 				if(fussnoten.getValue().toString() != "[]"){

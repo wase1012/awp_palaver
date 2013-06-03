@@ -88,7 +88,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Bezeichnung");
-	private ComboBox mitarbeiterCb = new ComboBox("Bï¿½cker");
+	private ComboBox mitarbeiterCb = new ComboBox("Bäcker");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -207,6 +207,16 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		zutatenTable.setContainerDataSource(containerKuchenrezeptHasArtikel);
 		zutatenTable.setVisibleColumns(new Object[] { "artikelname","menge", "einheit" });
 		zutatenTable.setEditable(true);
+		
+		hlRezeptZutaten.addComponent(zutatenTable);
+		hlRezeptZutaten.addComponent(artikelTable);
+
+		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
+		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
+		hlRezeptZutaten.setSpacing(true);
+		
+		artikelTable.setCaption("Artikel");
+		zutatenTable.setCaption("Zutatenliste");
 
 		/**
 		 * Drag n Drop
@@ -266,16 +276,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				zutatenTable.markAsDirty();
 			}
 		});
-
-		hlRezeptZutaten.addComponent(zutatenTable);
-		hlRezeptZutaten.addComponent(artikelTable);
-
-		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
-		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
-		hlRezeptZutaten.setSpacing(true);
-		
-		artikelTable.setCaption("Artikel");
-		zutatenTable.setCaption("Zutatenliste");
 
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
@@ -369,7 +369,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				} 
 				
 				Notification notification1 = new Notification(
-						"Rezept wurde geï¿½ndert!");
+						"Rezept wurde geändert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(
