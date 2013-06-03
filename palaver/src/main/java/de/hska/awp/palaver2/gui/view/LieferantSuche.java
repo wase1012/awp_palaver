@@ -2,6 +2,9 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -37,6 +40,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class LieferantSuche extends VerticalLayout  implements View{
 	
+	private static final Logger	log	= LoggerFactory.getLogger(LieferantSuche.class.getName());
+	
 	private HorizontalLayout	box = new HorizontalLayout();
 	private HorizontalLayout 	knoepfe = new HorizontalLayout();
 	private VerticalLayout 		links = new VerticalLayout();
@@ -46,7 +51,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("Straße");
+	private TextField			strasse = new TextField("Straï¿½e");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -266,7 +271,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (Exception e) {
-							throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+//							throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+							log.error(e.toString());
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
@@ -380,7 +386,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 							
 							VerticalLayout verticallayout = new VerticalLayout();
 														
-							Label label = new Label("Wollen Sie den Ansprechpartner wirklich löschen?");
+							Label label = new Label("Wollen Sie den Ansprechpartner wirklich lï¿½schen?");
 							verticallayout.addComponent(label);
 							verticallayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 							
@@ -411,7 +417,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 									try {
 									Ansprechpartnerverwaltung.getInstance().deleteAnsprechpartner(ansprechpartnerBean.getId());
 									} catch (Exception e) {
-									System.out.println(e);
+										log.error(e.toString());
 									}
 							
 								UI.getCurrent().removeWindow(anspr);
@@ -443,8 +449,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 							try {
 								Ansprechpartnerverwaltung.getInstance().updateAnsprechpartner(ansprechpartnerBean);
 							} catch (Exception e) {
-								System.out.println(e);
-
+								log.error(e.toString());
 							}				
 							
 							UI.getCurrent().removeWindow(anspr);
@@ -510,7 +515,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setCaption("Ansprechpartner hinzufügen");
+			anspr.setCaption("Ansprechpartner hinzufï¿½gen");
 			
 			UI.getCurrent().addWindow(anspr);
 			
@@ -587,8 +592,8 @@ public class LieferantSuche extends VerticalLayout  implements View{
 					try {
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (Exception e) {
-						System.out.println(e);
-						throw new NullPointerException("Bitte gültige Werte eingeben");
+						log.error(e.toString());
+//						throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
 
 					}				
 					
@@ -653,7 +658,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
 			} 
 			catch (Exception e) {
-				e.printStackTrace();
+				log.error(e.toString());
 			}
 		}
 		name.setValue(lieferant.getName());
@@ -704,7 +709,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			ansprechpartner.setColumnCollapsed(faxAnspr, false);				
 		} 
 		catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 	}
 }

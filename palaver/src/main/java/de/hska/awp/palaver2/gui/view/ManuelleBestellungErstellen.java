@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -45,6 +47,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class ManuelleBestellungErstellen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(ManuelleBestellungErstellen.class.getName());
+	
 	private Table bestellungTable;
 
 	private FilterTable artikelTable;
@@ -267,8 +272,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				try {
 					Bestellverwaltung.getInstance().createBestellung(bestellung);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error(e.toString());
 				}
 				ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
 			}
@@ -292,8 +296,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		try {
 			artikelListe = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(lieferant.getId());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		for (Artikel e : artikelListe) {

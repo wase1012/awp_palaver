@@ -4,6 +4,9 @@
  */
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.EmailValidator;
@@ -33,6 +36,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class LieferantErstellen extends VerticalLayout implements View
 {
+	private static final Logger	log	= LoggerFactory.getLogger(LieferantErstellen.class.getName());
+	
 	private HorizontalLayout	box = new HorizontalLayout();
 	private VerticalLayout		fenster = new VerticalLayout();
 	
@@ -41,7 +46,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("Straße");
+	private TextField			strasse = new TextField("Straï¿½e");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -155,7 +160,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		
 		name.setImmediate(true);
 		name.setRequired(true);
-		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -171,7 +176,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		strasse.setMaxLength(45);
 		
 //        Validator postalCodeValidator = new AbstractStringValidator(
-//                "Bitte gültige PLZ eingeben.") {
+//                "Bitte gï¿½ltige PLZ eingeben.") {
 //			@Override
 //			protected boolean isValidValue(String value) {
 //                return value.matches("[1-9][0-9]{4}");
@@ -187,7 +192,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);
@@ -359,8 +364,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.toString());
 			}
 			
 			okButton.addClickListener(new ClickListener()

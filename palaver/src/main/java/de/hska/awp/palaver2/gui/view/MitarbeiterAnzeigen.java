@@ -3,6 +3,8 @@
  */
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -31,6 +33,8 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class MitarbeiterAnzeigen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(MitarbeiterAnzeigen.class.getName());
 
 	private FilterTable table;
 
@@ -96,7 +100,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			table.setVisibleColumns(new Object[] { "name", "vorname", "email", "eintrittsdatum", "austrittsdatum", "benutzername" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		this.addComponent(head);

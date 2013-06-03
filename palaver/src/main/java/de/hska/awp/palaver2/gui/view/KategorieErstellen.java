@@ -1,5 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.StringLengthValidator;
@@ -26,6 +29,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class KategorieErstellen extends VerticalLayout  implements View{
+	
+	private static final Logger	log	= LoggerFactory.getLogger(KategorieErstellen.class.getName());
 
 	private VerticalLayout	box = new VerticalLayout();
 	
@@ -62,7 +67,7 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 		name.setImmediate(true);
 		name.setMaxLength(15);
 		name.setRequired(true);
-		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
+		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 4,15, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
@@ -80,7 +85,8 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
 				} catch (Exception e) {
-					throw new NullPointerException("Bitte gültige Werte eingeben");
+//					throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+					log.error(e.toString());
 				}
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 			}

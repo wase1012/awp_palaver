@@ -2,6 +2,9 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FileDownloader;
@@ -38,12 +41,14 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class EmailMitBestellung extends VerticalLayout implements View {
 	// Upload.Receiver,
+	
+	private static final Logger	log	= LoggerFactory.getLogger(EmailMitBestellung.class.getName());
 
 	private VerticalLayout fenster = new VerticalLayout();
 
 	private Label headline;
 
-	private TextField empfaenger = new TextField("Empfänger");
+	private TextField empfaenger = new TextField("Empfï¿½nger");
 	private TextField betreff = new TextField("Betreff");
 	private TextArea nachricht = new TextArea("Nachricht");
 
@@ -136,7 +141,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 								bestellung);
 					} 
 					catch (Exception e) {
-						e.printStackTrace();
+						log.error(e.toString());
 					}
 				}
 				final Window dialog = new Window();
