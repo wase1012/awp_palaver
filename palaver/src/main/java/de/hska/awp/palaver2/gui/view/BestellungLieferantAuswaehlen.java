@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,6 +30,8 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class BestellungLieferantAuswaehlen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
 
 	private FilterTable table;
 	private HorizontalLayout box = new HorizontalLayout();
@@ -101,7 +105,7 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		mitte.addComponent(box);

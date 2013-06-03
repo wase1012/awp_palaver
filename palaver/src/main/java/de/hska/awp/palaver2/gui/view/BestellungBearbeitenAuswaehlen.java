@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -25,10 +27,12 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
 
 	private VerticalLayout fenster = new VerticalLayout();
 	
-	private Button auswaehlen = new Button("ausw‰hlen");
+	private Button auswaehlen = new Button("ausw√§hlen");
 
 	private FilterTable bestellungen = new FilterTable("Bestellung");
 	private Bestellung bestellung;
@@ -85,7 +89,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 			});
 			bestellungen.setColumnWidth("bestellt", 50);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		bestellungen.addValueChangeListener(new ValueChangeListener() {

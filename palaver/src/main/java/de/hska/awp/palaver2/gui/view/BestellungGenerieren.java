@@ -6,6 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -23,7 +26,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * Die View ermöglicht die Auswahl eines Kalendertags und die Generierung und
+ * Die View ermÃ¶glicht die Auswahl eines Kalendertags und die Generierung und
  * Speicherung der Bestellungen zu der entsprechenden Kalenderwoche.
  * 
  * @author Christian Barth
@@ -31,10 +34,12 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class BestellungGenerieren extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
 
 	private VerticalLayout form = new VerticalLayout();
 
-	private Button bg = new Button("Bestellungen aus dem Menüplan generieren");
+	private Button bg = new Button("Bestellungen aus dem MenÃ¼plan generieren");
 
 	public BestellungGenerieren() {
 		super();
@@ -46,7 +51,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		form.setHeight("200px");
 		form.setSpacing(true);
 
-		final PopupDateField date = new PopupDateField("Datum wählen:");
+		final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
@@ -68,7 +73,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 				String sample = null;
 
 				if (date.getValue() == null) {
-					Notification notification = new Notification("Es wurde kein Datum ausgewählt!");
+					Notification notification = new Notification("Es wurde kein Datum ausgewÃ¤hlt!");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				} else {
@@ -78,7 +83,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					try {
 						datum = sdf.parse(sample);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						log.error(e.toString());
 					}
 					cal = Calendar.getInstance();
 					cal.setTime(datum);
@@ -87,7 +92,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					int year = date.getValue().getYear() + 1900;
 
 					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year)) == null) {
-						Notification notification = new Notification("Kein Menüplan vorhanden!");
+						Notification notification = new Notification("Kein MenÃ¼plan vorhanden!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
@@ -97,7 +102,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 							Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(new Week(week, year));
 
 						} catch (Exception e) {
-							e.printStackTrace();
+							log.error(e.toString());
 						}
 
 						ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
