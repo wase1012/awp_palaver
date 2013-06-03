@@ -6,7 +6,6 @@ DROP SCHEMA IF EXISTS `palaver` ;
 CREATE SCHEMA IF NOT EXISTS `palaver` DEFAULT CHARACTER SET 'UTF8' COLLATE utf8_bin ;
 USE `palaver` ;
 
-
 -- -----------------------------------------------------
 -- Table `palaver`.`regel`
 -- -----------------------------------------------------
@@ -625,6 +624,7 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
 	id INT NOT NULL AUTO_INCREMENT,
 	menueplan INT NOT NULL,
 	menue INT NOT NULL,
+	angezName VARCHAR(200) NOT NULL,
 	spalte INT NOT NULL,
 	zeile INT NOT NULL,
 	PRIMARY KEY (id),
