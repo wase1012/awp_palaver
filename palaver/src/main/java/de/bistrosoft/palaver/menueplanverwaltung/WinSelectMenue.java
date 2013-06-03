@@ -1,39 +1,28 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
-import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.Page;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -41,16 +30,22 @@ public class WinSelectMenue extends Window {
 	
 	Window subwindow = this;
 	
+	Menue menue;
 	private Table menueList = new Table();
 	private TextField searchField = new TextField();
-	private ArrayList<TextField> textfields = new ArrayList<TextField>();
+	private TextField id = new TextField("Id");
+	private TextField angezName = new TextField("Angezeigter Name");
+	private TextField name = new TextField("Name");
+	private TextField koch = new TextField("Koch");
+	private TextField menüart = new TextField("Menüart");
+	private TextField geschmack = new TextField("Geschmack");
+	private CheckBox aufwand = new CheckBox("Aufwand");
+	private CheckBox favorit = new CheckBox("Favorit");
 	private Button addNewmenueButton = new Button("Neu");
-	private Button ok = new Button("AuswÃ¤hlen");
+	private Button ok = new Button("Auswählen");
 	private FormLayout editorLayout = new FormLayout();
-	private FieldGroup editorFields = new FieldGroup();
-	
+
 	private static final String MENU = "name";
-	private static final String[] fieldNames = new String[] { MENU, "id", "koch"};
 	
 	Component destComp;
 	int destRow;
@@ -66,6 +61,7 @@ public class WinSelectMenue extends Window {
 	
 	// Konstruktor 
 	public WinSelectMenue(MenueplanGridLayout nMenuePlan,Component nDestComp,int nDestRow, int nDestCol) {
+		setCaption("Menü einfügen");
 		menueplan = nMenuePlan;
 		menueGrid=menueplan.layout;
 		destComp=nDestComp;
@@ -87,19 +83,19 @@ public class WinSelectMenue extends Window {
 		setContent(splitPanel);
 
 		
-		// Splitpanel die Layouts zufÃ¼gen
+		// Splitpanel die Layouts zufügen
 		splitPanel.addComponent(leftLayout);
 		splitPanel.addComponent(editorLayout);
 		
-		// Der linken Seite Tabelle hinzufÃ¼gen und Layout fÃ¼r Suchfeld und "Neu" Button
+		// Der linken Seite Tabelle hinzufügen und Layout für Suchfeld und "Neu" Button
 		leftLayout.addComponent(menueList);
 		leftLayout.addComponent(bottomLeftLayout);
 		
-		// Suchfeld und "Neu" Button hinzufÃ¼gen
+		// Suchfeld und "Neu" Button hinzufügen
 		bottomLeftLayout.addComponent(searchField);
 		bottomLeftLayout.addComponent(addNewmenueButton);
 
-		// Linke Seite HÃ¶he und Breite auf 100% setzen
+		// Linke Seite HÖhe und Breite auf 100% setzen
 		leftLayout.setSizeFull();
 
 		// Kontaktliste soll gesamten Platz verwenden
@@ -109,7 +105,7 @@ public class WinSelectMenue extends Window {
 		// "bottomleftlayout" soll gesamte Breite verwenden
 		bottomLeftLayout.setWidth("100%");
 		
-		// Suchfeld soll verfÃ¼gbare Breite verwenden
+		// Suchfeld soll verfügbare Breite verwenden
 		searchField.setWidth("100%");
 		bottomLeftLayout.setExpandRatio(searchField, 1);
 
@@ -120,35 +116,10 @@ public class WinSelectMenue extends Window {
 	// Rechte Seite 
 	private void initEditor() {
 
-		// FÃ¼r jeden Feldnamen 
-		for (String fieldName : fieldNames) {
-			
-			// erster Buchstabe groÃŸ
-			String f = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-			
-			// soll ein Textfeld erstellt werden
-			TextField field = new TextField(f);
-			field.setEnabled(false);
-			// Inhalt des Feldes in Array speichern
-			textfields.add(field);
-			
-			// dem EditorLayout das Textfeld hinzufÃ¼gen
-			
-				editorLayout.addComponent(field);
-				field.setWidth("100%");
+		HorizontalLayout v = new HorizontalLayout();
+		v.addComponents(favorit, aufwand);
+		editorLayout.addComponents(angezName, name, koch, menüart, geschmack, v);
 
-				editorFields.bind(field, fieldName);
-
-			
-						
-			if(fieldName == "id"){
-				field.setVisible(false);
-			}
-		}
-
-		editorFields.setBuffered(false);
-		
-		// Auswahl Button hinzufÃ¼gen
 		editorLayout.addComponent(ok);
 	}
 
@@ -156,12 +127,12 @@ public class WinSelectMenue extends Window {
 	private void initSearch() {
 
 		// Info im Suchfeld setzen
-		searchField.setInputPrompt("MenÃ¼ suchen");
+		searchField.setInputPrompt("Menü suchen");
 			
-		// TextChangeEvent wird ausgelÃ¶st, wenn bei der Eingabe eine Pause ist
+		// TextChangeEvent wird ausgelöst, wenn bei der Eingabe eine Pause ist
 		searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
 
-		// ChangeListener hinzufÃ¼gen
+		// ChangeListener hinzufügen
 		searchField.addTextChangeListener(new TextChangeListener() {
 				public void textChange(final TextChangeEvent event) {
 
@@ -174,11 +145,11 @@ public class WinSelectMenue extends Window {
 		});
 	}
 
-	// Klasse fÃ¼r MenueFilter
+	// Klasse für MenueFilter
 	private class MenueFilter implements Filter {
 		private String needle;
 
-		// Konstruktor fÃ¼r Menuefilter
+		// Konstruktor für Menuefilter
 		public MenueFilter(String needle) {
 			// string in Kleinbuchstaben
 			this.needle = needle.toLowerCase();
@@ -194,7 +165,7 @@ public class WinSelectMenue extends Window {
 		}
 	}
 
-	// Clicklistener fÃ¼r Auswahl Button
+	// Clicklistener für Auswahl Button
 	private void initOKButton() {
 		ok.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -217,46 +188,20 @@ public class WinSelectMenue extends Window {
                 
                 menueplan.removeMenue(destComp);
                 
-				// MenÃ¼bezeichnung des ausgewÃ¤hlten MenÃ¼s
-				String titel = textfields.get(0).getValue();
-				String s = textfields.get(1).getValue();
-				Long id = Long.parseLong(s.trim());
-				String k = textfields.get(2).getValue();
-//				Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(id)
-//				Menue menue = null;
+				// Menübezeichnung des ausgewählten Menüs
 				try {
-					Menue menue = Menueverwaltung.getInstance().getMenueByName(titel);
-					// Neue MenÃ¼komponente aus ausgewÃ¤hltem MenÃ¼ erstellen und hinzufÃ¼gen
-					MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
+					Menue menue = Menueverwaltung.getInstance().getMenueByName(name.getValue());
+					// Neue Menükomponente aus ausgewähltem Menü erstellen und hinzufügen
+					MenueComponent menueComp = new MenueComponent(menue,angezName.getValue(), menueplan, menueGrid, sourceRow, sourceColumn,true);
 					menueplan.addMenue(menueComp, sourceColumn, sourceRow);
 					menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
 									
-//					System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
-				} catch (ConnectException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
+					
 					e.printStackTrace();
-				} catch (DAOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//				Menue menue = new Menue(id,titel,k);
-				//Testrezeptdaten
-//				Rezept rez = new Rezept(1L);
-//				rez.setRezeptart(new Rezeptart(3L,""));
-//				List<Rezept> rezepte = new ArrayList<>();
-//				rezepte.add(rez);
-//				menue.setRezepte(rezepte);
-				
-//				// Neue MenÃ¼komponente aus ausgewÃ¤hltem MenÃ¼ erstellen und hinzufÃ¼gen
-//				MenueComponent menueComp = new MenueComponent(menue, menueplan, menueGrid, sourceRow, sourceColumn,true);
-//				menueplan.addMenue(menueComp, sourceColumn, sourceRow);
-//				menueGrid.setComponentAlignment(menueComp, Alignment.MIDDLE_CENTER);
-//								
-//				System.out.print(menue.getRezepte().get(0).getRezeptart().getName());
-				// Window schlieÃŸen
+				} 
+
+				// Window schließen
 				subwindow.close();
 		}
 	});
@@ -264,8 +209,35 @@ public class WinSelectMenue extends Window {
 
 	private void initMenueList() {
 		
-		// Container fÃ¼r MenÃ¼liste festlegen
-		menueContainer = new BeanItemContainer<Menue>(Menue.class, Menueverwaltung.getInstance().getAllMenues());
+		// Container für Menüliste festlegen
+		menueContainer = new BeanItemContainer<Menue>(Menue.class, Menueverwaltung.getInstance().getAllMenuesTabelle());
+		
+		menueList.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null) {
+					menue = (Menue) event.getProperty().getValue();
+					id.setValue(menue.getId().toString());
+					id.setVisible(false);
+					angezName.setValue(menue.getName());
+					name.setValue(menue.getName());
+					name.setEnabled(false);
+					koch.setValue(menue.getKochname());
+					koch.setEnabled(false);
+					menüart.setValue(menue.getMenueart().getName());
+					menüart.setEnabled(false);
+					geschmack.setValue(menue.getGeschmack().getName());
+					geschmack.setEnabled(false);
+					favorit.setValue(menue.getFavorit());
+					aufwand.setValue(menue.getAufwand());
+					
+					editorLayout.setVisible(true);
+					
+				}
+
+			}
+		});
 		menueList.setContainerDataSource(menueContainer);
 
 		// Spalten festlegen
@@ -275,25 +247,8 @@ public class WinSelectMenue extends Window {
 		// Spaltenbezeichnung angeben
 		menueList.setSelectable(true);
 		menueList.setImmediate(true);
-
-		//Changelistener hinzufÃ¼gen
-		menueList.addValueChangeListener(new Property.ValueChangeListener() {
-			public void valueChange(ValueChangeEvent event) {
-				// Angeklicktes Objekt 
-				Object menueId = menueList.getValue();
-
-				// Falls Objekt nicht null ist
-				if (menueId != null)
-					
-					// auf der rechten Seite anzeigen
-					editorFields.setItemDataSource(menueList
-							.getItem(menueId));
-
-				editorLayout.setVisible(menueId != null);
-			}
-		});
 		
-		// bei Ã„ndern Komponente aus MenÃ¼plan selektieren
+		// bei Ã„ndern Komponente aus Menüplan selektieren
 		if (menueGrid.getComponent(destCol, destRow).toString().contains("de.bistrosoft.palaver.menueplanverwaltung.MenueComponent")){
 			Integer MenueSelected = new Integer (((MenueComponent) menueGrid.getComponent(destCol, destRow)).getMenue().getId().intValue());
 			Integer Index = new Integer(0);
