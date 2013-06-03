@@ -1,5 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,6 +30,8 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class LieferantAnzeigen extends VerticalLayout  implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
 
 		private FilterTable			table;
 		
@@ -97,7 +101,7 @@ public class LieferantAnzeigen extends VerticalLayout  implements View {
 			} 
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				log.error(e.toString());
 			}	
 			
 			this.addComponent(head);
