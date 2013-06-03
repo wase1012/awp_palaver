@@ -794,10 +794,18 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private void speichern() {
 		if (menueInput == "true") {
 			if (rezeptartInput == "Hauptgericht") {
+				if (nameInput == "" || portionInput == null
+						|| mitarbeiterInput == null || rezeptartInput == null) {
+					Notification notification = new Notification(
+							"Bitte alle Felder befüllen");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+				} else {
 				rezeptSpeichern();
 				rezeptAlsMenuSpeichern();
 				rezeptAlsHauptgerichtSpeichern();
 				System.out.println("Rezept wurde als Menü gespeichert");
+				}
 			} else {
 				Notification notification = new Notification(
 						"Rezept für Menue nur als Hauptgericht speicherbar!");
