@@ -532,7 +532,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				me.setKurz(kurz.getValue());
 				String notification = "Mengeneinheit gespeichert";
 				try {
-					Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
+					Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
 					UI.getCurrent().removeWindow(win);
 				} catch (Exception e) {
 					e.printStackTrace();
