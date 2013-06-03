@@ -1,6 +1,7 @@
 package de.hska.awp.palaver2.emailversand;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -32,7 +33,7 @@ public class MailActions
 	 * @throws MessagingException
 	 */
     public static void sendOhneAnhang(MailAccounts acc, String recipient, String subject,
-            String text) throws AddressException, MessagingException
+            String text) throws AddressException, MessagingException, ConnectException
     {
         // Properties über die Systemeigenschaften anlegen
         Properties properties = System.getProperties(); 
