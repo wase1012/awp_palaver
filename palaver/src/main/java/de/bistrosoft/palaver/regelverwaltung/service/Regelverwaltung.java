@@ -8,7 +8,7 @@ import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.RegelDAO;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 
-public class Regelverwaltung extends RegelDAO{
+public class Regelverwaltung extends RegelDAO {
 
 	private static Regelverwaltung instance = null;
 
@@ -22,19 +22,40 @@ public class Regelverwaltung extends RegelDAO{
 		}
 		return instance;
 	}
-	
-	public List<Regel> getAllRegeln() throws ConnectException,
-	DAOException, SQLException {
+
+	public List<Regel> getAllRegeln() throws ConnectException, DAOException,
+			SQLException {
 
 		List<Regel> result = null;
 		result = super.getAllRegeln();
 
 		return result;
 	}
-	
-	public void createRegel(Regel regel)
-			throws ConnectException, DAOException, SQLException {
+
+	public Regel getRegelById(Long id) throws ConnectException, DAOException,
+			SQLException {
+
+		Regel result = null;
+		result = super.getRegelById(id);
+
+		return result;
+	}
+
+	public void createRegel(Regel regel) throws ConnectException, DAOException,
+			SQLException {
 
 		super.createRegel(regel);
+	}
+
+	public void deleteRegel(Regel regel) throws ConnectException, DAOException,
+			SQLException {
+
+		super.deleteRegel(regel);
+	}
+
+	public void updateRegel(Regel regel) throws ConnectException, DAOException,
+			SQLException {
+
+		super.updateRegel(regel);
 	}
 }

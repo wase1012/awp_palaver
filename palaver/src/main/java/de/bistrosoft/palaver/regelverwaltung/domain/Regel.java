@@ -3,6 +3,9 @@ package de.bistrosoft.palaver.regelverwaltung.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.server.Page;
+import com.vaadin.ui.Notification;
+
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
@@ -11,7 +14,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
-
+	Long id;
 	List<Integer> zeilenlist;
 	String zeilen;
 	List<Integer> spaltenlist;
@@ -26,7 +29,22 @@ public class Regel {
 	public Regel() {
 
 	}
+	public Boolean getAktiv() {
+		return aktiv;
+	}
 
+	public void setAktiv(Boolean aktiv) {
+		this.aktiv = aktiv;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getZeile() {
 		return zeilen;
 	}
@@ -91,17 +109,10 @@ public class Regel {
 		this.fehlermeldung = fehlermeldung;
 	}
 
-	public Boolean getAktiv() {
-		return aktiv;
-	}
-
-	public void setAktiv(Boolean aktiv) {
-		this.aktiv = aktiv;
-	}
-
-	public Regel(String regeltyp, String zeilen, String spalten,
+	public Regel(Long id,String regeltyp, String zeilen, String spalten,
 			String operator, String kriterien, String fehlermeldung,
 			Boolean aktiv) {
+		this.id = id;
 		this.regeltyp = regeltyp;
 		this.zeilen = zeilen;
 		this.spalten = spalten;
@@ -413,5 +424,18 @@ public class Regel {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static void löschen(Regel regel) {
+
+		try {
+			Regelverwaltung.getInstance().deleteRegel(regel);
+		} catch (Exception  e) {
+			e.printStackTrace();
+		} 
+		
+		Notification notification = new Notification("Regel wurde gelöscht");
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
 	}
 }
