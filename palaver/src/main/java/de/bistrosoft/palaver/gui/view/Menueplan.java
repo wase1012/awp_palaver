@@ -78,7 +78,7 @@ public class Menueplan extends VerticalLayout implements View{
 		btForeWeek.addStyleName("menueplan-lastweek");
 		btForeWeek.addClickListener(new ClickListener() {
 			
-        	// Click-Listener für eine Woche vorher
+        	// Click-Listener fï¿½r eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if(shownMenueplan == curMenueplan) {
@@ -115,7 +115,7 @@ public class Menueplan extends VerticalLayout implements View{
         btNextWeek.addStyleName("menueplan-nextweek");
         btNextWeek.addClickListener(new ClickListener() {
 			
-        	// Click-Listener für eine Woche spÃ¤ter
+        	// Click-Listener fï¿½r eine Woche spÃ¤ter
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if(shownMenueplan == curMenueplan) {
@@ -143,7 +143,7 @@ public class Menueplan extends VerticalLayout implements View{
 			
 		});
         
-        // Hinzufügen und Anordnen der Komponenten
+        // Hinzufï¿½gen und Anordnen der Komponenten
         left.addComponent(btForeWeek);
         left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -157,18 +157,18 @@ public class Menueplan extends VerticalLayout implements View{
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);		
 		
 		
-		// Button zum Speichern des Menüplans
+		// Button zum Speichern des Menï¿½plans
 		Button btSpeichern = new Button("Speichern");
         
 		btSpeichern.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//alle Felder durchgehen, prüfen ob menuecomponent vorhanden ist und wenn ja speichern
+				//alle Felder durchgehen, prï¿½fen ob menuecomponent vorhanden ist und wenn ja speichern
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
-				Notification notification = new Notification("Menüplan für Kalenderwoche " + week + "/" + year + " wurde gespeichert");
+				Notification notification = new Notification("MenÃ¼plan fÃ¼r Kalenderwoche " + week + "/" + year + " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -178,7 +178,7 @@ public class Menueplan extends VerticalLayout implements View{
 		@SuppressWarnings("deprecation")
 		Label lbFussnoten=new Label("<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mÃ¶gl. &nbsp;&nbsp; (veg.m) = vegetarisch mÃ¶gl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mÃ¶gl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mÃ¶gl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mÃ¶gl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mÃ¶gl.</div>", Label.CONTENT_XHTML);
 		
-		// Hinzufügen und Anordnen weiterer Komponenten		
+		// Hinzufï¿½gen und Anordnen weiterer Komponenten		
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);

@@ -161,7 +161,7 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es d�rfen maximal 3 Men�s einer Kat in den Zeilen 2 und 3 eingef�gt werden",	true));
+		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es dürfen maximal 3 Menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",	true));
 
 		return regeln;
 	}
@@ -365,7 +365,7 @@ public class Regel {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
 						return this;
 				}
-			} else if (operator.equals("enth�lt")) {
+			} else if (operator.equals("enthält")) {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
 						return this;
 					}
@@ -415,11 +415,11 @@ public class Regel {
 		System.out.print(mc.row+"/");
 		System.out.println(menue.getMenueart());
 		if(menue.getMenueart()!=null){
-			if (operator.equals("enth�lt nicht")) {
+			if (operator.equals("enthält nicht")) {
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) == -1) {
 						return this;
 				}
-			} else if (operator.equals("enth�lt")) {
+			} else if (operator.equals("enthält")) {
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) >= 0) {
 						return this;
 					}
@@ -466,12 +466,12 @@ public class Regel {
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 
-		if (operator.equals("enth�lt nicht")) {
+		if (operator.equals("enthält nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 
 				return this;
 			}
-		} else if (operator.equals("enth�lt")) {
+		} else if (operator.equals("enthält")) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
@@ -502,7 +502,7 @@ public class Regel {
 
 	}
 	
-	public static void l�schen(Regel regel) {
+	public static void loeschen(Regel regel) {
 
 		try {
 			Regelverwaltung.getInstance().deleteRegel(regel);
@@ -510,7 +510,7 @@ public class Regel {
 			e.printStackTrace();
 		} 
 		
-		Notification notification = new Notification("Regel wurde gel�scht");
+		Notification notification = new Notification("Regel wurde gelöscht");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 	}

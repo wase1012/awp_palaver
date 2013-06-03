@@ -53,13 +53,13 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		this.setComponentAlignment(box, Alignment.TOP_CENTER);
 
 		// Kalender zur Datums-Auswahl
-		final PopupDateField date = new PopupDateField("Datum wählen:");
+		final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
 		box.addComponent(date);
 		box.setComponentAlignment(date, Alignment.TOP_CENTER);
-		final Button btDatumsauswahl = new Button("Menüplan anzeigen");
+		final Button btDatumsauswahl = new Button("MenÃ¼plan anzeigen");
 		btDatumsauswahl.addClickListener(new ClickListener() {
 			// Click-Listener zur Datumsauswahl
 			@Override

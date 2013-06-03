@@ -40,7 +40,7 @@ public class MenueComponent extends CustomComponent{
 	public MenueplanGridLayout menueplan;
 	private DDGridLayout menueGrid;
 	private Button btn = new Button();
-	private Button btDelete = new Button("Löschen");
+	private Button btDelete = new Button("LÃ¶schen");
 	private Button btChange = new Button("Ã„ndern");
 	private Menue menue;
 	private Boolean isChanged;
@@ -283,7 +283,7 @@ public class MenueComponent extends CustomComponent{
 			public void buttonClick(final ClickEvent event) {
 				
 				// Window erstellen welches abfragt, ob man das MenÃ¼ wirklich aus dem MenÃ¼plan lÃ¶schen will
-				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:", "Wollen Sie das Menü wirklich aus dem Plan löschen?",
+				ConfirmDialog.show(UI.getCurrent(), "MenÃ¼ aus Plan lÃ¶schen:", "Wollen Sie das MenÃ¼ wirklich aus dem Plan lÃ¶schen?",
 				        "Ja", "Nein", new ConfirmDialog.Listener() {
 
 				            public void onClose(ConfirmDialog dialog) {
@@ -319,7 +319,8 @@ public class MenueComponent extends CustomComponent{
 		
 		btFehler= new Button();
 		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
-		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
+		btFehler.setIcon(new ThemeResource("img/Menue.png"));
+//		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
 		btFehler.addStyleName("menueplan-regel");
 		btFehler.setWidth("20px");
 		vl.addComponent(btFehler);
