@@ -1,5 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -32,6 +35,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class KategorienAnzeigen  extends VerticalLayout  implements View{
+	
+	private static final Logger	log	= LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
 
 	private VerticalLayout layout = new VerticalLayout();	
 	private Button hinzufuegen = new Button(IConstants.BUTTON_ADD);
@@ -85,7 +90,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Kategorie hinzufügen");
+					mengNeu.setCaption("Kategorie hinzufï¿½gen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -119,7 +124,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					nameUp.setImmediate(true);
 					nameUp.setValue(kategorieUpdate.getName());
 					nameUp.setMaxLength(45);
-					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
+					nameUp.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 4,45, false));
 					
 					verwerfen.addClickListener(new ClickListener() {
 						
@@ -138,7 +143,8 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 							try {
 								Kategorienverwaltung.getInstance().updateKategorie(kategorieUpdate);
 							} catch (Exception e) {
-								throw new NullPointerException("Bitte gültige Werte eingeben");
+//								throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+								log.error(e.toString());
 							}
 							UI.getCurrent().removeWindow(mengNeu);
 							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
@@ -182,7 +188,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 		} 
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			log.error(e.toString());
 		}	
 		
 		this.addComponent(layout);
@@ -198,7 +204,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Kategorie hinzufügen");
+				mengNeu.setCaption("Kategorie hinzufï¿½gen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -231,7 +237,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(45);
-				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
+				name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 4,45, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -251,7 +257,8 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 						try {
 							Kategorienverwaltung.getInstance().createNewKategorie(me);
 						} catch (Exception e) {
-							throw new NullPointerException("Bitte gültige Werte eingeben");
+//							throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+							log.error(e.toString());
 						}
 						UI.getCurrent().removeWindow(mengNeu);
 						ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
