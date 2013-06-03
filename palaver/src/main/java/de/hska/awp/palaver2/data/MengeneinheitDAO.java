@@ -79,7 +79,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public void createNewMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
+	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name, kurz) VALUES('" + mengeneinheit.getName() + "', '" + mengeneinheit.getKurz() + "')";
 		putManaged(INSERT_QUERY);
 	}
