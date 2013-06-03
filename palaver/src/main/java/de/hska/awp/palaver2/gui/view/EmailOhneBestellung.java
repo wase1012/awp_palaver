@@ -1,6 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.io.File;
+import java.net.ConnectException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,6 +131,9 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				Mail mail = Mail.getInstance();
+				Boolean ergebniss = mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
+				
 				final Window dialog = new Window();
 				dialog.setClosable(false);
 				dialog.setWidth("300px");
@@ -139,8 +143,11 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 				dialog.setResizable(false);
 				dialog.setStyleName("dialog-window");
 				
-				Label message = new Label("Email wurde gesendet");
-				
+				Label message;
+				if(ergebniss == true)
+					message = new Label("Email wurde gesendet");
+				else 
+					message = new Label("Email wurde nicht gesendet");
 				Button okButton = new Button("OK");
 				VerticalLayout dialogContent = new VerticalLayout();
 				dialogContent.setSizeFull();
@@ -153,8 +160,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 				
 				UI.getCurrent().addWindow(dialog);
 				
-				Mail mail = Mail.getInstance();
-				mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
+				
 				
 				okButton.addClickListener(new ClickListener()
 				{	

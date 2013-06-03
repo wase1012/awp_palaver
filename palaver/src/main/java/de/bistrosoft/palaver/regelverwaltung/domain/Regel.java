@@ -172,11 +172,14 @@ public class Regel {
 //		} else if (regeltyp.equals("Menueart")) {
 //			mc.addFehlerRegel(checkMenueart(mc, mp));
 //		}
-		if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
-			if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
-				this.findeRegel(mc,mp);
+		if(getZeilen()!=null&&getSpalten()!=null){
+			if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
+				if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
+					this.findeRegel(mc,mp);
+				}
 			}
 		}
+		
 
 	}
 	
@@ -192,6 +195,10 @@ public class Regel {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
 		} else if (regeltyp.equals("Fussnote")) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
+		} else if (regeltyp.equals("Zubereitung")) {
+			mc.addFehlerRegel(checkZubereitung(mc, mp));
+		} else if (regeltyp.equals("Aufwand")) {
+			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
 
 	}

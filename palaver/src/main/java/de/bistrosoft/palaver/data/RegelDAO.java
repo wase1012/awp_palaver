@@ -79,19 +79,24 @@ public class RegelDAO extends AbstractDAO {
 		
 	}
 	
-	public List<Regel> getAllAktivRegeln() throws ConnectException, DAOException,
-	SQLException {
+	public List<Regel> getAllAktivRegeln() {
 		
 		List<Regel> list = new ArrayList<Regel>();
 
-		ResultSet set = getManaged(GET_ALL_AKTIV_REGELN);
-		
-		while (set.next()) {
-			list.add(new Regel(set.getLong("id"), set.getString("regeltyp"), set
-					.getString("zeile"), set.getString("spalte"), set
-					.getString("operator"), set.getString("kriterien"), set
-					.getString("fehlermeldung"), set.getBoolean("aktiv")));
+		ResultSet set;
+		try {
+			set = getManaged(GET_ALL_AKTIV_REGELN);
+			while (set.next()) {
+				list.add(new Regel(set.getLong("id"), set.getString("regeltyp"), set
+						.getString("zeile"), set.getString("spalte"), set
+						.getString("operator"), set.getString("kriterien"), set
+						.getString("fehlermeldung"), set.getBoolean("aktiv")));
+			}
+		} catch (ConnectException | DAOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 
 		return list;
 	}
