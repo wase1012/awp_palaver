@@ -83,6 +83,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		datetime.setImmediate(true);
 		datetime.setResolution(Resolution.DAY);
 		datetime.setTextFieldEnabled(false);
+		datetime.setShowISOWeekNumbers(true);
 
 		datetime.addValueChangeListener(new ValueChangeListener() {
 			@Override
@@ -101,6 +102,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		datetime2.setImmediate(true);
 		datetime2.setResolution(Resolution.DAY);
 		datetime2.setTextFieldEnabled(false);
+		datetime2.setShowISOWeekNumbers(true);
 
 		datetime2.addValueChangeListener(new ValueChangeListener() {
 			@Override
