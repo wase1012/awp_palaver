@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -33,6 +35,7 @@ import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
@@ -44,6 +47,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class BestellungBearbeiten extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(LoginForm.class.getName());
 
 	private Table bestellungTable;
 
@@ -232,8 +237,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		hl.setComponentAlignment(datetime2, Alignment.TOP_LEFT);
 
 		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>" + "<ul>"
-				+ "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschließend die Bestellung abspeichern.</li>"
-				+ "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr möglich!</li></ul>");
+				+ "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschlieï¿½end die Bestellung abspeichern.</li>"
+				+ "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr mï¿½glich!</li></ul>");
 
 		hl.addComponent(bestellt);
 		hl.setComponentAlignment(bestellt, Alignment.BOTTOM_LEFT);
@@ -294,7 +299,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 					bestellung.setBestellt(bestellt.getValue());
 					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.toString());
 				}
 
 				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
@@ -335,7 +340,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				try {
 					Bestellverwaltung.getInstance().updateBestellung(bestellung);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.toString());
 				}
 
 				ViewHandler.getInstance().switchView(EmailMitBestellung.class, new ViewDataObject<Bestellung>(bestellung));
@@ -360,7 +365,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			artikel = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		containerBestellung = new BeanItemContainer<BestellungData>(BestellungData.class, list);
@@ -371,7 +376,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				containerBestellung.addItem(new BestellungData(bp));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 		if (bestellung.getLieferant().getMehrereliefertermine() == false) {
 

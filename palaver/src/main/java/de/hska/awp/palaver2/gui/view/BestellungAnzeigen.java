@@ -2,6 +2,8 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -37,6 +39,8 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
  */
 @SuppressWarnings("serial")
 public class BestellungAnzeigen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(BestellungAnzeigen.class.getName());
 
 	private VerticalLayout form = new VerticalLayout();
 	private HorizontalLayout fenster = new HorizontalLayout();
@@ -50,7 +54,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 	private BeanItemContainer<Bestellposition> bpcontainer;
 
 	private Button allBestellungen = new Button("Alle Bestellungen");
-	private Button zurueck = new Button("zurück");
+	private Button zurueck = new Button("zurï¿½ck");
 
 	public BestellungAnzeigen() {
 		super();
@@ -104,7 +108,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			});
 			bestellungen.setColumnWidth("bestellt", 50);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		bestellungen.addValueChangeListener(new ValueChangeListener() {
@@ -187,7 +191,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 							}
 						});
 					} catch (Exception e) {
-						e.printStackTrace();
+						log.error(e.toString());
 					}
 				}
 			}
@@ -239,7 +243,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 					});
 					bestellungen.setColumnWidth("bestellt", 50);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.toString());
 				}
 
 			}
