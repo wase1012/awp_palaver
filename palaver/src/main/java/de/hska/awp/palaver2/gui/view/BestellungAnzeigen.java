@@ -93,6 +93,9 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			container = new BeanItemContainer<Bestellung>(Bestellung.class, Bestellverwaltung.getInstance().getBestellungenLTWeeks());
 			bestellungen.setContainerDataSource(container);
 			bestellungen.setVisibleColumns(new Object[] { "bestellt", "lieferant", "datumS", "lieferdatumS", "lieferdatum2S" });
+			bestellungen.setColumnHeader("datumS", "Datum");
+			bestellungen.setColumnHeader("lieferdatumS", "lieferdatum - 1");
+			bestellungen.setColumnHeader("lieferdatum2S", "lieferdatum - 2");
 			bestellungen.sort(new Object[] { "id" }, new boolean[] { true });
 			bestellungen.setCellStyleGenerator(new CellStyleGenerator() {
 
