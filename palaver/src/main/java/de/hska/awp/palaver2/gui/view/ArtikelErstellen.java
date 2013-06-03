@@ -6,6 +6,9 @@ package de.hska.awp.palaver2.gui.view;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.EmailValidator;
@@ -49,6 +52,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings({ "serial" })
 public class ArtikelErstellen extends VerticalLayout implements View, ValueChangeListener
 {
+	private static final Logger	log	= LoggerFactory.getLogger(ArtikelErstellen.class.getName());
+	
 	private VerticalLayout		box = new VerticalLayout();
 	private HorizontalLayout 	control = new HorizontalLayout();
 	
@@ -58,7 +63,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("BestellgrößŸe");
+	private TextField			bestellung = new TextField("Bestellgrï¿½ßŸe");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -263,7 +268,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				} 
 				catch (Exception e)
 				{
-					e.printStackTrace();
+					log.error(e.toString());
 					notification = e.toString();
 				}
 				
@@ -358,7 +363,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		} 
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 	}
 
@@ -440,7 +445,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				} 
 				catch (Exception e)
 				{
-					e.printStackTrace();
+					log.error(e.toString());
 					notification = e.toString();
 				}
 			}
@@ -535,9 +540,9 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
 					UI.getCurrent().removeWindow(win);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.toString());
 					if(e.toString().contains("INSERT INTO mengeneinheit"))
-						notification = "diese Name oder dieses Kürzel sind bereits in der System vorhanden.";
+						notification = "diese Name oder dieses KÃ¼rzel sind bereits in der System vorhanden.";
 					else
 						notification = e.toString();
 				}
@@ -653,7 +658,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
 				} catch (Exception e) {
-					throw new NullPointerException("Bitte gültige Werte eingeben");
+//					throw new NullPointerException("Bitte gï¿½ltige Werte eingeben");
+					log.error(e.toString());
 				}
 				load();
 				UI.getCurrent().removeWindow(win);
@@ -808,7 +814,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);
@@ -949,8 +955,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			try {
 				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.toString());
 			}
 			load();
 			UI.getCurrent().removeWindow(win);
