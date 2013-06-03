@@ -49,7 +49,6 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		
 		auswaehlen.addClickListener(new ClickListener()
 		{
-			@SuppressWarnings("unchecked")
 			public void buttonClick(ClickEvent event)
 			{
 				ViewHandler.getInstance().switchView(BestellungBearbeiten.class, new ViewDataObject<Bestellung>(bestellung));
