@@ -276,7 +276,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						me.setKurz(kurzText);
 						String notification = "Mengeneinheit gespeichert";
 						try {
-							Mengeneinheitverwaltung.getInstance().createNewMengeneinheit(me);
+							Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
 						} catch (Exception e) {
 							e.printStackTrace();
 							if(e.toString().contains("INSERT INTO mengeneinheit"))

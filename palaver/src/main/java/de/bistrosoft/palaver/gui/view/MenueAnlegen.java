@@ -82,7 +82,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private String merker1 = "leer";
 	private String merker2 = "leer";
 	private HorizontalLayout haupt = new HorizontalLayout();
-	
+	private HorizontalLayout unten = new HorizontalLayout();
 	private VerticalLayout box = new VerticalLayout();
 	private VerticalLayout box2 = new VerticalLayout();
 	private HorizontalLayout horizont1 = new HorizontalLayout();
@@ -96,7 +96,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private VerticalLayout mitte2 = new VerticalLayout();
 	private VerticalLayout rechts2 = new VerticalLayout();
 	private VerticalLayout links3 = new VerticalLayout();
-
+	private VerticalLayout rezeptvl = new VerticalLayout();
 	private VerticalLayout mitte3 = new VerticalLayout();
 	private VerticalLayout rechts3 = new VerticalLayout();
 	private VerticalLayout blank2 = new VerticalLayout();
@@ -145,6 +145,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Label d4 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
 			Label.CONTENT_XHTML);
+	private Label r = new Label(
+			"<div>&nbsp;&nbsp;&nbsp;</div>",
+			Label.CONTENT_XHTML);
     private TextField menuename = new TextField("Menuename");
     private ComboBox ersteller = new ComboBox("Menueersteller");
 	public static  TextField hauptgericht = new TextField("Hauptgericht");
@@ -164,9 +167,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button neuesRezept = new Button("neues Rezeptanlegen");
-	private Button hZufuegen = new Button("Hauptegricht hinzufügen");
-	private Button b1Zufuegen = new Button("Beilage1 hinzufügen    ");
-	private Button b2Zufuegen = new Button("Beilage2 hinzufügen    ");
+	private Button hZufuegen = new Button("Hauptegricht suchen");
+	private Button b1Zufuegen = new Button("Beilage1 suchen");
+	private Button b2Zufuegen = new Button("Beilage2 suchen");
 	
 	
 	private String hauptgerichtInput;
@@ -204,7 +207,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		beilage1.setWidth("100%");
 		beilage2.setWidth("100%");
 		fussnoten.setWidth("100%");
-		menuename.setWidth("100%");
+		menuename.setWidth("90%");
         b1Zufuegen.setWidth("150");
         b2Zufuegen.setWidth("150");
         hZufuegen.setWidth("150");
@@ -215,6 +218,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		this.addComponent(haupt);
 		this.setComponentAlignment(haupt, Alignment.MIDDLE_CENTER);
+		this.addComponent(unten);
+		this.setComponentAlignment(unten, Alignment.MIDDLE_CENTER);
 		haupt.addComponent(box);
 		box.addComponent(ueberschrift);
 		box.addComponent(menuename);
@@ -222,7 +227,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		box.addComponent(menueartCb);
 		box.addComponent(geschmackCb);
 		box.addComponent(cbs);
-		box.setComponentAlignment(cbs, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(cbs, Alignment.MIDDLE_LEFT);
 		cbs.addComponent(favorit);
 		cbs.addComponent(d4);
 		cbs.addComponent(aufwand);
@@ -235,12 +240,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		box2.setComponentAlignment(horizont1, Alignment.MIDDLE_CENTER);
 		box2.setComponentAlignment(horizont2, Alignment.MIDDLE_CENTER);
 		box2.setComponentAlignment(horizont3, Alignment.MIDDLE_CENTER);
-		box2.setComponentAlignment(horizont4, Alignment.MIDDLE_CENTER);
+		box2.setComponentAlignment(horizont4, Alignment.MIDDLE_LEFT);
 		horizont1.addComponent(links);
 		horizont1.addComponent(b1);
 		horizont1.addComponent(mitte);
 		horizont1.addComponent(rechts);
-		horizont1.setComponentAlignment(links, Alignment.BOTTOM_CENTER);
+		horizont1.setComponentAlignment(links, Alignment.MIDDLE_CENTER);
 		horizont1.setComponentAlignment(mitte, Alignment.MIDDLE_CENTER);
 		horizont1.setComponentAlignment(rechts, Alignment.MIDDLE_CENTER);
 		horizont2.addComponent(links2);
@@ -256,12 +261,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		horizont3.addComponent(mitte3);
 		horizont3.addComponent(rechts3);
 		horizont3.setComponentAlignment(links3, Alignment.MIDDLE_CENTER);
-		horizont3.setComponentAlignment(mitte3, Alignment.MIDDLE_RIGHT);
+		horizont3.setComponentAlignment(mitte3, Alignment.MIDDLE_CENTER);
 		horizont3.setComponentAlignment(rechts3, Alignment.MIDDLE_CENTER);
 		links.addComponent(hauptgericht);		
      	links2.addComponent(beilage1);		
 		links3.addComponent(beilage2);
-		horizont4.addComponent(neuesRezept);
+		horizont4.addComponent(rezeptvl);
+		rezeptvl.addComponent(r);
+		rezeptvl.addComponent(neuesRezept);
 		mitte.addComponent(dummy1);
 		mitte2.addComponent(dummy2);
 		mitte3.addComponent(dummy3);
@@ -282,8 +289,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		
 		
 		control.setSpacing(true);
-		horizont4.addComponent(control);
-		horizont4.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		unten.addComponent(control);
+		unten.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 
 		hauptgericht.setImmediate(true);
 		hauptgericht.setInputPrompt(hauptgerichtInput);
@@ -479,6 +486,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
     //in der Prozedur load wird die ganze Seite geladen, alle felder und Werte werden geleert
 	//auch werden die inhalte fuer den Geschmack, die Koeche, die Menueart udn die Fussnoten geladen
 	public void load() {
+		System.out.println("load");
 		//Variablen leeren WICHTIG
 		beilage1.setValue("");
 		beilage2.setValue("");
@@ -768,6 +776,7 @@ private void fussnotenEinlesen(Menue menue2) {
 
 //in dieser Prozedur werden die normalen Items des Meneus eingelesen
 private void normalEinlesen(Menue menue2) {	
+	System.out.println("einlesen");
 	favorit.setValue(menue2.getFavorit());
 	aufwand.setValue(menue2.getAufwand());	
 	try {
@@ -813,18 +822,32 @@ private void normalEinlesen(Menue menue2) {
 //in der Funktion pruefen wird abgefragt ob die wichtigen Attribute fuer das menue gesetzt sind
 //wenn ja wird zu speichern oder aendern navigiert
 private void pruefen(int i) {
-	if (menuename.getValue() != null) {
+	if (menuename.getValue() != null && menuename.getValue() != "" ) {
 		
-		if (ersteller.getValue() != null) {
+		if (ersteller.getValue() != null && ersteller.getValue() != "" ) {
 	
-			if ( hauptgericht.getValue() != null) {
-				if (i == 1) {
-					speichern();
+			if ( hauptgericht.getValue() != null && hauptgericht.getValue() != "" ) {
+				
+				if ( geschmackCb.getValue() != null && geschmackCb.getValue() != "" ) {
+					
+					if ( menueartCb.getValue() != null && menueartCb.getValue() != "" ) {
+						if (i == 1) {
+							speichern();
+						}
+						else{
+							aendern();
+						}
+					} else {
+						Notification notification = new Notification("Bitte geben Sie die Menueart ein");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+					}
+				} else {
+					Notification notification = new Notification("Bitte geben Sie den Geschmack ein");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
 				}
-				else{
-					aendern();
-				}
-			}	 
+			} 	 
 			else {
 				
 				Notification notification = new Notification("Bitte geben Sie ein Hauptgericht ein");

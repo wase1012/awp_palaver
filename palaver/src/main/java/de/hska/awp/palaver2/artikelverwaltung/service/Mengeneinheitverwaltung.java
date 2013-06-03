@@ -81,7 +81,7 @@ public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 	 */
 	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException
 	{
-		dao.createNewMengeneinheit(mengeneinheit);
+		dao.createMengeneinheit(mengeneinheit);
 	}
 	
 	/**

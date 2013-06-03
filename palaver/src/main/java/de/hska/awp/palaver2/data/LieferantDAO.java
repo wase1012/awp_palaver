@@ -41,19 +41,16 @@ public class LieferantDAO extends AbstractDAO {
 
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE;
 
-	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE
-			+ " WHERE " + ID + "= {0}";
-	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM "
-			+ TABLE + " WHERE " + NAME + " LIKE"+" '%";
-	
-	private final static String GET_LIEFERANTEN_BY_ARTIKEL_ID = "SELECT * FROM " + TABLE +
-			" join " + TABLE_ARTIKEL + " on " + TABLE +"." + ID + " = " + TABLE_ARTIKEL + ".lieferant_fk" +
-			" where " + TABLE_ARTIKEL + "." + ID + " = {0}";
-	
-	private final static String GET_ALL_LIEFERANTEN_WITH_ARTIKEL = "SELECT Distinct lieferant.id, " +
-			"lieferant.name, lieferant.kundennummer, lieferant.bezeichnung, lieferant.strasse, lieferant.plz, lieferant.ort, " +
-			"lieferant.email, lieferant.telefon, lieferant.fax, lieferant.notiz, lieferant.mehrereliefertermine FROM lieferant " +
-			"join artikel on lieferant.id = artikel.lieferant_fk";
+	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
+	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
+
+	private final static String GET_LIEFERANTEN_BY_ARTIKEL_ID = "SELECT * FROM " + TABLE + " join " + TABLE_ARTIKEL + " on " + TABLE + "." + ID
+			+ " = " + TABLE_ARTIKEL + ".lieferant_fk" + " where " + TABLE_ARTIKEL + "." + ID + " = {0}";
+
+	private final static String GET_ALL_LIEFERANTEN_WITH_ARTIKEL = "SELECT Distinct lieferant.id, "
+			+ "lieferant.name, lieferant.kundennummer, lieferant.bezeichnung, lieferant.strasse, lieferant.plz, lieferant.ort, "
+			+ "lieferant.email, lieferant.telefon, lieferant.fax, lieferant.notiz, lieferant.mehrereliefertermine FROM lieferant "
+			+ "join artikel on lieferant.id = artikel.lieferant_fk";
 
 	public LieferantDAO() {
 		super();
@@ -78,18 +75,15 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Lieferant> getAllLieferanten() throws ConnectException,
-			DAOException, SQLException {
+	public List<Lieferant> getAllLieferanten() throws ConnectException, DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
 		ResultSet set = getManaged(GET_ALL_LIEFERANTEN);
 
 		while (set.next()) {
-			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
-					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
-					.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
+			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
+					.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON), set.getString(FAX),
+					set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -105,18 +99,15 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Lieferant> getLieferantenByName(String name)
-			throws ConnectException, DAOException, SQLException {
+	public List<Lieferant> getLieferantenByName(String name) throws ConnectException, DAOException, SQLException {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
 		ResultSet set = getManaged(GET_LIEFERANT_BY_NAME + name + "%'");
 
 		while (set.next()) {
-			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
-					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
-					.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
+			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
+					.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON), set.getString(FAX),
+					set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
@@ -132,26 +123,23 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Lieferant getLieferantById(Long id) throws ConnectException,
-			DAOException, SQLException {
+	public Lieferant getLieferantById(Long id) throws ConnectException, DAOException, SQLException {
 
 		Lieferant lieferant = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
 
 		while (set.next()) {
-			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
-					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
-					set.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
+			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
+					set.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON),
+					set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
 		}
 
 		return lieferant;
 	}
-	
+
 	/**
-	 * Die Methode liefert ein Ergebnisse zurück bei der Suche
-	 * nach einem Lieferant bei ArtikelId in der Datenbank.
+	 * Die Methode liefert ein Ergebnisse zurück bei der Suche nach einem
+	 * Lieferant bei ArtikelId in der Datenbank.
 	 * 
 	 * @param id
 	 * @return
@@ -159,15 +147,13 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Lieferant getLieferantByArtikelId(long id) throws ConnectException, DAOException, SQLException{
+	public Lieferant getLieferantByArtikelId(long id) throws ConnectException, DAOException, SQLException {
 		Lieferant lieferant = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_LIEFERANTEN_BY_ARTIKEL_ID, id));
 		while (set.next()) {
-			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME),
-					set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
-					set.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL),
-					set.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
+			lieferant = new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG),
+					set.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON),
+					set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE));
 		}
 		return lieferant;
 	}
@@ -180,18 +166,13 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void createLieferant(Lieferant lieferant) throws ConnectException,
-			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ
-				+ "," + ORT + "," + EMAIL + "," + TELEFON + "," + FAX + "," + NOTIZ + "," + MEHRERELIEFERTERMINE + ")"
-				+ "VALUES" + "('" + lieferant.getName() + "','"
-				+ lieferant.getKundennummer() + "','"
-				+ lieferant.getBezeichnung() + "','" + lieferant.getStrasse()
-				+ "','" + lieferant.getPlz() + "','" + lieferant.getOrt()
-				+ "','" + lieferant.getEmail() + "','" + lieferant.getTelefon()
-				+ "','" + lieferant.getFax() + "','" + lieferant.getNotiz() + "','"+ Util.convertBoolean(lieferant.getMehrereliefertermine()) + "')";
-		this.putManaged(INSERT_QUERY);
+	public void createLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ + "," + ORT
+				+ "," + EMAIL + "," + TELEFON + "," + FAX + "," + NOTIZ + "," + MEHRERELIEFERTERMINE + ")" + "VALUES" + "('" + lieferant.getName()
+				+ "','" + lieferant.getKundennummer() + "','" + lieferant.getBezeichnung() + "','" + lieferant.getStrasse() + "','"
+				+ lieferant.getPlz() + "','" + lieferant.getOrt() + "','" + lieferant.getEmail() + "','" + lieferant.getTelefon() + "','"
+				+ lieferant.getFax() + "','" + lieferant.getNotiz() + "','" + Util.convertBoolean(lieferant.getMehrereliefertermine()) + "')";
+		this.putManaged(INSERTQUERY);
 	}
 
 	/**
@@ -202,45 +183,37 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void updateLieferant(Lieferant lieferant) throws ConnectException,
-			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ lieferant.getName() + "'," + KUNDENNUMMER + "='"
-				+ lieferant.getKundennummer() + "'," + BEZEICHNUNG + "='"
-				+ lieferant.getBezeichnung() + "'," + STRASSE + "='"
-				+ lieferant.getStrasse() + "'," + PLZ + "='"
-				+ lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt()
-				+ "'," + EMAIL + "='" + lieferant.getEmail() + "'," + TELEFON
-				+ "='" + lieferant.getTelefon() + "'," + FAX + "='"
-				+ lieferant.getFax()+ "'," + NOTIZ + "='"
-				+ lieferant.getNotiz()+ "'," + MEHRERELIEFERTERMINE	+ "='"
-				+ Util.convertBoolean(lieferant.getMehrereliefertermine()) + "' WHERE " + ID + "='"
-				+ lieferant.getId() + "'";
-		this.putManaged(UPDATE_QUERY);
+	public void updateLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
+		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + lieferant.getName() + "'," + KUNDENNUMMER + "='"
+				+ lieferant.getKundennummer() + "'," + BEZEICHNUNG + "='" + lieferant.getBezeichnung() + "'," + STRASSE + "='"
+				+ lieferant.getStrasse() + "'," + PLZ + "='" + lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt() + "'," + EMAIL + "='"
+				+ lieferant.getEmail() + "'," + TELEFON + "='" + lieferant.getTelefon() + "'," + FAX + "='" + lieferant.getFax() + "'," + NOTIZ
+				+ "='" + lieferant.getNotiz() + "'," + MEHRERELIEFERTERMINE + "='" + Util.convertBoolean(lieferant.getMehrereliefertermine())
+				+ "' WHERE " + ID + "='" + lieferant.getId() + "'";
+		this.putManaged(UPDATEQUERY);
 	}
 
 	/**
 	 * Die Methode liefert
+	 * 
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
 	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException, SQLException {
-		
+
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
 		ResultSet set = getManaged(GET_ALL_LIEFERANTEN_WITH_ARTIKEL);
 
 		while (set.next()) {
-			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set
-					.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
-					.getString(STRASSE), set.getString(PLZ),
-					set.getString(ORT), set.getString(EMAIL), set
-							.getString(TELEFON), set.getString(FAX), set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
+			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
+					.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON), set.getString(FAX),
+					set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
 		}
 
 		return list;
 	}
-	
+
 }

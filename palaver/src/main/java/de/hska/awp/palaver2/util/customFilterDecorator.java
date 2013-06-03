@@ -24,11 +24,11 @@ public class customFilterDecorator implements FilterDecorator {
 
 	@Override
 	public String getBooleanFilterDisplayName(Object propertyId, boolean value) {
-//		if ("Compress".equals(propertyId)) {
-//            return value ? "Validated" : "Not validated";
-//        }
-        // returning null will output default value
-        return value ? "Ja" : "Nein";
+		// if ("Compress".equals(propertyId)) {
+		// return value ? "Validated" : "Not validated";
+		// }
+		// returning null will output default value
+		return value ? "Ja" : "Nein";
 	}
 
 	@Override
@@ -67,8 +67,7 @@ public class customFilterDecorator implements FilterDecorator {
 	}
 
 	@Override
-	public Resolution getDateFieldResolution(Object propertyId) 
-	{
+	public Resolution getDateFieldResolution(Object propertyId) {
 		return Resolution.YEAR;
 	}
 
@@ -82,26 +81,22 @@ public class customFilterDecorator implements FilterDecorator {
 	}
 
 	@Override
-	public String getDateFormatPattern(Object propertyId)
-	{
+	public String getDateFormatPattern(Object propertyId) {
 		return null;
 	}
 
 	@Override
-	public Locale getLocale()
-	{
+	public Locale getLocale() {
 		return null;
 	}
 
 	@Override
-	public NumberFilterPopupConfig getNumberFilterPopupConfig()
-	{
+	public NumberFilterPopupConfig getNumberFilterPopupConfig() {
 		return null;
 	}
 
 	@Override
-	public boolean usePopupForNumericProperty(Object propertyId)
-	{
+	public boolean usePopupForNumericProperty(Object propertyId) {
 		return false;
 	}
 

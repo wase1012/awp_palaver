@@ -122,9 +122,9 @@ public class RollenDAO extends AbstractDAO {
 	 */
 	public void createRollen(Rollen rolle) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ")"
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + ")"
 				+ "VALUES" + "('" + rolle.getName() + "')";
-		this.putManaged(INSERT_QUERY);
+		this.putManaged(INSERTQUERY);
 	}
 	
 	/**
@@ -136,10 +136,10 @@ public class RollenDAO extends AbstractDAO {
 	 */
 	public void updateRollen(Rollen rolle) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
+		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
 				+ rolle.getName() + "' WHERE " + ID + "='"
 				+ rolle.getId() + "'";
-		this.putManaged(UPDATE_QUERY);
+		this.putManaged(UPDATEQUERY);
 	}
 	
 }

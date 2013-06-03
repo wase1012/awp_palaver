@@ -7,29 +7,30 @@ package de.hska.awp.palaver2.util;
 import com.vaadin.data.validator.AbstractStringValidator;
 
 @SuppressWarnings("serial")
-public class CustomDoubleValidator extends AbstractStringValidator
-{
+public class CustomDoubleValidator extends AbstractStringValidator {
 
 	/**
 	 * @param errorMessage
 	 */
-	public CustomDoubleValidator(String errorMessage)
-	{
+	public CustomDoubleValidator(String errorMessage) {
 		super(errorMessage);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.data.validator.AbstractValidator#isValidValue(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.data.validator.AbstractValidator#isValidValue(java.lang.Object
+	 * )
 	 */
 	@Override
-	protected boolean isValidValue(String value)
-	{
+	protected boolean isValidValue(String value) {
 		try {
-            Double.parseDouble(value.replace(',', '.'));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+			Double.parseDouble(value.replace(',', '.'));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

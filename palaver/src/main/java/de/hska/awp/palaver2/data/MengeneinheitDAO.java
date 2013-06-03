@@ -79,9 +79,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public void createNewMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name, kurz) VALUES('" + mengeneinheit.getName() + "', '" + mengeneinheit.getKurz() + "')";
-		putManaged(INSERT_QUERY);
+	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(name, kurz) VALUES('" + mengeneinheit.getName() + "', '" + mengeneinheit.getKurz() + "')";
+		putManaged(INSERTQUERY);
 	}
 
 	/**
@@ -93,9 +93,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @datum 19.04.2013
 	 */
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='" + mengeneinheit.getName() + "', kurz='" + mengeneinheit.getKurz() + "' WHERE id='"
+		String UPDATEQUERY = "UPDATE " + TABLE + " SET name='" + mengeneinheit.getName() + "', kurz='" + mengeneinheit.getKurz() + "' WHERE id='"
 				+ mengeneinheit.getId() + "'";
-		putManaged(UPDATE_QUERY);
+		putManaged(UPDATEQUERY);
 	}
 
 	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {

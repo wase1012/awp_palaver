@@ -44,6 +44,7 @@ import de.bistrosoft.palaver.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.KuchenrezeptDAO;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
@@ -153,7 +154,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		this.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-		btSpeichern.setEnabled(false);
+//		btSpeichern.setEnabled(false);
 
 		control.addComponent(verwerfen);
 		control.addComponent(btSpeichern);
@@ -459,17 +460,32 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		nameInput = name.getValue();
 		kommentarInput = kommentar.getValue();
 
-		if (name.getValue() == "" || name.getValue() == null
-				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
-			btSpeichern.setEnabled(false);
-		} else {
-			btSpeichern.setEnabled(true);
-		}
+//		if (name.getValue() == "" || name.getValue() == null
+//				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
+//			btSpeichern.setEnabled(false);
+//		} else {
+//			btSpeichern.setEnabled(true);
+//		}
 
 	}
 	
 	
-	private void speichern(){
+	private void speichern() {
+		if (name.getValue() == "" || name.getValue() == null
+				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
+			Notification notification = new Notification(
+					"Bitte alle Felder befüllen");
+			notification.setDelayMsec(500);
+			notification.show(Page.getCurrent());
+		} else {
+		KuchenrezeptSpeichern();
+		System.out.println("Rezept wurde gespeichert");
+		}
+		
+	}
+	
+	
+	private void KuchenrezeptSpeichern(){
 		Kuchenrezept kuchenrezept = new Kuchenrezept();
 
 		kuchenrezept.setName(nameInput);
@@ -489,36 +505,63 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 
-		try {
-			Kuchenrezeptverwaltung.getInstance().createKuchenrezept(kuchenrezept);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-
 		Kuchenrezept rez = null;
 		try {
 			System.out.println(nameInput);
 			rez = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(
 					nameInput);
+			System.out.println(rez);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
-//			@SuppressWarnings("unchecked")
-		BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) zutatenTable.getContainerDataSource();
-		ausgArtikel = bicArtikel.getItemIds();
-		System.out.println(ausgArtikel);
-		rez.setArtikel(ausgArtikel);
-
+		String aus = "1";
 		try {
-			Kuchenrezeptverwaltung.getInstance().saveArtikel(rez);
+			if (aus == "2") {
+				aus = "1";
+				return;
+			} else {
+				Kuchenrezeptverwaltung.getInstance().createKuchenrezept(kuchenrezept);
+				System.out.println("kuchenrezeptAnlegen nach speichern createKuchenrezept id: " + kuchenrezept.getId());
+
+			}
+			try {
+				rez = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(
+						nameInput);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+			@SuppressWarnings("unchecked")
+			BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) zutatenTable.getContainerDataSource();
+			ausgArtikel = bicArtikel.getItemIds();
+			System.out.println(ausgArtikel);
+			rez.setArtikel(ausgArtikel);
+		
+			if (ausgArtikel.isEmpty()) {
+				Notification notification = new Notification(
+						"Bitte Zutaten eintragen");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+				aus = "2";
+				return;
+			}
+		
+			try {
+				System.out.println("kuchenrezeptAnlegen speichern id: "
+						+ kuchenrezept.getId());
+				Kuchenrezeptverwaltung.getInstance().saveArtikel(rez);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		
 		Notification notification = new Notification(
 				"Rezept wurde gespeichert!");
 		notification.setDelayMsec(500);

@@ -9,38 +9,38 @@ package de.hska.awp.palaver2.mitarbeiterverwaltung.domain;
  */
 public class MitarbeiterHasRollen {
 
-	private Long rollen_fk;
-	private Long mitarbeiter_fk;
+	private Long rollenfk;
+	private Long mitarbeiterfk;
 
 	public MitarbeiterHasRollen() {
 		super();
 	}
 
-	public MitarbeiterHasRollen(Long rollen_fk, Long mitarbeiter_fk) {
+	public MitarbeiterHasRollen(Long rollenfk, Long mitarbeiterfk) {
 		super();
-		this.rollen_fk = rollen_fk;
-		this.mitarbeiter_fk = mitarbeiter_fk;
+		this.rollenfk = rollenfk;
+		this.mitarbeiterfk = mitarbeiterfk;
 	}
 
-	public Long getRollen_fk() {
-		return rollen_fk;
+	public Long getRollenfk() {
+		return rollenfk;
 	}
 
-	public void setRollen_fk(Long rollen_fk) {
-		this.rollen_fk = rollen_fk;
+	public void setRollenfk(Long rollenfk) {
+		this.rollenfk = rollenfk;
 	}
 
-	public Long getMitarbeiter_fk() {
-		return mitarbeiter_fk;
+	public Long getMitarbeiterfk() {
+		return mitarbeiterfk;
 	}
 
-	public void setMitarbeiter_fk(Long mitarbeiter_fk) {
-		this.mitarbeiter_fk = mitarbeiter_fk;
+	public void setMitarbeiterfk(Long mitarbeiterfk) {
+		this.mitarbeiterfk = mitarbeiterfk;
 	}
 
 	@Override
 	public String toString() {
-		return "MitarbeiterHasRollen [rollen_fk=" + rollen_fk + ", mitarbeiter_fk=" + mitarbeiter_fk + "]";
+		return "MitarbeiterHasRollen [rollenfk=" + rollenfk + ", mitarbeiterfk=" + mitarbeiterfk + "]";
 	}
 
 }
