@@ -40,8 +40,8 @@ public class MenueComponent extends CustomComponent{
 	public MenueplanGridLayout menueplan;
 	private DDGridLayout menueGrid;
 	private Button btn = new Button();
-	private Button btDelete = new Button("Löschen");
-	private Button btChange = new Button("Ändern");
+	private Button btDelete = new Button();
+	private Button btChange = new Button();
 	private Menue menue;
 	private Boolean isChanged;
 	private Button btFehler;
@@ -318,8 +318,8 @@ public class MenueComponent extends CustomComponent{
 		});
 		
 		btFehler= new Button();
-		btFehler.setStyleName(BaseTheme.BUTTON_LINK);
-		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
+		btFehler.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+		btFehler.setIcon(new ThemeResource("img/false.ico"));
 //		btFehler.setIcon(new ThemeResource("img/warning.bmp"));
 		btFehler.addStyleName("menueplan-regel");
 		btFehler.setWidth("20px");
@@ -328,8 +328,13 @@ public class MenueComponent extends CustomComponent{
 		vl.setComponentAlignment(btFehler, Alignment.TOP_RIGHT);
 		
 		HorizontalLayout hl = new HorizontalLayout();
-		btChange.addStyleName(Reindeer.BUTTON_SMALL);
-		btDelete.addStyleName(Reindeer.BUTTON_SMALL);
+//		btChange.addStyleName(Reindeer.BUTTON_SMALL);
+//		btDelete.setStyleName(Reindeer.BUTTON_SMALL);
+		btChange.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		btDelete.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		btChange.setIcon(new ThemeResource("img/edit.ico"));
+		btDelete.setIcon(new ThemeResource("img/Delete.ico"));
+//		btChange.addStyleName(Reindeer.BUTTON_DEFAULT);
 		hl.addComponent(btChange);
 		hl.addComponent(btDelete);
 		vl.addComponent(hl);
