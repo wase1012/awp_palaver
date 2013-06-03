@@ -63,7 +63,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 	private Mitarbeiter mitarbeiter = new Mitarbeiter();
 	private List<Rollen> rollenlist = new ArrayList<Rollen>();
-	public String valueString = new String();
+	public String valueString = null;
 
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
