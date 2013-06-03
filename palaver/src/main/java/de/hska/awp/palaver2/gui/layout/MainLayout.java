@@ -136,7 +136,7 @@ public class MainLayout extends VerticalLayout implements Command
 				IConstants.MENU_REGEL, this);
 		
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
-//		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);
+		einstellungItem.addItem(IConstants.MENU_HEADER, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
@@ -287,6 +287,10 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(BestellungGenerieren.class);
 		}
+		else if (selectedItem.getText().equals(IConstants.MENU_HEADER))
+		{
+			setHeaderVisible(!this.header.isVisible());
+		}
 		else 
 		{
 			ViewHandler.getInstance().returnToDefault();
@@ -296,5 +300,10 @@ public class MainLayout extends VerticalLayout implements Command
 	private String getUser()
 	{
 		return "Benutzer : " + Application.getInstance().getUsername();
+	}
+	
+	public void setHeaderVisible(Boolean arg0)
+	{
+		this.header.setVisible(arg0);
 	}
 }

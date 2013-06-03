@@ -96,9 +96,11 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	public void createRezept(Rezept Rezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("rezept verwaltung vor createRezept ID: " + Rezept.getId());
-		super.createRezept(Rezept);		
-		System.out.println("rezept verwaltung nach createRezept ID: " + Rezept.getId());
+		System.out.println("rezept verwaltung vor createRezept ID: "
+				+ Rezept.getId());
+		super.createRezept(Rezept);
+		System.out.println("rezept verwaltung nach createRezept ID: "
+				+ Rezept.getId());
 
 	}
 
@@ -124,17 +126,19 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	public void saveArtikel(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("rezept verwaltung vor saveArtikel id: " + rezept.getId());
+		System.out.println("rezept verwaltung vor saveArtikel id: "
+				+ rezept.getId());
 		Long rez1 = rezept.getId() + 1;
-		System.out.println("rezept verwaltung vot rez1 saveArtikel id: " + rez1);
+		System.out
+				.println("rezept verwaltung vot rez1 saveArtikel id: " + rez1);
 
 		String rez = String.valueOf(rez1);
 		System.out.println("rezept verwaltung vot rez saveArtikel id: " + rez);
 
-		super.saveArtikel(rezept);	
-		System.out.println("rezept verwaltung nach saveArtikel id: " + rezept.getId());
+		super.saveArtikel(rezept);
+		System.out.println("rezept verwaltung nach saveArtikel id: "
+				+ rezept.getId());
 
-		
 	}
 
 	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
@@ -179,7 +183,6 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	}
 
-
 	public void updateRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		super.updateRezept(rezept);
@@ -194,22 +197,24 @@ public class Rezeptverwaltung extends RezeptDAO {
 		}
 		return null;
 	}
-	
+
 	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez) {
 		try {
 			return super.ladeArtikelFuerRezept(rez);
 		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return new ArrayList<RezeptHasArtikel>();
+	}
+
+	public void deleteZutatenZuRezept(Rezept rez2)
+			throws ConnectException, DAOException, SQLException {
+		super.deleteZutatenZuRezept(rez2);
 	}
 
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws

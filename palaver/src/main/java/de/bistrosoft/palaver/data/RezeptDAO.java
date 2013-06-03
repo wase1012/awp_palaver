@@ -227,22 +227,21 @@ public class RezeptDAO extends AbstractDAO {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
 				+ MITARBEITER + "," + ERSTELLT + ")" + " VALUES" + "('"
-				+ rezept.getName() + "','"
-				+ rezept.getRezeptart().getId() 
+				+ rezept.getName() + "','" + rezept.getRezeptart().getId()
 				+ "','" + rezept.getKommentar() + "','" + rezept.getPortion()
 				+ "','" + rezept.getMitarbeiter().getId() + "','"
 				+ rezept.getErstellt() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
- 
+
 	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO rezept_has_zubereitung (rezept_fk, zubereitung_fk) VALUES"
 				+ "("
 				+ rezeptHasZubereitung.getRezept()
 				+ ", "
-				+ rezeptHasZubereitung.getZubereitung() + ")";
-
+				+ rezeptHasZubereitung.getZubereitung().getId() + ")";
+		this.putManaged(INSERT_QUERY);
 	}
 
 	public void saveArtikel(Rezept rezept) throws ConnectException,
@@ -271,7 +270,7 @@ public class RezeptDAO extends AbstractDAO {
 				+ "kommentar='" + rezept.getKommentar() + "'," + "portion="
 				+ rezept.getPortion() + "," + "mitarbeiter_fk = "
 				+ rezept.getMitarbeiter().getId() + "," + "erstellt='"
-				+ rezept.getErstellt() + " WHERE id = " + rezept.getId();
+				+ rezept.getErstellt() + "' WHERE id = " + rezept.getId();
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -343,4 +342,10 @@ public class RezeptDAO extends AbstractDAO {
 		return rha;
 	}
 
+	public void deleteZutatenZuRezept(Rezept rez2) throws ConnectException,
+			DAOException, SQLException {
+		String DELETE_QUERY = "DELETE FROM rezept_has_artikel WHERE "
+				+ REZEPTFK + "=" + rez2.getId() + ";";
+		this.putManaged(DELETE_QUERY);
+	}
 }
