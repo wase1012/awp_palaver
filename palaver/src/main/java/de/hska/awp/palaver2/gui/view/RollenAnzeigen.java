@@ -1,5 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -33,6 +36,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
  */
 @SuppressWarnings("serial")
 public class RollenAnzeigen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(RollenAnzeigen.class.getName());
 
 	private VerticalLayout layout = new VerticalLayout();
 	private Table table;
@@ -82,7 +87,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Rolle hinzufügen");
+					mengNeu.setCaption("Rolle hinzufï¿½gen");
 
 					UI.getCurrent().addWindow(mengNeu);
 
@@ -116,7 +121,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 					nameup.setImmediate(true);
 					nameup.setValue(rollenupdate.getName());
 					nameup.setMaxLength(45);
-					nameup.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4, 45, false));
+					nameup.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 4, 45, false));
 
 					verwerfen.addClickListener(new ClickListener() {
 
@@ -133,7 +138,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 							try {
 								Rollenverwaltung.getInstance().updateRollen(rollenupdate);
 							} catch (Exception e) {
-								throw new NullPointerException("Bitte gültige Werte eingeben");
+								log.error(e.toString());
 							}
 							UI.getCurrent().removeWindow(mengNeu);
 							ViewHandler.getInstance().switchView(RollenAnzeigen.class);
@@ -155,7 +160,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		this.addComponent(layout);

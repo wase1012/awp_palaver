@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.EmailValidator;
@@ -38,6 +41,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class MitarbeiterErstellen extends VerticalLayout implements View {
+	
+	private static final Logger	log	= LoggerFactory.getLogger(MitarbeiterErstellen.class.getName());
+	
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -120,8 +126,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("Verfügbare Rollen");
-		rollen.setRightColumnCaption("Ausgewählte Rollen");
+		rollen.setLeftColumnCaption("Verfï¿½gbare Rollen");
+		rollen.setRightColumnCaption("Ausgewï¿½hlte Rollen");
 		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
@@ -139,7 +145,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 			}
 		} catch (Exception e) {
 
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 
 		rechts.addComponent(rollen);
@@ -169,19 +175,19 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -191,7 +197,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {
@@ -276,20 +282,18 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				try {
 					mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
 				} catch (UnsupportedEncodingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.error(e1.toString());
 				} catch (NoSuchAlgorithmException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.error(e1.toString());
 				}
 				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
 				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
 				mitarbeiter.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
-				// zurück z.B. [1, 3]
+				// zurï¿½ck z.B. [1, 3]
 				// String auseinander nehmen und die Objekte anhand der ID
-				// suchen und der Liste hinzufügen
+				// suchen und der Liste hinzufï¿½gen
 				List<String> rollenId = null;
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
@@ -300,7 +304,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 							id = Long.parseLong(sId.trim());
 
 						} catch (NumberFormatException nfe) {
-
+							log.error(nfe.toString());
 						}
 
 						Rollen rollen = null;
@@ -308,7 +312,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 							rollen = Rollenverwaltung.getInstance().getRollenById(id);
 							rollenlist.add(rollen);
 						} catch (Exception e) {
-							e.printStackTrace();
+							log.error(e.toString());
 						}
 
 					}
@@ -319,7 +323,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				try {
 					Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e.toString());
 				}
 
 				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
