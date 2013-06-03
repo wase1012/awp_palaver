@@ -1,3 +1,6 @@
 id; nachricht; sender_fk; empf_rolle_fk
-1; du bist schäiße;1;1
-2; dä büsst döhf;2;1
+1;Dies ist eine Nachricht an Administrator.;1;1
+2;Dies ist eine Nachricht an die Köche.;2;2
+3;Dies ist eine Nachricht an den Einkauf.;1;3
+4;Dies ist eine Nachricht an den Besteller.;1;4
+5;Dies ist eine Nachricht an den Speiseplan Freigeber.;1;5
