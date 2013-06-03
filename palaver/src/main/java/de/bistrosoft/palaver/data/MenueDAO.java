@@ -119,6 +119,21 @@ public class MenueDAO extends AbstractDAO {
 
 		return list;
 	}
+	
+	public Menue getMenueByName1(String namemenue) throws ConnectException,
+	DAOException, SQLException {
+Menue result = null;
+String name = "'" + namemenue + "'";
+System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
+ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_NAME, name));
+
+while (set.next()) {
+	result = new Menue(set.getLong("id"), set.getString("name"),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(
+					set.getLong("koch")));
+}
+return result;
+}
 
 	public Menue getMenueByName(String namemenue) throws ConnectException,
 			DAOException, SQLException {
@@ -160,76 +175,80 @@ public class MenueDAO extends AbstractDAO {
 	}
 
 	public void createMenue(Menue menue) throws ConnectException, DAOException,
-			SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
-				+ ", geschmack_fk, menueart_fk, aufwand, favorit)" + " VALUES"
-				+ "('" + menue.getName() + "'," + menue.getKoch().getId()
-				+ ", " + menue.getGeschmack().getId() + ", "
-				+ menue.getMenueart().getId() + ", "
-				+ Util.convertBoolean(menue.getAufwand()) + ", "
-				+ Util.convertBoolean(menue.getFavorit()) + ")";
-		System.out.println(INSERT_QUERY);
-		this.putManaged(INSERT_QUERY);
-	}
+	SQLException {
+String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
+		+ ", geschmack_fk, menueart_fk, aufwand, favorit)" + " VALUES"
+		+ "('" + menue.getName() + "'," + menue.getKoch().getId()
+		+ ", " + menue.getGeschmack().getId() + ", "
+		+ menue.getMenueart().getId() + ", "
+		+ Util.convertBoolean(menue.getAufwand()) + ", "
+		+ Util.convertBoolean(menue.getFavorit()) + ")";
+System.out.println(INSERT_QUERY);
+this.putManaged(INSERT_QUERY);
+}
 
-	public void createRezeptAlsMenue(Menue menue) throws ConnectException,
-			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH + "," + MENUEART
-				+ ")" + " VALUES" + "('" + menue.getName() + "',"
-				+ menue.getKoch().getId() + ",1)";
-		this.putManaged(INSERT_QUERY);
-	}
+public void createRezeptAlsMenue(Menue menue) throws ConnectException,
+	DAOException, SQLException {
+String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH + "," + MENUEART
+		+ ")" + " VALUES" + "('" + menue.getName() + "',"
+		+ menue.getKoch().getId() + ",1)";
+this.putManaged(INSERT_QUERY);
+}
 
-	public void updateMenue(Menue menue) throws ConnectException, DAOException,
-			SQLException {
-		String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
-				+ menue.getName() + "' ," + KOCH + " = "
-				+ menue.getKoch().getId() + " WHERE menue.id = "
-				+ menue.getId() + ", geschmack_fk = "
-				+ menue.getGeschmack().getId() + ", menueart_fk = "
-				+ menue.getMenueart().getId() + ", aufwand = "
-				+ Util.convertBoolean(menue.getAufwand()) + ", favorit = "
-				+ Util.convertBoolean(menue.getFavorit()) + " ;";
-		this.putManaged(INSERT_QUERY);
-	}
+public void updateMenue(Menue menue) throws ConnectException, DAOException,
+	SQLException {
+String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
+		+ menue.getName() + "' ," + KOCH + " = "
+		+ menue.getKoch().getId() + ", geschmack_fk = "
+		+ menue.getGeschmack().getId() + ", menueart_fk = "
+		+ menue.getMenueart().getId() + ", aufwand = "
+		+ Util.convertBoolean(menue.getAufwand()) + ", favorit = "
+		+ Util.convertBoolean(menue.getFavorit()) + " WHERE menue.id = "
+		+ menue.getId() + ";";
+this.putManaged(INSERT_QUERY);
+}
 
-	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
-				+ "("
-				+ menueHasFussnote.getMenue()
-				+ ", "
-				+ menueHasFussnote.getFussnote() + ")";
-		this.putManaged(INSERT_QUERY);
-	}
+public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
+	throws ConnectException, DAOException, SQLException {
+String INSERT_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
+		+ "("
+		+ menueHasFussnote.getMenue()
+		+ ", "
+		+ menueHasFussnote.getFussnoteid() + ")";
+System.out.println(INSERT_QUERY);
+this.putManaged(INSERT_QUERY);
+}
 
-	public void RezepteAdd(MenueHasRezept menueHasRezept)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO menue_has_rezept (menue_id, rezept_id, hauptgericht) VALUES"
-				+ "("
-				+ menueHasRezept.getMenue()
-				+ ", "
-				+ menueHasRezept.getRezept()
-				+ "," + menueHasRezept.getHauptgericht() + ")";
-		this.putManaged(INSERT_QUERY);
-	}
+public void RezepteAdd(MenueHasRezept menueHasRezept)
+	throws ConnectException, DAOException, SQLException {
+String INSERT_QUERY = "INSERT INTO menue_has_rezept (menue_id, rezept_id, hauptgericht) VALUES"
+		+ "("
+		+ menueHasRezept.getMenue()
+		+ ", "
+		+ menueHasRezept.getRezept()
+		//+ ", true" + ")";
+		+ ","
+	+ menueHasRezept.getHauptgericht() + ")";
+System.out.println(INSERT_QUERY);
+this.putManaged(INSERT_QUERY);
+}
 
-	// /
+// /
 
-	public void FussnoteDelete(Menue menue1) throws ConnectException,
-			DAOException, SQLException {
-		String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = "
-				+ menue1.getId() + ";";
+public void FussnoteDelete(Menue menue1) throws ConnectException,
+	DAOException, SQLException {
+String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = "
+		+ menue1.getId() + ";";
 
-		this.putManaged(DELETE_QUERY);
-	}
+this.putManaged(DELETE_QUERY);
+}
 
-	public void RezepteDelete(Menue menue1) throws ConnectException,
-			DAOException, SQLException {
-		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = "
-				+ menue1.getId() + ";";
-
-		this.putManaged(DELETE_QUERY);
-	}
+public void RezepteDelete(Menue menue1, String rezeptid) throws ConnectException,
+	DAOException, SQLException {
+String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = "
+		+ menue1.getId() + " And rezept_id = " + rezeptid + ";";
+System.out.println(DELETE_QUERY);
+this.putManaged(DELETE_QUERY);
+}
 
 }

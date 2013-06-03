@@ -7,6 +7,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -85,10 +86,10 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 		try {
 			container = new BeanItemContainer<Menue>(Menue.class,
-					Menueverwaltung.getInstance().getAllMenues());
+					Menueverwaltung.getInstance().getAllMenuesTabelle());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "id", "name",
-					"kochname", "geschmackname", "menueartname" });
+					"kochname", "geschmack", "menueart" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -110,8 +111,8 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				} else {
 					table.setFilterBarVisible(true);
 					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-					// showFilter.setIcon(new
-					// ThemeResource("img/disable_filter.ico"));
+					 showFilter.setIcon(new
+					 ThemeResource("img/disable_filter.ico"));
 				}
 			}
 		});

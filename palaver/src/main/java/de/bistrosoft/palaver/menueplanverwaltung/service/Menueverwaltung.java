@@ -36,6 +36,15 @@ public class Menueverwaltung extends MenueDAO{
 		}
 	}
 	
+	public List<Menue> getAllMenuesTabelle() {
+		try {
+			return super.getAllMenues();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public void createMenue(Menue menue) throws ConnectException,
 	DAOException, SQLException {

@@ -8,6 +8,7 @@ public class MenueHasFussnote implements java.io.Serializable {
 	private MenueHasFussnoteId menueHasFussnoteId;
 	private Fussnote fussnote;
 	private Menue menue;
+	private Long fussnoteid;
 
 	public MenueHasFussnote() {
 	}
@@ -25,7 +26,12 @@ public class MenueHasFussnote implements java.io.Serializable {
 		this.fussnote = fussnote;
 		this.menue = menue;
 	}
-
+	public MenueHasFussnote( Long fussnoteid,
+			Menue menue) {
+		
+		this.fussnoteid = fussnoteid;
+		this.menue = menue;
+	}
 	
 
 	public MenueHasFussnoteId getId() {
@@ -88,6 +94,14 @@ public class MenueHasFussnote implements java.io.Serializable {
 	public String toString() {
 		return "menueHasFussnote [fussnote=" + fussnote + ", menue=" + menue
 				+ "]";
+	}
+
+	public Long getFussnoteid() {
+		return fussnoteid;
+	}
+
+	public void setFussnoteid(Long fussnoteid) {
+		this.fussnoteid = fussnoteid;
 	}
 
 }

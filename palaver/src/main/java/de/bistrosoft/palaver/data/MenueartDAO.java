@@ -64,7 +64,7 @@ public class MenueartDAO extends AbstractDAO {
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_ID, id));
 		while (set.next()) {
-			menueart = new Menueart(set.getLong(ID), set.getString(NAME));
+			menueart = new Menueart(set.getLong("id"), set.getString("name"));
 		}
 		return menueart;
 	}
