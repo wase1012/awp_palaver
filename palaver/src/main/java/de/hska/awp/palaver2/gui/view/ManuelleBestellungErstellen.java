@@ -212,6 +212,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		datetime2.setCaption("Freitag");
 		hl.addComponent(datetime);
 		hl.addComponent(datetime2);
+		hl.setSpacing(true);
 		fenster.addComponent(hl);
 		fenster.addComponent(form);
 		fenster.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
@@ -304,7 +305,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		if (lieferant.getMehrereliefertermine() == true) {
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "freitag", "montag" });
+					.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
