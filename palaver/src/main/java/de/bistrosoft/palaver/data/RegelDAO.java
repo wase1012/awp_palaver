@@ -92,7 +92,7 @@ public class RegelDAO extends AbstractDAO {
 						.getString("operator"), set.getString("kriterien"), set
 						.getString("fehlermeldung"), set.getBoolean("aktiv")));
 			}
-		} catch (ConnectException | DAOException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

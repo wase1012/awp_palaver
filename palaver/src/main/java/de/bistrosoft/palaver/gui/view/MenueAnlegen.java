@@ -109,13 +109,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private VerticalLayout box3 = new VerticalLayout();
 	private int zahl = 0;
 	
-	private Button update = new Button("Ändern");
+	private Button update = new Button("Ã„ndern");
 	
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
 	private Label ueberschrift2 = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue ändern</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue ï¿½ndern</font><b></pre>",
 			Label.CONTENT_XHTML);
 
 	private Label dummy = new Label(
@@ -533,7 +533,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 	}
 	
-	//Diese Funktion wird angesprochen, wenn man ein Menue ansehen oder ändern moechte, es wir ein Menue
+	//Diese Funktion wird angesprochen, wenn man ein Menue ansehen oder ï¿½ndern moechte, es wir ein Menue
 	// uebergeben welches dann angeziegt werden soll
 	@Override
 	public void getViewParam(ViewData data) {
@@ -856,7 +856,7 @@ private void pruefen(int i) {
 			}
 			}
 			else{
-				Notification notification = new Notification("Bitte geben Sie den Menüersteller an einen Namen");
+				Notification notification = new Notification("Bitte geben Sie den MenÃ¼ersteller an einen Namen");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -1016,7 +1016,7 @@ private void aendern() {
 		 beilage2Setzen(menue2);
 	}
 
-	//wenn der merker auf x gesetzt ist, das heißt die Fussnoten ahben sich geaendert
+	//wenn der merker auf x gesetzt ist, das heiï¿½t die Fussnoten ahben sich geaendert
 	//werdne dei alten Fussnoten geloescht und neue eingefuegt
 	if(merker == "x") {
 	try {

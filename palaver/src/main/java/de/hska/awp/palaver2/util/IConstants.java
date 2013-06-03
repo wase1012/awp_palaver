@@ -11,7 +11,7 @@ public interface IConstants
 //  Team1
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -30,32 +30,32 @@ public interface IConstants
 	String 		MENU_BESTELLUNG_BEARBEITEN = "Bestellung bearbeiten";
 	String 		MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen anzeigen";
 	String		MENU_BESTELLUNG_GENERATE = "Neue Bestellungen generieren";
-	String		MENU_NACHRICHT_ANZEIGEN = "Alle Nachrichten anzeigen";
+	String		MENU_NACHRICHT_ANZEIGEN = "Nachrichten anzeigen";
 	String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
 	String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
-	String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten anzeigen";
+	String		MENU_MENGENEINHEIT_ANZEIGEN = "Mengeneinheiten";
 	String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
-	String		MENU_KATEGORIE_ANZEIGEN = "Alle Kategorien anzeigen";
-	String		MENU_ROLLEN_ANZEIGEN = "Alle Rollen anzeigen";
+	String		MENU_KATEGORIE_ANZEIGEN = "Kategorien";
+	String		MENU_ROLLEN_ANZEIGEN = "Rollen anzeigen";
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Anlegen";
 	String 		MENU_REZEPT_ANZEIGEN = "Anzeigen";
-	String 		MENU_REZEPT_AENDERN = "�ndern";
-	String 		MENU_REZEPT_LOESCHEN = "L�schen";
-	String 		MENU_MENUPLAN_HEADLINE = "Men�plan";
-	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Men�plan";
-	String 		MENU_MENUPLAN_HISTORIE = "Men�plan-Historie";
+	String 		MENU_REZEPT_AENDERN = "Ändern";
+	String 		MENU_REZEPT_LOESCHEN = "Löschen";
+	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
+	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
+	String 		MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
 	String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
 	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
 	String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
 	String 		MENU_FUSSNOTE = "Fussnoten";
-	String 		MENU_GESCHMACK = "Geschm�cker";
+	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
 	String		MENU_LOGOUT = "Logout";
-	String 		MENU_MENUE_HEADLINE = "Men�";
-	String 		MENU_MENUE_ANLEGEN = " Men� anlegen";
-	String 		MENU_MENUE_SUCHEN = " Men� suchen";
+	String 		MENU_MENUE_HEADLINE = "Menü";
+	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
+	String 		MENU_MENUE_SUCHEN = " Menü suchen";
 	String 		MENU_REGEL = "Regeln";
 	String 		MENU_HEADER = "Kopfzeile anzeigen/ausblenden";
 	
@@ -65,11 +65,11 @@ public interface IConstants
 	String		BUTTON_SAVE = "Speichern";
 	String		BUTTON_SENDEN = "Senden";
 	String		BUTTON_DISCARD = "Verwerfen";
-	String		BUTTON_ADD = "Hinzuf�gen";
+	String		BUTTON_ADD = "Hinzufügen";
 	String		BUTTON_NEW = "Neu";
 	String		BUTTON_EDIT = "Bearbeiten";
 	String		BUTTON_OK = "OK";
-	String		BUTTON_DELETE = "L�schen";
+	String		BUTTON_DELETE = "Löschen";
 	String		BUTTON_JA = "Ja";
 	String 		BUTTON_NEIN = "Nein";
 	String		BUTTON_EMAILVERSAND = "Per Email versenden";
@@ -90,10 +90,5 @@ public interface IConstants
 	
 	String		ICON_YES = "img/tick_circle.ico";
 	String		ICON_NO = "img/cross_circle.ico";
-	String		ICON_DELETE = "img/Delete.ico";
-
-	
-
-
-	
+	String		ICON_DELETE = "img/Delete.ico";	
 }

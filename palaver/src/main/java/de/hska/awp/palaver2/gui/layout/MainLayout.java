@@ -139,7 +139,7 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem(IConstants.MENU_HEADER, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
-		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
+//		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);

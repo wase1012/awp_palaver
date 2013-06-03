@@ -89,7 +89,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			Label.CONTENT_XHTML);
 
 	private TextField name = new TextField("Bezeichnung");
-	private ComboBox mitarbeiterCb = new ComboBox("Bäcker");
+	private ComboBox mitarbeiterCb = new ComboBox("BÃ¤cker");
 
 	private TextArea kommentar = new TextArea("Kommentar");
 
@@ -370,7 +370,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				} 
 				
 				Notification notification1 = new Notification(
-						"Rezept wurde geändert!");
+						"Rezept wurde geÃ¤ndert!");
 				notification1.setDelayMsec(500);
 				notification1.show(Page.getCurrent());
 				ViewHandler.getInstance().switchView(
@@ -474,7 +474,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		if (name.getValue() == "" || name.getValue() == null
 				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
 			Notification notification = new Notification(
-					"Bitte alle Felder befüllen");
+					"Bitte alle Felder befÃ¼llen");
 			notification.setDelayMsec(500);
 			notification.show(Page.getCurrent());
 		} else {

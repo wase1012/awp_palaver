@@ -115,7 +115,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
 
 	// CheckBox
-	private CheckBox menueCbx = new CheckBox("Rezept als Menü speichern");
+	private CheckBox menueCbx = new CheckBox("Rezept als MenÃ¼ speichern");
 
 	// OptionGroup
 	private OptionGroup rezeptartOg = new OptionGroup();
@@ -660,18 +660,18 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				if (nameInput == "" || portionInput == null
 						|| mitarbeiterInput == null || rezeptartInput == null) {
 					Notification notification = new Notification(
-							"Bitte alle Felder befüllen");
+							"Bitte alle Felder befÃ¼llen");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				} else {
 					rezeptSpeichern();
 					rezeptAlsMenuSpeichern();
 					rezeptAlsHauptgerichtSpeichern();
-					System.out.println("Rezept wurde als Menü gespeichert");
+					System.out.println("Rezept wurde als Menï¿½ gespeichert");
 				}
 			} else {
 				Notification notification = new Notification(
-						"Rezept für Menue nur als Hauptgericht speicherbar!");
+						"Rezept fÃ¼r Menue nur als Hauptgericht speicherbar!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			}
@@ -679,14 +679,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			if (nameInput == "" || portionInput == null
 					|| mitarbeiterInput == null || rezeptartInput == null) {
 				Notification notification = new Notification(
-						"Bitte alle Felder befüllen");
+						"Bitte alle Felder befÃ¼llen");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 			} else {
 				// System.out.println("rezeptAnlegen in Methode speichern ID: "
 				// + rezept.getId());
 				rezeptSpeichern();
-				// Plausibiltätasprüfung für Zutatenliste läuft in der Methode
+				// Plausibiltï¿½tasprï¿½fung fï¿½r Zutatenliste lï¿½uft in der Methode
 				// Speichern
 			}
 		}
@@ -735,22 +735,22 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 		mhr.setHauptgericht(true);
 		Notification notification = new Notification(
-				"Rezept wurde als Menü gespeichert!");
+				"Rezept wurde als MenÃ¼ gespeichert!");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 	}
 
-	// Methode zum Ändern eines Rezepts
+	// Methode zum ï¿½ndern eines Rezepts
 	private void update() {
 		System.out.println("!--- Starte Update ---!");
 		String altername = rezept.getName();
-		System.out.println("Rezept, das geändernt werden soll: " + altername);
+		System.out.println("Rezept, das geÃ¤ndernt werden soll: " + altername);
 
 		// setzt Rezeptname
 		rezept.setName(nameInput);
 		System.out.println("Rezeptname: " + nameInput);
 
-		// setzt Änderungsdatum
+		// setzt ï¿½nderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 		rezept.setErstellt(date2);
@@ -848,7 +848,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		/* Liste Artikel zu Rezept */
 		List<RezeptHasArtikel> zutatenliste = new ArrayList<RezeptHasArtikel>();
 
-		// aktuelles Rezept über Name suchen
+		// aktuelles Rezept ï¿½ber Name suchen
 		try {
 			rez = Rezeptverwaltung.getInstance().getRezeptByName1(altername);
 			System.out.println("Zutaten speichern auf Rezept: " + altername);
@@ -856,11 +856,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 
-		// Zutaten über ID zu einem Rezept suchen
+		// Zutaten ï¿½ber ID zu einem Rezept suchen
 		try {
 			zutatenliste = Rezeptverwaltung.getInstance()
 					.getAllArtikelByRezeptId1(rez.getId());
-			System.out.println("Zutatenliste ändern auf RezeptID: "
+			System.out.println("Zutatenliste Ã¤ndern auf RezeptID: "
 					+ rez.getId());
 		} catch (ConnectException e1) {
 			e1.printStackTrace();
@@ -870,7 +870,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 
-		// Zutaten über ID zu einem Rezept löschen
+		// Zutaten ï¿½ber ID zu einem Rezept lï¿½schen
 		try {
 			Rezeptverwaltung.getInstance().deleteZutatenZuRezept(rez);
 			System.out.println("Delete success auf Artikel zu RezeptID "
@@ -917,7 +917,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		System.out.println("!--- Ende Update ---!");
 
-		Notification notification = new Notification("Rezept wurde geändert!");
+		Notification notification = new Notification("Rezept wurde geÃ¤ndert!");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
