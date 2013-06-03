@@ -15,18 +15,18 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 public class BestellungData {
-	private String		name;
-	private	String		gebinde;
-	private Kategorie	kategorie;
-	private TextField	durchschnitt = new TextField();
-	private TextField	kantine = new TextField();;
-	private TextField	gesamt = new TextField();;
-	private IntStepper 	freitag = new IntStepper();
-	private IntStepper	montag = new IntStepper();
-	private Artikel		artikel;
+	private String name;
+	private String gebinde;
+	private Kategorie kategorie;
+	private TextField durchschnitt = new TextField();
+	private TextField kantine = new TextField();;
+	private TextField gesamt = new TextField();;
+	private IntStepper freitag = new IntStepper();
+	private IntStepper montag = new IntStepper();
+	private Artikel artikel;
 	private Long id;
 	private boolean geliefert;
-	
+
 	/**
 	 * @param name
 	 * @param artnr
@@ -45,7 +45,7 @@ public class BestellungData {
 		this.freitag.setValue(durchschnitt + kantine);
 		this.montag.setValue(0);
 	}
-	
+
 	@SuppressWarnings("serial")
 	public BestellungData(Bestellposition bp) {
 		super();
@@ -53,7 +53,7 @@ public class BestellungData {
 		this.artikel = bp.getArtikel();
 		this.geliefert = bp.isGeliefert();
 		this.name = bp.getArtikelName();
-		this.gebinde = bp.getArtikel().getBestellgroesse()  + " " + bp.getArtikel().getMengeneinheit().getKurz();
+		this.gebinde = bp.getArtikel().getBestellgroesse() + " " + bp.getArtikel().getMengeneinheit().getKurz();
 		this.kategorie = bp.getArtikel().getKategorie();
 		this.durchschnitt.setValue(bp.getDurchschnitt().toString());
 		this.kantine.setValue(bp.getKantine().toString());
@@ -62,21 +62,21 @@ public class BestellungData {
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(bp.getFreitag());
 		this.montag.setValue(bp.getMontag());
-		
+
 		this.durchschnitt.setWidth("50px");
 		this.kantine.setWidth("50px");
 		this.gesamt.setWidth("50px");
 		this.freitag.setWidth("50px");
 		this.montag.setWidth("50px");
-		
+
 		this.durchschnitt.setImmediate(true);
 		this.kantine.setImmediate(true);
-		
+
 		this.freitag.setMinValue(0);
 		this.montag.setMinValue(0);
 		this.freitag.setManualInputAllowed(false);
 		this.montag.setManualInputAllowed(false);
-		
+
 		this.gesamt.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -84,51 +84,46 @@ public class BestellungData {
 				freitag.setMaxValue(getInt(gesamt.getValue()));
 			}
 		});
-		
-		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {	
+
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				valueChangeEvent();
 			}
 		});
-		
+
 		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event) {
 				valueChangeEvent();
 			}
 		});
-		
-		this.freitag.addValueChangeListener(new ValueChangeListener() {	
+
+		this.freitag.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				if (freitag.getValue() >= getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
-				}
-				else {
+				} else {
 					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
 				}
 			}
 		});
-		
-		this.montag.addValueChangeListener(new ValueChangeListener()
-		{	
+
+		this.montag.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)
-			{
+			public void valueChange(ValueChangeEvent event) {
 				if (montag.getValue() >= getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
-				}
-				else {
+				} else {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("serial")
 	public BestellungData(Artikel artikel) {
 		super();
@@ -142,188 +137,207 @@ public class BestellungData {
 		this.freitag.setValue(artikel.getDurchschnitt());
 		this.montag.setValue(0);
 		this.artikel = artikel;
-		
+
 		this.durchschnitt.setWidth("50px");
 		this.kantine.setWidth("50px");
 		this.gesamt.setWidth("50px");
 		this.freitag.setWidth("50px");
 		this.montag.setWidth("50px");
-		
+
 		this.durchschnitt.setImmediate(true);
 		this.kantine.setImmediate(true);
-		
+
 		this.freitag.setMinValue(0);
 		this.montag.setMinValue(0);
 		this.freitag.setManualInputAllowed(false);
 		this.montag.setManualInputAllowed(false);
-		
+
 		this.gesamt.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				montag.setMaxValue(getInt(gesamt.getValue()));
 				freitag.setMaxValue(getInt(gesamt.getValue()));
 			}
 		});
-		
-		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {	
+
+		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				valueChangeEvent();
 			}
 		});
-		
+
 		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				valueChangeEvent();
 			}
 		});
-		
-		this.freitag.addValueChangeListener(new ValueChangeListener() {	
+
+		this.freitag.addValueChangeListener(new ValueChangeListener() {
 			@Override
-			public void valueChange(ValueChangeEvent event)	{
+			public void valueChange(ValueChangeEvent event) {
 				if (freitag.getValue() >= getInt(gesamt.getValue())) {
 					freitag.setValue(getInt(gesamt.getValue()));
 					montag.setValue(0);
-				}
-				else {
+				} else {
 					montag.setValue(getInt(gesamt.getValue()) - freitag.getValue());
 				}
 			}
 		});
-		
-		this.montag.addValueChangeListener(new ValueChangeListener() {	
+
+		this.montag.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (montag.getValue() >= getInt(gesamt.getValue())) {
 					montag.setValue(getInt(gesamt.getValue()));
 					freitag.setValue(0);
-				}
-				else {
+				} else {
 					freitag.setValue(getInt(gesamt.getValue()) - montag.getValue());
 				}
 			}
 		});
 	}
-	
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * @return the artnr
 	 */
 	public String getGebinde() {
 		return gebinde;
 	}
+
 	/**
-	 * @param artnr the artnr to set
+	 * @param artnr
+	 *            the artnr to set
 	 */
 	public void setGebinde(String artnr) {
 		this.gebinde = artnr;
 	}
+
 	/**
 	 * @return the menge
 	 */
 	public IntStepper getFreitag() {
 		return freitag;
 	}
+
 	/**
-	 * @param menge the menge to set
+	 * @param menge
+	 *            the menge to set
 	 */
 	public void setFreitag(IntStepper menge) {
 		this.freitag = menge;
 	}
+
 	/**
 	 * @return the kategorie
 	 */
 	public Kategorie getKategorie() {
 		return kategorie;
 	}
+
 	/**
-	 * @param kategorie the kategorie to set
+	 * @param kategorie
+	 *            the kategorie to set
 	 */
 	public void setKategorie(Kategorie kategorie) {
 		this.kategorie = kategorie;
 	}
+
 	/**
 	 * @return the durchschnitt
 	 */
 	public TextField getDurchschnitt() {
 		return durchschnitt;
 	}
+
 	/**
-	 * @param durchschnitt the durchschnitt to set
+	 * @param durchschnitt
+	 *            the durchschnitt to set
 	 */
 	public void setDurchschnitt(TextField durchschnitt) {
 		this.durchschnitt = durchschnitt;
 	}
+
 	/**
 	 * @return the kantine
 	 */
 	public TextField getKantine() {
 		return kantine;
 	}
+
 	/**
-	 * @param kantine the kantine to set
+	 * @param kantine
+	 *            the kantine to set
 	 */
 	public void setKantine(TextField kantine) {
 		this.kantine = kantine;
 	}
+
 	/**
 	 * @return the gesamt
 	 */
 	public TextField getGesamt() {
 		return gesamt;
 	}
+
 	/**
-	 * @param gesamt the gesamt to set
+	 * @param gesamt
+	 *            the gesamt to set
 	 */
 	public void setGesamt(TextField gesamt) {
 		this.gesamt = gesamt;
 	}
+
 	/**
 	 * @return the montag
 	 */
 	public IntStepper getMontag() {
 		return montag;
 	}
+
 	/**
-	 * @param montag the montag to set
+	 * @param montag
+	 *            the montag to set
 	 */
 	public void setMontag(IntStepper montag) {
 		this.montag = montag;
 	}
-	
+
 	public Artikel getBestellungArtikel() {
 		return this.artikel;
 	}
-	
-	private void valueChangeEvent()	{
+
+	private void valueChangeEvent() {
 		try {
 			Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
 			gesamt.setValue(gesammt + "");
 			montag.setValue(gesammt);
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			gesamt.setValue("Invalid");
 		}
 	}
-	
+
 	public static Integer getInt(String str) {
 		Integer nummer = null;
 		try {
 			nummer = Integer.parseInt(str);
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 
 		}
 		return nummer;
@@ -337,7 +351,8 @@ public class BestellungData {
 	}
 
 	/**
-	 * @param geliefert the geliefert to set
+	 * @param geliefert
+	 *            the geliefert to set
 	 */
 	public void setGeliefert(boolean geliefert) {
 		this.geliefert = geliefert;
@@ -351,7 +366,8 @@ public class BestellungData {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;

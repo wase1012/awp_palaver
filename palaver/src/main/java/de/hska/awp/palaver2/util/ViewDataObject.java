@@ -4,17 +4,14 @@
  */
 package de.hska.awp.palaver2.util;
 
-public class ViewDataObject<T> implements ViewData
-{
-	private T	data;
-	
-	public ViewDataObject(T data)
-	{
+public class ViewDataObject<T> implements ViewData {
+	private T data;
+
+	public ViewDataObject(T data) {
 		this.data = data;
 	}
-	
-	public T getData()
-	{
+
+	public T getData() {
 		return data;
 	}
 }
