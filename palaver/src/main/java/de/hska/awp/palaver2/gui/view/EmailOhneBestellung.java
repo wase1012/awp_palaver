@@ -1,10 +1,13 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.io.File;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -13,12 +16,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.emailversand.Mail;
-import de.hska.awp.palaver2.gui.layout.DefaultView;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
