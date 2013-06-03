@@ -14,13 +14,12 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
  * @version 1.0
  */
 public class MengeneinheitDAO extends AbstractDAO {
-	
+
 	private final static String TABLE = "mengeneinheit";
 	private static MengeneinheitDAO instance = null;
-	private final static String GET_ALL_MENGENEINHEITEN = "SELECT * FROM "+ TABLE;
+	private final static String GET_ALL_MENGENEINHEITEN = "SELECT * FROM " + TABLE;
 	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
 	private final static String GET_MENGENEINHEIT_BY_NAME = "SELECT * FROM mengeneinheit WHERE name = '";
-	private final static String PUT_MENGENEINHEIT = "INSERT into mengeneinheit (name, kurz) values (";
 
 	/**
 	 * Konstruktor
@@ -31,7 +30,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 	public MengeneinheitDAO() {
 		super();
 	}
-	
+
 	/**
 	 * @return instance
 	 */
@@ -50,31 +49,23 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public List<Mengeneinheit> getAllMengeneinheit() throws ConnectException, DAOException, SQLException
-	{
+	public List<Mengeneinheit> getAllMengeneinheit() throws ConnectException, DAOException, SQLException {
 		List<Mengeneinheit> list = new ArrayList<Mengeneinheit>();
-		ResultSet set = getManaged(GET_ALL_MENGENEINHEITEN);	
-		
-		while(set.next())
-		{
-			list.add(new Mengeneinheit(set.getLong("id"),
-								set.getString("name"),
-								set.getString("kurz")
-								));
+		ResultSet set = getManaged(GET_ALL_MENGENEINHEITEN);
+
+		while (set.next()) {
+			list.add(new Mengeneinheit(set.getLong("id"), set.getString("name"), set.getString("kurz")));
 		}
 		return list;
 	}
-	
-	public List<Mengeneinheit> getMengeneinheitByName(String name)
-			throws ConnectException, DAOException, SQLException {
+
+	public List<Mengeneinheit> getMengeneinheitByName(String name) throws ConnectException, DAOException, SQLException {
 		List<Mengeneinheit> list = new ArrayList<Mengeneinheit>();
-		
+
 		ResultSet set = getManaged(GET_MENGENEINHEIT_BY_NAME + name + "'");
-		
+
 		while (set.next()) {
-			list.add(new Mengeneinheit(set.getLong("id"), 
-					set.getString("name"),
-					set.getString("kurz")));
+			list.add(new Mengeneinheit(set.getLong("id"), set.getString("name"), set.getString("kurz")));
 		}
 
 		return list;
@@ -88,11 +79,8 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public void createNewMengeneinheit(Mengeneinheit mengeneinheit)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name, kurz) VALUES('"
-				+ mengeneinheit.getName() + "', '" + mengeneinheit.getKurz()
-				+ "')";
+	public void createNewMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name, kurz) VALUES('" + mengeneinheit.getName() + "', '" + mengeneinheit.getKurz() + "')";
 		putManaged(INSERT_QUERY);
 	}
 
@@ -104,24 +92,19 @@ public class MengeneinheitDAO extends AbstractDAO {
 	 * @throws SQLException
 	 * @datum 19.04.2013
 	 */
-	public void updateMengeneinheit(Mengeneinheit mengeneinheit)
-			throws ConnectException, DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='"
-				+ mengeneinheit.getName() + "', kurz='"
-				+ mengeneinheit.getKurz() + "' WHERE id='"
+	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET name='" + mengeneinheit.getName() + "', kurz='" + mengeneinheit.getKurz() + "' WHERE id='"
 				+ mengeneinheit.getId() + "'";
 		putManaged(UPDATE_QUERY);
 	}
 
-	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException,
-	DAOException, SQLException {
+	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {
 
 		Mengeneinheit me = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
 
 		while (set.next()) {
-			me = new Mengeneinheit(set.getLong("id"), set.getString("name"),
-			set.getString("kurz"));
+			me = new Mengeneinheit(set.getLong("id"), set.getString("name"), set.getString("kurz"));
 		}
 
 		return me;
