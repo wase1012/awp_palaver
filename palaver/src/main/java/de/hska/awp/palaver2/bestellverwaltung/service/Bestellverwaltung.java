@@ -175,7 +175,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws SQLException
 	 */
 	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException, SQLException {
-		List<Lieferant> list = new ArrayList<Lieferant>();
+		List<Lieferant> list = null;
 		list = LieferantDAO.getInstance().getLieferantenWithArtikel();
 
 		return list;

@@ -263,7 +263,7 @@ public class BestellungDAO extends AbstractDAO {
 		this.putManaged(UPDATE_QUERY);
 		
 		List<Bestellposition> bplist = BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(bestellung.getId());
-		List<Bestellposition> bebplist = new ArrayList<Bestellposition>();
+		List<Bestellposition> bebplist = null;
 		bebplist = bestellung.getBestellpositionen();
 		
 		for(int i = 0 ; i < bplist.size() ; i++){
