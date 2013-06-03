@@ -90,7 +90,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Kategorie hinzuf�gen");
+					mengNeu.setCaption("Kategorie hinzufügen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -124,7 +124,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 					nameUp.setImmediate(true);
 					nameUp.setValue(kategorieUpdate.getName());
 					nameUp.setMaxLength(45);
-					nameUp.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 4,45, false));
+					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
 					
 					verwerfen.addClickListener(new ClickListener() {
 						
@@ -204,7 +204,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Kategorie hinzuf�gen");
+				mengNeu.setCaption("Kategorie hinzufügen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -237,7 +237,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(45);
-				name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 4,45, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,45, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -257,7 +257,7 @@ public class KategorienAnzeigen  extends VerticalLayout  implements View{
 						try {
 							Kategorienverwaltung.getInstance().createNewKategorie(me);
 						} catch (Exception e) {
-//							throw new NullPointerException("Bitte g�ltige Werte eingeben");
+//							throw new NullPointerException("Bitte gültige Werte eingeben");
 							log.error(e.toString());
 						}
 						UI.getCurrent().removeWindow(mengNeu);

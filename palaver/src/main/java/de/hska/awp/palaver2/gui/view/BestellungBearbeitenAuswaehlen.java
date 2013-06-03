@@ -32,7 +32,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 
 	private VerticalLayout fenster = new VerticalLayout();
 	
-	private Button auswaehlen = new Button("ausw‰hlen");
+	private Button auswaehlen = new Button("ausw√§hlen");
 
 	private FilterTable bestellungen = new FilterTable("Bestellung");
 	private Bestellung bestellung;
@@ -73,6 +73,8 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 			bestellungen.setContainerDataSource(container);
 			bestellungen.setVisibleColumns(new Object[] { "bestellt",
 					"lieferant", "datumS", "lieferdatumS" });
+			bestellungen.setColumnHeader("datumS", "datum");
+			bestellungen.setColumnHeader("lieferdatumS", "lieferdatum");
 			bestellungen.sort(new Object[] { "id" }, new boolean[] { true });
 			bestellungen.setCellStyleGenerator(new CellStyleGenerator() {
 

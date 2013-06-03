@@ -63,7 +63,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("Bestellgr�ߟe");
+	private TextField			bestellung = new TextField("Bestellgröße");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -704,7 +704,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		TextField			telefon = new TextField("Telefon");
 		TextField			fax = new TextField("Telefax");
 		TextArea			notiz = new TextArea("Notiz");
-		final CheckBox		mehrereliefertermine = new CheckBox("mehrereliefertermine");
+		final CheckBox		mehrereliefertermine = new CheckBox("mehrere Liefertermine");
 		
 		final Lieferant lieferant = new Lieferant();
 		final Button			speichern = new Button(IConstants.BUTTON_SAVE);
@@ -782,7 +782,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -814,7 +814,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte g�ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);

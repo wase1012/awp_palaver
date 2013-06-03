@@ -48,7 +48,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 
 	private Label headline;
 
-	private TextField empfaenger = new TextField("Empf�nger");
+	private TextField empfaenger = new TextField("Empfänger");
 	private TextField betreff = new TextField("Betreff");
 	private TextArea nachricht = new TextArea("Nachricht");
 

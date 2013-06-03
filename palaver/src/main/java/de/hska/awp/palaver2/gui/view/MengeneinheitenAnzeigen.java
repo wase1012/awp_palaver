@@ -44,10 +44,10 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 	private Table table;
 	
 	private TextField			name = new TextField("Name");
-	private TextField			kurz = new TextField("K�rzel");
+	private TextField			kurz = new TextField("Kürzel");
 	
 	private TextField			nameUp = new TextField("Name");
-	private TextField			kurzUp = new TextField("K�rzel");
+	private TextField			kurzUp = new TextField("Kürzel");
 	
 	private String				nameText;
 	private String				kurzText;
@@ -96,7 +96,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Mengeneinheit hinzuf�gen");
+					mengNeu.setCaption("Mengeneinheit hinzufügen");
 					
 					UI.getCurrent().addWindow(mengNeu);
 					
@@ -220,7 +220,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Mengeneinheit hinzuf�gen");
+				mengNeu.setCaption("Mengeneinheit hinzufügen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -258,11 +258,11 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(15);
-				name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 4,15, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 				
 				kurz.setImmediate(true);
 				kurz.setMaxLength(4);	
-				kurz.addValidator(new StringLengthValidator("Bitte g�ltiges K�rzel eingeben", 1,4, false));
+				kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -286,7 +286,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						} catch (Exception e) {
 							log.error(e.toString());
 							if(e.toString().contains("INSERT INTO mengeneinheit"))
-								notification = "diese Name oder dieses K�rzel sind bereits in der System vorhanden.";
+								notification = "diese Name oder dieses Kürzel sind bereits in der System vorhanden.";
 							else
 								notification = e.toString();
 						}

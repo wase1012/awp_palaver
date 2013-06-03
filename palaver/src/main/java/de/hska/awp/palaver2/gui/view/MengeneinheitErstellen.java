@@ -89,7 +89,7 @@ public class MengeneinheitErstellen extends VerticalLayout  implements View{
 				try {
 					Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
 				} catch (Exception e) {
-//					throw new NullPointerException("Bitte g�ltige Werte eingeben");
+//					throw new NullPointerException("Bitte gültige Werte eingeben");
 					log.error(e.toString());
 				}
 				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);

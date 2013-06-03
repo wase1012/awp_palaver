@@ -67,7 +67,7 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 		name.setImmediate(true);
 		name.setMaxLength(15);
 		name.setRequired(true);
-		name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 4,15, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 		
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
@@ -85,7 +85,7 @@ public class KategorieErstellen extends VerticalLayout  implements View{
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
 				} catch (Exception e) {
-//					throw new NullPointerException("Bitte g�ltige Werte eingeben");
+//					throw new NullPointerException("Bitte gültige Werte eingeben");
 					log.error(e.toString());
 				}
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);

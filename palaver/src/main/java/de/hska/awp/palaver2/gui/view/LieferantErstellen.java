@@ -46,7 +46,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("Stra�e");
+	private TextField			strasse = new TextField("Straße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -160,7 +160,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		
 		name.setImmediate(true);
 		name.setRequired(true);
-		name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -176,7 +176,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		strasse.setMaxLength(45);
 		
 //        Validator postalCodeValidator = new AbstractStringValidator(
-//                "Bitte g�ltige PLZ eingeben.") {
+//                "Bitte gültige PLZ eingeben.") {
 //			@Override
 //			protected boolean isValidValue(String value) {
 //                return value.matches("[1-9][0-9]{4}");
@@ -192,7 +192,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte g�ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);

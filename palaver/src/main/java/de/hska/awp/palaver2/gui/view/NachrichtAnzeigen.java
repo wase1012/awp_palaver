@@ -113,7 +113,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		
 		if(nl!=null){
 			
-			//Sortieren der Nachrichten nach der gr��ten ID
+			//Sortieren der Nachrichten nach der größten ID
 			final List<Nachricht> neu = new ArrayList<Nachricht>();
 			if (nl != null) {
 				for (int z = 0; z < nl.size(); z++) {
@@ -165,7 +165,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 				{
 					public void buttonClick(ClickEvent event){
 						try {
-							System.out.print("Id des L�schbutton beim l�schen");
+							System.out.print("Id des Löschbutton beim löschen");
 							System.out.print(Long.valueOf(loeschbutton.getId()));
 							System.out.print("    ");
 						Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
@@ -242,7 +242,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
-				// TODO Sollte sp�ter funktionieren, andernfalls Mitarbeiter �ber username suchen und setzen
+				// TODO Sollte später funktionieren, andernfalls Mitarbeiter über username suchen und setzen
 //				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 
 				try {

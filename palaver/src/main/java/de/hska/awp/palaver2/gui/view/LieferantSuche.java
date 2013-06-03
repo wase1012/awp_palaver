@@ -51,7 +51,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
-	private TextField			strasse = new TextField("Stra�e");
+	private TextField			strasse = new TextField("Straße");
 	private TextField			plz = new TextField("PLZ");
 	private TextField			ort = new TextField("Ort");
 	private TextField			email = new TextField("E-Mail");
@@ -271,7 +271,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (Exception e) {
-//							throw new NullPointerException("Bitte g�ltige Werte eingeben");
+//							throw new NullPointerException("Bitte gültige Werte eingeben");
 							log.error(e.toString());
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
@@ -386,7 +386,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 							
 							VerticalLayout verticallayout = new VerticalLayout();
 														
-							Label label = new Label("Wollen Sie den Ansprechpartner wirklich l�schen?");
+							Label label = new Label("Wollen Sie den Ansprechpartner wirklich löschen?");
 							verticallayout.addComponent(label);
 							verticallayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 							
@@ -515,7 +515,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 			anspr.setModal(true);
 			anspr.center();
 			anspr.setResizable(false);
-			anspr.setCaption("Ansprechpartner hinzuf�gen");
+			anspr.setCaption("Ansprechpartner hinzufügen");
 			
 			UI.getCurrent().addWindow(anspr);
 			
@@ -593,7 +593,7 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						Ansprechpartnerverwaltung.getInstance().createAnsprechpartner(ans);
 					} catch (Exception e) {
 						log.error(e.toString());
-//						throw new NullPointerException("Bitte g�ltige Werte eingeben");
+//						throw new NullPointerException("Bitte gültige Werte eingeben");
 
 					}				
 					

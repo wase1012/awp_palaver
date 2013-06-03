@@ -128,8 +128,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("Verf�gbare Rollen");
-		rollen.setRightColumnCaption("Ausgew�hlte Rollen");
+		rollen.setLeftColumnCaption("Verfügbare Rollen");
+		rollen.setRightColumnCaption("Ausgewählte Rollen");
 		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
@@ -177,19 +177,19 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte g�ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -199,7 +199,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte g�ltigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {
@@ -306,9 +306,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				mitarbeiter.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
-				// zur�ck z.B. [1, 3]
+				// zurück z.B. [1, 3]
 				// String auseinander nehmen und die Objekte anhand der ID
-				// suchen und der Liste hinzuf�gen
+				// suchen und der Liste hinzufügen
 				List<String> rollenId = null;
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
