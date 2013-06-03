@@ -11,12 +11,14 @@ import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.MenuBar.MenuItem;
 
 import de.bistrosoft.palaver.gui.view.FussnoteEinst;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
+import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.Menueplan;
@@ -25,24 +27,18 @@ import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.RezeptartEinst;
-import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
-import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
-import de.hska.awp.palaver2.gui.view.BestellungErstellen;
-import de.hska.awp.palaver2.gui.view.BestellungAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungGenerieren;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
 import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.LieferantErstellen;
-import de.hska.awp.palaver2.gui.view.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
@@ -200,10 +196,6 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN))
 		{
 			ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW))
-		{
-			ViewHandler.getInstance().switchView(BestellungAuswaehlen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
 		{
