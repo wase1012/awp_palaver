@@ -23,6 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
@@ -90,7 +91,8 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 		// Nachrichtlayout zusammenbauen
 		try {
 
-			m = Application.getInstance().getUser();
+			Mitarbeiter m2 = Application.getInstance().getUser();
+			m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(m2.getId());
 			List<Rollen> rlist = m.getRollen();
 			if (rlist != null) {
 				for (int i = 0; i < rlist.size(); i++) {
@@ -160,9 +162,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 				loeschbutton.addClickListener(new ClickListener() {
 					public void buttonClick(ClickEvent event) {
 						try {
-							System.out.print("Id des Löschbutton beim löschen");
-							System.out.print(Long.valueOf(loeschbutton.getId()));
-							System.out.print("    ");
 							Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
 						} catch (Exception e) {
 							log.error(e.toString());
@@ -234,7 +233,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
 				try {
-					// TODO
 					nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
 					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
 				} catch (Exception e) {
