@@ -64,12 +64,14 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 */
 	public List<Mitarbeiter> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
-		ResultSet set = getManaged(GET_ALL_MITARBEITER);
+		openConnection();
+		ResultSet set = get(GET_ALL_MITARBEITER);
+		openConnection();
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
-					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), RollenDAO.getInstance()
-					.getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername")));
+					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername")));
 		}
+		closeConnection();
 		return list;
 	}
 

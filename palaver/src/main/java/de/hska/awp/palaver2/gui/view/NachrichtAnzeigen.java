@@ -20,9 +20,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
@@ -32,36 +32,38 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class NachrichtAnzeigen extends VerticalLayout  implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(NachrichtAnzeigen.class.getName());
+public class NachrichtAnzeigen extends VerticalLayout implements View {
+
+	private static final Logger log = LoggerFactory.getLogger(NachrichtAnzeigen.class.getName());
 
 	private HorizontalLayout horizontallayout = new HorizontalLayout();
 	private VerticalLayout nachrichtanzeigenlayout = new VerticalLayout();
 	private VerticalLayout nachrichterstellenlayout = new VerticalLayout();
-	
-	private VerticalLayout nachrichtverticallayout = new VerticalLayout();	
+
+	private VerticalLayout nachrichtverticallayout = new VerticalLayout();
 	HorizontalLayout nachrichterstellenlayoutbuttons = new HorizontalLayout();
-	
+
 	private Label von;
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
-	
+
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
 	private Nachricht nachricht = new Nachricht();
-	
+
 	private String neuernachrichtentextinput;
-	
+
+	Mitarbeiter m = null;
+
 	private int NACHRICHT_MAXLENGTH = 300;
-	
+
 	public NachrichtAnzeigen() {
-		
+
 		super();
-		
+
 		this.setSizeFull();
 		this.setMargin(true);
 		this.addComponent(horizontallayout);
-		
+
 		horizontallayout.setSizeFull();
 		horizontallayout.setHeight("90%");
 		horizontallayout.setSpacing(true);
@@ -71,49 +73,44 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		nachrichterstellenlayout.setWidth("300px");
 		nachrichterstellenlayout.setSpacing(true);
 
-		
 		Panel panel = new Panel("Nachrichten");
 		panel.setWidth("450px");
 		panel.setHeight("100%");
 
-	    final VerticalLayout contentLayout = new VerticalLayout();
-	    contentLayout.setWidth(400, Unit.PIXELS);
-	    contentLayout.setMargin(true);
-	    	      
-	    horizontallayout.addComponent(panel);
-	    horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
-	        
+		final VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setWidth(400, Unit.PIXELS);
+		contentLayout.setMargin(true);
+
+		horizontallayout.addComponent(panel);
+		horizontallayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+
 		horizontallayout.addComponent(nachrichterstellenlayout);
 		horizontallayout.setComponentAlignment(nachrichterstellenlayout, Alignment.MIDDLE_LEFT);
-		
-		
-		
-		//Nachrichtlayout zusammenbauen
-		//TODO Auskommentierten Text anzeigen, wenn getUser() funktioniert
-		try{
-			
-//		Mitarbeiter m = Application.getInstance().getUser();
-		Mitarbeiter m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1"));
-		List<Rollen> rlist = m.getRollen();
-		if(rlist!=null){
-			for(int i = 0; i < rlist.size() ; i++){
-				if(rlist.get(i).getNachrichten()!=null){
-					for(int z = 0; z < rlist.get(i).getNachrichten().size();z++){
-						nl.add(rlist.get(i).getNachrichten().get(z));
+
+		// Nachrichtlayout zusammenbauen
+		try {
+
+			m = Application.getInstance().getUser();
+			System.out.println(m);
+			List<Rollen> rlist = m.getRollen();
+			if (rlist != null) {
+				for (int i = 0; i < rlist.size(); i++) {
+					if (rlist.get(i).getNachrichten() != null) {
+						for (int z = 0; z < rlist.get(i).getNachrichten().size(); z++) {
+							nl.add(rlist.get(i).getNachrichten().get(z));
+						}
 					}
 				}
-			}
-			
-		}
 
-		}
-		catch (Exception e) {
+			}
+
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
-		if(nl!=null){
-			
-			//Sortieren der Nachrichten nach der größten ID
+
+		if (nl != null) {
+
+			// Sortieren der Nachrichten nach der größten ID
 			final List<Nachricht> neu = new ArrayList<Nachricht>();
 			if (nl != null) {
 				for (int z = 0; z < nl.size(); z++) {
@@ -133,55 +130,53 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 			}
 
 			nl = neu;
-			
-			for(int i = 0; i < nl.size(); i++){
-								
+
+			for (int i = 0; i < nl.size(); i++) {
+
 				von = new Label("Von:");
 				von.setWidth("100%");
 				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
-							
+
 				final Button loeschbutton = new Button();
 				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
-				
+
 				loeschbutton.setId(String.valueOf(nl.get(i).getId()));
-				
+
 				nachrichtentext = new TextArea("");
 				nachrichtentext.setWidth("100%");
 				nachrichtentext.setRows(4);
 				nachrichtentext.setValue(nl.get(i).getNachricht());
 				nachrichtentext.setReadOnly(true);
-				
+
 				nachrichtverticallayout = new VerticalLayout();
 				nachrichtverticallayout.setStyleName("nachricht");
-				nachrichtverticallayout.addComponent(von);			
+				nachrichtverticallayout.addComponent(von);
 				nachrichtverticallayout.addComponent(nachrichtentext);
 				nachrichtverticallayout.addComponent(loeschbutton);
 				nachrichtverticallayout.setComponentAlignment(loeschbutton, Alignment.TOP_RIGHT);
-				
+
 				contentLayout.addComponent(nachrichtverticallayout);
 				panel.setContent(contentLayout);
-				
-				loeschbutton.addClickListener(new ClickListener()
-				{
-					public void buttonClick(ClickEvent event){
+
+				loeschbutton.addClickListener(new ClickListener() {
+					public void buttonClick(ClickEvent event) {
 						try {
 							System.out.print("Id des Löschbutton beim löschen");
 							System.out.print(Long.valueOf(loeschbutton.getId()));
 							System.out.print("    ");
-						Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
+							Nachrichtenverwaltung.getInstance().deleteNachricht(Long.valueOf(loeschbutton.getId()));
 						} catch (Exception e) {
 							log.error(e.toString());
 						}
-						
-					
-					ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+
+						ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
 					}
 				});
 			}
-		}else {
-			//TODO falls keine Nachrichten vorhanden sind
+		} else {
+			// TODO falls keine Nachrichten vorhanden sind
 		}
-	
+
 		// RECHTE SEITE
 
 		Label label = new Label("Neue Nachricht");
@@ -200,11 +195,9 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 			for (Rollen i : rollen) {
 				combobox.addItem(i);
 			}
-		} 
-		catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
 
 		nachrichterstellenlayout.addComponent(combobox);
 
@@ -220,8 +213,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 		neuernachrichtentext.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
-				neuernachrichtentextinput = String.valueOf(event.getProperty()
-						.getValue());
+				neuernachrichtentextinput = String.valueOf(event.getProperty().getValue());
 			}
 		});
 
@@ -230,7 +222,7 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-		
+
 		nachrichterstellenlayoutbuttons.addComponent(verwerfen);
 		nachrichterstellenlayoutbuttons.addComponent(speichern);
 
@@ -242,14 +234,10 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
-				// TODO Sollte später funktionieren, andernfalls Mitarbeiter über username suchen und setzen
-//				nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
-
 				try {
-					//TODO
-					nachricht.setMitarbeiterBySenderFk(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(Long.valueOf("1")));
-					Nachrichtenverwaltung.getInstance().createNachricht(
-							nachricht);
+					// TODO
+					nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
+					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
@@ -269,7 +257,6 @@ public class NachrichtAnzeigen extends VerticalLayout  implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
+
 	}
 }
-
-

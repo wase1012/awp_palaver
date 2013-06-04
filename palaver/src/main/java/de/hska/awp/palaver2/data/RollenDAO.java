@@ -6,7 +6,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Rollen bereit.
@@ -22,6 +24,11 @@ public class RollenDAO extends AbstractDAO {
 	private final static String	GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
 	private final static String	GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on " +
 			"rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
+	private static final String GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
+	private static final String GET_MITARBEITER_BY_ROLLEN_ID = "SELECT * FROM mitarbeiter "
+			+ "JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk "
+			+ "join rollen on mitarbeiter_has_rollen.rollen_fk = rollen.id where rollen.id = {0}";
+	private static final String GET_MITARBEITER_BY_ID = "SELECT * FROM mitarbeiter WHERE id = {0}";
 	
 	private static RollenDAO instance = null;
 
@@ -47,17 +54,18 @@ public class RollenDAO extends AbstractDAO {
 	public List<Rollen> getAllRollen() throws ConnectException, DAOException, SQLException
 	{
 		List<Rollen> list = new ArrayList<Rollen>();
-		
-		ResultSet set = getManaged(GET_ALL_ROLLEN);
-		
+		openConnection();
+		ResultSet set = get(GET_ALL_ROLLEN);
+		//TODO
+		openConnection();
 		while(set.next())
 		{
 			list.add(new Rollen(set.getLong("id"),
 								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id")),
-								NachrichtDAO.getInstance().getNachrichtByRolleId(set.getLong("id"))));
+								getMitarbeiterByRollenId(set.getLong("id")),
+								getNachrichtByRolleId(set.getLong("id"))));
 		}
-		
+		closeConnection();
 		return list;
 	}
 	
@@ -104,13 +112,61 @@ public class RollenDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Rollen(set.getLong("id"), set.getString("name"),
-					NachrichtDAO.getInstance().getNachrichtByRolleId(set.getLong("id"))));
+					getNachrichtByRolleId(set.getLong("id"))));
 
 		}
 
 		return list;
 
 	}
+	
+	private List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
+
+		List<Nachricht> list = new ArrayList<Nachricht>();
+
+		ResultSet set = getMany(MessageFormat.format(GET_NACHRICHT_BY_ROLLE_ID, rid));
+
+		while (set.next()) {
+			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), getMitarbeiterByIdForNachricht(set.getLong("sender_fk")),
+					new Rollen()));
+		}
+
+		return list;
+	}
+	
+	private List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
+
+		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+
+		ResultSet set = getMany(MessageFormat.format(GET_MITARBEITER_BY_ROLLEN_ID, id));
+
+		while (set.next()) {
+			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
+					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername")));
+
+		}
+
+		return list;
+
+	}
+	
+	
+	private Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
+
+		if (id == null) {
+			return null;
+		}
+		Mitarbeiter mitarbeiter = null;
+		ResultSet set = getMany(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
+
+		while (set.next()) {
+			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
+					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername"));
+		}
+		return mitarbeiter;
+
+	}
+	
 	
 	/**
 	 * Die Methode erzeugt eine Rolle in der Datenbank.

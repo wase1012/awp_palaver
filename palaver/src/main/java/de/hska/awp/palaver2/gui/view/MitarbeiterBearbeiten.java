@@ -127,8 +127,8 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("VerfÃ¼gbare Rollen");
-		rollen.setRightColumnCaption("AusgewÃ¤hlte Rollen");
+		rollen.setLeftColumnCaption("Verfügbare Rollen");
+		rollen.setRightColumnCaption("Ausgewählte Rollen");
 		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
@@ -139,10 +139,10 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		});
 
 		try {
-			for (int i = 0; i < Rollenverwaltung.getInstance().getAllRollen().size(); i++) {
-				rollen.addItem(Rollenverwaltung.getInstance().getAllRollen().get(i).getId());
-				rollen.setItemCaption(Rollenverwaltung.getInstance().getAllRollen().get(i).getId(), Rollenverwaltung.getInstance().getAllRollen()
-						.get(i).getName());
+			List<Rollen> l = Rollenverwaltung.getInstance().getAllRollen();
+			for (int i = 0; i < l.size(); i++) {
+				rollen.addItem(l.get(i).getId());
+				rollen.setItemCaption(l.get(i).getId(), l.get(i).getName());
 			}
 		} catch (Exception e) {
 
@@ -176,19 +176,19 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gÃ¼ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -198,7 +198,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {
@@ -298,9 +298,9 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 				mitarbeiter.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
-				// zurÃ¼ck z.B. [1, 3]
+				// zurück z.B. [1, 3]
 				// String auseinander nehmen und die Objekte anhand der ID
-				// suchen und der Liste hinzufÃ¼gen
+				// suchen und der Liste hinzufügen
 				List<String> rollenId = null;
 				if (rollen.getValue().toString() != "[]") {
 					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));

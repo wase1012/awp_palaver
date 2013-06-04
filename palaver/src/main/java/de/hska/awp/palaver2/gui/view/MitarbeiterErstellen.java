@@ -128,8 +128,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("VerfÃ¼gbare Rollen");
-		rollen.setRightColumnCaption("AusgewÃ¤hlte Rollen");
+		rollen.setLeftColumnCaption("Verfügbare Rollen");
+		rollen.setRightColumnCaption("Ausgewählte Rollen");
 		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
@@ -140,10 +140,10 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		});
 
 		try {
-			for (int i = 0; i < Rollenverwaltung.getInstance().getAllRollen().size(); i++) {
-				rollen.addItem(Rollenverwaltung.getInstance().getAllRollen().get(i).getId());
-				rollen.setItemCaption(Rollenverwaltung.getInstance().getAllRollen().get(i).getId(), Rollenverwaltung.getInstance().getAllRollen()
-						.get(i).getName());
+			List<Rollen> l = Rollenverwaltung.getInstance().getAllRollen();
+			for (int i = 0; i < l.size(); i++) {
+				rollen.addItem(l.get(i).getId());
+				rollen.setItemCaption(l.get(i).getId(), l.get(i).getName());
 			}
 		} catch (Exception e) {
 
@@ -177,19 +177,19 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gÃ¼ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -199,7 +199,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {
@@ -220,9 +220,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				vornameInput = valueString;
-				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
-					speichern.setEnabled(true);
-				}
+				checkValidate();
 			}
 		});
 
@@ -232,9 +230,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				emailInput = valueString;
-				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
-					speichern.setEnabled(true);
-				}
+				
 			}
 		});
 
@@ -244,9 +240,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				passwortInput = valueString;
-				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
-					speichern.setEnabled(true);
-				}
+				checkValidate();
 			}
 		});
 
@@ -274,6 +268,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 				final String valueString = String.valueOf(event.getProperty().getValue());
 
 				benutzernameInput = valueString;
+				checkValidate();
 			}
 		});
 
@@ -337,8 +332,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 				try {
 					boolean vorhanden = false;
-					for (int i = 0; i < Mitarbeiterverwaltung.getInstance().getAllMitarbeiter().size(); i++) {
-						if (benutzernameInput.equals(Mitarbeiterverwaltung.getInstance().getAllMitarbeiter().get(i).getBenutzername())) {
+					List<Mitarbeiter> ml = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+					for (int i = 0; i < ml.size(); i++) {
+						if (benutzernameInput.equals(ml.get(i).getBenutzername())) {
 							vorhanden = true;
 						}
 					}
@@ -377,8 +373,17 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 			}
 		}
+		
+		
+		
 	}
 
+	public void checkValidate(){
+		if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
+			speichern.setEnabled(true);
+		}	
+	}
+	
 	@Override
 	public void getViewParam(ViewData data) {
 

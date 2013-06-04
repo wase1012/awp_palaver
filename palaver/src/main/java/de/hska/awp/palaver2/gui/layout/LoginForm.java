@@ -115,8 +115,9 @@ public class LoginForm extends VerticalLayout
 						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
 						if (current.getPasswort() != null && current.getPasswort().equals(Util.encryptPassword(password.getValue())))
 						{
-							Application.getInstance().login(username.getValue());
 							Application.getInstance().setUser(current);
+							Application.getInstance().login(username.getValue());
+
 							UI.getCurrent().setContent(Application.getInstance().getLayout());
 						}
 						else
