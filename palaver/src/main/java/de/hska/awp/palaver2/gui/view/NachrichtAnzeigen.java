@@ -91,7 +91,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 		try {
 
 			m = Application.getInstance().getUser();
-			System.out.println(m);
 			List<Rollen> rlist = m.getRollen();
 			if (rlist != null) {
 				for (int i = 0; i < rlist.size(); i++) {
