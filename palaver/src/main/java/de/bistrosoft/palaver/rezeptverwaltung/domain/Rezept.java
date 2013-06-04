@@ -18,7 +18,7 @@ public class Rezept implements java.io.Serializable {
 	private Mitarbeiter mitarbeiter;
 	private String name;
 	private String kommentar;
-	private int portion;
+	private Integer portion;
 	private Date erstellt;
 	private List<RezeptHasArtikel> artikel;
 	private Boolean menue;
@@ -115,11 +115,11 @@ public class Rezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 	}
 
-	public int getPortion() {
+	public Integer getPortion() {
 		return this.portion;
 	}
 
-	public void setPortion(int portion) {
+	public void setPortion(Integer portion) {
 		this.portion = portion;
 	}
 

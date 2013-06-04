@@ -498,7 +498,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 		rezept.setArtikel(list);
 
-		portion.setValue("100");
+		portion.setValue(rezept.getPortion().toString());
+		
 		try {
 			kommentar.setValue(RezeptDAO.getInstance()
 					.getRezeptById(rezept.getId()).getKommentar().toString());
