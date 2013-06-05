@@ -103,9 +103,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private ComboBox mitarbeiterCb = new ComboBox("Koch");
 	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
 
-	// CheckBox
-	private CheckBox menueCbx = new CheckBox("Rezept als Menü speichern");
-
 	// OptionGroup
 	private OptionGroup rezeptartOg = new OptionGroup();
 
@@ -177,7 +174,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlRezeptdetailsLinks.addComponent(mitarbeiterCb);
 		vlRezeptdetailsLinks.addComponent(rezeptartOg);
 		vlRezeptdetailsLinks.addComponent(dummyl);
-		vlRezeptdetailsLinks.addComponent(menueCbx);
 
 		vlRezeptdetailsRechts.addComponent(zubereitung);
 		vlRezeptdetailsRechts.addComponent(kommentar);
