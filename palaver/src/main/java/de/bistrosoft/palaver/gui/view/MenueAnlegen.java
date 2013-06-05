@@ -458,7 +458,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hZufuegen.addClickListener(new ClickListener(){
 			@Override
 			public void buttonClick(ClickEvent event)
-			{
+			{   merkerh = "x";
 				zahl = 0;
 				WinSelectRezepte window = new WinSelectRezepte(zahl);
 						  UI.getCurrent().addWindow(window);
@@ -472,7 +472,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		b1Zufuegen.addClickListener(new ClickListener(){
 			@Override
 			public void buttonClick(ClickEvent event)
-			{
+			{   merker1 = "x";
 				zahl = 1;
 				WinSelectRezepte window = new WinSelectRezepte(zahl);
 						  UI.getCurrent().addWindow(window);
@@ -486,7 +486,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		b2Zufuegen.addClickListener(new ClickListener(){
 			@Override
 			public void buttonClick(ClickEvent event)
-			{
+			{   merker2 = "x";
 				zahl = 2;
 				WinSelectRezepte window = new WinSelectRezepte(zahl);
 						  UI.getCurrent().addWindow(window);
@@ -507,7 +507,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		
 		hEntfernen.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {				
+			public void buttonClick(ClickEvent event) {	
+				merkerh = "leer";
 					hauptgericht.setValue("");		
 					}
 					});
@@ -515,14 +516,15 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		b1Entfernen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {	
-				
+				merker1 = "leer";
 					beilage1.setValue("");		
 					}
 					});
 		
 		b2Entfernen.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {				
+			public void buttonClick(ClickEvent event) {
+				merker2 = "leer";
 					beilage2.setValue("");		
 					}
 					});
@@ -1002,7 +1004,7 @@ private void speichern() {
 //hier werden die Aenderungen an einem Menue vermerkt
 private void aendern() {
 	System.out.println("in andern");
-	Menue menue = new Menue();
+	
 	MenueHasFussnote fussnote = new MenueHasFussnote();
 			Menue m = menuetabelleSpeichern();
 	
