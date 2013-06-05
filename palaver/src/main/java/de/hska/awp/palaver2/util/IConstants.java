@@ -11,7 +11,7 @@ public interface IConstants
 //  Team1
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -76,6 +76,8 @@ public interface IConstants
 	String		BUTTON_DOWNLOAD = "Download";
 	String		BUTTON_BACK = "zurÃ¼ck";
 	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
+	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menü Speichern";	
+
 	
 	// Icons fuer Knoepfe
 	String		BUTTON_DELETE_ICON = "img/delete.ico";
@@ -90,5 +92,14 @@ public interface IConstants
 	
 	String		ICON_YES = "img/tick_circle.ico";
 	String		ICON_NO = "img/cross_circle.ico";
-	String		ICON_DELETE = "img/Delete.ico";	
+	String		ICON_DELETE = "img/Delete.ico";
+
+	// Beschriftungen für Notifications
+	String		INFO_REZEPT_SAVE = "Rezept wurde gespeichert!";
+	String		INFO_REZEPT_MENUE_SAVE = "Menü kann nur als Haupgericht gespeichert werden!";
+	String		INFO_REZEPT_ZUTATEN = "Bitte Zutaten wählen!";
+	String		INFO_REZEPT_MENGE = "Bitte Menge kleiner 100.000 wählen!";
+	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
+	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
+	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 }
