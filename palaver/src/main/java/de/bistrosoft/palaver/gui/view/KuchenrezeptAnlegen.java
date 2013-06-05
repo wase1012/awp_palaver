@@ -3,7 +3,6 @@ package de.bistrosoft.palaver.gui.view;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
@@ -23,7 +22,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -31,21 +29,16 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.KuchenrezeptDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-//import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
@@ -63,57 +56,69 @@ import de.hska.awp.palaver2.util.IConstants;
 public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
+	// Layouts
 	private VerticalLayout box = new VerticalLayout();
-	private HorizontalLayout hol = new HorizontalLayout();
-	private VerticalLayout eins = new VerticalLayout();
-	private VerticalLayout zwei = new VerticalLayout();
-	private VerticalLayout dummy = new VerticalLayout();
 	private HorizontalLayout control = new HorizontalLayout();
 	private HorizontalLayout hlRezeptZutaten = new HorizontalLayout();
 
+	// Tabellen
 	private Table zutatenTable;
 	private FilterTable artikelTable;
 	
+	List<KuchenrezeptHasArtikel> tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
+	
+	//BeanContainer
 	private BeanItemContainer<Artikel> containerArtikel;
 	private BeanItemContainer<KuchenrezeptHasArtikel> containerKuchenrezeptHasArtikel;
-	
-	Kuchenrezept kuchenrezept;
 
+	// ‹berschriften
 	@SuppressWarnings("deprecation")
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept anlegen</font><b></pre>",
 			Label.CONTENT_XHTML);
+	@SuppressWarnings("deprecation")
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept bearbeiten</font><b></pre>",
 			Label.CONTENT_XHTML);
+	@SuppressWarnings({ "unused", "deprecation" })
 	private Label d1 = new Label("<div>&nbsp;&nbsp;&nbsp;</div>",
 			Label.CONTENT_XHTML);
 
+	// Textfeld
 	private TextField name = new TextField("Bezeichnung");
-	private ComboBox mitarbeiterCb = new ComboBox("B√§cker");
+	
+	// Combobox
+	private ComboBox mitarbeiterCb = new ComboBox("B‰cker");
 
+	// Textarea
 	private TextArea kommentar = new TextArea("Kommentar");
-
+	
+	// Buttons
 	private Button btSpeichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button update = new Button(IConstants.BUTTON_SAVE);
 
+	// Strings
 	private String nameInput;
 	private String kommentarInput;
 	private String mitarbeiterInput;
-
 	public String valueString = new String();
 
-	private List<KuchenrezeptHasArtikel> ausgArtikel = new ArrayList<KuchenrezeptHasArtikel>();
+	Kuchenrezept kuchenrezept;
+	
+	// Listen
+	List<KuchenrezeptHasArtikel> ausgArtikel = new ArrayList<KuchenrezeptHasArtikel>();
 	List<KuchenrezeptHasArtikel> artikel = new ArrayList<KuchenrezeptHasArtikel>();
 
-	@SuppressWarnings("deprecation")
+	// Konstruktor
 	public KuchenrezeptAnlegen() {
 
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
 
+		// Komponenten
+		
 		name.setWidth("100%");
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
@@ -123,7 +128,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
 		mitarbeiterCb.setNullSelectionAllowed(false);
 
-//		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
 
 		box.setWidth("90%");
@@ -140,12 +144,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		box.addComponent(mitarbeiterCb);
 		mitarbeiterCb.setWidth("300px");
 		box.setComponentAlignment(mitarbeiterCb, Alignment.MIDDLE_CENTER);
-//		box.addComponent(hol);
-//		box.setComponentAlignment(hol, Alignment.MIDDLE_CENTER);
-//		hol.addComponent(eins);
-//		hol.addComponent(dummy);
-//		hol.addComponent(zwei);
-//		dummy.addComponent(d1);
 		box.addComponent(hlRezeptZutaten);
 		box.setComponentAlignment(hlRezeptZutaten, Alignment.MIDDLE_CENTER);
 		box.addComponent(kommentar);
@@ -155,13 +153,14 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		this.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-//		btSpeichern.setEnabled(false);
 
 		control.addComponent(verwerfen);
 		control.addComponent(btSpeichern);
 
+		// ValueChangeListener Name
 		name.addValueChangeListener(this);
 
+		// ValueChangeListener Mitarbeiter
 		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
@@ -169,26 +168,31 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				mitarbeiterInput = valueString;
 			}
 		});
+		
 		kommentar.setHeight("70px");
 		kommentar.setWidth("300px");
 		box.setComponentAlignment(kommentar, Alignment.MIDDLE_CENTER);
+		// ValueChangeListener Kommentar
 		kommentar.addValueChangeListener(this);
 
+		// ClickListener Verwerfen
 		verwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().returnToDefault();
 			}
 		});
-
+		
+		// ClickListener Speichern
 		btSpeichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				speichern();
+				if(validiereEingabe()){					
+					speichern();
+				}
 			}
 		});
 		
-//		hlRezeptZutaten.setSizeFull();
 		hlRezeptZutaten.setWidth("100%");
 		hlRezeptZutaten.setHeight("200px");		
 		
@@ -212,17 +216,17 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		
 		hlRezeptZutaten.addComponent(zutatenTable);
 		hlRezeptZutaten.addComponent(artikelTable);
-
+		
+		// Aufteilung im Layout
 		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
 		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
 		hlRezeptZutaten.setSpacing(true);
 		
+		// ‹berschriften
 		artikelTable.setCaption("Artikel");
 		zutatenTable.setCaption("Zutatenliste");
 
-		/**
-		 * Drag n Drop
-		 */
+		// Drag&Drop
 		artikelTable.setDropHandler(new DropHandler() {
 			/**
 			 * Prueft, ob das Element verschoben werden darf.
@@ -233,7 +237,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 
 			/**
-			 * Bestellposition loeschen und Artikel wieder in Liste setzen.
+			 * Zutat loeschen und Artikel wieder in Liste setzen.
 			 */
 			@Override
 			public void drop(DragAndDropEvent event) {
@@ -241,6 +245,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				KuchenrezeptHasArtikel selected = (KuchenrezeptHasArtikel) t
 						.getData("itemId");
 				containerKuchenrezeptHasArtikel.removeItem(selected);
+				tmpZutaten.remove(selected);
 				containerArtikel.addItem(selected.getArtikel());
 				artikelTable.markAsDirty();
 				zutatenTable.markAsDirty();
@@ -248,9 +253,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		});
 
 		zutatenTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
-		/**
-		 * Drag n Drop
-		 */
+		
+		// Drag&Drop
 		zutatenTable.setDropHandler(new DropHandler() {
 			/**
 			 * Prueft, ob das Element verschoben werden darf.
@@ -269,9 +273,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				if (t.getData("itemId") instanceof Artikel) {
 					Artikel selected = (Artikel) t.getData("itemId");
 					containerArtikel.removeItem(selected);
-
-					containerKuchenrezeptHasArtikel.addItem(new KuchenrezeptHasArtikel(
-							selected));
+					KuchenrezeptHasArtikel tmp=new KuchenrezeptHasArtikel(selected);
+					tmpZutaten.add(tmp);
+					containerKuchenrezeptHasArtikel.addItem(tmp);
 				}
 
 				artikelTable.markAsDirty();
@@ -284,23 +288,21 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					Artikelverwaltung.getInstance().getAllArtikel());
 			artikelTable.setContainerDataSource(containerArtikel);
 			artikelTable
-					.setVisibleColumns(new Object[] { "name", "artikelnr" });
+					.setVisibleColumns(new Object[] { "name" });
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		
 		load();
+		
+		//Baecker auf aktuellen User setzen
+		mitarbeiterCb.select(Application.getInstance().getUser());
 	}
 
 	public void load() {
@@ -311,8 +313,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				mitarbeiterCb.addItem(e.getId());
-				mitarbeiterCb.setItemCaption(e.getId(), e.getVorname());
+				mitarbeiterCb.addItem(e);
+//				mitarbeiterCb.setItemCaption(e.getId(), e.getVorname());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -325,6 +327,13 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		kuchenrezept = (Kuchenrezept) ((ViewDataObject<?>) data).getData();
 
+		if(kuchenrezept.getArtikel()!=null){
+			tmpZutaten=kuchenrezept.getArtikel();
+		}
+		else{
+			tmpZutaten=new ArrayList<KuchenrezeptHasArtikel>();
+		}
+		
 		control.replaceComponent(btSpeichern, update);
 		box.replaceComponent(ueberschrift, ueberschrift2);
 		ueberschrift2.setWidth("300px");
@@ -334,68 +343,23 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		update.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				kuchenrezept.setName(name.getValue());
-
-				try {
-					kuchenrezept.setMitarbeiter(MitarbeiterDAO
-							.getInstance()
-							.getMitarbeiterById(
-									Long.parseLong(mitarbeiterInput.toString())));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-//				kuchenrezept.setKommentar(kommentar.getValue());
-
-				// √Ñnderungsdatum erfassen
-				java.util.Date date = new java.util.Date();
-				Date date3 = new Date(date.getTime());
-				kuchenrezept.setErstellt(date3);
-
-				String notification = "Rezept gespeichert";
-
-				final Window dialog = new Window();
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-
-				try {
-					Kuchenrezeptverwaltung.getInstance().updateKuchenrezept(kuchenrezept);
-				} catch (Exception e) {
-					e.printStackTrace();
-					notification = e.toString();
-				} 
-				
-				Notification notification1 = new Notification(
-						"Rezept wurde ge√§ndert!");
-				notification1.setDelayMsec(500);
-				notification1.show(Page.getCurrent());
-				ViewHandler.getInstance().switchView(
-						KuchenrezeptAnzeigen.class);
-
+				update();
 			}
-
 		});
 
 		/**
 		 * Daten in Felder schreiben
 		 */
-
 		try {
 			name.setValue(KuchenrezeptDAO.getInstance().getKuchenrezeptById(kuchenrezept.getId())
 					.getName().toString());
 		} catch (Exception e3) {
-			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
 
 
 		try {
-			mitarbeiterCb.setValue(kuchenrezept.getMitarbeiter());
+			mitarbeiterCb.select(kuchenrezept.getMitarbeiter());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -424,6 +388,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			zutatenTable.setContainerDataSource(artikelcontainer);
 			zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge", "einheit" });
 			
+			tmpZutaten=list;
+			
 			for(KuchenrezeptHasArtikel kha : list){
 				containerArtikel.removeItem(kha);
 				System.out.println(kha.getArtikelname());
@@ -432,7 +398,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-
 		}
 
 		kuchenrezept.setArtikel(list);
@@ -440,51 +405,39 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		try {
 			kommentar.setValue(KuchenrezeptDAO.getInstance()
 					.getKuchenrezeptById(kuchenrezept.getId()).getKommentar().toString());
-		} catch (Exception e3) {
-			// TODO Auto-generated catch block
-			e3.printStackTrace();
+		} catch (ReadOnlyException e) {
+			e.printStackTrace();
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 	}
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		// TODO Auto-generated method stub
-		// name.addValueChangeListener(this);
-		// portion.addValueChangeListener(this);
-		// zubereitung.addValueChangeListener(this);
-		// geschmackCb.addValueChangeListener(this);
-		// rezeptartCb.addValueChangeListener(this);
-		// mitarbeiterCb.addValueChangeListener(this);
-		// kommentar.addValueChangeListener(this);
 		nameInput = name.getValue();
 		kommentarInput = kommentar.getValue();
-
+	}
+	
+	// Funktion zum Speichern
+	private void speichern() {
 //		if (name.getValue() == "" || name.getValue() == null
 //				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
-//			btSpeichern.setEnabled(false);
+//			Notification notification = new Notification(
+//					"Bitte alle Felder bef√ºllen");
+//			notification.setDelayMsec(500);
+//			notification.show(Page.getCurrent());
 //		} else {
-//			btSpeichern.setEnabled(true);
-//		}
-
-	}
-	
-	
-	private void speichern() {
-		if (name.getValue() == "" || name.getValue() == null
-				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
-			Notification notification = new Notification(
-					"Bitte alle Felder bef√ºllen");
-			notification.setDelayMsec(500);
-			notification.show(Page.getCurrent());
-		} else {
 		KuchenrezeptSpeichern();
-		System.out.println("Rezept wurde gespeichert");
-		}
-		
+//		System.out.println("Rezept wurde gespeichert");
+//		}
 	}
 	
-	
+	//Funktion zum Speichern eines Kuchenrezeptes
 	private void KuchenrezeptSpeichern(){
 		Kuchenrezept kuchenrezept = new Kuchenrezept();
 
@@ -496,21 +449,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		kuchenrezept.setErstellt(date2);
 
 		kuchenrezept.setKommentar(kommentarInput);
+		
 		try {
-			kuchenrezept.setMitarbeiter(MitarbeiterDAO
-					.getInstance()
-					.getMitarbeiterById(
-							Long.parseLong(mitarbeiterInput.toString())));
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		Kuchenrezept rez = null;
-		try {
-			System.out.println(nameInput);
-			rez = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(
-					nameInput);
-			System.out.println(rez);
+			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -522,21 +463,21 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				return;
 			} else {
 				Kuchenrezeptverwaltung.getInstance().createKuchenrezept(kuchenrezept);
-				System.out.println("kuchenrezeptAnlegen nach speichern createKuchenrezept id: " + kuchenrezept.getId());
-
 			}
+			
+			Kuchenrezept kuchenrezeptNeu = null;
+
 			try {
-				rez = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(
-						nameInput);
+				kuchenrezeptNeu = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptByName1(nameInput);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-
+	
 			@SuppressWarnings("unchecked")
-			BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) zutatenTable.getContainerDataSource();
+			BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) zutatenTable
+					.getContainerDataSource();
 			ausgArtikel = bicArtikel.getItemIds();
-			System.out.println(ausgArtikel);
-			rez.setArtikel(ausgArtikel);
+			kuchenrezeptNeu.setArtikel(ausgArtikel);
 		
 			if (ausgArtikel.isEmpty()) {
 				Notification notification = new Notification(
@@ -550,9 +491,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			try {
 				System.out.println("kuchenrezeptAnlegen speichern id: "
 						+ kuchenrezept.getId());
-				Kuchenrezeptverwaltung.getInstance().saveArtikel(rez);
+				Kuchenrezeptverwaltung.getInstance().saveArtikel(kuchenrezeptNeu);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
@@ -568,6 +508,68 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(
 				KuchenrezeptAnzeigen.class);
+	}
+	
+
+	// Methode zum Aendern eines Rezepts
+	private void update() {
+		
+		// setzt Rezeptname
+		kuchenrezept.setName(nameInput);
+		
+		// setzt √Ñnderungsdatum
+		java.util.Date date = new java.util.Date();
+		Date date3 = new Date(date.getTime());
+		kuchenrezept.setErstellt(date3);
+		
+		// setzt Kommentar
+		kuchenrezept.setKommentar(kommentarInput);
+		
+		// setzt Mitarbeiter
+		try {
+			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		// setzt Artikel
+		kuchenrezept.setArtikel(tmpZutaten);
+		
+		try {
+			Kuchenrezeptverwaltung.getInstance().updateKuchenrezept(kuchenrezept);
+			Kuchenrezeptverwaltung.getInstance().deleteZutatenZuKuchenrezept(kuchenrezept);
+			Kuchenrezeptverwaltung.getInstance().saveArtikel(kuchenrezept);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Funktion zum Anzeigen der Notification
+	private void showNotification(String text){
+		Notification notification = new Notification(text);
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
+	}
+		
+	// Funktion zur Validierung
+	private Boolean validiereEingabe(){
+		if(name.getValue().isEmpty()){
+			showNotification("Bitte Namen eingeben!");
+			return false;
+		}
+		if(mitarbeiterCb.getValue()==null){
+			showNotification("Bitte B‰cker w‰hlen!");
+			return false;
+		}
+		if(tmpZutaten==null || tmpZutaten.size()==0){
+			showNotification("Bitte Zutaten w√§hlen!");
+			return false;
+		}
+		return true;
 	}
 	
 }

@@ -1,10 +1,6 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
 
-
-import java.math.BigDecimal;
-
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
@@ -14,10 +10,21 @@ public class KuchenrezeptHasArtikel {
 	private double menge;
 	private Mengeneinheit mengeneinheit;
 	private Kuchenrezept kuchenrezept;
-	private String artikelname;
 
 	public KuchenrezeptHasArtikel() {
 		super();
+	}
+
+	public Mengeneinheit getMengeneinheit() {
+		return mengeneinheit;
+	}
+
+	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
+		this.mengeneinheit = mengeneinheit;
+	}
+
+	public void setArtikel(Artikel artikel) {
+		this.artikel = artikel;
 	}
 
 	public KuchenrezeptHasArtikel(Artikel artikel, Mengeneinheit mengeneinheit,
@@ -40,7 +47,6 @@ public class KuchenrezeptHasArtikel {
 		this.mengeneinheit=a.getMengeneinheit();
 		this.menge=1.0;
 		this.kuchenrezept=null; 
-		this.artikelname=a.getName();
 	}
 
 	@Override
@@ -51,7 +57,6 @@ public class KuchenrezeptHasArtikel {
 
 	public double getMenge() {
 		return this.menge;
-
 	}
 
 	public void setMenge(double menge) {
@@ -85,29 +90,4 @@ public class KuchenrezeptHasArtikel {
 	public Artikel getArtikel() {
 		return this.artikel;
 	}
-
-	// public void setRezeptart(Rezeptart rezeptart) {
-	// this.rezeptart = rezeptart;
-	// }
-
-	// public Artikel getArtikel() {
-	// return this.artikel;
-	// }
-	//
-	// public void setArtikel(Artikel artikel) {
-	// this.artikel = artikel;
-	// }
-	//
-	// public void setMengeneinheit(Mengeneinheit mengeneinheit) {
-	// this.mengeneinheit = mengeneinheit;
-	// }
-	//
-	//
-	// public BigDecimal getMenge() {
-	// return this.menge;
-	// }
-	//
-	// public void setMenge(BigDecimal menge) {
-	// this.menge = menge;
-	// }
 }
