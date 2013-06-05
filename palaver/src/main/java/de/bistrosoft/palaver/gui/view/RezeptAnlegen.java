@@ -587,39 +587,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	private void speichern() {
 		rezeptSpeichern();
-//		if (menueInput == "true") {
-//			if (rezeptartInput == "Hauptgericht") {
-//				if (nameInput == "" || mitarbeiterInput == null || rezeptartInput == null) {
-//					Notification notification = new Notification(
-//							"Bitte alle Felder befüllen");
-//					notification.setDelayMsec(500);
-//					notification.show(Page.getCurrent());
-//				} else {
-//					rezeptSpeichern();
-//					rezeptAlsMenuSpeichern();
-//					rezeptAlsHauptgerichtSpeichern();
-//					System.out.println("Rezept wurde als Men� gespeichert");
-//				}
-//			} else {
-//				Notification notification = new Notification(
-//						"Rezept für Menue nur als Hauptgericht speicherbar!");
-//				notification.setDelayMsec(500);
-//				notification.show(Page.getCurrent());
-//			}
-//		} else {
-//			if (nameInput == "" || mitarbeiterInput == null || rezeptartInput == null) {
-//				Notification notification = new Notification(
-//						"Bitte alle Felder befüllen");
-//				notification.setDelayMsec(500);
-//				notification.show(Page.getCurrent());
-//			} else {
-//				// System.out.println("rezeptAnlegen in Methode speichern ID: "
-//				// + rezept.getId());
-//				rezeptSpeichern();
-//				// Plausibilt�taspr�fung f�r Zutatenliste l�uft in der Methode
-//				// Speichern
-//			}
-//		}
 	}
 
 //	private void rezeptAlsHauptgerichtSpeichern() {
@@ -779,5 +746,4 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 		return true;
 	}
-
 }
