@@ -3,7 +3,8 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 import java.sql.Date;
 import java.util.List;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+//
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class Kuchenrezept implements java.io.Serializable {
 

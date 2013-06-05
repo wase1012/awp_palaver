@@ -5,7 +5,7 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 import java.util.List;
 
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;

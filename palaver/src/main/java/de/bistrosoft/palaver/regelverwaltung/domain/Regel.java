@@ -129,26 +129,24 @@ public class Regel {
 		List<String> strZeilen=Arrays.asList(zeilen.split(","));
 //		List<String> strZeilen=Arrays.asList(zeilen.split("\\s*,\\s*"));
 		zeilenlist=new ArrayList<Integer>();
+		
 		for(String s : strZeilen){
-			switch (s.trim()) {
-			case "Fleischgericht":
-				zeilenlist.add(0+topRows);
-				break;
-			case "Hauptgericht":
-				zeilenlist.add(1+topRows);
-				zeilenlist.add(2+topRows);
-				break;
-			case "Pastagericht":
-				zeilenlist.add(3+topRows);
-				break;
-			case "Suppe/Salat":
-				zeilenlist.add(4+topRows);
-				break;
-			case "Dessert":
-				zeilenlist.add(5+topRows);
-				break;
-			default:
-				break;
+			int i=0;
+			if(s.equals("Fleischgericht")){
+				zeilenlist.add(i++ +topRows);
+			}
+			else if(s.equals("Hauptgericht")){
+				zeilenlist.add(i++ +topRows);
+			}
+			else if(s.equals("Pastagericht")){
+				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(i++ +topRows);
+			}
+			else if(s.equals("Suppe/Salat")){
+				zeilenlist.add(i++ +topRows);
+			}
+			else if(s.equals("Dessert")){
+				zeilenlist.add(i++ +topRows);
 			}
 		}
 		//Spalten
@@ -156,24 +154,21 @@ public class Regel {
 		List<String> strSpalten=Arrays.asList(spalten.split(","));
 		spaltenlist=new ArrayList<Integer>();
 		for(String s : strSpalten){
-			switch (s.trim()) {
-			case "Montag":
-				spaltenlist.add(0+leftCols);
-				break;
-			case "Dienstag":
-				spaltenlist.add(1+leftCols);
-				break;
-			case "Mittwoch":
-				spaltenlist.add(2+leftCols);
-				break;
-			case "Donnerstag":
-				spaltenlist.add(3+leftCols);
-				break;
-			case "Freitag":
-				spaltenlist.add(4+leftCols);
-				break;
-			default:
-				break;
+			int i=0;
+			if(s.equals("Montag")){
+				zeilenlist.add(i++ +leftCols);
+			}
+			else if(s.equals("Dienstag")){
+				zeilenlist.add(i++ +leftCols);
+			}
+			else if(s.equals("Mittwoch")){
+				zeilenlist.add(i++ +leftCols);
+			}
+			else if(s.equals("Donnerstag")){
+				zeilenlist.add(i++ +leftCols);
+			}
+			else if(s.equals("Freitag")){
+				zeilenlist.add(i++ +leftCols);
 			}
 		}
 	}

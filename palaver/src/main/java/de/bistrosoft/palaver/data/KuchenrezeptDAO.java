@@ -20,6 +20,7 @@ import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
 public class KuchenrezeptDAO extends AbstractDAO {
 

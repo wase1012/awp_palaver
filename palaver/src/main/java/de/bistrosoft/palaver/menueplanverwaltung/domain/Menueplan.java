@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.bistrosoft.palaver.util.Week;
 
 public class Menueplan {

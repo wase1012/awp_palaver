@@ -212,11 +212,15 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return new ArrayList<RezeptHasArtikel>();
 	}
 
-	public void deleteZutatenZuRezept(Rezept rez2)
+	public void deleteZutatenZuRezept(Rezept rezept)
 			throws ConnectException, DAOException, SQLException {
-		super.deleteZutatenZuRezept(rez2);
+		super.deleteZutatenZuRezept(rezept);
 	}
 
+	public void deleteZubereitungZuRezept(Rezept rezept)
+			throws ConnectException, DAOException {
+		super.deleteZubereitungZuRezept(rezept);
+	}
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws
 	// ConnectException,
 	// DAOException, SQLException {
