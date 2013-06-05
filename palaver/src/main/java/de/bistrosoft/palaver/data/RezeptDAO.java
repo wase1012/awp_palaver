@@ -12,8 +12,10 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.Util;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -24,6 +26,7 @@ import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
 public class RezeptDAO extends AbstractDAO {
 
@@ -32,7 +35,6 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String NAME = "name";
 	private final static String REZEPTART = "rezeptart_fk";
 	private final static String KOMMENTAR = "kommentar";
-	private final static String PORTION = "portion";
 	private final static String MITARBEITER = "mitarbeiter_fk";
 	private final static String ERSTELLT = "erstellt";
 	private final static String REZEPTHASARTIKEL = "rezept_has_artikel";
@@ -69,14 +71,12 @@ public class RezeptDAO extends AbstractDAO {
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
 		ResultSet set = getManaged(GET_ALL_REZEPTS);
-		;
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), set.getString("kommentar"), set
-							.getInt("portion")));
+							.getString("name"), set.getString("kommentar")));
 		}
 		return list;
 	}
@@ -87,12 +87,15 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = getManaged(GET_ALL_REZEPT_TABELLE);
 
 		while (set.next()) {
-			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			Rezept rezept = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), set.getString("kommentar"), set
-							.getInt("portion"), set.getDate("erstellt")));
+							.getString("name"), set.getString("kommentar"), set.getDate("erstellt"));
+			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance().getZubereitungByRezept(rezept.getId());
+			rezept.setZubereitung(zubereitung);
+			list.add(rezept);
+			
 		}
 		return list;
 	}
@@ -107,7 +110,7 @@ public class RezeptDAO extends AbstractDAO {
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), null, set.getInt("portion")
+							.getString("name"), null
 
 			));
 		}
@@ -123,8 +126,7 @@ public class RezeptDAO extends AbstractDAO {
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")),
-					set.getString("name"), set.getString("kommentar"),
-					set.getInt("portion"));
+					set.getString("name"), set.getString("kommentar"));
 			// List<RezeptHasArtikel> artikel =
 			// Rezeptverwaltung.getInstance().getAllArtikelByRezeptId1(rezept.getId());
 			// rezept.setArtikel(artikel);
@@ -157,7 +159,7 @@ public class RezeptDAO extends AbstractDAO {
 					.getRezeptartById(set.getLong("rezeptart")), MitarbeiterDAO
 					.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter")), set.getString("name"),
-					null, set.getInt("portion"));
+					null);
 		}
 
 		return result;
@@ -185,7 +187,7 @@ public class RezeptDAO extends AbstractDAO {
 			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
 					set.getLong("id")), MitarbeiterDAO.getInstance()
 					.getMitarbeiterById(set.getLong("id")), set
-					.getString("name"), null, set.getInt("portion")));
+					.getString("name"), null));
 		}
 		return rezept;
 	}
@@ -205,7 +207,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rha;
 	}
 
-	/* GEschmack sollte in Menü rein */
+	/* GEschmack sollte in Menï¿½ rein */
 	// public List<Rezept> getRezeptebyGeschmack(Geschmack geschmack)
 	// throws ConnectException, DAOException, SQLException {
 	// List<Rezept> rezept = new ArrayList<Rezept>();
@@ -225,11 +227,12 @@ public class RezeptDAO extends AbstractDAO {
 	public void createRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ REZEPTART + "," + KOMMENTAR + "," + PORTION + ","
+				+ REZEPTART + "," + KOMMENTAR + ","
 				+ MITARBEITER + "," + ERSTELLT + ")" + " VALUES" + "('"
-				+ rezept.getName() + "','" + rezept.getRezeptart().getId()
-				+ "','" + rezept.getKommentar() + "','" + rezept.getPortion()
-				+ "','" + rezept.getMitarbeiter().getId() + "','"
+				+ rezept.getName() + "',"
+				+ rezept.getRezeptart().getId()
+				+ ",'" + rezept.getKommentar() 
+				+ "'," + rezept.getMitarbeiter().getId() + ",'"
 				+ rezept.getErstellt() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
@@ -267,8 +270,7 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "UPDATE rezept SET name = '" + rezept.getName()
 				+ "'," + "rezeptart_fk=" + rezept.getRezeptart().getId() + ","
-				+ "kommentar='" + rezept.getKommentar() + "'," + "portion="
-				+ rezept.getPortion() + "," + "mitarbeiter_fk = "
+				+ "kommentar='" + rezept.getKommentar() + "'," + "mitarbeiter_fk = "
 				+ rezept.getMitarbeiter().getId() + "," + "erstellt='"
 				+ rezept.getErstellt() + "' WHERE id = " + rezept.getId();
 		this.putManaged(INSERT_QUERY);
@@ -346,6 +348,12 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE FROM rezept_has_artikel WHERE "
 				+ REZEPTFK + "=" + rez2.getId() + ";";
+		this.putManaged(DELETE_QUERY);
+	}
+
+	public void deleteZubereitungZuRezept(Rezept rezept) throws ConnectException, DAOException {		
+		String DELETE_QUERY = "DELETE FROM rezept_has_zubereitung WHERE "
+				+ REZEPTFK + "=" + rezept.getId() + ";";
 		this.putManaged(DELETE_QUERY);
 	}
 }

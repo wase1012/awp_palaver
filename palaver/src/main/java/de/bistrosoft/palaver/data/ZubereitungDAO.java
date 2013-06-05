@@ -33,9 +33,10 @@ public class ZubereitungDAO extends AbstractDAO {
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_ZUBEREITUNG_BY_NAME = "DELETE FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_ZUBEREITUNG_BY_ID = "DELETE FROM " + TABLE
-			+ " WHERE id = {0}";
+	private static final String DELETE_ZUBEREITUNG_BY_ID = "DELETE FROM "
+			+ TABLE + " WHERE id = {0}";
 	private static final String GET_ZUBEREITUNG_BY_REZEPT = "Select zubereitung.id, zubereitung.name From zubereitung Join rezept_has_zubereitung On zubereitung.id = rezept_has_zubereitung.zubereitung_fk WHERE rezept_has_zubereitung.rezept_fk = {0}";
+
 	public ZubereitungDAO() {
 		super();
 	}
@@ -57,36 +58,39 @@ public class ZubereitungDAO extends AbstractDAO {
 		}
 		return list;
 	}
-	
-	public List<Zubereitung> getZubereitungByRezept(Long id) throws ConnectException,
-	DAOException, SQLException {
-List<Zubereitung> list = new ArrayList<Zubereitung>();
-ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_REZEPT, id));
-while (set.next()) {
-	list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
-}
-return list;
-}
+
+	public List<Zubereitung> getZubereitungByRezept(Long id)
+			throws ConnectException, DAOException, SQLException {
+		List<Zubereitung> list = new ArrayList<Zubereitung>();
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_ZUBEREITUNG_BY_REZEPT, id));
+		while (set.next()) {
+			list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
+		}
+		return list;
+	}
 
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID,
+				id));
+		System.out.println(MessageFormat.format(GET_ZUBEREITUNG_BY_ID, id));
 		while (set.next()) {
 			zubereitung = new Zubereitung(set.getLong(ID), set.getString(NAME));
 		}
 		return zubereitung;
 	}
 
-	public List<Zubereitung> getZubereitungByName(String name)
+	public Zubereitung getZubereitungByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
 
 		ResultSet set = getManaged(GET_ZUBEREITUNG_BY_NAME + name + "%'");
-
+		System.out.println(GET_ZUBEREITUNG_BY_NAME + name + "%'");
 		while (set.next()) {
 			list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
 		}
-		return list;
+		return list.get(0);
 	}
 
 	public void createZubereitung(Zubereitung zubereitung)
@@ -111,14 +115,13 @@ return list;
 		}
 		putManaged(DELETE_ZUBEREITUNG_BY_NAME + name + "%'");
 	}
-	
+
 	public void deleteZubereitungById(Long id) throws ConnectException,
-	DAOException, SQLException {
-		if(id==null){
+			DAOException, SQLException {
+		if (id == null) {
 			throw new NullPointerException("keine Zubereitung übergeben!");
 		}
 		putManaged(MessageFormat.format(DELETE_ZUBEREITUNG_BY_ID, id));
 	}
 
-	
 }

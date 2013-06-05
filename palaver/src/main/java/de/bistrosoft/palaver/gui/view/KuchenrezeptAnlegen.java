@@ -40,10 +40,11 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.KuchenrezeptDAO;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+//import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
@@ -394,8 +395,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 
 		try {
-			mitarbeiterCb.setValue(MitarbeiterDAO.getInstance()
-					.getMitarbeiterByKuchenrezept(kuchenrezept.getId()).getId());
+			mitarbeiterCb.setValue(kuchenrezept.getMitarbeiter());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

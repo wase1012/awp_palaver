@@ -34,6 +34,12 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 		result = super.getAllZubereitung();
 		return result;
 	}
+	public List<Zubereitung> getZubereitungByRezept(Long rezeptId) throws ConnectException,
+	DAOException, SQLException {
+		List<Zubereitung> result = null;
+		result = super.getZubereitungByRezept(rezeptId);
+		return result;
+	}
 
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
@@ -42,11 +48,11 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 		return result;
 	}
 
-	public List<Zubereitung> getZubereitungByName(String name)
+	public Zubereitung getZubereitungByName(String name)
 			throws ConnectException, DAOException, SQLException {
-		List<Zubereitung> result = null;
-		result = super.getZubereitungByName(name);
-		return result;
+//		List<Zubereitung> result = null;
+//		result = super.getZubereitungByName(name);
+		return  super.getZubereitungByName(name);
 	}
 
 	public void createZubereitung(Zubereitung zubereitung)

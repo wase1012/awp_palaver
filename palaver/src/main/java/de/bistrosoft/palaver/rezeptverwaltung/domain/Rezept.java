@@ -6,7 +6,7 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 import java.sql.Date;
 import java.util.List;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class Rezept implements java.io.Serializable {
 
@@ -18,10 +18,10 @@ public class Rezept implements java.io.Serializable {
 	private Mitarbeiter mitarbeiter;
 	private String name;
 	private String kommentar;
-	private int portion;
 	private Date erstellt;
 	private List<RezeptHasArtikel> artikel;
 	private Boolean menue;
+	private List<Zubereitung> zubereitung;
 
 	//Konstruktoren
 	public Rezept() {
@@ -29,35 +29,32 @@ public class Rezept implements java.io.Serializable {
 	}
 
 	public Rezept(Rezeptart rezeptart, Mitarbeiter mitarbeiter, String name,
-			String kommentar, int portion) {
+			String kommentar) {
 		super();
 		this.rezeptart = rezeptart;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
-		this.portion = portion;
 	}
 
 	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
-			String name, String kommentar, int portion) {
+			String name, String kommentar) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
-		this.portion = portion;
 	}
 
 	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
-			String name, String kommentar, int portion, Date erstellt) {
+			String name, String kommentar, Date erstellt) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
 		this.mitarbeiter = mitarbeiter;
 		this.name = name;
 		this.kommentar = kommentar;
-		this.portion = portion;
 		this.erstellt = erstellt;
 	}
 
@@ -81,6 +78,14 @@ public class Rezept implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public List<Zubereitung> getZubereitung() {
+		return zubereitung;
+	}
+
+	public void setZubereitung(List<Zubereitung> zubereitung) {
+		this.zubereitung = zubereitung;
 	}
 
 	public Rezeptart getRezeptart() {
@@ -115,14 +120,6 @@ public class Rezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 	}
 
-	public int getPortion() {
-		return this.portion;
-	}
-
-	public void setPortion(int portion) {
-		this.portion = portion;
-	}
-
 	public Date getErstellt() {
 		return erstellt;
 	}
@@ -152,7 +149,6 @@ public class Rezept implements java.io.Serializable {
 		result = prime * result
 				+ ((mitarbeiter == null) ? 0 : mitarbeiter.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + portion;
 		result = prime * result
 				+ ((rezeptart == null) ? 0 : rezeptart.hashCode());
 		return result;
@@ -199,8 +195,6 @@ public class Rezept implements java.io.Serializable {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (portion != other.portion)
 			return false;
 		if (rezeptart == null) {
 			if (other.rezeptart != null)

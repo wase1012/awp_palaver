@@ -36,7 +36,7 @@ import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.data.MenueartDAO;
-import de.bistrosoft.palaver.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
@@ -45,8 +45,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.bistrosoft.palaver.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -780,14 +780,15 @@ private void normalEinlesen(Menue menue2) {
 	favorit.setValue(menue2.getFavorit());
 	aufwand.setValue(menue2.getAufwand());	
 	try {
-		System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+//		System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
 	} catch (Exception e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
 	menuename.setValue(menue2.getName());
 	try {
-		ersteller.setValue(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
+		
+		ersteller.setValue(menue2.getKoch());
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

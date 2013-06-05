@@ -1,6 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import de.bistrosoft.palaver.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class KochInMenueplan {
 	private Mitarbeiter koch;
