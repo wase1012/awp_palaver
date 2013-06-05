@@ -1,9 +1,5 @@
 package de.bistrosoft.palaver.gui.view;
 
-//import org.vaadin.virkki.carousel.HorizontalCarousel;
-//import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
-//import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,10 +33,10 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 	Label lbKW = null;
 	Label lbPlatzhalter1 = new Label();
 	Label lbPlatzhalter2 = new Label();
-	// FuÃŸnoten
+	// FußŸnoten
 	@SuppressWarnings("deprecation")
 	Label lbFussnoten = new Label(
-			"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mÃ¶gl. &nbsp;&nbsp; (veg.m) = vegetarisch mÃ¶gl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mÃ¶gl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mÃ¶gl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mÃ¶gl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mÃ¶gl.</div>",
+			"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
 			Label.CONTENT_XHTML);
 	Label lbPlatzhalter = new Label();
 
@@ -53,13 +49,13 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		this.setComponentAlignment(box, Alignment.TOP_CENTER);
 
 		// Kalender zur Datums-Auswahl
-		final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:");
+		final PopupDateField date = new PopupDateField("Datum wählen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
 		box.addComponent(date);
 		box.setComponentAlignment(date, Alignment.TOP_CENTER);
-		final Button btDatumsauswahl = new Button("MenÃ¼plan anzeigen");
+		final Button btDatumsauswahl = new Button("Menüplan anzeigen");
 		btDatumsauswahl.addClickListener(new ClickListener() {
 			// Click-Listener zur Datumsauswahl
 			@Override
@@ -75,7 +71,6 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 				try {
 					datum = sdf.parse(sample);
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				cal = Calendar.getInstance();
@@ -90,15 +85,15 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 					box.removeComponent(lbPlatzhalter1);
 					box.removeComponent(lbPlatzhalter2);
 				}
-				// nur alte PlÃ¤ne
+				// nur alte Pläne
 				Week curWeek = CalendarWeek.getCurrentWeek();
 				final int woche = curWeek.getWeek();
-				if (week < woche) {
-					// nur gespeicherte PlÃ¤ne
+				if (week < (woche + 1)) {
+					// nur gespeicherte Pläne
 					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
 							new Week(week, year)) == null) {
 						Notification notification = new Notification(
-								"Kein MenÃ¼plan vorhanden.");
+								"Kein Menüplan vorhanden.");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
@@ -132,7 +127,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 					}
 				} else {
 					Notification notification = new Notification(
-							"MenÃ¼plan muss in der Vergangenheit liegen.");
+							"Anzeige nur von älteren Menüplänen möglich.");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				}
@@ -149,8 +144,6 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
