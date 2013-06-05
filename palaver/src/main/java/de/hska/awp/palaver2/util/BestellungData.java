@@ -14,7 +14,10 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
-public class BestellungData {
+public class BestellungData implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 7961573736724011030L;
+	
 	private String name;
 	private String gebinde;
 	private Kategorie kategorie;

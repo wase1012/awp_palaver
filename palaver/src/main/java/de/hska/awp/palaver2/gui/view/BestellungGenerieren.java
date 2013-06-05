@@ -103,6 +103,9 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 
 						} catch (Exception e) {
 							log.error(e.toString());
+							Notification notification = new Notification("Bestellungen konnte nicht erzeugt werden!");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
 						}
 
 						ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
