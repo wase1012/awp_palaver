@@ -194,7 +194,7 @@ public class BestellungDAO extends AbstractDAO {
 		if (bestellung.getBestellpositionen().size() == 0) {
 			return;
 		}
-
+		
 		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + "," + DATUM + "," + LIEFERDATUM + "," + LIEFERDATUM2 + "," + BESTELLT
 				+ ")" + "VALUES" + "('" + bestellung.getLieferant().getId() + "','" + bestellung.getDatum() + "','" + bestellung.getLieferdatum()
 				+ "','" + bestellung.getLieferdatum2() + "','" + Util.convertBoolean(bestellung.isBestellt()) + "')";
@@ -203,14 +203,33 @@ public class BestellungDAO extends AbstractDAO {
 		List<Bestellung> bestellungen = getAllBestellungen();
 
 		Bestellung bestell = getBestellungById(bestellungen.get(bestellungen.size() - 1).getId());
-
+		openConnection();
 		for (int i = 0; i < bestellung.getBestellpositionen().size(); i++) {
 
 			bestellung.getBestellpositionen().get(i).setBestellung(bestell);
-			BestellpositionDAO.getInstance().createBestellposition(bestellung.getBestellpositionen().get(i));
+			createBestellposition(bestellung.getBestellpositionen().get(i));
 		}
-
+		closeConnection();
 	}
+	
+	/**
+	 * Die Methode erzeugt eine Bestellposition in der Datenbank.
+	 * 
+	 * @param bestellposition
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
+	private void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException, SQLException, ParseException {
+		String INSERTQUERY = "INSERT INTO bestellposition(" + ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT
+				+ "," + FREITAG + "," + MONTAG + "," + GELIEFERT + ")" + "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
+				+ bestellposition.getBestellung().getId() + "','" + bestellposition.getDurchschnitt() + "','" + bestellposition.getKantine() + "','"
+				+ bestellposition.getGesamt() + "','" + bestellposition.getFreitag() + "','" + bestellposition.getMontag() + "','"
+				+ Util.convertBoolean(bestellposition.isGeliefert()) + "')";
+		this.putMany(INSERTQUERY);
+	}
+	
 
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.

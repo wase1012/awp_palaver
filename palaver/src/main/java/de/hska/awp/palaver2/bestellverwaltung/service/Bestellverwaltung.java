@@ -243,7 +243,6 @@ public class Bestellverwaltung extends BestellungDAO {
 
 		// 4. Füge List<RezeptHasArtikel> von Menueplan (Freitag) in
 		// List<Bestellposition>
-		System.out.println(rha);
 
 		if (rha.isEmpty() == false) {
 			Bestellposition bpo = new Bestellposition();
@@ -394,24 +393,20 @@ public class Bestellverwaltung extends BestellungDAO {
 
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
 		if (rhalist.isEmpty() == false) {
-			System.out.println("MENGEADDSAMEARTIKEL INPUTLISTE:");
-
 			for (int i = 0; i < rhalist.size(); i++) {
 				boolean vorhanden = false;
 				if (i == 0) {
 					list.add(rhalist.get(i));
-					System.out.println("1 Element eintragen! Menge:");
-					System.out.println(list.get(i).getMenge());
 				} else {
 					for (int z = 0; z < list.size(); z++) {
 						if (list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())) {
-							System.out.println("Aktuelle Menge in vorhandener Liste");
-							System.out.println(list.get(z).getMenge());
+							// System.out.println("Aktuelle Menge in vorhandener Liste");
+							// System.out.println(list.get(z).getMenge());
 							list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
-							System.out.println("Menge in NEUER Liste");
-							System.out.println(rhalist.get(i).getMenge());
-							System.out.println("GESAMTMENGE in Liste");
-							System.out.println(list.get(z).getMenge());
+							// System.out.println("Menge in NEUER Liste");
+							// System.out.println(rhalist.get(i).getMenge());
+							// System.out.println("GESAMTMENGE in Liste");
+							// System.out.println(list.get(z).getMenge());
 							vorhanden = true;
 						}
 

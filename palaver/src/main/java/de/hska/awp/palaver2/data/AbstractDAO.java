@@ -90,6 +90,22 @@ public abstract class AbstractDAO
 		}
 	}
 	
+	protected synchronized void putMany(String querry) throws ConnectException, DAOException 
+	{
+		
+		try 
+		{
+			statement.executeUpdate(querry);
+		} 
+		catch (Exception e) 
+		{
+			throw new DAOException("Statement error: " + querry);
+		}
+		
+	}
+	
+	
+	
 	@Deprecated
 	protected ResultSet get(String querry) throws SQLException
 	{
