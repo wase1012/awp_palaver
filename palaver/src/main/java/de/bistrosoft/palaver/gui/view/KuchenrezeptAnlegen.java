@@ -121,6 +121,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		
 		name.setWidth("100%");
 		name.setImmediate(true);
+		name.setMaxLength(200);
 		name.setInputPrompt(nameInput);
 
 		mitarbeiterCb.setWidth("100%");
@@ -129,6 +130,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterCb.setNullSelectionAllowed(false);
 
 		kommentar.setImmediate(true);
+		kommentar.setMaxLength(1000);
 
 		box.setWidth("90%");
 		box.setSpacing(true);
@@ -288,7 +290,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					Artikelverwaltung.getInstance().getAllArtikel());
 			artikelTable.setContainerDataSource(containerArtikel);
 			artikelTable
-					.setVisibleColumns(new Object[] { "name" });
+					.setVisibleColumns(new Object[] { "name", "artikelnr" });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
@@ -314,7 +316,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
 				mitarbeiterCb.addItem(e);
-//				mitarbeiterCb.setItemCaption(e.getId(), e.getVorname());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -425,16 +426,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	
 	// Funktion zum Speichern
 	private void speichern() {
-//		if (name.getValue() == "" || name.getValue() == null
-//				&& mitarbeiterCb.getValue() == "" || mitarbeiterCb.getValue() == null) {
-//			Notification notification = new Notification(
-//					"Bitte alle Felder bef√ºllen");
-//			notification.setDelayMsec(500);
-//			notification.show(Page.getCurrent());
-//		} else {
 		KuchenrezeptSpeichern();
-//		System.out.println("Rezept wurde gespeichert");
-//		}
 	}
 	
 	//Funktion zum Speichern eines Kuchenrezeptes
@@ -546,6 +538,13 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		Notification notification = new Notification(
+				"Rezept wurde ges‰ndert!");
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
+		ViewHandler.getInstance().switchView(
+				KuchenrezeptAnzeigen.class);
 	}
 	
 	// Funktion zum Anzeigen der Notification
