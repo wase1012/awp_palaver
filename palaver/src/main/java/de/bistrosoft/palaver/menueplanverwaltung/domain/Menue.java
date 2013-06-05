@@ -94,6 +94,9 @@ public class Menue {
 
 	public Menue() {
 	}
+	
+
+	
 
 	public List<Fussnote> getFussnoten() {
 		return fussnoten;
@@ -198,7 +201,76 @@ public class Menue {
 	public void setFavorit(boolean favorit) {
 		this.favorit = favorit;
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (aufwand ? 1231 : 1237);
+		result = prime * result + (favorit ? 1231 : 1237);
+		result = prime * result
+				+ ((geschmack == null) ? 0 : geschmack.hashCode());
+		result = prime * result
+				+ ((hauptgericht == null) ? 0 : hauptgericht.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((koch == null) ? 0 : koch.hashCode());
+		result = prime * result
+				+ ((kochname == null) ? 0 : kochname.hashCode());
+		result = prime * result
+				+ ((menueart == null) ? 0 : menueart.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Menue other = (Menue) obj;
+		if (aufwand != other.aufwand)
+			return false;
+		if (favorit != other.favorit)
+			return false;
+		if (geschmack == null) {
+			if (other.geschmack != null)
+				return false;
+		} else if (!geschmack.equals(other.geschmack))
+			return false;
+		if (hauptgericht == null) {
+			if (other.hauptgericht != null)
+				return false;
+		} else if (!hauptgericht.equals(other.hauptgericht))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (koch == null) {
+			if (other.koch != null)
+				return false;
+		} else if (!koch.equals(other.koch))
+			return false;
+		if (kochname == null) {
+			if (other.kochname != null)
+				return false;
+		} else if (!kochname.equals(other.kochname))
+			return false;
+		if (menueart == null) {
+			if (other.menueart != null)
+				return false;
+		} else if (!menueart.equals(other.menueart))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 	
 	@Override
 	public String toString() {

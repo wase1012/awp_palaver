@@ -168,10 +168,10 @@ public class WinSelectRezepte extends Window {
 			private void loadhauptgerichte() {
 				
 				BeanItemContainer<Rezept> rezeptcontainer;
-				System.out.println("Container erstellt");
+				
 				try {
 					rezeptcontainer = new BeanItemContainer<Rezept>(Rezept.class,
-							Rezeptverwaltung.getInstance().getAllRezepte());
+							Rezeptverwaltung.getInstance().getAllHauptgerichte());
 				// noch getallrezepte aendern wenn methoden in rezeptdao fertig
 					rezepttable.setContainerDataSource(rezeptcontainer);
 					
@@ -187,10 +187,10 @@ public class WinSelectRezepte extends Window {
 			
 			private void loadbeilagen() {
 				BeanItemContainer<Rezept> rezeptcontainer;
-				System.out.println("Container erstellt");
+			
 				try {
 					rezeptcontainer = new BeanItemContainer<Rezept>(Rezept.class,
-							Rezeptverwaltung.getInstance().getAllRezepte());
+							Rezeptverwaltung.getInstance().getAllBeilagen());
 				// noch getallrezepte aendern wenn methoden in rezeptdao fertig
 					rezepttable.setContainerDataSource(rezeptcontainer);
 					
@@ -223,18 +223,27 @@ public class WinSelectRezepte extends Window {
 			}
 			
 			private void uebertragebeilage1() {
+				
+				MenueAnlegen.beilage1.setEnabled(true);
+				
 				MenueAnlegen.beilage1.setValue(rezeptInput);
 				MenueAnlegen.beilageid = rezeptid;
+				MenueAnlegen.beilage1.setEnabled(false);
 			}
 			
             private void uebertragebeilage2() {
+            	MenueAnlegen.beilage2.setEnabled(true);
             	MenueAnlegen.beilage2.setValue(rezeptInput);
             	MenueAnlegen.beilage2id = rezeptid;
+            	MenueAnlegen.beilage2.setEnabled(false);
 			}
             
             private void uebertragehauptgericht() {
+            	MenueAnlegen.hauptgericht.setEnabled(true);
             	MenueAnlegen.hauptgericht.setValue(rezeptInput);
             	MenueAnlegen.hauptgerichtid = rezeptid;
+            	
+            	MenueAnlegen.hauptgericht.setEnabled(false);
             	//MenueAnlegen.hauptgerichtid = rezeptid;
 }
 			

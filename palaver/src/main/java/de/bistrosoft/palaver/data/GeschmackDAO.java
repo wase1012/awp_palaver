@@ -99,7 +99,7 @@ return geschmack;
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_ID, id));
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
-					null);
+					set.getBoolean(INAKTIV));
 		}
 		return geschmack;
 	}

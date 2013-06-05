@@ -18,10 +18,12 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -74,8 +76,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	
 	List<Rezept> listrezept = new ArrayList<Rezept>();
 	List<Fussnote> listfussnote = new ArrayList<Fussnote>();
-	Menue menue2;
-	Menue menue3;
+	Menue menue = new Menue();
+//	Menue menue2;
+//	Menue menue3;
 	Integer z = 0;
 	private String merker = "leer";
 	private String merkerh = "leer";
@@ -113,41 +116,41 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue ï¿½ndern</font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 
 	private Label dummy = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label dummy1 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label dummy2 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label dummy3 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label dummy4 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label d1 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label d2 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label d3 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label d4 = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label r = new Label(
 			"<div>&nbsp;&nbsp;&nbsp;</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
     private TextField menuename = new TextField("Menuename");
     private ComboBox ersteller = new ComboBox("Menueersteller");
 	public static  TextField hauptgericht = new TextField("Hauptgericht");
@@ -167,10 +170,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button speichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button neuesRezept = new Button("neues Rezeptanlegen");
-	private Button hZufuegen = new Button("Hauptegricht suchen");
-	private Button b1Zufuegen = new Button("Beilage1 suchen");
-	private Button b2Zufuegen = new Button("Beilage2 suchen");
-	
+	private Button hZufuegen = new Button();
+	private Button b1Zufuegen = new Button();
+	private Button b2Zufuegen = new Button();
+	private Button hEntfernen = new Button();
+	private Button b1Entfernen = new Button();
+	private Button b2Entfernen = new Button();
 	
 	private String hauptgerichtInput;
 	private String beilage1Input;
@@ -206,8 +211,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hauptgericht.setWidth("100%");
 		beilage1.setWidth("100%");
 		beilage2.setWidth("100%");
+		hauptgericht.setEnabled(false);
+		beilage1.setEnabled(false);
+		beilage2.setEnabled(false);
 		fussnoten.setWidth("100%");
 		menuename.setWidth("90%");
+		menuename.setMaxLength(200);
         b1Zufuegen.setWidth("150");
         b2Zufuegen.setWidth("150");
         hZufuegen.setWidth("150");
@@ -276,7 +285,21 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		mitte2.addComponent(b1Zufuegen);
 		blank2.addComponent(dummy);
 		mitte3.addComponent(b2Zufuegen);
-		
+		mitte.addComponent(hEntfernen);
+		mitte2.addComponent(b1Entfernen);		
+		mitte3.addComponent(b2Entfernen);
+		hZufuegen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		hZufuegen.setIcon(new ThemeResource("img/add.ico"));
+		b1Zufuegen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		b1Zufuegen.setIcon(new ThemeResource("img/add.ico"));
+		b2Zufuegen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		b2Zufuegen.setIcon(new ThemeResource("img/add.ico"));
+		hEntfernen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		hEntfernen.setIcon(new ThemeResource("img/Delete.ico"));
+		b1Entfernen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		b1Entfernen.setIcon(new ThemeResource("img/Delete.ico"));
+		b2Entfernen.setPrimaryStyleName(Reindeer.BUTTON_SMALL);
+		b2Entfernen.setIcon(new ThemeResource("img/Delete.ico"));
 		haupt.addComponent(box3);
 		box3.addComponent(fussnoten);
 		b1.addComponent(d1);
@@ -480,8 +503,33 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				pruefen(1);				
 					}
 					});
+		
+		
+		hEntfernen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {				
+					hauptgericht.setValue("");		
+					}
+					});
+		
+		b1Entfernen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {	
+				
+					beilage1.setValue("");		
+					}
+					});
+		
+		b2Entfernen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {				
+					beilage2.setValue("");		
+					}
+					});
 	      }
 
+	
+      
 
     //in der Prozedur load wird die ganze Seite geladen, alle felder und Werte werden geleert
 	//auch werden die inhalte fuer den Geschmack, die Koeche, die Menueart udn die Fussnoten geladen
@@ -502,24 +550,24 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				ersteller.addItem(e.getId());
-				ersteller.setItemCaption(e.getId(), e.getVorname());
+				ersteller.addItem(e);
+				
 
 			}
 			
 				List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
 						.getAllGeschmackAktiv();
 				for (Geschmack e : geschmack) {
-					geschmackCb.addItem(e.getId());
-					geschmackCb.setItemCaption(e.getId(), e.getName());
+					geschmackCb.addItem(e);
+					
                     
 				}
 				
 				List<Menueart> menueart = Menueartverwaltung.getInstance()
 						.getAllMenueart();
 				for (Menueart e : menueart) {
-					menueartCb.addItem(e.getId());
-					menueartCb.setItemCaption(e.getId(), e.getName());
+					menueartCb.addItem(e);
+					
 				}		
 			
 			List<Fussnote> fussnote = Fussnotenverwaltung.getInstance().getAllFussnote();
@@ -539,12 +587,26 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void getViewParam(ViewData data) {
 		
 		//leere menues erstellen
-		menue2 = new Menue();
-		menue3 = new Menue();
+//		menue2 = new Menue();
+//		menue3 = new Menue();
 		
 		//Daten des uebergebenen Menues speichern
-		menue2 = (Menue) ((ViewDataObject<?>)data).getData();
-		
+		menue = (Menue) ((ViewDataObject<?>)data).getData();
+		//Vollständiges menü laden
+		try {
+			menue = MenueDAO.getInstance().getAllItemsForUpdate(menue.getId());
+		} catch (ConnectException e) {
+			 
+			e.printStackTrace();
+		} catch (DAOException e) {
+			 
+			e.printStackTrace();
+		} catch (SQLException e) {
+			 
+			e.printStackTrace();
+		}
+		System.out.println("hier!!!!!!!!!!!");
+		System.out.println(menue);
 		//den Button speichern durch den Button aendern ersetzen
 		control.replaceComponent(speichern, update);
 		box.replaceComponent(ueberschrift, ueberschrift2);		
@@ -564,22 +626,10 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		});
 	
 		//in diesen prozeduren werden die daten des Menues in die Felder uebertragen
-		try {
-			menue3 = MenueDAO.getInstance().getAllItemsForUpdate(menue2.getId());
-		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		fussnotenEinlesen(menue2);
-		normalEinlesen(menue3);
-		beilagenEinlesen(menue2);
+		fussnotenEinlesen(menue);
+		normalEinlesen(menue);
+		beilagenEinlesen(menue);
 
 		//die Merker werden geleert, wichtig dies darf erst nach den 
 		//Prozeduren passieren sonst sind sie automatisch auf x gesetzt
@@ -596,7 +646,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	//Menue gespeichert werden sollen, der Rueckgabewert ist ein Menue
 private Menue menuetabelleSpeichern() {
 
-	Menue menue = new Menue();
+//	Menue menue = new Menue();
 	MenueHasFussnote fussnote = new MenueHasFussnote();
 
 	
@@ -605,25 +655,19 @@ private Menue menuetabelleSpeichern() {
 	menue.setFavorit(favorit.getValue());
 
 	try {
-		menue.setKoch(MitarbeiterDAO.getInstance()
-				.getMitarbeiterById(
-						Long.parseLong(erstellerInput.toString())));
+		menue.setKoch((Mitarbeiter) ersteller.getValue());
 	} catch (Exception e1) {
 		e1.printStackTrace();
 	}
 
 	try {
-		menue.setGeschmack(GeschmackDAO.getInstance()
-				.getGeschmackById(
-						Long.parseLong(geschmackInput.toString())));
+		menue.setGeschmack((Geschmack) geschmackCb.getValue());
 	} catch (Exception e1) {
 		e1.printStackTrace();
 	}
 	
 	try {
-		menue.setMenueart(MenueartDAO.getInstance()
-				.getMenueartById(
-						Long.parseLong(menueartInput.toString())));
+		menue.setMenueart((Menueart) menueartCb.getValue());
 	} catch (Exception e1) {
 		e1.printStackTrace();
 	}
@@ -670,7 +714,7 @@ private void fussnotenSetzen(Menue menue1) {
 				//stehen alle Fussnoten die zu einem Menue gehoeren darin(mit Menue)
 				fussnotelist.add(a);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				 
 				e.printStackTrace();
 			}
 		}
@@ -680,7 +724,7 @@ private void fussnotenSetzen(Menue menue1) {
 			try{
 			Menueverwaltung.getInstance().FussnoteAdd(i);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				 
 				e.printStackTrace();
 			}
 		}
@@ -695,14 +739,14 @@ private void fussnotenSetzen(Menue menue1) {
 		try {
 			rezept = RezeptDAO.getInstance().getRezept1(Long.parseLong(hauptgerichtid.toString()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		MenueHasRezept mhr = new MenueHasRezept(menue1, rezept, true);
 		try{
 			Menueverwaltung.getInstance().RezepteAdd(mhr);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}		
 		}
@@ -717,14 +761,14 @@ private void beilage1Setzen(Menue menue1) {
 						try {
 							rezept1 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilageid.toString()));
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 						MenueHasRezept mhr1 = new MenueHasRezept(menue1, rezept1, false);
 						try{
 							Menueverwaltung.getInstance().RezepteAdd(mhr1);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
+							
 								e.printStackTrace();
 							}
 						}
@@ -739,14 +783,14 @@ private void beilage2Setzen(Menue menue1) {
 						try {
 							rezept2 = RezeptDAO.getInstance().getRezept1(Long.parseLong(beilage2id.toString()));
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
+							 
 							e.printStackTrace();
 						}
 						MenueHasRezept mhr2 = new MenueHasRezept(menue1, rezept2, false);
 						try{
 							Menueverwaltung.getInstance().RezepteAdd(mhr2);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
+								 
 								e.printStackTrace();
 							}
 						}
@@ -759,7 +803,7 @@ private void fussnotenEinlesen(Menue menue2) {
 	try {
 		listfussnote = FussnoteDAO.getInstance().getFussnoteByMenue(menue2.getId());
 	} catch (Exception e2) {
-		// TODO Auto-generated catch block
+		 
 		e2.printStackTrace();
 	}
 	//pruefen ob es uerberhaupt Fussnoten gibt
@@ -775,45 +819,45 @@ private void fussnotenEinlesen(Menue menue2) {
 }
 
 //in dieser Prozedur werden die normalen Items des Meneus eingelesen
-private void normalEinlesen(Menue menue2) {	
+private void normalEinlesen(Menue menue) {	
 	System.out.println("einlesen");
-	favorit.setValue(menue2.getFavorit());
-	aufwand.setValue(menue2.getAufwand());	
+	favorit.setValue(menue.getFavorit());
+	aufwand.setValue(menue.getAufwand());	
 	try {
 //		System.out.println(MitarbeiterDAO.getInstance().getMitarbeiterByMenue(menue2.getId()).getId());
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		 
 		e1.printStackTrace();
 	}
-	menuename.setValue(menue2.getName());
+	menuename.setValue(menue.getName());
 	try {
-		
-		ersteller.setValue(menue2.getKoch());
+		System.out.println(menue.getKoch());
+		ersteller.setValue(menue.getKoch());
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
+		 
 		e.printStackTrace();
 	}
 	
 	try {
-		geschmackCb.setValue(GeschmackDAO.getInstance().getGeschmackByMenue(menue2.getId()).getId());
+		System.out.println(menue.getGeschmack());
+		geschmackCb.setValue(menue.getGeschmack());
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		System.out.println("im stacktrace");
+		 
 		e.printStackTrace();
 	}
 	
 	try {
-		menueartCb.setValue(MenueartDAO.getInstance().getMenueartByMenue(menue2.getId()).getId());
+		menueartCb.setValue(menue.getMenueart());
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
+		 
 		e.printStackTrace();
 	}
 	
 	try {
-		hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtMenue(menue2.getId()).getName());
-		althg = MenueDAO.getInstance().getHauptgerichtMenue(menue2.getId()).getId().toString();
+		hauptgericht.setValue(MenueDAO.getInstance().getHauptgerichtMenue(menue.getId()).getName());
+		althg = MenueDAO.getInstance().getHauptgerichtMenue(menue.getId()).getId().toString();
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
+		 
 		e.printStackTrace();
 	}
 	
@@ -875,7 +919,7 @@ private void beilagenEinlesen(Menue menue2) {
 try {
 	listrezept = MenueDAO.getInstance().getBeilagenByMenue(menue2.getId());
 } catch (Exception e) {
-	// TODO Auto-generated catch block
+	 
 	e.printStackTrace();
 }
 
@@ -936,7 +980,7 @@ private void speichern() {
 		try {
 			menue1 = Menueverwaltung.getInstance().getMenueByName1(menuenameInput);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+			 
 			e1.printStackTrace();
 		}
 	
@@ -963,7 +1007,7 @@ private void aendern() {
 			Menue m = menuetabelleSpeichern();
 	
 	try {
-		Menueverwaltung.getInstance().updateMenue(m, menue2.getId());
+		Menueverwaltung.getInstance().updateMenue(m, menue.getId());
 		
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -973,12 +1017,12 @@ private void aendern() {
 	//wird das alte Hautgericht(alth) geloescht und das neue eingefuegt
 	if (merkerh == "x") {
 		try {
-		Menueverwaltung.getInstance().RezepteDelete(menue2, althg);
+		Menueverwaltung.getInstance().RezepteDelete(menue, althg);
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		 
 		e1.printStackTrace();
 	}
-		hauptgerichtSetzen(menue2);
+		hauptgerichtSetzen(menue);
 	}
 	
 
@@ -987,9 +1031,9 @@ private void aendern() {
 	if (merker1 == "x") {
 		if (altb1 != null) {
 		try {
-		Menueverwaltung.getInstance().RezepteDelete(menue2, altb1);
+		Menueverwaltung.getInstance().RezepteDelete(menue, altb1);
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		 
 		e1.printStackTrace();
 	}
 		}
@@ -997,7 +1041,7 @@ private void aendern() {
 			
 		}
 		
-		 beilage1Setzen(menue2);
+		 beilage1Setzen(menue);
 	}
 	
 	//wenn der merker2 auf x gesetzt wird(Beilage2 hat sich geaendert)
@@ -1005,28 +1049,28 @@ private void aendern() {
 	if (merker2 == "x") {
 		if (altb2 != null) {
 		try {
-		Menueverwaltung.getInstance().RezepteDelete(menue2, altb2);
+		Menueverwaltung.getInstance().RezepteDelete(menue, altb2);
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		 
 		e1.printStackTrace();
 	}
 		}
 		else {
 			
 		}
-		 beilage2Setzen(menue2);
+		 beilage2Setzen(menue);
 	}
 
 	//wenn der merker auf x gesetzt ist, das heiï¿½t die Fussnoten ahben sich geaendert
 	//werdne dei alten Fussnoten geloescht und neue eingefuegt
 	if(merker == "x") {
 	try {
-		Menueverwaltung.getInstance().FussnoteDelete(menue2);
+		Menueverwaltung.getInstance().FussnoteDelete(menue);
 	} catch (Exception e1) {
-		// TODO Auto-generated catch block
+		 
 		e1.printStackTrace();
 	}
-    fussnotenSetzen(menue2);
+    fussnotenSetzen(menue);
 	}
 	else {
 		

@@ -43,6 +43,8 @@ public class RezeptDAO extends AbstractDAO {
 
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
+	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1";
+	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
@@ -80,6 +82,33 @@ public class RezeptDAO extends AbstractDAO {
 		}
 		return list;
 	}
+	
+	public List<Rezept> getAllHauptgerichte() throws ConnectException, DAOException,
+	SQLException {
+List<Rezept> list = new ArrayList<Rezept>();
+ResultSet set = getManaged(GET_ALL_HAUPTGERICHTE);
+while (set.next()) {
+	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			.getRezeptartById(set.getLong("rezeptart_fk")),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(
+					set.getLong("mitarbeiter_fk")), set
+					.getString("name"), set.getString("kommentar")));
+}
+return list;
+}
+	public List<Rezept> getAllBeilagen() throws ConnectException, DAOException,
+	SQLException {
+List<Rezept> list = new ArrayList<Rezept>();
+ResultSet set = getManaged(GET_ALL_BEILAGEN);
+while (set.next()) {
+	list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			.getRezeptartById(set.getLong("rezeptart_fk")),
+			MitarbeiterDAO.getInstance().getMitarbeiterById(
+					set.getLong("mitarbeiter_fk")), set
+					.getString("name"), set.getString("kommentar")));
+}
+return list;
+}
 
 	public List<Rezept> getAllRezepteTabelle() throws ConnectException,
 			DAOException, SQLException {
