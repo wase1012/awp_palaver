@@ -36,6 +36,7 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.RezeptDAO;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -330,6 +331,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 
 		load();
+		
+		//Koch auf aktuellen User setzen
+		mitarbeiterCb.select(Application.getInstance().getUser());
 	}
 
 	public void load() {
