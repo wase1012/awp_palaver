@@ -12,6 +12,7 @@ import java.util.List;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.Util;
 
@@ -303,16 +304,23 @@ public class BestellungDAO extends AbstractDAO {
 		if (bestellung.getId() == null) {
 			throw new NullPointerException("Keine BestellungsId übergeben!");
 		}
+		Bestellung b = null;
+		try {
+		b = Bestellverwaltung.getInstance().getBestellungById(bestellung.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		openConnection();
-		if (bestellung.getBestellpositionen().isEmpty() == false) {
+		if (b.getBestellpositionen().isEmpty() == false) {
 
-			for (int i = 0; i < bestellung.getBestellpositionen().size(); i++) {
-				deleteBestellposition(bestellung.getBestellpositionen().get(i).getId());
+			for (int i = 0; i < b.getBestellpositionen().size(); i++) {
+				deleteBestellposition(b.getBestellpositionen().get(i).getId());
 			}
-			putMany(MessageFormat.format(DELETE_BESTELLUNG, bestellung.getId()));
+			putMany(MessageFormat.format(DELETE_BESTELLUNG, b.getId()));
 
 		} else {
-			putMany(MessageFormat.format(DELETE_BESTELLUNG, bestellung.getId()));
+			putMany(MessageFormat.format(DELETE_BESTELLUNG, b.getId()));
 		}
 		closeConnection();
 

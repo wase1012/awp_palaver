@@ -15,6 +15,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
@@ -32,8 +33,10 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 	private static final Logger	log	= LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
 
 	private VerticalLayout fenster = new VerticalLayout();
+	private HorizontalLayout hl = new HorizontalLayout();
 	
 	private Button auswaehlen = new Button(IConstants.BUTTON_SELECT);
+	private Button loeschen = new Button(IConstants.BUTTON_DELETE);
 
 	private FilterTable bestellungen = new FilterTable("Bestellung");
 	private Bestellung bestellung;
@@ -48,22 +51,52 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		fenster.setSpacing(true);
 		fenster.addComponentAsFirst(bestellungen);
 		
-	
-		fenster.addComponent(auswaehlen);
-		fenster.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
+		hl.setSpacing(true);
+		hl.setSizeFull();
+		hl.addComponent(loeschen);
+		hl.addComponent(auswaehlen);
+		hl.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
+		hl.setComponentAlignment(loeschen, Alignment.TOP_CENTER);
+		
+//		fenster.addComponent(auswaehlen);
+//		fenster.addComponent(loeschen);
+		fenster.addComponent(hl);
+		fenster.setExpandRatio(hl, 1);
+//		fenster.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
+		fenster.setComponentAlignment(hl, Alignment.TOP_RIGHT);
+		
 		
 		auswaehlen.setEnabled(true);
 		auswaehlen.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
 			{
+				if(bestellung != null){
 				ViewHandler.getInstance().switchView(BestellungBearbeiten.class, new ViewDataObject<Bestellung>(bestellung));
+				}
 			}
 		});
+		
+		loeschen.setEnabled(true);
+		loeschen.addClickListener(new ClickListener()
+		{
+			public void buttonClick(ClickEvent event)
+			{	
+				if(bestellung != null){
+				try{
+					Bestellverwaltung.getInstance().deleteBestellung(bestellung);
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+				}
+			}
+		});
+		
 
 		bestellungen.setSizeFull();
 
-		fenster.setExpandRatio(bestellungen, 1);
+		fenster.setExpandRatio(bestellungen, 9);
 
 		bestellungen.setSelectable(true);
 		bestellungen.setFilterBarVisible(true);
