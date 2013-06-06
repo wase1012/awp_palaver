@@ -50,6 +50,9 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String GET_BESTELLUNG_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private final static String GET_ALL_BESTELLUNGEN_NOT_ORDERED = "SELECT * FROM " + TABLE + " WHERE " + BESTELLT + "= '0'";
 
+	private static final String DELETE_BESTELLPOSITION = "DELETE FROM " + TABLE2 + " WHERE id = {0}";
+	private static final String DELETE_BESTELLUNG = "DELETE FROM " + TABLE + " WHERE id = {0}";
+
 	private final static int TAGEZURUECK = -22;
 
 	public BestellungDAO() {
@@ -194,7 +197,7 @@ public class BestellungDAO extends AbstractDAO {
 		if (bestellung.getBestellpositionen().size() == 0) {
 			return;
 		}
-		
+
 		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + LIEFERANT_FK + "," + DATUM + "," + LIEFERDATUM + "," + LIEFERDATUM2 + "," + BESTELLT
 				+ ")" + "VALUES" + "('" + bestellung.getLieferant().getId() + "','" + bestellung.getDatum() + "','" + bestellung.getLieferdatum()
 				+ "','" + bestellung.getLieferdatum2() + "','" + Util.convertBoolean(bestellung.isBestellt()) + "')";
@@ -211,7 +214,7 @@ public class BestellungDAO extends AbstractDAO {
 		}
 		closeConnection();
 	}
-	
+
 	/**
 	 * Die Methode erzeugt eine Bestellposition in der Datenbank.
 	 * 
@@ -229,7 +232,6 @@ public class BestellungDAO extends AbstractDAO {
 				+ Util.convertBoolean(bestellposition.isGeliefert()) + "')";
 		this.putMany(INSERTQUERY);
 	}
-	
 
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
@@ -293,6 +295,35 @@ public class BestellungDAO extends AbstractDAO {
 				+ bestellung.getLieferdatum2() + "'," + BESTELLT + "='" + Util.convertBoolean(bestellung.isBestellt()) + "' WHERE " + ID + "='"
 				+ bestellung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
+
+	}
+
+	public void deleteBestellung(Bestellung bestellung) throws ConnectException, DAOException, SQLException {
+
+		if (bestellung.getId() == null) {
+			throw new NullPointerException("Keine BestellungsId übergeben!");
+		}
+		openConnection();
+		if (bestellung.getBestellpositionen().isEmpty() == false) {
+
+			for (int i = 0; i < bestellung.getBestellpositionen().size(); i++) {
+				deleteBestellposition(bestellung.getBestellpositionen().get(i).getId());
+			}
+			putMany(MessageFormat.format(DELETE_BESTELLUNG, bestellung.getId()));
+
+		} else {
+			putMany(MessageFormat.format(DELETE_BESTELLUNG, bestellung.getId()));
+		}
+		closeConnection();
+
+	}
+
+	private void deleteBestellposition(Long id) throws ConnectException, DAOException, SQLException {
+
+		if (id == null) {
+			throw new NullPointerException("kein ID übergeben");
+		}
+		putMany(MessageFormat.format(DELETE_BESTELLPOSITION, id));
 
 	}
 
