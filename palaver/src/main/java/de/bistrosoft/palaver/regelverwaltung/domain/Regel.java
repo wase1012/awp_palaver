@@ -195,7 +195,7 @@ public class Regel {
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("3");
-		regeln.add(new Regel("Fussnote",r,c,"max",rw,"Nur Vegan!",true));
+		regeln.add(new Regel("Fussnote",r,c,"maximal",rw,"Nur Vegan!",true));
 		
 		List<Integer> r3 = new ArrayList<Integer>();
 		r3.add(2);
@@ -212,7 +212,7 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Menueart",r2,c2,	"max",rw2,"Es dÃ¼rfen maximal 3 MenÃ¼s einer Kat in den Zeilen 2 und 3 eingefÃ¼gt werden",	true));
+		regeln.add(new Regel("Menueart",r2,c2,	"maximal",rw2,"Es dÃ¼rfen maximal 3 MenÃ¼s einer Kat in den Zeilen 2 und 3 eingefÃ¼gt werden",	true));
 
 		return regeln;
 	}
@@ -282,7 +282,7 @@ public class Regel {
 					}
 				} else return null;
 				
-			} else if (operator.equals("max")) {
+			} else if (operator.equals("maximal")) {
 				if(menue.getFussnoten()!=null){
 					int count = 0;
 					int maxValue = Integer.MAX_VALUE;
@@ -361,7 +361,7 @@ public class Regel {
 					}
 				} else return null;
 				
-			} else if (operator.equals("max")) {
+			} else if (operator.equals("maximal")) {
 				if(menue.getFussnoten()!=null){
 					int count = 0;
 					int maxValue = Integer.MAX_VALUE;
@@ -429,7 +429,7 @@ public class Regel {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
 						return this;
 					}
-			} else if (operator.equals("max")) {
+			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -477,17 +477,17 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if(menue.getGeschmack()!=null){
-			if (operator.equals("//enthält nicht")) {
+			if (operator.equals("enthält nicht")) {
 				System.out.println("ent nit");
 				System.out.println(menue.getGeschmack().getName().toString());
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
 						return this;
 				}
-			} else if (operator.equals("//enthält")) {
+			} else if (operator.equals("enthält")) {
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
 						return this;
 					}
-			} else if (operator.equals("max")) {
+			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -543,7 +543,7 @@ public class Regel {
 					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) >= 0) {
 						return this;
 					}
-			} else if (operator.equals("max")) {
+			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -596,7 +596,7 @@ public class Regel {
 
 				return this;
 			}
-		} else if (operator.equals("max")) {
+		} else if (operator.equals("maximal")) {
 			int count = 0;
 			int maxValue = Integer.MAX_VALUE;
 			try {
