@@ -33,12 +33,13 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class MitarbeiterAnzeigen extends VerticalLayout implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(MitarbeiterAnzeigen.class.getName());
+
+	private static final Logger log = LoggerFactory.getLogger(MitarbeiterAnzeigen.class.getName());
 
 	private FilterTable table;
 
 	private Button showFilter;
+	private Button auswaehlen;
 	private Label headline;
 
 	private HorizontalLayout head;
@@ -55,6 +56,10 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 
 		headline = new Label("Alle Mitarbeiter");
 		headline.setStyleName("ViewHeadline");
+
+		auswaehlen = new Button(IConstants.BUTTON_SELECT);
+		auswaehlen.setHeight("50px");
+		auswaehlen.setEnabled(false);
 
 		head = new HorizontalLayout();
 		head.setWidth("100%");
@@ -79,6 +84,9 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					mitarbeiter = (Mitarbeiter) event.getProperty().getValue();
+					auswaehlen.setEnabled(true);
+				} else {
+					auswaehlen.setEnabled(false);
 				}
 			}
 		});
@@ -90,6 +98,16 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
 				}
 
+			}
+		});
+
+		auswaehlen.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (mitarbeiter != null) {
+					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+				}
 			}
 		});
 
@@ -106,6 +124,8 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 		this.addComponent(head);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
+		this.addComponent(auswaehlen);
+		this.setComponentAlignment(auswaehlen, Alignment.BOTTOM_RIGHT);
 
 		showFilter.addClickListener(new ClickListener() {
 			@Override
