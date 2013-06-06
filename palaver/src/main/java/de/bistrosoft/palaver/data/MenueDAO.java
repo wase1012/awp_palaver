@@ -70,13 +70,9 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch"))
-							.getVorname(), MenueartDAO.getInstance()
-							.getMenueartById(set.getLong("menueart_fk")),
-					GeschmackDAO.getInstance().getGeschmackById(
-							set.getLong("geschmack_fk"))));
-
+					MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")).getVorname(), 
+					MenueartDAO.getInstance().getMenueartById(set.getLong("menueart_fk")),
+					GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk"))));
 		}
 
 		return list;

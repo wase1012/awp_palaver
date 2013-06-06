@@ -437,7 +437,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		try {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
-					RezeptHasArtikel.class);
+					RezeptHasArtikel.class,rezept.getArtikel());
 
 			zutatenTable = null;
 			zutatenTable = new Table();
