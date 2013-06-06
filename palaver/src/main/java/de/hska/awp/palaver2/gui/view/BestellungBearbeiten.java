@@ -163,6 +163,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setColumnCollapsingAllowed(true);
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
@@ -222,7 +223,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		form.addComponent(bestellungTable);
 		form.addComponent(artikelTable);
 
-		form.setExpandRatio(bestellungTable, 2);
+		form.setExpandRatio(bestellungTable, 4);
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
 
@@ -409,6 +410,12 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable
 					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
+			bestellungTable.setColumnHeader("durchschnitt", "Menge");
+			bestellungTable.setColumnWidth("kantine", 60);
+			bestellungTable.setColumnWidth("montag", 60);
+			bestellungTable.setColumnWidth("freitag", 60);
+			bestellungTable.setColumnWidth("gesamt", 60);
+			bestellungTable.setColumnWidth("durchschnitt", 60);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
@@ -416,6 +423,12 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
+			bestellungTable.setColumnHeader("durchschnitt", "Menge");
+			bestellungTable.setColumnWidth("kantine", 60);
+			bestellungTable.setColumnWidth("montag", 60);
+			bestellungTable.setColumnWidth("freitag", 60);
+			bestellungTable.setColumnWidth("gesamt", 60);
+			bestellungTable.setColumnWidth("durchschnitt", 60);
 			datetime.setRequired(true);
 			datetime2.setVisible(false);
 		}
@@ -426,7 +439,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
-
+		artikelTable.setColumnCollapsible("name", false);
+		
 		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";
 		if (bestellung.getLieferant().getTelefon() != null) {
