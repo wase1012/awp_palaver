@@ -47,6 +47,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 	private FilterTable			table;
 	
 	private Button				showFilter;
+	private Button				auswaehlen;
 	
 	private Label				headline;
 	
@@ -61,8 +62,11 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		this.setSizeFull();
 		this.setMargin(true);
 		
-		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
-		showFilter.setIcon(new ThemeResource("img/filter.ico"));
+		showFilter = new Button(IConstants.BUTTON_HIDE_FILTER);
+		showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
+		
+		auswaehlen = new Button(IConstants.BUTTON_SELECT);
+		auswaehlen.setHeight("50px");
 		
 		headline = new Label("Alle Artikel");
 		headline.setStyleName("ViewHeadline");
@@ -79,7 +83,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		table = new FilterTable();
 		table.setStyleName("palaverTable");
 		table.setSizeFull();
-		table.setFilterBarVisible(false);
+		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
@@ -98,10 +102,20 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if(event.isDoubleClick()){
-					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+					auswaehlen.click();
 				}
 				
 			}
+		});
+		
+		auswaehlen.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (artikel != null) {
+					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+				}
+			}	
 		});
 		
 		BeanItemContainer<Artikel> container;
@@ -146,6 +160,8 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		this.addComponent(head);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
+		this.addComponent(auswaehlen);
+		this.setComponentAlignment(auswaehlen, Alignment.BOTTOM_RIGHT);
 		
 		showFilter.addClickListener(new ClickListener()
 		{

@@ -88,7 +88,7 @@ public class Bestellung implements java.io.Serializable {
 	}
 	
 	public String getDatumS() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		DateFormat df=new SimpleDateFormat("dd.MM.yy");
 		Date date = datum;
 		String s=df.format(date); 
 		return s;
@@ -103,7 +103,7 @@ public class Bestellung implements java.io.Serializable {
 	}
 	
 	public String getLieferdatumS() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		DateFormat df=new SimpleDateFormat("dd.MM.yy");
 		Date date = lieferdatum;
 		String s=df.format(date); 
 		return s;
@@ -142,7 +142,7 @@ public class Bestellung implements java.io.Serializable {
 	}
 	
 	public String getLieferdatum2S() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yyyy");
+		DateFormat df=new SimpleDateFormat("dd.MM.yy");
 		Date date = lieferdatum2;
 		String s=df.format(date); 
 		return s;
