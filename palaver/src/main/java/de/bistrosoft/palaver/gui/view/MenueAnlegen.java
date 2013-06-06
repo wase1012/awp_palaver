@@ -319,7 +319,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tcsFussnoten.select(menue.getFussnoten().get(i));
 		}
 
-		ctRezepte = new BeanItemContainer<Rezept>(Rezept.class);
+
 
 		tblMenue = null;
 		tblMenue = new Table();
@@ -332,8 +332,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		for (Rezept r : tmpRezepte) {
 			ctRezepte.removeItem(r);
 			ctMenue.addItem(r);
+			
 		}
 
+		
+		
 		menue.setRezepte(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
