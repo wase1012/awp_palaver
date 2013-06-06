@@ -92,7 +92,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Kategorie hinzufÃ¼gen");
+					mengNeu.setCaption("Kategorie hinzufügen");
 
 					UI.getCurrent().addWindow(mengNeu);
 
@@ -130,7 +130,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 					nameUp.setValue(kategorieUpdate.getName());
 					nameUp.setMaxLength(45);
 					nameUp.addValidator(new StringLengthValidator(
-							"Bitte gÃ¼ltigen Namen eingeben", 4, 45, false));
+							"Bitte gültigen Namen eingeben", 4, 45, false));
 
 					verwerfen.addClickListener(new ClickListener() {
 
@@ -149,8 +149,6 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 								Kategorienverwaltung.getInstance()
 										.updateKategorie(kategorieUpdate);
 							} catch (Exception e) {
-								// throw new
-								// NullPointerException("Bitte gï¿½ltige Werte eingeben");
 								log.error(e.toString());
 							}
 							UI.getCurrent().removeWindow(mengNeu);
@@ -205,7 +203,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Kategorie hinzufÃ¼gen");
+				mengNeu.setCaption("Kategorie hinzufügen");
 
 				UI.getCurrent().addWindow(mengNeu);
 
@@ -241,7 +239,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 				name.setImmediate(true);
 				name.setMaxLength(45);
 				name.addValidator(new StringLengthValidator(
-						"Bitte gÃ¼ltigen Namen eingeben", 4, 45, false));
+						"Bitte gültigen Namen eingeben", 4, 45, false));
 
 				verwerfen.addClickListener(new ClickListener() {
 
@@ -264,7 +262,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							UI.getCurrent().removeWindow(mengNeu);
 						} catch (Exception e) {
 							if (e.toString().contains("INSERT INTO kategorie"))
-								notification = "diese Name ist bereits in der System vorhanden.";
+								notification = "Der Name ist bereits im System vorhanden!";
 							else
 								notification = e.toString();
 							log.error(e.toString());
@@ -324,7 +322,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub blablabla
 
 	}
 
