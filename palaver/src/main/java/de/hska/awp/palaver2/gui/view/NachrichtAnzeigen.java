@@ -33,7 +33,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class NachrichtAnzeigen extends VerticalLayout implements View {
+public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChangeListener {
 
 	private static final Logger log = LoggerFactory.getLogger(NachrichtAnzeigen.class.getName());
 
@@ -47,6 +47,8 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 	private Label von;
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
+	private ComboBox combobox = new ComboBox();
+	Button speichern = new Button(IConstants.BUTTON_SAVE);
 
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
 	private Nachricht nachricht = new Nachricht();
@@ -182,8 +184,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 
 		nachrichterstellenlayout.addComponent(label);
 
-		final ComboBox combobox = new ComboBox();
-
 		combobox.setWidth("60%");
 		combobox.setImmediate(true);
 		combobox.setNullSelectionAllowed(false);
@@ -205,19 +205,16 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 		neuernachrichtentext.setImmediate(true);
 		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
 		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
+		neuernachrichtentext.setRequired(true);
+		
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 
-		neuernachrichtentext.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				neuernachrichtentextinput = String.valueOf(event.getProperty().getValue());
-			}
-		});
+		neuernachrichtentext.addValueChangeListener(this);
 
-		Button speichern = new Button(IConstants.BUTTON_SAVE);
 		Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
+		speichern.setEnabled(false);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
@@ -255,5 +252,16 @@ public class NachrichtAnzeigen extends VerticalLayout implements View {
 	@Override
 	public void getViewParam(ViewData data) {
 
+	}
+
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		
+		if(combobox.isValid()==false || neuernachrichtentext.isValid()==false){
+			speichern.setEnabled(false);
+		} else {
+			speichern.setEnabled(true);
+		}
+		
 	}
 }
