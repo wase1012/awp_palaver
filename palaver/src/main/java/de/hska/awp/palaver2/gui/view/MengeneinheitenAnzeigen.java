@@ -9,6 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -220,7 +222,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				mengNeu.setModal(true);
 				mengNeu.center();
 				mengNeu.setResizable(false);
-				mengNeu.setCaption("Mengeneinheit hinzufÃ¼gen");
+				mengNeu.setCaption("Mengeneinheit hinzufügen");
 				
 				UI.getCurrent().addWindow(mengNeu);
 				
@@ -277,6 +279,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				{
 					public void buttonClick(ClickEvent event)
 					{
+						if(name.isValid()==true && kurz.isValid()==true) {
 						Mengeneinheit me = new Mengeneinheit();
 						me.setName(nameText);
 						me.setKurz(kurzText);
@@ -323,6 +326,12 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 								ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 							}
 						});
+						} else {
+							Notification notification = new Notification("Die Eingabe ist fehlerhaft!");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
+						}
+						
 					}
 				});
 
