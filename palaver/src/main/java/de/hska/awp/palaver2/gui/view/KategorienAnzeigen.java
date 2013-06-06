@@ -322,7 +322,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub blablabla
 
 	}
 
