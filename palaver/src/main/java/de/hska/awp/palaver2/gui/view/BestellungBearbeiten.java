@@ -46,6 +46,8 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class BestellungBearbeiten extends VerticalLayout implements View {
@@ -168,6 +170,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		artikelTable.setColumnCollapsingAllowed(true);
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
+		artikelTable.setFilterGenerator(new customFilter());
+		artikelTable.setFilterDecorator(new customFilterDecorator());
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		/**
 		 * Darg n Drop
@@ -237,9 +241,9 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				{
 					return artikel.isGrundbedarf() ? "check" : "cross";
 				}
-				if ("bio".equals(propertyId))
+				if ("lebensmittel".equals(propertyId))
 				{
-					return artikel.isBio() ? "check" : "cross";
+					return artikel.isLebensmittel() ? "check" : "cross";
 				}
 				return "";
 			}
@@ -465,6 +469,10 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
 		artikelTable.setColumnCollapsible("name", false);
+		artikelTable.setColumnWidth("grundbedarf", 50);
+		artikelTable.setColumnHeader("grundbedarf", "grundb.");
+		artikelTable.setColumnWidth("standard", 50);
+		artikelTable.setColumnWidth("lebensmittel", 50);
 		
 		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";
