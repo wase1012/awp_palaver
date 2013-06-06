@@ -103,4 +103,7 @@ public interface IConstants
 	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
+
+	// Beschriftung für Tabellenüberschriften
+	String 		BESTELLGROESE = "Bestellgröße";
 }

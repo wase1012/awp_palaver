@@ -67,6 +67,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
+		auswaehlen.setEnabled(false);
 		
 		headline = new Label("Alle Artikel");
 		headline.setStyleName("ViewHeadline");
@@ -92,8 +93,12 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if(event.getProperty().getValue() != null) {
+				if (event.getProperty().getValue() != null) {
 					artikel = (Artikel) event.getProperty().getValue();
+					auswaehlen.setEnabled(true);
+				}
+				else {
+					auswaehlen.setEnabled(false);
 				}
 			}
 		});
@@ -101,7 +106,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		table.addItemClickListener(new ItemClickListener() {	
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				if(event.isDoubleClick()){
+				if (event.isDoubleClick()){
 					auswaehlen.click();
 				}
 				

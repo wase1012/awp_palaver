@@ -68,6 +68,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 		form.setSpacing(true);
 		
 		zurueck.setVisible(false);
+		auswaehlen.setEnabled(false);
 
 		fenster.setSizeFull();
 		fenster.setSpacing(true);
@@ -126,8 +127,11 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					bestellung = (Bestellung) event.getProperty().getValue();
+					auswaehlen.setEnabled(true);
 				}
-
+				else {
+					auswaehlen.setEnabled(false);
+				}
 			}
 		});
 
@@ -136,73 +140,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					bpositionen.setVisible(true);
-					try {
-						if (bestellung.getLieferant().getMehrereliefertermine() == false) {
-							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
-									.getBestellpositionenByBestellungId(bestellung.getId()));
-							bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
-									"geliefert" });
-							bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
-							bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
-
-								@Override
-								public String getStyle(CustomTable source, Object itemId, Object propertyId) {
-									Bestellposition bp = (Bestellposition) itemId;
-									return bp.isGeliefert() ? "status-1" : "status-none";
-								}
-							});
-						} else {
-							bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
-									.getBestellpositionenByBestellungId(bestellung.getId()));
-							bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-							bpositionen.setContainerDataSource(bpcontainer);
-							bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
-									"freitag", "montag", "geliefert" });
-							bpositionen.setColumnHeader("bestellgroesse", "bestellgröße");
-							bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
-							bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
-
-								@Override
-								public String getStyle(CustomTable source, Object itemId, Object propertyId) {
-									Bestellposition bp = (Bestellposition) itemId;
-									return bp.isGeliefert() ? "status-1" : "status-none";
-								}
-							});
-						}
-						bpositionen.addValueChangeListener(new ValueChangeListener() {
-							@Override
-							public void valueChange(ValueChangeEvent event) {
-								if (event.getProperty().getValue() != null) {
-									bestellposition = (Bestellposition) event.getProperty().getValue();
-									bestellposition.setGeliefert(!bestellposition.isGeliefert());
-									bpcontainer.removeItem(bestellposition);
-									bpcontainer.addBean(bestellposition);
-									bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-									try {
-										Bestellpositionverwaltung.getInstance().updateBestellposition(bestellposition);
-									} catch (ConnectException e) {
-										e.printStackTrace();
-									} catch (DAOException e) {
-										e.printStackTrace();
-									} catch (SQLException e) {
-										e.printStackTrace();
-									}
-									bpositionen.markAsDirtyRecursive();
-								}
-							}
-						});
-						bpositionen.addItemClickListener(new ItemClickListener() {
-							@Override
-							public void itemClick(ItemClickEvent event) {
-								bpositionen.markAsDirty();
-							}
-						});
-					} catch (Exception e) {
-						log.error(e.toString());
-					}
+					auswaehlen.click();
 				}
 			}
 		});
@@ -228,6 +166,82 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 				zurueck.setVisible(false);
 				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
 
+			}
+		});
+		
+		auswaehlen.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				bpositionen.setVisible(true);
+				try {
+					if (bestellung.getLieferant().getMehrereliefertermine() == false) {
+						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
+								.getBestellpositionenByBestellungId(bestellung.getId()));
+						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+						bpositionen.setContainerDataSource(bpcontainer);
+						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
+								"geliefert" });
+						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESE);
+						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
+						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
+
+							@Override
+							public String getStyle(CustomTable source, Object itemId, Object propertyId) {
+								Bestellposition bp = (Bestellposition) itemId;
+								return bp.isGeliefert() ? "status-1" : "status-none";
+							}
+						});
+					} else {
+						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
+								.getBestellpositionenByBestellungId(bestellung.getId()));
+						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+						bpositionen.setContainerDataSource(bpcontainer);
+						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
+								"freitag", "montag", "geliefert" });
+						bpositionen.setColumnHeader("bestellgroesse", "bestellgröße");
+						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
+						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
+
+							@Override
+							public String getStyle(CustomTable source, Object itemId, Object propertyId) {
+								Bestellposition bp = (Bestellposition) itemId;
+								return bp.isGeliefert() ? "status-1" : "status-none";
+							}
+						});
+					}
+					bpositionen.addValueChangeListener(new ValueChangeListener() {
+						@Override
+						public void valueChange(ValueChangeEvent event) {
+							if (event.getProperty().getValue() != null) {
+								bestellposition = (Bestellposition) event.getProperty().getValue();
+								bestellposition.setGeliefert(!bestellposition.isGeliefert());
+								bpcontainer.removeItem(bestellposition);
+								bpcontainer.addBean(bestellposition);
+								bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+								try {
+									Bestellpositionverwaltung.getInstance().updateBestellposition(bestellposition);
+								} catch (ConnectException e) {
+									e.printStackTrace();
+								} catch (DAOException e) {
+									e.printStackTrace();
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+								bpositionen.markAsDirtyRecursive();
+							}
+						}
+					});
+					bpositionen.addItemClickListener(new ItemClickListener() {
+						@Override
+						public void itemClick(ItemClickEvent event) {
+							bpositionen.markAsDirty();
+						}
+					});
+				} catch (Exception e) {
+					log.error(e.toString());
+				}
+				
 			}
 		});
 
