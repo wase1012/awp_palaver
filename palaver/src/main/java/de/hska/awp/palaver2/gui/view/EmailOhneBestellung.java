@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -44,7 +46,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 	
 	private Label				headline;
 	
-	private TextField			empfaenger = new TextField("Empf√§nger");
+	private TextField			empfaenger = new TextField("Empf‰nger");
 	private TextField			betreff = new TextField("Betreff");
 	private TextArea			nachricht = new TextArea("Nachricht");
 	
@@ -131,6 +133,7 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				if(empfaenger.getValue()!="" && betreff.getValue()!="" && nachricht.getValue()!="" ) {
 				Mail mail = Mail.getInstance();
 				Boolean ergebniss = mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
 				
@@ -173,6 +176,11 @@ public class EmailOhneBestellung extends VerticalLayout implements  View{
 						else
 							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));			}
 				});
+				} else {
+					Notification notification = new Notification("Bitte vervollst‰ndigen Sie ihre Angaben!");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+				}
 			}
 		});
 		
