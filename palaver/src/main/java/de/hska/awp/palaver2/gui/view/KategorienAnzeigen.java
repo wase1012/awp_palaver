@@ -268,7 +268,8 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							else
 								notification = e.toString();
 							log.error(e.toString());
-						}final Window dialog = new Window();
+						}
+						final Window dialog = new Window();
 						dialog.setClosable(false);
 						dialog.setWidth("300px");
 						dialog.setHeight("150px");
