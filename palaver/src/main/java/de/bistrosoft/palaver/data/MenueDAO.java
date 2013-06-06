@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.data;
 
-import java.io.ObjectInputStream.GetField;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -20,7 +19,6 @@ import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -70,9 +68,12 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong("koch")).getVorname(), 
-					MenueartDAO.getInstance().getMenueartById(set.getLong("menueart_fk")),
-					GeschmackDAO.getInstance().getGeschmackById(set.getLong("geschmack_fk"))));
+					MitarbeiterDAO.getInstance()
+							.getMitarbeiterById(set.getLong("koch"))
+							.getVorname(), MenueartDAO.getInstance()
+							.getMenueartById(set.getLong("menueart_fk")),
+					GeschmackDAO.getInstance().getGeschmackById(
+							set.getLong("geschmack_fk"))));
 		}
 
 		return list;

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -35,10 +34,12 @@ public class RegelDAO extends AbstractDAO {
 			+ " WHERE aktiv = 1";
 	private static final String GET_REGEL_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE id = {0}";
-	private static final String GET_KRITERIEN_BY_REGELID = "SELECT " + KRITERIEN + " FROM " + TABLE + " WHERE id = {0}";
+	private static final String GET_KRITERIEN_BY_REGELID = "SELECT "
+			+ KRITERIEN + " FROM " + TABLE + " WHERE id = {0}";
 	private static final String UPDATE_REGEL = "UPDATE " + TABLE + " SET "
 			+ ZEILEN + "= {0}," + SPALTEN + "={1}," + REGELTYP + "={2},"
-			+ OPERATOR + "={3}," + KRITERIEN + "={4}," + FEHLERMELDUNG + "={5} WHERE id = {6}";
+			+ OPERATOR + "={3}," + KRITERIEN + "={4}," + FEHLERMELDUNG
+			+ "={5} WHERE id = {6}";
 	private static final String DELETE_REGEL = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
 
@@ -65,43 +66,43 @@ public class RegelDAO extends AbstractDAO {
 		return list;
 	}
 
-	public List<String> getKriterienByRegelId(Long id) throws ConnectException, DAOException,
-			SQLException {
+	public List<String> getKriterienByRegelId(Long id) throws ConnectException,
+			DAOException, SQLException {
 		List<String> list = new ArrayList<String>();
-		
+
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_KRITERIEN_BY_REGELID, id));
-		
+
 		while (set.next()) {
 			list.add(set.getString("kriterien"));
 		}
-		
+
 		return list;
-		
+
 	}
-	
+
 	public List<Regel> getAllAktivRegeln() {
-		
+
 		List<Regel> list = new ArrayList<Regel>();
 
 		ResultSet set;
 		try {
 			set = getManaged(GET_ALL_AKTIV_REGELN);
 			while (set.next()) {
-				list.add(new Regel(set.getLong("id"), set.getString("regeltyp"), set
-						.getString("zeile"), set.getString("spalte"), set
-						.getString("operator"), set.getString("kriterien"), set
-						.getString("fehlermeldung"), set.getBoolean("aktiv")));
+				list.add(new Regel(set.getLong("id"),
+						set.getString("regeltyp"), set.getString("zeile"), set
+								.getString("spalte"),
+						set.getString("operator"), set.getString("kriterien"),
+						set.getString("fehlermeldung"), set.getBoolean("aktiv")));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		return list;
 	}
-	
+
 	public Regel getRegelById(Long id) throws ConnectException, DAOException,
 			SQLException {
 
@@ -120,10 +121,11 @@ public class RegelDAO extends AbstractDAO {
 
 	public void createRegel(Regel regel) throws ConnectException, DAOException,
 			SQLException {
-		putManaged(MessageFormat.format(CREATE_REGEL, "'" + regel.getZeile() + "'",
-				"'" + regel.getSpalte() + "'" , "'" + regel.getRegeltyp() +"'", "'" + regel.getOperator() + "'",
-				"'" + regel.getKriterien() + "'", "'" +regel.getFehlermeldung() + "'",
-				regel.getAktiv()));
+		putManaged(MessageFormat.format(CREATE_REGEL, "'" + regel.getZeile()
+				+ "'", "'" + regel.getSpalte() + "'", "'" + regel.getRegeltyp()
+				+ "'", "'" + regel.getOperator() + "'",
+				"'" + regel.getKriterien() + "'",
+				"'" + regel.getFehlermeldung() + "'", regel.getAktiv()));
 
 	}
 
@@ -139,12 +141,13 @@ public class RegelDAO extends AbstractDAO {
 	public void updateRegel(Regel regel) throws ConnectException, DAOException,
 			SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ZEILEN + "='"
-				+ regel.getZeile() + "'," + SPALTEN + "='"
-						+ regel.getSpalte() + "'" + REGELTYP + "='" + regel.getRegeltyp() + OPERATOR + "='"
-								+ regel.getOperator() + "'," + KRITERIEN + "='" + regel.getKriterien() 
-								+ "'," + FEHLERMELDUNG + "='" + regel.getFehlermeldung() + "'," + AKTIV + "=" 
-								+ regel.getAktiv() + " WHERE " + ID + "='"
-										+ regel.getId() + "'";
+				+ regel.getZeile() + "'," + SPALTEN + "='" + regel.getSpalte()
+				+ "'" + REGELTYP + "='" + regel.getRegeltyp() + OPERATOR + "='"
+				+ regel.getOperator() + "'," + KRITERIEN + "='"
+				+ regel.getKriterien() + "'," + FEHLERMELDUNG + "='"
+				+ regel.getFehlermeldung() + "'," + AKTIV + "="
+				+ regel.getAktiv() + " WHERE " + ID + "='" + regel.getId()
+				+ "'";
 		this.putManaged(UPDATE_QUERY);
 	}
 

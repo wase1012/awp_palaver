@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -59,17 +58,18 @@ public class FussnoteDAO extends AbstractDAO {
 		}
 		return list;
 	}
-	
+
 	public List<Fussnote> getFussnoteByMenue(Long id) throws ConnectException,
-	DAOException, SQLException {
-List<Fussnote> list = new ArrayList<Fussnote>();
-ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_MENUE, id));
-while (set.next()) {
-	list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
-			.getString(ABKUERZUNG)));
-}
-return list;
-}
+			DAOException, SQLException {
+		List<Fussnote> list = new ArrayList<Fussnote>();
+		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_MENUE,
+				id));
+		while (set.next()) {
+			list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
+					.getString(ABKUERZUNG)));
+		}
+		return list;
+	}
 
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
@@ -81,23 +81,24 @@ return list;
 		return fussnote;
 	}
 
-//	public List<Fussnote> getFussnoteByName(String name)
-//			throws ConnectException, DAOException, SQLException {
-//		List<Fussnote> list = new ArrayList<Fussnote>();
-//		ResultSet set = get(GET_FUSSNOTE_BY_NAME + name + "%'");
-//		while (set.next()) {
-//			list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
-//					.getString(ABKUERZUNG)));
-//		}
-//		return list;
-//	}
+	// public List<Fussnote> getFussnoteByName(String name)
+	// throws ConnectException, DAOException, SQLException {
+	// List<Fussnote> list = new ArrayList<Fussnote>();
+	// ResultSet set = get(GET_FUSSNOTE_BY_NAME + name + "%'");
+	// while (set.next()) {
+	// list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
+	// .getString(ABKUERZUNG)));
+	// }
+	// return list;
+	// }
 
 	public Fussnote getFussnoteByName(String fn) throws ConnectException,
 			DAOException, SQLException {
 		Fussnote result = null;
-		fn="'"+fn+"'";
+		fn = "'" + fn + "'";
 
-		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME,fn));
+		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME,
+				fn));
 		while (set.next()) {
 			result = new Fussnote(set.getLong("id"), set.getString("name"),
 					set.getString("abkuerzung"));
@@ -105,7 +106,7 @@ return list;
 
 		return result;
 	}
-	
+
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE

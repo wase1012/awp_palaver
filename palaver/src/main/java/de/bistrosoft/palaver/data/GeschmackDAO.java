@@ -29,7 +29,8 @@ public class GeschmackDAO extends AbstractDAO {
 	Geschmack geschmack;
 
 	private final static String GET_ALL_GESCHMACK = "SELECT * FROM " + TABLE;
-	private final static String GET_ALL_GESCHMACK_AKTIV = "SELECT * FROM " + TABLE + " WHERE inaktiv = false";
+	private final static String GET_ALL_GESCHMACK_AKTIV = "SELECT * FROM "
+			+ TABLE + " WHERE inaktiv = false";
 	private final static String GET_GESCHMACK_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
 	private final static String GET_GESCHMACK_BY_NAME = "SELECT * FROM "
@@ -40,6 +41,7 @@ public class GeschmackDAO extends AbstractDAO {
 			+ " WHERE id = {0}";
 	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
 	private static final String GET_GESCHMACK_BY_MENUE = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join menue On menue.geschmack_fk = geschmack.id WHERE menue.id = {0}";
+
 	public GeschmackDAO() {
 		super();
 	}
@@ -62,16 +64,17 @@ public class GeschmackDAO extends AbstractDAO {
 		}
 		return list;
 	}
-	
+
 	public Geschmack getGeschmackByMenue(Long id) throws ConnectException,
-	DAOException, SQLException {
-ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE, id));
-while (set.next()) {
-	geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
-			set.getBoolean(INAKTIV));
-}
-return geschmack;
-}
+			DAOException, SQLException {
+		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE,
+				id));
+		while (set.next()) {
+			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
+					set.getBoolean(INAKTIV));
+		}
+		return geschmack;
+	}
 
 	public List<Geschmack> getAllGeschmackAktiv() throws ConnectException,
 			DAOException, SQLException {
@@ -86,7 +89,8 @@ return geschmack;
 
 	public Geschmack getGeschmackByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_REZEPT, id));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_GESCHMACK_BY_REZEPT, id));
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
 					set.getBoolean(INAKTIV));
@@ -96,7 +100,8 @@ return geschmack;
 
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat
+				.format(GET_GESCHMACK_BY_ID, id));
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
 					set.getBoolean(INAKTIV));
@@ -106,7 +111,8 @@ return geschmack;
 
 	public Geschmack getGeschmackByName1(String name) throws ConnectException,
 			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME, NAME));
+		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME,
+				NAME));
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong("id"));
 		}
@@ -126,8 +132,9 @@ return geschmack;
 
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name, inaktiv) VALUES('"
-				+ geschmack.getName() + "' " + ", false)";
+		String INSERT_QUERY = "INSERT INTO " + TABLE
+				+ "(name, inaktiv) VALUES('" + geschmack.getName() + "' "
+				+ ", false)";
 		this.putManaged(INSERT_QUERY);
 	}
 

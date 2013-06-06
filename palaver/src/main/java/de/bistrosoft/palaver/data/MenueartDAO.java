@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;

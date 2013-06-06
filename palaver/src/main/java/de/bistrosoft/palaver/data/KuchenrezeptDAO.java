@@ -38,7 +38,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String GET_KUCHENREZEPTHASARTIKEL_BY_KUCHENREZEPT_ID = "SELECT * FROM "
 			+ KUCHENREZEPTHASARTIKEL + " WHERE " + KUCHENREZEPTFK + " = {0}";
 	private static final String GET_ALL_KUCHENREZEPT_TABELLE = "SELECT * FROM "
-					+ TABLE;
+			+ TABLE;
 
 	Kuchenrezept kuchenrezept;
 
@@ -53,67 +53,69 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		return instance;
 	}
 
-	public List<Kuchenrezept> getAllKuchenrezepte(Boolean ladeArtikel) throws ConnectException, DAOException,
-			SQLException {
+	public List<Kuchenrezept> getAllKuchenrezepte(Boolean ladeArtikel)
+			throws ConnectException, DAOException, SQLException {
 		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();
 		ResultSet set = getManaged(GET_ALL_KUCHENREZEPTS);
 		while (set.next()) {
-			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-					.getString("name"), set.getString("kommentar"), set
-					.getDate("erstellt"));
-			if(ladeArtikel){
+			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), set.getString("kommentar"),
+					set.getDate("erstellt"));
+			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
 			list.add(kr);
 		}
 		return list;
 	}
-	
-	public List<Kuchenrezept> getAllKuchenrezepteTabelle() throws ConnectException,
-			DAOException, SQLException {
+
+	public List<Kuchenrezept> getAllKuchenrezepteTabelle()
+			throws ConnectException, DAOException, SQLException {
 		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();
 		ResultSet set = getManaged(GET_ALL_KUCHENREZEPT_TABELLE);
-		
+
 		while (set.next()) {
 			Kuchenrezept kuchenrezept = new Kuchenrezept(set.getLong("id"),
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), set.getString("kommentar"), set.getDate("erstellt"));
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), set.getString("kommentar"),
+					set.getDate("erstellt"));
 			list.add(kuchenrezept);
-			
+
 		}
 		return list;
 	}
 
-	public List<Kuchenrezept> getAllKuchenrezepteM() throws ConnectException, DAOException,
-			SQLException {
+	public List<Kuchenrezept> getAllKuchenrezepteM() throws ConnectException,
+			DAOException, SQLException {
 		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();
 		ResultSet set = getManaged(GET_ALL_KUCHENREZEPTS);
 		;
 		while (set.next()) {
 			list.add(new Kuchenrezept(set.getLong("id"), MitarbeiterDAO
-							.getInstance().getMitarbeiterById(
-									set.getLong("mitarbeiter_fk")), set
-							.getString("name"), null
+					.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")), set
+					.getString("name"), null
 
 			));
 		}
 		return list;
 	}
 
-	public Kuchenrezept getKuchenrezeptById(Long id, Boolean ladeArtikel) throws ConnectException, DAOException,
-			SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_ID, id));
+	public Kuchenrezept getKuchenrezeptById(Long id, Boolean ladeArtikel)
+			throws ConnectException, DAOException, SQLException {
+		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_ID,
+				id));
 		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();
 		while (set.next()) {
-			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-					.getString("name"), set.getString("kommentar"), set
-					.getDate("erstellt"));
-			if(ladeArtikel){
+			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), set.getString("kommentar"),
+					set.getDate("erstellt"));
+			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
 			list.add(kr);
@@ -122,10 +124,11 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		return list.get(0);
 	}
 
-	public Kuchenrezept getKuchenrezept1(Long id) throws ConnectException, DAOException,
-			SQLException {
+	public Kuchenrezept getKuchenrezept1(Long id) throws ConnectException,
+			DAOException, SQLException {
 		Kuchenrezept result = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_ID,
+				id));
 
 		while (set.next()) {
 			result = new Kuchenrezept(set.getLong("id"));
@@ -133,26 +136,28 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		return result;
 	}
 
-	public Kuchenrezept getKuchenrezeptByName(String namekuchenrezept) throws ConnectException,
-			DAOException, SQLException {
+	public Kuchenrezept getKuchenrezeptByName(String namekuchenrezept)
+			throws ConnectException, DAOException, SQLException {
 		Kuchenrezept result = null;
 
-		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_NAME, NAME));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_KUCHENREZEPT_BY_NAME, NAME));
 
 		while (set.next()) {
-			result = new Kuchenrezept(set.getLong("id"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+			result = new Kuchenrezept(set.getLong("id"), MitarbeiterDAO
+					.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter")), set.getString("name"),
 					null);
 		}
 		return result;
 	}
 
-	public Kuchenrezept getKuchenrezeptByName1(String name) throws ConnectException,
-			DAOException, SQLException {
+	public Kuchenrezept getKuchenrezeptByName1(String name)
+			throws ConnectException, DAOException, SQLException {
 		Kuchenrezept result = null;
 
-		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPT_BY_NAME, "name"));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_KUCHENREZEPT_BY_NAME, "name"));
 
 		while (set.next()) {
 			result = new Kuchenrezept(set.getLong("id"));
@@ -166,32 +171,34 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		List<Kuchenrezept> kuchenrezept = new ArrayList<Kuchenrezept>();
 		ResultSet set = getManaged(GET_ARTIKEL_KUCHENREZEPT_BY_ID);
 		while (set.next()) {
-			kuchenrezept.add(new Kuchenrezept(MitarbeiterDAO
-					.getInstance().getMitarbeiterById(set.getLong("id")), set
+			kuchenrezept.add(new Kuchenrezept(MitarbeiterDAO.getInstance()
+					.getMitarbeiterById(set.getLong("id")), set
 					.getString("name"), null));
 		}
 		return kuchenrezept;
 	}
 
-	public List<KuchenrezeptHasArtikel> getAllArtikelByKuchenrezeptId1(Kuchenrezept kr)
-			throws ConnectException, DAOException, SQLException {
+	public List<KuchenrezeptHasArtikel> getAllArtikelByKuchenrezeptId1(
+			Kuchenrezept kr) throws ConnectException, DAOException,
+			SQLException {
 		List<KuchenrezeptHasArtikel> rha = new ArrayList<KuchenrezeptHasArtikel>();
-		ResultSet set = getManaged(MessageFormat.format(GET_KUCHENREZEPTHASARTIKEL_BY_KUCHENREZEPT_ID,kr.getId()));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_KUCHENREZEPTHASARTIKEL_BY_KUCHENREZEPT_ID, kr.getId()));
 		while (set.next()) {
-			rha.add(new KuchenrezeptHasArtikel(
-					kr, 
-					ArtikelDAO.getInstance().getArtikelById(set.getLong("artikel_fk")), 
-					MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong("einheit")), set.getDouble("menge")));
+			rha.add(new KuchenrezeptHasArtikel(kr, ArtikelDAO.getInstance()
+					.getArtikelById(set.getLong("artikel_fk")),
+					MengeneinheitDAO.getInstance().getMengeneinheitById(
+							set.getLong("einheit")), set.getDouble("menge")));
 		}
 		return rha;
 	}
 
-	public void createKuchenrezept(Kuchenrezept kuchenrezept) throws ConnectException,
-			DAOException, SQLException {
+	public void createKuchenrezept(Kuchenrezept kuchenrezept)
+			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ KOMMENTAR	+ "," + MITARBEITER + "," + ERSTELLT + ")" 
+				+ KOMMENTAR + "," + MITARBEITER + "," + ERSTELLT + ")"
 				+ " VALUES" + "('" + kuchenrezept.getName() + "','"
-			    + kuchenrezept.getKommentar() + "','"
+				+ kuchenrezept.getKommentar() + "','"
 				+ kuchenrezept.getMitarbeiter().getId() + "','"
 				+ kuchenrezept.getErstellt() + "')";
 		this.putManaged(INSERT_QUERY);
@@ -206,22 +213,25 @@ public class KuchenrezeptDAO extends AbstractDAO {
 			String menge = Double.toString(a.getMenge());
 			String me = "1";
 
-			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk, menge, me));
+			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
+					menge, me));
 		}
 	}
 
-	public void updateKuchenrezept(Kuchenrezept kuchenrezept) throws ConnectException,
-			DAOException, SQLException {
-		String INSERT_QUERY = "UPDATE kuchenrezept SET name = '" + kuchenrezept.getName()
-				+ "'," + "kommentar='" + kuchenrezept.getKommentar() + "'," + "mitarbeiter_fk = "
+	public void updateKuchenrezept(Kuchenrezept kuchenrezept)
+			throws ConnectException, DAOException, SQLException {
+		String INSERT_QUERY = "UPDATE kuchenrezept SET name = '"
+				+ kuchenrezept.getName() + "'," + "kommentar='"
+				+ kuchenrezept.getKommentar() + "'," + "mitarbeiter_fk = "
 				+ kuchenrezept.getMitarbeiter().getId() + "," + "erstellt='"
 				+ kuchenrezept.getErstellt() + "' WHERE id = "
 				+ kuchenrezept.getId();
 		this.putManaged(INSERT_QUERY);
 	}
 
-	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(Kuchenrezept rez)
-			throws ConnectException, DAOException, SQLException {
+	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(
+			Kuchenrezept rez) throws ConnectException, DAOException,
+			SQLException {
 		List<KuchenrezeptHasArtikel> rha = new ArrayList<KuchenrezeptHasArtikel>();
 
 		ResultSet set = getManaged("select * from kuchenrezept_has_artikel where kuchenrezept_fk="
@@ -242,8 +252,8 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		return rha;
 	}
 
-	public void deleteZutatenZuKuchenrezept(Kuchenrezept rez2) throws ConnectException,
-			DAOException, SQLException {
+	public void deleteZutatenZuKuchenrezept(Kuchenrezept rez2)
+			throws ConnectException, DAOException, SQLException {
 		String DELETE_QUERY = "DELETE FROM kuchenrezept_has_artikel WHERE "
 				+ KUCHENREZEPTFK + "=" + rez2.getId() + ";";
 		this.putManaged(DELETE_QUERY);
