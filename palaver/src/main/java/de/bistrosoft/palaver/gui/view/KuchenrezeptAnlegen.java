@@ -56,6 +56,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 	// Layouts
 	private VerticalLayout box = new VerticalLayout();
+	private HorizontalLayout infos = new HorizontalLayout();
+	private VerticalLayout infosLinks = new VerticalLayout();
 	private HorizontalLayout control = new HorizontalLayout();
 	private HorizontalLayout hlRezeptZutaten = new HorizontalLayout();
 
@@ -72,11 +74,11 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	// Überschriften
 	@SuppressWarnings("deprecation")
 	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept anlegen</font><b></pre>",
+			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept anlegen</font></pre>",
 			Label.CONTENT_XHTML);
 	@SuppressWarnings("deprecation")
 	private Label ueberschrift2 = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept bearbeiten</font><b></pre>",
+			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept bearbeiten</font></pre>",
 			Label.CONTENT_XHTML);
 	@SuppressWarnings({ "unused", "deprecation" })
 	private Label d1 = new Label("<div>&nbsp;&nbsp;&nbsp;</div>",
@@ -130,27 +132,28 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		kommentar.setImmediate(true);
 		kommentar.setMaxLength(1000);
 
-		box.setWidth("90%");
+		box.setWidth("800px");
 		box.setSpacing(true);
-
+		
+		infos.setWidth("100%");
+		infos.setSpacing(true);
+		
 		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 		box.addComponent(ueberschrift);
 		ueberschrift.setWidth("300px");
-		box.setComponentAlignment(ueberschrift, Alignment.MIDDLE_CENTER);
-		box.addComponent(name);
-		name.setWidth("300px");
-		box.setComponentAlignment(name, Alignment.MIDDLE_CENTER);
-		box.addComponent(mitarbeiterNs);
-		mitarbeiterNs.setWidth("300px");
-		box.setComponentAlignment(mitarbeiterNs, Alignment.MIDDLE_CENTER);
+		box.addComponent(infos);
+		infos.addComponent(infosLinks);
+		infosLinks.addComponent(name);
+		name.setWidth("100%");
+		infosLinks.addComponent(mitarbeiterNs);
+		infosLinks.setWidth("350px");
+		mitarbeiterNs.setWidth("100%");
 		box.addComponent(hlRezeptZutaten);
-		box.setComponentAlignment(hlRezeptZutaten, Alignment.MIDDLE_CENTER);
-		box.addComponent(kommentar);
+		infos.addComponent(kommentar);
 
 		control.setSpacing(true);
-		this.addComponent(control);
-		this.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
+		box.addComponent(control);
+		box.setComponentAlignment(control, Alignment.MIDDLE_CENTER);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
@@ -170,8 +173,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		});
 		
 		kommentar.setHeight("70px");
-		kommentar.setWidth("300px");
-		box.setComponentAlignment(kommentar, Alignment.MIDDLE_CENTER);
+		kommentar.setWidth("350px");
+		infos.setComponentAlignment(kommentar, Alignment.MIDDLE_LEFT);
 		// ValueChangeListener Kommentar
 		kommentar.addValueChangeListener(this);
 
@@ -193,16 +196,22 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 		
-		hlRezeptZutaten.setWidth("100%");
-		hlRezeptZutaten.setHeight("200px");		
+		hlRezeptZutaten.setWidth("800px");
+		hlRezeptZutaten.setHeight("393px");		
 		
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
+		zutatenTable.setWidth("435px");
 		zutatenTable.setStyleName("palaverTable2");
+		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
+		zutatenTable.setColumnWidth("artikelname", 200);
+		zutatenTable.setColumnWidth("menge", 100);
+		zutatenTable.setColumnWidth("einheit", 90);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setWidth("270px");
 		artikelTable.setStyleName("palaverTable2");
 
 		artikelTable.setFilterBarVisible(true);
@@ -288,7 +297,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					Artikelverwaltung.getInstance().getAllArtikel());
 			artikelTable.setContainerDataSource(containerArtikel);
 			artikelTable
-					.setVisibleColumns(new Object[] { "name", "artikelnr" });
+					.setVisibleColumns(new Object[] { "name" });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
@@ -345,7 +354,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		control.replaceComponent(btSpeichern, update);
 		box.replaceComponent(ueberschrift, ueberschrift2);
 		ueberschrift2.setWidth("300px");
-		box.setComponentAlignment(ueberschrift2, Alignment.MIDDLE_CENTER);
+		
 
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		update.addClickListener(new ClickListener() {
@@ -541,7 +550,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	// Funktion zur Validierung
 	private Boolean validiereEingabe(){
 		if(name.getValue().isEmpty()){
-			showNotification("Bitte Namen eingeben!");
+			showNotification("Bitte Bezeichnung eingeben!");
 			return false;
 		}
 		if(mitarbeiterNs.getValue()==null){
