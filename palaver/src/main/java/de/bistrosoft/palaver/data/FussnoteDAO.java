@@ -93,20 +93,19 @@ return list;
 //	}
 
 	public Fussnote getFussnoteByName(String fn) throws ConnectException,
-	DAOException, SQLException {
-Fussnote result = null;
+			DAOException, SQLException {
+		Fussnote result = null;
+		fn="'"+fn+"'";
 
-ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME, NAME));
+		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME,fn));
+		System.out.println(MessageFormat.format(GET_FUSSNOTE_BY_NAME,fn));
+		while (set.next()) {
+			result = new Fussnote(set.getLong("id"), set.getString("name"),
+					set.getString("abkuerzung"));
+		}
 
-while (set.next()) {
-	result = new Fussnote(set.getLong("id"), set.getString("name"), set.getString("abkuerzung"));
-}
-
-return result;
-}	
-	
-	
-	
+		return result;
+	}
 	
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {

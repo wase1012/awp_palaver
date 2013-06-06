@@ -133,20 +133,20 @@ public class Regel {
 		for(String s : strZeilen){
 			int i=0;
 			if(s.equals("Fleischgericht")){
-				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(0 +topRows);
 			}
 			else if(s.equals("Hauptgericht")){
-				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(1 +topRows);
 			}
 			else if(s.equals("Pastagericht")){
-				zeilenlist.add(i++ +topRows);
-				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(2 +topRows);
+				zeilenlist.add(3 +topRows);
 			}
 			else if(s.equals("Suppe/Salat")){
-				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(4 +topRows);
 			}
 			else if(s.equals("Dessert")){
-				zeilenlist.add(i++ +topRows);
+				zeilenlist.add(5 +topRows);
 			}
 		}
 		//Spalten
@@ -156,19 +156,19 @@ public class Regel {
 		for(String s : strSpalten){
 			int i=0;
 			if(s.equals("Montag")){
-				zeilenlist.add(i++ +leftCols);
+				spaltenlist.add(0 +leftCols);
 			}
 			else if(s.equals("Dienstag")){
-				zeilenlist.add(i++ +leftCols);
+				spaltenlist.add(1 +leftCols);
 			}
 			else if(s.equals("Mittwoch")){
-				zeilenlist.add(i++ +leftCols);
+				spaltenlist.add(2 +leftCols);
 			}
 			else if(s.equals("Donnerstag")){
-				zeilenlist.add(i++ +leftCols);
+				spaltenlist.add(3 +leftCols);
 			}
 			else if(s.equals("Freitag")){
-				zeilenlist.add(i++ +leftCols);
+				spaltenlist.add(4 +leftCols);
 			}
 		}
 	}
@@ -240,7 +240,7 @@ public class Regel {
 		System.out.println("Count Fussnoten: "+mc.getMenue().getFussnoten().size());
 		if (regeltyp.equals("Name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
-		} else if (regeltyp.equals("Menüart")) {
+		} else if (regeltyp.trim().equals("Menüart")) {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
@@ -251,7 +251,6 @@ public class Regel {
 		} else if (regeltyp.equals("Aufwand")) {
 			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
-
 	}
 	
 	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {

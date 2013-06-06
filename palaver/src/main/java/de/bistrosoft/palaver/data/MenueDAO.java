@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.data;
 
+import java.io.ObjectInputStream.GetField;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -9,6 +10,7 @@ import java.util.List;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
@@ -18,6 +20,7 @@ import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -79,23 +82,25 @@ public class MenueDAO extends AbstractDAO {
 		return list;
 	}
 
-	public Menue getAllItemsForUpdate(Long id) throws ConnectException,
-			DAOException, SQLException {
-		Menue list = new Menue();
+	public Menue getMenueById(Long id) throws ConnectException, DAOException,
+			SQLException {
+		Menue menue = new Menue();
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUE_BY_ID, id));
 
 		while (set.next()) {
-			list = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch")),
-							GeschmackDAO.getInstance()
+			menue = new Menue(set.getLong("id"), set.getString("name"),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
 					MenueartDAO.getInstance().getMenueartById(
 							set.getLong("menueart_fk")),
 					set.getBoolean("aufwand"), set.getBoolean("favorit"));
-
 		}
-		return list;
+		menue.setFussnoten(Fussnotenverwaltung.getInstance()
+				.getFussnoteByMenue(id));
+		menue.setRezepte(Rezeptverwaltung.getInstance()
+				.getRezepteByMenue(menue));
+		return menue;
 	}
 
 	public List<Rezept> getRezepteByMenue() throws ConnectException,
@@ -235,8 +240,8 @@ public class MenueDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
-	public void updateMenue(Menue menue, Long mid) throws ConnectException,
-			DAOException, SQLException {
+	public void updateMenue(Menue menue) throws ConnectException, DAOException,
+			SQLException {
 		String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
 				+ menue.getName() + "' ," + KOCH + " = "
 				+ menue.getKoch().getId() + ", geschmack_fk = "
@@ -244,18 +249,28 @@ public class MenueDAO extends AbstractDAO {
 				+ menue.getMenueart().getId() + ", aufwand = "
 				+ Util.convertBoolean(menue.getAufwand()) + ", favorit = "
 				+ Util.convertBoolean(menue.getFavorit())
-				+ " WHERE menue.id = " + mid + ";";
-		System.out.println(INSERT_QUERY);
+				+ " WHERE menue.id = " + menue.getId() + ";";
 		this.putManaged(INSERT_QUERY);
+
+		Menueverwaltung.getInstance().FussnoteDelete(menue);
+		for (Fussnote fs : menue.getFussnoten()) {
+			Menueverwaltung.getInstance().FussnoteAdd(
+					new MenueHasFussnote(fs, menue));
+		}
+
+		Menueverwaltung.getInstance().RezepteDelete(menue);
+		for (Rezept rezept : menue.getRezepte()) {
+			RezepteAdd(new MenueHasRezept(menue, rezept));
+		}
 	}
 
 	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
 				+ "("
-				+ menueHasFussnote.getMenue()
+				+ menueHasFussnote.getMenue().getId()
 				+ ", "
-				+ menueHasFussnote.getFussnoteid() + ")";
+				+ menueHasFussnote.getFussnote().getId() + ")";
 		System.out.println(INSERT_QUERY);
 		this.putManaged(INSERT_QUERY);
 	}
@@ -275,20 +290,32 @@ public class MenueDAO extends AbstractDAO {
 
 	// /
 
-	public void FussnoteDelete(Menue menue1) throws ConnectException,
+	public void FussnoteDelete(Menue menue) throws ConnectException,
 			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE  from menue_has_fussnote WHERE menue_fk = "
-				+ menue1.getId() + ";";
+				+ menue.getId() + ";";
 
 		this.putManaged(DELETE_QUERY);
 	}
 
-	public void RezepteDelete(Menue menue1, String rezeptid)
-			throws ConnectException, DAOException, SQLException {
+	public void RezepteDelete(Menue menue) throws ConnectException,
+			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = "
-				+ menue1.getId() + " And rezept_id = " + rezeptid + ";";
+				+ menue.getId();
 		System.out.println(DELETE_QUERY);
 		this.putManaged(DELETE_QUERY);
 	}
 
+	public void speicherMenue(Menue menue) throws ConnectException,
+			DAOException, SQLException {
+		createMenue(menue);
+		menue.setId(getMenueByName(menue.getName()).getId());
+		for (Fussnote fs : menue.getFussnoten()) {
+			FussnoteAdd(new MenueHasFussnote(fs, menue));
+		}
+
+		for (Rezept rezept : menue.getRezepte()) {
+			RezepteAdd(new MenueHasRezept(menue, rezept));
+		}
+	}
 }

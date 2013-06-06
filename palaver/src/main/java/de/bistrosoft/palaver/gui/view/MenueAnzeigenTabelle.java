@@ -5,6 +5,7 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
@@ -31,8 +32,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button showFilter;
 	private Menue menue;
-	private Menue menue1;
- private String i;
+
 	public MenueAnzeigenTabelle() {
 		super();
 
@@ -49,36 +49,28 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
 
-		
 		table.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					menue = (Menue) event.getProperty().getValue();
-					
+
 				}
 
 			}
 		});
-		
-		
 
 		table.addItemClickListener(new ItemClickListener() {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				
-				
-				
-				if(event.isDoubleClick()){
-				ViewHandler.getInstance().switchView(MenueAnlegen.class,
-						new ViewDataObject<Menue>(menue));
-				}
-				else {
-					
-				}
+				if (event.isDoubleClick()) {
+					ViewHandler.getInstance().switchView(MenueAnlegen.class,
+							new ViewDataObject<Menue>(menue));
+				} else {
 
+				}
 			}
 		});
 
@@ -88,10 +80,18 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			container = new BeanItemContainer<Menue>(Menue.class,
 					Menueverwaltung.getInstance().getAllMenuesTabelle());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "id", "name",
-					"kochname", "geschmack", "menueart" });
-			table.sort(new Object[] { "name" }, new boolean[] { true });
+			table.setVisibleColumns(new Object[] { "id", "name", "kochname",
+					"geschmack", "menueart" });
+			table.setFilterBarVisible(true);
+			table.sort(new Object[] { "id" }, new boolean[] { true });
+
+			// TODO Filter setzen
+			// System.out.println(table.setFilterFieldValue("kochname",
+			// Mitarbeiterverwaltung.getInstance().getMitarbeiterByBenutzername("Shanta")));
+
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (ConversionException e) {
 			e.printStackTrace();
 		}
 
@@ -111,15 +111,14 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				} else {
 					table.setFilterBarVisible(true);
 					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-					 showFilter.setIcon(new
-					 ThemeResource("img/disable_filter.ico"));
+					showFilter.setIcon(new ThemeResource(
+							"img/disable_filter.ico"));
 				}
 			}
 		});
 
 	}
 
-	
 	@Override
 	public void getViewParam(ViewData data) {
 	}
