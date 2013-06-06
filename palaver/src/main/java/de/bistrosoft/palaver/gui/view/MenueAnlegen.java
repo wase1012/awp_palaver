@@ -23,9 +23,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -61,7 +62,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
 			ContentMode.HTML);
 	private Label ueberschriftUpdate = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue Ã¤ndern</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue Ändern</font><b></pre>",
 			ContentMode.HTML);
 
 	private VerticalLayout vlBox = new VerticalLayout();
@@ -76,16 +77,16 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private TwinColSelect tcsFussnoten = new TwinColSelect("Fussnoten");
 
-	private ComboBox cbKoch = new ComboBox("Koch");
-	private ComboBox cbMenueart = new ComboBox("Menueart");
-	private ComboBox cbGeschmack = new ComboBox("Geschmack");
+	private NativeSelect nSKoch = new NativeSelect("Koch");
+	private NativeSelect nSMenueart = new NativeSelect("Menueart");
+	private NativeSelect nSGeschmack = new NativeSelect("Geschmack");
 
-	private CheckBox chbFavorit = new CheckBox("MenÃ¼ ist ein Favorit");
-	private CheckBox chbAufwand = new CheckBox("MenÃ¼ hat hohen Aufwand");
+	private CheckBox chbFavorit = new CheckBox("Menü ist ein Favorit");
+	private CheckBox chbAufwand = new CheckBox("Menü hat hohen Aufwand");
 
 	private Button btSpeichern = new Button("Speichern");
 	private Button btVerwerfen = new Button("Verwerfen");
-	private Button btUpdate = new Button("Ã„ndern");
+	private Button btUpdate = new Button("Ä„ndern");
 	private Button btNeuesRezept = new Button("neues Rezeptanlegen");
 
 	private Table tblMenue = new Table();
@@ -114,22 +115,22 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenue.setStyleName("palaverTable");
 		tblMenue.setImmediate(true);
 		tblMenue.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
-		tblMenue.setCaption("Rezepte in MenÃ¼");
+		tblMenue.setCaption("Rezepte in Menü");
 
 		load();
 		this.setSizeFull();
 		this.setMargin(true);
 
-		// Komponenten einfÃ¼gen
+		// Komponenten einfuegen
 		this.addComponent(vlBox);
 		vlBox.addComponent(hlUeberschrift);
 		hlUeberschrift.addComponent(ueberschriftAnlegen);
 		vlBox.addComponent(hlDetails);
 		hlDetails.addComponent(vlDetailsLinks);
 		vlDetailsLinks.addComponent(tfMenuename);
-		vlDetailsLinks.addComponent(cbKoch);
-		vlDetailsLinks.addComponent(cbMenueart);
-		vlDetailsLinks.addComponent(cbGeschmack);
+		vlDetailsLinks.addComponent(nSKoch);
+		vlDetailsLinks.addComponent(nSMenueart);
+		vlDetailsLinks.addComponent(nSGeschmack);
 		vlDetailsLinks.addComponent(chbFavorit);
 		vlDetailsLinks.addComponent(chbAufwand);
 		hlDetails.addComponent(vlDetailsRechts);
@@ -157,11 +158,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tfMenuename.setWidth("90%");
 		tfMenuename.setMaxLength(200);
 
-		cbGeschmack.setNullSelectionAllowed(false);
-		cbMenueart.setNullSelectionAllowed(false);
+		nSGeschmack.setNullSelectionAllowed(false);
+		nSMenueart.setNullSelectionAllowed(false);
 		tfMenuename.setImmediate(true);
-		cbKoch.setImmediate(true);
-		cbKoch.setNullSelectionAllowed(false);
+		nSKoch.setImmediate(true);
+		nSKoch.setNullSelectionAllowed(false);
 
 		tcsFussnoten.setImmediate(true);
 		tcsFussnoten.setWidth("400");
@@ -239,6 +240,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	public void load() {
 
+		
 		// Inhalte laden
 		try {
 			ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
@@ -251,20 +253,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				cbKoch.addItem(e);
+				nSKoch.addItem(e);
 			}
-
+	
 			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
 					.getAllGeschmackAktiv();
 			for (Geschmack e : geschmack) {
-				cbGeschmack.addItem(e);
+				nSGeschmack.addItem(e);
 
 			}
 
 			List<Menueart> menueart = Menueartverwaltung.getInstance()
 					.getAllMenueart();
 			for (Menueart e : menueart) {
-				cbMenueart.addItem(e);
+				nSMenueart.addItem(e);
 
 			}
 
@@ -303,11 +305,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		tfMenuename.setValue(menue.getName());
 
-		cbKoch.select(menue.getKoch());
+		nSKoch.select(menue.getKoch());
 
-		cbMenueart.select(menue.getMenueart());
+		nSMenueart.select(menue.getMenueart());
 
-		cbGeschmack.select(menue.getGeschmack());
+		nSGeschmack.select(menue.getGeschmack());
 
 		chbAufwand.setValue(menue.getAufwand());
 
@@ -371,9 +373,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 
 		menue.setName(tfMenuename.getValue());
-		menue.setKoch((Mitarbeiter) cbKoch.getValue());
-		menue.setMenueart((Menueart) cbMenueart.getValue());
-		menue.setGeschmack((Geschmack) cbGeschmack.getValue());
+		menue.setKoch((Mitarbeiter) nSKoch.getValue());
+		menue.setMenueart((Menueart) nSMenueart.getValue());
+		menue.setGeschmack((Geschmack) nSGeschmack.getValue());
 
 		if (chbFavorit.getValue()) {
 			menue.setFavorit(true);
@@ -439,20 +441,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			showNotification("Bitte Namen eingeben!");
 			return false;
 		}
-		if (cbKoch.getValue() == null) {
+		if (nSKoch.getValue() == null) {
 			showNotification("Bitte Koch wÃ¤hlen!");
 			return false;
 		}
-		if (cbMenueart.getValue() == null) {
-			showNotification("Bitte MenÃ¼art wÃ¤hlen!");
+		if (nSMenueart.getValue() == null) {
+			showNotification("Bitte Menüart wählen!");
 			return false;
 		}
-		if (cbGeschmack.getValue() == null) {
-			showNotification("Bitte Geschmack wÃ¤hlen!");
+		if (nSGeschmack.getValue() == null) {
+			showNotification("Bitte Geschmack wälen!");
 			return false;
 		}
 		if (tmpRezepte == null || tmpRezepte.size() == 0) {
-			showNotification("Bitte Rezept wÃ¤hlen!");
+			showNotification("Bitte Rezept wählen!");
 			return false;
 		}
 		int countHauptmenue = 0;
