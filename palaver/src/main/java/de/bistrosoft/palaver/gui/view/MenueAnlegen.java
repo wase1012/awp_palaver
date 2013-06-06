@@ -26,7 +26,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
