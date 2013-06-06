@@ -188,7 +188,8 @@ public class BestellpositionDAO extends AbstractDAO {
 			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
 					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
-					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"));
+					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), 
+					set.getBoolean("lebensmittel"), set.getString("notiz"));
 		}
 		return result;
 	}

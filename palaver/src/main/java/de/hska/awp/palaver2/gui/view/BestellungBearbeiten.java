@@ -407,13 +407,13 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		if (bestellung.getLieferant().getMehrereliefertermine() == true) {
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
+					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
@@ -422,7 +422,10 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "artikelnr" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
+		artikelTable.setColumnCollapsed("grundbedarf", true);
+		artikelTable.setColumnCollapsed("standard", true);
+		artikelTable.setColumnCollapsed("lebensmittel", true);
 
 		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";

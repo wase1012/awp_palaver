@@ -109,7 +109,7 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		{
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio", "bestellgroesse"});
+			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio", "bestellgroesse", "notiz"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
 			
 			table.setCellStyleGenerator(new CellStyleGenerator()

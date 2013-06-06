@@ -63,7 +63,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	private TextField			preis = new TextField("Preis");
 	private TextField			artnr = new TextField("Artikelnummer");
 	private TextField			durchschnitt = new TextField("Durchschnitt");
-	private TextField			bestellung = new TextField("BestellgrÃ¶ÃŸe");
+	private TextField			bestellung = new TextField("Bestellgröße");
+	private TextField			notiz = new TextField("Notiz");
 	
 	private ComboBox			lieferant = new ComboBox("Lieferant");
 	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
@@ -143,6 +144,10 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		kategorie.setImmediate(true);
 		kategorie.addValueChangeListener(this);
 		
+		notiz.setWidth("100");
+		notiz.setImmediate(true);
+		notiz.addValueChangeListener(this);
+		
 		durchschnitt.setEnabled(false);
 		
 		addLieferant.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
@@ -160,6 +165,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		box.addComponent(headline);
 		box.addComponent(name);
 		box.addComponent(preis);
+		box.addComponent(notiz);
 		
 		HorizontalLayout lieferantLayout = new HorizontalLayout();
 		lieferantLayout.setWidth("100%");
@@ -259,6 +265,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				artikel.setName(name.getValue());
 				artikel.setPreis((preis.getValue() == "") ? 0F : Float.parseFloat(preis.getValue().replace(',', '.')));
 				artikel.setStandard(standard.getValue());
+				artikel.setNotiz(notiz.getValue());
 				
 				String notification = "Artikel gespeichert";
 				
@@ -402,6 +409,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				artikel.setName(name.getValue());
 				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',', '.')));
 				artikel.setStandard(standard.getValue());
+				artikel.setNotiz(notiz.getValue());
 				
 				String notification = "Artikel gespeichert";
 				
@@ -468,6 +476,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		bio.setValue(artikel.isBio());
 		lebensmittel.setValue(artikel.isLebensmittel());
 		durchschnitt.setValue(artikel.getDurchschnitt() + "");
+		notiz.setValue(artikel.getNotiz());
 	}
 	
 	private void addMengeneinheit()
@@ -542,7 +551,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				} catch (Exception e) {
 					log.error(e.toString());
 					if(e.toString().contains("INSERT INTO mengeneinheit"))
-						notification = "diese Name oder dieses KÃ¼rzel sind bereits in der System vorhanden.";
+						notification = "diese Name oder dieses Kürzel sind bereits in der System vorhanden.";
 					else
 						notification = e.toString();
 				}
@@ -732,7 +741,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		final TextField		name = new TextField("Name");
 		TextField			bezeichnung = new TextField("Bezeichnung");
 		TextField			kundennummer = new TextField("Kundennummer");
-		TextField			strasse = new TextField("StaÃŸe");
+		TextField			strasse = new TextField("StraßŸe");
 		TextField			plz = new TextField("PLZ");
 		TextField			ort = new TextField("Ort");
 		TextField			email = new TextField("E-Mail");
@@ -817,7 +826,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 3,45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3,45, false));
 		name.setMaxLength(45);
 		
 		bezeichnung.setImmediate(true);
@@ -849,7 +858,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		ort.setMaxLength(45);
 		
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gÃ¼ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 		
 		telefon.setImmediate(true);

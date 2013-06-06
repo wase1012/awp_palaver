@@ -42,7 +42,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private VerticalLayout		fenster = new VerticalLayout();
 	
 	private Label				headline;
-
+	
 	private TextField			name = new TextField("Name");
 	private TextField			bezeichnung = new TextField("Bezeichnung");
 	private TextField			kundennummer = new TextField("Kundennummer");
@@ -68,7 +68,6 @@ public class LieferantErstellen extends VerticalLayout implements View
 	
 	private Lieferant lieferant = new Lieferant();
 
-	boolean action = false;
 	
 	private Button			speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button			verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -327,30 +326,6 @@ public class LieferantErstellen extends VerticalLayout implements View
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			lieferant.setName(nameInput);
-			lieferant.setBezeichnung(bezInput);
-			lieferant.setKundennummer(knrInput);
-			lieferant.setStrasse(strasseInput);
-			lieferant.setPlz(plzInput);
-			lieferant.setOrt(ortInput);
-			lieferant.setEmail(emailInput);
-			lieferant.setTelefon(telefonInput);
-			lieferant.setFax(faxInput);
-			lieferant.setNotiz(notizInput);
-			lieferant.setMehrereliefertermine(mehrereliefertermine.getValue());
-			String notification = "Lieferant gespeichert";			
-			try {
-				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
-				action = true;
-			} catch (Exception e) {
-				if (e.toString().contains("INSERT INTO lieferant"))
-					notification = "diese Name ist bereits in der System vorhanden.";
-				else
-					notification = e.toString();
-				log.error(e.toString());
-			}
-			
-			
 			final Window dialog = new Window();
 			dialog.setClosable(false);
 			dialog.setWidth("300px");
@@ -360,7 +335,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 			dialog.setResizable(false);
 			dialog.setStyleName("dialog-window");
 			
-			Label message = new Label(notification);
+			Label message = new Label("Lieferant gespeichert");
 			
 			Button okButton = new Button("OK");
 			
@@ -374,7 +349,23 @@ public class LieferantErstellen extends VerticalLayout implements View
 			dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
 			
 			UI.getCurrent().addWindow(dialog);
-
+			lieferant.setName(nameInput);
+			lieferant.setBezeichnung(bezInput);
+			lieferant.setKundennummer(knrInput);
+			lieferant.setStrasse(strasseInput);
+			lieferant.setPlz(plzInput);
+			lieferant.setOrt(ortInput);
+			lieferant.setEmail(emailInput);
+			lieferant.setTelefon(telefonInput);
+			lieferant.setFax(faxInput);
+			lieferant.setNotiz(notizInput);
+			lieferant.setMehrereliefertermine(mehrereliefertermine.getValue());
+				
+			try {
+				Lieferantenverwaltung.getInstance().createLieferant(lieferant);
+			} catch (Exception e) {
+				log.error(e.toString());
+			}
 			
 			okButton.addClickListener(new ClickListener()
 			{	
@@ -382,9 +373,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 				public void buttonClick(ClickEvent event)
 				{
 					UI.getCurrent().removeWindow(dialog);
-					if(action == true)
-						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
-					}
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
 			});
 		}
 	});

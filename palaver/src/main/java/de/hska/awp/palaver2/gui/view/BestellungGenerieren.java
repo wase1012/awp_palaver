@@ -39,7 +39,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 
 	private VerticalLayout form = new VerticalLayout();
 
-	private Button bg = new Button("Bestellungen aus dem MenÃ¼plan generieren");
+	private Button bg = new Button("Bestellungen aus dem Menüplan generieren");
 
 	public BestellungGenerieren() {
 		super();
@@ -51,7 +51,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		form.setHeight("200px");
 		form.setSpacing(true);
 
-		final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:");
+		final PopupDateField date = new PopupDateField("Datum wählen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
@@ -73,7 +73,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 				String sample = null;
 
 				if (date.getValue() == null) {
-					Notification notification = new Notification("Es wurde kein Datum ausgewÃ¤hlt!");
+					Notification notification = new Notification("Es wurde kein Datum ausgewählt!");
 					notification.setDelayMsec(500);
 					notification.show(Page.getCurrent());
 				} else {
@@ -92,7 +92,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					int year = date.getValue().getYear() + 1900;
 
 					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year)) == null) {
-						Notification notification = new Notification("Kein MenÃ¼plan vorhanden!");
+						Notification notification = new Notification("Kein Menüplan vorhanden!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {

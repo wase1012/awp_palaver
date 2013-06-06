@@ -26,6 +26,7 @@ public class BestellungData implements java.io.Serializable {
 	private TextField gesamt = new TextField();;
 	private IntStepper freitag = new IntStepper();
 	private IntStepper montag = new IntStepper();
+	private String notiz;
 	private Artikel artikel;
 	private Long id;
 	private boolean geliefert;
@@ -35,7 +36,7 @@ public class BestellungData implements java.io.Serializable {
 	 * @param artnr
 	 * @param menge
 	 */
-	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine) {
+	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine, String notiz) {
 		super();
 		this.name = name;
 		this.gebinde = gebinde;
@@ -47,6 +48,7 @@ public class BestellungData implements java.io.Serializable {
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(durchschnitt + kantine);
 		this.montag.setValue(0);
+		this.setNotiz(notiz);
 	}
 
 	@SuppressWarnings("serial")
@@ -65,6 +67,7 @@ public class BestellungData implements java.io.Serializable {
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(bp.getFreitag());
 		this.montag.setValue(bp.getMontag());
+		this.setNotiz(this.artikel.getNotiz());
 
 		this.durchschnitt.setWidth("50px");
 		this.kantine.setWidth("50px");
@@ -389,5 +392,13 @@ public class BestellungData implements java.io.Serializable {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getNotiz() {
+		return notiz;
+	}
+
+	public void setNotiz(String notiz) {
+		this.notiz = notiz;
 	}
 }

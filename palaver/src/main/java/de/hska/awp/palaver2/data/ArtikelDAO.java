@@ -83,7 +83,8 @@ public class ArtikelDAO extends AbstractDAO
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								));
 		}
 		
@@ -133,7 +134,8 @@ return list;
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								));
 		}		
 		closeConnection();
@@ -171,7 +173,8 @@ return list;
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								);
 		}
 		closeConnection();
@@ -208,7 +211,8 @@ return list;
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								));
 		}
 		
@@ -244,7 +248,8 @@ return list;
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								));
 		}
 		
@@ -280,7 +285,8 @@ return list;
 								set.getBoolean("standard"),
 								set.getBoolean("grundbedarf"),
 								set.getInt("durchschnitt"),
-								set.getBoolean("lebensmittel")
+								set.getBoolean("lebensmittel"),
+								set.getString("notiz")
 								));
 		}
 		
@@ -302,7 +308,8 @@ return list;
 				+ artikel.getBestellgroesse() + "," + artikel.getMengeneinheit().getId() + "," 
 				+ artikel.getPreis() + "," + artikel.getLieferant().getId() + "," + Util.convertBoolean(artikel.isBio()) 
 				+ "," + artikel.getKategorie().getId() + "," + Util.convertBoolean(artikel.isStandard()) + ","
-				+ Util.convertBoolean(artikel.isGrundbedarf()) + "," + artikel.getDurchschnitt() + "," + Util.convertBoolean(artikel.isLebensmittel())));
+				+ Util.convertBoolean(artikel.isGrundbedarf()) + "," + artikel.getDurchschnitt() + "," + 
+				Util.convertBoolean(artikel.isLebensmittel()) + "," + artikel.getNotiz()));
 	}
 	
 	/**
@@ -326,7 +333,8 @@ return list;
 				"`standard` = "+Util.convertBoolean(artikel.isStandard())+"," +
 				"`grundbedarf` = "+Util.convertBoolean(artikel.isGrundbedarf())+"," +
 				"`durchschnitt` = "+artikel.getDurchschnitt()+"," +
-				"`lebensmittel` = "+Util.convertBoolean(artikel.isLebensmittel())+
+				"`lebensmittel` = "+Util.convertBoolean(artikel.isLebensmittel())+ "," +
+				"`notiz` = " + artikel.getNotiz()+
 				" WHERE id = "+artikel.getId());
 		
 		/*
@@ -367,16 +375,18 @@ return list;
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(),
 					KategorieDAO.getInstance().getKategorieById(
-							set.getLong("kategorie_fk")), LieferantDAO
-							.getInstance().getLieferantById(
-									set.getLong("lieferant_fk")), set
-							.getString("artikelnr"), set.getString("name"), set
-							.getDouble("bestellgroesse"),
-					set.getFloat("preis"), set.getBoolean("bio"), set
-							.getBoolean("standard"), set
-							.getBoolean("grundbedarf"), set
-							.getInt("durchschnitt"), set
-							.getBoolean("lebensmittel")));
+							set.getLong("kategorie_fk")), 
+							LieferantDAO.getInstance().getLieferantById(
+							set.getLong("lieferant_fk")), 
+							set.getString("artikelnr"), 
+							set.getString("name"), 
+							set.getDouble("bestellgroesse"),
+							set.getFloat("preis"), set.getBoolean("bio"), 
+							set.getBoolean("standard"), 
+							set.getBoolean("grundbedarf"), 
+							set.getInt("durchschnitt"), 
+							set.getBoolean("lebensmittel"),
+							set.getString("notiz")));
 		}
 
 		return list;
