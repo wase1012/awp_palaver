@@ -56,6 +56,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 
 	private Button allBestellungen = new Button(IConstants.BUTTON_ALL_ORDERS);
 	private Button zurueck = new Button(IConstants.BUTTON_BACK);
+	private Button auswaehlen = new Button(IConstants.BUTTON_SELECT);
 
 	public BestellungAnzeigen() {
 		super();
@@ -65,6 +66,8 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 
 		form.setSizeFull();
 		form.setSpacing(true);
+		
+		zurueck.setVisible(false);
 
 		fenster.setSizeFull();
 		fenster.setSpacing(true);
@@ -204,6 +207,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			}
 		});
 
+		control.addComponent(auswaehlen);
 		control.addComponent(zurueck);
 		control.addComponent(allBestellungen);
 		form.addComponent(fenster);
@@ -220,6 +224,8 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				allBestellungen.setVisible(true);
+				zurueck.setVisible(false);
 				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
 
 			}
@@ -230,6 +236,8 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
+				allBestellungen.setVisible(false);
+				zurueck.setVisible(true);
 				BeanItemContainer<Bestellung> ncontainer;
 				try {
 					ncontainer = new BeanItemContainer<Bestellung>(Bestellung.class, Bestellverwaltung.getInstance().getAllBestellungen());

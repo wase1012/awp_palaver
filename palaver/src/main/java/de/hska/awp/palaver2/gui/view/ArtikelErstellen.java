@@ -309,7 +309,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					public void buttonClick(ClickEvent event)
 					{
 						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().returnToDefault();
+						ViewHandler.getInstance().switchView(ArtikelErstellen.class);
 					}
 				});
 			}

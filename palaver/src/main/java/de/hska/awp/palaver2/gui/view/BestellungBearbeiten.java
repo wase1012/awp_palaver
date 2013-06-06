@@ -163,6 +163,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setColumnCollapsingAllowed(true);
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
