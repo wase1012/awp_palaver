@@ -655,14 +655,49 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			{
 				Kategorie ka = new Kategorie();
 				ka.setName(kaname.getValue());
+				String notification = "Kategorie gespeichert";
 				try {
 					Kategorienverwaltung.getInstance().createNewKategorie(ka);
+					UI.getCurrent().removeWindow(win);
 				} catch (Exception e) {
-//					throw new NullPointerException("Bitte g�ltige Werte eingeben");
 					log.error(e.toString());
+					if(e.toString().contains("INSERT INTO kategorie"))
+						notification = "diese Name ist bereits in der System vorhanden.";
+					else
+						notification = e.toString();					
 				}
 				load();
-				UI.getCurrent().removeWindow(win);
+				final Window dialog = new Window();
+				dialog.setClosable(false);
+				dialog.setWidth("300px");
+				dialog.setHeight("150px");
+				dialog.setModal(true);
+				dialog.center();
+				dialog.setResizable(false);
+				dialog.setStyleName("dialog-window");
+				
+				Label message = new Label(notification);
+				
+				Button okButton = new Button("OK");
+				
+				VerticalLayout dialogContent = new VerticalLayout();
+				dialogContent.setSizeFull();
+				dialogContent.setMargin(true);
+				dialog.setContent(dialogContent);
+				
+				dialogContent.addComponent(message);
+				dialogContent.addComponent(okButton);
+				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+				
+				UI.getCurrent().addWindow(dialog);
+				okButton.addClickListener(new ClickListener()
+				{	
+					@Override
+					public void buttonClick(ClickEvent event)
+					{
+						UI.getCurrent().removeWindow(dialog);
+					}
+				});
 			}
 		});
 
