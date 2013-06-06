@@ -400,7 +400,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			tmpZutaten=list;
 			
 			for(KuchenrezeptHasArtikel kha : list){
-				containerArtikel.removeItem(kha);
+				containerArtikel.removeItem(kha.getArtikel());
 				containerKuchenrezeptHasArtikel.addItem(kha);				
 			}
 			
