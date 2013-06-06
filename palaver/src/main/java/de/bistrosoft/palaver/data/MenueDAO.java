@@ -163,7 +163,6 @@ public class MenueDAO extends AbstractDAO {
 			DAOException, SQLException {
 		Menue result = null;
 		String name = "'" + namemenue + "'";
-		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
 		ResultSet set = getManaged(MessageFormat
 				.format(GET_MENUE_BY_NAME, name));
 
@@ -179,7 +178,6 @@ public class MenueDAO extends AbstractDAO {
 			DAOException, SQLException {
 		Menue result = null;
 		String name = "'" + namemenue + "'";
-		System.out.println(MessageFormat.format(GET_MENUE_BY_NAME, name));
 		ResultSet set = getManaged(MessageFormat
 				.format(GET_MENUE_BY_NAME, name));
 
@@ -224,7 +222,6 @@ public class MenueDAO extends AbstractDAO {
 				+ menue.getMenueart().getId() + ", "
 				+ Util.convertBoolean(menue.getAufwand()) + ", "
 				+ Util.convertBoolean(menue.getFavorit()) + ")";
-		System.out.println(INSERT_QUERY);
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -267,7 +264,6 @@ public class MenueDAO extends AbstractDAO {
 				+ menueHasFussnote.getMenue().getId()
 				+ ", "
 				+ menueHasFussnote.getFussnote().getId() + ")";
-		System.out.println(INSERT_QUERY);
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -280,11 +276,8 @@ public class MenueDAO extends AbstractDAO {
 				+ menueHasRezept.getRezept()
 				// + ", true" + ")";
 				+ "," + menueHasRezept.getHauptgericht() + ")";
-		System.out.println(INSERT_QUERY);
 		this.putManaged(INSERT_QUERY);
 	}
-
-	// /
 
 	public void FussnoteDelete(Menue menue) throws ConnectException,
 			DAOException, SQLException {
@@ -298,7 +291,6 @@ public class MenueDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE  from menue_has_rezept WHERE menue_id = "
 				+ menue.getId();
-		System.out.println(DELETE_QUERY);
 		this.putManaged(DELETE_QUERY);
 	}
 

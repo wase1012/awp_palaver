@@ -478,8 +478,6 @@ public class Regel {
 		System.out.println(menue.getGeschmack());
 		if(menue.getGeschmack()!=null){
 			if (operator.equals("enthält nicht")) {
-				System.out.println("ent nit");
-				System.out.println(menue.getGeschmack().getName().toString());
 					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
 						return this;
 				}

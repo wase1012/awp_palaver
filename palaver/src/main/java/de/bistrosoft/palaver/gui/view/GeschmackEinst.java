@@ -198,9 +198,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println(geschmack);
-				System.out.println(geschmack1);
-				System.out.println(nameInput);
 
 				try {
 					Geschmackverwaltung.getInstance().updateGeschmackInaktiv(

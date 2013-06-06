@@ -146,8 +146,6 @@ public class RegelDAO extends AbstractDAO {
 								+ regel.getAktiv() + " WHERE " + ID + "='"
 										+ regel.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-		
-		System.out.println(UPDATE_QUERY);
 	}
 
 }

@@ -43,8 +43,6 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 
 	public KuchenrezeptAnzeigen() {
 		super();
-
-		System.out.println("OK");
 		
 		this.setSizeFull();
 		this.setMargin(true);

@@ -107,8 +107,6 @@ return geschmack;
 	public Geschmack getGeschmackByName1(String name) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME, NAME));
-		System.out.println(MessageFormat.format(GET_GESCHMACK_BY_NAME, name));
-		System.out.println("geschmackbyname12" + name);
 		while (set.next()) {
 			geschmack = new Geschmack(set.getLong("id"));
 		}
@@ -147,7 +145,6 @@ return geschmack;
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + INAKTIV + " = "
 				+ true + " WHERE " + ID + " = '" + geschmack.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-		System.out.println(UPDATE_QUERY);
 	}
 
 	public void updateGeschmackAktiv(Geschmack geschmack)
@@ -155,7 +152,6 @@ return geschmack;
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + INAKTIV + " = "
 				+ false + " WHERE " + ID + " = '" + geschmack.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-		System.out.println(UPDATE_QUERY);
 	}
 
 	public void deleteGeschmackByName(String name) throws ConnectException,

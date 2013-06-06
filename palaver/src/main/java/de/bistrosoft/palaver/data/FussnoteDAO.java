@@ -98,7 +98,6 @@ return list;
 		fn="'"+fn+"'";
 
 		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_NAME,fn));
-		System.out.println(MessageFormat.format(GET_FUSSNOTE_BY_NAME,fn));
 		while (set.next()) {
 			result = new Fussnote(set.getLong("id"), set.getString("name"),
 					set.getString("abkuerzung"));

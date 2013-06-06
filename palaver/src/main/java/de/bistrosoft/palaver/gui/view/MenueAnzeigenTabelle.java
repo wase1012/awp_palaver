@@ -86,7 +86,6 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			table.sort(new Object[] { "id" }, new boolean[] { true });
 			table.markAsDirty();
 			// TODO Filter setzen
-			// System.out.println(table.setFilterFieldValue("kochname",
 			// Mitarbeiterverwaltung.getInstance().getMitarbeiterByBenutzername("Shanta")));
 
 		} catch (IllegalArgumentException e) {

@@ -199,9 +199,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 
 	public void saveArtikel(Kuchenrezept kuchenrezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("saveArtikel");
 		List<KuchenrezeptHasArtikel> rha = kuchenrezept.getArtikel();
-		System.out.println(rha.size());
 		for (KuchenrezeptHasArtikel a : rha) {
 			String rez = kuchenrezept.getId().toString();
 			String artikel_fk = a.getArtikelId().toString();
