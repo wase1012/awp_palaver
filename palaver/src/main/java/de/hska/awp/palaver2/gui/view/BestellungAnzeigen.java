@@ -180,9 +180,11 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 								.getBestellpositionenByBestellungId(bestellung.getId()));
 						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setContainerDataSource(bpcontainer);
-						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
-								"geliefert" });
+						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt"});
 						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
+						bpositionen.setColumnWidth("kantine", 60);
+						bpositionen.setColumnWidth("gesamt", 60);
+						bpositionen.setColumnWidth("durchschnitt", 60);
 						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
 
@@ -198,8 +200,14 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setContainerDataSource(bpcontainer);
 						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
-								"freitag", "montag", "geliefert" });
+								"freitag", "montag"});
 						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
+						bpositionen.setColumnWidth("kantine", 60);
+						bpositionen.setColumnWidth("gesamt", 60);
+						bpositionen.setColumnWidth("durchschnitt", 60);
+						bpositionen.setColumnWidth("freitag", 60);
+						bpositionen.setColumnWidth("montag", 60);
+						bpositionen.setColumnHeader("durchschnitt", "MENGE");
 						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
 
