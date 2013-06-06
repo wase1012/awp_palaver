@@ -182,7 +182,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 						bpositionen.setContainerDataSource(bpcontainer);
 						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
 								"geliefert" });
-						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESE);
+						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
 						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
 
@@ -199,7 +199,7 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 						bpositionen.setContainerDataSource(bpcontainer);
 						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
 								"freitag", "montag", "geliefert" });
-						bpositionen.setColumnHeader("bestellgroesse", "bestellgröße");
+						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
 						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
 						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
 

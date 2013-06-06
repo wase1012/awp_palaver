@@ -105,5 +105,5 @@ public interface IConstants
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 
 	// Beschriftung für Tabellenüberschriften
-	String 		BESTELLGROESE = "Bestellgröße";
+	String 		BESTELLGROESSE = "Bestellgröße";
 }
