@@ -74,7 +74,6 @@ public class ZubereitungDAO extends AbstractDAO {
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID,
 				id));
-		System.out.println(MessageFormat.format(GET_ZUBEREITUNG_BY_ID, id));
 		while (set.next()) {
 			zubereitung = new Zubereitung(set.getLong(ID), set.getString(NAME));
 		}
@@ -86,7 +85,6 @@ public class ZubereitungDAO extends AbstractDAO {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
 
 		ResultSet set = getManaged(GET_ZUBEREITUNG_BY_NAME + name + "%'");
-		System.out.println(GET_ZUBEREITUNG_BY_NAME + name + "%'");
 		while (set.next()) {
 			list.add(new Zubereitung(set.getLong(ID), set.getString(NAME)));
 		}
