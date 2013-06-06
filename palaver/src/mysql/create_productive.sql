@@ -202,19 +202,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palaver`.`zutatenkategorie`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `palaver`.`zutatenkategorie` ;
-
-CREATE  TABLE IF NOT EXISTS `palaver`.`zutatenkategorie` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `palaver`.`rezeptart`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `palaver`.`rezeptart` ;
@@ -225,9 +212,6 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezeptart` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
-
-
-
 
 
 -- -----------------------------------------------------
@@ -313,6 +297,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`artikel` (
   `grundbedarf` TINYINT(1) NOT NULL ,
   `durchschnitt` INT NULL ,
   `lebensmittel` TINYINT(1) NOT NULL ,
+  `notiz` VARCHAR(90) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `LIEFER_FK_idx` (`lieferant_fk` ASC) ,
   INDEX `KATEGOIRE_FK_idx` (`kategorie_fk` ASC) ,
@@ -345,9 +330,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_artikel` (
   `artikel_fk` INT NOT NULL ,
   `menge` DECIMAL(10,4) NOT NULL ,
   `einheit` INT NOT NULL ,
-  `zutatenkategorie` INT NOT NULL ,
   INDEX `fk_rezept_has_artikel_einheit1_idx` (`einheit` ASC) ,
-  INDEX `fk_rezept_has_artikel_zutatenkategorie1_idx` (`zutatenkategorie` ASC) ,
   INDEX `fk_rezept_has_artikel_rezept1_idx` (`rezept_fk` ASC) ,
   INDEX `fk_rezept_has_artikel_ARTIKEL11_idx` (`artikel_fk` ASC) ,
   PRIMARY KEY (`rezept_fk`, `artikel_fk`) ,
@@ -359,11 +342,6 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept_has_artikel` (
   CONSTRAINT `fk_rezept_has_artikel_einheit1`
     FOREIGN KEY (`einheit` )
     REFERENCES `palaver`.`mengeneinheit` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rezept_has_artikel_zutatenkategorie1`
-    FOREIGN KEY (`zutatenkategorie` )
-    REFERENCES `palaver`.`zutatenkategorie` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_rezept_has_artikel_ARTIKEL11`
