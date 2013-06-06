@@ -15,7 +15,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 public class Rezeptartverwaltung extends RezeptartDAO {
 
 	private static Rezeptartverwaltung instance = null;
-	private RezeptartDAO dao;
 
 	private Rezeptartverwaltung() {
 		super();

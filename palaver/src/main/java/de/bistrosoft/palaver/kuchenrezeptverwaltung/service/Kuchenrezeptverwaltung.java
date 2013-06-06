@@ -34,8 +34,8 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		return instance;
 	}
 
-	public void createKuchenrezept(Kuchenrezept kuchenrezept) throws ConnectException,
-			DAOException, SQLException {
+	public void createKuchenrezept(Kuchenrezept kuchenrezept)
+			throws ConnectException, DAOException, SQLException {
 		super.createKuchenrezept(kuchenrezept);
 	}
 
@@ -44,8 +44,8 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		super.saveArtikel(kuchenrezept);
 	}
 
-	public List<Artikel> getAllArtikelByKuchenrezeptId() throws ConnectException,
-			DAOException, SQLException {
+	public List<Artikel> getAllArtikelByKuchenrezeptId()
+			throws ConnectException, DAOException, SQLException {
 		List<Artikel> result = null;
 
 		result = ArtikelDAO.getInstance().getAllArtikel();
@@ -53,13 +53,13 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		return result;
 	}
 
-
-	public void updateRezept(Kuchenrezept kuchenrezept) throws ConnectException,
-			DAOException, SQLException {
+	public void updateRezept(Kuchenrezept kuchenrezept)
+			throws ConnectException, DAOException, SQLException {
 		super.updateKuchenrezept(kuchenrezept);
 	}
-	
-	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(Kuchenrezept rez) {
+
+	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(
+			Kuchenrezept rez) {
 		try {
 			return super.ladeArtikelFuerKuchenrezept(rez);
 		} catch (ConnectException e) {

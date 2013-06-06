@@ -41,8 +41,7 @@ public class MenueHasFussnoteId implements java.io.Serializable {
 		int result = 1;
 		result = prime * result
 				+ ((fussnoteFk == null) ? 0 : fussnoteFk.hashCode());
-		result = prime * result
-				+ ((menueFk == null) ? 0 : menueFk.hashCode());
+		result = prime * result + ((menueFk == null) ? 0 : menueFk.hashCode());
 		return result;
 	}
 
@@ -67,7 +66,5 @@ public class MenueHasFussnoteId implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
-
 
 }

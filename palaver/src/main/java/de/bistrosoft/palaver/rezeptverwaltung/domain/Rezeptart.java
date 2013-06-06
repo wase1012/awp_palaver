@@ -7,20 +7,20 @@ public class Rezeptart implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3791004464836691661L;
 
-	//Variablen
+	// Variablen
 	private Long id;
 	private String name;
 
-	//Konstruktoren
+	// Konstruktoren
 	public Rezeptart() {
 	}
 
 	public Rezeptart(Long id, String name) {
-		this.id =id;
+		this.id = id;
 		this.name = name;
 	}
 
-	//Getter- und Setter
+	// Getter- und Setter
 	public Long getId() {
 		return this.id;
 	}
@@ -37,7 +37,9 @@ public class Rezeptart implements java.io.Serializable {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -49,7 +51,9 @@ public class Rezeptart implements java.io.Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -74,7 +78,9 @@ public class Rezeptart implements java.io.Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

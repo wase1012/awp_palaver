@@ -91,32 +91,32 @@
 //	
 //	private Label ueberschrift = new Label(
 //			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //
 //	private Label dummy = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy1 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy2 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy3 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy4 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label d1 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label d2 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label d3 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //    private TextField menuename = new TextField("Menuename");
 //    private ComboBox ersteller = new ComboBox("Menueersteller");
 //	private ComboBox hauptgericht = new ComboBox("Hauptgericht");

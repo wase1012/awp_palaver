@@ -19,6 +19,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -35,9 +36,6 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.RezeptDAO;
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
@@ -45,10 +43,13 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -83,14 +84,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private BeanItemContainer<RezeptHasArtikel> containerRezeptHasArtikel;
 
 	// Ueberschriften
-	@SuppressWarnings("deprecation")
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anlegen</font><b></pre>",
-			Label.CONTENT_XHTML);
-	@SuppressWarnings("deprecation")
+			ContentMode.HTML);
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 
 	// TextFelder
 	private TextField name = new TextField("Bezeichnung");
@@ -382,7 +381,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
-					ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+					ViewHandler.getInstance().switchView(
+							RezeptAnzeigenTabelle.class);
 				}
 			}
 		});
@@ -418,7 +418,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		try {
 			artikelcontainer = new BeanItemContainer<RezeptHasArtikel>(
-					RezeptHasArtikel.class,rezept.getArtikel());
+					RezeptHasArtikel.class, rezept.getArtikel());
 
 			zutatenTable = null;
 			zutatenTable = new Table();

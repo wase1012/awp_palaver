@@ -47,7 +47,7 @@
 //	
 //	private Label ueberschrift = new Label(
 //			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü Anzeigen</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //
 //	
 //    private TextField menuename = new TextField();
@@ -59,34 +59,34 @@
 //	
 //	private Label uMenuename = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menuename</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uErsteller = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Koch</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uFussnoten = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnoten</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uHauptgericht = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Hauptgericht</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uBeilage1 = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Beilage1</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uBeilage2 = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Beilage2</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy1 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy2 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label dummy3 = new Label(
 //			"<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //
 //    
 //	private Table fussnoten = new Table();

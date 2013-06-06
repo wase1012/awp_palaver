@@ -6,13 +6,13 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 public class Geschmack implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2070753066033963562L;
-	
-	//Variablen
+
+	// Variablen
 	private Long id;
 	private String name;
 	private Boolean inaktiv;
-	
-	//Konstruktoren
+
+	// Konstruktoren
 	public Geschmack() {
 		super();
 	}
@@ -20,7 +20,7 @@ public class Geschmack implements java.io.Serializable {
 	public Geschmack(String name) {
 		this.name = name;
 	}
-	
+
 	public Geschmack(Long id) {
 		this.id = id;
 	}
@@ -31,7 +31,7 @@ public class Geschmack implements java.io.Serializable {
 		this.inaktiv = inaktiv;
 	}
 
-	//Getter- und Setter
+	// Getter- und Setter
 	public Long getId() {
 		return this.id;
 	}
@@ -39,7 +39,7 @@ public class Geschmack implements java.io.Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Boolean getInaktiv() {
 		return inaktiv;
 	}
@@ -56,7 +56,9 @@ public class Geschmack implements java.io.Serializable {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -69,7 +71,9 @@ public class Geschmack implements java.io.Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -98,8 +102,10 @@ public class Geschmack implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -12,15 +12,15 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 public class Fussnote implements java.io.Serializable {
 
 	private static final long serialVersionUID = 6494109377137286448L;
-	
-	//Variablen
+
+	// Variablen
 	private Long id;
 	private String name;
 	private String abkuerzung;
 	private Set<MenueHasFussnote> menueHasFussnotes = new HashSet<MenueHasFussnote>(
 			0);
 
-	//Konstruktoren
+	// Konstruktoren
 	public Fussnote() {
 	}
 
@@ -36,10 +36,10 @@ public class Fussnote implements java.io.Serializable {
 
 	public Fussnote(String name, String abkuerzung) {
 		this.name = name;
-		this.abkuerzung = abkuerzung;	
+		this.abkuerzung = abkuerzung;
 	}
-	
-	//Getter- und Setter
+
+	// Getter- und Setter
 	public Long getId() {
 		return this.id;
 	}
@@ -72,7 +72,9 @@ public class Fussnote implements java.io.Serializable {
 		this.menueHasFussnotes = menueHasFussnotes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -83,11 +85,13 @@ public class Fussnote implements java.io.Serializable {
 				+ ((abkuerzung == null) ? 0 : abkuerzung.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		
+
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -114,11 +118,13 @@ public class Fussnote implements java.io.Serializable {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		
+
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

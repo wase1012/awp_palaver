@@ -12,7 +12,7 @@ public class Rezept implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7984117576450240771L;
 
-	//Variablen
+	// Variablen
 	private Long id;
 	private Rezeptart rezeptart;
 	private Mitarbeiter mitarbeiter;
@@ -23,7 +23,7 @@ public class Rezept implements java.io.Serializable {
 	private Boolean menue;
 	private List<Zubereitung> zubereitung;
 
-	//Konstruktoren
+	// Konstruktoren
 	public Rezept() {
 		super();
 	}
@@ -62,8 +62,8 @@ public class Rezept implements java.io.Serializable {
 		super();
 		this.id = id;
 	}
-	
-	//Getter- und Setter
+
+	// Getter- und Setter
 	public Boolean getMenue() {
 		return menue;
 	}
@@ -166,8 +166,10 @@ public class Rezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

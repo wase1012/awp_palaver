@@ -1,10 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung.service;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
@@ -24,24 +19,25 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		}
 		return instance;
 	}
-	
-	public Menueplan getMenueplanByWeekWithItems(Week week){
-		Menueplan mpl=null;
+
+	public Menueplan getMenueplanByWeekWithItems(Week week) {
+		Menueplan mpl = null;
 		try {
 			mpl = super.getMenueplanByWeekWithItems(week);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return mpl;
 	}
 
 	public void persist(Menueplan menueplan) {
-		if(menueplan.getId()==null){
+		if (menueplan.getId() == null) {
 			try {
 				super.createMenueplan(menueplan);
-				menueplan.setId(super.getMenueplanByWeekWithItems(menueplan.getWeek()).getId());
+				menueplan.setId(super.getMenueplanByWeekWithItems(
+						menueplan.getWeek()).getId());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,19 +49,20 @@ public class Menueplanverwaltung extends MenueplanDAO {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		 
-		for (MenueComponent mc : menueplan.getMenues()){
+
+		for (MenueComponent mc : menueplan.getMenues()) {
 
 			try {
-				super.createMenueForMenueplan(menueplan, mc.getMenue(),mc.getAngezeigterName(), mc.getCol(), mc.getRow());
+				super.createMenueForMenueplan(menueplan, mc.getMenue(),
+						mc.getAngezeigterName(), mc.getCol(), mc.getRow());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public void deleteItemsByMenueplan(Menueplan mpl){
+
+	public void deleteItemsByMenueplan(Menueplan mpl) {
 		try {
 			super.deleteItemsByMenueplan(mpl);
 		} catch (Exception e) {

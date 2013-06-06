@@ -36,7 +36,8 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 	}
 
-	public Kuchenrezept(Long id, Mitarbeiter mitarbeiter, String name, String kommentar) {
+	public Kuchenrezept(Long id, Mitarbeiter mitarbeiter, String name,
+			String kommentar) {
 		super();
 		this.id = id;
 		this.mitarbeiter = mitarbeiter;
@@ -44,8 +45,8 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.kommentar = kommentar;
 	}
 
-	public Kuchenrezept(Long id, Mitarbeiter mitarbeiter, String name, String kommentar,
-			Date erstellt) {
+	public Kuchenrezept(Long id, Mitarbeiter mitarbeiter, String name,
+			String kommentar, Date erstellt) {
 		super();
 		this.id = id;
 		this.mitarbeiter = mitarbeiter;
@@ -243,9 +244,5 @@ public class Kuchenrezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
-	
-
-	
 
 }

@@ -41,12 +41,10 @@ public class KuchenrezeptHasArtikelId implements java.io.Serializable {
 		this.artikelFk = artikelFk;
 	}
 
-	
-
 	@Override
 	public String toString() {
-		return "KuchenrezeptHasArtikelId [kuchenrezeptFk=" + kuchenrezeptFk + ", artikelFk="
-				+ artikelFk + "]";
+		return "KuchenrezeptHasArtikelId [kuchenrezeptFk=" + kuchenrezeptFk
+				+ ", artikelFk=" + artikelFk + "]";
 	}
 
 	@Override

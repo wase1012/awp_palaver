@@ -47,7 +47,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 	public void createRezept(Rezept Rezept) throws ConnectException,
 			DAOException, SQLException {
 		super.createRezept(Rezept);
-}
+	}
 
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
@@ -129,8 +129,8 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return new ArrayList<RezeptHasArtikel>();
 	}
 
-	public void deleteZutatenZuRezept(Rezept rezept)
-			throws ConnectException, DAOException, SQLException {
+	public void deleteZutatenZuRezept(Rezept rezept) throws ConnectException,
+			DAOException, SQLException {
 		super.deleteZutatenZuRezept(rezept);
 	}
 

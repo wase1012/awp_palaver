@@ -1,10 +1,7 @@
 package de.bistrosoft.palaver.gui.view;
 
-import java.sql.SQLException;
-
 import org.tepi.filtertable.FilterTable;
 
-import com.google.gwt.user.client.ui.ClickListenerCollection;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -12,28 +9,22 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
@@ -50,7 +41,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Geschmack anlegen</font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 
 	private TextField name = new TextField("Geschmack");
 
@@ -63,12 +54,12 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 	private Label dummy = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	
 	private String nameInput;
 	private FilterTable table;
 	private Label hinweis = new Label( "<pre><font size='3' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"><b>Bedeutung:</b> false: aktiv | true: inaktiv</font></pre>",
-			Label.CONTENT_XHTML);;
+			ContentMode.HTML);;
 
 	public GeschmackEinst() {
 		super();

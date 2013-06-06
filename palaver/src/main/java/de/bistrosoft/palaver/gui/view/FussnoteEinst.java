@@ -1,7 +1,5 @@
 package de.bistrosoft.palaver.gui.view;
 
-import java.sql.SQLException;
-
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -9,22 +7,19 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
@@ -42,10 +37,10 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	private VerticalLayout box = new VerticalLayout();
 	private Label ueberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnote anlegen</font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	private Label dummy = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 
 	private TextField name = new TextField("Fussnote");
 	private TextField abkuerzung = new TextField("Abkuerzung");
@@ -89,7 +84,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		abkuerzung.setImmediate(true);
 		abkuerzung.setInputPrompt(abkuerzungInput);
 		abkuerzung.setMaxLength(150);
-		
+
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource("img/save.ico"));
 
@@ -101,7 +96,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 				nameInput = valueString;
 			}
 		});
-		
+
 		abkuerzung.addValueChangeListener(new ValueChangeListener() {
 			public void valueChange(final ValueChangeEvent event) {
 				final String valueString = String.valueOf(event.getProperty()
@@ -119,8 +114,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 				fn.setAbkuerzung(abkuerzungInput);
 
 				try {
-					Fussnotenverwaltung.getInstance()
-							.createFussnote(fn);
+					Fussnotenverwaltung.getInstance().createFussnote(fn);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -130,7 +124,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 						"Fussnote wurde gespeichert!");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
-				
+
 				ViewHandler.getInstance().switchView(FussnoteEinst.class);
 
 			}

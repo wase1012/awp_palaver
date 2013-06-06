@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.server.Page;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -20,9 +21,9 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
+import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.bistrosoft.palaver.util.Week;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
@@ -38,10 +39,9 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 	int exception = 0;
 	
 	// FußŸnoten
-	@SuppressWarnings("deprecation")
 	Label lbFussnoten = new Label(
 			"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
-			Label.CONTENT_XHTML);
+			ContentMode.HTML);
 	Label lbPlatzhalter = new Label();
 
 	public MenueplanHistorie() {
@@ -119,11 +119,11 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 							Menueplan.layout.setDragMode(LayoutDragMode.NONE);
 							String strKW = new String("Kalenderwoche: " + week
 									+ "/" + year);
-							@SuppressWarnings("deprecation")
+
 							Label lbKW2 = new Label(
 									"<pre><div align=center><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 											+ strKW + "</div></pre>",
-									Label.CONTENT_XHTML);
+									ContentMode.HTML);
 							lbKW = lbKW2;
 							lbPlatzhalter1.setHeight("30px");
 							box.addComponent(lbPlatzhalter1);

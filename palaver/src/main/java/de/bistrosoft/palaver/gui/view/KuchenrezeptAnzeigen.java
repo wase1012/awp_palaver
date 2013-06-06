@@ -7,11 +7,12 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
@@ -32,18 +33,17 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 
 	private FilterTable table;
-	
-	@SuppressWarnings("deprecation")
+
 	private Label ueberschrift = new Label(
 			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezepte</font></pre>",
-			Label.CONTENT_XHTML); 
+			ContentMode.HTML);
 
 	private Button showFilter;
 	private Kuchenrezept kuchenrezept;
 
 	public KuchenrezeptAnzeigen() {
 		super();
-		
+
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -61,7 +61,8 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					kuchenrezept = (Kuchenrezept) event.getProperty().getValue();
+					kuchenrezept = (Kuchenrezept) event.getProperty()
+							.getValue();
 				}
 
 			}
@@ -72,7 +73,8 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					ViewHandler.getInstance().switchView(KuchenrezeptAnlegen.class,
+					ViewHandler.getInstance().switchView(
+							KuchenrezeptAnlegen.class,
 							new ViewDataObject<Kuchenrezept>(kuchenrezept));
 				}
 
@@ -83,9 +85,11 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 
 		try {
 			container = new BeanItemContainer<Kuchenrezept>(Kuchenrezept.class,
-					Kuchenrezeptverwaltung.getInstance().getAllKuchenrezepte(false));
+					Kuchenrezeptverwaltung.getInstance().getAllKuchenrezepte(
+							false));
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"id", "name", "mitarbeiter", "erstellt" });
+			table.setVisibleColumns(new Object[] { "id", "name", "mitarbeiter",
+					"erstellt" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (Exception e) {
 			e.printStackTrace();

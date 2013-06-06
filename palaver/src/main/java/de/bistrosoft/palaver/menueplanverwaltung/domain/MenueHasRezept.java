@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 
 public class MenueHasRezept implements java.io.Serializable {
@@ -13,21 +12,20 @@ public class MenueHasRezept implements java.io.Serializable {
 	public MenueHasRezept() {
 	}
 
-	public MenueHasRezept(MenueHasRezeptId id, 
-			Menue menue, Rezept rezept) {
+	public MenueHasRezept(MenueHasRezeptId id, Menue menue, Rezept rezept) {
 		this.id = id;
 		this.menue = menue;
 		this.rezept = rezept;
 	}
-	
+
 	public MenueHasRezept(Menue menue, Rezept rezept) {
-		
+
 		this.menue = menue;
 		this.rezept = rezept;
 	}
-	
-public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
-		
+
+	public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
+
 		this.menue = menue;
 		this.rezept = rezept;
 		this.hauptgericht = hauptgericht;
@@ -40,9 +38,9 @@ public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
 	public void setId(MenueHasRezeptId id) {
 		this.id = id;
 	}
-	
+
 	public Rezept getRezept() {
-		return rezept;  ///stand bei beidem noch this.
+		return rezept; // /stand bei beidem noch this.
 	}
 
 	public void setRezept(Rezept rezept) {
@@ -56,8 +54,7 @@ public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
 	public void setMenue(Menue menue) {
 		this.menue = menue;
 	}
-	
-	
+
 	public Boolean getHauptgericht() {
 		return hauptgericht;
 	}
@@ -70,8 +67,7 @@ public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((rezept == null) ? 0 : rezept.hashCode());
+		result = prime * result + ((rezept == null) ? 0 : rezept.hashCode());
 		result = prime * result + ((menue == null) ? 0 : menue.hashCode());
 		return result;
 	}

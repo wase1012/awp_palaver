@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +7,11 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -18,17 +19,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 @SuppressWarnings("serial")
@@ -223,8 +220,7 @@ public class MenueComponent extends CustomComponent{
 			fn = fn+" ("+f.getAbkuerzung().toString()+")";
 		}
 
-		@SuppressWarnings("deprecation")
-		Label lbText = new Label("<div align=center>"+ angezName +"<BR>"+fn+"</div>", Label.CONTENT_XHTML);
+		Label lbText = new Label("<div align=center>"+ angezName +"<BR>"+fn+"</div>", ContentMode.HTML);
 		vl.addComponent(lbText);
 		
 		
@@ -263,15 +259,11 @@ public class MenueComponent extends CustomComponent{
 				
 	        	//finde position
 				Component sourceComp = comp;
-				Integer sourceRow =-1;
-	            Integer sourceColumn=-1;
 	            final int COLUMNS = menueGrid.getColumns();
 	            final int ROWS = menueGrid.getRows();
 	            for (int row = 0; row < ROWS; row++) {
 	    	        for (int col = 0; col < COLUMNS; col++) {
 	    	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
-	    	        		sourceColumn=col;
-	    	        		sourceRow=row;
 	    	        	}
 	    	        }
 	            }

@@ -30,6 +30,7 @@ public class Regel {
 	public Regel() {
 
 	}
+
 	public Boolean getAktiv() {
 		return aktiv;
 	}
@@ -37,15 +38,15 @@ public class Regel {
 	public void setAktiv(Boolean aktiv) {
 		this.aktiv = aktiv;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getZeile() {
 		return zeilen;
 	}
@@ -110,7 +111,7 @@ public class Regel {
 		this.fehlermeldung = fehlermeldung;
 	}
 
-	public Regel(Long id,String regeltyp, String zeilen, String spalten,
+	public Regel(Long id, String regeltyp, String zeilen, String spalten,
 			String operator, String kriterien, String fehlermeldung,
 			Boolean aktiv) {
 		this.id = id;
@@ -121,54 +122,44 @@ public class Regel {
 		this.kriterien = kriterien;
 		this.fehlermeldung = fehlermeldung;
 		this.aktiv = aktiv;
-		this.kriterienlist=Arrays.asList(kriterien.split(", "));
-		
-		//F√ºlle List<Integer>
-		//Zeilen
-		int topRows=2;
-		List<String> strZeilen=Arrays.asList(zeilen.split(","));
-//		List<String> strZeilen=Arrays.asList(zeilen.split("\\s*,\\s*"));
-		zeilenlist=new ArrayList<Integer>();
-		
-		for(String s : strZeilen){
-			int i=0;
-			if(s.trim().equals("Fleischgericht")){
-				zeilenlist.add(0 +topRows);
-			}
-			else if(s.trim().equals("Hauptgericht")){
-				zeilenlist.add(1 +topRows);
-			}
-			else if(s.trim().equals("Pastagericht")){
-				zeilenlist.add(2 +topRows);
-				zeilenlist.add(3 +topRows);
-			}
-			else if(s.trim().equals("Suppe/Salat")){
-				zeilenlist.add(4 +topRows);
-			}
-			else if(s.trim().equals("Dessert")){
-				zeilenlist.add(5 +topRows);
+		this.kriterienlist = Arrays.asList(kriterien.split(", "));
+
+		// F√ºlle List<Integer>
+		// Zeilen
+		int topRows = 2;
+		List<String> strZeilen = Arrays.asList(zeilen.split(","));
+		// List<String> strZeilen=Arrays.asList(zeilen.split("\\s*,\\s*"));
+		zeilenlist = new ArrayList<Integer>();
+
+		for (String s : strZeilen) {
+			if (s.trim().equals("Fleischgericht")) {
+				zeilenlist.add(0 + topRows);
+			} else if (s.trim().equals("Hauptgericht")) {
+				zeilenlist.add(1 + topRows);
+			} else if (s.trim().equals("Pastagericht")) {
+				zeilenlist.add(2 + topRows);
+				zeilenlist.add(3 + topRows);
+			} else if (s.trim().equals("Suppe/Salat")) {
+				zeilenlist.add(4 + topRows);
+			} else if (s.trim().equals("Dessert")) {
+				zeilenlist.add(5 + topRows);
 			}
 		}
-		//Spalten
-		int leftCols=1;
-		List<String> strSpalten=Arrays.asList(spalten.split(","));
-		spaltenlist=new ArrayList<Integer>();
-		for(String s : strSpalten){
-			int i=0;
-			if(s.trim().equals("Montag")){
-				spaltenlist.add(0 +leftCols);
-			}
-			else if(s.trim().equals("Dienstag")){
-				spaltenlist.add(1 +leftCols);
-			}
-			else if(s.trim().equals("Mittwoch")){
-				spaltenlist.add(2 +leftCols);
-			}
-			else if(s.trim().equals("Donnerstag")){
-				spaltenlist.add(3 +leftCols);
-			}
-			else if(s.trim().equals("Freitag")){
-				spaltenlist.add(4 +leftCols);
+		// Spalten
+		int leftCols = 1;
+		List<String> strSpalten = Arrays.asList(spalten.split(","));
+		spaltenlist = new ArrayList<Integer>();
+		for (String s : strSpalten) {
+			if (s.trim().equals("Montag")) {
+				spaltenlist.add(0 + leftCols);
+			} else if (s.trim().equals("Dienstag")) {
+				spaltenlist.add(1 + leftCols);
+			} else if (s.trim().equals("Mittwoch")) {
+				spaltenlist.add(2 + leftCols);
+			} else if (s.trim().equals("Donnerstag")) {
+				spaltenlist.add(3 + leftCols);
+			} else if (s.trim().equals("Freitag")) {
+				spaltenlist.add(4 + leftCols);
 			}
 		}
 	}
@@ -188,23 +179,25 @@ public class Regel {
 	// Testdaten
 	public static List<Regel> getTestRegeln() {
 		List<Regel> regeln = new ArrayList<Regel>();
-		
+
 		List<Integer> r = new ArrayList<Integer>();
 		r.add(2);
 		List<Integer> c = new ArrayList<Integer>();
 		c.add(-1);
 		List<String> rw = new ArrayList<String>();
 		rw.add("3");
-		regeln.add(new Regel("Fussnote",r,c,"maximal",rw,"Nur Vegan!",true));
-		
+		regeln.add(new Regel("Fussnote", r, c, "maximal", rw, "Nur Vegan!",
+				true));
+
 		List<Integer> r3 = new ArrayList<Integer>();
 		r3.add(2);
 		List<Integer> c3 = new ArrayList<Integer>();
 		c3.add(-1);
 		List<String> rw3 = new ArrayList<String>();
 		rw3.add("deutsch");
-		regeln.add(new Regel("Geschmack",r3,c3,"enth‰lt nicht",rw3,"Geschmack",true));
-		
+		regeln.add(new Regel("Geschmack", r3, c3, "enth‰lt nicht", rw3,
+				"Geschmack", true));
+
 		List<Integer> r2 = new ArrayList<Integer>();
 		r2.add(3);
 		r2.add(4);
@@ -212,32 +205,41 @@ public class Regel {
 		c2.add(-1);
 		List<String> rw2 = new ArrayList<String>();
 		rw2.add("3");
-		regeln.add(new Regel("Menueart",r2,c2,	"maximal",rw2,"Es d√ºrfen maximal 3 Men√ºs einer Kat in den Zeilen 2 und 3 eingef√ºgt werden",	true));
+		regeln.add(new Regel(
+				"Menueart",
+				r2,
+				c2,
+				"maximal",
+				rw2,
+				"Es d√ºrfen maximal 3 Men√ºs einer Kat in den Zeilen 2 und 3 eingef√ºgt werden",
+				true));
 
 		return regeln;
 	}
 
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
-//		if (regeltyp.equals("name")) {
-//			mc.addFehlerRegel(checkName(mc, mp));
-//		} else if (regeltyp.equals("Menueart")) {
-//			mc.addFehlerRegel(checkMenueart(mc, mp));
-//		}
-		if(getZeilen()!=null&&getSpalten()!=null){
-			if (this.getZeilen().indexOf(mc.row) >= 0 || this.getZeilen().indexOf(-1) >= 0) {
-				if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
-					this.findeRegel(mc,mp);
+		// if (regeltyp.equals("name")) {
+		// mc.addFehlerRegel(checkName(mc, mp));
+		// } else if (regeltyp.equals("Menueart")) {
+		// mc.addFehlerRegel(checkMenueart(mc, mp));
+		// }
+		if (getZeilen() != null && getSpalten() != null) {
+			if (this.getZeilen().indexOf(mc.row) >= 0
+					|| this.getZeilen().indexOf(-1) >= 0) {
+				if (this.getSpalten().indexOf(mc.col) >= 0
+						|| this.getSpalten().indexOf(-1) >= 0) {
+					this.findeRegel(mc, mp);
 				}
 			}
 		}
-		
 
 	}
-	
-//	Geschmack!, FuÔøΩnote, Zubereitung, Menueart!
-	
+
+	// Geschmack!, FuÔøΩnote, Zubereitung, Menueart!
+
 	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
-		System.out.println("Count Fussnoten: "+mc.getMenue().getFussnoten().size());
+		System.out.println("Count Fussnoten: "
+				+ mc.getMenue().getFussnoten().size());
 		if (regeltyp.equals("Name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
 		} else if (regeltyp.trim().equals("Men¸art")) {
@@ -252,69 +254,77 @@ public class Regel {
 			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
 	}
-	
+
 	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col+"/");
-		System.out.print(mc.row+"/");
+		System.out.print(mc.col + "/");
+		System.out.print(mc.row + "/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-//		if(menue.getFussnoten()!=null){
-			if (operator.equals("enth‰lt nicht")) {	
-				System.out.println("#Fussnote: enth‰lt nicht");
-				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
-					System.out.println("#Fussnote: not null"+menue.getFussnoten().size());
-					for(Fussnote fs: menue.getFussnoten()){
-						System.out.println("#Fussnote:"+ fs.getName());
-						if (kriterienlist.indexOf(fs.getName()) >= 0) {
-							System.out.println("#Fussnote: return "+ fs.getName());
-							return null;
-						} return this;
+		// if(menue.getFussnoten()!=null){
+		if (operator.equals("enth‰lt nicht")) {
+			System.out.println("#Fussnote: enth‰lt nicht");
+			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
+				System.out.println("#Fussnote: not null"
+						+ menue.getFussnoten().size());
+				for (Fussnote fs : menue.getFussnoten()) {
+					System.out.println("#Fussnote:" + fs.getName());
+					if (kriterienlist.indexOf(fs.getName()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getName());
+						return null;
 					}
-				} else return this;
-				
-			} else if (operator.equals("enth‰lt")) {
-				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
-					for(Fussnote fs: menue.getFussnoten()){
-						if (kriterienlist.indexOf(fs.getName()) == -1) {
-							return null;
-						}else return this;
-					}
-				} else return null;
-				
-			} else if (operator.equals("maximal")) {
-				if(menue.getFussnoten()!=null){
-					int count = 0;
-					int maxValue = Integer.MAX_VALUE;
-					try {
-						maxValue = Integer.parseInt(kriterienlist.get(0));
-					} catch (NumberFormatException e) {
-						// do something! anything to handle the exception.
-					}
+					return this;
+				}
+			} else
+				return this;
 
-					DDGridLayout grid = mp.layout;
-					for(Fussnote fs : mc.getMenue().getFussnoten()){
-						count=0;
+		} else if (operator.equals("enth‰lt")) {
+			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
+				for (Fussnote fs : menue.getFussnoten()) {
+					if (kriterienlist.indexOf(fs.getName()) == -1) {
+						return null;
+					} else
+						return this;
+				}
+			} else
+				return null;
+
+		} else if (operator.equals("maximal")) {
+			if (menue.getFussnoten() != null) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					// do something! anything to handle the exception.
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (Fussnote fs : mc.getMenue().getFussnoten()) {
+					count = 0;
 					for (int col = 0; col < grid.getColumns(); ++col) {
 						for (int row = 0; row < grid.getRows(); ++row) {
-							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-									&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist
+									.indexOf(-1) >= 0)
+									&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+											.indexOf(-1) >= 0)) {
 								if (grid.getComponent(col, row) instanceof MenueComponent) {
-									MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-										if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
-											if (tmp.getFehlerRegeln() != null) {
-												if (tmp.getFehlerRegeln().indexOf(this) == -1) {
-													++count;
-													if (count > maxValue) {
-														return this;
-													}
-												}
-											} 
-											else {
+									MenueComponent tmp = (MenueComponent) grid
+											.getComponent(col, row);
+									if (tmp.getMenue().getFussnoten()
+											.indexOf(fs) >= 0) {
+										if (tmp.getFehlerRegeln() != null) {
+											if (tmp.getFehlerRegeln().indexOf(
+													this) == -1) {
 												++count;
 												if (count > maxValue) {
 													return this;
 												}
+											}
+										} else {
+											++count;
+											if (count > maxValue) {
+												return this;
 											}
 										}
 									}
@@ -322,113 +332,125 @@ public class Regel {
 							}
 						}
 					}
-				} else return null;		
-			}
-//		}
+				}
+			} else
+				return null;
+		}
+		// }
 		return null;
 	}
 
-	
 	private Regel checkFussnote(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col+"/");
-		System.out.print(mc.row+"/");
+		System.out.print(mc.col + "/");
+		System.out.print(mc.row + "/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-//		if(menue.getFussnoten()!=null){
-			if (operator.equals("enth‰lt nicht")) {	
-				System.out.println("#Fussnote: enth‰lt nicht");
-				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
-					System.out.println("#Fussnote: not null"+menue.getFussnoten().size());
-					for(Fussnote fs: menue.getFussnoten()){
-						System.out.println("#Fussnote:"+ fs.getName());
-						if (kriterienlist.indexOf(fs.getName()) >= 0) {
-							System.out.println("#Fussnote: return "+ fs.getName());
-							return null;
-						} return this;
+		// if(menue.getFussnoten()!=null){
+		if (operator.equals("enth‰lt nicht")) {
+			System.out.println("#Fussnote: enth‰lt nicht");
+			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
+				System.out.println("#Fussnote: not null"
+						+ menue.getFussnoten().size());
+				for (Fussnote fs : menue.getFussnoten()) {
+					System.out.println("#Fussnote:" + fs.getName());
+					if (kriterienlist.indexOf(fs.getName()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getName());
+						return null;
 					}
-				} else return this;
-				
-			} else if (operator.equals("enth‰lt")) {
-				System.out.println("###enth‰lt");
-				if(menue.getFussnoten()!=null && menue.getFussnoten().size()>0){
-					for(Fussnote fs: menue.getFussnoten()){
-						
-						System.out.println("#Fussnote:"+ fs.getName());
-						if (kriterienlist.indexOf(fs.getName()) == -1) {
-							
-						}else return this;
-					}
-				} else return null;
-				
-			} else if (operator.equals("maximal")) {
-				if(menue.getFussnoten()!=null){
-					int count = 0;
-					int maxValue = Integer.MAX_VALUE;
-					try {
-						maxValue = Integer.parseInt(kriterienlist.get(0));
-					} catch (NumberFormatException e) {
-						// do something! anything to handle the exception.
-					}
+					return this;
+				}
+			} else
+				return this;
 
-					DDGridLayout grid = mp.layout;
-					for(Fussnote fs : mc.getMenue().getFussnoten()){
-						count=0;
+		} else if (operator.equals("enth‰lt")) {
+			System.out.println("###enth‰lt");
+			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
+				for (Fussnote fs : menue.getFussnoten()) {
+
+					System.out.println("#Fussnote:" + fs.getName());
+					if (kriterienlist.indexOf(fs.getName()) == -1) {
+
+					} else
+						return this;
+				}
+			} else
+				return null;
+
+		} else if (operator.equals("maximal")) {
+			if (menue.getFussnoten() != null) {
+				int count = 0;
+				int maxValue = Integer.MAX_VALUE;
+				try {
+					maxValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					// do something! anything to handle the exception.
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (Fussnote fs : mc.getMenue().getFussnoten()) {
+					count = 0;
 					for (int col = 0; col < grid.getColumns(); ++col) {
 						for (int row = 0; row < grid.getRows(); ++row) {
-							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-									&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist
+									.indexOf(-1) >= 0)
+									&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+											.indexOf(-1) >= 0)) {
 								if (grid.getComponent(col, row) instanceof MenueComponent) {
-									MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-										if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
-											if (tmp.getFehlerRegeln() != null) {
-												if (tmp.getFehlerRegeln().indexOf(this) == -1) {
-													++count;
-													if (count > maxValue) {
-														return this;
-													}
-												}
-											} 
-											else {
+									MenueComponent tmp = (MenueComponent) grid
+											.getComponent(col, row);
+									if (tmp.getMenue().getFussnoten()
+											.indexOf(fs) >= 0) {
+										if (tmp.getFehlerRegeln() != null) {
+											if (tmp.getFehlerRegeln().indexOf(
+													this) == -1) {
 												++count;
 												if (count > maxValue) {
 													return this;
 												}
 											}
+										} else {
+											++count;
+											if (count > maxValue) {
+												return this;
+											}
 										}
-
 									}
+
 								}
 							}
 						}
 					}
-				} else return null;
-				
-			}
-//		}
-		
+				}
+			} else
+				return null;
+
+		}
+		// }
+
 		return null;
 	}
-
 
 	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
 		System.out.println("#Geschmack");
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col+"/");
-		System.out.print(mc.row+"/");
+		System.out.print(mc.col + "/");
+		System.out.print(mc.row + "/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-		if(menue.getGeschmack()!=null){
+		if (menue.getGeschmack() != null) {
 			if (operator.equals("enth‰lt nicht")) {
 				System.out.println("ent nit");
 				System.out.println(menue.getGeschmack().getName().toString());
-					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
-						return this;
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+						.toString()) == -1) {
+					return this;
 				}
 			} else if (operator.equals("enth‰lt")) {
-					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
-						return this;
-					}
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+						.toString()) >= 0) {
+					return this;
+				}
 			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -441,11 +463,15 @@ public class Regel {
 				DDGridLayout grid = mp.layout;
 				for (int col = 0; col < grid.getColumns(); ++col) {
 					for (int row = 0; row < grid.getRows(); ++row) {
-						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist
+								.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+										.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
-								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-								if (mc.getMenue().getGeschmack().equals(tmp.getMenue().getGeschmack())) {
+								MenueComponent tmp = (MenueComponent) grid
+										.getComponent(col, row);
+								if (mc.getMenue().getGeschmack()
+										.equals(tmp.getMenue().getGeschmack())) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
@@ -468,23 +494,25 @@ public class Regel {
 		}
 		return null;
 	}
-	
+
 	private Regel checkAufwand(MenueComponent mc, MenueplanGridLayout mp) {
 		System.out.println("#Geschmack");
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col+"/");
-		System.out.print(mc.row+"/");
+		System.out.print(mc.col + "/");
+		System.out.print(mc.row + "/");
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
-		if(menue.getGeschmack()!=null){
+		if (menue.getGeschmack() != null) {
 			if (operator.equals("enth‰lt nicht")) {
-					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) == -1) {
-						return this;
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+						.toString()) == -1) {
+					return this;
 				}
 			} else if (operator.equals("enth‰lt")) {
-					if (kriterienlist.indexOf(menue.getGeschmack().getName().toString()) >= 0) {
-						return this;
-					}
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+						.toString()) >= 0) {
+					return this;
+				}
 			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -497,11 +525,16 @@ public class Regel {
 				DDGridLayout grid = mp.layout;
 				for (int col = 0; col < grid.getColumns(); ++col) {
 					for (int row = 0; row < grid.getRows(); ++row) {
-						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist
+								.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+										.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
-								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-								if (mc.getMenue().getKoch().equals(tmp.getMenue().getKoch()) && mc.getMenue().getAufwand()) {
+								MenueComponent tmp = (MenueComponent) grid
+										.getComponent(col, row);
+								if (mc.getMenue().getKoch()
+										.equals(tmp.getMenue().getKoch())
+										&& mc.getMenue().getAufwand()) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
@@ -525,22 +558,24 @@ public class Regel {
 		return null;
 	}
 
-
 	private Regel checkMenueart(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col+"/");
-		System.out.print(mc.row+"/");
+		System.out.print(mc.col + "/");
+		System.out.print(mc.row + "/");
 		System.out.println(menue.getMenueart());
-		if(menue.getMenueart()!=null){
+		if (menue.getMenueart() != null) {
 			if (operator.equals("enth‰lt nicht")) {
-				System.out.println("!!!!!!!!"+menue.getMenueart().getName().toString());
-					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) == -1) {
-						return this;
+				System.out.println("!!!!!!!!"
+						+ menue.getMenueart().getName().toString());
+				if (kriterienlist.indexOf(menue.getMenueart().getName()
+						.toString()) == -1) {
+					return this;
 				}
 			} else if (operator.equals("enth‰lt")) {
-					if (kriterienlist.indexOf(menue.getMenueart().getName().toString()) >= 0) {
-						return this;
-					}
+				if (kriterienlist.indexOf(menue.getMenueart().getName()
+						.toString()) >= 0) {
+					return this;
+				}
 			} else if (operator.equals("maximal")) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -553,11 +588,15 @@ public class Regel {
 				DDGridLayout grid = mp.layout;
 				for (int col = 0; col < grid.getColumns(); ++col) {
 					for (int row = 0; row < grid.getRows(); ++row) {
-						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+						if ((zeilenlist.indexOf(row) >= 0 || zeilenlist
+								.indexOf(-1) >= 0)
+								&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+										.indexOf(-1) >= 0)) {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
-								MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-								if (mc.getMenue().getMenueart().equals(tmp.getMenue().getMenueart())) {
+								MenueComponent tmp = (MenueComponent) grid
+										.getComponent(col, row);
+								if (mc.getMenue().getMenueart()
+										.equals(tmp.getMenue().getMenueart())) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
@@ -607,10 +646,13 @@ public class Regel {
 			for (int col = 0; col < grid.getColumns(); ++col) {
 				for (int row = 0; row < grid.getRows(); ++row) {
 					if ((zeilenlist.indexOf(row) >= 0 || zeilenlist.indexOf(-1) >= 0)
-							&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+							&& (spaltenlist.indexOf(col) >= 0 || spaltenlist
+									.indexOf(-1) >= 0)) {
 						if (grid.getComponent(col, row) instanceof MenueComponent) {
-							MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-							if (mc.getMenue().getName().equals(tmp.getMenue().getName())) {
+							MenueComponent tmp = (MenueComponent) grid
+									.getComponent(col, row);
+							if (mc.getMenue().getName()
+									.equals(tmp.getMenue().getName())) {
 								if (tmp.getFehlerRegeln() != null) {
 									if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 										++count;
@@ -654,15 +696,15 @@ public class Regel {
 		}
 
 	}
-	
+
 	public static void loeschen(Regel regel) {
 
 		try {
 			Regelverwaltung.getInstance().deleteRegel(regel);
-		} catch (Exception  e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
 		Notification notification = new Notification("Regel wurde gel√∂scht");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());

@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
 /**
  * @author Michael Marschall
@@ -16,7 +16,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 public class Fussnotenverwaltung extends FussnoteDAO {
 
 	private static Fussnotenverwaltung instance = null;
-	private FussnoteDAO dao;
 
 	private Fussnotenverwaltung() {
 		super();
@@ -43,8 +42,8 @@ public class Fussnotenverwaltung extends FussnoteDAO {
 		return result;
 	}
 
-	public Fussnote getFussnoteByName(String name)
-			throws ConnectException, DAOException, SQLException {
+	public Fussnote getFussnoteByName(String name) throws ConnectException,
+			DAOException, SQLException {
 		Fussnote result = null;
 		result = super.getFussnoteByName(name);
 		return result;

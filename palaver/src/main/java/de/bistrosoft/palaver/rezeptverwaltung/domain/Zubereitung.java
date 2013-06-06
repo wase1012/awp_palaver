@@ -9,14 +9,14 @@ import java.util.Set;
 public class Zubereitung implements java.io.Serializable {
 
 	private static final long serialVersionUID = -962227872830047781L;
-	
-	//Variablen
+
+	// Variablen
 	private Long id;
 	private String name;
 	private Set<RezeptHasZubereitung> rezeptHasZubereitungs = new HashSet<RezeptHasZubereitung>(
 			0);
 
-	//Konstruktoren
+	// Konstruktoren
 	public Zubereitung() {
 	}
 
@@ -31,8 +31,8 @@ public class Zubereitung implements java.io.Serializable {
 		this.name = name;
 		this.rezeptHasZubereitungs = rezeptHasZubereitungs;
 	}
-	
-	//Getter- und Setter
+
+	// Getter- und Setter
 	public Long getId() {
 		return this.id;
 	}
@@ -58,8 +58,9 @@ public class Zubereitung implements java.io.Serializable {
 		this.rezeptHasZubereitungs = rezeptHasZubereitungs;
 	}
 
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -75,7 +76,9 @@ public class Zubereitung implements java.io.Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -105,7 +108,9 @@ public class Zubereitung implements java.io.Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -2,18 +2,11 @@
  
 package de.bistrosoft.palaver.gui.view;
 
-import com.vaadin.client.ui.Action;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.Align;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 
@@ -32,14 +25,14 @@ public class RezeptSuchen extends VerticalLayout{
 	
 	private VerticalLayout	eregbnis = new VerticalLayout();
 	
-	private Label ueberschrift = new Label("<pre><b><font size='4' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept Suchen</font><b></pre>", Label.CONTENT_XHTML);
+	private Label ueberschrift = new Label("<pre><b><font size='4' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept Suchen</font><b></pre>", ContentMode.HTML);
     private OptionGroup auswahl = new OptionGroup("Suchkriterium");
     
     
-    private Label name = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Name suchen       </font><b></pre>", Label.CONTENT_XHTML);
-    private Label ersteller = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Rezeptersteller suchen       </font><b></pre>", Label.CONTENT_XHTML);
-    private Label geschmack = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Geschmack suchen       </font><b></pre>", Label.CONTENT_XHTML);
-    private Label fussnote = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Fussnote suchen       </font><b></pre>", Label.CONTENT_XHTML);
+    private Label name = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Name suchen       </font><b></pre>", ContentMode.HTML);
+    private Label ersteller = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Rezeptersteller suchen       </font><b></pre>", ContentMode.HTML);
+    private Label geschmack = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Geschmack suchen       </font><b></pre>", ContentMode.HTML);
+    private Label fussnote = new Label("<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Nach Fussnote suchen       </font><b></pre>", ContentMode.HTML);
  
 	
 	

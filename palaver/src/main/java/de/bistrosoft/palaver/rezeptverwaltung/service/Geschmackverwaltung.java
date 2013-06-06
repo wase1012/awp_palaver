@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
 /**
  * @author Michael Marschall
@@ -15,7 +15,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 public class Geschmackverwaltung extends GeschmackDAO {
 
 	private static Geschmackverwaltung instance = null;
-	private GeschmackDAO dao;
 
 	private Geschmackverwaltung() {
 		super();

@@ -7,18 +7,17 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
 public class RezeptHasArtikel {
 
-
-
 	private Artikel artikel;
 	private double menge;
 	private Mengeneinheit mengeneinheit;
 	private Rezept rezept;
-//	private String artikelname;
+
+	// private String artikelname;
 
 	public RezeptHasArtikel() {
 		super();
 	}
-	
+
 	public Mengeneinheit getMengeneinheit() {
 		return mengeneinheit;
 	}
@@ -46,12 +45,12 @@ public class RezeptHasArtikel {
 		this.mengeneinheit = mengeneinheit;
 
 	}
-	
-	public RezeptHasArtikel(Artikel a){
-		this.artikel=a;
-		this.mengeneinheit=a.getMengeneinheit();
-		this.menge=1.0;
-		this.rezept=null; 
+
+	public RezeptHasArtikel(Artikel a) {
+		this.artikel = a;
+		this.mengeneinheit = a.getMengeneinheit();
+		this.menge = 1.0;
+		this.rezept = null;
 	}
 
 	public double getMenge() {
@@ -66,7 +65,7 @@ public class RezeptHasArtikel {
 	public String getArtikelname() {
 		return this.artikel.getName();
 	}
-	
+
 	public String getEinheit() {
 		return this.mengeneinheit.getName();
 	}
@@ -97,15 +96,15 @@ public class RezeptHasArtikel {
 				+ artikel.getName();
 	}
 
-//	@Override
-//	public int hashCode() {
-//		return artikel.hashCode();
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		return artikel.equals(obj);
-//	}
+	// @Override
+	// public int hashCode() {
+	// return artikel.hashCode();
+	// }
+	//
+	// @Override
+	// public boolean equals(Object obj) {
+	// return artikel.equals(obj);
+	// }
 
 	// public void setRezeptart(Rezeptart rezeptart) {
 	// this.rezeptart = rezeptart;

@@ -15,7 +15,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 public class Zubereitungverwaltung extends ZubereitungDAO {
 
 	private static Zubereitungverwaltung instance = null;
-	private ZubereitungDAO dao;
 
 	private Zubereitungverwaltung() {
 		super();
@@ -34,8 +33,9 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 		result = super.getAllZubereitung();
 		return result;
 	}
-	public List<Zubereitung> getZubereitungByRezept(Long rezeptId) throws ConnectException,
-	DAOException, SQLException {
+
+	public List<Zubereitung> getZubereitungByRezept(Long rezeptId)
+			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> result = null;
 		result = super.getZubereitungByRezept(rezeptId);
 		return result;
@@ -50,9 +50,9 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 
 	public Zubereitung getZubereitungByName(String name)
 			throws ConnectException, DAOException, SQLException {
-//		List<Zubereitung> result = null;
-//		result = super.getZubereitungByName(name);
-		return  super.getZubereitungByName(name);
+		// List<Zubereitung> result = null;
+		// result = super.getZubereitungByName(name);
+		return super.getZubereitungByName(name);
 	}
 
 	public void createZubereitung(Zubereitung zubereitung)

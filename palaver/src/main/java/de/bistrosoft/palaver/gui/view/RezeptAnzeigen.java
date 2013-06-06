@@ -32,28 +32,28 @@
 //	// Ueberschriften
 //	private Label uBezeichnung = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Bezeichnung</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uRezeptersteller = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Koch</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uPortion = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Portion</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uArt = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezeptart</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uKommentar = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kommentar</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uZutaten = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zutaten</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uFavorit = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Favorit</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	private Label uAufwand = new Label(
 //			"<pre><b><font size='2' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Aufwand</font><b></pre>",
-//			Label.CONTENT_XHTML);
+//			ContentMode.HTML);
 //	
 //	// Textfelder
 //	private TextField bezeichnung = new TextField();

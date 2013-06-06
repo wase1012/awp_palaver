@@ -3,11 +3,10 @@ package de.bistrosoft.palaver.menueplanverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.bistrosoft.palaver.data.MenueartDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
 /**
  * 
@@ -16,7 +15,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 public class Menueartverwaltung extends MenueartDAO {
 
 	private static Menueartverwaltung instance = null;
-	private MenueartDAO dao;
 
 	private Menueartverwaltung() {
 		super();

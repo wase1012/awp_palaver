@@ -1,14 +1,13 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -21,17 +20,14 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.data.RegelDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -45,9 +41,8 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
-//	List<Regel> regeln = Regel.getTestRegeln();
+	// List<Regel> regeln = Regel.getTestRegeln();
 	List<Regel> regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
-	 
 
 	public Menueplan getMenueplan() {
 		return menueplan;
@@ -59,7 +54,8 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year) {
-		menueplan = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
+		menueplan = Menueplanverwaltung.getInstance()
+				.getMenueplanByWeekWithItems(new Week(week, year));
 		if (menueplan == null) {
 			menueplan = new Menueplan(new Week(week, year));
 		}
@@ -102,32 +98,31 @@ public class MenueplanGridLayout extends CustomComponent {
 		});
 
 		// FÃ¼lle Ãœberschriftenspalte mit formatierten Labels
-		@SuppressWarnings("deprecation")
 		Label[] arlbUeb = {
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     Köche</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Fleischgericht</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Hauptgericht</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Pastagericht</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Suppe / Salat</font></pre>",
-						Label.CONTENT_XHTML),
+						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Dessert</font></pre>",
-						Label.CONTENT_XHTML) };
+						ContentMode.HTML) };
 		for (int i = 0; i < arlbUeb.length; i++) {
 			arlbUeb[i].setWidth("150px");
 			arlbUeb[i].setHeight("90px");
@@ -149,9 +144,8 @@ public class MenueplanGridLayout extends CustomComponent {
 					+ (date.get(Calendar.MONTH) + 1) + "."
 					+ date.get(Calendar.YEAR);
 
-			@SuppressWarnings("deprecation")
 			Label lbTmp = new Label("<div align=center><B>" + "\r\n" + strDay
-					+ "\r\n" + strDate + "</B></div>", Label.CONTENT_XHTML);
+					+ "\r\n" + strDate + "</B></div>", ContentMode.HTML);
 			lbTmp.setHeight("30px");
 			lbTmp.setWidth("149px");
 			layout.addComponent(lbTmp, col, 0);
@@ -257,8 +251,8 @@ public class MenueplanGridLayout extends CustomComponent {
 		}
 		menueplan.setMenues(menues);
 
-		// Extrahiere KÃ¶che
-		// TODO: KÃ¶che extrahieren
+		// Extrahiere Köche
+		// TODO: Köche extrahieren
 		List<KochInMenueplan> koeche = new ArrayList<KochInMenueplan>();
 		for (int col = 2; col < COLUMNS; ++col) {
 			VerticalLayout vl = (VerticalLayout) layout.getComponent(col, 1);
@@ -274,19 +268,20 @@ public class MenueplanGridLayout extends CustomComponent {
 		this.layout.removeComponent(destComp);
 		this.pruefeMenueRegeln();
 	}
-	
+
 	public void addMenue(MenueComponent comp, Integer col, Integer row) {
-		
+
 		layout.addComponent(comp, col, row);
 		pruefeRegeln(comp);
-		
+
 	}
-	
-	public void vertauscheMenue(Component sourceComp, Component comp, Integer col, Integer row) {	
+
+	public void vertauscheMenue(Component sourceComp, Component comp,
+			Integer col, Integer row) {
 		layout.removeComponent(sourceComp);
 		layout.removeComponent(comp);
 		pruefeMenueRegeln();
-		layout.addComponent(sourceComp,col,row);
+		layout.addComponent(sourceComp, col, row);
 
 		layout.setComponentAlignment(sourceComp, Alignment.MIDDLE_CENTER);
 
@@ -294,15 +289,15 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	public void pruefeRegeln(MenueComponent mc) {
 		for (Regel r : regeln) {
-			r.check(mc, this); 
+			r.check(mc, this);
 		}
 	}
-	
-	public void pruefeMenueRegeln(){
+
+	public void pruefeMenueRegeln() {
 		for (int col = 0; col < COLUMNS; ++col) {
 			for (int row = 0; row < ROWS; ++row) {
-				Component comp=layout.getComponent(col, row);
-				if(comp instanceof MenueComponent){
+				Component comp = layout.getComponent(col, row);
+				if (comp instanceof MenueComponent) {
 					MenueComponent menue = (MenueComponent) comp;
 					menue.pruefeRegeln(this);
 				}
