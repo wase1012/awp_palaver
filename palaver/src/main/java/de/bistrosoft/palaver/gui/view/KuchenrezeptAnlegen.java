@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
-import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -22,9 +21,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
@@ -36,7 +35,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.bistrosoft.palaver.data.KuchenrezeptDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
@@ -87,8 +85,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	// Textfeld
 	private TextField name = new TextField("Bezeichnung");
 	
-	// Combobox
-	private ComboBox mitarbeiterCb = new ComboBox("Bäcker");
+	// NativeSelect
+	private NativeSelect mitarbeiterNs = new NativeSelect("Bäcker");
 
 	// Textarea
 	private TextArea kommentar = new TextArea("Kommentar");
@@ -124,10 +122,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		name.setMaxLength(200);
 		name.setInputPrompt(nameInput);
 
-		mitarbeiterCb.setWidth("100%");
-		mitarbeiterCb.setImmediate(true);
-		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
-		mitarbeiterCb.setNullSelectionAllowed(false);
+		mitarbeiterNs.setWidth("100%");
+		mitarbeiterNs.setImmediate(true);
+		mitarbeiterNs.setData(mitarbeiterInput);
+		mitarbeiterNs.setNullSelectionAllowed(false);
 
 		kommentar.setImmediate(true);
 		kommentar.setMaxLength(1000);
@@ -143,9 +141,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		box.addComponent(name);
 		name.setWidth("300px");
 		box.setComponentAlignment(name, Alignment.MIDDLE_CENTER);
-		box.addComponent(mitarbeiterCb);
-		mitarbeiterCb.setWidth("300px");
-		box.setComponentAlignment(mitarbeiterCb, Alignment.MIDDLE_CENTER);
+		box.addComponent(mitarbeiterNs);
+		mitarbeiterNs.setWidth("300px");
+		box.setComponentAlignment(mitarbeiterNs, Alignment.MIDDLE_CENTER);
 		box.addComponent(hlRezeptZutaten);
 		box.setComponentAlignment(hlRezeptZutaten, Alignment.MIDDLE_CENTER);
 		box.addComponent(kommentar);
@@ -163,7 +161,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		name.addValueChangeListener(this);
 
 		// ValueChangeListener Mitarbeiter
-		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
+		mitarbeiterNs.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				valueString = String.valueOf(event.getProperty().getValue());
@@ -304,18 +302,18 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		load();
 		
 		//Baecker auf aktuellen User setzen
-		mitarbeiterCb.select(Application.getInstance().getUser());
+		mitarbeiterNs.select(Application.getInstance().getUser());
 	}
 
 	public void load() {
 
-		mitarbeiterCb.removeAllItems();
+		mitarbeiterNs.removeAllItems();
 
 		try {
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				mitarbeiterCb.addItem(e);
+				mitarbeiterNs.addItem(e);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -327,12 +325,21 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	public void getViewParam(ViewData data) {
 
 		kuchenrezept = (Kuchenrezept) ((ViewDataObject<?>) data).getData();
+		try {
+			kuchenrezept = Kuchenrezeptverwaltung.getInstance().getKuchenrezeptById(kuchenrezept.getId(),true);
+		} catch (ConnectException e2) {
+			e2.printStackTrace();
+		} catch (DAOException e2) {
+			e2.printStackTrace();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
 
-		if(kuchenrezept.getArtikel()!=null){
-			tmpZutaten=kuchenrezept.getArtikel();
+		if(kuchenrezept.getArtikel() != null){
+			tmpZutaten = kuchenrezept.getArtikel();
 		}
 		else{
-			tmpZutaten=new ArrayList<KuchenrezeptHasArtikel>();
+			tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
 		}
 		
 		control.replaceComponent(btSpeichern, update);
@@ -344,41 +351,33 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		update.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				update();
+				if(validiereEingabe()){					
+					update();
+				}
 			}
 		});
 
 		/**
 		 * Daten in Felder schreiben
 		 */
-		try {
-			name.setValue(KuchenrezeptDAO.getInstance().getKuchenrezeptById(kuchenrezept.getId())
-					.getName().toString());
-		} catch (Exception e3) {
-			e3.printStackTrace();
-		}
+		
+			name.setValue(kuchenrezept.getName());
 
+			mitarbeiterNs.select(kuchenrezept.getMitarbeiter());
 
-		try {
-			mitarbeiterCb.select(kuchenrezept.getMitarbeiter());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		BeanItemContainer<KuchenrezeptHasArtikel> artikelcontainer;
-		List<KuchenrezeptHasArtikel> list = new ArrayList<KuchenrezeptHasArtikel>();
-
-		try {
-			list = Kuchenrezeptverwaltung.getInstance().getAllArtikelByKuchenrezeptId1(
-					kuchenrezept.getId());
-			System.out.println(list);
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-
-		try {
-			artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
-					KuchenrezeptHasArtikel.class);
+			BeanItemContainer<KuchenrezeptHasArtikel> artikelcontainer;
+			List<KuchenrezeptHasArtikel> list = new ArrayList<KuchenrezeptHasArtikel>();
+	
+			try {
+				list = Kuchenrezeptverwaltung.getInstance().getAllArtikelByKuchenrezeptId1(
+						kuchenrezept);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+	
+			try {
+				artikelcontainer = new BeanItemContainer<KuchenrezeptHasArtikel>(
+						KuchenrezeptHasArtikel.class);
 			
 			zutatenTable = null;
 			zutatenTable = new Table();
@@ -393,7 +392,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			
 			for(KuchenrezeptHasArtikel kha : list){
 				containerArtikel.removeItem(kha);
-				System.out.println(kha.getArtikelname());
 				containerKuchenrezeptHasArtikel.addItem(kha);				
 			}
 			
@@ -403,19 +401,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		kuchenrezept.setArtikel(list);
 
-		try {
-			kommentar.setValue(KuchenrezeptDAO.getInstance()
-					.getKuchenrezeptById(kuchenrezept.getId()).getKommentar().toString());
-		} catch (ReadOnlyException e) {
-			e.printStackTrace();
-		} catch (ConnectException e) {
-			e.printStackTrace();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+		kommentar.setValue(kuchenrezept.getKommentar());
 	}
 
 	@Override
@@ -443,7 +429,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		kuchenrezept.setKommentar(kommentarInput);
 		
 		try {
-			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
+			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -481,8 +467,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 		
 			try {
-				System.out.println("kuchenrezeptAnlegen speichern id: "
-						+ kuchenrezept.getId());
 				Kuchenrezeptverwaltung.getInstance().saveArtikel(kuchenrezeptNeu);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -519,7 +503,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		
 		// setzt Mitarbeiter
 		try {
-			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
+			kuchenrezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -540,7 +524,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		}
 		
 		Notification notification = new Notification(
-				"Rezept wurde gesändert!");
+				"Rezept wurde geändert!");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(
@@ -560,14 +544,25 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			showNotification("Bitte Namen eingeben!");
 			return false;
 		}
-		if(mitarbeiterCb.getValue()==null){
+		if(mitarbeiterNs.getValue()==null){
 			showNotification("Bitte Bäcker wählen!");
 			return false;
 		}
-		if(tmpZutaten==null || tmpZutaten.size()==0){
-			showNotification("Bitte Zutaten wÃ¤hlen!");
-			return false;
+		if (tmpZutaten != null || tmpZutaten.size() != 0) {
+			for (KuchenrezeptHasArtikel kha : tmpZutaten) {
+				if (kha.getMenge() >= 100000.0) {
+					showNotification(IConstants.INFO_REZEPT_MENGE);
+					return false;
+				}
+			}
+		
+			if (tmpZutaten == null || tmpZutaten.size() == 0) {
+				showNotification(IConstants.INFO_REZEPT_ZUTATEN);
+				return false;
+			}
 		}
+
+		
 		return true;
 	}
 	
