@@ -144,7 +144,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		kategorie.setImmediate(true);
 		kategorie.addValueChangeListener(this);
 		
-		notiz.setWidth("100");
+		notiz.setWidth("100%");
 		notiz.setImmediate(true);
 		notiz.addValueChangeListener(this);
 		
