@@ -240,7 +240,6 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
   `name` VARCHAR(200) NOT NULL ,
   `rezeptart_fk` INT NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
-  `portion` INT NOT NULL ,
   `mitarbeiter_fk` INT NULL ,
    `erstellt` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,

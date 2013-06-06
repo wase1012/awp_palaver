@@ -65,12 +65,13 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
 	// Layouts
-	private HorizontalLayout box = new HorizontalLayout();
-	private HorizontalLayout control = new HorizontalLayout();
+	private VerticalLayout vlBox = new VerticalLayout();
+	private VerticalLayout vlDetailsLinks = new VerticalLayout();
+	private VerticalLayout vlDetailsRechts = new VerticalLayout();
 
-	private VerticalLayout vlRezeptdetailsLinks = new VerticalLayout();
-	private VerticalLayout vlRezeptdetailsRechts = new VerticalLayout();
-	private HorizontalLayout hlRezeptZutaten = new HorizontalLayout();
+	private HorizontalLayout hlZutaten = new HorizontalLayout();
+	private HorizontalLayout hlControl = new HorizontalLayout();
+	private HorizontalLayout hlDetails = new HorizontalLayout();
 
 	// Tabellen
 	private Table zutatenTable;
@@ -90,9 +91,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	@SuppressWarnings("deprecation")
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
-			Label.CONTENT_XHTML);
-	@SuppressWarnings("deprecation")
-	private Label dummyl = new Label("<div>&nbsp;&nbsp;&nbsp;</div>",
 			Label.CONTENT_XHTML);
 
 	// TextFelder
@@ -167,37 +165,43 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		kommentar.setImmediate(true);
 		kommentar.setMaxLength(5000);
 
-		box.setWidth("800px");
-		box.setSpacing(true);
+		vlBox.setWidth("1000px");
+		vlBox.setSpacing(true);
 
-		this.addComponent(box);
-		box.addComponent(vlRezeptdetailsLinks);
-		box.addComponent(vlRezeptdetailsRechts);
-		this.addComponent(hlRezeptZutaten);
-		vlRezeptdetailsLinks.addComponent(ueberschrift);
-		vlRezeptdetailsLinks.addComponent(name);
-		vlRezeptdetailsLinks.addComponent(mitarbeiterCb);
-		vlRezeptdetailsLinks.addComponent(rezeptartOg);
-		vlRezeptdetailsLinks.addComponent(dummyl);
+		this.addComponent(vlBox);
+		vlBox.addComponent(hlDetails);
+		vlBox.addComponent(hlZutaten);
+		vlBox.addComponent(hlControl);
 
-		vlRezeptdetailsRechts.addComponent(zubereitung);
-		vlRezeptdetailsRechts.addComponent(kommentar);
+		hlDetails.addComponent(vlDetailsLinks);
+		hlDetails.addComponent(vlDetailsRechts);
+		hlDetails.setWidth("800px");
+		hlDetails.setHeight("285px");
 
-		hlRezeptZutaten.setSizeUndefined();
+		vlDetailsLinks.addComponent(ueberschrift);
+		vlDetailsLinks.addComponent(name);
+		vlDetailsLinks.addComponent(mitarbeiterCb);
+		vlDetailsLinks.addComponent(rezeptartOg);
+		vlDetailsLinks.setWidth("350px");
 
-		control.setSpacing(true);
-		this.addComponent(control);
-		this.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		vlDetailsRechts.addComponent(zubereitung);
+		vlDetailsRechts.addComponent(kommentar);
+		vlDetailsRechts.setWidth("350px");
+
+		hlZutaten.setWidth("1000px");
+		hlZutaten.setHeight("393px");
+
+		hlControl.setSpacing(true);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
-		
 
-		control.addComponent(btMenue);
-		control.addComponent(btVerwerfen);
-		control.addComponent(btSpeichern);
+		hlControl.addComponent(btMenue);
+		hlControl.addComponent(btVerwerfen);
+		hlControl.addComponent(btSpeichern);
 
 		// ValueChangeListener
 		name.addValueChangeListener(this);
@@ -209,6 +213,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				rezeptartInput = valueString;
 			}
 		});
+
 		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
@@ -246,17 +251,17 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		});
 
 		zutatenTable = new Table();
-		zutatenTable.setSizeUndefined();
+		zutatenTable.setSizeFull();
 		zutatenTable.setStyleName("palaverTable");
+		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-		zutatenTable.setColumnWidth("Artikel", 100);		
-		zutatenTable.setColumnWidth("Menge", 100);
-		zutatenTable.setColumnWidth("Mengeneinheit", 100);
+		zutatenTable.setColumnWidth("artikelname", 200);
+		zutatenTable.setColumnWidth("menge", 100);
+		zutatenTable.setColumnWidth("einheit", 90);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeUndefined();
 		artikelTable.setStyleName("palaverTable");
-
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 
@@ -267,15 +272,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				"einheit" });
 		zutatenTable.setEditable(true);
 
-		hlRezeptZutaten.addComponent(zutatenTable);
-		hlRezeptZutaten.addComponent(artikelTable);
-
-		box.setExpandRatio(vlRezeptdetailsLinks, 1);
-		box.setExpandRatio(vlRezeptdetailsRechts, 1);
-
-		hlRezeptZutaten.setExpandRatio(zutatenTable, 1);
-		hlRezeptZutaten.setExpandRatio(artikelTable, 1);
-		hlRezeptZutaten.setSpacing(true);
+		hlZutaten.addComponent(zutatenTable);
+		hlZutaten.addComponent(artikelTable);
 
 		artikelTable.setCaption("Artikel");
 		zutatenTable.setCaption("Zutatenliste");
@@ -331,7 +329,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					tmpZutaten.add(tmp);
 					containerRezeptHasArtikel.addItem(tmp);
 				}
-
 				artikelTable.markAsDirty();
 				zutatenTable.markAsDirty();
 			}
@@ -359,7 +356,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	public void load() {
-		
 		mitarbeiterCb.removeAllItems();
 		rezeptartCb.removeAllItems();
 		zubereitung.removeAllItems();
@@ -391,15 +387,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	@Override
 	public void getViewParam(ViewData data) {
-
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
 		if (rezept.getArtikel() != null) {
 			tmpZutaten = rezept.getArtikel();
 		} else {
 			tmpZutaten = new ArrayList<RezeptHasArtikel>();
 		}
-		control.replaceComponent(btSpeichern, btUpdate);
-		vlRezeptdetailsLinks.replaceComponent(ueberschrift, ueberschrift2);
+		hlControl.replaceComponent(btSpeichern, btUpdate);
+		vlDetailsLinks.replaceComponent(ueberschrift, ueberschrift2);
 
 		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btUpdate.addClickListener(new ClickListener() {
@@ -449,7 +444,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			zutatenTable.setSizeFull();
 			zutatenTable.setStyleName("palaverTable2");
 			zutatenTable.setImmediate(true);
-
 			zutatenTable.setContainerDataSource(artikelcontainer);
 			zutatenTable.setVisibleColumns(new Object[] { "artikelname",
 					"menge", "einheit" });
@@ -488,9 +482,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	// Funktion zum Speichern eines Rezeptes
 	public void rezeptSpeichern() {
 		Rezept rezept = new Rezept();
-
 		rezept.setName(nameInput);
-
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 
@@ -509,7 +501,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 
 		try {
-			
 			Rezeptverwaltung.getInstance().createRezept(rezept);
 			Rezept rezeptNeu = null;
 
@@ -531,26 +522,21 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 				List<RezeptHasZubereitung> zubereitunglist = new ArrayList<RezeptHasZubereitung>();
 				for (String sId : ZubereitungId) {
-
 					Zubereitung zubereitung1 = new Zubereitung();
 					try {
-
 						zubereitung1 = Zubereitungverwaltung.getInstance()
 								.getZubereitungByName(sId);
-
 						RezeptHasZubereitung a = new RezeptHasZubereitung(
 								zubereitung1, rezeptNeu);
 						zubereitunglist.add(a);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
 				}
 				for (RezeptHasZubereitung i : zubereitunglist) {
 					try {
 						Rezeptverwaltung.getInstance().ZubereitungAdd(i);
 					} catch (Exception e) {
-
 						e.printStackTrace();
 					}
 				}
@@ -647,6 +633,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("Mitarbeiter.getValue(): " + mitarbeiterCb.getValue());
+		System.out.println("rezept.getMitarbeiter().getName(): " + rezept.getMitarbeiter().getName());
 
 		// setzt Mitarbeiter
 		try {
@@ -654,9 +643,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		System.out.println("Mitarbeiter.getValue(): " + mitarbeiterCb.getValue());
+
 		// Setze Artikel
 		rezept.setArtikel(tmpZutaten);
-
+ 
 		try {
 			Rezeptverwaltung.getInstance().updateRezept(rezept);
 			Rezeptverwaltung.getInstance().deleteZutatenZuRezept(rezept);
@@ -685,7 +676,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			for (String sId : ZubereitungId) {
 				Zubereitung zubereitung1 = new Zubereitung();
 				try {
-
 					zubereitung1 = Zubereitungverwaltung.getInstance()
 							.getZubereitungByName(sId);
 					RezeptHasZubereitung a = new RezeptHasZubereitung(
@@ -700,7 +690,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				try {
 					Rezeptverwaltung.getInstance().ZubereitungAdd(i);
 				} catch (Exception e) {
-
 					e.printStackTrace();
 				}
 			}

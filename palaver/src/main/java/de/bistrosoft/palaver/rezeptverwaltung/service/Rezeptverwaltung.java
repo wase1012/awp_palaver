@@ -44,76 +44,10 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return instance;
 	}
 
-	// public void createArtikelForRezept(Rezept rezept){
-	// try {
-	// super.createArtikelForRezept(rezept);
-	// } catch (ConnectException | DAOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
-	//
-	// public List<RezeptHasArtikel> getArtikelByRezept(Rezept rezept){
-	// List<RezeptHasArtikel> artikel=null;
-	//
-	// try {
-	// super.getArtikelByRezept(rezept);
-	// } catch (ConnectException | DAOException | SQLException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// return artikel;
-	// }
-
-	// public List<Rezept> getAllRezept() throws ConnectException, DAOException,
-	// SQLException {
-	// List<Rezept> result = null;
-	//
-	// result = super.getAllRezept();
-	//
-	// return result;
-	// }
-	//
-	// public Rezept getRezeptById(Long id) throws ConnectException,
-	// DAOException,
-	// SQLException {
-	// Rezept result = null;
-	//
-	// result = super.getRezeptById(id);
-	//
-	// return result;
-	// }
-	//
-	// public List<Rezept> getRezeptByName(String name) throws ConnectException,
-	// DAOException, SQLException {
-	// List<Rezept> result = null;
-	//
-	// result = super.getRezeptByName(name);
-	//
-	// return result;
-	// }
-
 	public void createRezept(Rezept Rezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("rezept verwaltung vor createRezept ID: "
-				+ Rezept.getId());
 		super.createRezept(Rezept);
-		System.out.println("rezept verwaltung nach createRezept ID: "
-				+ Rezept.getId());
-
-	}
-
-	// public void addArtikel(Artikel a, BigDecimal m, Rezept r, Mengeneinheit
-	// me) throws ConnectException,
-	// DAOException, SQLException {
-	// this.Rezept.getId();
-	// }
-
-	// public void updateRezept(Rezept Rezept) throws ConnectException,
-	// DAOException {
-	// super.updateRezept(Rezept);
-	// }
+}
 
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
@@ -126,36 +60,20 @@ public class Rezeptverwaltung extends RezeptDAO {
 
 	public void saveArtikel(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("rezept verwaltung vor saveArtikel id: "
-				+ rezept.getId());
-		Long rez1 = rezept.getId() + 1;
-		System.out
-				.println("rezept verwaltung vot rez1 saveArtikel id: " + rez1);
-
-		String rez = String.valueOf(rez1);
-		System.out.println("rezept verwaltung vot rez saveArtikel id: " + rez);
-
 		super.saveArtikel(rezept);
-		System.out.println("rezept verwaltung nach saveArtikel id: "
-				+ rezept.getId());
-
 	}
 
 	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
 			DAOException, SQLException {
 		List<Artikel> result = null;
-
 		result = ArtikelDAO.getInstance().getAllArtikel();
-
 		return result;
 	}
 
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> result = null;
-
 		result = FussnoteDAO.getInstance().getAllFussnote();
-
 		return result;
 	}
 
@@ -192,7 +110,6 @@ public class Rezeptverwaltung extends RezeptDAO {
 		try {
 			return super.getRezepteByMenue(menue);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
