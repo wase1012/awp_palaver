@@ -258,11 +258,11 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 				
 				name.setImmediate(true);
 				name.setMaxLength(15);
-				name.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4,15, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4,15, false));
 				
 				kurz.setImmediate(true);
 				kurz.setMaxLength(4);	
-				kurz.addValidator(new StringLengthValidator("Bitte gÃ¼ltiges KÃ¼rzel eingeben", 1,4, false));
+				kurz.addValidator(new StringLengthValidator("Bitte gültiges Kürzel eingeben", 1,4, false));
 				
 				verwerfen.addClickListener(new ClickListener() {
 					
@@ -286,7 +286,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout  implements View{
 						} catch (Exception e) {
 							log.error(e.toString());
 							if(e.toString().contains("INSERT INTO mengeneinheit"))
-								notification = "diese Name oder dieses KÃ¼rzel sind bereits in der System vorhanden.";
+								notification = "Dieser Name oder dieses Kürzel ist bereits im System vorhanden!";
 							else
 								notification = e.toString();
 						}
