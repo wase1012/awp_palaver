@@ -285,7 +285,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void getViewParam(ViewData data) {
 
 		menue = (Menue) ((ViewDataObject<?>) data).getData();
-
+		Long id = menue.getId();
+		menue=null;
+		try {
+			menue = Menueverwaltung.getInstance().getMenueById(id);
+		} catch (ConnectException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DAOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			menue = MenueDAO.getInstance().getMenueById(menue.getId());
 		} catch (ConnectException e) {
@@ -462,16 +475,16 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 		int countHauptmenue = 0;
 		for (Rezept rezept : tmpRezepte) {
-			if (rezept.getRezeptart().getId() == 1) {
+			if (rezept.getRezeptart().getId() == 1L) {
 				++countHauptmenue;
 			}
 		}
 		if (countHauptmenue == 0) {
-			showNotification("Bitte ein Hauptgericht w√§hlen!");
+			showNotification("Bitte ein Hauptgericht w‰hlen!");
 			return false;
 		}
 		if (countHauptmenue > 1) {
-			showNotification("Bitte nur ein Hauptgericht w√§hlen!");
+			showNotification("Bitte nur ein Hauptgericht w‰hlen!");
 			return false;
 		}
 		return true;
