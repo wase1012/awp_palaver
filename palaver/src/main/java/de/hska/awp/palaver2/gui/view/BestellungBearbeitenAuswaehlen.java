@@ -52,6 +52,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		fenster.addComponent(auswaehlen);
 		fenster.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
 		
+		auswaehlen.setEnabled(true);
 		auswaehlen.addClickListener(new ClickListener()
 		{
 			public void buttonClick(ClickEvent event)
@@ -100,7 +101,11 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
+					auswaehlen.setEnabled(true);
 					bestellung = (Bestellung) event.getProperty().getValue();
+				}
+				else {
+					auswaehlen.setEnabled(false);
 				}
 			}
 			
