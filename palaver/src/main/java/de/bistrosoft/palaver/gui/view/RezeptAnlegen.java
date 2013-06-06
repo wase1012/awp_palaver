@@ -23,9 +23,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Table;
@@ -41,7 +41,6 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -99,9 +98,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	// TwinCol
 	private TwinColSelect zubereitung = new TwinColSelect("Zubereitung");
 
-	// ComboBoxen
-	private ComboBox mitarbeiterCb = new ComboBox("Koch");
-	private ComboBox rezeptartCb = new ComboBox("Rezeptart");
+	private NativeSelect mitarbeiterNs = new NativeSelect("Koch");
 
 	// OptionGroup
 	private OptionGroup rezeptartOg = new OptionGroup();
@@ -147,19 +144,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		name.setInputPrompt(nameInput);
 		name.setSizeFull();
 		name.setMaxLength(200);
+		name.setRequired(true);
 
 		zubereitung.setWidth("100%");
 		zubereitung.setImmediate(true);
 
-		mitarbeiterCb.setWidth("100%");
-		mitarbeiterCb.setImmediate(true);
-		mitarbeiterCb.setInputPrompt(mitarbeiterInput);
-		mitarbeiterCb.setNullSelectionAllowed(false);
-
-		rezeptartCb.setWidth("100%");
-		rezeptartCb.setImmediate(true);
-		rezeptartCb.setInputPrompt(rezeptartInput);
-		rezeptartCb.setNullSelectionAllowed(false);
+		mitarbeiterNs.setWidth("100%");
+		mitarbeiterNs.setImmediate(true);
+		mitarbeiterNs.setData(mitarbeiterInput);
+		mitarbeiterNs.setNullSelectionAllowed(false);
+		mitarbeiterNs.setRequired(true);
 
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
@@ -180,7 +174,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		vlDetailsLinks.addComponent(ueberschrift);
 		vlDetailsLinks.addComponent(name);
-		vlDetailsLinks.addComponent(mitarbeiterCb);
+		vlDetailsLinks.addComponent(mitarbeiterNs);
 		vlDetailsLinks.addComponent(rezeptartOg);
 		vlDetailsLinks.setWidth("350px");
 
@@ -214,18 +208,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		mitarbeiterCb.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				valueString = String.valueOf(event.getProperty().getValue());
-				mitarbeiterInput = valueString;
-			}
-		});
-
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().returnToDefault();
+				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
 			}
 		});
 
@@ -352,26 +338,19 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		load();
 
 		// Koch auf aktuellen User setzen
-		mitarbeiterCb.select(Application.getInstance().getUser());
+		mitarbeiterNs.select(Application.getInstance().getUser());
+
 	}
 
 	public void load() {
-		mitarbeiterCb.removeAllItems();
-		rezeptartCb.removeAllItems();
 		zubereitung.removeAllItems();
+		// mitarbeiterNs.removeAllItems();
 
 		try {
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				mitarbeiterCb.addItem(e);
-			}
-
-			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
-					.getAllRezeptart();
-			for (Rezeptart e : rezeptart) {
-				rezeptartCb.addItem(e.getId());
-				rezeptartCb.setItemCaption(e.getId(), e.getName());
+				mitarbeiterNs.addItem(e);
 			}
 
 			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
@@ -393,6 +372,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} else {
 			tmpZutaten = new ArrayList<RezeptHasArtikel>();
 		}
+		mitarbeiterNs.select(rezept.getMitarbeiter());
 		hlControl.replaceComponent(btSpeichern, btUpdate);
 		vlDetailsLinks.replaceComponent(ueberschrift, ueberschrift2);
 
@@ -402,6 +382,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
+					ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 				}
 			}
 		});
@@ -494,8 +475,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 		rezept.setErstellt(date2);
 		rezept.setKommentar(kommentarInput);
+
 		try {
-			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
+			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -633,21 +615,17 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Mitarbeiter.getValue(): " + mitarbeiterCb.getValue());
-		System.out.println("rezept.getMitarbeiter().getName(): " + rezept.getMitarbeiter().getName());
 
 		// setzt Mitarbeiter
 		try {
-			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterCb.getValue());
+			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("Mitarbeiter.getValue(): " + mitarbeiterCb.getValue());
 
 		// Setze Artikel
 		rezept.setArtikel(tmpZutaten);
- 
+
 		try {
 			Rezeptverwaltung.getInstance().updateRezept(rezept);
 			Rezeptverwaltung.getInstance().deleteZutatenZuRezept(rezept);
@@ -707,7 +685,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			showNotification(IConstants.INFO_REZEPT_NAME);
 			return false;
 		}
-		if (mitarbeiterCb.getValue() == null) {
+		if (mitarbeiterNs.getValue() == null) {
 			showNotification(IConstants.INFO_REZEPT_KOCH);
 			return false;
 		}
@@ -715,19 +693,19 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			showNotification(IConstants.INFO_REZEPT_REZEPTART);
 			return false;
 		}
-		if (tmpZutaten != null || tmpZutaten.size() != 0) {
+		if (tmpZutaten.isEmpty() == false || tmpZutaten.size() != 0) {
 			for (RezeptHasArtikel rha : tmpZutaten) {
 				if (rha.getMenge() >= 100000.0) {
 					showNotification(IConstants.INFO_REZEPT_MENGE);
 					return false;
 				}
 			}
-			if (tmpZutaten == null || tmpZutaten.size() == 0) {
-				showNotification(IConstants.INFO_REZEPT_ZUTATEN);
-				return false;
-			}
-
+		} else {
+			showNotification(IConstants.INFO_REZEPT_ZUTATEN);
+			return false;
 		}
+
 		return true;
+
 	}
 }

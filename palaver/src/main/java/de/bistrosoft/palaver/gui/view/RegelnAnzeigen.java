@@ -30,7 +30,7 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 	VerticalLayout oben = new VerticalLayout();
 	HorizontalLayout unten = new HorizontalLayout();
 	
-	Button bearbeiten = new Button(IConstants.BUTTON_EDIT);
+//	Button bearbeiten = new Button(IConstants.BUTTON_EDIT);
 	Button neu = new Button(IConstants.BUTTON_NEW);
 	Button loeschen = new Button (IConstants.BUTTON_DELETE);
 	Table table = new Table();
@@ -85,12 +85,13 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
     oben.setSpacing(true);
     box.addComponents(oben);
     loeschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
-    loeschen.setVisible(false);
-    bearbeiten.setVisible(false);
+    loeschen.setEnabled(false);
+//    bearbeiten.setEnabled(false);
     neu.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
-    bearbeiten.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
+//    bearbeiten.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
     
-    unten.addComponents(neu, bearbeiten, loeschen);
+//    unten.addComponents(neu, bearbeiten, loeschen);
+    unten.addComponents(neu, loeschen);
     oben.addComponent(unten);
     box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
     oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
@@ -121,24 +122,24 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		@Override
 		public void itemClick(ItemClickEvent event) {
 			
-			bearbeiten.setVisible(true);
-			loeschen.setVisible(true);
-			if(event.isDoubleClick()){
-				ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(regel));
-			}
+//			bearbeiten.setEnabled(true);
+			loeschen.setEnabled(true);
+//			if(event.isDoubleClick()){
+//				ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(regel));
+//			}
 			
 		}
 	});
     
-    bearbeiten.addClickListener(new ClickListener() {
-    	
-		@Override
-		public void buttonClick(ClickEvent event) {
-			Regel itemId = (Regel) table.getValue();
-			ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(itemId));
-			
-		}
-	});
+//    bearbeiten.addClickListener(new ClickListener() {
+//    	
+//		@Override
+//		public void buttonClick(ClickEvent event) {
+//			Regel itemId = (Regel) table.getValue();
+//			ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(itemId));
+//			
+//		}
+//	});
     
     loeschen.addClickListener(new ClickListener() {
 		

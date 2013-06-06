@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -137,9 +138,16 @@ public class RegelDAO extends AbstractDAO {
 
 	public void updateRegel(Regel regel) throws ConnectException, DAOException,
 			SQLException {
-		putManaged(MessageFormat.format(UPDATE_REGEL, "'" + regel.getZeile() + "'",
-				"'" + regel.getSpalte() + "'" , "'" + regel.getRegeltyp() +"'", "'" + regel.getOperator() + "'",
-				"'" + regel.getKriterien() + "'", "'" +regel.getFehlermeldung() + "'", regel.getId()));
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ZEILEN + "='"
+				+ regel.getZeile() + "'," + SPALTEN + "='"
+						+ regel.getSpalte() + "'" + REGELTYP + "='" + regel.getRegeltyp() + OPERATOR + "='"
+								+ regel.getOperator() + "'," + KRITERIEN + "='" + regel.getKriterien() 
+								+ "'," + FEHLERMELDUNG + "='" + regel.getFehlermeldung() + "'," + AKTIV + "=" 
+								+ regel.getAktiv() + " WHERE " + ID + "='"
+										+ regel.getId() + "'";
+		this.putManaged(UPDATE_QUERY);
+		
+		System.out.println(UPDATE_QUERY);
 	}
 
 }
