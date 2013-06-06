@@ -35,7 +35,7 @@ public class Mail {
 	public boolean EmailVersand(String to, String subject, String message,
 			String anhang) {
 		boolean ergebnis = false;
-		if (anhang == null) {
+		if (anhang == null || anhang == "") {
 
 				try {
 					MailActions.sendOhneAnhang(MailAccounts.NACHRICHT, to, subject, message);
@@ -53,7 +53,7 @@ public class Mail {
 					return false;
 				}
 				ergebnis = true;
-			} {
+			} else {
 			try {
 				MailActions.sendMitAnhang(MailAccounts.NACHRICHT, to, subject, message, anhang);
 				ergebnis = true;
