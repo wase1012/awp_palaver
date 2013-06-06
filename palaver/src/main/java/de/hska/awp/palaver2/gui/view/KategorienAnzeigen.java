@@ -9,6 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -37,8 +39,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings("serial")
 public class KategorienAnzeigen extends VerticalLayout implements View {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(KategorienAnzeigen.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
 
 	private VerticalLayout layout = new VerticalLayout();
 	private Button hinzufuegen = new Button(IConstants.BUTTON_ADD);
@@ -75,8 +76,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					kategorieUpdate = (Kategorie) event.getProperty()
-							.getValue();
+					kategorieUpdate = (Kategorie) event.getProperty().getValue();
 				}
 			}
 		});
@@ -114,31 +114,26 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 					control.setSpacing(true);
 					control.addComponent(verwerfen);
 					control.addComponent(speichern);
-					speichern.setIcon(new ThemeResource(
-							IConstants.BUTTON_SAVE_ICON));
-					verwerfen.setIcon(new ThemeResource(
-							IConstants.BUTTON_DISCARD_ICON));
+					speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+					verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 					layout.addComponent(feld);
 					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 					layout.addComponent(control);
-					layout.setComponentAlignment(control,
-							Alignment.BOTTOM_RIGHT);
+					layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
 					mengNeu.setContent(layout);
 
 					nameUp.setImmediate(true);
 					nameUp.setValue(kategorieUpdate.getName());
 					nameUp.setMaxLength(45);
-					nameUp.addValidator(new StringLengthValidator(
-							"Bitte gültigen Namen eingeben", 4, 45, false));
+					nameUp.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4, 45, false));
 
 					verwerfen.addClickListener(new ClickListener() {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
 							UI.getCurrent().removeWindow(mengNeu);
-							ViewHandler.getInstance().switchView(
-									KategorienAnzeigen.class);
+							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 						}
 					});
 
@@ -146,22 +141,19 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 						public void buttonClick(ClickEvent event) {
 							kategorieUpdate.setName(nameUp.getValue());
 							try {
-								Kategorienverwaltung.getInstance()
-										.updateKategorie(kategorieUpdate);
+								Kategorienverwaltung.getInstance().updateKategorie(kategorieUpdate);
 							} catch (Exception e) {
 								log.error(e.toString());
 							}
 							UI.getCurrent().removeWindow(mengNeu);
-							ViewHandler.getInstance().switchView(
-									KategorienAnzeigen.class);
+							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 						}
 					});
 
 					nameUp.addValueChangeListener(new ValueChangeListener() {
 
 						public void valueChange(final ValueChangeEvent event) {
-							final String valueString = String.valueOf(event
-									.getProperty().getValue());
+							final String valueString = String.valueOf(event.getProperty().getValue());
 
 							nameText = valueString;
 						}
@@ -181,8 +173,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 		BeanItemContainer<Kategorie> container;
 		try {
-			container = new BeanItemContainer<Kategorie>(Kategorie.class,
-					Kategorienverwaltung.getInstance().getAllKategories());
+			container = new BeanItemContainer<Kategorie>(Kategorie.class, Kategorienverwaltung.getInstance().getAllKategories());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
@@ -225,10 +216,8 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 				control.setSpacing(true);
 				control.addComponent(verwerfen);
 				control.addComponent(speichern);
-				speichern
-						.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-				verwerfen.setIcon(new ThemeResource(
-						IConstants.BUTTON_DISCARD_ICON));
+				speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+				verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 				layout.addComponent(feld);
 				layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
@@ -238,79 +227,78 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 				name.setImmediate(true);
 				name.setMaxLength(45);
-				name.addValidator(new StringLengthValidator(
-						"Bitte gültigen Namen eingeben", 4, 45, false));
+				name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4, 45, false));
 
 				verwerfen.addClickListener(new ClickListener() {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						UI.getCurrent().removeWindow(mengNeu);
-						ViewHandler.getInstance().switchView(
-								KategorienAnzeigen.class);
+						ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 					}
 				});
 
 				speichern.addClickListener(new ClickListener() {
 					public void buttonClick(ClickEvent event) {
-						Kategorie me = new Kategorie();
-						me.setName(nameText);
-						String notification = "Kategorie gespeichert";
-						try {
-							Kategorienverwaltung.getInstance()
-									.createNewKategorie(me);
-							UI.getCurrent().removeWindow(mengNeu);
-						} catch (Exception e) {
-							if (e.toString().contains("INSERT INTO kategorie"))
-								notification = "Der Name ist bereits im System vorhanden!";
-							else
-								notification = e.toString();
-							log.error(e.toString());
-						}
-						final Window dialog = new Window();
-						dialog.setClosable(false);
-						dialog.setWidth("300px");
-						dialog.setHeight("150px");
-						dialog.setModal(true);
-						dialog.center();
-						dialog.setResizable(false);
-						dialog.setStyleName("dialog-window");
-						
-						Label message = new Label(notification);
-						
-						Button okButton = new Button("OK");
-						
-						VerticalLayout dialogContent = new VerticalLayout();
-						dialogContent.setSizeFull();
-						dialogContent.setMargin(true);
-						dialog.setContent(dialogContent);
-						
-						dialogContent.addComponent(message);
-						dialogContent.addComponent(okButton);
-						dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-						
-						UI.getCurrent().addWindow(dialog);
-						
-						okButton.addClickListener(new ClickListener()
-						{	
-							@Override
-							public void buttonClick(ClickEvent event)
-							{
-								UI.getCurrent().removeWindow(dialog);
-								ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+						if (name.isValid() == true) {
+							Kategorie me = new Kategorie();
+							me.setName(nameText);
+							String notification = "Kategorie gespeichert";
+							try {
+								Kategorienverwaltung.getInstance().createNewKategorie(me);
+								UI.getCurrent().removeWindow(mengNeu);
+							} catch (Exception e) {
+								if (e.toString().contains("INSERT INTO kategorie"))
+									notification = "Der Name ist bereits im System vorhanden!";
+								else
+									notification = e.toString();
+								log.error(e.toString());
 							}
-						});
-						
-						ViewHandler.getInstance().switchView(
-								KategorienAnzeigen.class);
+							final Window dialog = new Window();
+							dialog.setClosable(false);
+							dialog.setWidth("300px");
+							dialog.setHeight("150px");
+							dialog.setModal(true);
+							dialog.center();
+							dialog.setResizable(false);
+							dialog.setStyleName("dialog-window");
+
+							Label message = new Label(notification);
+
+							Button okButton = new Button("OK");
+
+							VerticalLayout dialogContent = new VerticalLayout();
+							dialogContent.setSizeFull();
+							dialogContent.setMargin(true);
+							dialog.setContent(dialogContent);
+
+							dialogContent.addComponent(message);
+							dialogContent.addComponent(okButton);
+							dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+
+							UI.getCurrent().addWindow(dialog);
+
+							okButton.addClickListener(new ClickListener() {
+								@Override
+								public void buttonClick(ClickEvent event) {
+									UI.getCurrent().removeWindow(dialog);
+									ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+								}
+							});
+
+							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
+						} else {
+							Notification notification = new Notification("Die Eingabe ist fehlerhaft!");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
+						}
 					}
 				});
 
 				name.addValueChangeListener(new ValueChangeListener() {
 
 					public void valueChange(final ValueChangeEvent event) {
-						final String valueString = String.valueOf(event
-								.getProperty().getValue());
+						final String valueString = String.valueOf(event.getProperty().getValue());
 
 						nameText = valueString;
 					}

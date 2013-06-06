@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -33,6 +34,9 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 	Label lbKW = null;
 	Label lbPlatzhalter1 = new Label();
 	Label lbPlatzhalter2 = new Label();
+	
+	int exception = 0;
+	
 	// FußŸnoten
 	@SuppressWarnings("deprecation")
 	Label lbFussnoten = new Label(
@@ -49,7 +53,19 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		this.setComponentAlignment(box, Alignment.TOP_CENTER);
 
 		// Kalender zur Datums-Auswahl
-		final PopupDateField date = new PopupDateField("Datum wählen:");
+		final PopupDateField date = new PopupDateField("Datum wählen:") {
+		    @Override
+		    protected Date handleUnparsableDateString(String dateString)
+		    throws ConversionException {
+		        // Notification bei Fehleingabe
+		    	Notification notification = new Notification(
+						"Falsches Datumsformat.");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
+				exception = 1;
+		        throw new ConversionException("Falsches Datumsformat");
+		    }
+		};
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
@@ -60,77 +76,80 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 			// Click-Listener zur Datumsauswahl
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Datum in Woche und Jahr aufteilen
-				SimpleDateFormat sdf;
-				Calendar cal;
-				Date datum = null;
-				int week;
-				String sample = date.getValue().toString();
-				sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy",
-						Locale.ENGLISH);
-				try {
-					datum = sdf.parse(sample);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				cal = Calendar.getInstance();
-				cal.setTime(datum);
-				week = cal.get(Calendar.WEEK_OF_YEAR);
-				@SuppressWarnings("deprecation")
-				int year = date.getValue().getYear() + 1900;
-				// alte Anzeigen lÃ¶schen
-				if (Menueplan != null) {
-					box.removeComponent(Menueplan);
-					box.removeComponent(lbKW);
-					box.removeComponent(lbPlatzhalter1);
-					box.removeComponent(lbPlatzhalter2);
-				}
-				// nur alte Pläne
-				Week curWeek = CalendarWeek.getCurrentWeek();
-				final int woche = curWeek.getWeek();
-				if (week < (woche + 1)) {
-					// nur gespeicherte Pläne
-					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
-							new Week(week, year)) == null) {
+				if (exception == 0){
+					// Datum in Woche und Jahr aufteilen
+					SimpleDateFormat sdf;
+					Calendar cal;
+					Date datum = null;
+					int week;
+					String sample = date.getValue().toString();
+					sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy",
+							Locale.ENGLISH);
+					try {
+						datum = sdf.parse(sample);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					cal = Calendar.getInstance();
+					cal.setTime(datum);
+					week = cal.get(Calendar.WEEK_OF_YEAR);
+					@SuppressWarnings("deprecation")
+					int year = date.getValue().getYear() + 1900;
+					// alte Anzeigen lÃ¶schen
+					if (Menueplan != null) {
+						box.removeComponent(Menueplan);
+						box.removeComponent(lbKW);
+						box.removeComponent(lbPlatzhalter1);
+						box.removeComponent(lbPlatzhalter2);
+					}
+					// nur alte Pläne
+					Week curWeek = CalendarWeek.getCurrentWeek();
+					final int woche = curWeek.getWeek();
+					if (week < (woche + 1)) {
+						// nur gespeicherte Pläne
+						if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
+								new Week(week, year)) == null) {
+							Notification notification = new Notification(
+									"Kein Menüplan vorhanden.");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
+						} else {
+							// Anzeige
+							Menueplan = new MenueplanGridLayout(week, year);
+							Menueplan.layout.setDragMode(LayoutDragMode.NONE);
+							String strKW = new String("Kalenderwoche: " + week
+									+ "/" + year);
+							@SuppressWarnings("deprecation")
+							Label lbKW2 = new Label(
+									"<pre><div align=center><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
+											+ strKW + "</div></pre>",
+									Label.CONTENT_XHTML);
+							lbKW = lbKW2;
+							lbPlatzhalter1.setHeight("30px");
+							box.addComponent(lbPlatzhalter1);
+							box.setComponentAlignment(lbPlatzhalter1,
+									Alignment.TOP_CENTER);
+							box.addComponent(lbKW);
+							box.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
+							lbPlatzhalter2.setHeight("30px");
+							box.addComponent(lbPlatzhalter2);
+							box.setComponentAlignment(lbPlatzhalter2,
+									Alignment.TOP_CENTER);
+							box.addComponent(Menueplan);
+							box.setComponentAlignment(Menueplan,
+									Alignment.MIDDLE_CENTER);
+							box.addComponent(lbFussnoten);
+							box.setComponentAlignment(lbFussnoten,
+									Alignment.BOTTOM_CENTER);
+						}
+					} else {
 						Notification notification = new Notification(
-								"Kein Menüplan vorhanden.");
+								"Anzeige nur von älteren Menüplänen möglich.");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
-					} else {
-						// Anzeige
-						Menueplan = new MenueplanGridLayout(week, year);
-						Menueplan.layout.setDragMode(LayoutDragMode.NONE);
-						String strKW = new String("Kalenderwoche: " + week
-								+ "/" + year);
-						@SuppressWarnings("deprecation")
-						Label lbKW2 = new Label(
-								"<pre><div align=center><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-										+ strKW + "</div></pre>",
-								Label.CONTENT_XHTML);
-						lbKW = lbKW2;
-						lbPlatzhalter1.setHeight("30px");
-						box.addComponent(lbPlatzhalter1);
-						box.setComponentAlignment(lbPlatzhalter1,
-								Alignment.TOP_CENTER);
-						box.addComponent(lbKW);
-						box.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
-						lbPlatzhalter2.setHeight("30px");
-						box.addComponent(lbPlatzhalter2);
-						box.setComponentAlignment(lbPlatzhalter2,
-								Alignment.TOP_CENTER);
-						box.addComponent(Menueplan);
-						box.setComponentAlignment(Menueplan,
-								Alignment.MIDDLE_CENTER);
-						box.addComponent(lbFussnoten);
-						box.setComponentAlignment(lbFussnoten,
-								Alignment.BOTTOM_CENTER);
 					}
-				} else {
-					Notification notification = new Notification(
-							"Anzeige nur von älteren Menüplänen möglich.");
-					notification.setDelayMsec(500);
-					notification.show(Page.getCurrent());
 				}
+				exception = 0;
 			}
 		});
 

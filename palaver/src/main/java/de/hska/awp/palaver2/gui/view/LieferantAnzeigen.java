@@ -29,112 +29,127 @@ import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
-public class LieferantAnzeigen extends VerticalLayout  implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
+public class LieferantAnzeigen extends VerticalLayout implements View {
 
-		private FilterTable			table;
-		
-		private Button				showFilter;
-		private Label				headline;
-		
-		private HorizontalLayout 	head;
-		private Lieferant 			lieferant;
-		
-		public LieferantAnzeigen()
-		{
-			super();
-			
-			this.setSizeFull();
-			this.setMargin(true);
-			
-			showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
-			showFilter.setIcon(new ThemeResource("img/filter.ico"));
-			
-			headline = new Label("Alle Lieferanten");
-			headline.setStyleName("ViewHeadline");
-			
-			head = new HorizontalLayout();
-			head.setWidth("100%");
-			
-			head.addComponent(headline);
-			head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
-			head.addComponent(showFilter);
-			head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
-			head.setExpandRatio(headline, 1);
-			
-			table = new FilterTable();
-			table.setStyleName("palaverTable");
-			table.setSizeFull();
-			table.setFilterBarVisible(false);
-			table.setFilterGenerator(new customFilter());
-			table.setFilterDecorator(new customFilterDecorator());
-			table.setSelectable(true);
-			
-			table.addValueChangeListener(new ValueChangeListener() {
-				
-				@Override
-				public void valueChange(ValueChangeEvent event) {
-					if(event.getProperty().getValue() != null) {
-						lieferant = (Lieferant) event.getProperty().getValue();
-					}
+	private static final Logger log = LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
+
+	private FilterTable table;
+
+	private Button showFilter;
+	private Button auswaehlen;
+	private Label headline;
+
+	private HorizontalLayout head;
+	private Lieferant lieferant;
+
+	public LieferantAnzeigen() {
+		super();
+
+		this.setSizeFull();
+		this.setMargin(true);
+
+		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
+		showFilter.setIcon(new ThemeResource("img/filter.ico"));
+
+		auswaehlen = new Button(IConstants.BUTTON_SELECT);
+		auswaehlen.setHeight("50px");
+		auswaehlen.setEnabled(false);
+
+		headline = new Label("Alle Lieferanten");
+		headline.setStyleName("ViewHeadline");
+
+		head = new HorizontalLayout();
+		head.setWidth("100%");
+
+		head.addComponent(headline);
+		head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
+		head.addComponent(showFilter);
+		head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		head.setExpandRatio(headline, 1);
+
+		table = new FilterTable();
+		table.setStyleName("palaverTable");
+		table.setSizeFull();
+		table.setFilterBarVisible(false);
+		table.setFilterGenerator(new customFilter());
+		table.setFilterDecorator(new customFilterDecorator());
+		table.setSelectable(true);
+
+		table.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null) {
+					lieferant = (Lieferant) event.getProperty().getValue();
+					auswaehlen.setEnabled(true);
+				} else {
+					auswaehlen.setEnabled(false);
 				}
-			});
-	
-			table.addItemClickListener(new ItemClickListener() {	
-				@Override
-				public void itemClick(ItemClickEvent event) {
-					if(event.isDoubleClick()){
-						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
-					}
-					
+			}
+		});
+
+		table.addItemClickListener(new ItemClickListener() {
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					auswaehlen.click();
 				}
-			});
-			
-			BeanItemContainer<Lieferant> container;
-			try
-			{
-				container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
-				table.setContainerDataSource(container);
-				table.setVisibleColumns(new Object[] {"name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax", "notiz"});
-				table.sort(new Object[] {"name"}, new boolean[] {true});
-			} 
-			catch (Exception e)
-			{
-				log.error(e.toString());
-			}	
-			
-			this.addComponent(head);
-			this.addComponent(table);
-			this.setExpandRatio(table, 1);
-			
-			showFilter.addClickListener(new ClickListener()
-			{
-				@Override
-				public void buttonClick(ClickEvent event)
-				{
-					if (table.isFilterBarVisible())
-					{
-						table.setFilterBarVisible(false);
-						table.resetFilters();
-						showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-						showFilter.setIcon(new ThemeResource("img/filter.ico"));
-					}
-					else
-					{
-						table.setFilterBarVisible(true);
-						showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-						showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-					}
+
+			}
+		});
+
+		auswaehlen.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (lieferant != null) {
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 				}
-			});
+			}
+		});
+
+		BeanItemContainer<Lieferant> container;
+		try {
+			container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
+			table.setContainerDataSource(container);
+			table.setVisibleColumns(new Object[] { "name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax",
+					"notiz" });
+			table.sort(new Object[] { "name" }, new boolean[] { true });
+		} catch (Exception e) {
+			log.error(e.toString());
 		}
 
-		/* (non-Javadoc)
-		 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
-		 */
-		@Override
-		public void getViewParam(ViewData data)
-		{
-		}
+		this.addComponent(head);
+		this.addComponent(table);
+		this.setExpandRatio(table, 1);
+		this.addComponent(auswaehlen);
+		this.setComponentAlignment(auswaehlen, Alignment.BOTTOM_RIGHT);
+
+		showFilter.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (table.isFilterBarVisible()) {
+					table.setFilterBarVisible(false);
+					table.resetFilters();
+					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
+					showFilter.setIcon(new ThemeResource("img/filter.ico"));
+				} else {
+					table.setFilterBarVisible(true);
+					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
+					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
+				}
+			}
+		});
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
+	 * .ViewData)
+	 */
+	@Override
+	public void getViewParam(ViewData data) {
+	}
+}

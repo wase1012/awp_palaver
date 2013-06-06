@@ -42,9 +42,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class MitarbeiterBearbeiten extends VerticalLayout implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(MitarbeiterBearbeiten.class.getName());
-	
+
+	private static final Logger log = LoggerFactory.getLogger(MitarbeiterBearbeiten.class.getName());
+
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout fenster = new VerticalLayout();
 
@@ -268,7 +268,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().returnToDefault();
+				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 
 			}
 		});

@@ -268,8 +268,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		hl.setComponentAlignment(datetime2, Alignment.TOP_LEFT);
 
 		bestellt.setDescription("<h2><img src=\"VAADIN/themes/runo/icons/32/note.png\"/>Information</h2>" + "<ul>"
-				+ "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschlie√üend die Bestellung abspeichern.</li>"
-				+ "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr m√∂glich!</li></ul>");
+				+ "<li>Nach der erfolgreichen telefonischen Bestellung, bitte den Kasten anklicken und anschlieﬂend die Bestellung abspeichern.</li>"
+				+ "<li>Nach dem Abspeichern ist die Bearbeitung der Bestellung nicht mehr mˆglich!</li></ul>");
 
 		hl.addComponent(bestellt);
 		hl.setComponentAlignment(bestellt, Alignment.BOTTOM_LEFT);

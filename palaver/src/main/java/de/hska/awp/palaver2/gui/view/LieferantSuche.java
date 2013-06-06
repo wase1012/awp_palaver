@@ -271,7 +271,6 @@ public class LieferantSuche extends VerticalLayout  implements View{
 						try {
 							Lieferantenverwaltung.getInstance().updateLieferant(lieferant);
 						} catch (Exception e) {
-//							throw new NullPointerException("Bitte gültige Werte eingeben");
 							log.error(e.toString());
 						}
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
