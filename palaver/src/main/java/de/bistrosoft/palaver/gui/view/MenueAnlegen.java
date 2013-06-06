@@ -44,6 +44,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
@@ -59,10 +60,10 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
 	private Label ueberschriftAnlegen = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue anlegen</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü anlegen</font><b></pre>",
 			ContentMode.HTML);
 	private Label ueberschriftUpdate = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menue Ändern</font><b></pre>",
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü ändern</font><b></pre>",
 			ContentMode.HTML);
 
 	private VerticalLayout vlBox = new VerticalLayout();
@@ -77,9 +78,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private TwinColSelect tcsFussnoten = new TwinColSelect("Fussnoten");
 
-	private NativeSelect nSKoch = new NativeSelect("Koch");
-	private NativeSelect nSMenueart = new NativeSelect("Menueart");
-	private NativeSelect nSGeschmack = new NativeSelect("Geschmack");
+	private NativeSelect nsKoch = new NativeSelect("Koch");
+	private NativeSelect nsMenueart = new NativeSelect("Menueart");
+	private NativeSelect nsGeschmack = new NativeSelect("Geschmack");
 
 	private CheckBox chbFavorit = new CheckBox("Menü ist ein Favorit");
 	private CheckBox chbAufwand = new CheckBox("Menü hat hohen Aufwand");
@@ -128,9 +129,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		vlBox.addComponent(hlDetails);
 		hlDetails.addComponent(vlDetailsLinks);
 		vlDetailsLinks.addComponent(tfMenuename);
-		vlDetailsLinks.addComponent(nSKoch);
-		vlDetailsLinks.addComponent(nSMenueart);
-		vlDetailsLinks.addComponent(nSGeschmack);
+		vlDetailsLinks.addComponent(nsKoch);
+		vlDetailsLinks.addComponent(nsMenueart);
+		vlDetailsLinks.addComponent(nsGeschmack);
 		vlDetailsLinks.addComponent(chbFavorit);
 		vlDetailsLinks.addComponent(chbAufwand);
 		hlDetails.addComponent(vlDetailsRechts);
@@ -157,12 +158,15 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tcsFussnoten.setWidth("100%");
 		tfMenuename.setWidth("90%");
 		tfMenuename.setMaxLength(200);
+		nsKoch.setWidth("90%");
+		nsGeschmack.setWidth("90%");
+		nsMenueart.setWidth("90%");
 
-		nSGeschmack.setNullSelectionAllowed(false);
-		nSMenueart.setNullSelectionAllowed(false);
+		nsGeschmack.setNullSelectionAllowed(false);
+		nsMenueart.setNullSelectionAllowed(false);
 		tfMenuename.setImmediate(true);
-		nSKoch.setImmediate(true);
-		nSKoch.setNullSelectionAllowed(false);
+		nsKoch.setImmediate(true);
+		nsKoch.setNullSelectionAllowed(false);
 
 		tcsFussnoten.setImmediate(true);
 		tcsFussnoten.setWidth("400");
@@ -236,11 +240,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		nsKoch.select(Application.getInstance().getUser());
 	}
 
 	public void load() {
 
-		
 		// Inhalte laden
 		try {
 			ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
@@ -253,20 +257,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
-				nSKoch.addItem(e);
+				nsKoch.addItem(e);
 			}
-	
+
 			List<Geschmack> geschmack = Geschmackverwaltung.getInstance()
 					.getAllGeschmackAktiv();
 			for (Geschmack e : geschmack) {
-				nSGeschmack.addItem(e);
+				nsGeschmack.addItem(e);
 
 			}
 
 			List<Menueart> menueart = Menueartverwaltung.getInstance()
 					.getAllMenueart();
 			for (Menueart e : menueart) {
-				nSMenueart.addItem(e);
+				nsMenueart.addItem(e);
 
 			}
 
@@ -286,17 +290,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		menue = (Menue) ((ViewDataObject<?>) data).getData();
 		Long id = menue.getId();
-		menue=null;
+		menue = null;
 		try {
 			menue = Menueverwaltung.getInstance().getMenueById(id);
 		} catch (ConnectException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -318,11 +319,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		tfMenuename.setValue(menue.getName());
 
-		nSKoch.select(menue.getKoch());
+		nsKoch.select(menue.getKoch());
 
-		nSMenueart.select(menue.getMenueart());
+		nsMenueart.select(menue.getMenueart());
 
-		nSGeschmack.select(menue.getGeschmack());
+		nsGeschmack.select(menue.getGeschmack());
 
 		chbAufwand.setValue(menue.getAufwand());
 
@@ -331,8 +332,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		for (int i = 0; i < menue.getFussnoten().size(); i++) {
 			tcsFussnoten.select(menue.getFussnoten().get(i));
 		}
-
-
 
 		tblMenue = null;
 		tblMenue = new Table();
@@ -345,11 +344,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		for (Rezept r : tmpRezepte) {
 			ctRezepte.removeItem(r);
 			ctMenue.addItem(r);
-			
+
 		}
 
-		
-		
 		menue.setRezepte(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
@@ -389,9 +386,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 
 		menue.setName(tfMenuename.getValue());
-		menue.setKoch((Mitarbeiter) nSKoch.getValue());
-		menue.setMenueart((Menueart) nSMenueart.getValue());
-		menue.setGeschmack((Geschmack) nSGeschmack.getValue());
+		menue.setKoch((Mitarbeiter) nsKoch.getValue());
+		menue.setMenueart((Menueart) nsMenueart.getValue());
+		menue.setGeschmack((Geschmack) nsGeschmack.getValue());
 
 		if (chbFavorit.getValue()) {
 			menue.setFavorit(true);
@@ -457,15 +454,15 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			showNotification("Bitte Namen eingeben!");
 			return false;
 		}
-		if (nSKoch.getValue() == null) {
+		if (nsKoch.getValue() == null) {
 			showNotification("Bitte Koch wÃ¤hlen!");
 			return false;
 		}
-		if (nSMenueart.getValue() == null) {
+		if (nsMenueart.getValue() == null) {
 			showNotification("Bitte Menüart wählen!");
 			return false;
 		}
-		if (nSGeschmack.getValue() == null) {
+		if (nsGeschmack.getValue() == null) {
 			showNotification("Bitte Geschmack wälen!");
 			return false;
 		}
