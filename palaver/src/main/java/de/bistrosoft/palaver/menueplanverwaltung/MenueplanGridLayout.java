@@ -108,7 +108,7 @@ public class MenueplanGridLayout extends CustomComponent {
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>",
 						Label.CONTENT_XHTML),
 				new Label(
-						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     KÃ¶che</font></pre>",
+						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r     Köche</font></pre>",
 						Label.CONTENT_XHTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Fleischgericht</font></pre>",

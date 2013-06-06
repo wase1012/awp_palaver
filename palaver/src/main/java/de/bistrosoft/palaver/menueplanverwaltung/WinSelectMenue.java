@@ -42,7 +42,7 @@ public class WinSelectMenue extends Window {
 	private CheckBox aufwand = new CheckBox("Aufwand");
 	private CheckBox favorit = new CheckBox("Favorit");
 	private Button addNewmenueButton = new Button("Neu");
-	private Button ok = new Button("Auswï¿½hlen");
+	private Button ok = new Button("Auswählen");
 	private FormLayout editorLayout = new FormLayout();
 
 	private static final String MENU = "name";
@@ -61,7 +61,7 @@ public class WinSelectMenue extends Window {
 	
 	// Konstruktor 
 	public WinSelectMenue(MenueplanGridLayout nMenuePlan,Component nDestComp,int nDestRow, int nDestCol) {
-		setCaption("Menï¿½ einfï¿½gen");
+		setCaption("Menü einfügen");
 		menueplan = nMenuePlan;
 		menueGrid=menueplan.layout;
 		destComp=nDestComp;
@@ -127,7 +127,7 @@ public class WinSelectMenue extends Window {
 	private void initSearch() {
 
 		// Info im Suchfeld setzen
-		searchField.setInputPrompt("Menï¿½ suchen");
+		searchField.setInputPrompt("Menü suchen");
 			
 		// TextChangeEvent wird ausgelï¿½st, wenn bei der Eingabe eine Pause ist
 		searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);

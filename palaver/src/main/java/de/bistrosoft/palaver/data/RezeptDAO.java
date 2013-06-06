@@ -257,18 +257,13 @@ public class RezeptDAO extends AbstractDAO {
 
 	public void saveArtikel(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
-		System.out.println("saveArtikel");
 		List<RezeptHasArtikel> rha = rezept.getArtikel();
-		System.out.println(rha.size());
 		for (RezeptHasArtikel a : rha) {
 			String rez = rezept.getId().toString();
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = Long
 					.toString(a.getArtikel().getMengeneinheit().getId());
-
-			System.out.println(MessageFormat.format(SAVE_ARTIKEL, rez,
-					artikel_fk, menge, me));
 			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
 					menge, me));
 		}
