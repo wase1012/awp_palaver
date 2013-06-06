@@ -430,7 +430,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					"menge", "einheit" });
 			tmpZutaten = list;
 			for (RezeptHasArtikel rha : list) {
-				containerArtikel.removeItem(rha);
+				containerArtikel.removeItem(rha.getArtikel());
 				containerRezeptHasArtikel.addItem(rha);
 			}
 

@@ -99,6 +99,16 @@ public class RezeptHasArtikel {
 				+ artikel.getName();
 	}
 
+//	@Override
+//	public int hashCode() {
+//		return artikel.hashCode();
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		return artikel.equals(obj);
+//	}
+
 	// public void setRezeptart(Rezeptart rezeptart) {
 	// this.rezeptart = rezeptart;
 	// }
