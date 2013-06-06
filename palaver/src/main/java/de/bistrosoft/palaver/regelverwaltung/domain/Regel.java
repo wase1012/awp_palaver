@@ -12,7 +12,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
@@ -133,20 +132,20 @@ public class Regel {
 		
 		for(String s : strZeilen){
 			int i=0;
-			if(s.equals("Fleischgericht")){
+			if(s.trim().equals("Fleischgericht")){
 				zeilenlist.add(0 +topRows);
 			}
-			else if(s.equals("Hauptgericht")){
+			else if(s.trim().equals("Hauptgericht")){
 				zeilenlist.add(1 +topRows);
 			}
-			else if(s.equals("Pastagericht")){
+			else if(s.trim().equals("Pastagericht")){
 				zeilenlist.add(2 +topRows);
 				zeilenlist.add(3 +topRows);
 			}
-			else if(s.equals("Suppe/Salat")){
+			else if(s.trim().equals("Suppe/Salat")){
 				zeilenlist.add(4 +topRows);
 			}
-			else if(s.equals("Dessert")){
+			else if(s.trim().equals("Dessert")){
 				zeilenlist.add(5 +topRows);
 			}
 		}
@@ -156,19 +155,19 @@ public class Regel {
 		spaltenlist=new ArrayList<Integer>();
 		for(String s : strSpalten){
 			int i=0;
-			if(s.equals("Montag")){
+			if(s.trim().equals("Montag")){
 				spaltenlist.add(0 +leftCols);
 			}
-			else if(s.equals("Dienstag")){
+			else if(s.trim().equals("Dienstag")){
 				spaltenlist.add(1 +leftCols);
 			}
-			else if(s.equals("Mittwoch")){
+			else if(s.trim().equals("Mittwoch")){
 				spaltenlist.add(2 +leftCols);
 			}
-			else if(s.equals("Donnerstag")){
+			else if(s.trim().equals("Donnerstag")){
 				spaltenlist.add(3 +leftCols);
 			}
-			else if(s.equals("Freitag")){
+			else if(s.trim().equals("Freitag")){
 				spaltenlist.add(4 +leftCols);
 			}
 		}
@@ -666,7 +665,7 @@ public class Regel {
 			e.printStackTrace();
 		} 
 		
-		Notification notification = new Notification(IConstants.INFO_REGEL_DELETE);
+		Notification notification = new Notification("Regel wurde gelöscht");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 	}
