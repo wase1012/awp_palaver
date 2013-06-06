@@ -9,16 +9,26 @@ import org.slf4j.LoggerFactory;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 
 import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.gui.layout.MainLayout;
+import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * The Application's "main" class
@@ -161,6 +171,7 @@ public class Application extends UI
 		currentApplication.set(null);
 		currentApplication.remove();
 	}
+	
 	public Boolean userHasPersmission(String role)
 	{
 		for (Rollen e : user.getRollen())
@@ -171,5 +182,41 @@ public class Application extends UI
 			}
 		}
 		return false;
+	}
+	
+	public void showDialog(String message)
+	{
+		final Window dialog = new Window();
+		dialog.setClosable(false);
+		dialog.setWidth("300px");
+		dialog.setHeight("150px");
+		dialog.setModal(true);
+		dialog.center();
+		dialog.setResizable(false);
+		dialog.setStyleName("dialog-window");
+		
+		Label content = new Label(message);
+		
+		Button okButton = new Button("OK");
+		
+		VerticalLayout dialogContent = new VerticalLayout();
+		dialogContent.setSizeFull();
+		dialogContent.setMargin(true);
+		dialog.setContent(dialogContent);
+		
+		dialogContent.addComponent(content);
+		dialogContent.addComponent(okButton);
+		dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+		
+		UI.getCurrent().addWindow(dialog);
+		
+		okButton.addClickListener(new ClickListener()
+		{	
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				UI.getCurrent().removeWindow(dialog);
+			}
+		});
 	}
 }

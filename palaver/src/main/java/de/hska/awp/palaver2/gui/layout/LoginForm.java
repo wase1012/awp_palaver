@@ -105,8 +105,8 @@ public class LoginForm extends VerticalLayout
 				
 				if (username.getValue().equals("demo") && password.getValue().equals("palaverapp"))
 				{
-					Application.getInstance().login(username.getValue());
-					UI.getCurrent().setContent(Application.getInstance().getLayout());
+					Application.getInstance().showDialog("Der Benutzer demo ist nicht mehr aktiv.");
+					username.focus();
 				}
 				else 
 				{
@@ -164,7 +164,7 @@ public class LoginForm extends VerticalLayout
 	
 	private void fail()
 	{
-		new Notification("Login Failed").show(Page.getCurrent());
+		Application.getInstance().showDialog("Login fehlgeschlagen!");
 		username.focus();
 	}
 }
