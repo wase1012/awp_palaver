@@ -276,7 +276,8 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`lieferant` (
   `fax` VARCHAR(45) NULL ,
   `notiz` VARCHAR(300) NULL ,
   `mehrereliefertermine` TINYINT(1) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`),  
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 
