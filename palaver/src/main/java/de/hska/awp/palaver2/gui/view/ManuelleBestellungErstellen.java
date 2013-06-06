@@ -20,6 +20,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -27,6 +28,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -240,6 +242,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		speichern.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
+				
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
 
@@ -257,12 +260,19 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
 				if (lieferant.getMehrereliefertermine() == true) {
+					if(datetime2.isValid()==true){
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
 					java.util.Date date1 = datetime2.getValue();
 					Date datesql1 = new Date(date1.getTime());
 					bestellung.setLieferdatum(datesql);
 					bestellung.setLieferdatum2(datesql1);
+					} else {
+						java.util.Date date3 = datetime.getValue();
+						Date datesql = new Date(date3.getTime());
+						bestellung.setLieferdatum2(datesql);
+						bestellung.setLieferdatum(datesql);
+					}
 				} else {
 					java.util.Date date3 = datetime.getValue();
 					Date datesql = new Date(date3.getTime());
