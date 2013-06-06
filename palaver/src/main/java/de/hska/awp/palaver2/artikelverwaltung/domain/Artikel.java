@@ -24,6 +24,7 @@ public class Artikel implements java.io.Serializable
 	private boolean 		grundbedarf;
 	private Integer 		durchschnitt;
 	private boolean 		lebensmittel;
+	private String			notiz;
 
 	public Artikel() 
 	{
@@ -53,7 +54,7 @@ public class Artikel implements java.io.Serializable
 	public Artikel(Mengeneinheit mengeneinheit, Kategorie kategorie,
 			Lieferant lieferant, String artikelnr, String name,
 			Double bestellgroesse, Float preis, boolean bio, boolean standard,
-			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel)
+			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel, String notiz)
 	{
 		super();
 		this.mengeneinheit = mengeneinheit;
@@ -68,6 +69,7 @@ public class Artikel implements java.io.Serializable
 		this.grundbedarf = grundbedarf;
 		this.durchschnitt = durchschnitt;
 		this.lebensmittel = lebensmittel;
+		this.notiz = notiz;
 	}
 
 	/**
@@ -84,11 +86,12 @@ public class Artikel implements java.io.Serializable
 	 * @param grundbedarf
 	 * @param durchschnitt
 	 * @param lebensmittel
+	 * @param notiz
 	 */
 	public Artikel(Long id, Mengeneinheit mengeneinheit, Kategorie kategorie,
 			Lieferant lieferant, String artikelnr, String name,
 			Double bestellgroesse, Float preis, boolean bio, boolean standard,
-			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel)
+			boolean grundbedarf, Integer durchschnitt, boolean lebensmittel, String notiz)
 	{
 		super();
 		this.id = id;
@@ -104,6 +107,7 @@ public class Artikel implements java.io.Serializable
 		this.grundbedarf = grundbedarf;
 		this.durchschnitt = durchschnitt;
 		this.lebensmittel = lebensmittel;
+		this.notiz = notiz;
 	}
 
 	public Long getId() 
@@ -236,6 +240,16 @@ public class Artikel implements java.io.Serializable
 		this.lebensmittel = lebensmittel;
 	}
 
+	public String getNotiz()
+	{
+		return this.notiz;
+	}
+	
+	public void setNotiz(String notiz)
+	{
+		this.notiz = notiz;
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

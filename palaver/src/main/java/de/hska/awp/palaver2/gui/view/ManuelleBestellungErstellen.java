@@ -149,6 +149,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
+		artikelTable.setColumnCollapsingAllowed(true);
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
@@ -308,13 +309,13 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		if (lieferant.getMehrereliefertermine() == true) {
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
+					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
@@ -323,6 +324,9 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "artikelnr" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
+		artikelTable.setColumnCollapsed("grundbedarf", true);
+		artikelTable.setColumnCollapsed("standard", true);
+		artikelTable.setColumnCollapsed("lebensmittel", true);
 	}
 }

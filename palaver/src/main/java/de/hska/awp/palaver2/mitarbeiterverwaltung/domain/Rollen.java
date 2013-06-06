@@ -18,6 +18,12 @@ public class Rollen implements java.io.Serializable {
 	private String name;
 	private List<Mitarbeiter> mitarbeiters = new ArrayList<Mitarbeiter>();
 	private List<Nachricht> nachrichten = new ArrayList<Nachricht>();
+	
+	public static final String	ADMINISTRATOR = "Administrator";
+	public static final String	BESTELLER = "Besteller";
+	public static final String	EINKAUF = "Einkauf";
+	public static final String	KOCH = "Koch";
+	public static final String	SPEISEPLAN = "Speiseplan freigeben";
 
 	public Rollen() {
 	}

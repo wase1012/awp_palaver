@@ -18,6 +18,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.gui.layout.MainLayout;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 
 /**
  * The Application's "main" class
@@ -159,5 +160,16 @@ public class Application extends UI
 	{
 		currentApplication.set(null);
 		currentApplication.remove();
+	}
+	public Boolean userHasPersmission(String role)
+	{
+		for (Rollen e : user.getRollen())
+		{
+			if (e.getName().equals(role))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

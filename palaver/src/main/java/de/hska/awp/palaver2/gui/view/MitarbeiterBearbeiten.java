@@ -180,7 +180,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Vornamen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
@@ -188,7 +188,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Passwort eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -198,7 +198,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Benutzernamen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
 
 		name.addValueChangeListener(new ValueChangeListener() {

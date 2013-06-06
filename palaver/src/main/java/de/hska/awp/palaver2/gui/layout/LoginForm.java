@@ -45,7 +45,7 @@ public class LoginForm extends VerticalLayout
 	
 	private Embedded 			logo;
 	private TextField 			username = new TextField("Benutzername");
-	private PasswordField 		password = new PasswordField("Password");
+	private PasswordField 		password = new PasswordField("Passwort");
 	
 	private Button 				loginButton = new Button("Login");
 	

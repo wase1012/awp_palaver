@@ -44,6 +44,7 @@ import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
 import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
 import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 
@@ -58,8 +59,7 @@ public class MainLayout extends VerticalLayout implements Command
 	private static final Logger		log					= LoggerFactory.getLogger(MainLayout.class.getName());
 	
 	private MenuBar					menu = new MenuBar();
-	private MenuItem 				username = null;
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused" })
 	public MainLayout()
 	{
 		super();
@@ -104,7 +104,10 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
 		MenuItem mitarbeiterItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
-		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
+		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR))
+		{
+			mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
+		}
 		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
 		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
@@ -127,14 +130,18 @@ public class MainLayout extends VerticalLayout implements Command
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANZEIGEN, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
+		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR) || Application.getInstance().userHasPersmission(Rollen.BESTELLER))
+		{
+			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
+			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
+		}
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
-		MenuItem regelItem = menu.addItem(
-				IConstants.MENU_REGEL, this);
-		
+		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR))
+		{
+			MenuItem regelItem = menu.addItem(IConstants.MENU_REGEL, this);
+		}
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		einstellungItem.addItem(IConstants.MENU_HEADER, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);

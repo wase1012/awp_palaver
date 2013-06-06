@@ -19,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
@@ -32,7 +33,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 
 	private VerticalLayout fenster = new VerticalLayout();
 	
-	private Button auswaehlen = new Button("auswählen");
+	private Button auswaehlen = new Button(IConstants.BUTTON_SELECT);
 
 	private FilterTable bestellungen = new FilterTable("Bestellung");
 	private Bestellung bestellung;
