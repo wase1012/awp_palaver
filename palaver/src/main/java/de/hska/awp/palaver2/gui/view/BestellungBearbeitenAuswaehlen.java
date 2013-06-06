@@ -16,6 +16,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
@@ -56,7 +57,8 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		hl.addComponent(loeschen);
 		hl.addComponent(auswaehlen);
 		hl.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
-		hl.setComponentAlignment(loeschen, Alignment.TOP_CENTER);
+		hl.setComponentAlignment(loeschen, Alignment.TOP_RIGHT);
+		hl.setExpandRatio(loeschen, 1);
 		
 //		fenster.addComponent(auswaehlen);
 //		fenster.addComponent(loeschen);
