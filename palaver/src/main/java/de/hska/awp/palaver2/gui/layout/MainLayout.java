@@ -166,6 +166,11 @@ public class MainLayout extends VerticalLayout implements Command
 		
 //		this.addComponent(new ArtikelErstellen());
 //		this.setExpandRatio(this.getComponent(2), 1);
+		
+		if (UI.getCurrent().getSession().getBrowser().isTouchDevice())
+		{
+			setHeaderVisible(false);
+		}
 	}
 
 	@Override
@@ -309,7 +314,7 @@ public class MainLayout extends VerticalLayout implements Command
 		return "Benutzer : " + Application.getInstance().getUsername();
 	}
 	
-	public void setHeaderVisible(Boolean arg0)
+	private void setHeaderVisible(Boolean arg0)
 	{
 		this.header.setVisible(arg0);
 	}
