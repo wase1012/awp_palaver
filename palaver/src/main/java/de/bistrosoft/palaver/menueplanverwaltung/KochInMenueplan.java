@@ -5,17 +5,24 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 public class KochInMenueplan {
 	private Mitarbeiter koch;
 	private Integer spalte;
-	
-	
+
+	public KochInMenueplan(Mitarbeiter koch, int col) {
+		this.koch = koch;
+		this.spalte = col;
+	}
+
 	public Mitarbeiter getKoch() {
 		return koch;
 	}
+
 	public void setKoch(Mitarbeiter koch) {
 		this.koch = koch;
 	}
+
 	public Integer getSpalte() {
 		return spalte;
 	}
+
 	public void setSpalte(Integer spalte) {
 		this.spalte = spalte;
 	}

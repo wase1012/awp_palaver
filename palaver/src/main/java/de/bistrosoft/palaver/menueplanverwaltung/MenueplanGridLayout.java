@@ -41,7 +41,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	private static final int COLUMNS = 6;
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
-	// List<Regel> regeln = Regel.getTestRegeln();
+
 	List<Regel> regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
 
 	public Menueplan getMenueplan() {
@@ -152,34 +152,11 @@ public class MenueplanGridLayout extends CustomComponent {
 			layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
 		}
 
-		// FÃ¼lle Zeile fÃ¼r KÃ¶che mit DropDowm-Boxen fÃ¼r Namen
+		// Fülle Zeile für Köche mit DropDowm-Boxen für Namen
 		for (int col = 1; col < COLUMNS; col++) {
-			VerticalLayout vl = new VerticalLayout();
-			ComboBox koch1 = new ComboBox();
-			ComboBox koch2 = new ComboBox();
-			try {
-				List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung
-						.getInstance().getAllMitarbeiter();
-				for (Mitarbeiter e : mitarbeiter) {
-					// mitarbeiterCb.addItem(e);
-					koch1.addItem(e.getId());
-					koch1.setItemCaption(e.getId(), e.getVorname());
-					koch2.addItem(e.getId());
-					koch2.setItemCaption(e.getId(), e.getVorname());
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			koch1.setWidth("140px");
-			koch2.setWidth("140px");
-			vl.addComponent(koch1);
-			vl.addComponent(koch2);
-			vl.setWidth("149px");
-			vl.setHeight("50px");
-			vl.setComponentAlignment(koch1, Alignment.MIDDLE_CENTER);
-			vl.setComponentAlignment(koch2, Alignment.MIDDLE_CENTER);
-			layout.addComponent(vl, col, 1);
-			layout.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
+			KoecheComponent koeche = new KoecheComponent();
+			layout.addComponent(koeche, col, 1);
+			layout.setComponentAlignment(koeche, Alignment.MIDDLE_CENTER);
 		}
 
 		// FÃ¼ge MenueItems ein
@@ -254,10 +231,17 @@ public class MenueplanGridLayout extends CustomComponent {
 		// Extrahiere Köche
 		// TODO: Köche extrahieren
 		List<KochInMenueplan> koeche = new ArrayList<KochInMenueplan>();
-		for (int col = 2; col < COLUMNS; ++col) {
-			VerticalLayout vl = (VerticalLayout) layout.getComponent(col, 1);
-			ComboBox cb1 = (ComboBox) vl.getComponent(0);
-			ComboBox cb2 = (ComboBox) vl.getComponent(1);
+		for (int col = 0; col < COLUMNS; ++col) {
+			Component compKoeche = layout.getComponent(col, 1);
+			if(compKoeche instanceof KoecheComponent){
+				KoecheComponent kc = (KoecheComponent) compKoeche;
+				if(kc.getKoch1()!=null){
+					koeche.add(new KochInMenueplan(kc.getKoch1(),col));
+				}
+				if(kc.getKoch2()!=null){
+					koeche.add(new KochInMenueplan(kc.getKoch2(),col));
+				}
+			}
 		}
 		menueplan.setKoeche(koeche);
 

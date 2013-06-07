@@ -1,6 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung.service;
 
 import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.util.Week;
@@ -33,33 +34,29 @@ public class Menueplanverwaltung extends MenueplanDAO {
 	}
 
 	public void persist(Menueplan menueplan) {
-		if (menueplan.getId() == null) {
-			try {
+		try {
+			if (menueplan.getId() == null) {
 				super.createMenueplan(menueplan);
+				// TODO: Id anders ziehen
 				menueplan.setId(super.getMenueplanByWeekWithItems(
 						menueplan.getWeek()).getId());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
-		try {
 			super.deleteItemsByMenueplan(menueplan);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			for (MenueComponent mc : menueplan.getMenues()) {
 
-		for (MenueComponent mc : menueplan.getMenues()) {
-
-			try {
 				super.createMenueForMenueplan(menueplan, mc.getMenue(),
 						mc.getAngezeigterName(), mc.getCol(), mc.getRow());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+
+			super.deleteKoecheByMenueplan(menueplan);
+			for (KochInMenueplan kim : menueplan.getKoeche()) {
+				super.createKochForMenueplan(menueplan, kim);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	public void deleteItemsByMenueplan(Menueplan mpl) {

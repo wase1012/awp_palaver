@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
@@ -201,5 +202,16 @@ public class MenueplanDAO extends AbstractDAO {
 			throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_MENUPLANITEMS_BY_MENUEPLAN,
 				menueplan.getId()));
+	}
+
+	public void createKochForMenueplan(Menueplan menueplan, KochInMenueplan kim) throws ConnectException, DAOException {
+		String sql = "INSERT INTO menueplan_has_koeche (menueplan, spalte, koch) VALUES ({0},{1},{2})";
+		putManaged(MessageFormat.format(sql, menueplan.getId(),kim.getSpalte(),kim.getKoch().getId()));
+		
+	}
+
+	public void deleteKoecheByMenueplan(Menueplan menueplan) throws ConnectException, DAOException {
+		String sql = "DELETE FROM menueplan_has_koeche WHERE menueplan = " + menueplan.getId();
+		putManaged(sql);
 	}
 }

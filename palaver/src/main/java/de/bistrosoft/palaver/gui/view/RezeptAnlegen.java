@@ -343,7 +343,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	public void load() {
 		zubereitung.removeAllItems();
-		// mitarbeiterNs.removeAllItems();
 
 		try {
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()

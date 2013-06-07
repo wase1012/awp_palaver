@@ -79,7 +79,6 @@ public class WinSelectMenue extends Window {
 
 	// Layout festlegen
 	private void initLayout() {
-
 		// SplitPanel erstellen
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		setContent(splitPanel);
