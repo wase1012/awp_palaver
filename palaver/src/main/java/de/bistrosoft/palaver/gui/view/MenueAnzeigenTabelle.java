@@ -17,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -32,10 +33,12 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button showFilter;
 	private Menue menue;
+	
+	private Button btAuswaehlen;
 
 	public MenueAnzeigenTabelle() {
 		super();
-
+		btAuswaehlen=new Button(IConstants.BUTTON_SELECT);
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -98,6 +101,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
+		this.addComponent(btAuswaehlen);
 
 		showFilter.addClickListener(new ClickListener() {
 			@Override
@@ -113,6 +117,22 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 					showFilter.setIcon(new ThemeResource(
 							"img/disable_filter.ico"));
 				}
+			}
+		});
+		
+		btAuswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (table.getValue() != null
+						&& table.getValue() instanceof Menue) {
+
+					Menue menueAusTb = (Menue) table.getValue();
+					ViewHandler.getInstance().switchView(
+							MenueAnlegen.class,
+							new ViewDataObject<Menue>(menueAusTb));
+				}
+				//TODO Fehlermeldung
+				else;
+				
 			}
 		});
 

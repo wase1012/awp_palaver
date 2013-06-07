@@ -13,7 +13,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
@@ -30,8 +29,6 @@ import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -168,11 +165,11 @@ public class MenueplanGridLayout extends CustomComponent {
 					.getKoecheByMenueplan(menueplan);
 			for (KochInMenueplan k : kim) {
 				if (layout.getComponent(k.getSpalte(), 1) instanceof KoecheComponent) {
-					KoecheComponent kc = (KoecheComponent) layout.getComponent(k.getSpalte(), 1);
+					KoecheComponent kc = (KoecheComponent) layout.getComponent(
+							k.getSpalte(), 1);
 					if (k.getPosition() == 1) {
 						kc.setKoch1(k.getKoch());
-					}
-					else if (k.getPosition() == 2) {
+					} else if (k.getPosition() == 2) {
 						kc.setKoch2(k.getKoch());
 					}
 				}
@@ -255,7 +252,6 @@ public class MenueplanGridLayout extends CustomComponent {
 		menueplan.setMenues(menues);
 
 		// Extrahiere Köche
-		// TODO: Köche extrahieren
 		List<KochInMenueplan> koeche = new ArrayList<KochInMenueplan>();
 		for (int col = 0; col < COLUMNS; ++col) {
 			Component compKoeche = layout.getComponent(col, 1);
