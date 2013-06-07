@@ -11,25 +11,27 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 /**
- * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Rollen bereit.
+ * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Rollen
+ * bereit.
+ * 
  * @author Christian Barth
- *
+ * 
  */
 public class RollenDAO extends AbstractDAO {
 
 	private final static String TABLE = "rollen";
 	private final static String ID = "id";
-	private final static String	NAME = "name";
-	private final static String	GET_ALL_ROLLEN = "SELECT * FROM rollen";
-	private final static String	GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
-	private final static String	GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on " +
-			"rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
+	private final static String NAME = "name";
+	private final static String GET_ALL_ROLLEN = "SELECT * FROM rollen";
+	private final static String GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
+	private final static String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
+			+ "rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 	private static final String GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
 	private static final String GET_MITARBEITER_BY_ROLLEN_ID = "SELECT * FROM mitarbeiter "
 			+ "JOIN mitarbeiter_has_rollen on mitarbeiter.id = mitarbeiter_has_rollen.mitarbeiter_fk "
 			+ "join rollen on mitarbeiter_has_rollen.rollen_fk = rollen.id where rollen.id = {0}";
 	private static final String GET_MITARBEITER_BY_ID = "SELECT * FROM mitarbeiter WHERE id = {0}";
-	
+
 	private static RollenDAO instance = null;
 
 	public static RollenDAO getInstance() {
@@ -38,39 +40,36 @@ public class RollenDAO extends AbstractDAO {
 		}
 		return instance;
 	}
-	
-	public RollenDAO()
-	{
+
+	public RollenDAO() {
 		super();
 	}
-	
+
 	/**
 	 * Die Methode liefert alle Rollen aus der Datenbank zurück.
+	 * 
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Rollen> getAllRollen() throws ConnectException, DAOException, SQLException
-	{
+	public List<Rollen> getAllRollen() throws ConnectException, DAOException, SQLException {
 		List<Rollen> list = new ArrayList<Rollen>();
 		openConnection();
 		ResultSet set = get(GET_ALL_ROLLEN);
-		//TODO
+
 		openConnection();
-		while(set.next())
-		{
-			list.add(new Rollen(set.getLong("id"),
-								set.getString("name"),
-								getMitarbeiterByRollenId(set.getLong("id")),
-								getNachrichtByRolleId(set.getLong("id"))));
+		while (set.next()) {
+			list.add(new Rollen(set.getLong("id"), set.getString("name"), getMitarbeiterByRollenId(set.getLong("id")), getNachrichtByRolleId(set
+					.getLong("id"))));
 		}
 		closeConnection();
 		return list;
 	}
-	
+
 	/**
 	 * Die Methode liefert ein Rolle anhand seiner ID zurück.
+	 * 
 	 * @author Christian Barth
 	 * @param id
 	 * @return
@@ -79,47 +78,42 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public Rollen getRollenById(Long id) throws ConnectException, DAOException, SQLException {
-		
+
 		Rollen rolle = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_ROLLEN_BY_ID, id));
 
-		while(set.next())
-		{
-			rolle = new Rollen(set.getLong("id"),
-								set.getString("name"),
-								MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id")),
-								NachrichtDAO.getInstance().getNachrichtByRolleId(set.getLong("id")));
+		while (set.next()) {
+			rolle = new Rollen(set.getLong("id"), set.getString("name"), MitarbeiterDAO.getInstance().getMitarbeiterByRollenId(set.getLong("id")),
+					NachrichtDAO.getInstance().getNachrichtByRolleId(set.getLong("id")));
 		}
 		return rolle;
-		 
+
 	}
-	
+
 	/**
 	 * Die Methode liefert die Rollen zur einer Mitarbeiter ID zurück.
+	 * 
 	 * @param id
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Rollen> getRollenByMitarbeiterId(Long id)
-			throws ConnectException, DAOException, SQLException {
+	public List<Rollen> getRollenByMitarbeiterId(Long id) throws ConnectException, DAOException, SQLException {
 
 		List<Rollen> list = new ArrayList<Rollen>();
 
-		ResultSet set = getManaged(MessageFormat.format(
-				GET_ROLLEN_BY_MITARBEITER_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(GET_ROLLEN_BY_MITARBEITER_ID, id));
 
 		while (set.next()) {
-			list.add(new Rollen(set.getLong("id"), set.getString("name"),
-					getNachrichtByRolleId(set.getLong("id"))));
+			list.add(new Rollen(set.getLong("id"), set.getString("name"), getNachrichtByRolleId(set.getLong("id"))));
 
 		}
 
 		return list;
 
 	}
-	
+
 	private List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 
 		List<Nachricht> list = new ArrayList<Nachricht>();
@@ -133,7 +127,7 @@ public class RollenDAO extends AbstractDAO {
 
 		return list;
 	}
-	
+
 	private List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
 
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
@@ -149,8 +143,7 @@ public class RollenDAO extends AbstractDAO {
 		return list;
 
 	}
-	
-	
+
 	private Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
@@ -166,8 +159,7 @@ public class RollenDAO extends AbstractDAO {
 		return mitarbeiter;
 
 	}
-	
-	
+
 	/**
 	 * Die Methode erzeugt eine Rolle in der Datenbank.
 	 * 
@@ -176,26 +168,22 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void createRollen(Rollen rolle) throws ConnectException,
-			DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + ")"
-				+ "VALUES" + "('" + rolle.getName() + "')";
+	public void createRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + ")" + "VALUES" + "('" + rolle.getName() + "')";
 		this.putManaged(INSERTQUERY);
 	}
-	
+
 	/**
 	 * Die Methode aktualisiert eine Rolle in der Datenbank.
+	 * 
 	 * @param rolle
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void updateRollen(Rollen rolle) throws ConnectException,
-			DAOException, SQLException {
-		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ rolle.getName() + "' WHERE " + ID + "='"
-				+ rolle.getId() + "'";
+	public void updateRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
+		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + rolle.getName() + "' WHERE " + ID + "='" + rolle.getId() + "'";
 		this.putManaged(UPDATEQUERY);
 	}
-	
+
 }
