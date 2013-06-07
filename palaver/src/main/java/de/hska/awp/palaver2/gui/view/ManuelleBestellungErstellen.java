@@ -20,7 +20,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -28,7 +27,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -49,9 +47,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
 public class ManuelleBestellungErstellen extends VerticalLayout implements View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(ManuelleBestellungErstellen.class.getName());
-	
+
+	private static final Logger log = LoggerFactory.getLogger(ManuelleBestellungErstellen.class.getName());
+
 	private Table bestellungTable;
 
 	private FilterTable artikelTable;
@@ -242,7 +240,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		speichern.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
-				
+
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
 
@@ -260,13 +258,13 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				bestellung.setDatum(date);
 				bestellung.setBestellpositionen(bestellpositionen);
 				if (lieferant.getMehrereliefertermine() == true) {
-					if(datetime2.isValid()==true){
-					java.util.Date date3 = datetime.getValue();
-					Date datesql = new Date(date3.getTime());
-					java.util.Date date1 = datetime2.getValue();
-					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum(datesql);
-					bestellung.setLieferdatum2(datesql1);
+					if (datetime2.isValid() == true) {
+						java.util.Date date3 = datetime.getValue();
+						Date datesql = new Date(date3.getTime());
+						java.util.Date date1 = datetime2.getValue();
+						Date datesql1 = new Date(date1.getTime());
+						bestellung.setLieferdatum(datesql);
+						bestellung.setLieferdatum2(datesql1);
 					} else {
 						java.util.Date date3 = datetime.getValue();
 						Date datesql = new Date(date3.getTime());
@@ -318,14 +316,14 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		bestellungTable.setContainerDataSource(containerBestellung);
 
 		if (lieferant.getMehrereliefertermine() == true) {
-			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag",
+					"freitag" });
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			datetime.setRequired(true);

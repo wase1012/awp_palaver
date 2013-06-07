@@ -16,7 +16,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
@@ -28,14 +27,13 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 @SuppressWarnings("serial")
-public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
-		View {
-	
-	private static final Logger	log	= LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
+public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements View {
+
+	private static final Logger log = LoggerFactory.getLogger(BestellungLieferantAuswaehlen.class.getName());
 
 	private VerticalLayout fenster = new VerticalLayout();
 	private HorizontalLayout hl = new HorizontalLayout();
-	
+
 	private Button auswaehlen = new Button(IConstants.BUTTON_SELECT);
 	private Button loeschen = new Button(IConstants.BUTTON_DELETE);
 
@@ -51,7 +49,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		fenster.setSizeFull();
 		fenster.setSpacing(true);
 		fenster.addComponentAsFirst(bestellungen);
-		
+
 		hl.setSpacing(true);
 		hl.setSizeFull();
 		hl.addComponent(loeschen);
@@ -59,42 +57,36 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 		hl.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
 		hl.setComponentAlignment(loeschen, Alignment.TOP_RIGHT);
 		hl.setExpandRatio(loeschen, 1);
-		
-//		fenster.addComponent(auswaehlen);
-//		fenster.addComponent(loeschen);
+
+		// fenster.addComponent(auswaehlen);
+		// fenster.addComponent(loeschen);
 		fenster.addComponent(hl);
 		fenster.setExpandRatio(hl, 1);
-//		fenster.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
+		// fenster.setComponentAlignment(auswaehlen, Alignment.TOP_RIGHT);
 		fenster.setComponentAlignment(hl, Alignment.TOP_RIGHT);
-		
-		
+
 		auswaehlen.setEnabled(true);
-		auswaehlen.addClickListener(new ClickListener()
-		{
-			public void buttonClick(ClickEvent event)
-			{
-				if(bestellung != null){
-				ViewHandler.getInstance().switchView(BestellungBearbeiten.class, new ViewDataObject<Bestellung>(bestellung));
+		auswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (bestellung != null) {
+					ViewHandler.getInstance().switchView(BestellungBearbeiten.class, new ViewDataObject<Bestellung>(bestellung));
 				}
 			}
 		});
-		
+
 		loeschen.setEnabled(true);
-		loeschen.addClickListener(new ClickListener()
-		{
-			public void buttonClick(ClickEvent event)
-			{	
-				if(bestellung != null){
-				try{
-					Bestellverwaltung.getInstance().deleteBestellung(bestellung);
-				} catch (Exception e){
-					e.printStackTrace();
-				}
-				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+		loeschen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (bestellung != null) {
+					try {
+						Bestellverwaltung.getInstance().deleteBestellung(bestellung);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 				}
 			}
 		});
-		
 
 		bestellungen.setSizeFull();
 
@@ -105,19 +97,16 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 
 		BeanItemContainer<Bestellung> container;
 		try {
-			container = new BeanItemContainer<Bestellung>(Bestellung.class,
-					Bestellverwaltung.getInstance().getAllBestellungenNotOrdered());
+			container = new BeanItemContainer<Bestellung>(Bestellung.class, Bestellverwaltung.getInstance().getAllBestellungenNotOrdered());
 			bestellungen.setContainerDataSource(container);
-			bestellungen.setVisibleColumns(new Object[] { "bestellt",
-					"lieferant", "datumS", "lieferdatumS" });
+			bestellungen.setVisibleColumns(new Object[] { "bestellt", "lieferant", "datumS", "lieferdatumS" });
 			bestellungen.setColumnHeader("datumS", "datum");
 			bestellungen.setColumnHeader("lieferdatumS", "lieferdatum");
 			bestellungen.sort(new Object[] { "id" }, new boolean[] { true });
 			bestellungen.setCellStyleGenerator(new CellStyleGenerator() {
 
 				@Override
-				public String getStyle(CustomTable source, Object itemId,
-						Object propertyId) {
+				public String getStyle(CustomTable source, Object itemId, Object propertyId) {
 					Bestellung b = (Bestellung) itemId;
 					if ("bestellt".equals(propertyId)) {
 						return b.isBestellt() ? "check" : "cross";
@@ -138,12 +127,11 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 				if (event.getProperty().getValue() != null) {
 					auswaehlen.setEnabled(true);
 					bestellung = (Bestellung) event.getProperty().getValue();
-				}
-				else {
+				} else {
 					auswaehlen.setEnabled(false);
 				}
 			}
-			
+
 		});
 
 		bestellungen.addItemClickListener(new ItemClickListener() {
@@ -152,16 +140,14 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
 					auswaehlen.click();
-					
-			}
+
+				}
 			}
 		});
 
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
-		
-		
-		
+
 	}
 
 	@Override
