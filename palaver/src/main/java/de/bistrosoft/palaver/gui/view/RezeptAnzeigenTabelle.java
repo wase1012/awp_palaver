@@ -15,6 +15,8 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver2.gui.view.BestellungBearbeiten;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -35,9 +37,13 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 	private Button showFilter;
 	private Rezept rezept;
 
+	private Button btAuswaehlen;
+
 	public RezeptAnzeigenTabelle() {
 		super();
 
+		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
+		
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -86,10 +92,27 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			e.printStackTrace();
 		}
 
+		btAuswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (table.getValue() != null
+						&& table.getValue() instanceof Rezept) {
+
+					Rezept rezeptAusTb = (Rezept) table.getValue();
+					ViewHandler.getInstance().switchView(
+							RezeptAnlegen.class,
+							new ViewDataObject<Rezept>(rezeptAusTb));
+				}
+				//TODO Fehlermeldung
+				else;
+				
+			}
+		});
+
 		this.addComponent(showFilter);
 		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
+		this.addComponent(btAuswaehlen);
 
 		showFilter.addClickListener(new ClickListener() {
 			@Override
