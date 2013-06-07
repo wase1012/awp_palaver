@@ -55,9 +55,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	private TextField tfBezeichnung = new TextField("Bezeichnung");
 	private TextField tfAbkuerzung = new TextField("Abkuerzung");
 
-//	private TextField tfBezeichnung = new TextField("Bezeichnung");
-//	private TextField tfAbkuerzung = new TextField("Abkuerzung");
-
 	private Label lUeberschrift;
 
 	private Fussnote fn = new Fussnote();
@@ -76,6 +73,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tblFussnote = new FilterTable();
 		tblFussnote.setSizeFull();
 		tblFussnote.setSelectable(true);
+		tblFussnote.setFilterBarVisible(true);
 
 		lUeberschrift = new Label("Fussnoten");
 		lUeberschrift.setStyleName("ViewHeadline");
@@ -129,11 +127,9 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-
 	}
 
 	private void hinzufuegen() {
-
 		fnNeu = new Window();
 		fnNeu.setClosable(false);
 		fnNeu.setWidth("400px");
@@ -156,9 +152,11 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tfBezeichnung.setRequired(true);
 		tfAbkuerzung.setRequired(true);
 
+		vlDetails = new VerticalLayout();
 		vlDetails.addComponent(tfBezeichnung);
 		vlDetails.addComponent(tfAbkuerzung);
 
+		hlControl = new HorizontalLayout();
 		hlControl.setSpacing(true);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
@@ -222,6 +220,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		vlDetails.addComponent(tfBezeichnung);
 		vlDetails.addComponent(tfAbkuerzung);
 
+		hlControl = new HorizontalLayout();
 		hlControl.setSpacing(true);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btUpdate);
@@ -259,7 +258,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 				abbrechen();
 			}
 		});
-
 	}
 
 	private void speichern() {
@@ -272,7 +270,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		showNotification("Fussnote wurde gespeichert!");
 	}
 
@@ -285,7 +282,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		showNotification("Fussnote wurde geändert!");
 	}
 
