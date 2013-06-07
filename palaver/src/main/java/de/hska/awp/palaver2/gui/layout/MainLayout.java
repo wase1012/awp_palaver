@@ -212,7 +212,6 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
 		{
 			UI.getCurrent().setContent(new LoginForm());
-			Application.getInstance().setUsername(null);
 			UI.getCurrent().getSession().close();
 			UI.getCurrent().close();
 			log.info("**************************************************************");

@@ -45,14 +45,16 @@ public class Application extends UI
      */
     public static Application getInstance()
     {
-    	return instance;
+    	log.info("Instance: " + currentApplication.get());
+    	return currentApplication.get();
     }
     
     private static void setInstance(Application application)
 	{
-		if (getInstance() == null)
+    	if (getInstance() == null)
 		{
-			instance = application;
+			log.info("Set Instance");
+    		currentApplication.set(application);
 		}
 	}
 	
