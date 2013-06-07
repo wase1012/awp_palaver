@@ -163,6 +163,7 @@ public class LoginForm extends VerticalLayout
 					}
 					catch (Exception e)
 					{
+						e.printStackTrace();
 						log.error(e.toString());
 						fail();
 					}

@@ -51,11 +51,10 @@ public class Application extends UI
     
     private static void setInstance(Application application)
 	{
-    	if (getInstance() == null)
-		{
-			log.info("Set Instance");
-    		currentApplication.set(application);
-		}
+		log.info("Set Instance: " + application);
+    	currentApplication.set(application);
+//    	instance = application;
+
 	}
 	
     /**
