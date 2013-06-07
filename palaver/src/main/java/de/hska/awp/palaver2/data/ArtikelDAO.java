@@ -27,8 +27,7 @@ public class ArtikelDAO extends AbstractDAO
 	private final static String			GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM artikel where lieferant_fk = {0}";
 	private final static String			GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String			GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
-	private final static String			PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`)VALUES({0})";
-	//private final static String			UPDATE_ARTIKEL = "UPDATE artikel SET `artikelnr` = {0},`name` = {1},`bestellgroesse` = {2},`mengeneinheit_fk` = {3},`preis` = {4},`lieferant_fk` = {5},`bio` = {6},`kategorie_fk` = {7},`standard` = {8},`grundbedarf` = {9},`durchschnitt` = {10},`lebensmittel` = {11} WHERE id = {12}";
+	private final static String			PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`,`notiz`)VALUES({0})";
 	private final static String			GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM artikel WHERE grundbedarf=1";
 	private final static String			GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
 	private final static String 		GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
@@ -309,7 +308,7 @@ return list;
 				+ artikel.getPreis() + "," + artikel.getLieferant().getId() + "," + Util.convertBoolean(artikel.isBio()) 
 				+ "," + artikel.getKategorie().getId() + "," + Util.convertBoolean(artikel.isStandard()) + ","
 				+ Util.convertBoolean(artikel.isGrundbedarf()) + "," + artikel.getDurchschnitt() + "," + 
-				Util.convertBoolean(artikel.isLebensmittel()) + "," + artikel.getNotiz()));
+				Util.convertBoolean(artikel.isLebensmittel()) + ",'" + artikel.getNotiz() + "'"));
 	}
 	
 	/**
@@ -334,8 +333,8 @@ return list;
 				"`grundbedarf` = "+Util.convertBoolean(artikel.isGrundbedarf())+"," +
 				"`durchschnitt` = "+artikel.getDurchschnitt()+"," +
 				"`lebensmittel` = "+Util.convertBoolean(artikel.isLebensmittel())+ "," +
-				"`notiz` = " + artikel.getNotiz()+
-				" WHERE id = "+artikel.getId());
+				"`notiz` = '" + artikel.getNotiz() +
+				"' WHERE id = "+artikel.getId());
 		
 		/*
 		 * float und double werden in String mit ',' konvertiert
