@@ -2,8 +2,6 @@ package de.bistrosoft.palaver.gui.view;
 
 import org.tepi.filtertable.FilterTable;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
@@ -23,109 +21,76 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.hska.awp.palaver2.util.customFilter;
-import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Michael Marschall
  * 
  */
+@SuppressWarnings("serial")
 public class FussnoteEinst extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = 2474121007841510011L;
 
-	private VerticalLayout box = new VerticalLayout();
-	private Label ueberschrift = new Label(
+	private Label lUeberschrift = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Fussnote anlegen</font><b></pre>",
 			ContentMode.HTML);
-	private Label dummy = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
-			ContentMode.HTML);
+	
+	private VerticalLayout vlBox = new VerticalLayout();
+	private HorizontalLayout hlUeberschrift = new HorizontalLayout();
+	private HorizontalLayout hlControl = new HorizontalLayout();
+	
+	private TextField tfBezeichnung = new TextField("Bezeichnung");
+	private TextField tfAbkuerzung = new TextField("Abkürzung");
 
-	private TextField name = new TextField("Fussnote");
-	private TextField abkuerzung = new TextField("Abkuerzung");
+	private Button btSpeichern = new Button("Speichern");
 
-	private Button speichern = new Button("Speichern");
-
-	private String nameInput;
-	private String abkuerzungInput;
-	private FilterTable table;
+	private FilterTable tblZubereitung;
+	
+	Fussnote fn = new Fussnote();
 
 	public FussnoteEinst() {
 		super();
-		table = new FilterTable();
-		name.setWidth("100%");
-		abkuerzung.setWidth("100%");
-		table.setSizeFull();
-		table.setSelectable(true);
-		table.setFilterBarVisible(true);
-		table.setFilterGenerator(new customFilter());
-		table.setFilterDecorator(new customFilterDecorator());
+		tblZubereitung = new FilterTable();
+		tfBezeichnung.setWidth("100%");
+		tfAbkuerzung.setWidth("100%");
+		tblZubereitung.setSizeFull();
+		tblZubereitung.setSelectable(true);
+		tblZubereitung.setFilterBarVisible(true);
 
-		box.setWidth("300px");
-		box.setSpacing(true);
+		this.addComponent(vlBox);
+		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
+		
+		vlBox.setWidth("300px");
+		vlBox.setSpacing(true);
+		
+		vlBox.addComponent(hlUeberschrift);
+		hlUeberschrift.addComponent(lUeberschrift);
+		hlUeberschrift.setComponentAlignment(lUeberschrift, Alignment.MIDDLE_CENTER);
+		
+		vlBox.addComponent(tfBezeichnung);
+		vlBox.addComponent(tfAbkuerzung);
+		
+		tfBezeichnung.setImmediate(true);
+		tfBezeichnung.setMaxLength(150);
 
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-		box.addComponent(dummy);
-		box.addComponent(ueberschrift);
-		box.addComponent(name);
-		box.addComponent(abkuerzung);
+		tfAbkuerzung.setImmediate(true);
+		tfAbkuerzung.setMaxLength(150);
 
-		HorizontalLayout control = new HorizontalLayout();
-		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		vlBox.addComponent(hlControl);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(btSpeichern);
+		btSpeichern.setIcon(new ThemeResource("img/save.ico"));
+		hlControl.setSpacing(true);
 
-		name.setImmediate(true);
-		name.setInputPrompt(nameInput);
-		name.setMaxLength(150);
-
-		abkuerzung.setImmediate(true);
-		abkuerzung.setInputPrompt(abkuerzungInput);
-		abkuerzung.setMaxLength(150);
-
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
-
-		name.addValueChangeListener(new ValueChangeListener() {
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				nameInput = valueString;
-			}
-		});
-
-		abkuerzung.addValueChangeListener(new ValueChangeListener() {
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
-
-				abkuerzungInput = valueString;
-			}
-		});
-
-		speichern.addClickListener(new ClickListener() {
+		vlBox.addComponent(tblZubereitung);
+		
+		btSpeichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Fussnote fn = new Fussnote();
-				fn.setName(nameInput);
-				fn.setAbkuerzung(abkuerzungInput);
-
-				try {
-					Fussnotenverwaltung.getInstance().createFussnote(fn);
-
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (validiereEingabe()) {
+					speichern();
+					ViewHandler.getInstance().switchView(FussnoteEinst.class);
 				}
-
-				Notification notification = new Notification(
-						"Fussnote wurde gespeichert!");
-				notification.setDelayMsec(500);
-				notification.show(Page.getCurrent());
-
-				ViewHandler.getInstance().switchView(FussnoteEinst.class);
 
 			}
 		});
@@ -134,14 +99,45 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		try {
 			container = new BeanItemContainer<Fussnote>(Fussnote.class,
 					Fussnotenverwaltung.getInstance().getAllFussnote());
-			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "id", "name", "abkuerzung" });
-			table.sort(new Object[] { "name" }, new boolean[] { true });
+			tblZubereitung.setContainerDataSource(container);
+			tblZubereitung.setVisibleColumns(new Object[] { "id", "bezeichnung", "abkuerzung" });
+			tblZubereitung.sort(new Object[] { "id" }, new boolean[] { true });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		box.addComponent(table);
+	}
 
+	private void speichern() {
+		
+		fn.setName(tfBezeichnung.getValue());
+		fn.setAbkuerzung(tfAbkuerzung.getValue());
+
+		try {
+			Fussnotenverwaltung.getInstance().createFussnote(fn);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		showNotification("Fussnote wurde gespeichert!");
+	}
+
+	private void showNotification(String text) {
+		Notification notification = new Notification(text);
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
+	}
+
+	private Boolean validiereEingabe() {
+		if (tfBezeichnung.getValue().isEmpty()) {
+			showNotification("Bitte Bezeichnung eingeben!");
+			return false;
+		}
+		if (tfAbkuerzung.getValue().isEmpty()) {
+			showNotification("Bitte Abkürzung eingeben!");
+			return false;
+		}
+		return true;
 	}
 
 	@Override
