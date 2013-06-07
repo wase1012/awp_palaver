@@ -572,25 +572,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `palaver`.`menueplan_has_koeche` ;
 
-CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_koeche` (
-	id INT NOT NULL AUTO_INCREMENT,
-	menueplan INT NOT NULL,
-	spalte INT NOT NULL,
-	koch1 INT,
-	koch2 INT,
-	PRIMARY KEY (id),
-	CONSTRAINT `fk_menueplan_has_koch_menue`
-    FOREIGN KEY (`menueplan` )
-    REFERENCES `palaver`.`menueplan` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_menueplan_has_koch_koch1`
-    FOREIGN KEY (`koch1` )
-    REFERENCES `palaver`.`mitarbeiter` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-	ENGINE = InnoDB;
-
+CREATE TABLE `menueplan_has_koeche` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menueplan` int(11) NOT NULL,
+  `spalte` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `koch` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menueplan_has_koch_menue` (`menueplan`),
+  KEY `fk_menueplan_has_koch_koch1` (`koch`),
+  CONSTRAINT `fk_menueplan_has_koch_koch1` 
+  	FOREIGN KEY (`koch`) REFERENCES `mitarbeiter` (`id`) 
+  	ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menueplan_has_koch_menue` 
+  	FOREIGN KEY (`menueplan`) REFERENCES `menueplan` (`id`) 
+  	ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 

@@ -236,10 +236,10 @@ public class MenueplanGridLayout extends CustomComponent {
 			if(compKoeche instanceof KoecheComponent){
 				KoecheComponent kc = (KoecheComponent) compKoeche;
 				if(kc.getKoch1()!=null){
-					koeche.add(new KochInMenueplan(kc.getKoch1(),col));
+					koeche.add(new KochInMenueplan(kc.getKoch1(),col,1));
 				}
 				if(kc.getKoch2()!=null){
-					koeche.add(new KochInMenueplan(kc.getKoch2(),col));
+					koeche.add(new KochInMenueplan(kc.getKoch2(),col,2));
 				}
 			}
 		}
