@@ -40,22 +40,22 @@ public interface IConstants
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Anlegen";
 	String 		MENU_REZEPT_ANZEIGEN = "Anzeigen";
-	String 		MENU_REZEPT_AENDERN = "Ändern";
-	String 		MENU_REZEPT_LOESCHEN = "Löschen";
-	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
-	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
-	String 		MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
+	String 		MENU_REZEPT_AENDERN = "ï¿½ndern";
+	String 		MENU_REZEPT_LOESCHEN = "Lï¿½schen";
+	String 		MENU_MENUPLAN_HEADLINE = "Menï¿½plan";
+	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menï¿½plan";
+	String 		MENU_MENUPLAN_HISTORIE = "Menï¿½plan-Historie";
 	String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
 	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
 	String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
 	String 		MENU_FUSSNOTE = "Fussnoten";
-	String 		MENU_GESCHMACK = "Geschmäcker";
+	String 		MENU_GESCHMACK = "Geschmï¿½cker";
 	String 		MENU_REZEPTART = "Rezeptarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
 	String		MENU_LOGOUT = "Logout";
-	String 		MENU_MENUE_HEADLINE = "Menü";
-	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
-	String 		MENU_MENUE_SUCHEN = " Menü suchen";
+	String 		MENU_MENUE_HEADLINE = "Menï¿½";
+	String 		MENU_MENUE_ANLEGEN = " Menï¿½ anlegen";
+	String 		MENU_MENUE_SUCHEN = " Menï¿½ suchen";
 	String 		MENU_REGEL = "Regeln";
 	String 		MENU_HEADER = "Kopfzeile anzeigen/ausblenden";
 	
@@ -65,19 +65,19 @@ public interface IConstants
 	String		BUTTON_SAVE = "Speichern";
 	String		BUTTON_SENDEN = "Senden";
 	String		BUTTON_DISCARD = "Verwerfen";
-	String		BUTTON_ADD = "Hinzufügen";
+	String		BUTTON_ADD = "HinzufÃ¼gen";
 	String		BUTTON_NEW = "Neu";
 	String		BUTTON_EDIT = "Bearbeiten";
 	String		BUTTON_OK = "OK";
-	String		BUTTON_DELETE = "Löschen";
+	String		BUTTON_DELETE = "Lï¿½schen";
 	String		BUTTON_JA = "Ja";
 	String 		BUTTON_NEIN = "Nein";
 	String		BUTTON_EMAILVERSAND = "Per Email versenden";
 	String		BUTTON_DOWNLOAD = "Download";
-	String		BUTTON_BACK = "Zurück";
+	String		BUTTON_BACK = "Zurï¿½ck";
 	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
-	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menü Speichern";	
-	String		BUTTON_SELECT = "Auswählen";
+	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menï¿½ Speichern";	
+	String		BUTTON_SELECT = "Auswï¿½hlen";
 
 	
 	// Icons fuer Knoepfe
@@ -95,20 +95,20 @@ public interface IConstants
 	String		ICON_NO = "img/cross_circle.ico";
 	String		ICON_DELETE = "img/Delete.ico";
 
-	// Beschriftungen für Notifications
+	// Beschriftungen fï¿½r Notifications
 	String		INFO_REZEPT_SAVE = "Rezept wurde gespeichert!";
-	String		INFO_REZEPT_MENUE_SAVE = "Menü kann nur als Haupgericht gespeichert werden!";
-	String		INFO_REZEPT_ZUTATEN = "Bitte Zutaten wählen!";
-	String		INFO_REZEPT_MENGE = "Bitte Menge kleiner 100.000 wählen!";
-	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
-	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
+	String		INFO_REZEPT_MENUE_SAVE = "Menï¿½ kann nur als Haupgericht gespeichert werden!";
+	String		INFO_REZEPT_ZUTATEN = "Bitte Zutaten wï¿½hlen!";
+	String		INFO_REZEPT_MENGE = "Bitte Menge kleiner 100.000 wï¿½hlen!";
+	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wï¿½hlen!";	
+	String 		INFO_REZEPT_KOCH = "Bitte Koch wï¿½hlen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
-	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
-	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
-	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
+	String		INFO_REGEL_DELETE = "Regel wurde gelï¿½scht!";
+	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wï¿½hlen!";
+	String 		INFO_REGEL_OPERATOR = "Bitte Operator wï¿½hlen!";
 
-	// Beschriftung für Tabellenüberschriften
-	String 		BESTELLGROESSE = "Bestellgröße";
+	// Beschriftung fï¿½r Tabellenï¿½berschriften
+	String 		BESTELLGROESSE = "Bestellgrï¿½ï¿½e";
 }
