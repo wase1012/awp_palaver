@@ -27,6 +27,7 @@ import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 
 /**
  * @author Eike
@@ -210,6 +211,27 @@ public class MenueplanDAO extends AbstractDAO {
 		putManaged(MessageFormat.format(sql, menueplan.getId(),
 				kim.getSpalte(), kim.getPosition(), kim.getKoch().getId()));
 
+	}
+	
+	public List<KochInMenueplan> getKoecheByMenueplan(Menueplan menueplan) throws ConnectException, DAOException, SQLException{
+		List<KochInMenueplan> kim = new ArrayList<KochInMenueplan>();
+		String sql = "SELECT * FROM menueplan_has_koeche WHERE " + menueplan.getId();
+		
+		ResultSet set = getManaged(sql);
+		
+		while(set.next()){
+			Integer spalte = set.getInt("spalte");
+			Integer position = set.getInt("position");
+			Long kochId = set.getLong("koch");
+			
+			KochInMenueplan k = new KochInMenueplan();
+			k.setKoch(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(kochId));
+			k.setPosition(position);
+			k.setSpalte(spalte);
+			
+			kim.add(k);
+		}
+		return kim;
 	}
 
 	public void deleteKoecheByMenueplan(Menueplan menueplan)

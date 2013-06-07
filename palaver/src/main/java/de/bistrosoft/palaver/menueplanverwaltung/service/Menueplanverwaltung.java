@@ -1,10 +1,15 @@
 package de.bistrosoft.palaver.menueplanverwaltung.service;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 
 public class Menueplanverwaltung extends MenueplanDAO {
 
@@ -59,6 +64,17 @@ public class Menueplanverwaltung extends MenueplanDAO {
 
 	}
 
+//	public List<KochInMenueplan> getKoecheByMenueplan(Menueplan menueplan){
+//		try {
+//			return super.getKoecheByMenueplan(menueplan);
+//		} catch (ConnectException e) {
+//			e.printStackTrace();
+//		} catch (DAOException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	public void deleteItemsByMenueplan(Menueplan mpl) {
 		try {
 			super.deleteItemsByMenueplan(mpl);

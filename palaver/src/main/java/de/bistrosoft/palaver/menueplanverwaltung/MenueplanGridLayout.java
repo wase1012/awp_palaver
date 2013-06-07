@@ -1,5 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -20,12 +21,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -159,7 +163,29 @@ public class MenueplanGridLayout extends CustomComponent {
 			layout.setComponentAlignment(koeche, Alignment.MIDDLE_CENTER);
 		}
 
-		// FÃ¼ge MenueItems ein
+		try {
+			List<KochInMenueplan> kim = MenueplanDAO.getInstance()
+					.getKoecheByMenueplan(menueplan);
+			for (KochInMenueplan k : kim) {
+				if (layout.getComponent(k.getSpalte(), 1) instanceof KoecheComponent) {
+					KoecheComponent kc = (KoecheComponent) layout.getComponent(k.getSpalte(), 1);
+					if (k.getPosition() == 1) {
+						kc.setKoch1(k.getKoch());
+					}
+					else if (k.getPosition() == 2) {
+						kc.setKoch2(k.getKoch());
+					}
+				}
+			}
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Füge MenueItems ein
 		if (menueplan != null) {
 			if (menueplan.getMenues() != null) {
 				for (MenueComponent mc : menueplan.getMenues()) {
@@ -233,13 +259,13 @@ public class MenueplanGridLayout extends CustomComponent {
 		List<KochInMenueplan> koeche = new ArrayList<KochInMenueplan>();
 		for (int col = 0; col < COLUMNS; ++col) {
 			Component compKoeche = layout.getComponent(col, 1);
-			if(compKoeche instanceof KoecheComponent){
+			if (compKoeche instanceof KoecheComponent) {
 				KoecheComponent kc = (KoecheComponent) compKoeche;
-				if(kc.getKoch1()!=null){
-					koeche.add(new KochInMenueplan(kc.getKoch1(),col,1));
+				if (kc.getKoch1() != null) {
+					koeche.add(new KochInMenueplan(kc.getKoch1(), col, 1));
 				}
-				if(kc.getKoch2()!=null){
-					koeche.add(new KochInMenueplan(kc.getKoch2(),col,2));
+				if (kc.getKoch2() != null) {
+					koeche.add(new KochInMenueplan(kc.getKoch2(), col, 2));
 				}
 			}
 		}

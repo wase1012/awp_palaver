@@ -14,6 +14,9 @@ public class KochInMenueplan {
 		this.position = position;
 	}
 
+	public KochInMenueplan() {
+	}
+
 	public Mitarbeiter getKoch() {
 		return koch;
 	}
