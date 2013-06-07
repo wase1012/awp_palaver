@@ -48,7 +48,7 @@ public class Fussnote implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getBezeichnung() {
 		return this.name;
 	}
 
