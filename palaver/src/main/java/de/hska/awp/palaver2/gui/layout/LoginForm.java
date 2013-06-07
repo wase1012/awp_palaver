@@ -18,6 +18,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -47,6 +48,8 @@ public class LoginForm extends VerticalLayout
 	
 	private Button 				loginButton = new Button("Login");
 	
+	private Label				message = new Label("Login fehlgeschlagen");
+	
 	public LoginForm()
 	{
 		super();
@@ -69,15 +72,25 @@ public class LoginForm extends VerticalLayout
 		logo = new Embedded(null, new ThemeResource("img/cafe_palaver_Logo.png"));
 		content.addComponent(logo);
 		
+		HorizontalLayout messageBar = new HorizontalLayout();
+		messageBar.setWidth("100%");
+		messageBar.addComponent(message);
+		messageBar.addComponent(loginButton);
+		messageBar.setExpandRatio(message, 1);
+		messageBar.setComponentAlignment(loginButton, Alignment.BOTTOM_RIGHT);
+		
+		message.setStyleName("ErrorMessage");
+		
 		VerticalLayout fields = new VerticalLayout();
 		fields.addComponent(username);
 		fields.addComponent(password);
-		fields.addComponent(loginButton);
+		message.setVisible(false);
+		fields.addComponent(messageBar);
 		fields.setSpacing(true);
 		fields.setWidth("300px");
 		username.setWidth("100%");
 		password.setWidth("100%");
-		fields.setComponentAlignment(loginButton, Alignment.BOTTOM_RIGHT);
+//		fields.setComponentAlignment(loginButton, Alignment.BOTTOM_RIGHT);
 		username.focus();
 		
 		content.addComponent(fields);
@@ -162,7 +175,8 @@ public class LoginForm extends VerticalLayout
 	
 	private void fail()
 	{
-		Application.getInstance().showDialog("Login fehlgeschlagen!");
+//		Application.getInstance().showDialog("Login fehlgeschlagen!");
+		message.setVisible(true);
 		username.focus();
 	}
 }

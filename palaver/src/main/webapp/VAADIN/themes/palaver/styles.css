@@ -238,6 +238,10 @@ height: 30px;
 	padding-bottom: 10px;
 }
 
+.ErrorMessage {
+	color: red;
+}
+
 .v-table-cell-content-check {
 	background-image:url('img/tick_circle.ico');
 	background-position:center center;
