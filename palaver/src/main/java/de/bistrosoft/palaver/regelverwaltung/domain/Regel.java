@@ -195,7 +195,7 @@ public class Regel {
 		c3.add(-1);
 		List<String> rw3 = new ArrayList<String>();
 		rw3.add("deutsch");
-		regeln.add(new Regel("Geschmack", r3, c3, "enthält nicht", rw3,
+		regeln.add(new Regel("Geschmack", r3, c3, "enthï¿½lt nicht", rw3,
 				"Geschmack", true));
 
 		List<Integer> r2 = new ArrayList<Integer>();
@@ -242,7 +242,7 @@ public class Regel {
 				+ mc.getMenue().getFussnoten().size());
 		if (regeltyp.equals("Name")) {
 			mc.addFehlerRegel(checkName(mc, mp));
-		} else if (regeltyp.trim().equals("Menüart")) {
+		} else if (regeltyp.trim().equals("Menï¿½art")) {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
@@ -262,15 +262,15 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		// if(menue.getFussnoten()!=null){
-		if (operator.equals("enthält nicht")) {
-			System.out.println("#Fussnote: enthält nicht");
+		if (operator.equals("enthï¿½lt nicht")) {
+			System.out.println("#Fussnote: enthï¿½lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				System.out.println("#Fussnote: not null"
 						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getName());
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -278,10 +278,10 @@ public class Regel {
 			} else
 				return this;
 
-		} else if (operator.equals("enthält")) {
+		} else if (operator.equals("enthï¿½lt")) {
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getName()) == -1) {
+					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
 						return null;
 					} else
 						return this;
@@ -347,15 +347,15 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		// if(menue.getFussnoten()!=null){
-		if (operator.equals("enthält nicht")) {
-			System.out.println("#Fussnote: enthält nicht");
+		if (operator.equals("enthï¿½lt nicht")) {
+			System.out.println("#Fussnote: enthï¿½lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				System.out.println("#Fussnote: not null"
 						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getName());
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -363,13 +363,13 @@ public class Regel {
 			} else
 				return this;
 
-		} else if (operator.equals("enthält")) {
-			System.out.println("###enthält");
+		} else if (operator.equals("enthï¿½lt")) {
+			System.out.println("###enthï¿½lt");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
 
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) == -1) {
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
 
 					} else
 						return this;
@@ -439,14 +439,14 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
-			if (operator.equals("enthält nicht")) {
+			if (operator.equals("enthï¿½lt nicht")) {
 				System.out.println("ent nit");
 				System.out.println(menue.getGeschmack().getName().toString());
 				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enthält")) {
+			} else if (operator.equals("enthï¿½lt")) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
@@ -503,12 +503,12 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
-			if (operator.equals("enthält nicht")) {
+			if (operator.equals("enthï¿½lt nicht")) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enthält")) {
+			} else if (operator.equals("enthï¿½lt")) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
@@ -564,14 +564,14 @@ public class Regel {
 		System.out.print(mc.row + "/");
 		System.out.println(menue.getMenueart());
 		if (menue.getMenueart() != null) {
-			if (operator.equals("enthält nicht")) {
+			if (operator.equals("enthï¿½lt nicht")) {
 				System.out.println("!!!!!!!!"
 						+ menue.getMenueart().getName().toString());
 				if (kriterienlist.indexOf(menue.getMenueart().getName()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enthält")) {
+			} else if (operator.equals("enthï¿½lt")) {
 				if (kriterienlist.indexOf(menue.getMenueart().getName()
 						.toString()) >= 0) {
 					return this;
@@ -623,12 +623,12 @@ public class Regel {
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 
-		if (operator.equals("enthält nicht")) {
+		if (operator.equals("enthï¿½lt nicht")) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 
 				return this;
 			}
-		} else if (operator.equals("enthält")) {
+		} else if (operator.equals("enthï¿½lt")) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
