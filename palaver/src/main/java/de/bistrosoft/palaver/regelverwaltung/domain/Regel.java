@@ -246,7 +246,7 @@ public class Regel {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
-		} else if (regeltyp.equals("Fußnote")) {
+		} else if (regeltyp.equals("Fuߟnote")) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
 		} else if (regeltyp.equals("Zubereitung")) {
 			mc.addFehlerRegel(checkZubereitung(mc, mp));
@@ -268,9 +268,9 @@ public class Regel {
 				System.out.println("#Fussnote: not null"
 						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getName());
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -281,7 +281,7 @@ public class Regel {
 		} else if (operator.equals("enth�lt")) {
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getName()) == -1) {
+					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
 						return null;
 					} else
 						return this;
@@ -353,9 +353,9 @@ public class Regel {
 				System.out.println("#Fussnote: not null"
 						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getName());
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+						System.out.println("#Fussnote: return " + fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -368,8 +368,8 @@ public class Regel {
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
 
-					System.out.println("#Fussnote:" + fs.getName());
-					if (kriterienlist.indexOf(fs.getName()) == -1) {
+					System.out.println("#Fussnote:" + fs.getBezeichnung());
+					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
 
 					} else
 						return this;
