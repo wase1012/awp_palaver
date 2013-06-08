@@ -49,6 +49,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btHinzufuegen = new Button(IConstants.BUTTON_ADD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
+	private Button btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 
 	private FilterTable tblFussnote;
 
@@ -86,6 +87,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		vl.addComponent(btHinzufuegen);
 		vl.setComponentAlignment(btHinzufuegen, Alignment.MIDDLE_RIGHT);
 		btHinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
+		vl.addComponent(btAuswaehlen);
+		vl.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_CENTER);
 
 		btHinzufuegen.addClickListener(new ClickListener() {
 
@@ -127,6 +130,17 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
+
+		btAuswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (tblFussnote.getValue() != null
+						&& tblFussnote.getValue() instanceof Fussnote) {
+					updateFussnote();
+				} else
+					showNotification("Bitte Fussnote ausw‰hlen!");
+			}
+		});
+
 	}
 
 	private void hinzufuegen() {
@@ -193,10 +207,10 @@ public class FussnoteEinst extends VerticalLayout implements View {
 				abbrechen();
 			}
 		});
-
 	}
 
 	private void updateFussnote() {
+
 		fnNeu = new Window();
 		fnNeu.setClosable(false);
 		fnNeu.setWidth("400px");
@@ -236,7 +250,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.setValue(fn.getBezeichnung());
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte g√ºltige Bezeichnung eingeben", 3, 20, false));
+				"Bitte g√ºltige Bezeichnung eingeben", 3, 50, false));
 
 		tfAbkuerzung.setImmediate(true);
 		tfAbkuerzung.setValue(fn.getAbkuerzung());
@@ -282,7 +296,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Fussnote wurde ge√§ndert!");
+		showNotification("Fussnote wurde ge‰ndert!");
 	}
 
 	private void zurueck() {
@@ -301,7 +315,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			return false;
 		}
 		if (tfAbkuerzung.getValue().isEmpty()) {
-			showNotification("Bitte Abk√ºrzung eingeben!");
+			showNotification("Bitte Abk¸rzung eingeben!");
 			return false;
 		}
 		return true;
@@ -315,6 +329,5 @@ public class FussnoteEinst extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-
 	}
 }

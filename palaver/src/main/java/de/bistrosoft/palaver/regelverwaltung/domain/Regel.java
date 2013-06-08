@@ -246,7 +246,7 @@ public class Regel {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
 		} else if (regeltyp.equals("Geschmack")) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
-		} else if (regeltyp.equals("Fußnote")) {
+		} else if (regeltyp.equals("Fuߟnote")) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
 		} else if (regeltyp.equals("Zubereitung")) {
 			mc.addFehlerRegel(checkZubereitung(mc, mp));
@@ -441,13 +441,13 @@ public class Regel {
 		if (menue.getGeschmack() != null) {
 			if (operator.equals("enth�lt nicht")) {
 				System.out.println("ent nit");
-				System.out.println(menue.getGeschmack().getName().toString());
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				System.out.println(menue.getGeschmack().getBezeichnung().toString());
+				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals("enth�lt")) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}
@@ -504,12 +504,12 @@ public class Regel {
 		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
 			if (operator.equals("enth�lt nicht")) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals("enth�lt")) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}

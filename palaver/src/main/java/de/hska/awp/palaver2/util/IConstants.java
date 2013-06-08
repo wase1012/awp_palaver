@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -48,6 +48,7 @@ public interface IConstants
 	String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
 	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
 	String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
+	String		MENU_KUCHENPLAN_AKTUELL = "Aktueller Kuchenplan";
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschm�cker";
 	String 		MENU_REZEPTART = "Rezeptarten";
