@@ -30,8 +30,8 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 @SuppressWarnings("serial")
 public class Application extends UI
 {
-    private static ThreadLocal<Application>	currentApplication	= new ThreadLocal<Application>();
-    private static Application				instance = null;
+    private static final ThreadLocal<Application>	currentApplication	= new ThreadLocal<Application>();
+
     private static final Logger				log					= LoggerFactory.getLogger(Application.class.getName());
     
     private String 							username;
@@ -46,16 +46,25 @@ public class Application extends UI
     public static Application getInstance()
     {
     	log.info("Instance: " + currentApplication.get());
+    	if (currentApplication.get() == null)
+    	{
+    		log.error("Instance is NULL");
+    		return setInstance(new Application());
+    	}
     	return currentApplication.get();
     }
     
-    private static void setInstance(Application application)
+    private static Application setInstance(Application application)
 	{
 		log.info("Set Instance: " + application);
     	currentApplication.set(application);
-//    	instance = application;
-
+    	return application;
 	}
+    
+    public Application()
+    {
+    	setInstance(this);
+    }
 	
     /**
      * 
@@ -70,10 +79,7 @@ public class Application extends UI
         log.info("**************************************************************");
 		Page.getCurrent().setTitle("PalaverApp");
 		
-		final VerticalLayout layout = new VerticalLayout();
-//        layout.setMargin(true);
-        layout.setSizeFull();
-        setContent(layout);
+        setContent(new LoginForm());
         
 //        Button button = new Button("Datenbank Test");
 //        button.addClickListener(new Button.ClickListener() 
@@ -101,7 +107,6 @@ public class Application extends UI
 //        });
 //        layout.addComponent(button);
 //        layout.addComponent(MainLayout.getInstance());
-        layout.addComponent(new LoginForm());
     }
 	
 	/**
@@ -150,7 +155,7 @@ public class Application extends UI
 
 		super.getSession().close();
 		getPage().setLocation("/Logout");
-		instance = null;
+		setInstance(null);
 	}
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response)
@@ -178,6 +183,10 @@ public class Application extends UI
 		return false;
 	}
 	
+	/**
+	 * Öffnet den Standartdialog mit einem OK Button
+	 * @param message
+	 */
 	public void showDialog(String message)
 	{
 		final Window dialog = new Window();
