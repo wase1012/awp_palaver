@@ -113,7 +113,7 @@ public class MainLayout extends VerticalLayout implements Command
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
 		
 		MenuItem mitarbeiterItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
-		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR))
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR))
 		{
 			mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
 		}
@@ -140,7 +140,7 @@ public class MainLayout extends VerticalLayout implements Command
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENPLAN_AKTUELL, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
-		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR) || Application.getInstance().userHasPersmission(Rollen.BESTELLER))
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR) || ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER))
 		{
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
@@ -148,7 +148,7 @@ public class MainLayout extends VerticalLayout implements Command
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		
-		if (Application.getInstance().userHasPersmission(Rollen.ADMINISTRATOR))
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR))
 		{
 			MenuItem regelItem = menu.addItem(IConstants.MENU_REGEL, this);
 		}
