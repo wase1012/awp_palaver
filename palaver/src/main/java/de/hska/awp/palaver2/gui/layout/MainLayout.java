@@ -8,12 +8,20 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.gui.view.FussnoteEinst;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
@@ -153,6 +161,7 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
 		einstellungItem.addItem("Email", this);
 		einstellungItem.addItem("Nachrichten", this);
+//		einstellungItem.addItem(IConstants.MENU_INFO, this);
 		this.addComponent(menu);
 		
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
@@ -166,6 +175,11 @@ public class MainLayout extends VerticalLayout implements Command
 		
 //		this.addComponent(new ArtikelErstellen());
 //		this.setExpandRatio(this.getComponent(2), 1);
+		
+		if (UI.getCurrent().getSession().getBrowser().isTouchDevice())
+		{
+			setHeaderVisible(false);
+		}
 	}
 
 	@Override
@@ -207,7 +221,6 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
 		{
 			UI.getCurrent().setContent(new LoginForm());
-			Application.getInstance().setUsername(null);
 			UI.getCurrent().getSession().close();
 			UI.getCurrent().close();
 			log.info("**************************************************************");
@@ -298,6 +311,10 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			setHeaderVisible(!this.header.isVisible());
 		}
+		else if (selectedItem.getText().equals(IConstants.MENU_INFO))
+		{
+			showInfo();
+		}
 		else 
 		{
 			ViewHandler.getInstance().returnToDefault();
@@ -309,8 +326,46 @@ public class MainLayout extends VerticalLayout implements Command
 		return "Benutzer : " + Application.getInstance().getUsername();
 	}
 	
-	public void setHeaderVisible(Boolean arg0)
+	private void setHeaderVisible(Boolean arg0)
 	{
 		this.header.setVisible(arg0);
+	}
+	
+	private void showInfo()
+	{
+		final Window win = new Window();
+		win.center();
+		win.setModal(true);
+		win.setWidth("410px");
+		win.setHeight("400px");
+		win.setClosable(false);
+		win.setStyleName("dialog-window");
+		win.setResizable(false);
+		
+		VerticalLayout content = new VerticalLayout();
+		content.setSizeFull();
+		content.setMargin(true);
+		content.setSpacing(true);
+		
+		Embedded logo = new Embedded(null, new ThemeResource("img/hska.png"));
+		content.addComponent(logo);
+		
+		Label text = new Label("PalaverApp /n (c) 2013 Hochschule Karlsruhe /n Build: 07-06-2013-18-48");
+		content.addComponent(text);
+		
+		Button close = new Button(IConstants.BUTTON_OK);
+		close.addClickListener(new ClickListener()
+		{
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				UI.getCurrent().removeWindow(win);
+			}
+		});
+		content.addComponent(close);
+		content.setComponentAlignment(close, Alignment.BOTTOM_RIGHT);
+		
+		win.setContent(content);
+		UI.getCurrent().addWindow(win);
 	}
 }

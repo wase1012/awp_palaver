@@ -52,7 +52,7 @@ public class Fussnote implements java.io.Serializable {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setBezeichnung(String name) {
 		this.name = name;
 	}
 
@@ -131,4 +131,5 @@ public class Fussnote implements java.io.Serializable {
 	public String toString() {
 		return name;
 	}
+
 }

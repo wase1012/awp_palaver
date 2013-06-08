@@ -110,7 +110,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name, abkuerzung) VALUES('" + fussnote.getName() + "','"
+				+ "(name, abkuerzung) VALUES('" + fussnote.getBezeichnung() + "','"
 				+ fussnote.getAbkuerzung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
@@ -118,7 +118,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public void updateFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ fussnote.getName() + "'," + ABKUERZUNG + "='"
+				+ fussnote.getBezeichnung() + "'," + ABKUERZUNG + "='"
 				+ fussnote.getAbkuerzung() + "'" + " WHERE " + ID + "='"
 				+ fussnote.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
