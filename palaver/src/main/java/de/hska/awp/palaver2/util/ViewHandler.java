@@ -6,6 +6,8 @@ package de.hska.awp.palaver2.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.vaadin.ui.UI;
+
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.gui.layout.DefaultView;
 
@@ -29,59 +31,61 @@ public class ViewHandler {
 	}
 
 	public void switchView(Class<? extends View> view) {
-		try {
-			if (view != null) {
-				View current = view.newInstance();
-				Application
-						.getInstance()
-						.getLayout()
-						.removeComponent(
-								Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1));
-				Application.getInstance().getLayout().addComponent(current);
-				Application
-						.getInstance()
-						.getLayout()
-						.setExpandRatio(
-								Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1), 1);
-				log.info("Switch View to: " + current.getClass());
+		Application app = (Application) UI.getCurrent().getData();
+		if (app != null)
+		{
+			try {
+				
+				if (view != null) {
+					View current = view.newInstance();
+					app.getLayout().removeComponent(
+							app.getLayout().getComponent(app.getLayout().getComponentCount() - 1));
+					app.getLayout().addComponent(current);
+					app.getLayout().setExpandRatio(
+							app.getLayout().getComponent(app.getLayout().getComponentCount() - 1), 1);
+					log.info("Switch View to: " + current.getClass());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				app.getLayout().addComponent(new DefaultView());
+				app.getLayout().setExpandRatio(
+						app.getLayout().getComponent(app.getLayout().getComponentCount() - 1), 1);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Application.getInstance().getLayout().addComponent(new DefaultView());
-			Application
-					.getInstance()
-					.getLayout()
-					.setExpandRatio(
-							Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1), 1);
+		}
+		else
+		{
+			log.warn("Instane is NULL");
 		}
 	}
 
 	public void switchView(Class<? extends View> view, ViewData data) {
-		try {
-			if (view != null) {
-				View current = view.newInstance();
-				Application
-						.getInstance()
-						.getLayout()
-						.removeComponent(
-								Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1));
-				Application.getInstance().getLayout().addComponent(current);
-				Application
-						.getInstance()
-						.getLayout()
+		Application app = (Application) UI.getCurrent().getData();
+		if (app != null)
+		{
+			try {
+				if (view != null) {
+					View current = view.newInstance();
+					app.getLayout()
+							.removeComponent(
+									app.getLayout().getComponent(app.getLayout().getComponentCount() - 1));
+					app.getLayout().addComponent(current);
+					app.getLayout()
+							.setExpandRatio(
+									app.getLayout().getComponent(app.getLayout().getComponentCount() - 1), 1);
+					current.getViewParam(data);
+					log.info("Switch View to: " + current.getClass() + " with data: " + data);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				app.getLayout().addComponent(new DefaultView());
+				app.getLayout()
 						.setExpandRatio(
-								Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1), 1);
-				current.getViewParam(data);
-				log.info("Switch View to: " + current.getClass() + " with data: " + data);
+								app.getLayout().getComponent(app.getLayout().getComponentCount() - 1), 1);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Application.getInstance().getLayout().addComponent(new DefaultView());
-			Application
-					.getInstance()
-					.getLayout()
-					.setExpandRatio(
-							Application.getInstance().getLayout().getComponent(Application.getInstance().getLayout().getComponentCount() - 1), 1);
+		}
+		else
+		{
+			log.warn("Instane is NULL");
 		}
 	}
 

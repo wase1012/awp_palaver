@@ -1,3 +1,6 @@
+/**
+ * Created by S.Walz
+ */
 package de.hska.awp.palaver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +37,6 @@ public class Application extends UI
 
     private static final Logger				log					= LoggerFactory.getLogger(Application.class.getName());
     
-    private String 							username;
     private Mitarbeiter						user;
     
     private MainLayout						layout;
@@ -43,6 +45,7 @@ public class Application extends UI
      * Zugriff auf "MAIN" Klasse und Session
      * @return Application
      */
+    @Deprecated
     public static Application getInstance()
     {
     	log.info("Instance: " + currentApplication.get());
@@ -54,6 +57,7 @@ public class Application extends UI
     	return currentApplication.get();
     }
     
+    @Deprecated
     private static Application setInstance(Application application)
 	{
 		log.info("Set Instance: " + application);
@@ -73,6 +77,7 @@ public class Application extends UI
     protected void init(VaadinRequest request) 
     {
         setInstance(this);
+        super.setData(this);
         log.info("**************************************************************");
         log.info("New Session with following data:");
         log.info("IP : " + request.getRemoteAddr());
@@ -109,23 +114,6 @@ public class Application extends UI
 //        layout.addComponent(MainLayout.getInstance());
     }
 	
-	/**
-	 * @return the username
-	 */
-	public String getUsername()
-	{
-		return username;
-	}
-
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username)
-	{
-		log.info("LOGIN USER: " + username);
-		this.username = username;
-	}
-	
 	public Mitarbeiter getUser()
 	{
 		return user;
@@ -141,9 +129,9 @@ public class Application extends UI
 		return layout;
 	}
 	
-	public void login(String username)
+	public void login(Mitarbeiter user)
 	{
-		setUsername(username);
+		setUser(user);
 		layout = new MainLayout();
 	}
 	
@@ -156,6 +144,7 @@ public class Application extends UI
 		super.getSession().close();
 		getPage().setLocation("/Logout");
 		setInstance(null);
+		super.setData(null);
 	}
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response)

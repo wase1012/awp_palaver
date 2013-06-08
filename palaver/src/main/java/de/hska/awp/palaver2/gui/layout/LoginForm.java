@@ -1,5 +1,5 @@
 /**
- * 
+ * Created by S.Walz
  */
 package de.hska.awp.palaver2.gui.layout;
 
@@ -116,7 +116,7 @@ public class LoginForm extends VerticalLayout
 				
 				if (username.getValue().equals("demo") && password.getValue().equals("palaverapp"))
 				{
-					Application.getInstance().showDialog("Der Benutzer demo ist nicht mehr aktiv.");
+					((Application) UI.getCurrent().getData()).showDialog("Der Benutzer demo ist nicht mehr aktiv.");
 					username.focus();
 				}
 				else 
@@ -126,10 +126,9 @@ public class LoginForm extends VerticalLayout
 						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
 						if (current.getPasswort() != null && current.getPasswort().equals(Util.encryptPassword(password.getValue())))
 						{
-							Application.getInstance().setUser(current);
-							Application.getInstance().login(username.getValue());
+							((Application) UI.getCurrent().getData()).login(current);
 
-							UI.getCurrent().setContent(Application.getInstance().getLayout());
+							UI.getCurrent().setContent(((Application) UI.getCurrent().getData()).getLayout());
 						}
 						else
 						{

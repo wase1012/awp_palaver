@@ -323,7 +323,7 @@ public class MainLayout extends VerticalLayout implements Command
 	
 	private String getUser()
 	{
-		return "Benutzer : " + Application.getInstance().getUsername();
+		return "Benutzer : " + ((Application) UI.getCurrent().getData()).getUser().getBenutzername();
 	}
 	
 	private void setHeaderVisible(Boolean arg0)
