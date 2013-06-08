@@ -48,11 +48,11 @@ public class Geschmack implements java.io.Serializable {
 		this.inaktiv = inaktiv;
 	}
 
-	public String getName() {
+	public String getBezeichnung() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setBezeichnung(String name) {
 		this.name = name;
 	}
 
