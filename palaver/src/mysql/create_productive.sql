@@ -695,7 +695,8 @@ CREATE TABLE IF NOT EXISTS `palaver`.`kuchenplan_has_kuchenrezepte` (
 	id INT NOT NULL AUTO_INCREMENT,
 	kuchenplan_fk INT NOT NULL,
 	kuchenrezept_fk INT NOT NULL,
-	spalte INT NOT NULL,
+	tag INT NOT NULL,
+	anzahl INT NOT NULL,
 	PRIMARY KEY (id),
   CONSTRAINT `fk_kuchenplan_has_kuchenrezepte_kuchenplan`
     FOREIGN KEY (`kuchenplan_fk` )
