@@ -7,9 +7,11 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
@@ -17,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -40,9 +43,13 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 
 	private Button showFilter;
 	private Kuchenrezept kuchenrezept;
+	
+	private Button btAuswaehlen;
 
 	public KuchenrezeptAnzeigen() {
 		super();
+		
+		btAuswaehlen=new Button(IConstants.BUTTON_SELECT);
 
 		this.setSizeFull();
 		this.setMargin(true);
@@ -100,6 +107,7 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
+		this.addComponent(btAuswaehlen);
 
 		showFilter.addClickListener(new ClickListener() {
 			@Override
@@ -112,6 +120,25 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 					table.setFilterBarVisible(true);
 					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
 				}
+			}
+		});
+		
+		btAuswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (table.getValue() != null
+						&& table.getValue() instanceof Kuchenrezept) {
+
+					Kuchenrezept kuchenrezeptAusTb = (Kuchenrezept) table.getValue();
+					ViewHandler.getInstance().switchView(
+							KuchenrezeptAnlegen.class,
+							new ViewDataObject<Kuchenrezept>(kuchenrezeptAusTb));
+				} else{
+					Notification notification = new Notification(
+							"Bitte wählen Sie ein Rezept aus!");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
+				}
+				
 			}
 		});
 
