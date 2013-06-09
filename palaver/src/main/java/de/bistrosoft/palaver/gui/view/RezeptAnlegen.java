@@ -33,6 +33,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.RezeptDAO;
@@ -337,7 +338,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		load();
 
 		// Koch auf aktuellen User setzen
-		mitarbeiterNs.select(Application.getInstance().getUser());
+		mitarbeiterNs.select(((Application) UI.getCurrent().getData()).getUser());
 
 	}
 

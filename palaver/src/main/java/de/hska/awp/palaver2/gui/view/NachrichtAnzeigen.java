@@ -18,6 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
@@ -93,7 +94,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		// Nachrichtlayout zusammenbauen
 		try {
 
-			Mitarbeiter m2 = Application.getInstance().getUser();
+			Mitarbeiter m2 = ((Application) UI.getCurrent().getData()).getUser();
 			m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(m2.getId());
 			List<Rollen> rlist = m.getRollen();
 			if (rlist != null) {
@@ -230,7 +231,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
 
 				try {
-					nachricht.setMitarbeiterBySenderFk(Application.getInstance().getUser());
+					nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
 					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
 				} catch (Exception e) {
 					log.error(e.toString());

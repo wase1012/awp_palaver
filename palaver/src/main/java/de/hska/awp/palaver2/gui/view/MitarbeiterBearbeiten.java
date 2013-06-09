@@ -26,6 +26,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
@@ -372,7 +373,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 		// Berechtigung: Administrator darf Mitarbeiter bearbeiten und der
 		// eigene Mitarbeiter darf sich selber bearbeiten mit Ausnahme der
 		// Rollen
-		Mitarbeiter m = Application.getInstance().getUser();
+		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
 				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {

@@ -28,6 +28,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
@@ -356,7 +357,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		});
 
 		// Berechtigung: Nur Administrator darf Mitarbeiter anlegen
-		Mitarbeiter m = Application.getInstance().getUser();
+		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
 				if (m.getRollen().get(i).getName().equals("Administrator")) {

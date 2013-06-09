@@ -29,6 +29,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
@@ -308,7 +309,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		load();
 
 		// Baecker auf aktuellen User setzen
-		mitarbeiterNs.select(Application.getInstance().getUser());
+		mitarbeiterNs.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 
 	public void load() {

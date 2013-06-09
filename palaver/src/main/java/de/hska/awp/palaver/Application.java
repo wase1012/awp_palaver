@@ -48,10 +48,10 @@ public class Application extends UI
     @Deprecated
     public static Application getInstance()
     {
-    	log.info("Instance: " + currentApplication.get());
+    	log.info("OLD !! Instance: " + currentApplication.get());
     	if (currentApplication.get() == null)
     	{
-    		log.error("Instance is NULL");
+    		log.error("OLD !! Instance is NULL");
     		return setInstance(new Application());
     	}
     	return currentApplication.get();
@@ -60,7 +60,7 @@ public class Application extends UI
     @Deprecated
     private static Application setInstance(Application application)
 	{
-		log.info("Set Instance: " + application);
+		log.info("Set OLD !! Instance: " + application);
     	currentApplication.set(application);
     	return application;
 	}

@@ -30,6 +30,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.MenueDAO;
@@ -239,7 +240,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		nsKoch.select(Application.getInstance().getUser());
+		nsKoch.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 
 	public void load() {
