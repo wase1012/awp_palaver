@@ -44,6 +44,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -96,7 +97,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private TextField name = new TextField("Bezeichnung");
 
 	// TwinCol
-	private TwinColSelect zubereitung = new TwinColSelect("Zubereitung");
+	private TwinColTouch zubereitung = new TwinColTouch("Zubereitung");
+	
 
 	private NativeSelect mitarbeiterNs = new NativeSelect("Koch");
 
