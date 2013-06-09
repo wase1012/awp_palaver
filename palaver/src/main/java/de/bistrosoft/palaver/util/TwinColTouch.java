@@ -47,7 +47,7 @@ public class TwinColTouch extends CustomComponent {
 			ls.setCaption(caption);
 		} else {
 			layoutNonTouch();
-			ls.setCaption(caption);
+			tcs.setCaption(caption);
 		}
 	}
 
@@ -60,6 +60,7 @@ public class TwinColTouch extends CustomComponent {
 
 	private void layoutTouch() {
 		ls = new ListSelect();
+		ls.setMultiSelect(true);
 		ls.setWidth("100%");
 		ls.setImmediate(true);
 		vlMain.addComponent(ls);
