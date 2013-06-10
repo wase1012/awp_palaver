@@ -35,7 +35,7 @@ import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.RezeptartEinst;
+import de.bistrosoft.palaver.gui.view.MenueartEinst;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
@@ -159,7 +159,7 @@ public class MainLayout extends VerticalLayout implements Command
 //		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
-		einstellungItem.addItem(IConstants.MENU_REZEPTART, this);
+		einstellungItem.addItem(IConstants.MENU_MENUEART, this);
 		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
 		einstellungItem.addItem("Email", this);
 		einstellungItem.addItem("Nachrichten", this);
@@ -277,9 +277,9 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(GeschmackEinst.class);
 		}
-		else if (selectedItem.getText().equals(IConstants.MENU_REZEPTART))
+		else if (selectedItem.getText().equals(IConstants.MENU_MENUEART))
 		{
-			ViewHandler.getInstance().switchView(RezeptartEinst.class);
+			ViewHandler.getInstance().switchView(MenueartEinst.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG))
 		{

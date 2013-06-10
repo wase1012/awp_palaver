@@ -566,13 +566,13 @@ public class Regel {
 		if (menue.getMenueart() != null) {
 			if (operator.equals("enth�lt nicht")) {
 				System.out.println("!!!!!!!!"
-						+ menue.getMenueart().getName().toString());
-				if (kriterienlist.indexOf(menue.getMenueart().getName()
+						+ menue.getMenueart().getBezeichnung().toString());
+				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals("enth�lt")) {
-				if (kriterienlist.indexOf(menue.getMenueart().getName()
+				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}

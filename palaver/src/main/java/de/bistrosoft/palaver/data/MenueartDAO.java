@@ -92,14 +92,14 @@ public class MenueartDAO extends AbstractDAO {
 	public void createMenueart(Menueart menueart) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ menueart.getName() + "');";
+				+ menueart.getBezeichnung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	public void updateMenueart(Menueart menueart) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ menueart.getName() + "'" + " WHERE " + ID + "='"
+				+ menueart.getBezeichnung() + "'" + " WHERE " + ID + "='"
 				+ menueart.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}

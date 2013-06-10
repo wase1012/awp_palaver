@@ -53,6 +53,7 @@ public interface IConstants
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
+	String		MENU_MENUEART="Menüarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
 	String		MENU_LOGOUT = "Logout";
 	String 		MENU_MENUE_HEADLINE = "Menü";
@@ -110,7 +111,10 @@ public interface IConstants
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
 	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
+	
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+	
 }
