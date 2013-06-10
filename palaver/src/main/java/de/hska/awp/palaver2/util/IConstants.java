@@ -111,6 +111,10 @@ public interface IConstants
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
 	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
+	String		INFO_REGEL_OPERATOR_ERLAUBT = "erlaubte Werte";
+	String 		INFO_REGEL_OPERATOR_VERBOTEN = "verbotene Werte";
+	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";
+	String		INFO_REGEL_OPERATOR_MAXIMAL = "maximale Anzahl";
 	
 
 	// Beschriftung für Tabellenüberschriften
