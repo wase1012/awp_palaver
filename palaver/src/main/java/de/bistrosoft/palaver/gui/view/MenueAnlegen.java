@@ -296,10 +296,21 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void ladeRezept(Rezept rezept) {
+		if (rezept.getId()==null){
+			try {
+				rezept=Rezeptverwaltung.getInstance().getRezeptByName(rezept.getName());
+			} catch (ConnectException e) {
+				e.printStackTrace();
+			} catch (DAOException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		tfMenuename.setValue(rezept.getName());
 		tblMenueRezepte.addItem(rezept);
+		tmpRezepte.add(rezept);
 		tblRezepte.removeItem(rezept);
 		Application.getInstance().showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
 	}
