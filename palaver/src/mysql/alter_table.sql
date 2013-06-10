@@ -1,3 +1,7 @@
+/*
+ * Erstellt von Eike Becher am 10.06.2013
+ * In DB ausgeführt: 
+ */
 ALTER TABLE `palaver`.`regel` 
 	CHANGE COLUMN `zeile` `zeile` VARCHAR(500) NULL DEFAULT NULL  , 
 	CHANGE COLUMN `spalte` `spalte` VARCHAR(500) NULL DEFAULT NULL  , 
