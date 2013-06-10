@@ -18,6 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
@@ -54,8 +55,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	private NativeSelect regeltyp = new NativeSelect("Regeltyp");
 	private NativeSelect operator = new NativeSelect("Operator");
-	private TwinColSelect spalten = new TwinColSelect("Spalten");
-	private TwinColSelect zeilen = new TwinColSelect("Zeilen");
+	private OptionGroup spalten = new OptionGroup("Spalten");
+	private OptionGroup zeilen = new OptionGroup("Zeilen");
 	private TwinColSelect kriterienTwin = new TwinColSelect("Kriterien");
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
@@ -90,10 +91,10 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			IConstants.INFO_REGEL_REGELTYP_MENUEART,
 			IConstants.INFO_REGEL_REGELTYP_AUFWAND,
 			IConstants.INFO_REGEL_REGELTYP_MENUE);
-	List<String> zeileninhalt = Arrays.asList("Fleischgericht", "Hauptgericht",
-			"Pastagericht", "Suppe/Salat", "Dessert");
-	List<String> spalteninhalt = Arrays.asList("Montag", "Dienstag",
-			"Mittwoch", "Donnerstag", "Freitag");
+	List<String> zeileninhalt = Arrays.asList(IConstants.INFO_REGEL_ZEILE_1, IConstants.INFO_REGEL_ZEILE_2,
+			IConstants.INFO_REGEL_ZEILE_3, IConstants.INFO_REGEL_ZEILE_4, IConstants.INFO_REGEL_ZEILE_5);
+	List<String> spalteninhalt = Arrays.asList(IConstants.INFO_REGEL_SPALTE_1, IConstants.INFO_REGEL_SPALTE_2,
+			IConstants.INFO_REGEL_SPALTE_3, IConstants.INFO_REGEL_SPALTE_4, IConstants.INFO_REGEL_SPALTE_5);
 	
 	BeanItemContainer<String> operatorcontainer = new BeanItemContainer<String>(
 			String.class, operatorinhalt);
@@ -182,10 +183,12 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		zeilen.setWidth("100%");
 		zeilen.setImmediate(true);
 		zeilen.setRequired(true);
-
+		zeilen.setMultiSelect(true);
+		
 		spalten.setWidth("100%");
 		spalten.setImmediate(true);
 		spalten.setRequired(true);
+		spalten.setMultiSelect(true);
 
 		regeltyp.setWidth("100%");
 		regeltyp.setImmediate(true);
@@ -581,6 +584,11 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	}
 
 	private Boolean validiereEingabe() {
+		if(zeilen.getValue() == null && spalten.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog("Test");
+			return false;
+		}
 		if (regeltyp.getValue() == null) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_REGEL_REGELTYP);
@@ -590,6 +598,20 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_REGEL_OPERATOR);
 			return false;
+		}
+		if (mitte.getComponent(2) == kriterienText){
+			if(kriterienText.getValue().isEmpty()) {
+				((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REGEL_KRITERIEN_ZAHL);
+			return false;
+			}
+		}
+		if (mitte.getComponent(2) == kriterienTwin) {
+			if (kriterienTwin.getValue().toString() == "") {
+				((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
+			return false;
+			}
 		}
 		return true;
 	}

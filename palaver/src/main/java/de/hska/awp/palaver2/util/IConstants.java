@@ -118,9 +118,12 @@ public interface IConstants
 	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
+	String 		INFO_REGEL_ZEILEN_SPALTEN = "Bitte Zeilen oder Spalten auswählen";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
 	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
-	String		INFO_REGEL_OPERATOR_ERLAUBT = "erlaubte Werte";
+	String		INFO_REGEL_KRITERIEN_ZAHL = "Bitte unter Kriterien eine Zahl eintragen!";
+	String		INFO_REGEL_KRITERIEN_TWIN = "Bitte unter Kriterien die gewünschten Werte auswählen";
+	String		INFO_REGEL_OPERATOR_ERLAUBT = "muss enthalten";
 	String 		INFO_REGEL_OPERATOR_VERBOTEN = "verbotene Werte";
 	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";
 	String		INFO_REGEL_OPERATOR_MAXIMAL = "maximale Anzahl";
@@ -130,6 +133,16 @@ public interface IConstants
 	String		INFO_REGEL_REGELTYP_ZUBEREITUNG = "Zubereitung";
 	String		INFO_REGEL_REGELTYP_AUFWAND = "Aufwand";
 	String 		INFO_REGEL_REGELTYP_FUSSNOTE = "Fußnote";
+	String 		INFO_REGEL_SPALTE_1 = "Montag";
+	String		INFO_REGEL_SPALTE_2 = "Dienstag";
+	String		INFO_REGEL_SPALTE_3 = "Mittwoch";
+	String		INFO_REGEL_SPALTE_4 = "Donnerstag";
+	String 		INFO_REGEL_SPALTE_5 = "Freitag";
+	String		INFO_REGEL_ZEILE_1 = "Fleischgericht";
+	String		INFO_REGEL_ZEILE_2 = "Hauptgericht";
+	String		INFO_REGEL_ZEILE_3 = "Pastagericht";
+	String		INFO_REGEL_ZEILE_4 = "Suppe/Salat";
+	String		INFO_REGEL_ZEILE_5 = "Dessert";
 	
 	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";

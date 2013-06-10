@@ -133,16 +133,16 @@ public class Regel {
 		zeilenlist = new ArrayList<Integer>();
 
 		for (String s : strZeilen) {
-			if (s.trim().equals("Fleischgericht")) {
+			if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_1)) {
 				zeilenlist.add(0 + topRows);
-			} else if (s.trim().equals("Hauptgericht")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_2)) {
 				zeilenlist.add(1 + topRows);
-			} else if (s.trim().equals("Pastagericht")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
 				zeilenlist.add(2 + topRows);
 				zeilenlist.add(3 + topRows);
-			} else if (s.trim().equals("Suppe/Salat")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_4)) {
 				zeilenlist.add(4 + topRows);
-			} else if (s.trim().equals("Dessert")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_5)) {
 				zeilenlist.add(5 + topRows);
 			}
 		}
@@ -151,15 +151,15 @@ public class Regel {
 		List<String> strSpalten = Arrays.asList(spalten.split(","));
 		spaltenlist = new ArrayList<Integer>();
 		for (String s : strSpalten) {
-			if (s.trim().equals("Montag")) {
+			if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_1)) {
 				spaltenlist.add(0 + leftCols);
-			} else if (s.trim().equals("Dienstag")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_2)) {
 				spaltenlist.add(1 + leftCols);
-			} else if (s.trim().equals("Mittwoch")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
 				spaltenlist.add(2 + leftCols);
-			} else if (s.trim().equals("Donnerstag")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_4)) {
 				spaltenlist.add(3 + leftCols);
-			} else if (s.trim().equals("Freitag")) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_5)) {
 				spaltenlist.add(4 + leftCols);
 			}
 		}
