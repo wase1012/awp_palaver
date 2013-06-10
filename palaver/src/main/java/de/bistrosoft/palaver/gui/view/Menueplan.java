@@ -33,16 +33,16 @@ public class Menueplan extends VerticalLayout implements View {
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
 
-	MenueplanGridLayout curMenueplan = new MenueplanGridLayout(week, year);
-	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week + 1, year);
-	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week - 1, year);
+	MenueplanGridLayout curMenueplan = new MenueplanGridLayout(week + 2, year);
+	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week + 3, year);
+	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week + 1, year);
 
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	private String strKW = new String("Kalenderwoche: " + week + "/" + year);
+	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/" + year);
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -79,7 +79,7 @@ public class Menueplan extends VerticalLayout implements View {
 				if (shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, prevMenueplan);
 					shownMenueplan = prevMenueplan;
-					strKW = "Kalenderwoche: " + (week - 1) + "/" + year;
+					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
 
 					Label lbForeWeek = new Label(
 							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -92,7 +92,7 @@ public class Menueplan extends VerticalLayout implements View {
 				if (shownMenueplan == nextMenueplan) {
 					box.replaceComponent(shownMenueplan, curMenueplan);
 					shownMenueplan = curMenueplan;
-					strKW = "Kalenderwoche: " + (week) + "/" + year;
+					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
 
 					Label lbForeWeek = new Label(
 							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -119,7 +119,7 @@ public class Menueplan extends VerticalLayout implements View {
 				if (shownMenueplan == curMenueplan) {
 					box.replaceComponent(shownMenueplan, nextMenueplan);
 					shownMenueplan = nextMenueplan;
-					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
+					strKW = "Kalenderwoche: " + (week + 3) + "/" + year;
 
 					Label lbNextWeek = new Label(
 							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -131,7 +131,7 @@ public class Menueplan extends VerticalLayout implements View {
 				if (shownMenueplan == prevMenueplan) {
 					box.replaceComponent(shownMenueplan, curMenueplan);
 					shownMenueplan = curMenueplan;
-					strKW = "Kalenderwoche: " + (week) + "/" + year;
+					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
 
 					Label lbNextWeek = new Label(
 							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
