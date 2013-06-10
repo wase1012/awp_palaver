@@ -11,8 +11,8 @@ public interface IConstants
 //  Team1
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -108,6 +108,13 @@ public interface IConstants
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 	
 	String 		INFO_MENUE_ALS_REZEPT = "Bitte weiteren Felder prüfen!";
+	String 		INFO_MENUE_NAME = "Bitte Name eingeben!";
+	String 		INFO_MENUE_KOCH = "Bitte Koch wählen!";
+	String 		INFO_MENUE_MENUEART = "Bitte Menüart wählen!";
+	String 		INFO_MENUE_GESCHMACK = "Bitte Geschmack wälen!";
+	String 		INFO_MENUE_REZEPT = "Bitte Rezept wählen!";
+	String 		INFO_MENUE_HAUPTGERICHT = "Bitte ein Hauptgericht wählen!";
+	String 		INFO_MENUE_NUR_HAUPTGERICHT = "Bitte nur ein Hauptgericht wählen!";
 	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
@@ -121,6 +128,8 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
 
 	
 }

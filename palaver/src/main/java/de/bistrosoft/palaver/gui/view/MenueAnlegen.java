@@ -15,7 +15,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -26,7 +25,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
@@ -297,7 +295,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			ladeRezept(rezept);
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void ladeRezept(Rezept rezept) {
 		tfMenuename.setValue(rezept.getName());
@@ -462,31 +460,28 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
-	}
-
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfMenuename.getValue().isEmpty()) {
-			showNotification("Bitte Namen eingeben!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_NAME);
 			return false;
 		}
 		if (nsKoch.getValue() == null) {
-			showNotification("Bitte Koch wÃ¤hlen!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_KOCH);
 			return false;
 		}
 		if (nsMenueart.getValue() == null) {
-			showNotification("Bitte Menüart wählen!");
+			Application.getInstance()
+					.showDialog(IConstants.INFO_MENUE_MENUEART);
 			return false;
 		}
 		if (nsGeschmack.getValue() == null) {
-			showNotification("Bitte Geschmack wälen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_GESCHMACK);
 			return false;
 		}
 		if (tmpRezepte == null || tmpRezepte.size() == 0) {
-			showNotification("Bitte Rezept wählen!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_REZEPT);
 			return false;
 		}
 		int countHauptmenue = 0;
@@ -496,11 +491,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		}
 		if (countHauptmenue == 0) {
-			showNotification("Bitte ein Hauptgericht wählen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_HAUPTGERICHT);
 			return false;
 		}
 		if (countHauptmenue > 1) {
-			showNotification("Bitte nur ein Hauptgericht wählen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_NUR_HAUPTGERICHT);
 			return false;
 		}
 		return true;
@@ -511,7 +508,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	}
 
-	
 	// private void rezeptAlsHauptgerichtSpeichern() {
 	// if (ausgArtikel.isEmpty()) {
 	// return;
