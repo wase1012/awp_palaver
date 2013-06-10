@@ -69,7 +69,8 @@ public class TwinColTouch extends CustomComponent {
 		ls.setImmediate(true);
 		vlMain.addComponent(ls);
 	}
-
+	
+	@Override
 	public void setWidth(String width) {
 		if (isTouch) {
 			ls.setWidth(width);
@@ -85,7 +86,7 @@ public class TwinColTouch extends CustomComponent {
 			tcs.setImmediate(immediate);
 		}
 	}
-
+	
 	public void removeAllItems() {
 		if (isTouch) {
 			ls.removeAllItems();
