@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBeadarf;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
@@ -40,13 +41,18 @@ public class MenueplanDAO extends AbstractDAO {
 
 	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE
 			+ " WHERE week = {0} AND year = {1,number,#}";
-	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*,mhm.angezName, mhm.spalte, mhm.zeile "
+	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "
 			+ "FROM menue men, menueplan_has_menues mhm "
 			+ "WHERE men.id = mhm.menue AND mhm.menueplan = {0}";
-	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile) "
-			+ "VALUES ({0},{1},{2},{3},{4})";
+	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion) "
+			+ "VALUES ({0},{1},{2},{3},{4},{5})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
+	private final String GET_ARTIKEL_BEDARF = "select rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte from rezept_has_artikel rha, menueplan_has_menues mhm, menue_has_rezept mhr where rezept_fk IN "+
+	"(select rezept_id from menue_has_rezept where menue_id IN"+ 
+		"(select menue from menueplan_has_menues where menueplan = "+
+			"(select id from menueplan where week = {0} AND year={1,number,#}))) "+
+"AND mhm.menue=mhr.menue_id AND mhr.rezept_id=rha.rezept_fk AND mhm.menueplan = (select id from menueplan where week = {0} AND year={1,number,#})";
 
 	// private final String GET_MENUES_BY_MENUEPLAN = "";
 
@@ -59,6 +65,19 @@ public class MenueplanDAO extends AbstractDAO {
 			instance = new MenueplanDAO();
 		}
 		return instance;
+	}
+	
+	public List<ArtikelBeadarf> getArtikelBedarf(Week week) throws ConnectException, DAOException, SQLException{
+		List<ArtikelBeadarf> bedarf = new ArrayList<ArtikelBeadarf>();
+		
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_MENUEPLAN_BY_WEEK, week.getWeek(), week.getYear()));
+		
+		while (set.next()) {
+			
+		}
+		
+		return bedarf;
 	}
 
 	public Menueplan getMenueplanByWeekWithItems(Week week)
@@ -185,11 +204,11 @@ public class MenueplanDAO extends AbstractDAO {
 	}
 
 	public void createMenueForMenueplan(Menueplan mpl, Menue menue,
-			String name, int col, int row) throws ConnectException,
+			String name, int col, int row, Integer portion) throws ConnectException,
 			DAOException {
 		String strName = "'" + name + "'";
 		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN,
-				mpl.getId(), menue.getId(), strName, col, row));
+				mpl.getId(), menue.getId(), strName, col, row,portion));
 
 	}
 

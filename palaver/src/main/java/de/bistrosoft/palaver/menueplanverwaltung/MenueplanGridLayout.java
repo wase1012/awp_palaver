@@ -229,7 +229,6 @@ public class MenueplanGridLayout extends CustomComponent {
 					layout.addComponent(btn, col, row);
 					layout.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 				}
-
 			}
 		}
 	}

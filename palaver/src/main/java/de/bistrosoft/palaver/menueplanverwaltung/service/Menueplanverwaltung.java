@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.bistrosoft.palaver.data.MenueplanDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBeadarf;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
@@ -37,6 +38,19 @@ public class Menueplanverwaltung extends MenueplanDAO {
 
 		return mpl;
 	}
+	
+	public List<ArtikelBeadarf> getArtikelBedarfByWeek(Week week){
+		try {
+			return super.getArtikelBedarf(week);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void persist(Menueplan menueplan) {
 		try {
@@ -50,7 +64,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 			for (MenueComponent mc : menueplan.getMenues()) {
 
 				super.createMenueForMenueplan(menueplan, mc.getMenue(),
-						mc.getAngezeigterName(), mc.getCol(), mc.getRow());
+						mc.getAngezeigterName(), mc.getCol(), mc.getRow(), mc.getPortion());
 			}
 
 			super.deleteKoecheByMenueplan(menueplan);
