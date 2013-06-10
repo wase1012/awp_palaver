@@ -178,11 +178,6 @@ public class Regel {
 	}
 
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
-		// if (regeltyp.equals("name")) {
-		// mc.addFehlerRegel(checkName(mc, mp));
-		// } else if (regeltyp.equals("Menueart")) {
-		// mc.addFehlerRegel(checkMenueart(mc, mp));
-		// }
 		if (getZeilen() != null && getSpalten() != null) {
 			if (this.getZeilen().indexOf(mc.row) >= 0
 					|| this.getZeilen().indexOf(-1) >= 0) {
@@ -195,43 +190,29 @@ public class Regel {
 
 	}
 
-	// Geschmack!, Fu�note, Zubereitung, Menueart!
-
 	public void findeRegel(MenueComponent mc, MenueplanGridLayout mp) {
-		System.out.println("Count Fussnoten: "
-				+ mc.getMenue().getFussnoten().size());
-		if (regeltyp.equals("Name")) {
+		if (regeltyp.equals(IConstants.INFO_REGEL_REGELTYP_MENUE)) {
 			mc.addFehlerRegel(checkName(mc, mp));
-		} else if (regeltyp.trim().equals("Men�art")) {
+		} else if (regeltyp.trim().equals(
+				IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
 			mc.addFehlerRegel(checkMenueart(mc, mp));
-		} else if (regeltyp.equals("Geschmack")) {
+		} else if (regeltyp.equals(IConstants.INFO_REGEL_REGELTYP_GESCHMACK)) {
 			mc.addFehlerRegel(checkGeschmack(mc, mp));
-		} else if (regeltyp.equals("Fuߟnote")) {
+		} else if (regeltyp.equals(IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)) {
 			mc.addFehlerRegel(checkFussnote(mc, mp));
-		} else if (regeltyp.equals("Zubereitung")) {
+		} else if (regeltyp.equals(IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)) {
 			mc.addFehlerRegel(checkZubereitung(mc, mp));
-		} else if (regeltyp.equals("Aufwand")) {
+		} else if (regeltyp.equals(IConstants.INFO_REGEL_REGELTYP_AUFWAND)) {
 			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
 	}
 
 	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col + "/");
-		System.out.print(mc.row + "/");
-		System.out.print("Geschmack/");
-		System.out.println(menue.getGeschmack());
-		// if(menue.getFussnoten()!=null){
 		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-			System.out.println("#Fussnote: enth�lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				System.out.println("#Fussnote: not null"
-						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getBezeichnung());
 					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
-						System.out.println("#Fussnote: return "
-								+ fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -297,27 +278,15 @@ public class Regel {
 			} else
 				return null;
 		}
-		// }
 		return null;
 	}
 
 	private Regel checkFussnote(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col + "/");
-		System.out.print(mc.row + "/");
-		System.out.print("Geschmack/");
-		System.out.println(menue.getGeschmack());
-		// if(menue.getFussnoten()!=null){
 		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-			System.out.println("#Fussnote: enth�lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				System.out.println("#Fussnote: not null"
-						+ menue.getFussnoten().size());
 				for (Fussnote fs : menue.getFussnoten()) {
-					System.out.println("#Fussnote:" + fs.getBezeichnung());
 					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
-						System.out.println("#Fussnote: return "
-								+ fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -326,11 +295,8 @@ public class Regel {
 				return this;
 
 		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-			System.out.println("###enth�lt");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
-
-					System.out.println("#Fussnote:" + fs.getBezeichnung());
 					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
 
 					} else
@@ -378,7 +344,6 @@ public class Regel {
 											}
 										}
 									}
-
 								}
 							}
 						}
@@ -386,25 +351,14 @@ public class Regel {
 				}
 			} else
 				return null;
-
 		}
-		// }
-
 		return null;
 	}
 
 	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
-		System.out.println("#Geschmack");
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col + "/");
-		System.out.print(mc.row + "/");
-		System.out.print("Geschmack/");
-		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("ent nit");
-				System.out.println(menue.getGeschmack().getBezeichnung()
-						.toString());
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) == -1) {
 					return this;
@@ -459,12 +413,7 @@ public class Regel {
 	}
 
 	private Regel checkAufwand(MenueComponent mc, MenueplanGridLayout mp) {
-		System.out.println("#Geschmack");
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col + "/");
-		System.out.print(mc.row + "/");
-		System.out.print("Geschmack/");
-		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
@@ -523,13 +472,8 @@ public class Regel {
 
 	private Regel checkMenueart(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
-		System.out.print(mc.col + "/");
-		System.out.print(mc.row + "/");
-		System.out.println(menue.getMenueart());
 		if (menue.getMenueart() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("!!!!!!!!"
-						+ menue.getMenueart().getBezeichnung().toString());
 				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
 						.toString()) == -1) {
 					return this;
@@ -668,6 +612,7 @@ public class Regel {
 			e.printStackTrace();
 		}
 
-		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_DELETE);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_REGEL_DELETE);
 	}
 }
