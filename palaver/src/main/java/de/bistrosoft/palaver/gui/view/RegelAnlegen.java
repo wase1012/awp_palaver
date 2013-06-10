@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
@@ -42,7 +44,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class RegelAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 	// Variablen und Komponenten
@@ -91,11 +93,13 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			IConstants.INFO_REGEL_REGELTYP_MENUEART,
 			IConstants.INFO_REGEL_REGELTYP_AUFWAND,
 			IConstants.INFO_REGEL_REGELTYP_MENUE);
-	List<String> zeileninhalt = Arrays.asList(IConstants.INFO_REGEL_ZEILE_1, IConstants.INFO_REGEL_ZEILE_2,
-			IConstants.INFO_REGEL_ZEILE_3, IConstants.INFO_REGEL_ZEILE_4, IConstants.INFO_REGEL_ZEILE_5);
-	List<String> spalteninhalt = Arrays.asList(IConstants.INFO_REGEL_SPALTE_1, IConstants.INFO_REGEL_SPALTE_2,
-			IConstants.INFO_REGEL_SPALTE_3, IConstants.INFO_REGEL_SPALTE_4, IConstants.INFO_REGEL_SPALTE_5);
-	
+	List<String> zeileninhalt = Arrays.asList(IConstants.INFO_REGEL_ZEILE_1,
+			IConstants.INFO_REGEL_ZEILE_2, IConstants.INFO_REGEL_ZEILE_3,
+			IConstants.INFO_REGEL_ZEILE_4, IConstants.INFO_REGEL_ZEILE_5);
+	List<String> spalteninhalt = Arrays.asList(IConstants.INFO_REGEL_SPALTE_1,
+			IConstants.INFO_REGEL_SPALTE_2, IConstants.INFO_REGEL_SPALTE_3,
+			IConstants.INFO_REGEL_SPALTE_4, IConstants.INFO_REGEL_SPALTE_5);
+
 	BeanItemContainer<String> operatorcontainer = new BeanItemContainer<String>(
 			String.class, operatorinhalt);
 	BeanItemContainer<String> regeltypcontainer = new BeanItemContainer<String>(
@@ -109,7 +113,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		speichern();
 
 	}
-	
+
 	// Konstruktor der für das Anlegen einer neuen Regel verwendet wird
 	public RegelAnlegen() {
 		label = new Label("Regel erstellen");
@@ -119,7 +123,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		speichern();
 
 	}
-	
+
 	// Methode um das Layout beim Regel anlegen und bearbeiten festzulegen
 	private void layout() {
 		this.setSizeFull();
@@ -182,13 +186,33 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 		zeilen.setWidth("100%");
 		zeilen.setImmediate(true);
-		zeilen.setRequired(true);
 		zeilen.setMultiSelect(true);
-		
+		zeilen.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (zeilen.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_ZEILEN);
+				}
+
+			}
+		});
+
 		spalten.setWidth("100%");
 		spalten.setImmediate(true);
-		spalten.setRequired(true);
 		spalten.setMultiSelect(true);
+		spalten.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (spalten.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_SPALTEN);
+				}
+
+			}
+		});
 
 		regeltyp.setWidth("100%");
 		regeltyp.setImmediate(true);
@@ -204,15 +228,27 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 		kriterienTwin.setWidth("100%");
 		kriterienTwin.setImmediate(true);
-		kriterienTwin.setRequired(true);
+		kriterienTwin.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (kriterienTwin.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				}
+
+			}
+		});
 
 		kriterienText.setWidth("100%");
 		kriterienText.setImmediate(true);
-		kriterienText.setRequired(true);
+		kriterienText.addValidator(new IntegerValidator(
+				IConstants.INFO_REGEL_KRITERIEN_ZAHL));
 
 		fehlermeldung.setWidth("100%");
 		fehlermeldung.setImmediate(true);
-		fehlermeldung.setRequired(true);
+		fehlermeldung.addValidator(new StringLengthValidator(
+				IConstants.INFO_REGEL_FEHLERMELDUNG, 3, 100, false));
 
 	}
 
@@ -229,8 +265,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					Regel.speichern(regeltypinput, zeileninput, spalteninput,
 							operatorinput, kriterieninput, fehlermeldunginput,
 							true);
-					
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_SAVE);
+
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_REGEL_SAVE);
 
 					ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
 				}
@@ -238,7 +275,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		});
 	}
 
-	// ChangeListener für die Felder 
+	// ChangeListener für die Felder
 	private void ChangeListener() {
 
 		zeilen.addValueChangeListener(new ValueChangeListener() {
@@ -270,8 +307,10 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						.getValue());
 
 				regeltypinput = valueString;
-				
-				// Falls Regeltyp Aufwand oder Menü ausgewählt wird, wird ein Textfeld eingefügt und der Container für das Feld Operator gesetzt
+
+				// Falls Regeltyp Aufwand oder Menü ausgewählt wird, wird ein
+				// Textfeld eingefügt und der Container für das Feld Operator
+				// gesetzt
 				if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienTwin);
@@ -281,23 +320,27 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					BeanItemContainer<String> container = new BeanItemContainer<String>(
 							String.class, inhalt);
 					operator.setContainerDataSource(container);
-				
-				// Falls Regeltyp Zubereitung, Menüart, Geschmack oder Fußnote ist wird der Container für das Feld Operator gesetzt	
+
+					// Falls Regeltyp Zubereitung, Menüart, Geschmack oder
+					// Fußnote ist wird der Container für das Feld Operator
+					// gesetzt
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
 
 					operator.setContainerDataSource(operatorcontainer);
-					
-					// Falls bei Operator "maximale Anzahl" oder "minimale Anzahl" ausgewählt wurde wird ein Textfeld eingefügt
+
+					// Falls bei Operator "maximale Anzahl" oder
+					// "minimale Anzahl" ausgewählt wurde wird ein Textfeld
+					// eingefügt
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
 							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
 
 						mitte.removeComponent(kriterienTwin);
 						mitte.addComponent(kriterienText);
-						
-					// Andernfalls wird ein TwinCol eingefügt	
+
+						// Andernfalls wird ein TwinCol eingefügt
 					} else {
 
 						operator.setContainerDataSource(operatorcontainer);
@@ -317,21 +360,24 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						.getValue());
 
 				operatorinput = valueString;
-				
-				// Falls beim Feld Operator "maximale Anzahl" oder "minimale Anzahl" ausgewählt wird, wird ein Textfeld eingefügt
+
+				// Falls beim Feld Operator "maximale Anzahl" oder
+				// "minimale Anzahl" ausgewählt wird, wird ein Textfeld
+				// eingefügt
 				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
 						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
 					mitte.removeComponent(kriterienTwin);
 					mitte.addComponent(kriterienText);
 					check();
-				
-				// Falls beim Regeltyp Aufwand oder Menü ausgewählt wird, so wird ein Textfeld eingefügt 
+
+					// Falls beim Regeltyp Aufwand oder Menü ausgewählt wird, so
+					// wird ein Textfeld eingefügt
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienTwin);
 					mitte.addComponent(kriterienText);
-					
-				// Andernfalls wird ein TwinCol eingefügt
+
+					// Andernfalls wird ein TwinCol eingefügt
 				} else {
 					mitte.removeComponent(kriterienText);
 					mitte.addComponent(kriterienTwin);
@@ -372,10 +418,11 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Diese Methode dient dazu, die Container je nach ausgewähltem Regeltyp zu setzen
+	// Diese Methode dient dazu, die Container je nach ausgewähltem Regeltyp zu
+	// setzen
 	public void check() {
 		try {
-			
+
 			// Container
 			zubereitungContainer = new BeanItemContainer<Zubereitung>(
 					Zubereitung.class, Zubereitungverwaltung.getInstance()
@@ -388,7 +435,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					Geschmack.class, Geschmackverwaltung.getInstance()
 							.getAllGeschmackAktiv());
 
-			//Container setzen
+			// Container setzen
 			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
 				kriterienTwin.setContainerDataSource(zubereitungContainer);
 			}
@@ -407,14 +454,15 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	// Diese Methode wird aufgerufen, sobald man eine Regel per Doppelklick auswählt
+	// Diese Methode wird aufgerufen, sobald man eine Regel per Doppelklick
+	// auswählt
 	public void getViewParam(ViewData data) {
-		// Angeklickte Regel 
+		// Angeklickte Regel
 		regel = (Regel) ((ViewDataObject<?>) data).getData();
 
 		// Speichern Button mit Bearbeiten Button ersetzen
 		control.replaceComponent(speichern, bearbeiten);
-		
+
 		// Werte setzen
 		label.setValue("Regel bearbeiten");
 		regeltyp.setValue(regel.getRegeltyp());
@@ -584,9 +632,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	}
 
 	private Boolean validiereEingabe() {
-		if(zeilen.getValue() == null && spalten.getValue() == null) {
+		if (zeilen.getValue().toString() == "[]") {
 			((Application) UI.getCurrent().getData())
-					.showDialog("Test");
+					.showDialog(IConstants.INFO_REGEL_ZEILEN);
+			return false;
+		}
+		if (spalten.getValue().toString() == "[]") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REGEL_SPALTEN);
 			return false;
 		}
 		if (regeltyp.getValue() == null) {
@@ -599,18 +652,18 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					.showDialog(IConstants.INFO_REGEL_OPERATOR);
 			return false;
 		}
-		if (mitte.getComponent(2) == kriterienText){
-			if(kriterienText.getValue().isEmpty()) {
+		if (mitte.getComponent(2) == kriterienText) {
+			if (kriterienText.getValue().isEmpty()) {
 				((Application) UI.getCurrent().getData())
-					.showDialog(IConstants.INFO_REGEL_KRITERIEN_ZAHL);
-			return false;
+						.showDialog(IConstants.INFO_REGEL_KRITERIEN_ZAHL);
+				return false;
 			}
 		}
 		if (mitte.getComponent(2) == kriterienTwin) {
-			if (kriterienTwin.getValue().toString() == "") {
+			if (kriterienTwin.getValue().toString() == "[]") {
 				((Application) UI.getCurrent().getData())
-					.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
-			return false;
+						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				return false;
 			}
 		}
 		return true;

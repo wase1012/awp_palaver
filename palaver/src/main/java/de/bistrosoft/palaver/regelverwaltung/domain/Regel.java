@@ -151,15 +151,15 @@ public class Regel {
 		List<String> strSpalten = Arrays.asList(spalten.split(","));
 		spaltenlist = new ArrayList<Integer>();
 		for (String s : strSpalten) {
-			if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_1)) {
+			if (s.trim().equals(IConstants.INFO_REGEL_SPALTE_1)) {
 				spaltenlist.add(0 + leftCols);
-			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_2)) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_SPALTE_2)) {
 				spaltenlist.add(1 + leftCols);
-			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_SPALTE_3)) {
 				spaltenlist.add(2 + leftCols);
-			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_4)) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_SPALTE_4)) {
 				spaltenlist.add(3 + leftCols);
-			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_5)) {
+			} else if (s.trim().equals(IConstants.INFO_REGEL_SPALTE_5)) {
 				spaltenlist.add(4 + leftCols);
 			}
 		}
