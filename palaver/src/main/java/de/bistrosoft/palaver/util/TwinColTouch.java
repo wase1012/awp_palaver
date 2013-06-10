@@ -13,14 +13,16 @@ public class TwinColTouch extends CustomComponent {
 	 */
 	private static final long serialVersionUID = -3723143101691071320L;
 
-	VerticalLayout vlMain = new VerticalLayout();
-	// Komponenten für PC
-	TwinColSelect tcs;
+	// Komponenten
+	private VerticalLayout vlMain;
+
+	// Komponenten für NonTouch
+	private TwinColSelect tcs;
 
 	// Komponenten für Touch
 	private ListSelect ls;
 
-	Boolean isTouch = false;
+	private Boolean isTouch;
 
 	public TwinColTouch() {
 		layout();
@@ -37,10 +39,16 @@ public class TwinColTouch extends CustomComponent {
 	}
 
 	private void layout() {
+		vlMain = new VerticalLayout();
+
 		setCompositionRoot(vlMain);
 		vlMain.setSizeFull();
 
 		isTouch = UI.getCurrent().getSession().getBrowser().isTouchDevice();
+
+		if (isTouch == null) {
+			isTouch = false;
+		}
 
 		if (isTouch) {
 			layoutTouch();
