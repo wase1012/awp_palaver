@@ -63,6 +63,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 		this.addComponent(vl);
+		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
 		vl.setWidth("60%");
 		vl.setMargin(true);

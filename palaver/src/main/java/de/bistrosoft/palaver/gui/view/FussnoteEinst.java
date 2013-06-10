@@ -64,7 +64,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 		this.addComponent(vl);
-
+		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
+		
 		vl.setWidth("60%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
@@ -73,7 +74,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tblFussnote.setSelectable(true);
 		tblFussnote.setFilterBarVisible(true);
 
-		lUeberschrift = new Label("Fussnoten");
+		lUeberschrift = new Label("Fussnote");
 		lUeberschrift.setStyleName("ViewHeadline");
 
 		vl.addComponent(lUeberschrift);
