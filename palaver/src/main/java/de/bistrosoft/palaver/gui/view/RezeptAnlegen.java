@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.jexl2.internal.DuckSetExecutor;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ReadOnlyException;
@@ -92,6 +93,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
 			ContentMode.HTML);
+	private Label dummy = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"><br></font><b></pre>",
+			ContentMode.HTML);
 
 	// TextFelder
 	private TextField name = new TextField("Bezeichnung");
@@ -135,7 +139,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		rezeptartOg.addItem("Hauptgericht");
 		rezeptartOg.addItem("Beilage");
-
+		
 		rezeptartOg.select(2);
 		rezeptartOg.setNullSelectionAllowed(false);
 		rezeptartOg.setHtmlContentAllowed(true);
@@ -177,6 +181,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlDetailsLinks.addComponent(ueberschrift);
 		vlDetailsLinks.addComponent(name);
 		vlDetailsLinks.addComponent(mitarbeiterNs);
+		vlDetailsLinks.addComponent(dummy);
 		vlDetailsLinks.addComponent(rezeptartOg);
 		vlDetailsLinks.setWidth("350px");
 
