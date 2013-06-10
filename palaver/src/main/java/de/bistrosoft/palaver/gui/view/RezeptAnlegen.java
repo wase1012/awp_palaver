@@ -222,7 +222,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 							MenueAnlegen.class,
 							new ViewDataObject<Rezept>(rezeptSpeichern()));
 				} else {
-					Application.getInstance().showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
+					((Application) UI.getCurrent().getData()).showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
 				}
 			}
 		});
@@ -530,7 +530,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
-		Application.getInstance().showDialog(IConstants.INFO_REZEPT_SAVE);
+		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_SAVE);
 		ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 		return rezept;
 	}
@@ -618,26 +618,26 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
-			Application.getInstance().showDialog(IConstants.INFO_REZEPT_NAME);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_NAME);
 			return false;
 		}
 		if (mitarbeiterNs.getValue() == null) {
-			Application.getInstance().showDialog(IConstants.INFO_REZEPT_KOCH);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_KOCH);
 			return false;
 		}
 		if (rezeptartNs.getValue() == null) {
-			Application.getInstance().showDialog(IConstants.INFO_REZEPT_REZEPTART);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_REZEPTART);
 			return false;
 		}
 		if (tmpZutaten.isEmpty() == false || tmpZutaten.size() != 0) {
 			for (RezeptHasArtikel rha : tmpZutaten) {
 				if (rha.getMenge() >= 100000.0) {
-					Application.getInstance().showDialog(IConstants.INFO_REZEPT_MENGE);
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_MENGE);
 					return false;
 				}
 			}
 		} else {
-			Application.getInstance().showDialog(IConstants.INFO_REZEPT_ZUTATEN);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_ZUTATEN);
 			return false;
 		}
 

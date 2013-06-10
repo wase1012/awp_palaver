@@ -474,25 +474,25 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfMenuename.getValue().isEmpty()) {
-			Application.getInstance().showDialog(IConstants.INFO_MENUE_NAME);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_NAME);
 			return false;
 		}
 		if (nsKoch.getValue() == null) {
-			Application.getInstance().showDialog(IConstants.INFO_MENUE_KOCH);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_KOCH);
 			return false;
 		}
 		if (nsMenueart.getValue() == null) {
-			Application.getInstance()
+			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_MENUE_MENUEART);
 			return false;
 		}
 		if (nsGeschmack.getValue() == null) {
-			Application.getInstance().showDialog(
+			((Application) UI.getCurrent().getData()).showDialog(
 					IConstants.INFO_MENUE_GESCHMACK);
 			return false;
 		}
 		if (tmpRezepte == null || tmpRezepte.size() == 0) {
-			Application.getInstance().showDialog(IConstants.INFO_MENUE_REZEPT);
+			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_REZEPT);
 			return false;
 		}
 		int countHauptmenue = 0;
@@ -502,12 +502,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		}
 		if (countHauptmenue == 0) {
-			Application.getInstance().showDialog(
+			((Application) UI.getCurrent().getData()).showDialog(
 					IConstants.INFO_MENUE_HAUPTGERICHT);
 			return false;
 		}
 		if (countHauptmenue > 1) {
-			Application.getInstance().showDialog(
+			((Application) UI.getCurrent().getData()).showDialog(
 					IConstants.INFO_MENUE_NUR_HAUPTGERICHT);
 			return false;
 		}
