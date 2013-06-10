@@ -107,6 +107,8 @@ public interface IConstants
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 	
+	String 		INFO_MENUE_ALS_REZEPT = "Bitte weiteren Felder prüfen!";
+	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";

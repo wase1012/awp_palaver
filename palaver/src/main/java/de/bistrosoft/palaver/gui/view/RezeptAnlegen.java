@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.jexl2.internal.DuckSetExecutor;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ReadOnlyException;
@@ -18,7 +17,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -28,12 +26,10 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -232,13 +228,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		});
 
 		btMenue.addClickListener(new ClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe() && rezeptartInput == "Hauptgericht") {
-					rezeptSpeichern();
-					ViewHandler.getInstance().switchView(MenueAnlegen.class);
+					
+					ViewHandler.getInstance().switchView(
+							MenueAnlegen.class,
+							new ViewDataObject<Rezept>(rezeptSpeichern()));
 				} else {
-					showNotification(IConstants.INFO_REZEPT_MENUE_SAVE);
+					Application.getInstance().showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
 				}
 			}
 		});
@@ -468,7 +467,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	// Funktion zum Speichern eines Rezeptes
-	public void rezeptSpeichern() {
+	@SuppressWarnings("deprecation")
+	public Rezept rezeptSpeichern() {
 		Rezept rezept = new Rezept();
 		rezept.setName(nameInput);
 		java.util.Date date = new java.util.Date();
@@ -547,11 +547,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
-		Notification notification = new Notification(
-				IConstants.INFO_REZEPT_SAVE);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
+		Application.getInstance().showDialog(IConstants.INFO_REZEPT_SAVE);
 		ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+		return rezept;
 	}
 
 	// private void rezeptAlsHauptgerichtSpeichern() {
@@ -681,34 +679,31 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
-	}
+	
 
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
-			showNotification(IConstants.INFO_REZEPT_NAME);
+			Application.getInstance().showDialog(IConstants.INFO_REZEPT_NAME);
 			return false;
 		}
 		if (mitarbeiterNs.getValue() == null) {
-			showNotification(IConstants.INFO_REZEPT_KOCH);
+			Application.getInstance().showDialog(IConstants.INFO_REZEPT_KOCH);
 			return false;
 		}
 		if (rezeptartOg.getValue() == null) {
-			showNotification(IConstants.INFO_REZEPT_REZEPTART);
+			Application.getInstance().showDialog(IConstants.INFO_REZEPT_REZEPTART);
 			return false;
 		}
 		if (tmpZutaten.isEmpty() == false || tmpZutaten.size() != 0) {
 			for (RezeptHasArtikel rha : tmpZutaten) {
 				if (rha.getMenge() >= 100000.0) {
-					showNotification(IConstants.INFO_REZEPT_MENGE);
+					Application.getInstance().showDialog(IConstants.INFO_REZEPT_MENGE);
 					return false;
 				}
 			}
 		} else {
-			showNotification(IConstants.INFO_REZEPT_ZUTATEN);
+			Application.getInstance().showDialog(IConstants.INFO_REZEPT_ZUTATEN);
 			return false;
 		}
 
