@@ -8,7 +8,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,7 +15,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -24,6 +22,7 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -108,26 +107,27 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 
 		BeanItemContainer<Zubereitung> ctZubereitung;
 		try {
-			ctZubereitung = new BeanItemContainer<Zubereitung>(Zubereitung.class,
-					Zubereitungverwaltung.getInstance().getAllZubereitung());
+			ctZubereitung = new BeanItemContainer<Zubereitung>(
+					Zubereitung.class, Zubereitungverwaltung.getInstance()
+							.getAllZubereitung());
 			tblZubereitung.setContainerDataSource(ctZubereitung);
-			tblZubereitung.setVisibleColumns(new Object[] { "id", "bezeichnung",
-					 });
+			tblZubereitung.setVisibleColumns(new Object[] { "id",
+					"bezeichnung", });
 			tblZubereitung.sort(new Object[] { "id" }, new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
+			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblZubereitung.getValue() != null
 						&& tblZubereitung.getValue() instanceof Zubereitung) {
 					updateZubereitung();
 				} else
-					showNotification("Bitte Zubereitung auswählen!");
+					Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_SELECT);
 			}
 		});
-
 	}
 
 	private void hinzufuegen() {
@@ -246,6 +246,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void speichern() {
 		zub.setBezeichnung(tfBezeichnung.getValue());
 
@@ -255,9 +256,10 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Zubereitung wurde gespeichert!");
+		Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_SAVE);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void update() {
 		zub.setBezeichnung(tfBezeichnung.getValue());
 
@@ -266,7 +268,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Zubereitung wurde geändert!");
+		Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_EDIT);
 	}
 
 	private void zurueck() {
@@ -279,18 +281,14 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(ZubereitungEinst.class);
 	}
 
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			showNotification("Bitte Bezeichnung eingeben!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		return true;
-	}
-
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,7 +15,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -24,6 +22,7 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -119,12 +118,14 @@ public class MenueartEinst extends VerticalLayout implements View {
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
+			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblMenueart.getValue() != null
 						&& tblMenueart.getValue() instanceof Menueart) {
 					updateZubereitung();
 				} else
-					showNotification("Bitte Menüart auswählen!");
+					Application.getInstance().showDialog(IConstants.INFO_MENUEART_SELECT);
+
 			}
 		});
 
@@ -246,6 +247,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void speichern() {
 		ma.setBezeichnung(tfBezeichnung.getValue());
 
@@ -255,9 +257,10 @@ public class MenueartEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Menüart wurde gespeichert!");
+		Application.getInstance().showDialog(IConstants.INFO_MENUEART_SAVE);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void update() {
 		ma.setBezeichnung(tfBezeichnung.getValue());
 
@@ -266,7 +269,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Menüart wurde geändert!");
+		Application.getInstance().showDialog(IConstants.INFO_MENUEART_EDIT);
 	}
 
 	private void zurueck() {
@@ -279,18 +282,13 @@ public class MenueartEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(MenueartEinst.class);
 	}
 
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			showNotification("Bitte Bezeichnung eingeben!");
+			Application.getInstance().showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		return true;
-	}
-
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
 	}
 
 	@Override

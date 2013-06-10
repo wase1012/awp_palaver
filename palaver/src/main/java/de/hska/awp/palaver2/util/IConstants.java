@@ -125,6 +125,25 @@ public interface IConstants
 	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";
 	String		INFO_REGEL_OPERATOR_MAXIMAL = "maximale Anzahl";
 	
+	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
+	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
+	
+	String		INFO_FUSSNOTE_SELECT = "Bitte Fussnote auswählen!";
+	String		INFO_FUSSNOTE_SAVE = "Fussnote wurde gespeichert!";
+	String		INFO_FUSSNOTE_EDIT = "Fussnote wurde geändert!";
+	
+	String		INFO_GESCHMACK_SELECT = "Bitte Geschmack auswählen!";
+	String		INFO_GESCHMACK_SAVE = "Geschmack wurde gespeichert!";
+	String		INFO_GESCHMACK_EDIT = "Geschmack wurde geändert!";
+	
+	String		INFO_ZUBEREITUNG_SELECT = "Bitte Zubereitung auswählen!";
+	String		INFO_ZUBEREITUNG_SAVE = "Zubereitung wurde gespeichert!";
+	String		INFO_ZUBEREITUNG_EDIT = "Zubereitung wurde geändert!";
+	
+	String		INFO_MENUEART_SELECT = "Bitte Menüart auswählen!";
+	String		INFO_MENUEART_SAVE = "Menüart wurde gespeichert!";
+	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
+	
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";

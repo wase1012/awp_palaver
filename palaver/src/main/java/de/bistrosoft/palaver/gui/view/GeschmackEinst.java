@@ -8,7 +8,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,7 +15,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -24,13 +22,14 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * @author Michael Marschall Jan Lauinger - Geschmack hinzufÃ¼gen
+ * @author Michael Marschall Jan Lauinger - Geschmack hinzufügen
  * 
  */
 @SuppressWarnings("serial")
@@ -119,12 +118,14 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
+			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblGeschmack.getValue() != null
 						&& tblGeschmack.getValue() instanceof Geschmack) {
 					updateGeschmack();
 				} else
-					showNotification("Bitte Geschmack auswählen!");
+					Application.getInstance().showDialog(
+							IConstants.INFO_GESCHMACK_SELECT);
 			}
 		});
 
@@ -138,7 +139,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		geschmackNeu.setModal(true);
 		geschmackNeu.center();
 		geschmackNeu.setResizable(false);
-		geschmackNeu.setCaption("Geschmack hinzufÃ¼gen");
+		geschmackNeu.setCaption("Geschmack hinzufügen");
 
 		UI.getCurrent().addWindow(geschmackNeu);
 
@@ -169,7 +170,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 25, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 25, false));
 
 		btSpeichern.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -246,6 +247,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void speichern() {
 		geschmack.setBezeichnung(tfBezeichnung.getValue());
 
@@ -254,9 +256,10 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Geschmack wurde gespeichert!");
+		Application.getInstance().showDialog(IConstants.INFO_GESCHMACK_SAVE);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void update() {
 		geschmack.setBezeichnung(tfBezeichnung.getValue());
 
@@ -265,7 +268,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Geschmack wurde geändert!");
+		Application.getInstance().showDialog(IConstants.INFO_GESCHMACK_EDIT);
 	}
 
 	private void zurueck() {
@@ -278,19 +281,14 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(GeschmackEinst.class);
 	}
 
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			showNotification("Bitte Bezeichnung eingeben!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
-
 		return true;
-	}
-
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
 	}
 
 	@Override
