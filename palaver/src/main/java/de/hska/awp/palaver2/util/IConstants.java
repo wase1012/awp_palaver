@@ -124,6 +124,12 @@ public interface IConstants
 	String 		INFO_REGEL_OPERATOR_VERBOTEN = "verbotene Werte";
 	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";
 	String		INFO_REGEL_OPERATOR_MAXIMAL = "maximale Anzahl";
+	String		INFO_REGEL_REGELTYP_GESCHMACK = "Geschmack";
+	String		INFO_REGEL_REGELTYP_MENUE = "Menü";
+	String 		INFO_REGEL_REGELTYP_MENUEART = "Menüart";
+	String		INFO_REGEL_REGELTYP_ZUBEREITUNG = "Zubereitung";
+	String		INFO_REGEL_REGELTYP_AUFWAND = "Aufwand";
+	String 		INFO_REGEL_REGELTYP_FUSSNOTE = "Fußnote";
 	
 	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
