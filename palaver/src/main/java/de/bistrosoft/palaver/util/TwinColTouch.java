@@ -23,20 +23,20 @@ public class TwinColTouch extends CustomComponent {
 	Boolean isTouch = false;
 
 	public TwinColTouch() {
-
-		setCompositionRoot(vlMain);
-		vlMain.setSizeFull();
-
-		isTouch = UI.getCurrent().getSession().getBrowser().isTouchDevice();
-
-		if (isTouch) {
-			layoutTouch();
-		} else {
-			layoutNonTouch();
-		}
+		layout();
 	}
 
 	public TwinColTouch(String caption) {
+		layout();
+
+		if (isTouch) {
+			ls.setCaption(caption);
+		} else {
+			tcs.setCaption(caption);
+		}
+	}
+
+	private void layout() {
 		setCompositionRoot(vlMain);
 		vlMain.setSizeFull();
 
@@ -44,16 +44,13 @@ public class TwinColTouch extends CustomComponent {
 
 		if (isTouch) {
 			layoutTouch();
-			ls.setCaption(caption);
 		} else {
 			layoutNonTouch();
-			tcs.setCaption(caption);
 		}
 	}
 
 	private void layoutNonTouch() {
 		tcs = new TwinColSelect();
-		tcs.setWidth("100%");
 		tcs.setImmediate(true);
 		vlMain.addComponent(tcs);
 	}
@@ -61,9 +58,24 @@ public class TwinColTouch extends CustomComponent {
 	private void layoutTouch() {
 		ls = new ListSelect();
 		ls.setMultiSelect(true);
-		ls.setWidth("100%");
 		ls.setImmediate(true);
 		vlMain.addComponent(ls);
+	}
+
+	public void setWidth(String width) {
+		if (isTouch) {
+			ls.setWidth(width);
+		} else {
+			tcs.setWidth(width);
+		}
+	}
+
+	public void setImmediate(Boolean immediate) {
+		if (isTouch) {
+			ls.setImmediate(immediate);
+		} else {
+			tcs.setImmediate(immediate);
+		}
 	}
 
 	public void removeAllItems() {
@@ -89,7 +101,7 @@ public class TwinColTouch extends CustomComponent {
 		} else {
 			tcs.select(item);
 		}
-		
+
 	}
 
 	public Object getValue() {
@@ -98,6 +110,6 @@ public class TwinColTouch extends CustomComponent {
 		} else {
 			return tcs.getValue();
 		}
-		
+
 	}
 }
