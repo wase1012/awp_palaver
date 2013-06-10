@@ -235,7 +235,7 @@ public class WinSelectMenue extends Window {
 					koch.setValue(menue.getKochname());
 					koch.setEnabled(false);
 					if (menue.getMenueart() != null) {
-						menueart.setValue(menue.getMenueart().getName());
+						menueart.setValue(menue.getMenueart().getBezeichnung());
 					}
 					menueart.setEnabled(false);
 					if (menue.getGeschmack() != null) {

@@ -15,7 +15,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -26,7 +25,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
@@ -90,7 +88,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button btUpdate = new Button("Ä„ndern");
 	private Button btNeuesRezept = new Button("neues Rezeptanlegen");
 
-	private Table tblMenue = new Table();
+	private Table tblMenueRezepte = new Table();
 	private BeanItemContainer<Rezept> ctMenue;
 	private FilterTable tblRezepte = new FilterTable();
 	private BeanItemContainer<Rezept> ctRezepte;
@@ -111,12 +109,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblRezepte.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		tblRezepte.setCaption("Rezepte");
 
-		tblMenue = new Table();
-		tblMenue.setSizeFull();
-		tblMenue.setStyleName("palaverTable");
-		tblMenue.setImmediate(true);
-		tblMenue.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
-		tblMenue.setCaption("Rezepte in Menü");
+		tblMenueRezepte = new Table();
+		tblMenueRezepte.setSizeFull();
+		tblMenueRezepte.setStyleName("palaverTable");
+		tblMenueRezepte.setImmediate(true);
+		tblMenueRezepte.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		tblMenueRezepte.setCaption("Rezepte in Menü");
 
 		load();
 		this.setSizeFull();
@@ -137,7 +135,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlDetails.addComponent(vlDetailsRechts);
 		vlDetailsRechts.addComponent(tcsFussnoten);
 		vlBox.addComponent(hlRezepte);
-		hlRezepte.addComponent(tblMenue);
+		hlRezepte.addComponent(tblMenueRezepte);
 		hlRezepte.addComponent(tblRezepte);
 		vlBox.addComponent(hlControl);
 		hlControl.addComponent(btVerwerfen);
@@ -148,11 +146,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlDetails.setComponentAlignment(vlDetailsLinks, Alignment.TOP_LEFT);
 		hlDetails.setComponentAlignment(vlDetailsRechts, Alignment.TOP_RIGHT);
 		hlRezepte.setWidth("900px");
-		hlRezepte.setComponentAlignment(tblMenue, Alignment.TOP_LEFT);
+		hlRezepte.setComponentAlignment(tblMenueRezepte, Alignment.TOP_LEFT);
 		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
 		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
-		tblMenue.setVisibleColumns(new Object[] { "name", "rezeptart",
+		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
 
 		tcsFussnoten.setWidth("100%");
@@ -176,7 +174,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		btUpdate.setIcon(new ThemeResource("img/cross.ico"));
 
 		// Drag&Drop
-		tblMenue.setDropHandler(new DropHandler() {
+		tblMenueRezepte.setDropHandler(new DropHandler() {
 
 			@Override
 			public AcceptCriterion getAcceptCriterion() {
@@ -190,7 +188,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				ctRezepte.removeItem(selected);
 				tmpRezepte.add(selected);
 				ctMenue.addItem(selected);
-				tblMenue.markAsDirty();
+				tblMenueRezepte.markAsDirty();
 				tblRezepte.markAsDirty();
 			}
 		});
@@ -209,7 +207,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				ctRezepte.addItem(selected);
 				tmpRezepte.remove(selected);
 				ctMenue.removeItem(selected);
-				tblMenue.markAsDirty();
+				tblMenueRezepte.markAsDirty();
 				tblRezepte.markAsDirty();
 			}
 		});
@@ -252,7 +250,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tblRezepte.setContainerDataSource(ctRezepte);
 
 			ctMenue = new BeanItemContainer<Rezept>(Rezept.class);
-			tblMenue.setContainerDataSource(ctMenue);
+			tblMenueRezepte.setContainerDataSource(ctMenue);
 
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
@@ -288,7 +286,26 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	@Override
 	public void getViewParam(ViewData data) {
 
-		menue = (Menue) ((ViewDataObject<?>) data).getData();
+		Object dataParam = ((ViewDataObject<?>) data).getData();
+		if (dataParam instanceof Menue) {
+			menue = (Menue) dataParam;
+			ladeMenue();
+		} else if (dataParam instanceof Rezept) {
+			Rezept rezept = (Rezept) dataParam;
+			ladeRezept(rezept);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void ladeRezept(Rezept rezept) {
+		tfMenuename.setValue(rezept.getName());
+		tblMenueRezepte.addItem(rezept);
+		tblRezepte.removeItem(rezept);
+		Application.getInstance().showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
+	}
+
+	private void ladeMenue() {
+
 		Long id = menue.getId();
 		menue = null;
 		try {
@@ -333,13 +350,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tcsFussnoten.select(menue.getFussnoten().get(i));
 		}
 
-		tblMenue = null;
-		tblMenue = new Table();
-		tblMenue.setSizeFull();
-		tblMenue.setStyleName("palaverTable2");
-		tblMenue.setImmediate(true);
+		tblMenueRezepte = null;
+		tblMenueRezepte = new Table();
+		tblMenueRezepte.setSizeFull();
+		tblMenueRezepte.setStyleName("palaverTable2");
+		tblMenueRezepte.setImmediate(true);
 
-		tblMenue.setContainerDataSource(ctRezepte);
+		tblMenueRezepte.setContainerDataSource(ctRezepte);
 		tmpRezepte = menue.getRezepte();
 		for (Rezept r : tmpRezepte) {
 			ctRezepte.removeItem(r);
@@ -443,31 +460,28 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
-	}
-
+	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfMenuename.getValue().isEmpty()) {
-			showNotification("Bitte Namen eingeben!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_NAME);
 			return false;
 		}
 		if (nsKoch.getValue() == null) {
-			showNotification("Bitte Koch wÃ¤hlen!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_KOCH);
 			return false;
 		}
 		if (nsMenueart.getValue() == null) {
-			showNotification("Bitte Menüart wählen!");
+			Application.getInstance()
+					.showDialog(IConstants.INFO_MENUE_MENUEART);
 			return false;
 		}
 		if (nsGeschmack.getValue() == null) {
-			showNotification("Bitte Geschmack wälen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_GESCHMACK);
 			return false;
 		}
 		if (tmpRezepte == null || tmpRezepte.size() == 0) {
-			showNotification("Bitte Rezept wählen!");
+			Application.getInstance().showDialog(IConstants.INFO_MENUE_REZEPT);
 			return false;
 		}
 		int countHauptmenue = 0;
@@ -477,11 +491,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		}
 		if (countHauptmenue == 0) {
-			showNotification("Bitte ein Hauptgericht wählen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_HAUPTGERICHT);
 			return false;
 		}
 		if (countHauptmenue > 1) {
-			showNotification("Bitte nur ein Hauptgericht wählen!");
+			Application.getInstance().showDialog(
+					IConstants.INFO_MENUE_NUR_HAUPTGERICHT);
 			return false;
 		}
 		return true;
@@ -491,4 +507,52 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void valueChange(ValueChangeEvent event) {
 
 	}
+
+	// private void rezeptAlsHauptgerichtSpeichern() {
+	// if (ausgArtikel.isEmpty()) {
+	// return;
+	// }
+	// Menue menue = new Menue();
+	//
+	// menue.setName(nameInput);
+	// try {
+	// menue.setKoch(MitarbeiterDAO.getInstance().getMitarbeiterById(
+	// Long.parseLong(mitarbeiterInput.toString())));
+	// } catch (Exception e1) {
+	// e1.printStackTrace();
+	// }
+	//
+	// try {
+	// Menueverwaltung.getInstance().createRezeptAlsMenue(menue);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// private void rezeptAlsMenuSpeichern() {
+	// if (ausgArtikel.isEmpty()) {
+	// return;
+	// }
+	// MenueHasRezept mhr = new MenueHasRezept();
+	// try {
+	// mhr.setMenue(MenueDAO.getInstance().getMenueIdByName(nameInput));
+	// } catch (Exception e1) {
+	// e1.printStackTrace();
+	// }
+	// try {
+	// mhr.setRezept(RezeptDAO.getInstance().getRezeptByName1(nameInput));
+	// } catch (Exception e1) {
+	// e1.printStackTrace();
+	// }
+	// try {
+	// Menueverwaltung.getInstance().RezepteAdd(mhr);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// mhr.setHauptgericht(true);
+	// Notification notification = new Notification(
+	// "Rezept wurde als MenÃ¼ gespeichert!");
+	// notification.setDelayMsec(500);
+	// notification.show(Page.getCurrent());
+	// }
 }

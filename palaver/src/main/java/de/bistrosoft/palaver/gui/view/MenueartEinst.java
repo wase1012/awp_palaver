@@ -20,8 +20,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -29,14 +29,14 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * @author Michael Marschall Jan Lauinger - Geschmack hinzufügen
+ * @author Michael Marschall
  * 
  */
 @SuppressWarnings("serial")
-public class GeschmackEinst extends VerticalLayout implements View {
+public class MenueartEinst extends VerticalLayout implements View {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(GeschmackEinst.class.getName());
+			.getLogger(MenueartEinst.class.getName());
 
 	private VerticalLayout vl = new VerticalLayout();
 	private VerticalLayout vlDetails = new VerticalLayout();
@@ -48,16 +48,16 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
 	private Button btAuswaehlen = new Button(IConstants.BUTTON_EDIT);
 
-	private FilterTable tblGeschmack;
+	private FilterTable tblMenueart;
 
 	private TextField tfBezeichnung = new TextField("Bezeichnung");
 
 	private Label lUeberschrift;
 
-	private Geschmack geschmack = new Geschmack();
-	private Window geschmackNeu;
+	private Menueart ma = new Menueart();
+	private Window maNeu;
 
-	public GeschmackEinst() {
+	public MenueartEinst() {
 		super();
 
 		this.setSizeFull();
@@ -68,19 +68,19 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		vl.setWidth("60%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
-		tblGeschmack = new FilterTable();
-		tblGeschmack.setSizeFull();
-		tblGeschmack.setSelectable(true);
-		tblGeschmack.setFilterBarVisible(true);
+		tblMenueart = new FilterTable();
+		tblMenueart.setSizeFull();
+		tblMenueart.setSelectable(true);
+		tblMenueart.setFilterBarVisible(true);
 
-		lUeberschrift = new Label("Geschmack");
+		lUeberschrift = new Label("Menüart");
 		lUeberschrift.setStyleName("ViewHeadline");
 
 		vl.addComponent(lUeberschrift);
 		vl.setComponentAlignment(lUeberschrift, Alignment.MIDDLE_LEFT);
 
-		vl.addComponent(tblGeschmack);
-		vl.setComponentAlignment(tblGeschmack, Alignment.MIDDLE_CENTER);
+		vl.addComponent(tblMenueart);
+		vl.setComponentAlignment(tblMenueart, Alignment.MIDDLE_CENTER);
 		vl.addComponent(hlControl);
 		vl.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
 		hlControl.addComponent(btAuswaehlen);
@@ -96,52 +96,53 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 		});
 
-		tblGeschmack.addValueChangeListener(new ValueChangeListener() {
+		tblMenueart.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					geschmack = (Geschmack) event.getProperty().getValue();
+					ma = (Menueart) event.getProperty().getValue();
 				}
 			}
 		});
 
-		BeanItemContainer<Geschmack> ctGeschmack;
+		BeanItemContainer<Menueart> ctMenueart;
 		try {
-			ctGeschmack = new BeanItemContainer<Geschmack>(Geschmack.class,
-					Geschmackverwaltung.getInstance().getAllGeschmack());
-			tblGeschmack.setContainerDataSource(ctGeschmack);
-			tblGeschmack
+			ctMenueart = new BeanItemContainer<Menueart>(Menueart.class,
+					Menueartverwaltung.getInstance().getAllMenueart());
+			tblMenueart.setContainerDataSource(ctMenueart);
+			tblMenueart
 					.setVisibleColumns(new Object[] { "id", "bezeichnung", });
-			tblGeschmack.sort(new Object[] { "id" }, new boolean[] { true });
+			tblMenueart.sort(new Object[] { "id" }, new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if (tblGeschmack.getValue() != null
-						&& tblGeschmack.getValue() instanceof Geschmack) {
-					updateGeschmack();
+				if (tblMenueart.getValue() != null
+						&& tblMenueart.getValue() instanceof Menueart) {
+					updateZubereitung();
 				} else
 					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_GESCHMACK_SELECT);
+							.showDialog(IConstants.INFO_MENUEART_SELECT);
+
 			}
 		});
 
 	}
 
 	private void hinzufuegen() {
-		geschmackNeu = new Window();
-		geschmackNeu.setClosable(false);
-		geschmackNeu.setWidth("400px");
-		geschmackNeu.setHeight("270px");
-		geschmackNeu.setModal(true);
-		geschmackNeu.center();
-		geschmackNeu.setResizable(false);
-		geschmackNeu.setCaption("Geschmack hinzufügen");
+		maNeu = new Window();
+		maNeu.setClosable(false);
+		maNeu.setWidth("400px");
+		maNeu.setHeight("270px");
+		maNeu.setModal(true);
+		maNeu.center();
+		maNeu.setResizable(false);
+		maNeu.setCaption("Menüart hinzufügen");
 
-		UI.getCurrent().addWindow(geschmackNeu);
+		UI.getCurrent().addWindow(maNeu);
 
 		vl = new VerticalLayout();
 		vl.setMargin(true);
@@ -166,11 +167,11 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		vl.setComponentAlignment(vlDetails, Alignment.MIDDLE_CENTER);
 		vl.addComponent(hlControl);
 		vl.setComponentAlignment(hlControl, Alignment.BOTTOM_RIGHT);
-		geschmackNeu.setContent(vl);
+		maNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gültige Bezeichnung eingeben", 3, 25, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 20, false));
 
 		btSpeichern.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -187,20 +188,20 @@ public class GeschmackEinst extends VerticalLayout implements View {
 				abbrechen();
 			}
 		});
-
 	}
 
-	private void updateGeschmack() {
-		geschmackNeu = new Window();
-		geschmackNeu.setClosable(false);
-		geschmackNeu.setWidth("400px");
-		geschmackNeu.setHeight("270px");
-		geschmackNeu.setModal(true);
-		geschmackNeu.center();
-		geschmackNeu.setResizable(false);
-		geschmackNeu.setCaption("Geschmack bearbeiten");
+	private void updateZubereitung() {
 
-		UI.getCurrent().addWindow(geschmackNeu);
+		maNeu = new Window();
+		maNeu.setClosable(false);
+		maNeu.setWidth("400px");
+		maNeu.setHeight("270px");
+		maNeu.setModal(true);
+		maNeu.center();
+		maNeu.setResizable(false);
+		maNeu.setCaption("Zubereitung bearbeiten");
+
+		UI.getCurrent().addWindow(maNeu);
 
 		vl = new VerticalLayout();
 		vl.setMargin(true);
@@ -223,10 +224,10 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		vl.setComponentAlignment(vlDetails, Alignment.MIDDLE_CENTER);
 		vl.addComponent(hlControl);
 		vl.setComponentAlignment(hlControl, Alignment.BOTTOM_RIGHT);
-		geschmackNeu.setContent(vl);
+		maNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
-		tfBezeichnung.setValue(geschmack.getBezeichnung());
+		tfBezeichnung.setValue(ma.getBezeichnung());
 		tfBezeichnung.addValidator(new StringLengthValidator(
 				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
@@ -248,37 +249,38 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	}
 
 	private void speichern() {
-		geschmack.setBezeichnung(tfBezeichnung.getValue());
+		ma.setBezeichnung(tfBezeichnung.getValue());
 
 		try {
-			Geschmackverwaltung.getInstance().createGeschmack(geschmack);
+			Menueartverwaltung.getInstance().createMenueart(ma);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_GESCHMACK_SAVE);
+				.showDialog(IConstants.INFO_MENUEART_SAVE);
 	}
 
 	private void update() {
-		geschmack.setBezeichnung(tfBezeichnung.getValue());
+		ma.setBezeichnung(tfBezeichnung.getValue());
 
 		try {
-			Geschmackverwaltung.getInstance().updateGeschmack(geschmack);
+			Menueartverwaltung.getInstance().updateMenueart(ma);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_GESCHMACK_EDIT);
+				.showDialog(IConstants.INFO_MENUEART_EDIT);
 	}
 
 	private void zurueck() {
-		UI.getCurrent().removeWindow(geschmackNeu);
-		ViewHandler.getInstance().switchView(GeschmackEinst.class);
+		UI.getCurrent().removeWindow(maNeu);
+		ViewHandler.getInstance().switchView(MenueartEinst.class);
 	}
 
 	private void abbrechen() {
-		UI.getCurrent().removeWindow(geschmackNeu);
-		ViewHandler.getInstance().switchView(GeschmackEinst.class);
+		UI.getCurrent().removeWindow(maNeu);
+		ViewHandler.getInstance().switchView(MenueartEinst.class);
 	}
 
 	private Boolean validiereEingabe() {
@@ -292,6 +294,5 @@ public class GeschmackEinst extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-
 	}
 }

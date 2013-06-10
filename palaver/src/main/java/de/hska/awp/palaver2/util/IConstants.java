@@ -11,8 +11,8 @@ public interface IConstants
 //  Team1
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -53,6 +53,7 @@ public interface IConstants
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
+	String		MENU_MENUEART="Menüarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
 	String		MENU_LOGOUT = "Logout";
 	String 		MENU_MENUE_HEADLINE = "Menü";
@@ -106,11 +107,54 @@ public interface IConstants
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 	
+	String 		INFO_MENUE_ALS_REZEPT = "Bitte weiteren Felder prüfen!";
+	String 		INFO_MENUE_NAME = "Bitte Name eingeben!";
+	String 		INFO_MENUE_KOCH = "Bitte Koch wählen!";
+	String 		INFO_MENUE_MENUEART = "Bitte Menüart wählen!";
+	String 		INFO_MENUE_GESCHMACK = "Bitte Geschmack wälen!";
+	String 		INFO_MENUE_REZEPT = "Bitte Rezept wählen!";
+	String 		INFO_MENUE_HAUPTGERICHT = "Bitte ein Hauptgericht wählen!";
+	String 		INFO_MENUE_NUR_HAUPTGERICHT = "Bitte nur ein Hauptgericht wählen!";
+	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
 	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
+	String		INFO_REGEL_OPERATOR_ERLAUBT = "erlaubte Werte";
+	String 		INFO_REGEL_OPERATOR_VERBOTEN = "verbotene Werte";
+	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";
+	String		INFO_REGEL_OPERATOR_MAXIMAL = "maximale Anzahl";
+	String		INFO_REGEL_REGELTYP_GESCHMACK = "Geschmack";
+	String		INFO_REGEL_REGELTYP_MENUE = "Menü";
+	String 		INFO_REGEL_REGELTYP_MENUEART = "Menüart";
+	String		INFO_REGEL_REGELTYP_ZUBEREITUNG = "Zubereitung";
+	String		INFO_REGEL_REGELTYP_AUFWAND = "Aufwand";
+	String 		INFO_REGEL_REGELTYP_FUSSNOTE = "Fußnote";
+	
+	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
+	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
+	
+	String		INFO_FUSSNOTE_SELECT = "Bitte Fussnote auswählen!";
+	String		INFO_FUSSNOTE_SAVE = "Fussnote wurde gespeichert!";
+	String		INFO_FUSSNOTE_EDIT = "Fussnote wurde geändert!";
+	
+	String		INFO_GESCHMACK_SELECT = "Bitte Geschmack auswählen!";
+	String		INFO_GESCHMACK_SAVE = "Geschmack wurde gespeichert!";
+	String		INFO_GESCHMACK_EDIT = "Geschmack wurde geändert!";
+	
+	String		INFO_ZUBEREITUNG_SELECT = "Bitte Zubereitung auswählen!";
+	String		INFO_ZUBEREITUNG_SAVE = "Zubereitung wurde gespeichert!";
+	String		INFO_ZUBEREITUNG_EDIT = "Zubereitung wurde geändert!";
+	
+	String		INFO_MENUEART_SELECT = "Bitte Menüart auswählen!";
+	String		INFO_MENUEART_SAVE = "Menüart wurde gespeichert!";
+	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
+	
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
+
+	
 }

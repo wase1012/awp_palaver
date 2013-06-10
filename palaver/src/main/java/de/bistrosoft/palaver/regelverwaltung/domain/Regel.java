@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.vaadin.server.Page;
-import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
@@ -176,47 +177,6 @@ public class Regel {
 		this.aktiv = aktiv;
 	}
 
-	// Testdaten
-	public static List<Regel> getTestRegeln() {
-		List<Regel> regeln = new ArrayList<Regel>();
-
-		List<Integer> r = new ArrayList<Integer>();
-		r.add(2);
-		List<Integer> c = new ArrayList<Integer>();
-		c.add(-1);
-		List<String> rw = new ArrayList<String>();
-		rw.add("3");
-		regeln.add(new Regel("Fussnote", r, c, "maximal", rw, "Nur Vegan!",
-				true));
-
-		List<Integer> r3 = new ArrayList<Integer>();
-		r3.add(2);
-		List<Integer> c3 = new ArrayList<Integer>();
-		c3.add(-1);
-		List<String> rw3 = new ArrayList<String>();
-		rw3.add("deutsch");
-		regeln.add(new Regel("Geschmack", r3, c3, "enth�lt nicht", rw3,
-				"Geschmack", true));
-
-		List<Integer> r2 = new ArrayList<Integer>();
-		r2.add(3);
-		r2.add(4);
-		List<Integer> c2 = new ArrayList<Integer>();
-		c2.add(-1);
-		List<String> rw2 = new ArrayList<String>();
-		rw2.add("3");
-		regeln.add(new Regel(
-				"Menueart",
-				r2,
-				c2,
-				"maximal",
-				rw2,
-				"Es dürfen maximal 3 Menüs einer Kat in den Zeilen 2 und 3 eingefügt werden",
-				true));
-
-		return regeln;
-	}
-
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 		// if (regeltyp.equals("name")) {
 		// mc.addFehlerRegel(checkName(mc, mp));
@@ -262,7 +222,7 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		// if(menue.getFussnoten()!=null){
-		if (operator.equals("enth�lt nicht")) {
+		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 			System.out.println("#Fussnote: enth�lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				System.out.println("#Fussnote: not null"
@@ -270,7 +230,8 @@ public class Regel {
 				for (Fussnote fs : menue.getFussnoten()) {
 					System.out.println("#Fussnote:" + fs.getBezeichnung());
 					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getBezeichnung());
+						System.out.println("#Fussnote: return "
+								+ fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -278,7 +239,7 @@ public class Regel {
 			} else
 				return this;
 
-		} else if (operator.equals("enth�lt")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
 					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
@@ -289,7 +250,7 @@ public class Regel {
 			} else
 				return null;
 
-		} else if (operator.equals("maximal")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 			if (menue.getFussnoten() != null) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -347,7 +308,7 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		// if(menue.getFussnoten()!=null){
-		if (operator.equals("enth�lt nicht")) {
+		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 			System.out.println("#Fussnote: enth�lt nicht");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				System.out.println("#Fussnote: not null"
@@ -355,7 +316,8 @@ public class Regel {
 				for (Fussnote fs : menue.getFussnoten()) {
 					System.out.println("#Fussnote:" + fs.getBezeichnung());
 					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
-						System.out.println("#Fussnote: return " + fs.getBezeichnung());
+						System.out.println("#Fussnote: return "
+								+ fs.getBezeichnung());
 						return null;
 					}
 					return this;
@@ -363,7 +325,7 @@ public class Regel {
 			} else
 				return this;
 
-		} else if (operator.equals("enth�lt")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 			System.out.println("###enth�lt");
 			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
 				for (Fussnote fs : menue.getFussnoten()) {
@@ -377,7 +339,7 @@ public class Regel {
 			} else
 				return null;
 
-		} else if (operator.equals("maximal")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 			if (menue.getFussnoten() != null) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
@@ -439,19 +401,20 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
-			if (operator.equals("enth�lt nicht")) {
+			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				System.out.println("ent nit");
-				System.out.println(menue.getGeschmack().getBezeichnung().toString());
+				System.out.println(menue.getGeschmack().getBezeichnung()
+						.toString());
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enth�lt")) {
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}
-			} else if (operator.equals("maximal")) {
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -503,17 +466,17 @@ public class Regel {
 		System.out.print("Geschmack/");
 		System.out.println(menue.getGeschmack());
 		if (menue.getGeschmack() != null) {
-			if (operator.equals("enth�lt nicht")) {
+			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enth�lt")) {
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}
-			} else if (operator.equals("maximal")) {
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -564,19 +527,19 @@ public class Regel {
 		System.out.print(mc.row + "/");
 		System.out.println(menue.getMenueart());
 		if (menue.getMenueart() != null) {
-			if (operator.equals("enth�lt nicht")) {
+			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				System.out.println("!!!!!!!!"
-						+ menue.getMenueart().getName().toString());
-				if (kriterienlist.indexOf(menue.getMenueart().getName()
+						+ menue.getMenueart().getBezeichnung().toString());
+				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
 						.toString()) == -1) {
 					return this;
 				}
-			} else if (operator.equals("enth�lt")) {
-				if (kriterienlist.indexOf(menue.getMenueart().getName()
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
 						.toString()) >= 0) {
 					return this;
 				}
-			} else if (operator.equals("maximal")) {
+			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -623,17 +586,17 @@ public class Regel {
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
 
-		if (operator.equals("enth�lt nicht")) {
+		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 			if (kriterienlist.indexOf(menue.getName()) == -1) {
 
 				return this;
 			}
-		} else if (operator.equals("enth�lt")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 			if (kriterienlist.indexOf(menue.getName()) >= 0) {
 
 				return this;
 			}
-		} else if (operator.equals("maximal")) {
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 			int count = 0;
 			int maxValue = Integer.MAX_VALUE;
 			try {
@@ -705,8 +668,6 @@ public class Regel {
 			e.printStackTrace();
 		}
 
-		Notification notification = new Notification("Regel wurde gelöscht");
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
+		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_DELETE);
 	}
 }

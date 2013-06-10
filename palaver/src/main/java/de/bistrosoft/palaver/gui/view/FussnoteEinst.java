@@ -8,9 +8,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -18,7 +15,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -26,6 +22,7 @@ import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -49,7 +46,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btHinzufuegen = new Button(IConstants.BUTTON_ADD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
-	private Button btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
+	private Button btAuswaehlen = new Button(IConstants.BUTTON_EDIT);
 
 	private FilterTable tblFussnote;
 
@@ -67,7 +64,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 		this.addComponent(vl);
-
+		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
+		
 		vl.setWidth("60%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
@@ -76,7 +74,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tblFussnote.setSelectable(true);
 		tblFussnote.setFilterBarVisible(true);
 
-		lUeberschrift = new Label("Fussnoten");
+		lUeberschrift = new Label("Fussnote");
 		lUeberschrift.setStyleName("ViewHeadline");
 
 		vl.addComponent(lUeberschrift);
@@ -84,11 +82,11 @@ public class FussnoteEinst extends VerticalLayout implements View {
 
 		vl.addComponent(tblFussnote);
 		vl.setComponentAlignment(tblFussnote, Alignment.MIDDLE_CENTER);
-		vl.addComponent(btHinzufuegen);
-		vl.setComponentAlignment(btHinzufuegen, Alignment.MIDDLE_RIGHT);
+		vl.addComponent(hlControl);
+		vl.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(btAuswaehlen);
+		hlControl.addComponent(btHinzufuegen);
 		btHinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
-		vl.addComponent(btAuswaehlen);
-		vl.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_CENTER);
 
 		btHinzufuegen.addClickListener(new ClickListener() {
 
@@ -105,16 +103,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					fn = (Fussnote) event.getProperty().getValue();
-				}
-			}
-		});
-
-		tblFussnote.addItemClickListener(new ItemClickListener() {
-
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
-					updateFussnote();
 				}
 			}
 		});
@@ -137,7 +125,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 						&& tblFussnote.getValue() instanceof Fussnote) {
 					updateFussnote();
 				} else
-					showNotification("Bitte Fussnote auswählen!");
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_FUSSNOTE_SELECT);
 			}
 		});
 
@@ -151,7 +140,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		fnNeu.setModal(true);
 		fnNeu.center();
 		fnNeu.setResizable(false);
-		fnNeu.setCaption("Fussnote hinzufÃ¼gen");
+		fnNeu.setCaption("Fussnote hinzufügen");
 
 		UI.getCurrent().addWindow(fnNeu);
 
@@ -186,11 +175,11 @@ public class FussnoteEinst extends VerticalLayout implements View {
 
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 20, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 20, false));
 
 		tfAbkuerzung.setImmediate(true);
 		tfAbkuerzung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige AbkÃ¼rzung eingeben", 1, 5, false));
+				"Bitte gültige Abkürzung eingeben", 1, 5, false));
 
 		btSpeichern.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -250,12 +239,12 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.setValue(fn.getBezeichnung());
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 50, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
 		tfAbkuerzung.setImmediate(true);
 		tfAbkuerzung.setValue(fn.getAbkuerzung());
 		tfAbkuerzung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 1, 5, false));
+				"Bitte gültige Bezeichnung eingeben", 1, 5, false));
 
 		btUpdate.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -284,7 +273,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Fussnote wurde gespeichert!");
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_FUSSNOTE_SAVE);
 	}
 
 	private void update() {
@@ -296,7 +286,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Fussnote wurde geändert!");
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_FUSSNOTE_EDIT);
 	}
 
 	private void zurueck() {
@@ -311,20 +302,16 @@ public class FussnoteEinst extends VerticalLayout implements View {
 
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			showNotification("Bitte Bezeichnung eingeben!");
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		if (tfAbkuerzung.getValue().isEmpty()) {
-			showNotification("Bitte Abkürzung eingeben!");
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_ABKUERZUNG);
 			return false;
 		}
 		return true;
-	}
-
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
 	}
 
 	@Override
