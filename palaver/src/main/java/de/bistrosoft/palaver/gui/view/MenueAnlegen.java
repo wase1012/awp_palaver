@@ -312,7 +312,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.addItem(rezept);
 		tmpRezepte.add(rezept);
 		tblRezepte.removeItem(rezept);
-		Application.getInstance().showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
+		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
 	}
 
 	private void ladeMenue() {
