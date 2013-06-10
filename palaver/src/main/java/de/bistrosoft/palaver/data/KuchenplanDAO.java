@@ -3,33 +3,7 @@
  */
 package de.bistrosoft.palaver.data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
-import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
-import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 
 /**
  * @author Christine
@@ -105,10 +79,10 @@ public class KuchenplanDAO extends AbstractDAO {
 //	//
 //	//
 //	// if(menueplan!=null){
-//	// // TODO: KÃ¶che laden
+//	// // TODO: Köche laden
 //	//
 //	// List<MenueComponent> menues = new ArrayList<>();
-//	// // TODO: MenÃ¼s laden
+//	// // TODO: Menüs laden
 //	// ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN,
 //	// menueplan.getId()));
 //	//

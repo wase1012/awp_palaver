@@ -85,7 +85,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private Button btSpeichern = new Button("Speichern");
 	private Button btVerwerfen = new Button("Verwerfen");
-	private Button btUpdate = new Button("Ä„ndern");
+	private Button btUpdate = new Button("Ändern");
 	private Button btNeuesRezept = new Button("neues Rezeptanlegen");
 
 	private Table tblMenueRezepte = new Table();
@@ -472,7 +472,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfMenuename.getValue().isEmpty()) {
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_NAME);

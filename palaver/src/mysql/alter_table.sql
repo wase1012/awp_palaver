@@ -9,3 +9,10 @@ ALTER TABLE `palaver`.`regel`
 	CHANGE COLUMN `operator` `operator` VARCHAR(500) NULL DEFAULT NULL  , 
 	CHANGE COLUMN `kriterien` `kriterien` VARCHAR(500) NULL DEFAULT NULL  , 
 	CHANGE COLUMN `fehlermeldung` `fehlermeldung` VARCHAR(500) NULL DEFAULT NULL;
+	
+/*
+ * Erstellt von Eike Becher am 10.06.2013
+ * In DB ausgeführt: 
+ */
+ALTER TABLE `palaver`.`menueplan_has_menues` 
+	ADD COLUMN `portion` INT(11) NOT NULL  AFTER `zeile` ;

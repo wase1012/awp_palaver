@@ -31,7 +31,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private FilterTable table;
 
-	private Button showFilter;
+	private Button btFilterLeeren;
 	private Menue menue;
 
 	private Button btAuswaehlen;
@@ -42,7 +42,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 
-		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
+		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 
 		table = new FilterTable();
 		table.setSizeFull();
@@ -92,13 +92,13 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			e.printStackTrace();
 		}
 
-		this.addComponent(showFilter);
-		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		this.addComponent(btFilterLeeren);
+		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		this.addComponent(btAuswaehlen);
 
-		showFilter.addClickListener(new ClickListener() {
+		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				table.resetFilters();

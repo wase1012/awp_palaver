@@ -76,16 +76,16 @@ public class MenueplanGridDropHandler extends
         Boolean isDoDND = true;
         Boolean isSwitch = true;
         
-        //PrÃ¼fe, dass Komponente nicht in die ersten zwei Zeilen gedropped wird
-        //PrÃ¼fe, dass Zielkomponente ungleich Quelkomponente ist
+        //Prüfe, dass Komponente nicht in die ersten zwei Zeilen gedropped wird
+        //Prüfe, dass Zielkomponente ungleich Quelkomponente ist
         if (!(destRow<2) && !(destColumn<1) && (destComp!=sourceComp) && isDoDND) {
-        	// MenÃ¼s vertauschen
+        	// Menüs vertauschen
         	menueplan.vertauscheMenue(sourceComp, destComp, destColumn, destRow);
         	
             System.out.println("CAST");
             
             System.out.println(menueplan);
-            //Wenn Zielkomponente vorhanden fÃ¼ge diese ein
+            //Wenn Zielkomponente vorhanden füge diese ein
             if (destComp!=null){
             	if(isSwitch){
             		layout.addComponent(destComp, sourceColumn, sourceRow);

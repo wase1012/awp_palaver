@@ -212,7 +212,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		});
 
 		btMenue.addClickListener(new ClickListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
@@ -453,7 +452,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	// Funktion zum Speichern eines Rezeptes
-	@SuppressWarnings("deprecation")
 	public Rezept rezeptSpeichern() {
 		Rezept rezept = new Rezept();
 		rezept.setName(nameInput);
@@ -541,7 +539,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		// setzt Rezeptname
 		rezept.setName(nameInput);
 
-		// setzt Ã„nderungsdatum
+		// setzt Ãnderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 		rezept.setErstellt(date2);
@@ -614,7 +612,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
 			((Application) UI.getCurrent().getData())

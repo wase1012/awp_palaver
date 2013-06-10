@@ -42,6 +42,7 @@ public class MenueComponent extends CustomComponent{
 	private Menue menue;
 	private Boolean isChanged;
 	private Button btFehler;
+	private Integer portion;
 	
 	private List<String> fehlermeldungen;
 	private List<Regel> FehlerRegeln;
@@ -139,6 +140,20 @@ public class MenueComponent extends CustomComponent{
 		return menueGrid;
 	}
 
+	/**
+	 * @return the portion
+	 */
+	public Integer getPortion() {
+		return portion;
+	}
+
+	/**
+	 * @param portion the portion to set
+	 */
+	public void setPortion(Integer portion) {
+		this.portion = portion;
+	}
+
 	public void setMenueGrid(DDGridLayout menueGrid) {
 		this.menueGrid = menueGrid;
 	}
@@ -193,8 +208,8 @@ public class MenueComponent extends CustomComponent{
 		});
 	}
 
-	// Konstruktor fÃ¼r MenÃ¼komponente 
-	public MenueComponent(Menue menue,String angezName, MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged){
+	// Konstruktor für Menükomponente 
+	public MenueComponent(Menue menue,String angezName, MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow, int nCol, Boolean isChanged, Integer portion){
 		this.isChanged = isChanged;
 		this.col = nCol;
 		this.row = nRow;
@@ -203,12 +218,13 @@ public class MenueComponent extends CustomComponent{
 		this.comp = this;
 		this.setMenue(menue);
 		this.angezeigterName=angezName;
+		this.portion = portion;
 		
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
 		setCompositionRoot(vl);
 		
-		// MenÃ¼bezeichnung des ausgewÃ¤hlten MenÃ¼s der MenÃ¼komponente hinzufÃ¼gen
+		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
 		try {
 			fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(menue.getId());
 		} catch (Exception e) {
@@ -228,22 +244,22 @@ public class MenueComponent extends CustomComponent{
 //		// Horizontales Layout erstellen
 //		HorizontalLayout hlProp = new HorizontalLayout();
 //		
-//		// Horizontales Layout dem vertikalen Layout zufÃ¼gen
+//		// Horizontales Layout dem vertikalen Layout zufügen
 //		vl.addComponent(hlProp);
 		
-		//Clicklistener fÃ¼r den ADD Button
+		//Clicklistener für den ADD Button
 		btn.setStyleName(BaseTheme.BUTTON_LINK);
 		btn.setIcon(new ThemeResource("img/Menue.png"));
 		btn.addStyleName("menueplan-add");
         btn.addClickListener(new ClickListener() {
 			
-        	// Click-Listener fÃ¼r ADD_Buttons
+        	// Click-Listener für ADD_Buttons
 			@Override
 			public void buttonClick(ClickEvent event) {
 	       		WinSelectMenue window = new WinSelectMenue(menueplan, btn, row, col);
         		UI.getCurrent().addWindow(window);
         		window.setModal(true);
-        		window.setWidth("50%");
+        		window.setWidth("800px");
         		window.setHeight("50%");
 			}
 		});
@@ -251,7 +267,7 @@ public class MenueComponent extends CustomComponent{
 		btn.setWidth("149px");
 		
 		
-		//ClickListener fÃ¼r den Ã„ndernbutton
+		//ClickListener für den Ändernbutton
 		btChange.addClickListener(new ClickListener(){
 			
 			@Override
@@ -272,21 +288,21 @@ public class MenueComponent extends CustomComponent{
 	            WinSelectMenue window = new WinSelectMenue(menueplan, sourceComp, row, col);
 	    		UI.getCurrent().addWindow(window);
 	    		window.setModal(true);
-	    		window.setWidth("50%");
+	    		window.setWidth("800px");
 	    		window.setHeight("50%");
 			}
 		});
 		        
 		
 		
-		// ClickListener fÃ¼r den LÃ¶schbutton
+		// ClickListener für den Löschbutton
 		btDelete.addClickListener(new ClickListener() {
 			
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				
-				// Window erstellen welches abfragt, ob man das MenÃ¼ wirklich aus dem MenÃ¼plan lÃ¶schen will
-				ConfirmDialog.show(UI.getCurrent(), "MenÃ¼ aus Plan lÃ¶schen:", "Wollen Sie das MenÃ¼ wirklich aus dem Plan lÃ¶schen?",
+				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
+				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:", "Wollen Sie das Menü wirklich aus dem Plan löschen?",
 				        "Ja", "Nein", new ConfirmDialog.Listener() {
 
 				            public void onClose(ConfirmDialog dialog) {
@@ -308,10 +324,10 @@ public class MenueComponent extends CustomComponent{
 				            	        }
 				                    }		                    
 				                	
-				                	//aktuelle MenÃ¼komponente lÃ¶schen
+				                	//aktuelle Menükomponente löschen
 //				                	menueGrid.removeComponent(comp);
 				                	menueplan.removeMenue(comp);
-				                	//ADD Button hinzufÃ¼gen
+				                	//ADD Button hinzufügen
 				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 				                }

@@ -72,10 +72,10 @@ public class MenueplanDAO extends AbstractDAO {
 		}
 
 		if (menueplan != null) {
-			// TODO: Kï¿½che laden
+			// TODO: Köche laden
 
 			List<MenueComponent> menues = new ArrayList<MenueComponent>();
-			// TODO: Menï¿½s laden
+			// TODO: Menüs laden
 			ResultSet setMenues = getManaged(MessageFormat.format(
 					GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
 
@@ -87,7 +87,7 @@ public class MenueplanDAO extends AbstractDAO {
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
-				// Rezepte hinzufï¿½gen
+				// Rezepte hinzufügen
 				List<Rezept> rezepte = Rezeptverwaltung.getInstance()
 						.getRezepteByMenue(menue);
 				menue.setRezepte(rezepte);
@@ -101,8 +101,9 @@ public class MenueplanDAO extends AbstractDAO {
 						.getMenueartById(setMenues.getLong("menueart_fk"));
 				menue.setMenueart(menueart);
 				String angezName = setMenues.getString("angezName");
+				Integer portion = setMenues.getInt("portion");
 				MenueComponent menueComp = new MenueComponent(menue, angezName,
-						null, null, row, col, false);
+						null, null, row, col, false,portion);
 				menues.add(menueComp);
 			}
 			menueplan.setMenues(menues);
@@ -123,10 +124,10 @@ public class MenueplanDAO extends AbstractDAO {
 	//
 	//
 	// if(menueplan!=null){
-	// // TODO: KÃ¶che laden
+	// // TODO: Köche laden
 	//
 	// List<MenueComponent> menues = new ArrayList<>();
-	// // TODO: MenÃ¼s laden
+	// // TODO: Menüs laden
 	// ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN,
 	// menueplan.getId()));
 	//
