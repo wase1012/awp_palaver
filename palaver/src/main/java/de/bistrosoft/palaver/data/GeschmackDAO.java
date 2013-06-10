@@ -133,16 +133,16 @@ public class GeschmackDAO extends AbstractDAO {
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name, inaktiv) VALUES('" + geschmack.getBezeichnung() + "' "
-				+ ", false)";
+				+ "(name, inaktiv) VALUES('" + geschmack.getBezeichnung()
+				+ "' " + ", false)";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + INAKTIV + "= '"
-				+ geschmack.getInaktiv() + "' WHERE " + NAME + " = '"
-				+ geschmack.getBezeichnung() + "'";
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "= '"
+				+ geschmack.getBezeichnung() + "' WHERE " + ID + " = "
+				+ geschmack.getId() + ";";
 		this.putManaged(UPDATE_QUERY);
 
 	}

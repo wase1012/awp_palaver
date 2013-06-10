@@ -8,8 +8,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -108,15 +106,15 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			}
 		});
 
-		tblGeschmack.addItemClickListener(new ItemClickListener() {
-
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
-					updateGeschmack();
-				}
-			}
-		});
+//		tblGeschmack.addItemClickListener(new ItemClickListener() {
+//
+//			@Override
+//			public void itemClick(ItemClickEvent event) {
+//				if (event.isDoubleClick()) {
+//					updateGeschmack();
+//				}
+//			}
+//		});
 
 		BeanItemContainer<Geschmack> ctGeschmack;
 		try {
@@ -239,7 +237,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.setValue(geschmack.getBezeichnung());
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 50, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
 		btUpdate.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -277,7 +275,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		showNotification("Geschmack wurde geÃ¤ndert!");
+		showNotification("Geschmack wurde geändert!");
 	}
 
 	private void zurueck() {
