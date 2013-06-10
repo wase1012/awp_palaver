@@ -41,11 +41,11 @@ public class Zubereitung implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getBezeichnung() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setBezeichnung(String name) {
 		this.name = name;
 	}
 

@@ -94,14 +94,14 @@ public class ZubereitungDAO extends AbstractDAO {
 	public void createZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ zubereitung.getName() + "');";
+				+ zubereitung.getBezeichnung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	public void updateZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ zubereitung.getName() + "'" + " WHERE " + ID + "='"
+				+ zubereitung.getBezeichnung() + "'" + " WHERE " + ID + "='"
 				+ zubereitung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}

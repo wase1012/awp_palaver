@@ -109,16 +109,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			}
 		});
 
-		tblFussnote.addItemClickListener(new ItemClickListener() {
-
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
-					updateFussnote();
-				}
-			}
-		});
-
 		BeanItemContainer<Fussnote> ctFussnote;
 		try {
 			ctFussnote = new BeanItemContainer<Fussnote>(Fussnote.class,
@@ -186,11 +176,11 @@ public class FussnoteEinst extends VerticalLayout implements View {
 
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 20, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 20, false));
 
 		tfAbkuerzung.setImmediate(true);
 		tfAbkuerzung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige AbkÃ¼rzung eingeben", 1, 5, false));
+				"Bitte gültige Abkürzung eingeben", 1, 5, false));
 
 		btSpeichern.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -250,12 +240,12 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		tfBezeichnung.setImmediate(true);
 		tfBezeichnung.setValue(fn.getBezeichnung());
 		tfBezeichnung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 3, 50, false));
+				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
 		tfAbkuerzung.setImmediate(true);
 		tfAbkuerzung.setValue(fn.getAbkuerzung());
 		tfAbkuerzung.addValidator(new StringLengthValidator(
-				"Bitte gÃ¼ltige Bezeichnung eingeben", 1, 5, false));
+				"Bitte gültige Bezeichnung eingeben", 1, 5, false));
 
 		btUpdate.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {

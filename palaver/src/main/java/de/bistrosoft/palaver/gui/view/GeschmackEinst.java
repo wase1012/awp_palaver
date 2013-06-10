@@ -106,16 +106,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			}
 		});
 
-//		tblGeschmack.addItemClickListener(new ItemClickListener() {
-//
-//			@Override
-//			public void itemClick(ItemClickEvent event) {
-//				if (event.isDoubleClick()) {
-//					updateGeschmack();
-//				}
-//			}
-//		});
-
 		BeanItemContainer<Geschmack> ctGeschmack;
 		try {
 			ctGeschmack = new BeanItemContainer<Geschmack>(Geschmack.class,

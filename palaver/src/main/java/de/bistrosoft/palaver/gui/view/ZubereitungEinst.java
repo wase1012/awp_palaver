@@ -1,13 +1,15 @@
 package de.bistrosoft.palaver.gui.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -16,119 +18,282 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.hska.awp.palaver2.util.customFilter;
-import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
  * @author Michael Marschall
  * 
  */
+@SuppressWarnings("serial")
 public class ZubereitungEinst extends VerticalLayout implements View {
 
-	private static final long serialVersionUID = 2474121007841510011L;
+	private static final Logger log = LoggerFactory
+			.getLogger(ZubereitungEinst.class.getName());
 
-	private VerticalLayout box = new VerticalLayout();
-	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Zubereitung anlegen</font><b></pre>",
-			ContentMode.HTML);
-	private Label dummy = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"></font><b></pre>",
-			ContentMode.HTML);
+	private VerticalLayout vl = new VerticalLayout();
+	private VerticalLayout vlDetails = new VerticalLayout();
+	private HorizontalLayout hlControl = new HorizontalLayout();
 
-	private TextField name = new TextField("Zubereitung");
+	private Button btSpeichern = new Button(IConstants.BUTTON_SAVE);
+	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
+	private Button btHinzufuegen = new Button(IConstants.BUTTON_ADD);
+	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
+	private Button btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 
-	private Button speichern = new Button("Speichern");
+	private FilterTable tblZubereitung;
 
-	private String nameInput;
-	private FilterTable table;
+	private TextField tfBezeichnung = new TextField("Bezeichnung");
+
+	private Label lUeberschrift;
+
+	private Zubereitung zub = new Zubereitung();
+	private Window zubNeu;
 
 	public ZubereitungEinst() {
 		super();
-		table = new FilterTable();
-		name.setWidth("100%");
-		table.setSizeFull();
-		table.setSelectable(true);
-		table.setFilterBarVisible(true);
-		table.setFilterGenerator(new customFilter());
-		table.setFilterDecorator(new customFilterDecorator());
 
-		box.setWidth("300px");
-		box.setSpacing(true);
+		this.setSizeFull();
+		this.setMargin(true);
+		this.addComponent(vl);
 
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-		box.addComponent(dummy);
-		box.addComponent(ueberschrift);
-		box.addComponent(name);
+		vl.setWidth("60%");
+		vl.setMargin(true);
+		vl.setSpacing(true);
+		tblZubereitung = new FilterTable();
+		tblZubereitung.setSizeFull();
+		tblZubereitung.setSelectable(true);
+		tblZubereitung.setFilterBarVisible(true);
 
-		HorizontalLayout control = new HorizontalLayout();
-		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		lUeberschrift = new Label("Zubereitung");
+		lUeberschrift.setStyleName("ViewHeadline");
 
-		name.setImmediate(true);
-		name.setInputPrompt(nameInput);
-		name.setMaxLength(150);
+		vl.addComponent(lUeberschrift);
+		vl.setComponentAlignment(lUeberschrift, Alignment.MIDDLE_LEFT);
 
-		control.addComponent(speichern);
-		speichern.setIcon(new ThemeResource("img/save.ico"));
+		vl.addComponent(tblZubereitung);
+		vl.setComponentAlignment(tblZubereitung, Alignment.MIDDLE_CENTER);
+		vl.addComponent(btHinzufuegen);
+		vl.setComponentAlignment(btHinzufuegen, Alignment.MIDDLE_RIGHT);
+		btHinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
+		vl.addComponent(btAuswaehlen);
+		vl.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_CENTER);
 
-		name.addValueChangeListener(new ValueChangeListener() {
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
+		btHinzufuegen.addClickListener(new ClickListener() {
 
-				nameInput = valueString;
-			}
-		});
-
-		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Zubereitung zb = new Zubereitung();
-				zb.setName(nameInput);
+				hinzufuegen();
+			}
 
-				try {
-					Zubereitungverwaltung.getInstance().createZubereitung(zb);
+		});
 
-				} catch (Exception e) {
-					e.printStackTrace();
+		tblZubereitung.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null) {
+					zub = (Zubereitung) event.getProperty().getValue();
 				}
-
-				Notification notification = new Notification(
-						"Zubereitung wurde gespeichert!");
-				notification.setDelayMsec(500);
-				notification.show(Page.getCurrent());
-
-				ViewHandler.getInstance().switchView(ZubereitungEinst.class);
-
 			}
 		});
 
-		BeanItemContainer<Zubereitung> container;
+		BeanItemContainer<Zubereitung> ctZubereitung;
 		try {
-			container = new BeanItemContainer<Zubereitung>(Zubereitung.class,
+			ctZubereitung = new BeanItemContainer<Zubereitung>(Zubereitung.class,
 					Zubereitungverwaltung.getInstance().getAllZubereitung());
-			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "id", "name" });
-			table.sort(new Object[] { "name" }, new boolean[] { true });
+			tblZubereitung.setContainerDataSource(ctZubereitung);
+			tblZubereitung.setVisibleColumns(new Object[] { "id", "bezeichnung",
+					 });
+			tblZubereitung.sort(new Object[] { "id" }, new boolean[] { true });
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		btAuswaehlen.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (tblZubereitung.getValue() != null
+						&& tblZubereitung.getValue() instanceof Zubereitung) {
+					updateZubereitung();
+				} else
+					showNotification("Bitte Zubereitung auswählen!");
+			}
+		});
+
+	}
+
+	private void hinzufuegen() {
+		zubNeu = new Window();
+		zubNeu.setClosable(false);
+		zubNeu.setWidth("400px");
+		zubNeu.setHeight("270px");
+		zubNeu.setModal(true);
+		zubNeu.center();
+		zubNeu.setResizable(false);
+		zubNeu.setCaption("Zubereitung hinzufügen");
+
+		UI.getCurrent().addWindow(zubNeu);
+
+		vl = new VerticalLayout();
+		vl.setMargin(true);
+		vl.setWidth("100%");
+		vl.setSpacing(true);
+
+		tfBezeichnung.setWidth("100%");
+		tfBezeichnung.setRequired(true);
+
+		vlDetails = new VerticalLayout();
+		vlDetails.addComponent(tfBezeichnung);
+
+		hlControl = new HorizontalLayout();
+		hlControl.setSpacing(true);
+		hlControl.addComponent(btVerwerfen);
+		hlControl.addComponent(btSpeichern);
+
+		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+
+		vl.addComponent(vlDetails);
+		vl.setComponentAlignment(vlDetails, Alignment.MIDDLE_CENTER);
+		vl.addComponent(hlControl);
+		vl.setComponentAlignment(hlControl, Alignment.BOTTOM_RIGHT);
+		zubNeu.setContent(vl);
+
+		tfBezeichnung.setImmediate(true);
+		tfBezeichnung.addValidator(new StringLengthValidator(
+				"Bitte gültige Bezeichnung eingeben", 3, 20, false));
+
+		btSpeichern.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (validiereEingabe()) {
+					speichern();
+					zurueck();
+				}
+			}
+		});
+
+		btVerwerfen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				abbrechen();
+			}
+		});
+	}
+
+	private void updateZubereitung() {
+
+		zubNeu = new Window();
+		zubNeu.setClosable(false);
+		zubNeu.setWidth("400px");
+		zubNeu.setHeight("270px");
+		zubNeu.setModal(true);
+		zubNeu.center();
+		zubNeu.setResizable(false);
+		zubNeu.setCaption("Zubereitung bearbeiten");
+
+		UI.getCurrent().addWindow(zubNeu);
+
+		vl = new VerticalLayout();
+		vl.setMargin(true);
+		vl.setWidth("100%");
+		vl.setSpacing(true);
+
+		tfBezeichnung.setWidth("100%");
+
+		vlDetails = new VerticalLayout();
+		vlDetails.addComponent(tfBezeichnung);
+
+		hlControl = new HorizontalLayout();
+		hlControl.setSpacing(true);
+		hlControl.addComponent(btVerwerfen);
+		hlControl.addComponent(btUpdate);
+		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+
+		vl.addComponent(vlDetails);
+		vl.setComponentAlignment(vlDetails, Alignment.MIDDLE_CENTER);
+		vl.addComponent(hlControl);
+		vl.setComponentAlignment(hlControl, Alignment.BOTTOM_RIGHT);
+		zubNeu.setContent(vl);
+
+		tfBezeichnung.setImmediate(true);
+		tfBezeichnung.setValue(zub.getBezeichnung());
+		tfBezeichnung.addValidator(new StringLengthValidator(
+				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
+
+		btUpdate.addClickListener(new ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if (validiereEingabe()) {
+					update();
+					zurueck();
+				}
+			}
+		});
+
+		btVerwerfen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				abbrechen();
+			}
+		});
+	}
+
+	private void speichern() {
+		zub.setBezeichnung(tfBezeichnung.getValue());
+
+		try {
+			Zubereitungverwaltung.getInstance().createZubereitung(zub);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		box.addComponent(table);
+		showNotification("Zubereitung wurde gespeichert!");
+	}
 
+	private void update() {
+		zub.setBezeichnung(tfBezeichnung.getValue());
+
+		try {
+			Zubereitungverwaltung.getInstance().updateZubereitung(zub);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		showNotification("Zubereitung wurde geändert!");
+	}
+
+	private void zurueck() {
+		UI.getCurrent().removeWindow(zubNeu);
+		ViewHandler.getInstance().switchView(ZubereitungEinst.class);
+	}
+
+	private void abbrechen() {
+		UI.getCurrent().removeWindow(zubNeu);
+		ViewHandler.getInstance().switchView(ZubereitungEinst.class);
+	}
+
+	private Boolean validiereEingabe() {
+		if (tfBezeichnung.getValue().isEmpty()) {
+			showNotification("Bitte Bezeichnung eingeben!");
+			return false;
+		}
+		return true;
+	}
+
+	private void showNotification(String text) {
+		Notification notification = new Notification(text);
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
 	}
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub
-
 	}
 }
