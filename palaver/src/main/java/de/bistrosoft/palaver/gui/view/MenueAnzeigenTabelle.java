@@ -11,6 +11,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
@@ -18,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -33,12 +35,12 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button showFilter;
 	private Menue menue;
-	
+
 	private Button btAuswaehlen;
 
 	public MenueAnzeigenTabelle() {
 		super();
-		btAuswaehlen=new Button(IConstants.BUTTON_SELECT);
+		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -88,6 +90,9 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			table.setFilterBarVisible(true);
 			table.sort(new Object[] { "id" }, new boolean[] { true });
 			table.markAsDirty();
+			table.setFilterFieldValue("kochname", ((Application) UI
+					.getCurrent().getData()).getUser().getVorname());
+
 			// TODO Filter setzen
 			// Mitarbeiterverwaltung.getInstance().getMitarbeiterByBenutzername("Shanta")));
 
@@ -106,33 +111,23 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		showFilter.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (table.isFilterBarVisible()) {
-					table.setFilterBarVisible(false);
-					table.resetFilters();
-					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-					// showFilter.setIcon(new ThemeResource("img/filter.ico"));
-				} else {
-					table.setFilterBarVisible(true);
-					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-					showFilter.setIcon(new ThemeResource(
-							"img/disable_filter.ico"));
-				}
+				table.resetFilters();
 			}
 		});
-		
+
 		btAuswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if (table.getValue() != null
 						&& table.getValue() instanceof Menue) {
 
 					Menue menueAusTb = (Menue) table.getValue();
-					ViewHandler.getInstance().switchView(
-							MenueAnlegen.class,
+					ViewHandler.getInstance().switchView(MenueAnlegen.class,
 							new ViewDataObject<Menue>(menueAusTb));
 				}
-				//TODO Fehlermeldung
-				else;
-				
+				// TODO Fehlermeldung
+				else
+					;
+
 			}
 		});
 

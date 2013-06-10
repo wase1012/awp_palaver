@@ -90,6 +90,10 @@ public class RezeptHasArtikel {
 		return this.artikel;
 	}
 
+	public String getNotiz() {
+		return artikel.getNotiz();
+	}
+
 	@Override
 	public String toString() {
 		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "

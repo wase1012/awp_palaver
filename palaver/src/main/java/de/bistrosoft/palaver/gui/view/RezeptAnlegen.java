@@ -95,11 +95,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	// TwinCol
 	private TwinColTouch zubereitung = new TwinColTouch("Zubereitung");
-	
-	//NativSelect
+
+	// NativSelect
 	private NativeSelect mitarbeiterNs = new NativeSelect("Koch");
 	private NativeSelect rezeptartNs = new NativeSelect("Rezeptart");
-
 
 	// TextArea
 	private TextArea kommentar = new TextArea("Kommentar");
@@ -143,7 +142,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterNs.setData(mitarbeiterInput);
 		mitarbeiterNs.setNullSelectionAllowed(false);
 		mitarbeiterNs.setRequired(true);
-		
+
 		rezeptartNs.setWidth("100%");
 		rezeptartNs.setImmediate(true);
 		rezeptartNs.setData(mitarbeiterInput);
@@ -217,12 +216,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					
-					ViewHandler.getInstance().switchView(
-							MenueAnlegen.class,
+
+					ViewHandler.getInstance().switchView(MenueAnlegen.class,
 							new ViewDataObject<Rezept>(rezeptSpeichern()));
 				} else {
-					((Application) UI.getCurrent().getData()).showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
+					((Application) UI.getCurrent().getData())
+							.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
 				}
 			}
 		});
@@ -246,7 +245,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				RezeptHasArtikel.class);
 		zutatenTable.setContainerDataSource(containerRezeptHasArtikel);
 		zutatenTable.setVisibleColumns(new Object[] { "artikelname", "menge",
-				"einheit" });
+				"einheit", "notiz" });
 		zutatenTable.setEditable(true);
 
 		hlZutaten.addComponent(zutatenTable);
@@ -329,7 +328,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		load();
 
 		// Koch auf aktuellen User setzen
-		mitarbeiterNs.select(((Application) UI.getCurrent().getData()).getUser());
+		mitarbeiterNs.select(((Application) UI.getCurrent().getData())
+				.getUser());
 
 	}
 
@@ -348,7 +348,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			for (Zubereitung z : zb) {
 				zubereitung.addItem(z);
 			}
-			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance().getAllRezeptart();
+			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance()
+					.getAllRezeptart();
 			for (Rezeptart ra : rezeptart) {
 				rezeptartNs.addItem(ra);
 			}
@@ -357,7 +358,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 
 	}
-	
 
 	@Override
 	public void getViewParam(ViewData data) {
@@ -464,7 +464,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		rezept.setKommentar(kommentarInput);
 
 		rezept.setRezeptart((Rezeptart) rezeptartNs.getValue());
-		
+
 		try {
 			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 
@@ -530,7 +530,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
-		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_SAVE);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_REZEPT_SAVE);
 		ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
 		return rezept;
 	}
@@ -613,31 +614,34 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	
-
 	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_NAME);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REZEPT_NAME);
 			return false;
 		}
 		if (mitarbeiterNs.getValue() == null) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_KOCH);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REZEPT_KOCH);
 			return false;
 		}
 		if (rezeptartNs.getValue() == null) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_REZEPTART);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REZEPT_REZEPTART);
 			return false;
 		}
 		if (tmpZutaten.isEmpty() == false || tmpZutaten.size() != 0) {
 			for (RezeptHasArtikel rha : tmpZutaten) {
 				if (rha.getMenge() >= 100000.0) {
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_MENGE);
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_REZEPT_MENGE);
 					return false;
 				}
 			}
 		} else {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPT_ZUTATEN);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_REZEPT_ZUTATEN);
 			return false;
 		}
 

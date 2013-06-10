@@ -150,6 +150,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
 		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
+		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI.getCurrent().getData()).getUser().getVorname());
 		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
 

@@ -9,12 +9,14 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.gui.view.BestellungBearbeiten;
 import de.hska.awp.palaver2.util.IConstants;
@@ -34,7 +36,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 	private FilterTable table;
 
-	private Button showFilter;
+	private Button btFilterLeeren;
 	private Rezept rezept;
 
 	private Button btAuswaehlen;
@@ -43,15 +45,15 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 		super();
 
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
-		
+
 		this.setSizeFull();
 		this.setMargin(true);
 
-		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
+		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 
 		table = new FilterTable();
 		table.setSizeFull();
-		table.setFilterBarVisible(false);
+		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
@@ -88,6 +90,9 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			table.setVisibleColumns(new Object[] { "id", "name", "rezeptart",
 					"mitarbeiter", "erstellt" });
 			table.sort(new Object[] { "id" }, new boolean[] { true });
+			table.setFilterFieldValue("mitarbeiter", ((Application) UI
+					.getCurrent().getData()).getUser().getVorname());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,33 +103,26 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 						&& table.getValue() instanceof Rezept) {
 
 					Rezept rezeptAusTb = (Rezept) table.getValue();
-					ViewHandler.getInstance().switchView(
-							RezeptAnlegen.class,
+					ViewHandler.getInstance().switchView(RezeptAnlegen.class,
 							new ViewDataObject<Rezept>(rezeptAusTb));
 				}
-				//TODO Fehlermeldung
-				else;
-				
+				// TODO Fehlermeldung
+				else
+					;
+
 			}
 		});
 
-		this.addComponent(showFilter);
-		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		this.addComponent(btFilterLeeren);
+		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		this.addComponent(btAuswaehlen);
 
-		showFilter.addClickListener(new ClickListener() {
+		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (table.isFilterBarVisible()) {
-					table.setFilterBarVisible(false);
-					table.resetFilters();
-					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-				} else {
-					table.setFilterBarVisible(true);
-					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-				}
+				table.resetFilters();
 			}
 		});
 

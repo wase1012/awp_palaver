@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
 	// Menuepunkte mit Unterpunkten
@@ -81,6 +81,7 @@ public interface IConstants
 	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
 	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menü Speichern";	
 	String		BUTTON_SELECT = "Auswählen";
+	String 		BUTTON_CLEAR_FILTER = "Filter leeren";
 
 	
 	// Icons fuer Knoepfe
@@ -166,6 +167,7 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
 
 
 
