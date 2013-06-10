@@ -47,7 +47,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btHinzufuegen = new Button(IConstants.BUTTON_ADD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
-	private Button btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
+	private Button btAuswaehlen = new Button(IConstants.BUTTON_EDIT);
 
 	private FilterTable tblZubereitung;
 
@@ -81,11 +81,11 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 
 		vl.addComponent(tblZubereitung);
 		vl.setComponentAlignment(tblZubereitung, Alignment.MIDDLE_CENTER);
-		vl.addComponent(btHinzufuegen);
-		vl.setComponentAlignment(btHinzufuegen, Alignment.MIDDLE_RIGHT);
+		vl.addComponent(hlControl);
+		vl.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(btAuswaehlen);
+		hlControl.addComponent(btHinzufuegen);
 		btHinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
-		vl.addComponent(btAuswaehlen);
-		vl.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_CENTER);
 
 		btHinzufuegen.addClickListener(new ClickListener() {
 
