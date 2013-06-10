@@ -148,6 +148,9 @@ public interface IConstants
 	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
 	
+	String 		INFO_REZEPTANZEIGEN_SELECT = "Bitte Rezept auswählen!";
+	String		INFO_MENUEANZEIGEN_SELECT = "Bitte Menü auswählen!";
+	
 	String		INFO_FUSSNOTE_SELECT = "Bitte Fussnote auswählen!";
 	String		INFO_FUSSNOTE_SAVE = "Fussnote wurde gespeichert!";
 	String		INFO_FUSSNOTE_EDIT = "Fussnote wurde geändert!";
@@ -167,6 +170,7 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
 
 
 

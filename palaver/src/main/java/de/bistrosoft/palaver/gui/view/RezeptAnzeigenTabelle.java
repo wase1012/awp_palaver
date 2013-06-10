@@ -9,16 +9,14 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.gui.view.BestellungBearbeiten;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -77,7 +75,6 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 					ViewHandler.getInstance().switchView(RezeptAnlegen.class,
 							new ViewDataObject<Rezept>(rezept));
 				}
-
 			}
 		});
 
@@ -105,11 +102,10 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 					Rezept rezeptAusTb = (Rezept) table.getValue();
 					ViewHandler.getInstance().switchView(RezeptAnlegen.class,
 							new ViewDataObject<Rezept>(rezeptAusTb));
+				} else {
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_REZEPTANZEIGEN_SELECT);
 				}
-				// TODO Fehlermeldung
-				else
-					;
-
 			}
 		});
 
