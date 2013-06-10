@@ -26,7 +26,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -37,6 +36,7 @@ import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -89,9 +89,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Label ueberschrift2 = new Label(
 			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
 			ContentMode.HTML);
-	private Label dummy = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"><br></font><b></pre>",
-			ContentMode.HTML);
 
 	// TextFelder
 	private TextField name = new TextField("Bezeichnung");
@@ -99,11 +96,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	// TwinCol
 	private TwinColTouch zubereitung = new TwinColTouch("Zubereitung");
 	
-
+	//NativSelect
 	private NativeSelect mitarbeiterNs = new NativeSelect("Koch");
+	private NativeSelect rezeptartNs = new NativeSelect("Rezeptart");
 
-	// OptionGroup
-	private OptionGroup rezeptartOg = new OptionGroup();
 
 	// TextArea
 	private TextArea kommentar = new TextArea("Kommentar");
@@ -117,7 +113,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	// Variablen
 	private String nameInput;
 	private String kommentarInput;
-	private String rezeptartInput;
 	private String mitarbeiterInput;
 	public String valueString = new String();
 
@@ -132,14 +127,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
-
-		rezeptartOg.addItem("Hauptgericht");
-		rezeptartOg.addItem("Beilage");
-		
-		rezeptartOg.select(2);
-		rezeptartOg.setNullSelectionAllowed(false);
-		rezeptartOg.setHtmlContentAllowed(true);
-		rezeptartOg.setImmediate(true);
 
 		name.setWidth("100%");
 		name.setImmediate(true);
@@ -156,6 +143,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterNs.setData(mitarbeiterInput);
 		mitarbeiterNs.setNullSelectionAllowed(false);
 		mitarbeiterNs.setRequired(true);
+		
+		rezeptartNs.setWidth("100%");
+		rezeptartNs.setImmediate(true);
+		rezeptartNs.setData(mitarbeiterInput);
+		rezeptartNs.setNullSelectionAllowed(false);
+		rezeptartNs.setRequired(true);
 
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
@@ -177,8 +170,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlDetailsLinks.addComponent(ueberschrift);
 		vlDetailsLinks.addComponent(name);
 		vlDetailsLinks.addComponent(mitarbeiterNs);
-		vlDetailsLinks.addComponent(dummy);
-		vlDetailsLinks.addComponent(rezeptartOg);
+		vlDetailsLinks.addComponent(rezeptartNs);
 		vlDetailsLinks.setWidth("350px");
 
 		vlDetailsRechts.addComponent(zubereitung);
@@ -203,13 +195,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		// ValueChangeListener
 		name.addValueChangeListener(this);
 		kommentar.addValueChangeListener(this);
-		rezeptartOg.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				valueString = String.valueOf(event.getProperty().getValue());
-				rezeptartInput = valueString;
-			}
-		});
 
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
@@ -231,7 +216,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (validiereEingabe() && rezeptartInput == "Hauptgericht") {
+				if (validiereEingabe()) {
 					
 					ViewHandler.getInstance().switchView(
 							MenueAnlegen.class,
@@ -363,11 +348,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			for (Zubereitung z : zb) {
 				zubereitung.addItem(z);
 			}
+			List<Rezeptart> rezeptart = Rezeptartverwaltung.getInstance().getAllRezeptart();
+			for (Rezeptart ra : rezeptart) {
+				rezeptartNs.addItem(ra);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
+	
 
 	@Override
 	public void getViewParam(ViewData data) {
@@ -378,6 +368,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			tmpZutaten = new ArrayList<RezeptHasArtikel>();
 		}
 		mitarbeiterNs.select(rezept.getMitarbeiter());
+		rezeptartNs.select(rezept.getRezeptart());
 		hlControl.replaceComponent(btSpeichern, btUpdate);
 		vlDetailsLinks.replaceComponent(ueberschrift, ueberschrift2);
 
@@ -399,11 +390,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			name.setValue(RezeptDAO.getInstance().getRezeptById(rezept.getId())
 					.getName().toString());
-			if (rezept.getRezeptart().getName().equals("Hauptgericht")) {
-				rezeptartOg.select("Hauptgericht");
-			} else {
-				rezeptartOg.select("Beilage");
-			}
 		} catch (Exception e3) {
 			e3.printStackTrace();
 		}
@@ -474,17 +460,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 
-		try {
-			rezept.setRezeptart(Rezeptartverwaltung.getInstance()
-					.getRezeptartByNameB(rezeptartInput));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		rezept.setErstellt(date2);
 		rezept.setKommentar(kommentarInput);
 
+		rezept.setRezeptart((Rezeptart) rezeptartNs.getValue());
+		
 		try {
 			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -552,54 +535,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		return rezept;
 	}
 
-	// private void rezeptAlsHauptgerichtSpeichern() {
-	// if (ausgArtikel.isEmpty()) {
-	// return;
-	// }
-	// Menue menue = new Menue();
-	//
-	// menue.setName(nameInput);
-	// try {
-	// menue.setKoch(MitarbeiterDAO.getInstance().getMitarbeiterById(
-	// Long.parseLong(mitarbeiterInput.toString())));
-	// } catch (Exception e1) {
-	// e1.printStackTrace();
-	// }
-	//
-	// try {
-	// Menueverwaltung.getInstance().createRezeptAlsMenue(menue);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	//
-	// private void rezeptAlsMenuSpeichern() {
-	// if (ausgArtikel.isEmpty()) {
-	// return;
-	// }
-	// MenueHasRezept mhr = new MenueHasRezept();
-	// try {
-	// mhr.setMenue(MenueDAO.getInstance().getMenueIdByName(nameInput));
-	// } catch (Exception e1) {
-	// e1.printStackTrace();
-	// }
-	// try {
-	// mhr.setRezept(RezeptDAO.getInstance().getRezeptByName1(nameInput));
-	// } catch (Exception e1) {
-	// e1.printStackTrace();
-	// }
-	// try {
-	// Menueverwaltung.getInstance().RezepteAdd(mhr);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// mhr.setHauptgericht(true);
-	// Notification notification = new Notification(
-	// "Rezept wurde als Men√º gespeichert!");
-	// notification.setDelayMsec(500);
-	// notification.show(Page.getCurrent());
-	// }
-
 	// Methode zum ‰ndern eines Rezepts
 	private void update() {
 		// setzt Rezeptname
@@ -615,8 +550,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		// setzt Rezeptart
 		try {
-			rezept.setRezeptart(Rezeptartverwaltung.getInstance()
-					.getRezeptartByNameB(rezeptartInput));
+			rezept.setRezeptart((Rezeptart) rezeptartNs.getValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -691,7 +625,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			Application.getInstance().showDialog(IConstants.INFO_REZEPT_KOCH);
 			return false;
 		}
-		if (rezeptartOg.getValue() == null) {
+		if (rezeptartNs.getValue() == null) {
 			Application.getInstance().showDialog(IConstants.INFO_REZEPT_REZEPTART);
 			return false;
 		}
