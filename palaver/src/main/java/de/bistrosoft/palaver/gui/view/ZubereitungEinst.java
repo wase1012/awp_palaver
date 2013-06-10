@@ -119,13 +119,13 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
-			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblZubereitung.getValue() != null
 						&& tblZubereitung.getValue() instanceof Zubereitung) {
 					updateZubereitung();
 				} else
-					Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_SELECT);
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_ZUBEREITUNG_SELECT);
 			}
 		});
 	}
@@ -246,7 +246,6 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		});
 	}
 
-	@SuppressWarnings("deprecation")
 	private void speichern() {
 		zub.setBezeichnung(tfBezeichnung.getValue());
 
@@ -256,10 +255,10 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_SAVE);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_ZUBEREITUNG_SAVE);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void update() {
 		zub.setBezeichnung(tfBezeichnung.getValue());
 
@@ -268,7 +267,8 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_ZUBEREITUNG_EDIT);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_ZUBEREITUNG_EDIT);
 	}
 
 	private void zurueck() {
@@ -281,11 +281,10 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(ZubereitungEinst.class);
 	}
 
-	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			Application.getInstance().showDialog(
-					IConstants.INFO_VALID_BEZEICHNUNG);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		return true;

@@ -110,21 +110,21 @@ public class MenueartEinst extends VerticalLayout implements View {
 			ctMenueart = new BeanItemContainer<Menueart>(Menueart.class,
 					Menueartverwaltung.getInstance().getAllMenueart());
 			tblMenueart.setContainerDataSource(ctMenueart);
-			tblMenueart.setVisibleColumns(new Object[] { "id", "bezeichnung",
-					 });
+			tblMenueart
+					.setVisibleColumns(new Object[] { "id", "bezeichnung", });
 			tblMenueart.sort(new Object[] { "id" }, new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
-			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblMenueart.getValue() != null
 						&& tblMenueart.getValue() instanceof Menueart) {
 					updateZubereitung();
 				} else
-					Application.getInstance().showDialog(IConstants.INFO_MENUEART_SELECT);
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_MENUEART_SELECT);
 
 			}
 		});
@@ -247,7 +247,6 @@ public class MenueartEinst extends VerticalLayout implements View {
 		});
 	}
 
-	@SuppressWarnings("deprecation")
 	private void speichern() {
 		ma.setBezeichnung(tfBezeichnung.getValue());
 
@@ -257,10 +256,10 @@ public class MenueartEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_MENUEART_SAVE);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_MENUEART_SAVE);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void update() {
 		ma.setBezeichnung(tfBezeichnung.getValue());
 
@@ -269,7 +268,8 @@ public class MenueartEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_MENUEART_EDIT);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_MENUEART_EDIT);
 	}
 
 	private void zurueck() {
@@ -282,10 +282,10 @@ public class MenueartEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(MenueartEinst.class);
 	}
 
-	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			Application.getInstance().showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		return true;

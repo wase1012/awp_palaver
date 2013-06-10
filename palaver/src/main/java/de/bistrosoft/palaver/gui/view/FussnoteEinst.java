@@ -119,14 +119,13 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		}
 
 		btAuswaehlen.addClickListener(new ClickListener() {
-			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				if (tblFussnote.getValue() != null
 						&& tblFussnote.getValue() instanceof Fussnote) {
 					updateFussnote();
 				} else
-					Application.getInstance().showDialog(
-							IConstants.INFO_FUSSNOTE_SELECT);
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_FUSSNOTE_SELECT);
 			}
 		});
 
@@ -263,7 +262,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		});
 	}
 
-	@SuppressWarnings("deprecation")
 	private void speichern() {
 		fn.setBezeichnung(tfBezeichnung.getValue());
 		fn.setAbkuerzung(tfAbkuerzung.getValue());
@@ -274,10 +272,10 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_FUSSNOTE_SAVE);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_FUSSNOTE_SAVE);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void update() {
 		fn.setBezeichnung(tfBezeichnung.getValue());
 		fn.setAbkuerzung(tfAbkuerzung.getValue());
@@ -287,7 +285,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Application.getInstance().showDialog(IConstants.INFO_FUSSNOTE_EDIT);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_FUSSNOTE_EDIT);
 	}
 
 	private void zurueck() {
@@ -300,16 +299,15 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		ViewHandler.getInstance().switchView(FussnoteEinst.class);
 	}
 
-	@SuppressWarnings("deprecation")
 	private Boolean validiereEingabe() {
 		if (tfBezeichnung.getValue().isEmpty()) {
-			Application.getInstance().showDialog(
-					IConstants.INFO_VALID_BEZEICHNUNG);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_BEZEICHNUNG);
 			return false;
 		}
 		if (tfAbkuerzung.getValue().isEmpty()) {
-			Application.getInstance().showDialog(
-					IConstants.INFO_VALID_ABKUERZUNG);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_VALID_ABKUERZUNG);
 			return false;
 		}
 		return true;
