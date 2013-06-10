@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
@@ -17,6 +18,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -178,6 +180,12 @@ public class Application extends UI
 	 */
 	public void showDialog(String message)
 	{
+		Notification dialog = new Notification(message);
+		dialog.show(Page.getCurrent());
+	}
+	
+	public void showDialogWindow(String message)
+	{
 		final Window dialog = new Window();
 		dialog.setClosable(false);
 		dialog.setWidth("300px");
@@ -210,5 +218,6 @@ public class Application extends UI
 				UI.getCurrent().removeWindow(dialog);
 			}
 		});
+		okButton.setClickShortcut(KeyCode.ENTER);
 	}
 }
