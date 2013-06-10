@@ -98,7 +98,7 @@ public class MenueplanGridLayout extends CustomComponent {
 			}
 		});
 
-		// Fülle Überschriftenspalte mit formatierten Labels
+		// Fülle �berschriftenspalte mit formatierten Labels
 		Label[] arlbUeb = {
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>",
@@ -204,7 +204,7 @@ public class MenueplanGridLayout extends CustomComponent {
 					btn.addStyleName("menueplan-add");
 					btn.addClickListener(new ClickListener() {
 
-						// Click-Listener für ADD_Buttons
+						// Click-Listener f�r ADD_Buttons
 						@Override
 						public void buttonClick(ClickEvent event) {
 							Button tmp = event.getButton();
@@ -216,7 +216,7 @@ public class MenueplanGridLayout extends CustomComponent {
 												instance, tmp, row, col);
 										UI.getCurrent().addWindow(window);
 										window.setModal(true);
-										window.setWidth("50%");
+										window.setWidth("800px");
 										window.setHeight("50%");
 									}
 								}
