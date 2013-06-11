@@ -218,7 +218,7 @@ public class MenueplanGridLayout extends CustomComponent {
 										UI.getCurrent().addWindow(window);
 										window.setModal(true);
 										window.setWidth("800px");
-										window.setHeight("50%");
+										window.setHeight("500px");
 									}
 								}
 							}

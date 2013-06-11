@@ -187,7 +187,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		hlZutaten.setHeight("393px");
 
 		hlControl.setSpacing(true);
-		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_LEFT);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
@@ -195,7 +195,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btMenue.setEnabled(true);
 
 		hlControl.addComponent(btArtikel);
-		System.out.println(this.getParent());
 		if(!(this.getParent() instanceof Window)) {
 			hlControl.addComponent(btMenue);
 		}

@@ -150,7 +150,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		control.setSpacing(true);
 		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 

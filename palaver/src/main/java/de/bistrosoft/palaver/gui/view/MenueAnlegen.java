@@ -82,7 +82,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button btSpeichern = new Button("Speichern");
 	private Button btVerwerfen = new Button("Verwerfen");
 	private Button btUpdate = new Button("Ändern");
-	private Button btNeuesRezept = new Button("neues Rezeptanlegen");
+	private Button btNeuesRezept = new Button("Neues Rezept");
 
 	private FilterTable tblMenueRezepte = new FilterTable();
 	private BeanItemContainer<Rezept> ctMenue;
