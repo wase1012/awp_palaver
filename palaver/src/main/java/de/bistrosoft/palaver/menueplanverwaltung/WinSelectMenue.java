@@ -20,11 +20,13 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -271,6 +273,9 @@ public class WinSelectMenue extends Window {
 				"geschmack", "menueart" });
 		ftMenueList.sort(new Object[] { "name" }, new boolean[] { true });
 
+		ftMenueList.setFilterFieldValue("kochname", ((Application) UI
+				.getCurrent().getData()).getUser().getVorname());
+		
 		ftMenueList.setColumnWidth("name", 200);
 		ftMenueList.setColumnWidth("kochname", 80);
 		ftMenueList.setColumnWidth("geschmack", 80);

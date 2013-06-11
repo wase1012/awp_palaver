@@ -188,6 +188,9 @@ public class MenueplanGridLayout extends CustomComponent {
 				for (MenueComponent mc : menueplan.getMenues()) {
 					mc.setMenueGrid(layout);
 					mc.setMenueplan(this);
+					System.out.println();
+					System.out.println();
+					System.out.println();
 					layout.addComponent(mc, mc.getCol(), mc.getRow());
 					this.pruefeRegeln(mc);
 				}
@@ -240,7 +243,7 @@ public class MenueplanGridLayout extends CustomComponent {
 		for (int col = 0; col < COLUMNS; ++col) {
 			for (int row = 0; row < ROWS; ++row) {
 				Component comp = layout.getComponent(col, row);
-				if (MenueComponent.class.isInstance(comp)) {
+				if (comp instanceof MenueComponent) {
 					MenueComponent menueComp = (MenueComponent) comp;
 					menueComp.setCol(col);
 					menueComp.setRow(row);
