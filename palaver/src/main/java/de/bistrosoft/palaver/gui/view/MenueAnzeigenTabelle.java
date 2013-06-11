@@ -12,6 +12,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -35,12 +36,20 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 	private Menue menue;
 
 	private Button btAuswaehlen;
+	
+	private Label headline;
 
 	public MenueAnzeigenTabelle() {
 		super();
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 		this.setSizeFull();
 		this.setMargin(true);
+		
+		headline = new Label("Alle Menüs");
+		headline.setStyleName("ViewHeadline");
+		
+		this.addComponent(headline);
+		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 
 		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 

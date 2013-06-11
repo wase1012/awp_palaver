@@ -16,7 +16,6 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,12 +57,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class MenueAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
-	private Label ueberschriftAnlegen = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü anlegen</font><b></pre>",
-			ContentMode.HTML);
-	private Label ueberschriftUpdate = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü ändern</font><b></pre>",
-			ContentMode.HTML);
+	private Label headlineAnlegen;
+	private Label headlineUpdate;
 
 	private VerticalLayout vlBox = new VerticalLayout();
 	private HorizontalLayout hlUeberschrift = new HorizontalLayout();
@@ -125,7 +120,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		// Komponenten einfuegen
 		this.addComponent(vlBox);
 		vlBox.addComponent(hlUeberschrift);
-		hlUeberschrift.addComponent(ueberschriftAnlegen);
+//		hlUeberschrift.addComponent(ueberschriftAnlegen);
+		headlineAnlegen = new Label("Menü anlegen");
+		headlineAnlegen.setStyleName("ViewHeadline");
+		
+		hlUeberschrift.addComponent(headlineAnlegen);
+		hlUeberschrift.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
+		
 		vlBox.addComponent(hlDetails);
 		hlDetails.addComponent(vlDetailsLinks);
 		vlDetailsLinks.addComponent(tfMenuename);
@@ -409,8 +410,15 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		menue.setRezepte(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
+		headlineUpdate = new Label("Menü bearbeiten");
+		
+		headlineUpdate.setStyleName("ViewHeadline");
+		
 		hlUeberschrift
-				.replaceComponent(ueberschriftAnlegen, ueberschriftUpdate);
+				.replaceComponent(headlineAnlegen, headlineUpdate);
+		
+		hlUeberschrift.setComponentAlignment(headlineUpdate, Alignment.MIDDLE_LEFT);
+
 		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btUpdate.addClickListener(new ClickListener() {
 			@Override

@@ -7,8 +7,10 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
@@ -39,6 +41,10 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button btAuswaehlen;
 
+	private Label ueberschrift = new Label(
+			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anzeigen</font><b></pre>",
+			ContentMode.HTML);
+	
 	public RezeptAnzeigenTabelle() {
 		super();
 
@@ -109,6 +115,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 
+		this.addComponent(ueberschrift);
 		this.addComponent(btFilterLeeren);
 		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);

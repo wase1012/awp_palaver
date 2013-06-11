@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.poi.ss.formula.ptg.TblPtg;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ReadOnlyException;
@@ -19,12 +18,10 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
@@ -34,6 +31,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.CloseEvent;
 
 import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -87,12 +85,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private BeanItemContainer<RezeptHasArtikel> containerRezeptHasArtikel;
 
 	// Ueberschriften
-	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anlegen</font><b></pre>",
-			ContentMode.HTML);
-	private Label ueberschrift2 = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept bearbeiten</font><b></pre>",
-			ContentMode.HTML);
+	private Label headlineAnlegen;
+	private Label headlineUpdate;
 
 	// TextFelder
 	private TextField name = new TextField("Bezeichnung");
@@ -174,7 +168,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		hlDetails.setWidth("800px");
 		hlDetails.setHeight("285px");
 
-		vlDetailsLinks.addComponent(ueberschrift);
+		headlineAnlegen = new Label("Alle Menüs");
+		vlBox.addComponent(headlineAnlegen);
+		
+		vlBox.addComponent(headlineAnlegen);
+		vlBox.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
+		
 		vlDetailsLinks.addComponent(name);
 		vlDetailsLinks.addComponent(mitarbeiterNs);
 		vlDetailsLinks.addComponent(rezeptartNs);
@@ -196,7 +195,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btMenue.setEnabled(true);
 
 		hlControl.addComponent(btArtikel);
-		hlControl.addComponent(btMenue);
+		System.out.println(this.getParent());
+		if(!(this.getParent() instanceof Window)) {
+			hlControl.addComponent(btMenue);
+		}
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
 
@@ -220,11 +222,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
+					rezeptSpeichern();
 					if (RezeptAnlegen.this.getParent() instanceof Window) {
 						Window win = (Window) RezeptAnlegen.this.getParent();
 						win.close();
 					} else {
-						rezeptSpeichern();
 						ViewHandler.getInstance().switchView(
 								RezeptAnzeigenTabelle.class);
 					}
@@ -405,7 +407,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterNs.select(rezept.getMitarbeiter());
 		rezeptartNs.select(rezept.getRezeptart());
 		hlControl.replaceComponent(btSpeichern, btUpdate);
-		vlDetailsLinks.replaceComponent(ueberschrift, ueberschrift2);
+		
+		headlineUpdate = new Label("Rezept bearbeiten");
+		
+		vlDetailsLinks.replaceComponent(headlineAnlegen, headlineUpdate);
+		this.setComponentAlignment(headlineUpdate, Alignment.MIDDLE_LEFT);
 
 		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btUpdate.addClickListener(new ClickListener() {

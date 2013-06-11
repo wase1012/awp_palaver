@@ -82,9 +82,6 @@ public class MenueplanGridDropHandler extends
         	// Menüs vertauschen
         	menueplan.vertauscheMenue(sourceComp, destComp, destColumn, destRow);
         	
-            System.out.println("CAST");
-            
-            System.out.println(menueplan);
             //Wenn Zielkomponente vorhanden füge diese ein
             if (destComp!=null){
             	if(isSwitch){
