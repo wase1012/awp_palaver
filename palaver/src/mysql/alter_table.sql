@@ -16,3 +16,6 @@ ALTER TABLE `palaver`.`regel`
  */
 ALTER TABLE `palaver`.`menueplan_has_menues` 
 	ADD COLUMN `portion` INT(11) NOT NULL  AFTER `zeile` ;
+	
+ALTER TABLE `palaver`.`menueplan` 
+	ADD COLUMN `freigegeben` TINYINT(1) NULL  AFTER `year` ;

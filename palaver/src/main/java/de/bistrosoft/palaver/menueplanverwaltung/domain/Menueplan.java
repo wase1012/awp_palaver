@@ -9,6 +9,7 @@ import de.bistrosoft.palaver.util.Week;
 public class Menueplan {
 	private Long id;
 	private Week week;
+	private Boolean freigegeben;
 	private List<MenueComponent> menues;
 	private List<KochInMenueplan> koeche;
 
@@ -41,6 +42,14 @@ public class Menueplan {
 
 	public void setWeek(Week week) {
 		this.week = week;
+	}
+	
+	public Boolean getFreigegeben() {
+		return freigegeben;
+	}
+
+	public void setFreigegeben(Boolean freigegeben) {
+		this.freigegeben = freigegeben;
 	}
 
 	public List<MenueComponent> getMenues() {

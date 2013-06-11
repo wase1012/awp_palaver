@@ -78,6 +78,14 @@ public class Menueplanverwaltung extends MenueplanDAO {
 
 	}
 
+	public void updateMenueplan(Menueplan menueplan) {
+		
+		try {
+			super.updateMenueplan(menueplan);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
 //	public List<KochInMenueplan> getKoecheByMenueplan(Menueplan menueplan){
 //		try {
 //			return super.getKoecheByMenueplan(menueplan);

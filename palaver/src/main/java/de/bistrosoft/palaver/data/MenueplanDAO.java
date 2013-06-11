@@ -51,6 +51,7 @@ public class MenueplanDAO extends AbstractDAO {
 	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion) "
 			+ "VALUES ({0},{1},{2},{3},{4},{5})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
+	private final String UPDATE_MENUEPLAN_FREIGEBEN = "UPDATE menueplan SET freigegeben = {0}";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
 	private final String GET_ARTIKEL_BEDARF = "select rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte, mhm.portion from rezept_has_artikel rha, menueplan_has_menues mhm, menue_has_rezept mhr where rezept_fk IN "+
 	"(select rezept_id from menue_has_rezept where menue_id IN"+ 
@@ -232,6 +233,11 @@ public class MenueplanDAO extends AbstractDAO {
 
 	}
 
+	public void updateMenueplan(Menueplan menueplan) throws ConnectException, 
+			DAOException{
+		putManaged(MessageFormat.format(UPDATE_MENUEPLAN_FREIGEBEN, menueplan.getFreigegeben()));
+	}
+	
 	public void createMenueplan(Menueplan menueplan) throws ConnectException,
 			DAOException {
 		Week week = menueplan.getWeek();

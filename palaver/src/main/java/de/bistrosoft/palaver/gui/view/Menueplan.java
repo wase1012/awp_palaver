@@ -14,12 +14,15 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 
@@ -42,6 +45,7 @@ public class Menueplan extends VerticalLayout implements View {
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
+	Button freigeben = new Button("Freigeben");
 	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/" + year);
 
 	private Label lbKW = new Label(
@@ -178,6 +182,15 @@ public class Menueplan extends VerticalLayout implements View {
 			}
 		});
 
+		freigeben.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				shownMenueplan.speichern();
+				shownMenueplan.freigeben();
+			}
+		});
+		
 		// FuÃŸnoten
 		Label lbFussnoten = new Label(
 				"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
@@ -186,7 +199,7 @@ public class Menueplan extends VerticalLayout implements View {
 		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
-		box.addComponent(btSpeichern);
+		box.addComponents(btSpeichern, freigeben);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
@@ -195,6 +208,15 @@ public class Menueplan extends VerticalLayout implements View {
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 
+		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
+		if (m.getRollen() != null) {
+			for (int i = 0; i < m.getRollen().size(); i++) {
+				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {
+					freigeben.setVisible(true);
+				}
+			}
+		}
+		
 		// HorizontalCarousel carousel = new HorizontalCarousel();
 		// carousel.setArrowKeysMode(ArrowKeysMode.FOCUS);
 		// carousel.setLoadMode(CarouselLoadMode.LAZY);

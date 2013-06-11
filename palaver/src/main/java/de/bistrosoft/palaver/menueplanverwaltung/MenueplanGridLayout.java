@@ -27,6 +27,7 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -269,6 +270,16 @@ public class MenueplanGridLayout extends CustomComponent {
 		Menueplanverwaltung.getInstance().persist(menueplan);
 	}
 
+	public void freigeben() {
+		menueplan.setFreigegeben(true);
+		Menueplanverwaltung.getInstance().updateMenueplan(menueplan);
+		
+		((Application) UI.getCurrent().getData())
+		 	.showDialog("Menüplan für Kalenderwoche " + menueplan.getWeek().getWeek() + "/" + menueplan.getWeek().getYear()
+								+ " wurde freigegeben");
+		
+	}
+	
 	public void removeMenue(Component destComp) {
 		this.layout.removeComponent(destComp);
 		this.pruefeMenueRegeln();
