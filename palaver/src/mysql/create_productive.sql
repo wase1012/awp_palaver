@@ -13,12 +13,12 @@ DROP TABLE IF EXISTS `palaver`.`regel` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`regel` (
   id INT NOT NULL AUTO_INCREMENT,
-  `zeile` VARCHAR(50) ,
-  `spalte` VARCHAR(50)  ,
-  `regeltyp` VARCHAR(45) ,
-  `operator` VARCHAR(45) ,
-  `kriterien` VARCHAR(100) ,
-  `fehlermeldung` VARCHAR(100) ,
+  `zeile` VARCHAR(500) ,
+  `spalte` VARCHAR(500)  ,
+  `regeltyp` VARCHAR(500) ,
+  `operator` VARCHAR(500) ,
+  `kriterien` VARCHAR(500) ,
+  `fehlermeldung` VARCHAR(500) ,
   `aktiv` BOOLEAN ,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
@@ -603,6 +603,7 @@ CREATE TABLE IF NOT EXISTS `palaver`.`menueplan_has_menues` (
 	angezName VARCHAR(200) NOT NULL,
 	spalte INT NOT NULL,
 	zeile INT NOT NULL,
+	portion INT NOT NULL,
 	PRIMARY KEY (id),
   CONSTRAINT `fk_menueplan_has_menue_menueplan`
     FOREIGN KEY (`menueplan` )

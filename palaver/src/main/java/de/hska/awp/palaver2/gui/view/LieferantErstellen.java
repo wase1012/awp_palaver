@@ -64,7 +64,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private String faxInput;
 	private String bezInput;
 	private String knrInput;
-	private String notizInput;
+	private String notizInput = "";
 	
 	private Lieferant lieferant = new Lieferant();
 
