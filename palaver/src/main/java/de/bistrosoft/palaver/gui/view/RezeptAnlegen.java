@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.poi.ss.formula.ptg.TblPtg;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ReadOnlyException;
@@ -23,6 +24,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
@@ -31,6 +33,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.RezeptDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
@@ -47,6 +50,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -60,8 +64,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  * 
  */
 @SuppressWarnings("serial")
-public class RezeptAnlegen extends VerticalLayout implements View,
-		ValueChangeListener {
+public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeListener {
 
 	// Layouts
 	private VerticalLayout vlBox = new VerticalLayout();
@@ -108,6 +111,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
 	private Button btMenue = new Button(IConstants.BUTTON_REZEPTSAVEASMENUE);
+	private Button btArtikel = new Button(IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
+
 
 	// Variablen
 	private String nameInput;
@@ -155,6 +160,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		vlBox.setWidth("1000px");
 		vlBox.setSpacing(true);
+		
+		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 
 		this.addComponent(vlBox);
 		vlBox.addComponent(hlDetails);
@@ -180,13 +187,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		hlZutaten.setHeight("393px");
 
 		hlControl.setSpacing(true);
-		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_LEFT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
 
+		hlControl.addComponent(btArtikel);
 		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
@@ -222,6 +230,16 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 					((Application) UI.getCurrent().getData())
 							.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
 				}
+			}
+		});
+		
+		btArtikel.addClickListener(new ClickListener()
+		{	
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				
+				addArtikel();
 			}
 		});
 
@@ -309,6 +327,17 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		ladeArtikel();
+
+		load();
+
+		// Koch auf aktuellen User setzen
+		mitarbeiterNs.select(((Application) UI.getCurrent().getData())
+				.getUser());
+
+	}
+
+	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
 					Artikelverwaltung.getInstance().getAllArtikel());
@@ -323,13 +352,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		load();
-
-		// Koch auf aktuellen User setzen
-		mitarbeiterNs.select(((Application) UI.getCurrent().getData())
-				.getUser());
-
+		
 	}
 
 	public void load() {
@@ -645,4 +668,29 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		return true;
 
 	}
+	
+	private void addArtikel()
+	{
+		final Window win = new Window("Neuer Artikel");
+		win.setModal(true);
+		win.setResizable(false);
+		win.setWidth("400px");
+		win.setHeight("600px");
+		
+		ArtikelErstellen ae = new ArtikelErstellen();
+		addComponent(ae);
+		
+		win.setContent(ae);
+		UI.getCurrent().addWindow(win);
+		win.addCloseListener(new Window.CloseListener() {
+			
+			@Override
+			public void windowClose(CloseEvent e) {
+				System.out.println("CloseListener");
+				ladeArtikel();
+				
+			}
+		});
+	}
+	
 }

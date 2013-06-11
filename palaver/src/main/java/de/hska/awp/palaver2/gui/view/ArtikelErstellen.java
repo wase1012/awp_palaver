@@ -243,7 +243,13 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
-				ViewHandler.getInstance().returnToDefault();
+					if (ArtikelErstellen.this.getParent() instanceof Window) {
+					Window win = (Window) ArtikelErstellen.this.getParent();
+					win.close();
+				}
+				else {
+					ViewHandler.getInstance().returnToDefault();
+				}
 			}
 		});
 		
@@ -252,6 +258,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				
 				Artikel artikel = new Artikel();
 				artikel.setArtikelnr(artnr.getValue());
 				artikel.setBestellgroesse((bestellung.getValue() == "") ? 0.0 : Double.parseDouble(bestellung.getValue()));
@@ -308,8 +315,15 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					@Override
 					public void buttonClick(ClickEvent event)
 					{
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+						if (ArtikelErstellen.this.getParent() instanceof Window) {
+							Window win = (Window) ArtikelErstellen.this.getParent();
+							win.close();
+							UI.getCurrent().removeWindow(dialog);
+						}
+						else {
+							UI.getCurrent().removeWindow(dialog);
+							ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+						}
 					}
 				});
 			}
