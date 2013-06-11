@@ -104,6 +104,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblRezepte.setFilterBarVisible(true);
 		tblRezepte.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		tblRezepte.setCaption("Rezepte");
+		tblRezepte.setSelectable(true);
 
 		tblMenueRezepte = new FilterTable();
 		tblMenueRezepte.setSizeFull();
