@@ -356,11 +356,11 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 			}
 		});
 
-		// Berechtigung: Nur Administrator darf Mitarbeiter anlegen
+		// Berechtigung: Nur Administrator/Chef darf Mitarbeiter anlegen
 		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
-				if (m.getRollen().get(i).getName().equals("Administrator")) {
+				if (m.getRollen().get(i).getName().equals("Chef")) {
 					name.setEnabled(true);
 					vorname.setEnabled(true);
 					email.setEnabled(true);
