@@ -214,7 +214,13 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
+					if (RezeptAnlegen.this.getParent() instanceof Window) {
+						Window win = (Window) RezeptAnlegen.this.getParent();
+						win.close();
+					} else {
 					rezeptSpeichern();
+					ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+					}
 				}
 			}
 		});
@@ -248,12 +254,14 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		zutatenTable.setStyleName("palaverTable");
 		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-		zutatenTable.setColumnWidth("artikelname", 200);
-		zutatenTable.setColumnWidth("menge", 100);
-		zutatenTable.setColumnWidth("einheit", 90);
+//		zutatenTable.setColumnWidth("artikelname", 200);
+//		zutatenTable.setColumnWidth("menge", 100);
+//		zutatenTable.setColumnWidth("einheit", 90);
+//		zutatenTable.setColumnWidth("notiz", 200);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeUndefined();
+		artikelTable.setWidth("250px");
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
@@ -553,7 +561,9 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_REZEPT_SAVE);
-		ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+		
+		
+
 		return rezept;
 	}
 
@@ -686,7 +696,6 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 			
 			@Override
 			public void windowClose(CloseEvent e) {
-				System.out.println("CloseListener");
 				ladeArtikel();
 				
 			}
