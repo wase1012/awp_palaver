@@ -64,7 +64,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
  * 
  */
 @SuppressWarnings("serial")
-public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeListener {
+public class RezeptAnlegen extends VerticalLayout implements View,
+		ValueChangeListener {
 
 	// Layouts
 	private VerticalLayout vlBox = new VerticalLayout();
@@ -111,8 +112,8 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
 	private Button btMenue = new Button(IConstants.BUTTON_REZEPTSAVEASMENUE);
-	private Button btArtikel = new Button(IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
-
+	private Button btArtikel = new Button(
+			IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
 
 	// Variablen
 	private String nameInput;
@@ -160,7 +161,7 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 
 		vlBox.setWidth("1000px");
 		vlBox.setSpacing(true);
-		
+
 		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 
 		this.addComponent(vlBox);
@@ -206,7 +207,12 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+				if (RezeptAnlegen.this.getParent() instanceof Window) {
+					Window win = (Window) RezeptAnlegen.this.getParent();
+					win.close();
+				} else {
+					ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+				}
 			}
 		});
 
@@ -218,8 +224,9 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 						Window win = (Window) RezeptAnlegen.this.getParent();
 						win.close();
 					} else {
-					rezeptSpeichern();
-					ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
+						rezeptSpeichern();
+						ViewHandler.getInstance().switchView(
+								RezeptAnzeigenTabelle.class);
 					}
 				}
 			}
@@ -238,13 +245,11 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 				}
 			}
 		});
-		
-		btArtikel.addClickListener(new ClickListener()
-		{	
+
+		btArtikel.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event)
-			{
-				
+			public void buttonClick(ClickEvent event) {
+
 				addArtikel();
 			}
 		});
@@ -254,10 +259,10 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		zutatenTable.setStyleName("palaverTable");
 		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-//		zutatenTable.setColumnWidth("artikelname", 200);
-//		zutatenTable.setColumnWidth("menge", 100);
-//		zutatenTable.setColumnWidth("einheit", 90);
-//		zutatenTable.setColumnWidth("notiz", 200);
+		// zutatenTable.setColumnWidth("artikelname", 200);
+		// zutatenTable.setColumnWidth("menge", 100);
+		// zutatenTable.setColumnWidth("einheit", 90);
+		// zutatenTable.setColumnWidth("notiz", 200);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeUndefined();
@@ -360,7 +365,7 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void load() {
@@ -561,8 +566,6 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_REZEPT_SAVE);
-		
-		
 
 		return rezept;
 	}
@@ -678,28 +681,27 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		return true;
 
 	}
-	
-	private void addArtikel()
-	{
+
+	private void addArtikel() {
 		final Window win = new Window("Neuer Artikel");
 		win.setModal(true);
 		win.setResizable(false);
 		win.setWidth("400px");
 		win.setHeight("600px");
-		
+
 		ArtikelErstellen ae = new ArtikelErstellen();
 		addComponent(ae);
-		
+
 		win.setContent(ae);
 		UI.getCurrent().addWindow(win);
 		win.addCloseListener(new Window.CloseListener() {
-			
+
 			@Override
 			public void windowClose(CloseEvent e) {
 				ladeArtikel();
-				
+
 			}
 		});
 	}
-	
+
 }
