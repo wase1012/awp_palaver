@@ -75,12 +75,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private HorizontalLayout hlRezepte = new HorizontalLayout();
 	private HorizontalLayout hlControl = new HorizontalLayout();
 
-	private TextField tfMenuename = new TextField("Menuename");
+	private TextField tfMenuename = new TextField("Menüname");
 
-	private TwinColSelect tcsFussnoten = new TwinColSelect("Fussnoten");
+	private TwinColSelect tcsFussnoten = new TwinColSelect("Fußnoten");
 
 	private NativeSelect nsKoch = new NativeSelect("Koch");
-	private NativeSelect nsMenueart = new NativeSelect("Menueart");
+	private NativeSelect nsMenueart = new NativeSelect("Menüart");
 	private NativeSelect nsGeschmack = new NativeSelect("Geschmack");
 
 	private CheckBox chbFavorit = new CheckBox("Menü ist ein Favorit");
@@ -103,21 +103,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	public MenueAnlegen() {
 		super();
-		try {
-			Menueplanverwaltung.getInstance().getArtikelBedarf(new Week(26,2013));
-			for (ArtikelBedarf ab : Menueplanverwaltung.getInstance().getArtikelBedarf(new Week(26,2013))){
-				System.out.println(ab);
-			}
-		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		tblRezepte = new FilterTable();
 		tblRezepte.setSizeFull();
 		tblRezepte.setStyleName("palaverTable");
