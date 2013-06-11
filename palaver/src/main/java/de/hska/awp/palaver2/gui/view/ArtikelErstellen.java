@@ -34,6 +34,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver2.gui.layout.MainLayout;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -252,6 +253,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				
 				Artikel artikel = new Artikel();
 				artikel.setArtikelnr(artnr.getValue());
 				artikel.setBestellgroesse((bestellung.getValue() == "") ? 0.0 : Double.parseDouble(bestellung.getValue()));
@@ -305,11 +307,21 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				
 				okButton.addClickListener(new ClickListener()
 				{	
+					@SuppressWarnings("static-access")
 					@Override
 					public void buttonClick(ClickEvent event)
 					{
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+						System.out.println(ArtikelErstellen.this.getParent());
+						if (ArtikelErstellen.this.getParent() instanceof Window) {
+							Window win = (Window) ArtikelErstellen.this.getParent();
+							System.out.println("win.getCurrent(): " + win.getUI().getCurrent());
+							win.close();
+							UI.getCurrent().removeWindow(dialog);
+						}
+						else {
+							UI.getCurrent().removeWindow(dialog);
+							ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+						}
 					}
 				});
 			}
