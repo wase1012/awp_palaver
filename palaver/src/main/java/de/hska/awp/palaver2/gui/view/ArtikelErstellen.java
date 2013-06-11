@@ -34,7 +34,6 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.gui.layout.MainLayout;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -244,7 +243,13 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
-				ViewHandler.getInstance().returnToDefault();
+					if (ArtikelErstellen.this.getParent() instanceof Window) {
+					Window win = (Window) ArtikelErstellen.this.getParent();
+					win.close();
+				}
+				else {
+					ViewHandler.getInstance().returnToDefault();
+				}
 			}
 		});
 		
@@ -307,7 +312,6 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 				
 				okButton.addClickListener(new ClickListener()
 				{	
-					@SuppressWarnings("static-access")
 					@Override
 					public void buttonClick(ClickEvent event)
 					{

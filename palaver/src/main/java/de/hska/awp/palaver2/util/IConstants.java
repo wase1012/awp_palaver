@@ -82,6 +82,7 @@ public interface IConstants
 	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menü Speichern";	
 	String		BUTTON_SELECT = "Auswählen";
 	String 		BUTTON_CLEAR_FILTER = "Filter leeren";
+	String 		BUTTON_REZEPT_ARTIKEL_ANLEGEN = "Artikel anlegen";
 
 	
 	// Icons fuer Knoepfe
@@ -172,6 +173,8 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
 
 
 

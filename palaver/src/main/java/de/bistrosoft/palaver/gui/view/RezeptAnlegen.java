@@ -111,7 +111,7 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
 	private Button btMenue = new Button(IConstants.BUTTON_REZEPTSAVEASMENUE);
-	private Button btArtikel = new Button(IConstants.BUTTON_NEW);
+	private Button btArtikel = new Button(IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
 
 
 	// Variablen
@@ -187,7 +187,7 @@ public class RezeptAnlegen extends VerticalLayout implements View, ValueChangeLi
 		hlZutaten.setHeight("393px");
 
 		hlControl.setSpacing(true);
-		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_LEFT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
