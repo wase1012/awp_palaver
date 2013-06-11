@@ -41,9 +41,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 	private Button btAuswaehlen;
 
-	private Label ueberschrift = new Label(
-			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Rezept anzeigen</font><b></pre>",
-			ContentMode.HTML);
+	private Label headline;
 	
 	public RezeptAnzeigenTabelle() {
 		super();
@@ -115,7 +113,12 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 
-		this.addComponent(ueberschrift);
+		headline = new Label("Alle Rezepte");
+		headline.setStyleName("ViewHeadline");
+		
+		this.addComponent(headline);
+		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
+
 		this.addComponent(btFilterLeeren);
 		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);

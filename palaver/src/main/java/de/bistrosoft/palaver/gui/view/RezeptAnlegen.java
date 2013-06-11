@@ -159,7 +159,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 
 		this.addComponent(vlBox);
-		headlineAnlegen = new Label("Alle Menüs");
+		headlineAnlegen = new Label("Rezept Anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
 		
