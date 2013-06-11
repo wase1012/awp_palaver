@@ -25,11 +25,12 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.CloseEvent;
 
 import de.bistrosoft.palaver.data.MenueDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
@@ -88,7 +89,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button btUpdate = new Button("Ändern");
 	private Button btNeuesRezept = new Button("neues Rezeptanlegen");
 
-	private Table tblMenueRezepte = new Table();
+	private FilterTable tblMenueRezepte = new FilterTable();
 	private BeanItemContainer<Rezept> ctMenue;
 	private FilterTable tblRezepte = new FilterTable();
 	private BeanItemContainer<Rezept> ctRezepte;
@@ -109,11 +110,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblRezepte.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		tblRezepte.setCaption("Rezepte");
 
-		tblMenueRezepte = new Table();
+		tblMenueRezepte = new FilterTable();
 		tblMenueRezepte.setSizeFull();
 		tblMenueRezepte.setStyleName("palaverTable");
 		tblMenueRezepte.setImmediate(true);
-		tblMenueRezepte.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		tblMenueRezepte.setFilterBarVisible(true);
+		tblMenueRezepte.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		tblMenueRezepte.setCaption("Rezepte in Menü");
 
 		load();
@@ -138,6 +140,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlRezepte.addComponent(tblMenueRezepte);
 		hlRezepte.addComponent(tblRezepte);
 		vlBox.addComponent(hlControl);
+		hlControl.addComponent(btNeuesRezept);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
 
@@ -235,13 +238,34 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		btNeuesRezept.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
+				addRezept();
 			}
 		});
 
 		nsKoch.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 
+	private void addRezept()
+	{
+		final Window win = new Window("Neues Rezept");
+		win.setModal(true);
+		win.setResizable(false);
+		win.setWidth("800px");
+		win.setHeight("600px");
+		
+		RezeptAnlegen ra = new RezeptAnlegen();
+		addComponent(ra);
+		
+		win.setContent(ra);
+		UI.getCurrent().addWindow(win);
+		win.addCloseListener(new Window.CloseListener() {
+			
+			@Override
+			public void windowClose(CloseEvent e) {
+				load();
+			}
+		});
+	}
 	public void load() {
 
 		// Inhalte laden
@@ -250,9 +274,15 @@ public class MenueAnlegen extends VerticalLayout implements View,
 					Rezeptverwaltung.getInstance().getAllRezepte());
 			tblRezepte.setContainerDataSource(ctRezepte);
 
+			tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+			"mitarbeiter" });
+			
 			ctMenue = new BeanItemContainer<Rezept>(Rezept.class);
 			tblMenueRezepte.setContainerDataSource(ctMenue);
 
+			tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+			"mitarbeiter" });
+			
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
@@ -363,7 +393,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 
 		tblMenueRezepte = null;
-		tblMenueRezepte = new Table();
+		tblMenueRezepte = new FilterTable();
 		tblMenueRezepte.setSizeFull();
 		tblMenueRezepte.setStyleName("palaverTable2");
 		tblMenueRezepte.setImmediate(true);

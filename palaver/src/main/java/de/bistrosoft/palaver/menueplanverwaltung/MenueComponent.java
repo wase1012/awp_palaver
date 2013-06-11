@@ -31,7 +31,7 @@ import fi.jasoft.dragdroplayouts.DDGridLayout;
 @SuppressWarnings("serial")
 public class MenueComponent extends CustomComponent{
 	
-	private Component comp;
+//	private Component comp;
 	public int row;
 	public int col;
 	public MenueplanGridLayout menueplan;
@@ -215,7 +215,7 @@ public class MenueComponent extends CustomComponent{
 		this.row = nRow;
 		this.menueplan=nMenueplan;
 		this.menueGrid = nMenueGrid;
-		this.comp = this;
+//		this.comp = this;
 		this.setMenue(menue);
 		this.angezeigterName=angezName;
 		this.portion = portion;
@@ -274,18 +274,18 @@ public class MenueComponent extends CustomComponent{
 			public void buttonClick(final ClickEvent event) {
 				
 	        	//finde position
-				Component sourceComp = comp;
+//				Component sourceComp = comp;
 	            final int COLUMNS = menueGrid.getColumns();
 	            final int ROWS = menueGrid.getRows();
 	            for (int row = 0; row < ROWS; row++) {
 	    	        for (int col = 0; col < COLUMNS; col++) {
-	    	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
+	    	        	if(MenueComponent.this.equals(menueGrid.getComponent(col, row))) {
 	    	        	}
 	    	        }
 	            }
 	            //Add
 	
-	            WinSelectMenue window = new WinSelectMenue(menueplan, sourceComp, row, col);
+	            WinSelectMenue window = new WinSelectMenue(menueplan, MenueComponent.this, row, col);
 	    		UI.getCurrent().addWindow(window);
 	    		window.setModal(true);
 	    		window.setWidth("800px");
@@ -308,7 +308,7 @@ public class MenueComponent extends CustomComponent{
 				            public void onClose(ConfirmDialog dialog) {
 				                if (dialog.isConfirmed()) {
 				                	//finde position
-				                    Component sourceComp = comp;
+//				                    Component sourceComp = comp;
 				                	Integer sourceRow =-1;
 				                    Integer sourceColumn=-1;
 				                    
@@ -317,7 +317,7 @@ public class MenueComponent extends CustomComponent{
 				                    
 				                    for (int row = 0; row < ROWS; row++) {
 				            	        for (int col = 0; col < COLUMNS; col++) {
-				            	        	if(sourceComp.equals(menueGrid.getComponent(col, row))) {
+				            	        	if(MenueComponent.this.equals(menueGrid.getComponent(col, row))) {
 				            	        		sourceColumn=col;
 				            	        		sourceRow=row;
 				            	        	}
@@ -326,7 +326,7 @@ public class MenueComponent extends CustomComponent{
 				                	
 				                	//aktuelle Menükomponente löschen
 //				                	menueGrid.removeComponent(comp);
-				                	menueplan.removeMenue(comp);
+				                	menueplan.removeMenue(MenueComponent.this);
 				                	//ADD Button hinzufügen
 				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
 				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
