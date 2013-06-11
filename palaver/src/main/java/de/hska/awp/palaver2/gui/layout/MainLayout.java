@@ -137,7 +137,7 @@ public class MainLayout extends VerticalLayout implements Command
 				null);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANLEGEN, this);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANZEIGEN, this);
-//		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENPLAN_AKTUELL, this);
+		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENPLAN_AKTUELL, this);
 		
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR) || ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER))
@@ -265,10 +265,10 @@ public class MainLayout extends VerticalLayout implements Command
 		{
 			ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
 		}
-//		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_AKTUELL))
-//		{
-//			ViewHandler.getInstance().switchView(KuchenplanAnzeigen.class);
-//		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_AKTUELL))
+		{
+			ViewHandler.getInstance().switchView(KuchenplanAnzeigen.class);
+		}
 		else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE))
 		{
 			ViewHandler.getInstance().switchView(FussnoteEinst.class);

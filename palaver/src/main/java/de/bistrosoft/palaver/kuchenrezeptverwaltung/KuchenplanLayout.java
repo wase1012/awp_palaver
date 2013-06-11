@@ -269,13 +269,12 @@ public class KuchenplanLayout extends CustomComponent {
 						.getData("itemId");
 				Table tSource = (Table) t.getSourceComponent();
 				@SuppressWarnings("unchecked")
-				BeanItemContainer<KuchenplanHasKuchenrezept> bicSource = (BeanItemContainer<KuchenplanHasKuchenrezept>) t
-						.getSourceComponent();
-				@SuppressWarnings("unchecked")
-				List<KuchenplanHasKuchenrezept> liSource = (List<KuchenplanHasKuchenrezept>) t
-						.getSourceComponent();
+				BeanItemContainer<KuchenplanHasKuchenrezept> bicSource = (BeanItemContainer<KuchenplanHasKuchenrezept>) tSource.getContainerDataSource();
+//				@SuppressWarnings("unchecked")
+//				List<KuchenplanHasKuchenrezept> liSource = (List<KuchenplanHasKuchenrezept>) t
+//						.getSourceComponent();
 				bicSource.removeItem(selected);
-				liSource.remove(selected);
+//				liSource.remove(selected);
 				// containerArtikel.addItem(selected.getArtikel());
 				// artikelTable.markAsDirty();
 				tSource.markAsDirty();
