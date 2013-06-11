@@ -311,10 +311,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					@Override
 					public void buttonClick(ClickEvent event)
 					{
-						System.out.println(ArtikelErstellen.this.getParent());
 						if (ArtikelErstellen.this.getParent() instanceof Window) {
 							Window win = (Window) ArtikelErstellen.this.getParent();
-							System.out.println("win.getCurrent(): " + win.getUI().getCurrent());
 							win.close();
 							UI.getCurrent().removeWindow(dialog);
 						}
