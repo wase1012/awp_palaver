@@ -4,6 +4,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
 public class ArtikelBedarf {
+
 	private Artikel artikel;
 	private Double menge;
 	private Mengeneinheit einheit;
@@ -51,5 +52,11 @@ public class ArtikelBedarf {
 
 	public void setTag(Integer tag) {
 		this.tag = tag;
+	}
+
+	@Override
+	public String toString() {
+		return "ArtikelBedarf [artikel=" + artikel.getId() + ", menge=" + menge
+				+ ", einheit=" + einheit + ", tag=" + tag + "]";
 	}
 }

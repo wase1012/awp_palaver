@@ -32,9 +32,11 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.MenueDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
@@ -42,6 +44,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -100,7 +103,21 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	public MenueAnlegen() {
 		super();
-
+		try {
+			Menueplanverwaltung.getInstance().getArtikelBedarf(new Week(26,2013));
+			for (ArtikelBedarf ab : Menueplanverwaltung.getInstance().getArtikelBedarf(new Week(26,2013))){
+				System.out.println(ab);
+			}
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		tblRezepte = new FilterTable();
 		tblRezepte.setSizeFull();
 		tblRezepte.setStyleName("palaverTable");

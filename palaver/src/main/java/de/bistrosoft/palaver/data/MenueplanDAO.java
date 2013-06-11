@@ -24,6 +24,10 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -48,7 +52,7 @@ public class MenueplanDAO extends AbstractDAO {
 			+ "VALUES ({0},{1},{2},{3},{4},{5})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
-	private final String GET_ARTIKEL_BEDARF = "select rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte from rezept_has_artikel rha, menueplan_has_menues mhm, menue_has_rezept mhr where rezept_fk IN "+
+	private final String GET_ARTIKEL_BEDARF = "select rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte, mhm.portion from rezept_has_artikel rha, menueplan_has_menues mhm, menue_has_rezept mhr where rezept_fk IN "+
 	"(select rezept_id from menue_has_rezept where menue_id IN"+ 
 		"(select menue from menueplan_has_menues where menueplan = "+
 			"(select id from menueplan where week = {0} AND year={1,number,#}))) "+
@@ -71,10 +75,26 @@ public class MenueplanDAO extends AbstractDAO {
 		List<ArtikelBedarf> bedarf = new ArrayList<ArtikelBedarf>();
 		
 		ResultSet set = getManaged(MessageFormat.format(
-				GET_MENUEPLAN_BY_WEEK, week.getWeek(), week.getYear()));
+				GET_ARTIKEL_BEDARF, week.getWeek(), week.getYear()));
+		
+		
 		
 		while (set.next()) {
+			//rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte, mhm.portion
+			Long artikelId = set.getLong("artikel_fk");
+			Double menge = set.getDouble("menge");
+			Long einheitId = set.getLong("einheit");
+			Integer portion = set.getInt("portion");
+			Integer tag = set.getInt("spalte");
 			
+			menge = menge * (portion/100);
+			
+			Artikel artikel = Artikelverwaltung.getInstance().getArtikelById(artikelId);
+			Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(einheitId);
+			
+			ArtikelBedarf ab = new ArtikelBedarf(artikel, menge, einheit, tag);
+			
+			bedarf.add(ab);
 		}
 		
 		return bedarf;
