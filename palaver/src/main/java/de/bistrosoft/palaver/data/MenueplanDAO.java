@@ -9,7 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBeadarf;
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
@@ -67,8 +67,8 @@ public class MenueplanDAO extends AbstractDAO {
 		return instance;
 	}
 	
-	public List<ArtikelBeadarf> getArtikelBedarf(Week week) throws ConnectException, DAOException, SQLException{
-		List<ArtikelBeadarf> bedarf = new ArrayList<ArtikelBeadarf>();
+	public List<ArtikelBedarf> getArtikelBedarf(Week week) throws ConnectException, DAOException, SQLException{
+		List<ArtikelBedarf> bedarf = new ArrayList<ArtikelBedarf>();
 		
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_MENUEPLAN_BY_WEEK, week.getWeek(), week.getYear()));

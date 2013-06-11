@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.bistrosoft.palaver.data.MenueplanDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBeadarf;
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
@@ -39,7 +39,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		return mpl;
 	}
 	
-	public List<ArtikelBeadarf> getArtikelBedarfByWeek(Week week){
+	public List<ArtikelBedarf> getArtikelBedarfByWeek(Week week){
 		try {
 			return super.getArtikelBedarf(week);
 		} catch (ConnectException e) {
