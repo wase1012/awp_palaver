@@ -10,6 +10,7 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -60,6 +61,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Label headlineAnlegen;
 	private Label headlineUpdate;
 
+	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout vlBox = new VerticalLayout();
 	private HorizontalLayout hlUeberschrift = new HorizontalLayout();
 	private HorizontalLayout hlDetails = new HorizontalLayout();
@@ -117,9 +119,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		load();
 		this.setSizeFull();
 		this.setMargin(true);
+		this.setSpacing(true);
 
 		// Komponenten einfuegen
-		this.addComponent(vlBox);
+		this.addComponent(box);
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		box.addComponent(vlBox);
+		vlBox.setSpacing(true);
 		vlBox.addComponent(hlUeberschrift);
 //		hlUeberschrift.addComponent(ueberschriftAnlegen);
 		headlineAnlegen = new Label("Menü anlegen");
@@ -142,9 +148,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlRezepte.addComponent(tblMenueRezepte);
 		hlRezepte.addComponent(tblRezepte);
 		vlBox.addComponent(hlControl);
-		hlControl.addComponent(btNeuesRezept);
-		hlControl.addComponent(btVerwerfen);
-		hlControl.addComponent(btSpeichern);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponents(btNeuesRezept, btVerwerfen, btSpeichern);
 
 		// Komponenten formatieren
 		hlDetails.setWidth("525px");
@@ -162,12 +167,16 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tcsFussnoten.setWidth("100%");
 		tfMenuename.setWidth("90%");
 		tfMenuename.setMaxLength(200);
-		nsKoch.setWidth("90%");
-		nsGeschmack.setWidth("90%");
-		nsMenueart.setWidth("90%");
-
-		nsGeschmack.setNullSelectionAllowed(false);
-		nsMenueart.setNullSelectionAllowed(false);
+		tfMenuename.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_NAME, 5, 200, false));
+		nsKoch.setWidth("95%");
+		
+		nsGeschmack.setWidth("95%");
+		nsGeschmack.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_GESCHMACK, 5, 200, false));
+		nsMenueart.setWidth("95%");
+		nsMenueart.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_MENUEART, 5, 200, false));
+//
+//		nsGeschmack.setNullSelectionAllowed(false);
+//		nsMenueart.setNullSelectionAllowed(false);
 		tfMenuename.setImmediate(true);
 		nsKoch.setImmediate(true);
 		nsKoch.setNullSelectionAllowed(false);
