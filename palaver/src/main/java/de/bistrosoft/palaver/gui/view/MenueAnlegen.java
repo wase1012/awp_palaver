@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Validator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
@@ -171,9 +173,30 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		nsKoch.setWidth("95%");
 		
 		nsGeschmack.setWidth("95%");
-		nsGeschmack.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_GESCHMACK, 5, 200, false));
+		nsGeschmack.setImmediate(true);
+		nsGeschmack.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (nsGeschmack.getValue() == null) {
+					throw new InvalidValueException(
+							IConstants.INFO_MENUE_GESCHMACK);
+				}
+
+			}
+		});
 		nsMenueart.setWidth("95%");
-		nsMenueart.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_MENUEART, 5, 200, false));
+		nsMenueart.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (nsMenueart.getValue() == null) {
+					throw new InvalidValueException(
+							IConstants.INFO_MENUE_MENUEART);
+				}
+
+			}
+		});
 //
 //		nsGeschmack.setNullSelectionAllowed(false);
 //		nsMenueart.setNullSelectionAllowed(false);
@@ -252,7 +275,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				addRezept();
 			}
 		});
+		nsGeschmack.addValueChangeListener(new ValueChangeListener() {
 
+			public void valueChange(final ValueChangeEvent event) {
+
+			}
+		});
 		nsKoch.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 
@@ -566,6 +594,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void valueChange(ValueChangeEvent event) {
 
 	}
+	
 
 	// private void rezeptAlsHauptgerichtSpeichern() {
 	// if (ausgArtikel.isEmpty()) {
@@ -614,4 +643,5 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	// notification.setDelayMsec(500);
 	// notification.show(Page.getCurrent());
 	// }
+
 }
