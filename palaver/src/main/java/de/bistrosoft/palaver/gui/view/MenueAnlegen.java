@@ -10,7 +10,6 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Validator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
@@ -182,7 +181,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 					throw new InvalidValueException(
 							IConstants.INFO_MENUE_GESCHMACK);
 				}
-
 			}
 		});
 		nsMenueart.setWidth("95%");
@@ -275,12 +273,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				addRezept();
 			}
 		});
-		nsGeschmack.addValueChangeListener(new ValueChangeListener() {
 
-			public void valueChange(final ValueChangeEvent event) {
-
-			}
-		});
 		nsKoch.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 

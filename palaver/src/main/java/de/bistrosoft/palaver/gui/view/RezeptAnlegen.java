@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
+import com.vaadin.data.Validator;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -141,14 +142,20 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		mitarbeiterNs.setWidth("100%");
 		mitarbeiterNs.setImmediate(true);
 		mitarbeiterNs.setNullSelectionAllowed(false);
-		mitarbeiterNs.addValidator(new StringLengthValidator(
-				IConstants.INFO_REZEPT_KOCH_VALID, 3, 200, false));
 		
 		rezeptartNs.setWidth("100%");
 		rezeptartNs.setImmediate(true);
 		rezeptartNs.setNullSelectionAllowed(false);
-		rezeptartNs.addValidator(new StringLengthValidator(
-				IConstants.INFO_REZEPT_REZEPTART_VALID, 3, 200, false));
+		rezeptartNs.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (rezeptartNs.getValue() == null) {
+					throw new InvalidValueException(
+							IConstants.INFO_REZEPT_REZEPTART_VALID);
+				}
+			}
+		});
 
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
