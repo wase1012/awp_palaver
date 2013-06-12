@@ -108,6 +108,10 @@ public interface IConstants
 	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
+	String		INFO_REZEPT_NAME_VALID = "Bitte vollständigen Namen eingeben";
+	String		INFO_REZEPT_KOCH_VALID = "Bitte vollständigen Koch wählen";
+	String		INFO_REZEPT_REZEPTART_VALID = "Bitte vollständigen Rezeptart wählen";
+
 	
 	String 		INFO_MENUE_ALS_REZEPT = "Bitte weitere Felder prüfen!";
 	String 		INFO_MENUE_NAME = "Bitte Name eingeben!";
