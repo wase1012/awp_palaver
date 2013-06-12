@@ -97,7 +97,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Mengeneinheit hinzufügen");
+					mengNeu.setCaption("Mengeneinheit bearbeiten");
 
 					UI.getCurrent().addWindow(mengNeu);
 
