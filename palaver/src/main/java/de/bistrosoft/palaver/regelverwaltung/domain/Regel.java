@@ -137,8 +137,8 @@ public class Regel {
 				zeilenlist.add(0 + topRows);
 			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_2)) {
 				zeilenlist.add(1 + topRows);
-			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
 				zeilenlist.add(2 + topRows);
+			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
 				zeilenlist.add(3 + topRows);
 			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_4)) {
 				zeilenlist.add(4 + topRows);

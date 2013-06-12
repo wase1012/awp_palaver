@@ -386,6 +386,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`menueplan` (
   id INT NOT NULL AUTO_INCREMENT,
   `week` INT NOT NULL ,
   `year` INT NOT NULL ,
+  `freigegeben` TINYINT(1) ,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
