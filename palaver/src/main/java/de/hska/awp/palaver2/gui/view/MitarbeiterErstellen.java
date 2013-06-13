@@ -61,14 +61,6 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 	private TextField benutzername = new TextField("Benutzername");
 	private TwinColSelect rollen = new TwinColSelect();
 
-	private String nameInput;
-	private String vornameInput;
-	private String emailInput;
-	private String passwortInput;
-	private String eintrittsdatumInput;
-	private String austrittsdatumInput;
-	private String benutzernameInput;
-
 	private Mitarbeiter mitarbeiter = new Mitarbeiter();
 	private List<Rollen> rollenlist = new ArrayList<Rollen>();
 	public String valueString = null;
@@ -129,8 +121,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rollen.setNullSelectionAllowed(true);
 		rollen.setMultiSelect(true);
 		rollen.setImmediate(true);
-		rollen.setLeftColumnCaption("Verfï¿½gbare Rollen");
-		rollen.setRightColumnCaption("Ausgewï¿½hlte Rollen");
+		rollen.setLeftColumnCaption("Verfügbare Rollen");
+		rollen.setRightColumnCaption("Ausgewählte Rollen");
 		rollen.setEnabled(false);
 
 		rollen.addValueChangeListener(new ValueChangeListener() {
@@ -166,7 +158,6 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		rechts.setComponentAlignment(control, Alignment.TOP_CENTER);
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-		speichern.setEnabled(false);
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 		fenster.addComponent(headline);
@@ -178,19 +169,19 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
 		name.setImmediate(true);
-		name.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Namen eingeben", 3, 45, false));
+		name.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 3, 45, false));
 		name.setMaxLength(45);
 
 		vorname.setImmediate(true);
-		vorname.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Vornamen eingeben", 3, 45, false));
+		vorname.addValidator(new StringLengthValidator("Bitte gültigen Vornamen eingeben", 3, 45, false));
 		vorname.setMaxLength(45);
 
 		email.setImmediate(true);
-		email.addValidator(new EmailValidator("Bitte gï¿½ltige E-Mailadresse angeben"));
+		email.addValidator(new EmailValidator("Bitte gültige E-Mailadresse angeben"));
 		email.setMaxLength(45);
 
 		passwort.setImmediate(true);
-		passwort.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Passwort eingeben", 6, 45, false));
+		passwort.addValidator(new StringLengthValidator("Bitte gültigen Passwort eingeben", 6, 45, false));
 		passwort.setMaxLength(45);
 
 		eintrittsdatum.setImmediate(true);
@@ -200,78 +191,8 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		austrittsdatum.setMaxLength(300);
 
 		benutzername.setImmediate(true);
-		benutzername.addValidator(new StringLengthValidator("Bitte gï¿½ltigen Benutzernamen eingeben", 3, 45, false));
+		benutzername.addValidator(new StringLengthValidator("Bitte gültigen Benutzernamen eingeben", 3, 45, false));
 		benutzername.setMaxLength(45);
-
-		name.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-				nameInput = valueString;
-				if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
-					speichern.setEnabled(true);
-				}
-
-			}
-		});
-
-		vorname.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				vornameInput = valueString;
-				checkValidate();
-			}
-		});
-
-		email.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				emailInput = valueString;
-				
-			}
-		});
-
-		passwort.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				passwortInput = valueString;
-				checkValidate();
-			}
-		});
-
-		eintrittsdatum.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				eintrittsdatumInput = valueString;
-			}
-		});
-
-		austrittsdatum.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				austrittsdatumInput = valueString;
-			}
-		});
-
-		benutzername.addValueChangeListener(new ValueChangeListener() {
-
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty().getValue());
-
-				benutzernameInput = valueString;
-				checkValidate();
-			}
-		});
 
 		verwerfen.addClickListener(new ClickListener() {
 
@@ -286,73 +207,75 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				mitarbeiter.setName(nameInput);
-				mitarbeiter.setVorname(vornameInput);
-				mitarbeiter.setEmail(emailInput);
-				try {
-					mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
-				} catch (UnsupportedEncodingException e1) {
-					log.error(e1.toString());
-				} catch (NoSuchAlgorithmException e1) {
-					log.error(e1.toString());
-				}
-				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
-				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
-
-				mitarbeiter.setBenutzername(benutzernameInput);
-
-				// Listbuilder: ValueChangeListener gibt einen String der IDs
-				// zurÃ¼ck z.B. [1, 3]
-				// String auseinander nehmen und die Objekte anhand der ID
-				// suchen und der Liste hinzufÃ¼gen
-				List<String> rollenId = null;
-				if (rollen.getValue().toString() != "[]") {
-					rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
-
-					for (String sId : rollenId) {
-						Long id = null;
-						try {
-							id = Long.parseLong(sId.trim());
-
-						} catch (NumberFormatException nfe) {
-							log.error(nfe.toString());
-						}
-
-						Rollen rollen = null;
-						try {
-							rollen = Rollenverwaltung.getInstance().getRollenById(id);
-							rollenlist.add(rollen);
-						} catch (Exception e) {
-							log.error(e.toString());
-						}
-
+				if (validiereEingabe()) {
+			
+					mitarbeiter.setName(name.getValue());
+					mitarbeiter.setVorname(vorname.getValue());
+					mitarbeiter.setEmail(email.getValue());
+					try {
+						mitarbeiter.setPasswort(Util.encryptPassword(passwort.getValue()).toString());
+					} catch (UnsupportedEncodingException e1) {
+						log.error(e1.toString());
+					} catch (NoSuchAlgorithmException e1) {
+						log.error(e1.toString());
 					}
-				}
-
-				mitarbeiter.setRollen(rollenlist);
-
-				try {
-					boolean vorhanden = false;
-					List<Mitarbeiter> ml = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
-					for (int i = 0; i < ml.size(); i++) {
-						if (benutzernameInput.equals(ml.get(i).getBenutzername())) {
-							vorhanden = true;
+					mitarbeiter.setEintrittsdatum(eintrittsdatum.getValue());
+					mitarbeiter.setAustrittsdatum(austrittsdatum.getValue());
+	
+					mitarbeiter.setBenutzername(benutzername.getValue());
+	
+					// Listbuilder: ValueChangeListener gibt einen String der IDs
+					// zurÃ¼ck z.B. [1, 3]
+					// String auseinander nehmen und die Objekte anhand der ID
+					// suchen und der Liste hinzufÃ¼gen
+					List<String> rollenId = null;
+					if (rollen.getValue().toString() != "[]") {
+						rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));
+	
+						for (String sId : rollenId) {
+							Long id = null;
+							try {
+								id = Long.parseLong(sId.trim());
+	
+							} catch (NumberFormatException nfe) {
+								log.error(nfe.toString());
+							}
+	
+							Rollen rollen = null;
+							try {
+								rollen = Rollenverwaltung.getInstance().getRollenById(id);
+								rollenlist.add(rollen);
+							} catch (Exception e) {
+								log.error(e.toString());
+							}
+	
 						}
 					}
-					if (vorhanden == false) {
-
-						Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
-						ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
-					} else {
-						Notification notification = new Notification("Der Benutzername ist bereits vorhanden!");
-						notification.setDelayMsec(500);
-						notification.show(Page.getCurrent());
+	
+					mitarbeiter.setRollen(rollenlist);
+	
+					try {
+						boolean vorhanden = false;
+						List<Mitarbeiter> ml = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+						for (int i = 0; i < ml.size(); i++) {
+							if (benutzername.getValue().equals(ml.get(i).getBenutzername())) {
+								vorhanden = true;
+							}
+						}
+						if (vorhanden == false) {
+	
+							Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+							ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
+						} else {
+							Notification notification = new Notification("Der Benutzername ist bereits vorhanden!");
+							notification.setDelayMsec(500);
+							notification.show(Page.getCurrent());
+						}
+	
+					} catch (Exception e) {
+						log.error(e.toString());
 					}
-
-				} catch (Exception e) {
-					log.error(e.toString());
 				}
-
 			}
 		});
 
@@ -369,24 +292,39 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 					austrittsdatum.setEnabled(true);
 					benutzername.setEnabled(true);
 					rollen.setEnabled(true);
-					speichern.setEnabled(false);
 				}
 
 			}
 		}
-		
-		
-		
-	}
-
-	public void checkValidate(){
-		if (name.isValid() == true && vorname.isValid() == true && benutzername.isValid() == true && passwort.isValid() == true) {
-			speichern.setEnabled(true);
-		}	
 	}
 	
 	@Override
 	public void getViewParam(ViewData data) {
 
+	}
+	private Boolean validiereEingabe() {
+		if (name.getValue().toString() == "[]") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MITARBEITER_NAME);
+			return false;
+		}
+		if (vorname.isValid() == false) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MITARBEITER_VORNAME);
+			return false;
+		}
+		if (benutzername.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MITARBEITER_BENUTZERNAME);
+			return false;
+		}
+		if (passwort.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MITARBEITER_PASSWORT);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }

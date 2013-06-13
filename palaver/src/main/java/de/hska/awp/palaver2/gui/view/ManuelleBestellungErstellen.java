@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -29,8 +27,10 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
@@ -88,36 +88,11 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		datetime.setTextFieldEnabled(false);
 		datetime.setShowISOWeekNumbers(true);
 
-		datetime.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				java.util.Date date2 = new java.util.Date();
-				if (date2.before(datetime.getValue()) == false || datetime.getValue() == null) {
-					speichern.setEnabled(false);
-				} else {
-					speichern.setEnabled(true);
-				}
-			}
-		});
-
 		datetime2.setVisible(false);
 		datetime2.setImmediate(true);
 		datetime2.setResolution(Resolution.DAY);
 		datetime2.setTextFieldEnabled(false);
 		datetime2.setShowISOWeekNumbers(true);
-
-		datetime2.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				java.util.Date date2 = new java.util.Date();
-				Date d = new Date(date2.getTime());
-				if (datetime.getValue() == null || d.before(datetime2.getValue()) == false || datetime2.getValue() == null) {
-					speichern.setEnabled(false);
-				} else {
-					speichern.setEnabled(true);
-				}
-			}
-		});
 
 		fenster = new VerticalLayout();
 		fenster.setSizeFull();
@@ -132,7 +107,6 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
-		speichern.setEnabled(false);
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
@@ -214,8 +188,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		form.setSpacing(true);
 
 		HorizontalLayout hl = new HorizontalLayout();
-		datetime.setCaption("Montag");
-		datetime2.setCaption("Freitag");
+		datetime.setCaption("Termin 1");
+		datetime2.setCaption("Termin 2");
 		hl.addComponent(datetime);
 		hl.addComponent(datetime2);
 		hl.setSpacing(true);
@@ -240,7 +214,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		speichern.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
-
+				if (validiereEingabe()) {
+					
 				bestellData = containerBestellung.getItemIds();
 				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionen(bestellData);
 
@@ -285,6 +260,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				}
 				ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
 			}
+			}	
 		});
 
 	}
@@ -318,6 +294,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		if (lieferant.getMehrereliefertermine() == true) {
 			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag",
 					"freitag" });
+			bestellungTable.setColumnHeader("montag", "Termin 1");
+			bestellungTable.setColumnHeader("freitag", "Termin 2");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
@@ -336,5 +314,49 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
+	}
+	private Boolean validiereEingabe() {
+		
+		java.util.Date date2 = new java.util.Date();
+		Date d = new Date(date2.getTime());
+		
+		if (lieferant.getMehrereliefertermine() == true) {	
+
+			if (datetime.isValid() == false || d.before(datetime.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN1);
+				return false;
+			}
+			if (datetime2.isValid() == false || d.before(datetime2.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN2);
+				return false;
+			}
+			if (bestellungTable.getValue() == null) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
+				return false;
+			}
+			else {
+				return true;
+			}
+		} 
+		else {
+
+			
+			if (datetime.isValid() == false || d.before(datetime.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN1);
+				return false;
+			}
+			if (bestellungTable.getValue() == null) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
 	}
 }
