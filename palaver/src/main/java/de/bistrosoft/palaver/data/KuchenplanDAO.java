@@ -38,9 +38,9 @@ public class KuchenplanDAO extends AbstractDAO {
 	private final String CREATE_KUCHENPLAN = "INSERT INTO kuchenplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenplan = {0}";
 	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "+ 
-	"(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "+
-		"(select id from kuchenplan where week={0} AND year= {1,number,#})) "+
-			"GROUP BY artikel_fk, einheit";
+							"(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "+
+								"(select id from kuchenplan where week={0} AND year= {1,number,#})) "+
+							"GROUP BY artikel_fk, einheit";
 
 	public KuchenplanDAO() {
 		super();
