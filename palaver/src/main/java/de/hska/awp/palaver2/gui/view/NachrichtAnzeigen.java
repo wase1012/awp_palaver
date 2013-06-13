@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
@@ -174,14 +176,11 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 					}
 				});
 			}
-		} else {
-			// TODO falls keine Nachrichten vorhanden sind
 		}
 
 		// RECHTE SEITE
 
-		Label label = new Label("Neue Nachricht");
-		label.setValue("Neue Nachricht");
+		Label label = new Label("Neue Nachricht an:");
 
 		nachrichterstellenlayout.addComponent(label);
 
@@ -207,7 +206,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
 		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
 		neuernachrichtentext.setRequired(true);
-		
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 
@@ -233,6 +231,9 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 				try {
 					nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
 					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
+					Notification notification = new Notification("Die Nachricht wurde gesendet!");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
@@ -257,12 +258,12 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		
-		if(combobox.isValid()==false || neuernachrichtentext.isValid()==false){
+
+		if (combobox.isValid() == false || neuernachrichtentext.isValid() == false) {
 			speichern.setEnabled(false);
 		} else {
 			speichern.setEnabled(true);
 		}
-		
+
 	}
 }

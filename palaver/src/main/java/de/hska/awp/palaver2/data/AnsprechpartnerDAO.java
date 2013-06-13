@@ -29,8 +29,9 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	private final static String TELEFON = "telefon";
 	private final static String HANDY = "handy";
 	private final static String FAX = "fax";
+	private final static String EMAIL = "email";
 	private final static String LIEFERANT_FK = "lieferant_fk";
-	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM " + TABLE;
+	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM " + TABLE + " ORDER BY ansprechpartner.name";
 	private static final String GET_ANSPRECHPARTNER_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_ANSPRECHPARTNER = "DELETE FROM " + TABLE + " WHERE id = {0}";
@@ -64,7 +65,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 		ResultSet set = getManaged(GET_ALL_ANSPRECHPARTNER);
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString("name"), set.getString("telefon"), set.getString("handy"), set
-					.getString("fax"), LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk"))));
+					.getString("fax"), set.getString("email"), LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk"))));
 		}
 		return list;
 	}
@@ -86,7 +87,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY), set.getString(FAX),
-					LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
+					set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
 		}
 
 		return list;
@@ -109,7 +110,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 		while (set.next()) {
 			ansprechpartner = new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY),
-					set.getString(FAX), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)));
+					set.getString(FAX), set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)));
 		}
 
 		return ansprechpartner;
@@ -124,9 +125,9 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + TELEFON + "," + HANDY + "," + FAX + "," + LIEFERANT_FK + ")" + "VALUES"
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + TELEFON + "," + HANDY + "," + FAX + "," + EMAIL + "," + LIEFERANT_FK + ")" + "VALUES"
 				+ "('" + ansprechpartner.getName() + "','" + ansprechpartner.getTelefon() + "','" + ansprechpartner.getHandy() + "','"
-				+ ansprechpartner.getFax() + "','" + ansprechpartner.getLieferant().getId() + "')";
+				+ ansprechpartner.getFax() + "','" + ansprechpartner.getEmail() + "','" + ansprechpartner.getLieferant().getId() + "')";
 		this.putManaged(INSERTQUERY);
 	}
 
@@ -141,7 +142,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
 		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + ansprechpartner.getName() + "'," + TELEFON + "='"
 				+ ansprechpartner.getTelefon() + "'," + HANDY + "='" + ansprechpartner.getHandy() + "'," + FAX + "='" + ansprechpartner.getFax()
-				+ "'," + LIEFERANT_FK + "='" + ansprechpartner.getLieferant().getId() + "'" + "WHERE " + ID + "='" + ansprechpartner.getId() + "'";
+				+ "'," + EMAIL + "='" + ansprechpartner.getEmail() + "'," + LIEFERANT_FK + "='" + ansprechpartner.getLieferant().getId() + "'" + "WHERE " + ID + "='" + ansprechpartner.getId() + "'";
 		this.putManaged(UPDATEQUERY);
 	}
 
@@ -177,7 +178,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY), set.getString(FAX),
-					LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
+					set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
 		}
 
 		return list;

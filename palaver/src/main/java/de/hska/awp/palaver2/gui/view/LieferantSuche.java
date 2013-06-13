@@ -53,7 +53,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private TextField name = new TextField("Name");
 	private TextField bezeichnung = new TextField("Bezeichnung");
 	private TextField kundennummer = new TextField("Kundennummer");
-	private TextField strasse = new TextField("Straße");
+	private TextField strasse = new TextField("Strasse");
 	private TextField plz = new TextField("PLZ");
 	private TextField ort = new TextField("Ort");
 	private TextField email = new TextField("E-Mail");
@@ -73,6 +73,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private String nameInput;
 	private String telefonInput;
 	private String handyInput;
+	private String emailInput;
 	private String faxInput;
 	private Lieferant lieferant = new Lieferant();
 	private Ansprechpartner ansprechpartnerBean = new Ansprechpartner();
@@ -80,6 +81,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private TextField nameAnspr = new TextField("Name");
 	private TextField telefonAnspr = new TextField("Telefon");
 	private TextField handyAnspr = new TextField("Handy");
+	private TextField emailAnspr = new TextField("Email");
 	private TextField faxAnspr = new TextField("Fax");
 
 	public LieferantSuche() throws ConnectException, DAOException, SQLException {
@@ -185,6 +187,14 @@ public class LieferantSuche extends VerticalLayout implements View {
 			}
 		});
 
+		emailAnspr.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				final String valueString = String.valueOf(event.getProperty().getValue());
+				emailInput = valueString;
+			}
+		});
+		
 		faxAnspr.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -208,7 +218,6 @@ public class LieferantSuche extends VerticalLayout implements View {
 		emailSenden.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.print("HAllo");
 				ViewHandler.getInstance().switchView(EmailOhneBestellung.class, new ViewDataObject<Lieferant>(lieferant));
 			}
 		});
@@ -278,7 +287,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 					final Window anspr = new Window();
 					anspr.setClosable(false);
 					anspr.setWidth("400px");
-					anspr.setHeight("270px");
+					anspr.setHeight("310px");
 					anspr.setModal(true);
 					anspr.center();
 					anspr.setResizable(false);
@@ -298,6 +307,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 					nameAnspr.setWidth("100%");
 					telefonAnspr.setWidth("100%");
 					handyAnspr.setWidth("100%");
+					emailAnspr.setWidth("100%");
 					faxAnspr.setWidth("100%");
 
 					VerticalLayout feld = new VerticalLayout();
@@ -305,11 +315,13 @@ public class LieferantSuche extends VerticalLayout implements View {
 					nameAnspr.setValue(ansprechpartnerBean.getName());
 					telefonAnspr.setValue(ansprechpartnerBean.getTelefon());
 					handyAnspr.setValue(ansprechpartnerBean.getHandy());
+					emailAnspr.setValue(ansprechpartnerBean.getEmail());
 					faxAnspr.setValue(ansprechpartnerBean.getFax());
 
 					feld.addComponent(nameAnspr);
 					feld.addComponent(telefonAnspr);
 					feld.addComponent(handyAnspr);
+					feld.addComponent(emailAnspr);
 					feld.addComponent(faxAnspr);
 
 					HorizontalLayout control = new HorizontalLayout();
@@ -330,6 +342,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 					nameAnspr.setImmediate(true);
 					nameAnspr.setInputPrompt(nameInput);
+					nameAnspr.setRequired(true);
 					nameAnspr.setMaxLength(30);
 
 					telefonAnspr.setImmediate(true);
@@ -340,6 +353,10 @@ public class LieferantSuche extends VerticalLayout implements View {
 					handyAnspr.setInputPrompt(handyInput);
 					handyAnspr.setMaxLength(20);
 
+					emailAnspr.setImmediate(true);
+					emailAnspr.setInputPrompt(emailInput);
+					emailAnspr.setMaxLength(20);
+					
 					faxAnspr.setImmediate(true);
 					faxAnspr.setInputPrompt(faxInput);
 					faxAnspr.setMaxLength(20);
@@ -360,7 +377,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 							anspr.setStyleName("dialog-window");
 							anspr.setClosable(false);
 							anspr.setWidth("320px");
-							anspr.setHeight("135px");
+							anspr.setHeight("165px");
 							anspr.setModal(true);
 							anspr.center();
 							anspr.setResizable(false);
@@ -427,6 +444,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 							ansprechpartnerBean.setTelefon(telefonInput);
 							ansprechpartnerBean.setHandy(handyInput);
 							ansprechpartnerBean.setFax(faxInput);
+							ansprechpartnerBean.setEmail(emailInput);
 							ansprechpartnerBean.setLieferant(lieferant);
 
 							try {
@@ -466,6 +484,15 @@ public class LieferantSuche extends VerticalLayout implements View {
 						}
 					});
 
+					emailAnspr.addValueChangeListener(new ValueChangeListener() {
+
+						public void valueChange(final ValueChangeEvent event) {
+							final String valueString = String.valueOf(event.getProperty().getValue());
+
+							emailInput = valueString;
+						}
+					});
+					
 					faxAnspr.addValueChangeListener(new ValueChangeListener() {
 
 						public void valueChange(final ValueChangeEvent event) {
@@ -486,7 +513,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 				final Window anspr = new Window();
 				anspr.setClosable(false);
 				anspr.setWidth("400px");
-				anspr.setHeight("270px");
+				anspr.setHeight("310px");
 				anspr.setModal(true);
 				anspr.center();
 				anspr.setResizable(false);
@@ -505,6 +532,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 				nameAnspr.setWidth("100%");
 				telefonAnspr.setWidth("100%");
 				handyAnspr.setWidth("100%");
+				emailAnspr.setWidth("100%");
 				faxAnspr.setWidth("100%");
 
 				name.setRequired(true);
@@ -514,6 +542,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 				feld.addComponent(nameAnspr);
 				feld.addComponent(telefonAnspr);
 				feld.addComponent(handyAnspr);
+				feld.addComponent(emailAnspr);
 				feld.addComponent(faxAnspr);
 
 				HorizontalLayout control = new HorizontalLayout();
@@ -540,6 +569,10 @@ public class LieferantSuche extends VerticalLayout implements View {
 				handyAnspr.setImmediate(true);
 				handyAnspr.setInputPrompt(handyInput);
 				handyAnspr.setMaxLength(20);
+				
+				emailAnspr.setImmediate(true);
+				emailAnspr.setInputPrompt(emailInput);
+				emailAnspr.setMaxLength(20);
 
 				faxAnspr.setImmediate(true);
 				faxAnspr.setInputPrompt(faxInput);
@@ -559,6 +592,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 							ans.setName(nameInput);
 							ans.setTelefon(telefonInput);
 							ans.setHandy(handyInput);
+							ans.setHandy(emailInput);
 							ans.setFax(faxInput);
 							ans.setLieferant(lieferant);
 							try {
@@ -601,6 +635,15 @@ public class LieferantSuche extends VerticalLayout implements View {
 						final String valueString = String.valueOf(event.getProperty().getValue());
 
 						handyInput = valueString;
+					}
+				});
+				
+				emailAnspr.addValueChangeListener(new ValueChangeListener() {
+
+					public void valueChange(final ValueChangeEvent event) {
+						final String valueString = String.valueOf(event.getProperty().getValue());
+
+						emailInput = valueString;
 					}
 				});
 
@@ -674,10 +717,11 @@ public class LieferantSuche extends VerticalLayout implements View {
 			container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class, Ansprechpartnerverwaltung.getInstance()
 					.getAnsprechpartnerByLieferant(lieferant));
 			ansprechpartner.setContainerDataSource(container);
-			ansprechpartner.setVisibleColumns(new Object[] { "name", "telefon", "handy", "fax" });
+			ansprechpartner.setVisibleColumns(new Object[] { "name", "telefon", "handy", "email", "fax" });
 			ansprechpartner.sort(new Object[] { "id" }, new boolean[] { true });
 			ansprechpartner.setColumnCollapsingAllowed(true);
 			ansprechpartner.setColumnCollapsed(handyAnspr, false);
+			ansprechpartner.setColumnCollapsed(emailAnspr, false);
 			ansprechpartner.setColumnCollapsed(faxAnspr, false);
 		} catch (IllegalArgumentException e) {
 			log.error(e.toString());

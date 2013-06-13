@@ -19,7 +19,9 @@ public class Ansprechpartner implements java.io.Serializable {
 	private String telefon;
 	private String handy;
 	private String fax;
+	private String email;
 	private Lieferant lieferant;
+	 
 
 	public Ansprechpartner() {
 	}
@@ -29,13 +31,14 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Ansprechpartner(Long id, String name, String telefon, String handy, String fax, Lieferant lieferant) {
+	public Ansprechpartner(Long id, String name, String telefon, String handy, String fax, String email, Lieferant lieferant) {
 		this.id = id;
 		this.name = name;
 		this.telefon = telefon;
 		this.handy = handy;
 		this.fax = fax;
 		this.lieferant = lieferant;
+		this.setEmail(email);
 	}
 
 	public Long getId() {
@@ -101,6 +104,14 @@ public class Ansprechpartner implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon=" + telefon + ", handy=" + handy + ", fax=" + fax + "]";
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

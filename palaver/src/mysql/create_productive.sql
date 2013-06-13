@@ -480,6 +480,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`ansprechpartner` (
   `telefon` VARCHAR(45) NULL ,
   `handy` VARCHAR(45) NULL ,
   `fax` VARCHAR(45) NULL ,
+  `email` VARCHAR(45) NULL,
   `lieferant_fk` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_ansprechpartner_lieferant1_idx` (`lieferant_fk` ASC) ,

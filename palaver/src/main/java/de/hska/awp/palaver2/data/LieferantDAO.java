@@ -39,7 +39,7 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String NOTIZ = "notiz";
 	private final static String MEHRERELIEFERTERMINE = "mehrereliefertermine";
 
-	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE;
+	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE + " ORDER BY lieferant.name";
 
 	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";

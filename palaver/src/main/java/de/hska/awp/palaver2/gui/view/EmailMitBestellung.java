@@ -71,7 +71,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 
 		headline = new Label("Bestellung senden");
 		headline.setStyleName("ViewHeadline");
-
+		
 		empfaenger.setWidth("45%");
 		betreff.setWidth("45%");
 		nachricht.setWidth("100%");
@@ -79,7 +79,9 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 
 		download.setVisible(false);
 		download.setIcon(new ThemeResource(IConstants.BUTTON_EXCEL_ICON));
-
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		senden.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
+		
 		fenster.setWidth("550px");
 		fenster.setSpacing(true);
 		fenster.addComponent(headline);

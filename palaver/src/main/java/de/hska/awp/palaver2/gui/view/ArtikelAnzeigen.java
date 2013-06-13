@@ -130,6 +130,12 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio", "bestellgroesse", "notiz"});
 			table.sort(new Object[] {"name"}, new boolean[] {true});
+			table.setColumnHeader("bestellgroesse", "Gebinde");
+			table.setColumnWidth("kategorie", 70);
+			table.setColumnWidth("artikelnr", 60);
+			table.setColumnWidth("preis", 50);
+			table.setColumnWidth("bestellgroesse", 50);
+			
 			
 			table.setCellStyleGenerator(new CellStyleGenerator()
 			{

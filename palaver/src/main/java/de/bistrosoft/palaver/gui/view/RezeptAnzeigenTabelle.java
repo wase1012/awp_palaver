@@ -88,9 +88,9 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			container = new BeanItemContainer<Rezept>(Rezept.class,
 					Rezeptverwaltung.getInstance().getAllRezepteTabelle());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "id", "name", "rezeptart",
+			table.setVisibleColumns(new Object[] { "name", "rezeptart",
 					"mitarbeiter", "erstellt" });
-			table.sort(new Object[] { "id" }, new boolean[] { true });
+			table.sort(new Object[] { "name" }, new boolean[] { true });
 			table.setFilterFieldValue("mitarbeiter", ((Application) UI
 					.getCurrent().getData()).getUser().getVorname());
 

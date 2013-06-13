@@ -142,6 +142,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
 		bestellenperemail = new Button(IConstants.BUTTON_EMAILVERSAND);
+		bestellenperemail.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
 		speichern.setEnabled(false);
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -252,7 +253,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		form.addComponent(bestellungTable);
 		form.addComponent(artikelTable);
 
-		form.setExpandRatio(bestellungTable, 4);
+		form.setExpandRatio(bestellungTable, 3);
 		form.setExpandRatio(artikelTable, 1);
 		form.setSpacing(true);
 
@@ -260,8 +261,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		hl.setSpacing(true);
 		hl.setWidth("100%");
 		l.setWidth("100%");
-		datetime.setCaption("Montag");
-		datetime2.setCaption("Freitag");
+		datetime.setCaption("Termin 1");
+		datetime2.setCaption("Termin 2");
 		hl.addComponent(datetime);
 		hl.setComponentAlignment(datetime, Alignment.TOP_LEFT);
 		hl.addComponent(datetime2);
@@ -440,11 +441,15 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
+			bestellungTable.setColumnHeader("montag", "Termin 1");
+			bestellungTable.setColumnHeader("freitag", "Termin 2");
 			bestellungTable.setColumnWidth("kantine", 60);
 			bestellungTable.setColumnWidth("montag", 60);
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
+			bestellungTable.setColumnWidth("kategorie", 70);
+			bestellungTable.setColumnWidth("gebinde", 70);	
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
@@ -453,11 +458,15 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
+			bestellungTable.setColumnHeader("montag", "Termin 1");
+			bestellungTable.setColumnHeader("freitag", "Termin 2");
 			bestellungTable.setColumnWidth("kantine", 60);
 			bestellungTable.setColumnWidth("montag", 60);
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
+			bestellungTable.setColumnWidth("kategorie", 70);
+			bestellungTable.setColumnWidth("gebinde", 60);			
 			datetime.setRequired(true);
 			datetime2.setVisible(false);
 		}
