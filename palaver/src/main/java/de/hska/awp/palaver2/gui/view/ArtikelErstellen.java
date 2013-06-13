@@ -22,6 +22,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -67,9 +68,9 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	private TextField			bestellung = new TextField("Bestellgröße");
 	private TextField			notiz = new TextField("Notiz");
 	
-	private ComboBox			lieferant = new ComboBox("Lieferant");
-	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
-	private ComboBox			kategorie = new ComboBox("Kategorie");
+	private NativeSelect		lieferant = new NativeSelect("Lieferant");
+	private NativeSelect		mengeneinheit = new NativeSelect("Mengeneinheit");
+	private NativeSelect		kategorie = new NativeSelect("Kategorie");
 	
 	private CheckBox			bio = new CheckBox("Bio");
 	private CheckBox			standard = new CheckBox("Standard");
