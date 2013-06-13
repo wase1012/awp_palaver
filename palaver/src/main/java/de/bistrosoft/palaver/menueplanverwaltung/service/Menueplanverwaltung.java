@@ -41,7 +41,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 	
 	public List<ArtikelBedarf> getArtikelBedarfByWeek(Week week){
 		try {
-			return super.getArtikelBedarfByWeek(week);
+			return super.getArtikelBedarf(week);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {
