@@ -183,7 +183,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		// RECHTE SEITE
 
 		Label label = new Label("Neue Nachricht an:");
-		label.setValue("Neue Nachricht");
 
 		nachrichterstellenlayout.addComponent(label);
 
