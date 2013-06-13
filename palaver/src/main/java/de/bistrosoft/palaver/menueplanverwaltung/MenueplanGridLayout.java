@@ -56,19 +56,9 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year) {
-		try {
-			menueplan = Menueplanverwaltung.getInstance()
-					.getMenueplanItems(new Week(week, year));
-		} catch (ConnectException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		menueplan = Menueplanverwaltung.getInstance()
+				.getMenueplanByWeekWithItems(new Week(week, year));
+
 		if (menueplan == null) {
 			menueplan = new Menueplan(new Week(week, year));
 		}
@@ -284,13 +274,14 @@ public class MenueplanGridLayout extends CustomComponent {
 	public void freigeben() {
 		menueplan.setFreigegeben(true);
 		Menueplanverwaltung.getInstance().updateMenueplan(menueplan);
-		
+
 		((Application) UI.getCurrent().getData())
-		 	.showDialog("Menüplan für Kalenderwoche " + menueplan.getWeek().getWeek() + "/" + menueplan.getWeek().getYear()
-								+ " wurde freigegeben");
-		
+				.showDialog("Menüplan für Kalenderwoche "
+						+ menueplan.getWeek().getWeek() + "/"
+						+ menueplan.getWeek().getYear() + " wurde freigegeben");
+
 	}
-	
+
 	public void removeMenue(Component destComp) {
 		this.layout.removeComponent(destComp);
 		this.pruefeMenueRegeln();
