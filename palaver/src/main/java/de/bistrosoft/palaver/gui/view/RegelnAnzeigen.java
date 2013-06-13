@@ -45,6 +45,7 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		this.setMargin(true);
 		this.addComponent(box);
 
+		box.setWidth("1000px");
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
 		try {
@@ -55,9 +56,17 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		}
 
 		table.setContainerDataSource(container);
+		table.setWidth("1000px");
 		table.setSelectable(true);
 		table.setVisibleColumns(new Object[] { "zeile", "spalte", "regeltyp",
 				"operator", "kriterien", "fehlermeldung", "aktiv" });
+		table.setColumnWidth("regeltyp", 70);
+		table.setColumnWidth("operator", 100);
+		table.setColumnWidth("spalte", 160);
+		table.setColumnWidth("zeile", 160);
+		table.setColumnWidth("kriterien", 100);
+		table.setColumnWidth("fehlermeldung", 277);
+		table.setColumnWidth("aktiv", 40);
 
 		// table.addGeneratedColumn("AKTIV", new ColumnGenerator() {
 		//

@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.util;
 
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TwinColSelect;
@@ -38,6 +40,7 @@ public class TwinColTouch extends CustomComponent {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private void layout() {
 		vlMain = new VerticalLayout();
 
@@ -76,6 +79,22 @@ public class TwinColTouch extends CustomComponent {
 			ls.setWidth(width);
 		} else {
 			tcs.setWidth(width);
+		}
+	}
+	
+	public void addValidator(Validator validator) {
+		if (isTouch) {
+			ls.addValidator(validator);
+		} else {
+			tcs.addValidator(validator);
+		}
+	}
+	
+	public void addValueChangeListener(ValueChangeListener valuechangelistener) {
+		if (isTouch) {
+			ls.addValueChangeListener(valuechangelistener);
+		} else {
+			tcs.addValueChangeListener(valuechangelistener);
 		}
 	}
 
