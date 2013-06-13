@@ -71,7 +71,7 @@ public class CreateExcelFile {
 			rowhead.createCell((short) 1).setCellValue("Artkel-Nr.");
 			rowhead.createCell((short) 2).setCellValue("Artikelname");
 			rowhead.createCell((short) 3).setCellValue("Kategorie");
-			rowhead.createCell((short) 4).setCellValue("Bestellgröße");
+			rowhead.createCell((short) 4).setCellValue("Gebinde");
 			rowhead.createCell((short) 5).setCellValue("Mengeneinheit");
 			if (mehrereliefertermine != true) {
 				rowhead.createCell((short) 6).setCellValue("Anzahl");

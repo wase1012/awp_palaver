@@ -94,7 +94,7 @@ public interface IConstants
 	String 		BUTTON_EDIT_ICON = "img/edit.ico";
 	String		BUTTON_OK_ICON = "img/check.ico";
 	String		BUTTON_EXCEL_ICON = "img/excel1.ico";
-//	String		BUTTON_EMAILVERSAND_ICON = "";
+	String		BUTTON_EMAILVERSAND_ICON = "img/mail.ico";
 	
 	String		ICON_YES = "img/tick_circle.ico";
 	String		ICON_NO = "img/cross_circle.ico";
@@ -108,6 +108,10 @@ public interface IConstants
 	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
+	String		INFO_REZEPT_NAME_VALID = "Bitte vollständigen Namen eingeben";
+	String		INFO_REZEPT_KOCH_VALID = "Bitte vollständigen Koch wählen";
+	String		INFO_REZEPT_REZEPTART_VALID = "Bitte vollständigen Rezeptart wählen";
+
 	
 	String 		INFO_MENUE_ALS_REZEPT = "Bitte weitere Felder prüfen!";
 	String 		INFO_MENUE_NAME = "Bitte Name eingeben!";
@@ -173,6 +177,8 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
 
 
 

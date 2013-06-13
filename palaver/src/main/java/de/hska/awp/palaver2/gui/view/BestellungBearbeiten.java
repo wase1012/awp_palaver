@@ -142,6 +142,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		speichern = new Button(IConstants.BUTTON_SAVE);
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
 		bestellenperemail = new Button(IConstants.BUTTON_EMAILVERSAND);
+		bestellenperemail.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
 		speichern.setEnabled(false);
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
