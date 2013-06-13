@@ -44,7 +44,7 @@ public class MenueDAO extends AbstractDAO {
 		}
 		return instance;
 	}
-
+	
 	public List<Menue> getAllMenues() throws ConnectException, DAOException,
 			SQLException {
 		List<Menue> list = new ArrayList<Menue>();

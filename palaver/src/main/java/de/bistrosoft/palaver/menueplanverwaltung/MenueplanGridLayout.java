@@ -56,8 +56,19 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year) {
-		menueplan = Menueplanverwaltung.getInstance()
-				.getMenueplanByWeekWithItems(new Week(week, year));
+		try {
+			menueplan = Menueplanverwaltung.getInstance()
+					.getMenueplanItems(new Week(week, year));
+		} catch (ConnectException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DAOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if (menueplan == null) {
 			menueplan = new Menueplan(new Week(week, year));
 		}
