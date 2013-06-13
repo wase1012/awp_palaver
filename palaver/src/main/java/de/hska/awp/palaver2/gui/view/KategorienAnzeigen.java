@@ -9,7 +9,6 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -17,13 +16,13 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -240,7 +239,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 				speichern.addClickListener(new ClickListener() {
 					public void buttonClick(ClickEvent event) {
-						if (name.isValid() == true) {
+						if (validiereKategorie()) {
 							Kategorie me = new Kategorie();
 							me.setName(nameText);
 							String notification = "Kategorie gespeichert";
@@ -287,31 +286,26 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							});
 
 							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-						} else {
-							Notification notification = new Notification("Die Eingabe ist fehlerhaft!");
-							notification.setDelayMsec(500);
-							notification.show(Page.getCurrent());
-						}
+						} 
 					}
 				});
-
-				name.addValueChangeListener(new ValueChangeListener() {
-
-					public void valueChange(final ValueChangeEvent event) {
-						final String valueString = String.valueOf(event.getProperty().getValue());
-
-						nameText = valueString;
-					}
-				});
-
 			}
 		});
 	}
 
 	@Override
 	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub blablabla
 
 	}
-
+	public boolean validiereKategorie() {
+		
+		if (name.isValid() == false) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIENAME);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }

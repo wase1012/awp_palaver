@@ -303,7 +303,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 	}
 	private Boolean validiereEingabe() {
-		if (name.getValue().toString() == "[]") {
+		if (name.isValid() == false) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_MITARBEITER_NAME);
 			return false;
@@ -313,12 +313,12 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 					.showDialog(IConstants.INFO_MITARBEITER_VORNAME);
 			return false;
 		}
-		if (benutzername.getValue() == null) {
+		if (benutzername.isValid() == false) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_MITARBEITER_BENUTZERNAME);
 			return false;
 		}
-		if (passwort.getValue() == null) {
+		if (passwort.isValid() == false) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_MITARBEITER_PASSWORT);
 			return false;

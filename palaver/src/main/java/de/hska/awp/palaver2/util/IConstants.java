@@ -83,6 +83,7 @@ public interface IConstants
 	String		BUTTON_SELECT = "Auswählen";
 	String 		BUTTON_CLEAR_FILTER = "Filter leeren";
 	String 		BUTTON_REZEPT_ARTIKEL_ANLEGEN = "Artikel anlegen";
+	String 		BUTTON_ADD_ANSPRECHPARTNER = "Ansprechpartner hinzufügen";
 
 	
 	// Icons fuer Knoepfe
@@ -156,6 +157,10 @@ public interface IConstants
 	String		INFO_ARTIKEL_MENGENEINHEIT = "Bitte Mengeneinheit auswählen";
 	String		INFO_ARTIKEL_KATEGORIE = "Bitte Kategorie auswählen";
 	String		INFO_ARTIKEL_GEBINDE = "Bitte Gebinde eingeben";
+	String 		INFO_ARTIKEL_LIEFERANTNAME = "Bitte Lieferantenname eingeben";
+	String 		INFO_ARTIKEL_MENGENEINHEITNAME = "Bitte Namen eingeben";
+	String	 	INFO_ARTIKEL_MENGENEINHEITKURZ = "Bitte Kürzel eingeben";
+	String 		INFO_ARTIKEL_KATEGORIENAME = "Bitte Namen eingeben";
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
 	
@@ -194,6 +199,14 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
+
+
+
+
+
+
 
 
 

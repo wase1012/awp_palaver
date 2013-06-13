@@ -63,7 +63,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private CheckBox mehrereliefertermine = new CheckBox("mehrere Liefertermine");
 
 	private Button okButton = new Button("Ok");
-	private Button ansprAdd = new Button(IConstants.BUTTON_ADD);
+	private Button ansprAdd = new Button(IConstants.BUTTON_ADD_ANSPRECHPARTNER);
 	private Button updateB = new Button(IConstants.BUTTON_EDIT);
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -530,6 +530,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 				Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
 				nameAnspr.setWidth("100%");
+				nameAnspr.setRequired(true);
 				telefonAnspr.setWidth("100%");
 				handyAnspr.setWidth("100%");
 				emailAnspr.setWidth("100%");
