@@ -53,7 +53,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private TextField name = new TextField("Name");
 	private TextField bezeichnung = new TextField("Bezeichnung");
 	private TextField kundennummer = new TextField("Kundennummer");
-	private TextField strasse = new TextField("Straße");
+	private TextField strasse = new TextField("Strasse");
 	private TextField plz = new TextField("PLZ");
 	private TextField ort = new TextField("Ort");
 	private TextField email = new TextField("E-Mail");
@@ -330,6 +330,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 					nameAnspr.setImmediate(true);
 					nameAnspr.setInputPrompt(nameInput);
+					nameAnspr.setRequired(true);
 					nameAnspr.setMaxLength(30);
 
 					telefonAnspr.setImmediate(true);
