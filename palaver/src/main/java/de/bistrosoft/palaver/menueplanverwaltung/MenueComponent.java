@@ -7,16 +7,15 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
@@ -43,6 +42,7 @@ public class MenueComponent extends CustomComponent{
 	private Boolean isChanged;
 	private Button btFehler;
 	private Integer portion;
+	private CheckBox ogMarkiere = new CheckBox();
 	
 	private List<String> fehlermeldungen;
 	private List<Regel> FehlerRegeln;
@@ -236,7 +236,10 @@ public class MenueComponent extends CustomComponent{
 			fn = fn+" ("+f.getAbkuerzung().toString()+")";
 		}
 
-		Label lbText = new Label("<div align=center>"+ angezName +"<BR>"+fn+"</div>", ContentMode.HTML);
+		Button lbText = new Button(angezName);
+		lbText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+		lbText.setWidth("100%");
+		lbText.setHeight("80px");
 		vl.addComponent(lbText);
 		
 		
@@ -307,34 +310,49 @@ public class MenueComponent extends CustomComponent{
 
 				            public void onClose(ConfirmDialog dialog) {
 				                if (dialog.isConfirmed()) {
-				                	//finde position
-//				                    Component sourceComp = comp;
-				                	Integer sourceRow =-1;
-				                    Integer sourceColumn=-1;
-				                    
-				                    final int COLUMNS = menueGrid.getColumns();
-				                    final int ROWS = menueGrid.getRows();
-				                    
-				                    for (int row = 0; row < ROWS; row++) {
-				            	        for (int col = 0; col < COLUMNS; col++) {
-				            	        	if(MenueComponent.this.equals(menueGrid.getComponent(col, row))) {
-				            	        		sourceColumn=col;
-				            	        		sourceRow=row;
-				            	        	}
-				            	        }
-				                    }		                    
+//				                	//finde position
+////				                    Component sourceComp = comp;
+//				                	Integer sourceRow =-1;
+//				                    Integer sourceColumn=-1;
+//				                    
+//				                    final int COLUMNS = menueGrid.getColumns();
+//				                    final int ROWS = menueGrid.getRows();
+//				                    
+//				                    for (int row = 0; row < ROWS; row++) {
+//				            	        for (int col = 0; col < COLUMNS; col++) {
+//				            	        	if(MenueComponent.this.equals(menueGrid.getComponent(col, row))) {
+//				            	        		sourceColumn=col;
+//				            	        		sourceRow=row;
+//				            	        	}
+//				            	        }
+//				                    }	
+				                	MenueComponent.this.remove();
 				                	
-				                	//aktuelle Menükomponente löschen
-//				                	menueGrid.removeComponent(comp);
-				                	menueplan.removeMenue(MenueComponent.this);
-				                	//ADD Button hinzufügen
-				                	menueGrid.addComponent(btn, sourceColumn, sourceRow);
-				        			menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
 				                }
 				            }			            
 				        });	
 			        }
 		});
+		
+		///////////////
+		lbText.addListener(new Listener() {
+			
+			@Override
+			public void componentEvent(Event event) {
+				if(ogMarkiere.isVisible()){
+					if(ogMarkiere.getValue()){
+						ogMarkiere.setValue(false);
+					}
+					else {
+						ogMarkiere.setValue(true);
+					}
+				}
+				else {
+					btChange.click();
+				}
+			}
+		});
+		////////////
 		
 		btFehler= new Button();
 		btFehler.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
@@ -356,6 +374,10 @@ public class MenueComponent extends CustomComponent{
 //		btChange.addStyleName(Reindeer.BUTTON_DEFAULT);
 		hl.addComponent(btChange);
 		hl.addComponent(btDelete);
+		
+		ogMarkiere.setVisible(false);
+		hl.addComponent(ogMarkiere);
+		
 		vl.addComponent(hl);
 		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
 //		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
@@ -366,6 +388,20 @@ public class MenueComponent extends CustomComponent{
 		
 	}
 	
+	public void remove() {
+		//Speicher Position
+    	Integer col = MenueComponent.this.getCol();
+    	Integer row = MenueComponent.this.getRow();
+    	//aktuelle Menükomponente löschen
+    	menueplan.removeMenue(MenueComponent.this);
+    	//ADD Button hinzufügen
+    	menueGrid.addComponent(btn, col, row);
+		menueGrid.setComponentAlignment(btn, Alignment.MIDDLE_CENTER);
+		if(this.isMarkiert()){
+			btn.setEnabled(false);
+		}
+	}
+
 	public void pruefeRegeln(MenueplanGridLayout mp) {
 		btFehler.setVisible(false);
 		if(FehlerRegeln!=null){
@@ -376,5 +412,23 @@ public class MenueComponent extends CustomComponent{
 			}
 		}
 		
+	}
+
+	public void setCbDelete() {
+		if(ogMarkiere.isVisible()){
+			ogMarkiere.setVisible(false);
+			btDelete.setVisible(true);
+			btChange.setVisible(true);
+			ogMarkiere.setValue(false);
+		}
+		else {
+			ogMarkiere.setVisible(true);
+			btDelete.setVisible(false);
+			btChange.setVisible(false);
+		}
+	}
+
+	public boolean isMarkiert() {
+		return ogMarkiere.getValue();
 	}
 }
