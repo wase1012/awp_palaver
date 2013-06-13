@@ -99,7 +99,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	public MenueAnlegen() {
 		super();
-		
+
 		tblRezepte = new FilterTable();
 		tblRezepte.setSizeFull();
 		tblRezepte.setStyleName("palaverTable");
@@ -114,7 +114,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.setStyleName("palaverTable");
 		tblMenueRezepte.setImmediate(true);
 		tblMenueRezepte.setFilterBarVisible(true);
-		tblMenueRezepte.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
+		tblMenueRezepte
+				.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		tblMenueRezepte.setCaption("Rezepte in Menü");
 
 		load();
@@ -128,13 +129,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		box.addComponent(vlBox);
 		vlBox.setSpacing(true);
 		vlBox.addComponent(hlUeberschrift);
-//		hlUeberschrift.addComponent(ueberschriftAnlegen);
+		// hlUeberschrift.addComponent(ueberschriftAnlegen);
 		headlineAnlegen = new Label("Menü anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
-		
+
 		hlUeberschrift.addComponent(headlineAnlegen);
-		hlUeberschrift.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
-		
+		hlUeberschrift.setComponentAlignment(headlineAnlegen,
+				Alignment.MIDDLE_LEFT);
+
 		vlBox.addComponent(hlDetails);
 		hlDetails.addComponent(vlDetailsLinks);
 		vlDetailsLinks.addComponent(tfMenuename);
@@ -161,16 +163,18 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
 		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
-		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI.getCurrent().getData()).getUser().getVorname());
+		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI
+				.getCurrent().getData()).getUser().getVorname());
 		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
 
 		tcsFussnoten.setWidth("100%");
 		tfMenuename.setWidth("90%");
 		tfMenuename.setMaxLength(200);
-		tfMenuename.addValidator(new StringLengthValidator(IConstants.INFO_MENUE_NAME, 5, 200, false));
+		tfMenuename.addValidator(new StringLengthValidator(
+				IConstants.INFO_MENUE_NAME, 5, 200, false));
 		nsKoch.setWidth("95%");
-		
+
 		nsGeschmack.setWidth("95%");
 		nsGeschmack.setImmediate(true);
 		nsGeschmack.addValidator(new Validator() {
@@ -195,9 +199,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 			}
 		});
-//
-//		nsGeschmack.setNullSelectionAllowed(false);
-//		nsMenueart.setNullSelectionAllowed(false);
+		//
+		// nsGeschmack.setNullSelectionAllowed(false);
+		// nsMenueart.setNullSelectionAllowed(false);
 		tfMenuename.setImmediate(true);
 		nsKoch.setImmediate(true);
 		nsKoch.setNullSelectionAllowed(false);
@@ -251,7 +255,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(MenueAnlegen.class);
+				if (MenueAnlegen.this.getParent() instanceof Window) {
+					Window win = (Window) MenueAnlegen.this.getParent();
+					win.close();
+				} else {
+					ViewHandler.getInstance().switchView(MenueAnlegen.class);
+				}
 			}
 		});
 
@@ -260,13 +269,17 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					speichern();
-					ViewHandler.getInstance().switchView(
-							MenueAnzeigenTabelle.class);
+					if (MenueAnlegen.this.getParent() instanceof Window) {
+						Window win = (Window) MenueAnlegen.this.getParent();
+						win.close();
+					} else {
+						ViewHandler.getInstance().switchView(
+								MenueAnzeigenTabelle.class);
+					}
 				}
 			}
 		});
 
-		// TODO Button implementieren
 		btNeuesRezept.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -277,27 +290,27 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		nsKoch.select(((Application) UI.getCurrent().getData()).getUser());
 	}
 
-	private void addRezept()
-	{
+	private void addRezept() {
 		final Window win = new Window("Neues Rezept");
 		win.setModal(true);
 		win.setResizable(false);
-		win.setWidth("800px");
-		win.setHeight("600px");
-		
+		win.setWidth("1200px");
+		win.setHeight("850px");
+
 		RezeptAnlegen ra = new RezeptAnlegen();
 		addComponent(ra);
-		
+
 		win.setContent(ra);
 		UI.getCurrent().addWindow(win);
 		win.addCloseListener(new Window.CloseListener() {
-			
+
 			@Override
 			public void windowClose(CloseEvent e) {
 				load();
 			}
 		});
 	}
+
 	public void load() {
 
 		// Inhalte laden
@@ -307,14 +320,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tblRezepte.setContainerDataSource(ctRezepte);
 
 			tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-			"mitarbeiter" });
-			
+					"mitarbeiter" });
+
 			ctMenue = new BeanItemContainer<Rezept>(Rezept.class);
 			tblMenueRezepte.setContainerDataSource(ctMenue);
 
-			tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-			"mitarbeiter" });
-			
+			tblMenueRezepte.setVisibleColumns(new Object[] { "name",
+					"rezeptart", "mitarbeiter" });
+
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 			for (Mitarbeiter e : mitarbeiter) {
@@ -360,9 +373,10 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	}
 
 	public void ladeRezept(Rezept rezept) {
-		if (rezept.getId()==null){
+		if (rezept.getId() == null) {
 			try {
-				rezept=Rezeptverwaltung.getInstance().getRezeptByName(rezept.getName());
+				rezept = Rezeptverwaltung.getInstance().getRezeptByName(
+						rezept.getName());
 			} catch (ConnectException e) {
 				e.printStackTrace();
 			} catch (DAOException e) {
@@ -375,7 +389,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.addItem(rezept);
 		tmpRezepte.add(rezept);
 		tblRezepte.removeItem(rezept);
-		((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
+		((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
 	}
 
 	private void ladeMenue() {
@@ -442,13 +457,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
 		headlineUpdate = new Label("Menü bearbeiten");
-		
+
 		headlineUpdate.setStyleName("ViewHeadline");
-		
-		hlUeberschrift
-				.replaceComponent(headlineAnlegen, headlineUpdate);
-		
-		hlUeberschrift.setComponentAlignment(headlineUpdate, Alignment.MIDDLE_LEFT);
+
+		hlUeberschrift.replaceComponent(headlineAnlegen, headlineUpdate);
+
+		hlUeberschrift.setComponentAlignment(headlineUpdate,
+				Alignment.MIDDLE_LEFT);
 
 		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btUpdate.addClickListener(new ClickListener() {
@@ -543,11 +558,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private Boolean validiereEingabe() {
 		if (tfMenuename.getValue().isEmpty()) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_NAME);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_NAME);
 			return false;
 		}
 		if (nsKoch.getValue() == null) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_KOCH);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_KOCH);
 			return false;
 		}
 		if (nsMenueart.getValue() == null) {
@@ -556,12 +573,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			return false;
 		}
 		if (nsGeschmack.getValue() == null) {
-			((Application) UI.getCurrent().getData()).showDialog(
-					IConstants.INFO_MENUE_GESCHMACK);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_GESCHMACK);
 			return false;
 		}
 		if (tmpRezepte == null || tmpRezepte.size() == 0) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_REZEPT);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_REZEPT);
 			return false;
 		}
 		int countHauptmenue = 0;
@@ -571,13 +589,13 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 		}
 		if (countHauptmenue == 0) {
-			((Application) UI.getCurrent().getData()).showDialog(
-					IConstants.INFO_MENUE_HAUPTGERICHT);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_HAUPTGERICHT);
 			return false;
 		}
 		if (countHauptmenue > 1) {
-			((Application) UI.getCurrent().getData()).showDialog(
-					IConstants.INFO_MENUE_NUR_HAUPTGERICHT);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_MENUE_NUR_HAUPTGERICHT);
 			return false;
 		}
 		return true;
@@ -587,7 +605,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void valueChange(ValueChangeEvent event) {
 
 	}
-	
 
 	// private void rezeptAlsHauptgerichtSpeichern() {
 	// if (ausgArtikel.isEmpty()) {

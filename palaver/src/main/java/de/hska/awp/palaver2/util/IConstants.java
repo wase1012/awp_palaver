@@ -33,23 +33,23 @@ public interface IConstants
 	String 		MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen anzeigen";
 	String		MENU_BESTELLUNG_GENERATE = "Neue Bestellungen generieren";
 	String		MENU_NACHRICHT_ANZEIGEN = "Nachrichten anzeigen";
-	String		MENU_NACHRICHT_NEU = "Nachrichten erstellen";
+	String		MENU_NACHRICHT_NEU = "Nachricht erstellen";
 	String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
 	String		MENU_MENGENEINHEIT_ANZEIGEN = "Mengeneinheiten";
 	String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
 	String		MENU_KATEGORIE_ANZEIGEN = "Kategorien";
 	String		MENU_ROLLEN_ANZEIGEN = "Rollen anzeigen";
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
-	String 		MENU_REZEPT_NEU = "Anlegen";
-	String 		MENU_REZEPT_ANZEIGEN = "Anzeigen";
+	String 		MENU_REZEPT_NEU = "Rezept anlegen";
+	String 		MENU_REZEPT_ANZEIGEN = "Alle Rezepte anzeigen";
 	String 		MENU_REZEPT_AENDERN = "Ändern";
 	String 		MENU_REZEPT_LOESCHEN = "Löschen";
 	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
 	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";
 	String 		MENU_MENUPLAN_HISTORIE = "Menüplan-Historie";
 	String		MENU_KUCHENVERWALTUNG_HEADLINE = "Kuchen";
-	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept Anlegen";
-	String		MENU_KUCHENREZEPT_ANZEIGEN = "Kuchenrezept Anzeigen";
+	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept anlegen";
+	String		MENU_KUCHENREZEPT_ANZEIGEN = "Alle Kuchenrezepte anzeigen";
 	String		MENU_KUCHENPLAN_AKTUELL = "Aktueller Kuchenplan";
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschmäcker";
@@ -59,7 +59,7 @@ public interface IConstants
 	String		MENU_LOGOUT = "Logout";
 	String 		MENU_MENUE_HEADLINE = "Menü";
 	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
-	String 		MENU_MENUE_SUCHEN = " Menü suchen";
+	String 		MENU_MENUE_SUCHEN = " Alle Menüs anzeigen";
 	String 		MENU_REGEL = "Regeln";
 	String 		MENU_HEADER = "Kopfzeile anzeigen/ausblenden";
 	

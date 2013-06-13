@@ -111,9 +111,9 @@ public class MenueartEinst extends VerticalLayout implements View {
 			ctMenueart = new BeanItemContainer<Menueart>(Menueart.class,
 					Menueartverwaltung.getInstance().getAllMenueart());
 			tblMenueart.setContainerDataSource(ctMenueart);
-			tblMenueart
-					.setVisibleColumns(new Object[] { "id", "bezeichnung", });
-			tblMenueart.sort(new Object[] { "id" }, new boolean[] { true });
+			tblMenueart.setVisibleColumns(new Object[] { "bezeichnung", });
+			tblMenueart.sort(new Object[] { "bezeichnung" },
+					new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}

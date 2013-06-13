@@ -111,9 +111,9 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			ctGeschmack = new BeanItemContainer<Geschmack>(Geschmack.class,
 					Geschmackverwaltung.getInstance().getAllGeschmack());
 			tblGeschmack.setContainerDataSource(ctGeschmack);
-			tblGeschmack
-					.setVisibleColumns(new Object[] { "id", "bezeichnung", });
-			tblGeschmack.sort(new Object[] { "id" }, new boolean[] { true });
+			tblGeschmack.setVisibleColumns(new Object[] { "bezeichnung", });
+			tblGeschmack.sort(new Object[] { "bezeichnung" },
+					new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}

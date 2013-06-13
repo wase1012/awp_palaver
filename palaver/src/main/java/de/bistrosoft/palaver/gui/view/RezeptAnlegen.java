@@ -168,7 +168,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
-		headlineAnlegen = new Label("Rezept Anlegen");
+		headlineAnlegen = new Label("Rezept anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
 

@@ -36,7 +36,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 	private Menue menue;
 
 	private Button btAuswaehlen;
-	
+
 	private Label headline;
 
 	public MenueAnzeigenTabelle() {
@@ -44,10 +44,10 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 		this.setSizeFull();
 		this.setMargin(true);
-		
+
 		headline = new Label("Alle Menüs");
 		headline.setStyleName("ViewHeadline");
-		
+
 		this.addComponent(headline);
 		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 
@@ -77,7 +77,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				if (event.isDoubleClick()) {
 					ViewHandler.getInstance().switchView(MenueAnlegen.class,
 							new ViewDataObject<Menue>(menue));
-				} 
+				}
 			}
 		});
 
@@ -87,10 +87,10 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			container = new BeanItemContainer<Menue>(Menue.class,
 					Menueverwaltung.getInstance().getAllMenuesTabelle());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "id", "name", "kochname",
+			table.setVisibleColumns(new Object[] { "name", "kochname",
 					"geschmack", "menueart" });
 			table.setFilterBarVisible(true);
-			table.sort(new Object[] { "id" }, new boolean[] { true });
+			table.sort(new Object[] { "name" }, new boolean[] { true });
 			table.markAsDirty();
 			table.setFilterFieldValue("kochname", ((Application) UI
 					.getCurrent().getData()).getUser().getVorname());

@@ -25,7 +25,6 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
@@ -67,8 +66,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
 	private CheckBox aktiv = new CheckBox("Aktiv");
-	// private CheckBox harteRegel = new CheckBox("Ignorierbar");
+	private CheckBox harteRegel = new CheckBox("Ignorierbar");
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button bearbeiten = new Button(IConstants.BUTTON_SAVE);
 	private Label label;
 	private Regel regel;
@@ -166,19 +166,26 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		mitte.addComponent(regeltyp);
 		mitte.addComponent(operator);
 		rechts.addComponent(fehlermeldung);
-		// rechts.addComponent(harteRegel);
+		rechts.addComponent(harteRegel);
 		rechts.addComponent(aktiv);
 
 		box.addComponent(rechts);
 		box.setComponentAlignment(rechts, Alignment.TOP_LEFT);
 
-		control.setWidth("100%");
 		control.setSpacing(true);
-
-		control.addComponent(speichern);
-		control.setComponentAlignment(speichern, Alignment.BOTTOM_RIGHT);
+		control.addComponents(verwerfen, speichern);
 		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		
+		verwerfen.addClickListener(new ClickListener()
+		{
+			@Override
+			public void buttonClick(ClickEvent event)
+			{
+				ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
+			}
+		});
 
 		links2.addComponent(label);
 		box2.setComponentAlignment(links2, Alignment.TOP_CENTER);
@@ -186,6 +193,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		fenster.addComponent(box);
 		fenster.setComponentAlignment(box, Alignment.TOP_CENTER);
 		fenster.addComponent(control);
+		fenster.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
 
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
