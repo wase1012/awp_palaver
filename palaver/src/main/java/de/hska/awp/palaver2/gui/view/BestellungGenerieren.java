@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
+import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
@@ -90,25 +93,37 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					week = cal.get(Calendar.WEEK_OF_YEAR);
 					@SuppressWarnings("deprecation")
 					int year = date.getValue().getYear() + 1900;
-
-					if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year)) == null) {
+					
+					Menueplan m = null;
+					List<ArtikelBedarf> a = null;
+					try {
+						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
+//						a = Menueplanverwaltung.getInstance().getArtikelBedarfByWeek(new Week(week, year));
+					} catch (Exception e) {
+						log.error(e.toString());
+					}
+					if (m == null) {
 						Notification notification = new Notification("Kein Menüplan vorhanden!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
-
-						try {
-
-							Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(new Week(week, year));
-
-						} catch (Exception e) {
-							log.error(e.toString());
-							Notification notification = new Notification("Bestellungen konnte nicht erzeugt werden!");
+						//TODO != in == ändern, wenn Methode auslesen richtig geht
+						if (a != null){	
+							Notification notification = new Notification("Kein Kuchenbedarf vorhanden!");
 							notification.setDelayMsec(500);
 							notification.show(Page.getCurrent());
-						}
+						} else {
+							try {
+								Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(m, a, new Week(week, year));
+							} catch (Exception e) {
+								log.error(e.toString());
+								Notification notification = new Notification("Bestellungen konnte nicht erzeugt werden!");
+								notification.setDelayMsec(500);
+								notification.show(Page.getCurrent());
+							}
 
-						ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+							ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
+						}
 					}
 				}
 			}
