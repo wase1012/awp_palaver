@@ -22,12 +22,14 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -66,9 +68,9 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	private TextField			bestellung = new TextField("Bestellgröße");
 	private TextField			notiz = new TextField("Notiz");
 	
-	private ComboBox			lieferant = new ComboBox("Lieferant");
-	private ComboBox			mengeneinheit = new ComboBox("Mengeneinheit");
-	private ComboBox			kategorie = new ComboBox("Kategorie");
+	private NativeSelect		lieferant = new NativeSelect("Lieferant");
+	private NativeSelect		mengeneinheit = new NativeSelect("Mengeneinheit");
+	private NativeSelect		kategorie = new NativeSelect("Kategorie");
 	
 	private CheckBox			bio = new CheckBox("Bio");
 	private CheckBox			standard = new CheckBox("Standard");
@@ -223,7 +225,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
-		speichern.setEnabled(false);
+//		speichern.setEnabled(false);
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -258,6 +260,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				if (validiereEingabe()) {
 				
 				Artikel artikel = new Artikel();
 				artikel.setArtikelnr(artnr.getValue());
@@ -326,6 +329,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 						}
 					}
 				});
+			}
 			}
 		});
 		addLieferant.addClickListener(new ClickListener()
@@ -1068,18 +1072,31 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		
-		if(name.getValue() == "" || name.getValue() == null || bestellung.getValue() == "" ||
-				 bestellung.getValue() == null || lieferant.getValue() == null ||
-				 lieferant.getValue() == "" || mengeneinheit.getValue() == null || mengeneinheit.getValue() == "" ||
-				 kategorie.getValue() == null || kategorie.getValue() == "") 
-		{
-			speichern.setEnabled(false);
+	}
+	
+	private Boolean validiereEingabe() {
+		if (name.getValue().toString() == "[]") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_NAME);
+			return false;
 		}
-		else 
-		{
-			speichern.setEnabled(true);
+		if (mengeneinheit.isValid() == false) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT);
+			return false;
 		}
-		
+		if (kategorie.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
+			return false;
+		}
+		if (bestellung.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }

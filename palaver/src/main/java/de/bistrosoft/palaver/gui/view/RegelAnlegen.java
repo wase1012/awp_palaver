@@ -23,7 +23,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -37,6 +36,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -49,6 +49,10 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 	// Variablen und Komponenten
 	HorizontalLayout box = new HorizontalLayout();
+	HorizontalLayout box2 = new HorizontalLayout();
+	VerticalLayout links2 = new VerticalLayout();
+	VerticalLayout mitte2 = new VerticalLayout();
+	VerticalLayout rechts2 = new VerticalLayout();
 	private VerticalLayout fenster = new VerticalLayout();
 	HorizontalLayout control = new HorizontalLayout();
 	VerticalLayout links = new VerticalLayout();
@@ -59,7 +63,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	private NativeSelect operator = new NativeSelect("Operator");
 	private OptionGroup spalten = new OptionGroup("Spalten");
 	private OptionGroup zeilen = new OptionGroup("Zeilen");
-	private TwinColSelect kriterienTwin = new TwinColSelect("Kriterien");
+	private TwinColTouch kriterienTwin = new TwinColTouch("Kriterien");
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
 	private CheckBox aktiv = new CheckBox("Aktiv");
@@ -132,10 +136,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		label = new Label("Neue Regel");
 		label.setStyleName("ViewHeadline");
 
-		fenster.setWidth("1000px");
-		fenster.setSpacing(true);
+		fenster.setWidth("900px");
 
-		links.setWidth("300px");
+		links.setWidth("100px");
 		links.setSpacing(true);
 
 		mitte.setWidth("300px");
@@ -144,11 +147,20 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		rechts.setWidth("300px");
 		rechts.setSpacing(true);
 
-		box.setWidth("1000px");
-		box.setSpacing(true);
+		box.setWidth("900px");
 		box.addComponent(links);
+		box.setComponentAlignment(links, Alignment.TOP_CENTER);
 		box.addComponent(mitte);
+		box.setComponentAlignment(mitte, Alignment.TOP_LEFT);
 
+		box2.setWidth("900px");
+		links2.setWidth("100px");
+		mitte2.setWidth("300px");
+		rechts2.setWidth("300px");
+		box2.addComponent(links2);
+		box2.addComponent(mitte2);
+		box2.addComponent(rechts2);
+		
 		links.addComponent(zeilen);
 		links.addComponent(spalten);
 		mitte.addComponent(regeltyp);
@@ -158,21 +170,22 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		rechts.addComponent(aktiv);
 
 		box.addComponent(rechts);
+		box.setComponentAlignment(rechts, Alignment.TOP_LEFT);
 
 		control.setWidth("100%");
 		control.setSpacing(true);
 
 		control.addComponent(speichern);
-
-		rechts.addComponent(control);
-		rechts.setComponentAlignment(control, Alignment.TOP_RIGHT);
-
+		control.setComponentAlignment(speichern, Alignment.BOTTOM_RIGHT);
+		
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 
-		fenster.addComponent(label);
-		fenster.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+		links2.addComponent(label);
+		box2.setComponentAlignment(links2, Alignment.TOP_CENTER);
+		fenster.addComponent(box2);
 		fenster.addComponent(box);
-		fenster.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		fenster.setComponentAlignment(box, Alignment.TOP_CENTER);
+		fenster.addComponent(control);
 
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
@@ -184,7 +197,6 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			spalten.addItem(z);
 		}
 
-		zeilen.setWidth("100%");
 		zeilen.setImmediate(true);
 		zeilen.setMultiSelect(true);
 		zeilen.addValidator(new Validator() {
@@ -199,7 +211,6 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		spalten.setWidth("100%");
 		spalten.setImmediate(true);
 		spalten.setMultiSelect(true);
 		spalten.addValidator(new Validator() {
@@ -214,19 +225,19 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		regeltyp.setWidth("100%");
+		regeltyp.setWidth("95%");
 		regeltyp.setImmediate(true);
 		regeltyp.addValidator(new StringLengthValidator(
-				IConstants.INFO_REGEL_REGELTYP, 3, 45, false));
+				IConstants.INFO_REGEL_REGELTYP, 3, 500, false));
 		regeltyp.setContainerDataSource(regeltypcontainer);
 
-		operator.setWidth("100%");
+		operator.setWidth("95%");
 		operator.setImmediate(true);
 		operator.addValidator(new StringLengthValidator(
-				IConstants.INFO_REGEL_OPERATOR, 3, 45, false));
+				IConstants.INFO_REGEL_OPERATOR, 3, 500, false));
 		operator.setContainerDataSource(operatorcontainer);
 
-		kriterienTwin.setWidth("100%");
+		kriterienTwin.setWidth("95%");
 		kriterienTwin.setImmediate(true);
 		kriterienTwin.addValidator(new Validator() {
 
@@ -248,7 +259,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		fehlermeldung.setWidth("100%");
 		fehlermeldung.setImmediate(true);
 		fehlermeldung.addValidator(new StringLengthValidator(
-				IConstants.INFO_REGEL_FEHLERMELDUNG, 3, 100, false));
+				IConstants.INFO_REGEL_FEHLERMELDUNG, 3, 500, false));
 
 	}
 
@@ -424,29 +435,32 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		try {
 
 			// Container
-			zubereitungContainer = new BeanItemContainer<Zubereitung>(
-					Zubereitung.class, Zubereitungverwaltung.getInstance()
-							.getAllZubereitung());
-			fussnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class,
-					Fussnotenverwaltung.getInstance().getAllFussnote());
-			menueartContainer = new BeanItemContainer<Menueart>(Menueart.class,
-					Menueartverwaltung.getInstance().getAllMenueart());
-			geschmackContainer = new BeanItemContainer<Geschmack>(
-					Geschmack.class, Geschmackverwaltung.getInstance()
-							.getAllGeschmackAktiv());
+			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
+					.getAllZubereitung();
+			List<Fussnote> fn = Fussnotenverwaltung.getInstance().getAllFussnote();
+			List<Menueart> ma = Menueartverwaltung.getInstance().getAllMenueart();
+			List<Geschmack> g = Geschmackverwaltung.getInstance().getAllGeschmackAktiv();
 
 			// Container setzen
 			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
-				kriterienTwin.setContainerDataSource(zubereitungContainer);
+				for (Zubereitung z : zb) {
+					kriterienTwin.addItem(z);
+				}
 			}
 			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
-				kriterienTwin.setContainerDataSource(fussnoteContainer);
+				for (Fussnote f : fn) {
+					kriterienTwin.addItem(f);
+				}
 			}
 			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
-				kriterienTwin.setContainerDataSource(geschmackContainer);
+				for (Geschmack ge : g) {
+					kriterienTwin.addItem(ge);
+				}
 			}
 			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
-				kriterienTwin.setContainerDataSource(menueartContainer);
+				for (Menueart m : ma) {
+					kriterienTwin.addItem(m);
+				}
 			}
 
 		} catch (Exception e) {
@@ -479,16 +493,11 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			zeilen.select(z);
 		}
 		try {
-			zubereitungContainer = new BeanItemContainer<Zubereitung>(
-					Zubereitung.class, Zubereitungverwaltung.getInstance()
-							.getAllZubereitung());
-			fussnoteContainer = new BeanItemContainer<Fussnote>(Fussnote.class,
-					Fussnotenverwaltung.getInstance().getAllFussnote());
-			menueartContainer = new BeanItemContainer<Menueart>(Menueart.class,
-					Menueartverwaltung.getInstance().getAllMenueart());
-			geschmackContainer = new BeanItemContainer<Geschmack>(
-					Geschmack.class, Geschmackverwaltung.getInstance()
-							.getAllGeschmackAktiv());
+			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
+					.getAllZubereitung();
+			List<Fussnote> fn = Fussnotenverwaltung.getInstance().getAllFussnote();
+			List<Menueart> ma = Menueartverwaltung.getInstance().getAllMenueart();
+			List<Geschmack> g = Geschmackverwaltung.getInstance().getAllGeschmackAktiv();
 
 			// List<String> kr =
 			// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
@@ -502,7 +511,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					&& regel.getOperator().equals(
 							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				System.out.println("1");
-				kriterienTwin.setContainerDataSource(zubereitungContainer);
+				for (Zubereitung z : zb) {
+					kriterienTwin.addItem(z);
+				}
 				mitte.removeComponent(kriterienText);
 				mitte.addComponent(kriterienTwin);
 				// List<String> kr =
@@ -522,7 +533,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				System.out.println("2");
 				// mitte.removeComponent(kriterienText);
 				mitte.addComponent(kriterienTwin);
-				kriterienTwin.setContainerDataSource(fussnoteContainer);
+				for (Fussnote f : fn) {
+					kriterienTwin.addItem(f);
+				}
 				// List<String> kr =
 				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
 				// for(String k : kr) {
@@ -541,7 +554,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				System.out.println("3");
 				mitte.removeComponent(kriterienText);
 				mitte.addComponent(kriterienTwin);
-				kriterienTwin.setContainerDataSource(geschmackContainer);
+				for (Geschmack ge : g) {
+					kriterienTwin.addItem(ge);
+				}
 
 				// List<String> kr =
 				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
@@ -559,7 +574,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					&& regel.getOperator().equals(
 							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 				System.out.println("4");
-				kriterienTwin.setContainerDataSource(menueartContainer);
+				for (Menueart m : ma) {
+					kriterienTwin.addItem(m);
+				}
 				mitte.removeComponent(kriterienText);
 				mitte.addComponent(kriterienTwin);
 				// List<String> kr =

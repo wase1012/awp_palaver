@@ -31,7 +31,7 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	private final static String FAX = "fax";
 	private final static String EMAIL = "email";
 	private final static String LIEFERANT_FK = "lieferant_fk";
-	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM " + TABLE;
+	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM " + TABLE + " ORDER BY ansprechpartner.name";
 	private static final String GET_ANSPRECHPARTNER_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
 	private static final String DELETE_ANSPRECHPARTNER = "DELETE FROM " + TABLE + " WHERE id = {0}";
