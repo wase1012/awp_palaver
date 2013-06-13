@@ -7,9 +7,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -18,12 +15,12 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.hska.awp.palaver.Application;
@@ -102,6 +99,15 @@ public class WinSelectMenue extends Window {
 		// Suchfeld und "Neu" Button hinzufï¿½gen
 		// bottomLeftLayout.addComponent(searchField);
 		leftLayout.addComponent(btNewMenue);
+
+		btNewMenue.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				addNewMenue();
+			}
+
+		});
 
 		// Linke Seite Höhe und Breite auf 100% setzen
 		leftLayout.setHeight("100%");
@@ -204,10 +210,11 @@ public class WinSelectMenue extends Window {
 				// Menï¿½bezeichnung des ausgewï¿½hlten Menï¿½s
 				try {
 					Menue menue = (Menue) ftMenueList.getValue();
-//					Menue menue = Menueverwaltung.getInstance().getMenueByName(tfName.getValue());
+					// Menue menue =
+					// Menueverwaltung.getInstance().getMenueByName(tfName.getValue());
 					// Neue Menï¿½komponente aus ausgewï¿½hltem Menï¿½ erstellen
 					// und hinzufï¿½gen
-					Integer iPortion=Integer.parseInt(tfPortion.getValue());
+					Integer iPortion = Integer.parseInt(tfPortion.getValue());
 					MenueComponent menueComp = new MenueComponent(menue,
 							tfAngezName.getValue(), menueplan, menueGrid,
 							sourceRow, sourceColumn, true, iPortion);
@@ -228,10 +235,7 @@ public class WinSelectMenue extends Window {
 
 	private void initMenueList() {
 
-		// Container fï¿½r Menï¿½liste festlegen
-		menueContainer = new BeanItemContainer<Menue>(Menue.class,
-				Menueverwaltung.getInstance().getAllMenuesTabelle());
-
+		ladeMenues();
 		ftMenueList.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -266,16 +270,10 @@ public class WinSelectMenue extends Window {
 
 			}
 		});
-		ftMenueList.setContainerDataSource(menueContainer);
-
-		// Spalten festlegen
-		ftMenueList.setVisibleColumns(new Object[] { "name", "kochname",
-				"geschmack", "menueart" });
-		ftMenueList.sort(new Object[] { "name" }, new boolean[] { true });
 
 		ftMenueList.setFilterFieldValue("kochname", ((Application) UI
 				.getCurrent().getData()).getUser().getVorname());
-		
+
 		ftMenueList.setColumnWidth("name", 200);
 		ftMenueList.setColumnWidth("kochname", 80);
 		ftMenueList.setColumnWidth("geschmack", 80);
@@ -288,12 +286,49 @@ public class WinSelectMenue extends Window {
 
 		// bei Ãndern Komponente aus Menï¿½plan selektieren
 		if (menueGrid.getComponent(destCol, destRow) instanceof MenueComponent) {
-			MenueComponent mc = (MenueComponent) menueGrid.getComponent(destCol, destRow);
+			MenueComponent mc = (MenueComponent) menueGrid.getComponent(
+					destCol, destRow);
 			ftMenueList.select(mc.getMenue());
 			tfAngezName.setValue(mc.getAngezeigterName());
 			tfPortion.setValue(mc.getPortion().toString());
 		}
 
+	}
+
+	private void ladeMenues() {
+
+		// Container fï¿½r Menï¿½liste festlegen
+		menueContainer = new BeanItemContainer<Menue>(Menue.class,
+				Menueverwaltung.getInstance().getAllMenuesTabelle());
+		ftMenueList.setContainerDataSource(menueContainer);
+
+		// Spalten festlegen
+		ftMenueList.setVisibleColumns(new Object[] { "name", "kochname",
+				"geschmack", "menueart" });
+		ftMenueList.sort(new Object[] { "name" }, new boolean[] { true });
+	}
+
+	private void addNewMenue() {
+		final Window win = new Window("Neues Menuü");
+		win.setModal(true);
+		win.setResizable(false);
+		win.setWidth("1000px");
+		win.setHeight("750px");
+
+		MenueAnlegen me = new MenueAnlegen();
+		win.setContent(me);
+//		addComponent(me);
+
+		win.setContent(me);
+		UI.getCurrent().addWindow(win);
+		win.addCloseListener(new Window.CloseListener() {
+
+			@Override
+			public void windowClose(CloseEvent e) {
+				ladeMenues();
+
+			}
+		});
 	}
 
 }
