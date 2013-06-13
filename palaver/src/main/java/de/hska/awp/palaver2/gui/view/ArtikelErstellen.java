@@ -28,6 +28,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -223,7 +224,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 		
-		speichern.setEnabled(false);
+//		speichern.setEnabled(false);
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -258,6 +259,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event)
 			{
+				if (validiereEingabe()) {
 				
 				Artikel artikel = new Artikel();
 				artikel.setArtikelnr(artnr.getValue());
@@ -326,6 +328,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 						}
 					}
 				});
+			}
 			}
 		});
 		addLieferant.addClickListener(new ClickListener()
@@ -1068,18 +1071,31 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		
-		if(name.getValue() == "" || name.getValue() == null || bestellung.getValue() == "" ||
-				 bestellung.getValue() == null || lieferant.getValue() == null ||
-				 lieferant.getValue() == "" || mengeneinheit.getValue() == null || mengeneinheit.getValue() == "" ||
-				 kategorie.getValue() == null || kategorie.getValue() == "") 
-		{
-			speichern.setEnabled(false);
+	}
+	
+	private Boolean validiereEingabe() {
+		if (name.getValue().toString() == "[]") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_NAME);
+			return false;
 		}
-		else 
-		{
-			speichern.setEnabled(true);
+		if (mengeneinheit.isValid() == false) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT);
+			return false;
 		}
-		
+		if (kategorie.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
+			return false;
+		}
+		if (bestellung.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }
