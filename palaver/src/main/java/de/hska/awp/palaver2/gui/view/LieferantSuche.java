@@ -592,7 +592,11 @@ public class LieferantSuche extends VerticalLayout implements View {
 							ans.setName(nameInput);
 							ans.setTelefon(telefonInput);
 							ans.setHandy(handyInput);
-							ans.setHandy(emailInput);
+							if(emailAnspr.getValue() == ""){
+							 ans.setEmail("");
+							} else {
+								ans.setEmail(emailInput);
+							}
 							ans.setFax(faxInput);
 							ans.setLieferant(lieferant);
 							try {
