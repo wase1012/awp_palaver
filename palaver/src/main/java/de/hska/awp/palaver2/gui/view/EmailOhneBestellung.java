@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -68,7 +69,11 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 		this.setSizeFull();
 
 		this.setMargin(true);
-
+		
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		senden.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
+		
+		
 		headline = new Label("Email senden");
 		headline.setStyleName("ViewHeadline");
 
