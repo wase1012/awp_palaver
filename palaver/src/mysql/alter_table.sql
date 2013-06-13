@@ -19,3 +19,7 @@ ALTER TABLE `palaver`.`menueplan_has_menues`
 	
 ALTER TABLE `palaver`.`menueplan` 
 	ADD COLUMN `freigegeben` TINYINT(1) NULL  AFTER `year` ;
+	
+ALTER TABLE `palaver`.`ansprechpartner` 
+	ADD COLUMN `email` VARCHAR(45) NULL  AFTER `fax` ;	
+	
