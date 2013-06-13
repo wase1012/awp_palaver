@@ -94,7 +94,7 @@ public interface IConstants
 	String 		BUTTON_EDIT_ICON = "img/edit.ico";
 	String		BUTTON_OK_ICON = "img/check.ico";
 	String		BUTTON_EXCEL_ICON = "img/excel1.ico";
-//	String		BUTTON_EMAILVERSAND_ICON = "";
+	String		BUTTON_EMAILVERSAND_ICON = "";
 	
 	String		ICON_YES = "img/tick_circle.ico";
 	String		ICON_NO = "img/cross_circle.ico";
@@ -177,6 +177,8 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
 
 
 
