@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
@@ -180,7 +182,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 		// RECHTE SEITE
 
-		Label label = new Label("Neue Nachricht");
+		Label label = new Label("Neue Nachricht an:");
 		label.setValue("Neue Nachricht");
 
 		nachrichterstellenlayout.addComponent(label);
@@ -233,6 +235,9 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 				try {
 					nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
 					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
+					Notification notification = new Notification("Die Nachricht wurde gesendet!");
+					notification.setDelayMsec(500);
+					notification.show(Page.getCurrent());
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
