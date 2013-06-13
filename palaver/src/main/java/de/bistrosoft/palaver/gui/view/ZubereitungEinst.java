@@ -112,9 +112,9 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 					Zubereitung.class, Zubereitungverwaltung.getInstance()
 							.getAllZubereitung());
 			tblZubereitung.setContainerDataSource(ctZubereitung);
-			tblZubereitung.setVisibleColumns(new Object[] { "id",
-					"bezeichnung", });
-			tblZubereitung.sort(new Object[] { "id" }, new boolean[] { true });
+			tblZubereitung.setVisibleColumns(new Object[] { "bezeichnung", });
+			tblZubereitung.sort(new Object[] { "bezeichnung" },
+					new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}

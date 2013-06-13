@@ -65,7 +65,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		this.setMargin(true);
 		this.addComponent(vl);
 		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
-		
+
 		vl.setWidth("60%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
@@ -112,9 +112,9 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			ctFussnote = new BeanItemContainer<Fussnote>(Fussnote.class,
 					Fussnotenverwaltung.getInstance().getAllFussnote());
 			tblFussnote.setContainerDataSource(ctFussnote);
-			tblFussnote.setVisibleColumns(new Object[] { "id", "bezeichnung",
+			tblFussnote.setVisibleColumns(new Object[] { "bezeichnung",
 					"abkuerzung" });
-			tblFussnote.sort(new Object[] { "id" }, new boolean[] { true });
+			tblFussnote.sort(new Object[] { "bezeichnung" }, new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
