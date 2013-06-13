@@ -360,7 +360,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
-				if (m.getRollen().get(i).getName().equals("Chef")) {
+				if (m.getRollen().get(i).getName().equals(Rollen.ADMINISTRATOR)) {
 					name.setEnabled(true);
 					vorname.setEnabled(true);
 					email.setEnabled(true);
