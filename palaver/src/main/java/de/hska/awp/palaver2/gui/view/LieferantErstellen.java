@@ -53,7 +53,8 @@ public class LieferantErstellen extends VerticalLayout implements View
 	private TextField			fax = new TextField("Telefax");
 	private TextArea			notiz = new TextArea("Notiz");
 	private CheckBox			mehrereliefertermine = new CheckBox("mehrere Liefertermine");
-
+	
+	private Window dialog = new Window();
 	
 	private Lieferant lieferant = new Lieferant();
 
@@ -192,8 +193,15 @@ public class LieferantErstellen extends VerticalLayout implements View
 		
 		@Override
 		public void buttonClick(ClickEvent event) {
-			ViewHandler.getInstance().returnToDefault();
 			
+			if (LieferantErstellen.this.getParent() instanceof Window) {
+				Window win = (Window) LieferantErstellen.this.getParent();
+				win.close();
+				UI.getCurrent().removeWindow(dialog);
+			}
+			else {
+				ViewHandler.getInstance().returnToDefault();
+			}
 		}
 	});
         	
@@ -204,7 +212,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		{
 			if (validiereEingabe()) {
 				
-				final Window dialog = new Window();
+
 				dialog.setClosable(false);
 				dialog.setWidth("300px");
 				dialog.setHeight("150px");
@@ -250,8 +258,17 @@ public class LieferantErstellen extends VerticalLayout implements View
 					@Override
 					public void buttonClick(ClickEvent event)
 					{
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));				}
+						if (LieferantErstellen.this.getParent() instanceof Window) {
+							Window win = (Window) LieferantErstellen.this.getParent();
+							win.close();
+							UI.getCurrent().removeWindow(dialog);
+						}
+						else {
+							UI.getCurrent().removeWindow(dialog);
+							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+						}
+					}
+						
 				});	
 			}
 		}
