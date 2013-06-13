@@ -11,6 +11,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
@@ -18,6 +19,7 @@ import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -68,7 +70,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements Vi
 		auswaehlen.setEnabled(true);
 		auswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if (bestellung != null) {
+				if (validiereAuswaehlen()) {
 					ViewHandler.getInstance().switchView(BestellungBearbeiten.class, new ViewDataObject<Bestellung>(bestellung));
 				}
 			}
@@ -77,7 +79,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements Vi
 		loeschen.setEnabled(true);
 		loeschen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if (bestellung != null) {
+				if (validiereAuswaehlen()) {
 					try {
 						Bestellverwaltung.getInstance().deleteBestellung(bestellung);
 					} catch (Exception e) {
@@ -125,10 +127,7 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements Vi
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					auswaehlen.setEnabled(true);
 					bestellung = (Bestellung) event.getProperty().getValue();
-				} else {
-					auswaehlen.setEnabled(false);
 				}
 			}
 
@@ -148,6 +147,17 @@ public class BestellungBearbeitenAuswaehlen extends VerticalLayout implements Vi
 		this.addComponent(fenster);
 		this.setComponentAlignment(fenster, Alignment.MIDDLE_CENTER);
 
+	}
+
+	public boolean validiereAuswaehlen() {
+		if (bestellung == null) {
+			((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_BESTELLUNG_AUSWAEHLEN);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	@Override

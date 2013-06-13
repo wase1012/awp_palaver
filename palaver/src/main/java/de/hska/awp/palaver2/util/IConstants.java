@@ -163,11 +163,13 @@ public interface IConstants
 	String 		INFO_ARTIKEL_KATEGORIENAME = "Bitte Namen eingeben";
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
+	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";
 	
 	String		INFO_BESTELLUNG_LIEFERANT ="Bitte Lieferant auswählen";
 	String 		INFO_BESTELLUNG_TERMIN1 = "Bitte gültigen Termin 1 eingeben";
 	String 		INFO_BESTELLUNG_TERMIN2 = "Bitte gültigen Termin 2 eingeben";
 	String		INFO_BESTELLUNG_ARTIKEL = "Bitte Artikel auswählen";
+	String 		INFO_BESTELLUNG_AUSWAEHLEN = "Bitte Bestellung auswählen";
 	
 	String 		INFO_MITARBEITER_NAME = "Bitte Namen eingeben";
 	String		INFO_MITARBEITER_VORNAME = "Bitte Vorname eingeben";
@@ -199,6 +201,10 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
+
+
+
 
 
 

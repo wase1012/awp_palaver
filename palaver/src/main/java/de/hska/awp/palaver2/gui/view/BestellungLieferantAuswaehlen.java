@@ -16,8 +16,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
@@ -81,9 +83,6 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
-					bestellen.setEnabled(true);
-				} else {
-					bestellen.setEnabled(false);
 				}
 			}
 		});
@@ -115,12 +114,12 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 		mitte.addComponent(bestellen);
 		mitte.setComponentAlignment(bestellen, Alignment.BOTTOM_RIGHT);
 
-		bestellen.setEnabled(false);
-
 		bestellen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ManuelleBestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
+				if (validiereLieferant()) {
+					ViewHandler.getInstance().switchView(ManuelleBestellungErstellen.class, new ViewDataObject<Lieferant>(lieferant));
+				}
 			}
 		});
 
@@ -139,6 +138,18 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 				}
 			}
 		});
+	}
+
+	protected boolean validiereLieferant() {
+		
+		if (lieferant == null ) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_AUSWAEHLEN);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
@@ -20,6 +21,7 @@ import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
@@ -68,7 +70,6 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 		form.setSpacing(true);
 		
 		zurueck.setVisible(false);
-		auswaehlen.setEnabled(false);
 
 		fenster.setSizeFull();
 		fenster.setSpacing(true);
@@ -121,20 +122,6 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			log.error(e.toString());
 		}
 
-		bestellungen.addValueChangeListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				if (event.getProperty().getValue() != null) {
-					bestellung = (Bestellung) event.getProperty().getValue();
-					auswaehlen.setEnabled(true);
-				}
-				else {
-					auswaehlen.setEnabled(false);
-				}
-			}
-		});
-
 		bestellungen.addItemClickListener(new ItemClickListener() {
 
 			@Override
@@ -173,85 +160,89 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				bpositionen.setVisible(true);
-				try {
-					if (bestellung.getLieferant().getMehrereliefertermine() == false) {
-						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
-								.getBestellpositionenByBestellungId(bestellung.getId()));
-						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-						bpositionen.setContainerDataSource(bpcontainer);
-						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt"});
-						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
-						bpositionen.setColumnWidth("kantine", 60);
-						bpositionen.setColumnWidth("gesamt", 60);
-						bpositionen.setColumnWidth("durchschnitt", 60);
-						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
-						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
-
-							@Override
-							public String getStyle(CustomTable source, Object itemId, Object propertyId) {
-								Bestellposition bp = (Bestellposition) itemId;
-								return bp.isGeliefert() ? "status-1" : "status-none";
-							}
-						});
-					} else {
-						bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
-								.getBestellpositionenByBestellungId(bestellung.getId()));
-						bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-						bpositionen.setContainerDataSource(bpcontainer);
-						bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
-								"freitag", "montag"});
-						bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
-						bpositionen.setColumnWidth("kantine", 60);
-						bpositionen.setColumnWidth("gesamt", 60);
-						bpositionen.setColumnWidth("durchschnitt", 60);
-						bpositionen.setColumnWidth("freitag", 60);
-						bpositionen.setColumnWidth("montag", 60);
-						bpositionen.setColumnHeader("durchschnitt", "MENGE");
-						bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
-						bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
-
-							@Override
-							public String getStyle(CustomTable source, Object itemId, Object propertyId) {
-								Bestellposition bp = (Bestellposition) itemId;
-								return bp.isGeliefert() ? "status-1" : "status-none";
-							}
-						});
-					}
-					bpositionen.addValueChangeListener(new ValueChangeListener() {
-						@Override
-						public void valueChange(ValueChangeEvent event) {
-							if (event.getProperty().getValue() != null) {
-								bestellposition = (Bestellposition) event.getProperty().getValue();
-								bestellposition.setGeliefert(!bestellposition.isGeliefert());
-								bpcontainer.removeItem(bestellposition);
-								bpcontainer.addBean(bestellposition);
-								bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
-								try {
-									Bestellpositionverwaltung.getInstance().updateBestellposition(bestellposition);
-								} catch (ConnectException e) {
-									e.printStackTrace();
-								} catch (DAOException e) {
-									e.printStackTrace();
-								} catch (SQLException e) {
-									e.printStackTrace();
-								}
-								bpositionen.markAsDirtyRecursive();
-							}
-						}
-					});
-					bpositionen.addItemClickListener(new ItemClickListener() {
-						@Override
-						public void itemClick(ItemClickEvent event) {
-							bpositionen.markAsDirty();
-						}
-					});
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
 				
-			}
-		});
+				if (validiereAuswaehlen()) {
+					try {
+						
+							if (bestellung.getLieferant().getMehrereliefertermine() == false) {
+								bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
+										.getBestellpositionenByBestellungId(bestellung.getId()));
+								bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+								bpositionen.setContainerDataSource(bpcontainer);
+								bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt"});
+								bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
+								bpositionen.setColumnWidth("kantine", 60);
+								bpositionen.setColumnWidth("gesamt", 60);
+								bpositionen.setColumnWidth("durchschnitt", 60);
+								bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
+								bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
+		
+									@Override
+									public String getStyle(CustomTable source, Object itemId, Object propertyId) {
+										Bestellposition bp = (Bestellposition) itemId;
+										return bp.isGeliefert() ? "status-1" : "status-none";
+									}
+								});
+							} else {
+								bpcontainer = new BeanItemContainer<Bestellposition>(Bestellposition.class, Bestellpositionverwaltung.getInstance()
+										.getBestellpositionenByBestellungId(bestellung.getId()));
+								bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+								bpositionen.setContainerDataSource(bpcontainer);
+								bpositionen.setVisibleColumns(new Object[] { "artikelName", "bestellgroesse", "durchschnitt", "kantine", "gesamt",
+										"freitag", "montag"});
+								bpositionen.setColumnHeader("bestellgroesse", IConstants.BESTELLGROESSE);
+								bpositionen.setColumnWidth("kantine", 60);
+								bpositionen.setColumnWidth("gesamt", 60);
+								bpositionen.setColumnWidth("durchschnitt", 60);
+								bpositionen.setColumnWidth("freitag", 60);
+								bpositionen.setColumnWidth("montag", 60);
+								bpositionen.setColumnHeader("durchschnitt", "MENGE");
+								bpositionen.sort(new Object[] { "id" }, new boolean[] { true });
+								bpositionen.setCellStyleGenerator(new CellStyleGenerator() {
+		
+									@Override
+									public String getStyle(CustomTable source, Object itemId, Object propertyId) {
+										Bestellposition bp = (Bestellposition) itemId;
+										return bp.isGeliefert() ? "status-1" : "status-none";
+									}
+								});
+							}
+							bpositionen.setVisible(true);
+							bpositionen.addValueChangeListener(new ValueChangeListener() {
+								@Override
+								public void valueChange(ValueChangeEvent event) {
+									if (event.getProperty().getValue() != null) {
+										bestellposition = (Bestellposition) event.getProperty().getValue();
+										bestellposition.setGeliefert(!bestellposition.isGeliefert());
+										bpcontainer.removeItem(bestellposition);
+										bpcontainer.addBean(bestellposition);
+										bpcontainer.sort(new Object[] { "id" }, new boolean[] { true });
+										try {
+											Bestellpositionverwaltung.getInstance().updateBestellposition(bestellposition);
+										} catch (ConnectException e) {
+											e.printStackTrace();
+										} catch (DAOException e) {
+											e.printStackTrace();
+										} catch (SQLException e) {
+											e.printStackTrace();
+										}
+										bpositionen.markAsDirtyRecursive();
+									}
+								}
+							});
+							bpositionen.addItemClickListener(new ItemClickListener() {
+								@Override
+								public void itemClick(ItemClickEvent event) {
+									bpositionen.markAsDirty();
+								}
+							});
+						}
+						catch (Exception e) {
+						log.error(e.toString());
+						} 
+					}
+				}
+			});
 
 		allBestellungen.addClickListener(new ClickListener() {
 
@@ -288,6 +279,18 @@ public class BestellungAnzeigen extends VerticalLayout implements View {
 
 			}
 		});
+	}
+
+	public boolean validiereAuswaehlen() {
+		
+		if (bestellungen.isValid() == false || bestellungen.getValue() == null) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_BESTELLUNG_AUSWAEHLEN);
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	@Override
