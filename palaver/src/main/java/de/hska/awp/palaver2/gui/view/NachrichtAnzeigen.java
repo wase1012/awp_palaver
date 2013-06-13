@@ -176,8 +176,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 					}
 				});
 			}
-		} else {
-			// TODO falls keine Nachrichten vorhanden sind
 		}
 
 		// RECHTE SEITE
@@ -208,7 +206,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		neuernachrichtentext.setInputPrompt(neuernachrichtentextinput);
 		neuernachrichtentext.setMaxLength(NACHRICHT_MAXLENGTH);
 		neuernachrichtentext.setRequired(true);
-		
 
 		nachrichterstellenlayout.addComponent(neuernachrichtentext);
 
@@ -261,12 +258,12 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		
-		if(combobox.isValid()==false || neuernachrichtentext.isValid()==false){
+
+		if (combobox.isValid() == false || neuernachrichtentext.isValid() == false) {
 			speichern.setEnabled(false);
 		} else {
 			speichern.setEnabled(true);
 		}
-		
+
 	}
 }
