@@ -9,7 +9,21 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
+import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -18,6 +32,7 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 /**
  * @author Christine
@@ -36,7 +51,7 @@ public class KuchenplanDAO extends AbstractDAO {
 	private final String CREATE_KUCHENREZEPT_FOR_KUCHENPLAN = "INSERT INTO kuchenplan_has_kuchenrezepte (kuchenplan_fk, kuchenrezept_fk, tag, anzahl) "
 			+ "VALUES ({0},{1},{2},{3})";
 	private final String CREATE_KUCHENPLAN = "INSERT INTO kuchenplan (week,year)  VALUES ({0},{1,number,#})";
-	private final String DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenplan = {0}";
+	private final String DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenplan_fk = {0}";
 	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "+ 
 							"(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "+
 								"(select id from kuchenplan where week={0} AND year= {1,number,#})) "+
@@ -77,36 +92,39 @@ public class KuchenplanDAO extends AbstractDAO {
 		return ab;
 	}
 
-//	public Kuchenplan getKuchenplanByWeekWithItems(Week week)
-//			throws ConnectException, DAOException, SQLException {
-//		Kuchenplan kuchenplan = null;
-//		ResultSet setMpl = getManaged(MessageFormat.format(
-//				GET_KUCHENPLAN_BY_WEEK, week.getWeek(), week.getYear()));
-//
-//		while (setMpl.next()) {
-//			kuchenplan = new Kuchenplan(setMpl.getLong(ID), week);
-//		}
-//
-//		if (kuchenplan != null) {
-//			List<Kuchenrezept> kuchenrezepte = new ArrayList<Kuchenrezept>();
-//			ResultSet setKuchenrezepte = getManaged(MessageFormat.format(
-//					GET_KUCHENREZEPTE_BY_KUCHENPLAN, kuchenplan.getId()));
-//
-//			while (setKuchenrezepte.next()) {
-//				Long id = setKuchenrezepte.getLong("id");
-//				String name = setKuchenrezepte.getString("name");
-////				Mitarbeiter baecker = null;
-////				Kuchenrezept kuchenrezept = new Kuchenrezept(id, name);
-////				int tag = setKuchenrezepte.getInt("tag");
-////				
-//				Kuchenrezept kr = new Kuchenrezept(menue, angezName,
-//						null, null, row, col, false);
-//				kuchenrezepte.add(Kuchenrezept);
-//			}
-//			menueplan.setMenues(kuchenrezepte);
-//		}
-//		return menueplan;
-//	}
+	
+	
+	
+	public Kuchenplan getKuchenplanByWeekWithItems(Week week)
+			throws ConnectException, DAOException, SQLException {
+		Kuchenplan kuchenplan = null;
+		ResultSet setKpl = getManaged(MessageFormat.format(
+				GET_KUCHENPLAN_BY_WEEK, week.getWeek(), week.getYear()));
+		while (setKpl.next()) {
+			kuchenplan = new Kuchenplan(setKpl.getLong(ID), week);
+		}
+		if (kuchenplan != null) {
+			List<KuchenplanHasKuchenrezept> kuchen = new ArrayList<KuchenplanHasKuchenrezept>();
+			ResultSet setKuchen = getManaged(MessageFormat.format(
+					GET_KUCHENREZEPTE_BY_KUCHENPLAN, kuchenplan.getId()));
+			while (setKuchen.next()) {
+				Long id = setKuchen.getLong("id");
+				String name = setKuchen.getString("name");
+				Mitarbeiter baecker = null;
+				String kommentar = null;
+				Kuchenrezept kuchenrezept = new Kuchenrezept(id, baecker, name, kommentar);
+				int anzahl = setKuchen.getInt("anzahl");
+				int tag = setKuchen.getInt("tag");
+//				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
+//						.getFussnoteByMenue(id);
+//				kuchenrezept.setFussnoten(fussnoten);
+				KuchenplanHasKuchenrezept kuchenComp = new KuchenplanHasKuchenrezept(kuchenrezept, tag, anzahl);
+				kuchen.add(kuchenComp);
+			}
+			kuchenplan.setKuchenrezepte(kuchen);
+		}
+		return kuchenplan;
+	}
 //
 //	// public Menueplan getMenueplanByWeekWithMenues(Week week) throws
 //	// ConnectException, DAOException, SQLException{
@@ -181,27 +199,26 @@ public class KuchenplanDAO extends AbstractDAO {
 //		return menues;
 //	}
 //
-//	public void createMenueForMenueplan(Menueplan mpl, Menue menue,
-//			String name, int col, int row) throws ConnectException,
-//			DAOException {
-//		String strName = "'" + name + "'";
-//		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN,
-//				mpl.getId(), menue.getId(), strName, col, row));
-//
-//	}
-//
-//	public void createMenueplan(Menueplan menueplan) throws ConnectException,
-//			DAOException {
-//		Week week = menueplan.getWeek();
-//		putManaged(MessageFormat.format(CREATE_MENUEPLAN, week.getWeek(),
-//				week.getYear()));
-//	}
-//
-//	public void deleteItemsByMenueplan(Menueplan menueplan)
-//			throws ConnectException, DAOException {
-//		putManaged(MessageFormat.format(DELETE_MENUPLANITEMS_BY_MENUEPLAN,
-//				menueplan.getId()));
-//	}
+	public void createKuchenrezepteForKuchenplan(Kuchenplan kpl, Kuchenrezept kuchenrezept,
+			String name, int tag, int anzahl) throws ConnectException,
+			DAOException {
+		String strName = "'" + name + "'";
+		putManaged(MessageFormat.format(CREATE_KUCHENREZEPT_FOR_KUCHENPLAN,
+				kpl.getId(), kuchenrezept.getId(), tag, anzahl));
+	}
+
+	public void createKuchenplan(Kuchenplan kuchenplan) throws ConnectException,
+			DAOException {
+		Week week = kuchenplan.getWeek();
+		putManaged(MessageFormat.format(CREATE_KUCHENPLAN, week.getWeek(),
+				week.getYear()));
+	}
+
+	public void deleteItemsByKuchenplan(Kuchenplan kuchenplan)
+			throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN,
+				kuchenplan.getId()));
+	}
 //
 //	public void createKochForMenueplan(Menueplan menueplan, KochInMenueplan kim)
 //			throws ConnectException, DAOException {

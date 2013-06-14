@@ -6,7 +6,7 @@ import de.bistrosoft.palaver.util.Week;
 public class Kuchenplan {
 	private Long id;
 	private Week week;
-	private List<Kuchenrezept> kuchenrezepte;
+	private List<KuchenplanHasKuchenrezept> kuchenrezepte;
 
 	public Kuchenplan(Long id, Week week) {
 		this.id = id;
@@ -37,12 +37,12 @@ public class Kuchenplan {
 	public void setWeek(Week week) {
 		this.week = week;
 	}
-
-	public List<Kuchenrezept> getKuchenrezepte() {
+	
+	public List<KuchenplanHasKuchenrezept> getKuchenrezepte() {
 		return kuchenrezepte;
 	}
 
-	public void setKuchenrezepte(List<Kuchenrezept> kuchenrezepte) {
+	public void setKuchenrezepte(List<KuchenplanHasKuchenrezept> kuchenrezepte) {
 		this.kuchenrezepte = kuchenrezepte;
 	}
 

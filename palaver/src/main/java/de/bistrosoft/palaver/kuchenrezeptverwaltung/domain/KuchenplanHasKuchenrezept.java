@@ -1,5 +1,9 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
+import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import fi.jasoft.dragdroplayouts.DDGridLayout;
+
 public class KuchenplanHasKuchenrezept {
 
 	/**
@@ -11,11 +15,21 @@ public class KuchenplanHasKuchenrezept {
 	private int tag;
 	private int anzahl;
 
+	public KuchenplanHasKuchenrezept() {
+	}
+	
 	public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag) {
 		this.kuchenrezept = a;
 		this.tag = tag;
 		this.anzahl = 1;
 	}
+	
+	// Konstruktor für Kuchenkomponente 
+		public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag, int anzahl){
+			this.kuchenrezept = a;
+			this.tag = tag;
+			this.anzahl = anzahl;
+		}
 
 	public Kuchenrezept getKuchenrezept() {
 		return kuchenrezept;
