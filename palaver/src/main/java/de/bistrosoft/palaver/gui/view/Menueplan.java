@@ -306,8 +306,8 @@ public class Menueplan extends VerticalLayout implements View {
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		hlControl.addComponent(btSpeichern);
-		hlControl.addComponent(btEnableDragging);
 		hlControl.addComponent(btFreigeben);
+		hlControl.addComponent(btEnableDragging);
 		hlControl.addComponent(btEnableDelete);
 		hlControl.addComponent(btSubmitDelete);
 		btSubmitDelete.setVisible(false);
