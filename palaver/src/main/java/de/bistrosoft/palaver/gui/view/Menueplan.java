@@ -47,13 +47,16 @@ public class Menueplan extends VerticalLayout implements View {
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	Button freigeben = new Button("Freigeben");
 	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/"
 			+ year);
 
-	Button btEnableDelete = new Button("Elemente Löschen");
+	HorizontalLayout hlControl = new HorizontalLayout();
+	
+	Button btEnableDelete = new Button("Elemente löschen");
 	Button btSubmitDelete = new Button("Löschen bestätigen");
 	Button btEnableDragging = new Button("Verschieben aktiv");
+	Button btSpeichern = new Button("Speichern");
+	Button btFreigeben = new Button("Freigeben");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -215,10 +218,20 @@ public class Menueplan extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
-					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
-				} else {
+				if (btSubmitDelete.isVisible()) {
 					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+					btSubmitDelete.setVisible(false);
+					btSpeichern.setVisible(true);
+					btFreigeben.setVisible(true);
+					btEnableDragging.setVisible(true);
+					btEnableDelete.setCaption("Elemente löschen");
+				} else {
+					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+					btSubmitDelete.setVisible(true);
+					btSpeichern.setVisible(false);
+					btFreigeben.setVisible(false);
+					btEnableDragging.setVisible(false);
+					btEnableDelete.setCaption("Zurück");
 				}
 
 				Integer rows = curMenueplan.layout.getRows();
@@ -244,8 +257,6 @@ public class Menueplan extends VerticalLayout implements View {
 			}
 		});
 
-		// Button zum Speichern des Menï¿½plans
-		Button btSpeichern = new Button("Speichern");
 
 		btSpeichern.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
@@ -264,7 +275,7 @@ public class Menueplan extends VerticalLayout implements View {
 			}
 		});
 
-		freigeben.addClickListener(new ClickListener() {
+		btFreigeben.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -281,15 +292,17 @@ public class Menueplan extends VerticalLayout implements View {
 		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
-		box.addComponent(btEnableDelete);
-		box.addComponent(btSubmitDelete);
-		box.addComponent(btEnableDragging);
-		box.addComponents(btSpeichern, freigeben);
+		hlControl.addComponent(btSpeichern);
+		hlControl.addComponent(btEnableDragging);
+		hlControl.addComponent(btFreigeben);
+		hlControl.addComponent(btEnableDelete);
+		hlControl.addComponent(btSubmitDelete);
+		btSubmitDelete.setVisible(false);
+		box.addComponent(hlControl);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
-		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 
@@ -297,7 +310,7 @@ public class Menueplan extends VerticalLayout implements View {
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
 				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {
-					freigeben.setVisible(true);
+					btFreigeben.setVisible(true);
 				}
 			}
 		}
