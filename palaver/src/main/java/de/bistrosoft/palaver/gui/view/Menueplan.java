@@ -4,6 +4,8 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import org.vaadin.addon.componentexport.java.PdfFromComponent;
+
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -57,6 +59,7 @@ public class Menueplan extends VerticalLayout implements View {
 	Button btEnableDragging = new Button("Verschieben aktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
+	Button btPdf = new Button("PDF");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -176,18 +179,18 @@ public class Menueplan extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
-					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+				if (shownMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
+					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 				} else {
-					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+					shownMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 				}
 
-				Integer rows = curMenueplan.layout.getRows();
-				Integer cols = curMenueplan.layout.getColumns();
+				Integer rows = shownMenueplan.layout.getRows();
+				Integer cols = shownMenueplan.layout.getColumns();
 				for (int x = 0; x < cols; ++x) {
 					for (int y = 0; y < rows; ++y) {
-						if (curMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
-							MenueComponent mc = (MenueComponent) curMenueplan.layout
+						if (shownMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
+							MenueComponent mc = (MenueComponent) shownMenueplan.layout
 									.getComponent(x, y);
 							if (mc.isMarkiert()) {
 								mc.remove();
@@ -203,11 +206,11 @@ public class Menueplan extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
-					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+				if (shownMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
+					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 					btEnableDragging.setCaption("Verschieben inaktiv");
 				} else {
-					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+					shownMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 					btEnableDragging.setCaption("Verschieben aktiv");
 				}
 
@@ -219,14 +222,14 @@ public class Menueplan extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (btSubmitDelete.isVisible()) {
-					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+					shownMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 					btSubmitDelete.setVisible(false);
 					btSpeichern.setVisible(true);
 					btFreigeben.setVisible(true);
 					btEnableDragging.setVisible(true);
 					btEnableDelete.setCaption("Elemente löschen");
 				} else {
-					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 					btSubmitDelete.setVisible(true);
 					btSpeichern.setVisible(false);
 					btFreigeben.setVisible(false);
@@ -234,17 +237,17 @@ public class Menueplan extends VerticalLayout implements View {
 					btEnableDelete.setCaption("Zurück");
 				}
 
-				Integer rows = curMenueplan.layout.getRows();
-				Integer cols = curMenueplan.layout.getColumns();
+				Integer rows = shownMenueplan.layout.getRows();
+				Integer cols = shownMenueplan.layout.getColumns();
 				for (int x = 0; x < cols; ++x) {
 					for (int y = 0; y < rows; ++y) {
-						if (curMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
-							MenueComponent mc = (MenueComponent) curMenueplan.layout
+						if (shownMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
+							MenueComponent mc = (MenueComponent) shownMenueplan.layout
 									.getComponent(x, y);
 							mc.setCbDelete();
 						}
-						if (curMenueplan.layout.getComponent(x, y) instanceof Button) {
-							Button bt = (Button) curMenueplan.layout
+						if (shownMenueplan.layout.getComponent(x, y) instanceof Button) {
+							Button bt = (Button) shownMenueplan.layout
 									.getComponent(x, y);
 							if (bt.isEnabled()) {
 								bt.setEnabled(false);
@@ -258,6 +261,16 @@ public class Menueplan extends VerticalLayout implements View {
 		});
 
 
+		btPdf.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				PdfFromComponent pfc = new PdfFromComponent();
+				pfc.export(hlControl);
+//				pfc.export(Menueplan.this.shownMenueplan.layout);
+			}
+		});
+		
 		btSpeichern.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
@@ -298,6 +311,7 @@ public class Menueplan extends VerticalLayout implements View {
 		hlControl.addComponent(btEnableDelete);
 		hlControl.addComponent(btSubmitDelete);
 		btSubmitDelete.setVisible(false);
+		hlControl.addComponent(btPdf);
 		box.addComponent(hlControl);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
