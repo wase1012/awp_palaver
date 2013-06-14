@@ -4,6 +4,8 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import javax.swing.DropMode;
+
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -18,6 +20,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
@@ -25,6 +28,7 @@ import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
 public class Menueplan extends VerticalLayout implements View {
@@ -47,6 +51,9 @@ public class Menueplan extends VerticalLayout implements View {
 	private Button platzhalter2 = new Button();
 	Button freigeben = new Button("Freigeben");
 	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/" + year);
+	
+	Button btEnableDelete = new Button("Elemente Löschen");
+	Button btSubmitDelete = new Button("Löschen bestätigen");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -162,6 +169,69 @@ public class Menueplan extends VerticalLayout implements View {
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
 
+		
+		btSubmitDelete.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(curMenueplan.layout.getDragMode()==LayoutDragMode.CLONE){
+					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+				}
+				else {
+					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+				}
+				
+				Integer rows = curMenueplan.layout.getRows();
+				Integer cols = curMenueplan.layout.getColumns();
+				for(int x = 0 ; x<cols; ++x){
+					for(int y = 0; y<rows ; ++y){
+						if(curMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
+							MenueComponent mc = (MenueComponent) curMenueplan.layout.getComponent(x, y);
+							if(mc.isMarkiert()){
+								mc.remove();
+							}
+						}
+					}
+				}
+				Menueplan.this.btEnableDelete.click();
+			}
+		});
+
+		
+		
+		btEnableDelete.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(curMenueplan.layout.getDragMode()==LayoutDragMode.CLONE){
+					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+				}
+				else {
+					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+				}
+				
+				Integer rows = curMenueplan.layout.getRows();
+				Integer cols = curMenueplan.layout.getColumns();
+				for(int x = 0 ; x<cols; ++x){
+					for(int y = 0; y<rows ; ++y){
+						if(curMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
+							MenueComponent mc = (MenueComponent) curMenueplan.layout.getComponent(x, y);
+							mc.setCbDelete();
+						}
+						if(curMenueplan.layout.getComponent(x, y) instanceof Button){
+							Button bt = (Button) curMenueplan.layout.getComponent(x, y);
+							if(bt.isEnabled()){
+								bt.setEnabled(false);
+							}
+							else {
+								bt.setEnabled(true);
+							}
+						}
+					}
+				}
+			}
+		});
+		
 		// Button zum Speichern des Menï¿½plans
 		Button btSpeichern = new Button("Speichern");
 
@@ -199,6 +269,8 @@ public class Menueplan extends VerticalLayout implements View {
 		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
+		box.addComponent(btEnableDelete);
+		box.addComponent(btSubmitDelete);
 		box.addComponents(btSpeichern, freigeben);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
