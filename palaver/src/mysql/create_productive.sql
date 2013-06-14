@@ -107,11 +107,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `palaver`.`fussnote` ;
 
 CREATE  TABLE IF NOT EXISTS `palaver`.`fussnote` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  `abkuerzung` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `abkuerzung` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `abkuerzung_UNIQUE` (`abkuerzung`),
+  UNIQUE KEY `name_UNIQUE` (`name`))
+  ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `palaver`.`geschmack`
@@ -122,7 +124,8 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`geschmack` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `inaktiv` BOOLEAN ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`))
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
@@ -134,7 +137,8 @@ DROP TABLE IF EXISTS `palaver`.`zubereitung` ;
 CREATE  TABLE IF NOT EXISTS `palaver`.`zubereitung` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`))
 -- ,
  -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
@@ -148,7 +152,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`menueart` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE_menueart` (`name` ASC) )
+  UNIQUE KEY `name_UNIQUE` (`name`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------

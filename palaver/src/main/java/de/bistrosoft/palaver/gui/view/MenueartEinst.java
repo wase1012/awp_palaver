@@ -177,7 +177,6 @@ public class MenueartEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					speichern();
-					zurueck();
 				}
 			}
 		});
@@ -235,7 +234,6 @@ public class MenueartEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
-					zurueck();
 				}
 			}
 		});
@@ -255,10 +253,16 @@ public class MenueartEinst extends VerticalLayout implements View {
 			Menueartverwaltung.getInstance().createMenueart(ma);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("INSERT INTO menueart"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_MENUEART_SAVE);
+		zurueck();
+
 	}
 
 	private void update() {
@@ -267,10 +271,16 @@ public class MenueartEinst extends VerticalLayout implements View {
 		try {
 			Menueartverwaltung.getInstance().updateMenueart(ma);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("UPDATE menueart SET"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_MENUEART_EDIT);
+		zurueck();
+
 	}
 
 	private void zurueck() {

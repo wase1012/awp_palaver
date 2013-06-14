@@ -176,7 +176,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					speichern();
-					zurueck();
+
 				}
 			}
 		});
@@ -234,7 +234,6 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
-					zurueck();
 				}
 			}
 		});
@@ -253,10 +252,15 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		try {
 			Geschmackverwaltung.getInstance().createGeschmack(geschmack);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("INSERT INTO geschmack"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_GESCHMACK_SAVE);
+		zurueck();
 	}
 
 	private void update() {
@@ -265,10 +269,16 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		try {
 			Geschmackverwaltung.getInstance().updateGeschmack(geschmack);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("UPDATE geschmack SET"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_GESCHMACK_EDIT);
+		zurueck();
+
 	}
 
 	private void zurueck() {

@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 //	Produktiv
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
@@ -179,6 +179,8 @@ public interface IConstants
 	
 	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
+	String 		INFO_VALID_BEZ_DOPPELT = "Bezeichnung bereits vorhanden!";
+	String 		INFO_VALID_BEZ_ABK_DOPPELT = "Bezeichnung oder Abkürzung bereits vorhanden!";
 	
 	String 		INFO_REZEPTANZEIGEN_SELECT = "Bitte Rezept auswählen!";
 	String		INFO_MENUEANZEIGEN_SELECT = "Bitte Menü auswählen!";
@@ -202,6 +204,7 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+
 
 
 

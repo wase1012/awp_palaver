@@ -176,7 +176,6 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					speichern();
-					zurueck();
 				}
 			}
 		});
@@ -234,7 +233,6 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
-					zurueck();
 				}
 			}
 		});
@@ -254,10 +252,16 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 			Zubereitungverwaltung.getInstance().createZubereitung(zub);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("INSERT INTO zubereitung"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_ZUBEREITUNG_SAVE);
+		zurueck();
+
 	}
 
 	private void update() {
@@ -266,10 +270,16 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		try {
 			Zubereitungverwaltung.getInstance().updateZubereitung(zub);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("UPDATE zubereitung SET"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_DOPPELT);
+			return;
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_ZUBEREITUNG_EDIT);
+		zurueck();
+
 	}
 
 	private void zurueck() {

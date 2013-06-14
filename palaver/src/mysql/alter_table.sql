@@ -23,3 +23,14 @@ ALTER TABLE `palaver`.`menueplan`
 ALTER TABLE `palaver`.`ansprechpartner` 
 	ADD COLUMN `email` VARCHAR(45) NULL  AFTER `fax` ;	
 	
+ALTER TABLE `palaver`.`fussnote` CHANGE COLUMN `abkuerzung` `abkuerzung` VARCHAR(45) NOT NULL  
+	, ADD UNIQUE INDEX `abkuerzung_UNIQUE` (`abkuerzung` ASC)
+	, ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) ;
+
+ALTER TABLE `palaver`.`geschmack` 
+	ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) ;	
+	
+ALTER TABLE `palaver`.`zubereitung` 
+	ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) ;
+
+	
