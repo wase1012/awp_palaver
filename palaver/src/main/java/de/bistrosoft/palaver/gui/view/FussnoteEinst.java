@@ -114,7 +114,8 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			tblFussnote.setContainerDataSource(ctFussnote);
 			tblFussnote.setVisibleColumns(new Object[] { "bezeichnung",
 					"abkuerzung" });
-			tblFussnote.sort(new Object[] { "bezeichnung" }, new boolean[] { true });
+			tblFussnote.sort(new Object[] { "bezeichnung" },
+					new boolean[] { true });
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -185,7 +186,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					speichern();
-					zurueck();
 				}
 			}
 		});
@@ -250,7 +250,6 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					update();
-					zurueck();
 				}
 			}
 		});
@@ -271,10 +270,16 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			Fussnotenverwaltung.getInstance().createFussnote(fn);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("INSERT INTO fussnote"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_ABK_DOPPELT);
+			return;
+
 		}
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_FUSSNOTE_SAVE);
+		zurueck();
 	}
 
 	private void update() {
@@ -284,10 +289,16 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		try {
 			Fussnotenverwaltung.getInstance().updateFussnote(fn);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.toString());
+			if (e.toString().contains("UPDATE fussnote SET"))
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_VALID_BEZ_ABK_DOPPELT);
+			return;
 		}
+
 		((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_FUSSNOTE_EDIT);
+				.showDialog(IConstants.INFO_FUSSNOTE_SAVE);
+		zurueck();
 	}
 
 	private void zurueck() {

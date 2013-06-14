@@ -105,6 +105,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 		mehrereliefertermine.setWidth("100%");
 
 		emailSenden.setEnabled(false);
+		emailSenden.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
 
 		ansprechpartner.setWidth("100%");
 		ansprechpartner.setHeight("230px");

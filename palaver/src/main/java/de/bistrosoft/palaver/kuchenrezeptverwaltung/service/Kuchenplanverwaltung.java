@@ -6,6 +6,7 @@ import java.util.List;
 import de.bistrosoft.palaver.data.KuchenplanDAO;
 import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
@@ -28,6 +29,33 @@ public class Kuchenplanverwaltung extends KuchenplanDAO {
 		}
 		return instance;
 	}
+	
+	public void persist(Kuchenplan kuchenplan) {
+		try {
+			if (kuchenplan.getId() == null) {
+				super.createKuchenplan(kuchenplan);
+				// TODO: Id anders ziehen
+				kuchenplan.setId(super.getKuchenplanByWeekWithItems(
+						kuchenplan.getWeek()).getId());
+			}
+			super.deleteItemsByKuchenplan(kuchenplan);
+			for (KuchenplanHasKuchenrezept kc : kuchenplan.getKuchenrezepte()) {
+
+				super.createKuchenrezepteForKuchenplan(kuchenplan, kc.getKuchenrezept(),
+						kc.getKuchenname(), kc.getTag(), kc.getAnzahl());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+//	public void saveRezept(Kuchenplan kuchenplan) throws ConnectException,
+//			DAOException, SQLException {
+//		super.saveRezept(kuchenplan);
+//	}
+	
 
 //	public Kuchenplan getKuchenplanByWeekWithItems(Week week) {
 //		Kuchenplan kpl = null;

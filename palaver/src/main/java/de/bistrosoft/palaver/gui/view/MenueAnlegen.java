@@ -27,7 +27,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -44,6 +43,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -73,7 +73,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private TextField tfMenuename = new TextField("Menüname");
 
-	private TwinColSelect tcsFussnoten = new TwinColSelect("Fußnoten");
+	private TwinColTouch tcsFussnoten = new TwinColTouch("Fußnoten");
 
 	private NativeSelect nsKoch = new NativeSelect("Koch");
 	private NativeSelect nsMenueart = new NativeSelect("Menüart");
@@ -155,6 +155,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlControl.addComponents(btNeuesRezept, btVerwerfen, btSpeichern);
 
 		// Komponenten formatieren
+		vlDetailsRechts.setWidth("450px");
 		hlDetails.setWidth("525px");
 		hlDetails.setComponentAlignment(vlDetailsLinks, Alignment.TOP_LEFT);
 		hlDetails.setComponentAlignment(vlDetailsRechts, Alignment.TOP_RIGHT);
@@ -207,7 +208,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		nsKoch.setNullSelectionAllowed(false);
 
 		tcsFussnoten.setImmediate(true);
-		tcsFussnoten.setWidth("400");
 
 		btSpeichern.setIcon(new ThemeResource("img/save.ico"));
 		btVerwerfen.setIcon(new ThemeResource("img/cross.ico"));
