@@ -267,3 +267,7 @@ height: 30px;
 .v-table-row-status-none {
     background: none;
 }
+
+.v-menubar, .v-menubar-submenu {
+	font-size: 14px;
+}

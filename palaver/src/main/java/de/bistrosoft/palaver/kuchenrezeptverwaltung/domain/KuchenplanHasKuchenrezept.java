@@ -1,8 +1,5 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class KuchenplanHasKuchenrezept {
 
