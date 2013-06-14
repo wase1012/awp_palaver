@@ -84,16 +84,16 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					final Window mengNeu = new Window();
-					mengNeu.setClosable(false);
-					mengNeu.setWidth("400px");
-					mengNeu.setHeight("270px");
-					mengNeu.setModal(true);
-					mengNeu.center();
-					mengNeu.setResizable(false);
-					mengNeu.setCaption("Kategorie bearbeiten");
+					final Window kategNeu = new Window();
+					kategNeu.setClosable(false);
+					kategNeu.setWidth("400px");
+					kategNeu.setHeight("270px");
+					kategNeu.setModal(true);
+					kategNeu.center();
+					kategNeu.setResizable(false);
+					kategNeu.setCaption("Kategorie bearbeiten");
 
-					UI.getCurrent().addWindow(mengNeu);
+					UI.getCurrent().addWindow(kategNeu);
 
 					VerticalLayout layout = new VerticalLayout();
 					layout.setMargin(true);
@@ -120,7 +120,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 					layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 					layout.addComponent(control);
 					layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
-					mengNeu.setContent(layout);
+					kategNeu.setContent(layout);
 
 					nameUp.setImmediate(true);
 					nameUp.setValue(kategorieUpdate.getName());
@@ -131,7 +131,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							UI.getCurrent().removeWindow(mengNeu);
+							UI.getCurrent().removeWindow(kategNeu);
 							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 						}
 					});
@@ -144,7 +144,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							} catch (Exception e) {
 								log.error(e.toString());
 							}
-							UI.getCurrent().removeWindow(mengNeu);
+							UI.getCurrent().removeWindow(kategNeu);
 							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 						}
 					});
@@ -186,16 +186,16 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 		hinzufuegen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				final Window mengNeu = new Window();
-				mengNeu.setClosable(false);
-				mengNeu.setWidth("400px");
-				mengNeu.setHeight("270px");
-				mengNeu.setModal(true);
-				mengNeu.center();
-				mengNeu.setResizable(false);
-				mengNeu.setCaption("Kategorie hinzufügen");
+				final Window kategNeu = new Window();
+				kategNeu.setClosable(false);
+				kategNeu.setWidth("400px");
+				kategNeu.setHeight("270px");
+				kategNeu.setModal(true);
+				kategNeu.center();
+				kategNeu.setResizable(false);
+				kategNeu.setCaption("Kategorie hinzufügen");
 
-				UI.getCurrent().addWindow(mengNeu);
+				UI.getCurrent().addWindow(kategNeu);
 
 				VerticalLayout layout = new VerticalLayout();
 				layout.setMargin(true);
@@ -222,7 +222,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 				layout.setComponentAlignment(feld, Alignment.MIDDLE_CENTER);
 				layout.addComponent(control);
 				layout.setComponentAlignment(control, Alignment.BOTTOM_RIGHT);
-				mengNeu.setContent(layout);
+				kategNeu.setContent(layout);
 
 				name.setImmediate(true);
 				name.setMaxLength(45);
@@ -232,7 +232,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().removeWindow(mengNeu);
+						UI.getCurrent().removeWindow(kategNeu);
 						ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 					}
 				});
@@ -245,7 +245,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							String notification = "Kategorie gespeichert";
 							try {
 								Kategorienverwaltung.getInstance().createNewKategorie(me);
-								UI.getCurrent().removeWindow(mengNeu);
+								UI.getCurrent().removeWindow(kategNeu);
 							} catch (Exception e) {
 								if (e.toString().contains("INSERT INTO kategorie"))
 									notification = "Der Name ist bereits im System vorhanden!";
@@ -281,7 +281,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 								@Override
 								public void buttonClick(ClickEvent event) {
 									UI.getCurrent().removeWindow(dialog);
-									ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+									ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 								}
 							});
 
