@@ -4,8 +4,6 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
-import javax.swing.DropMode;
-
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -50,10 +48,12 @@ public class Menueplan extends VerticalLayout implements View {
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
 	Button freigeben = new Button("Freigeben");
-	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/" + year);
-	
+	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/"
+			+ year);
+
 	Button btEnableDelete = new Button("Elemente Löschen");
 	Button btSubmitDelete = new Button("Löschen bestätigen");
+	Button btEnableDragging = new Button("Verschieben aktiv");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -169,25 +169,24 @@ public class Menueplan extends VerticalLayout implements View {
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
 
-		
 		btSubmitDelete.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(curMenueplan.layout.getDragMode()==LayoutDragMode.CLONE){
+				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
 					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
-				}
-				else {
+				} else {
 					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 				}
-				
+
 				Integer rows = curMenueplan.layout.getRows();
 				Integer cols = curMenueplan.layout.getColumns();
-				for(int x = 0 ; x<cols; ++x){
-					for(int y = 0; y<rows ; ++y){
-						if(curMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
-							MenueComponent mc = (MenueComponent) curMenueplan.layout.getComponent(x, y);
-							if(mc.isMarkiert()){
+				for (int x = 0; x < cols; ++x) {
+					for (int y = 0; y < rows; ++y) {
+						if (curMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
+							MenueComponent mc = (MenueComponent) curMenueplan.layout
+									.getComponent(x, y);
+							if (mc.isMarkiert()) {
 								mc.remove();
 							}
 						}
@@ -197,33 +196,46 @@ public class Menueplan extends VerticalLayout implements View {
 			}
 		});
 
-		
-		
+		btEnableDragging.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
+					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
+					btEnableDragging.setCaption("Verschieben inaktiv");
+				} else {
+					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
+					btEnableDragging.setCaption("Verschieben aktiv");
+				}
+
+			}
+		});
+
 		btEnableDelete.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(curMenueplan.layout.getDragMode()==LayoutDragMode.CLONE){
+				if (curMenueplan.layout.getDragMode() == LayoutDragMode.CLONE) {
 					curMenueplan.layout.setDragMode(LayoutDragMode.NONE);
-				}
-				else {
+				} else {
 					curMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 				}
-				
+
 				Integer rows = curMenueplan.layout.getRows();
 				Integer cols = curMenueplan.layout.getColumns();
-				for(int x = 0 ; x<cols; ++x){
-					for(int y = 0; y<rows ; ++y){
-						if(curMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
-							MenueComponent mc = (MenueComponent) curMenueplan.layout.getComponent(x, y);
+				for (int x = 0; x < cols; ++x) {
+					for (int y = 0; y < rows; ++y) {
+						if (curMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
+							MenueComponent mc = (MenueComponent) curMenueplan.layout
+									.getComponent(x, y);
 							mc.setCbDelete();
 						}
-						if(curMenueplan.layout.getComponent(x, y) instanceof Button){
-							Button bt = (Button) curMenueplan.layout.getComponent(x, y);
-							if(bt.isEnabled()){
+						if (curMenueplan.layout.getComponent(x, y) instanceof Button) {
+							Button bt = (Button) curMenueplan.layout
+									.getComponent(x, y);
+							if (bt.isEnabled()) {
 								bt.setEnabled(false);
-							}
-							else {
+							} else {
 								bt.setEnabled(true);
 							}
 						}
@@ -231,7 +243,7 @@ public class Menueplan extends VerticalLayout implements View {
 				}
 			}
 		});
-		
+
 		// Button zum Speichern des Menï¿½plans
 		Button btSpeichern = new Button("Speichern");
 
@@ -253,14 +265,14 @@ public class Menueplan extends VerticalLayout implements View {
 		});
 
 		freigeben.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				shownMenueplan.speichern();
 				shownMenueplan.freigeben();
 			}
 		});
-		
+
 		// FuÃŸnoten
 		Label lbFussnoten = new Label(
 				"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
@@ -271,6 +283,7 @@ public class Menueplan extends VerticalLayout implements View {
 		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btEnableDelete);
 		box.addComponent(btSubmitDelete);
+		box.addComponent(btEnableDragging);
 		box.addComponents(btSpeichern, freigeben);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
@@ -288,7 +301,7 @@ public class Menueplan extends VerticalLayout implements View {
 				}
 			}
 		}
-		
+
 		// HorizontalCarousel carousel = new HorizontalCarousel();
 		// carousel.setArrowKeysMode(ArrowKeysMode.FOCUS);
 		// carousel.setLoadMode(CarouselLoadMode.LAZY);
