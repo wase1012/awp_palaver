@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 //	Produktiv
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
@@ -125,14 +125,15 @@ public interface IConstants
 	String 		INFO_MENUE_NUR_HAUPTGERICHT = "Bitte nur ein Hauptgericht wählen!";
 	
 	String		INFO_REGEL_SAVE = "Regel wurde gespeichert!";
+	String		INFO_REGEL_EDIT = "Bearbeitete Regel wurde gespeichert!";
 	String		INFO_REGEL_DELETE = "Regel wurde gelöscht!";
 	String 		INFO_REGEL_ZEILEN = "Bitte gewünschte Zeilen auswählen";
 	String 		INFO_REGEL_SPALTEN = "Bitte gewünschte Spalten auswählen";
 	String 		INFO_REGEL_REGELTYP = "Bitte Regeltyp wählen!";
 	String 		INFO_REGEL_OPERATOR = "Bitte Operator wählen!";
-	String		INFO_REGEL_KRITERIEN_ZAHL = "Bitte unter Kriterien eine Zahl eintragen!";
+	String		INFO_REGEL_KRITERIEN_ZAHL = "Bitte unter Kriterien eine ganze Zahl eintragen!";
 	String		INFO_REGEL_KRITERIEN_TWIN = "Bitte unter Kriterien die gewünschten Werte auswählen!";
-	String		INFO_REGEL_FEHLERMELDUNG = "Bitte eine Fehlermeldung angeben!";
+	String		INFO_REGEL_FEHLERMELDUNG = "Bitte eine Fehlermeldung angeben die mehr als 5 Zeichen hat!";
 	String		INFO_REGEL_OPERATOR_ERLAUBT = "muss enthalten";
 	String 		INFO_REGEL_OPERATOR_VERBOTEN = "verbotene Werte";
 	String 		INFO_REGEL_OPERATOR_MINIMAL = "minimale Anzahl";

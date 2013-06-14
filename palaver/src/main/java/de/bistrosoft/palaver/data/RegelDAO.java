@@ -36,10 +36,6 @@ public class RegelDAO extends AbstractDAO {
 			+ " WHERE id = {0}";
 	private static final String GET_KRITERIEN_BY_REGELID = "SELECT "
 			+ KRITERIEN + " FROM " + TABLE + " WHERE id = {0}";
-	private static final String UPDATE_REGEL = "UPDATE " + TABLE + " SET "
-			+ ZEILEN + "= {0}," + SPALTEN + "={1}," + REGELTYP + "={2},"
-			+ OPERATOR + "={3}," + KRITERIEN + "={4}," + FEHLERMELDUNG
-			+ "={5} WHERE id = {6}";
 	private static final String DELETE_REGEL = "DELETE FROM " + TABLE
 			+ " WHERE id = {0}";
 
@@ -96,7 +92,6 @@ public class RegelDAO extends AbstractDAO {
 						set.getString("fehlermeldung"), set.getBoolean("aktiv")));
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -142,7 +137,7 @@ public class RegelDAO extends AbstractDAO {
 			SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + ZEILEN + "='"
 				+ regel.getZeile() + "'," + SPALTEN + "='" + regel.getSpalte()
-				+ "'" + REGELTYP + "='" + regel.getRegeltyp() + OPERATOR + "='"
+				+ "'," + REGELTYP + "='" + regel.getRegeltyp() + "'," + OPERATOR + "='"
 				+ regel.getOperator() + "'," + KRITERIEN + "='"
 				+ regel.getKriterien() + "'," + FEHLERMELDUNG + "='"
 				+ regel.getFehlermeldung() + "'," + AKTIV + "="
