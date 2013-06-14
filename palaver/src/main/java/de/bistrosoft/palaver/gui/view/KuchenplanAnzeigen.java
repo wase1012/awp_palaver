@@ -1,17 +1,15 @@
 package de.bistrosoft.palaver.gui.view;
 
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.KuchenplanLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
@@ -168,14 +166,9 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				// alle Felder durchgehen, prï¿½fen ob menuecomponent vorhanden
 				// ist und wenn ja speichern
-				shownKuchenplan.speichern();
 				int week = shownKuchenplan.getKuchenplan().getWeek().getWeek();
 				int year = shownKuchenplan.getKuchenplan().getWeek().getYear();
-				Notification notification = new Notification(
-						"Kuchenplan für Kalenderwoche " + week + "/" + year
-								+ " wurde gespeichert");
-				notification.setDelayMsec(500);
-				notification.show(Page.getCurrent());
+				shownKuchenplan.speichern(week, year);
 			}
 		});
 

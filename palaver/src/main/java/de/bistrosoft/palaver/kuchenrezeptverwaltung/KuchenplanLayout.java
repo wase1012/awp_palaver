@@ -15,25 +15,25 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
-import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.util.IConstants;
 
 @SuppressWarnings("serial")
 public class KuchenplanLayout extends CustomComponent {
@@ -53,18 +53,10 @@ public class KuchenplanLayout extends CustomComponent {
 	private Table itemFrTable;
 	private Table itemSaTable;
 	private Table itemSoTable;
-
 	private FilterTable kuchenTable;
 
+	// Listen
 	List<KuchenplanHasKuchenrezept> tmpItems = new ArrayList<KuchenplanHasKuchenrezept>();
-	
-	List<KuchenplanHasKuchenrezept> tmpItemsMo = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsDi = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsMi = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsDo = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsFr = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsSa = new ArrayList<KuchenplanHasKuchenrezept>();
-	List<KuchenplanHasKuchenrezept> tmpItemsSo = new ArrayList<KuchenplanHasKuchenrezept>();
 
 	// BeanContainer
 	private BeanItemContainer<Kuchenrezept> containerKuchen;
@@ -75,8 +67,8 @@ public class KuchenplanLayout extends CustomComponent {
 	private BeanItemContainer<KuchenplanHasKuchenrezept> containerKuchenplanHasKuchenrezeptFr;
 	private BeanItemContainer<KuchenplanHasKuchenrezept> containerKuchenplanHasKuchenrezeptSa;
 	private BeanItemContainer<KuchenplanHasKuchenrezept> containerKuchenplanHasKuchenrezeptSo;
-	
-	private BeanItemContainer<KuchenplanHasKuchenrezept> containerKuchenplanHasKuchenrezeptAlle;
+	private BeanItemContainer<KuchenplanHasKuchenrezept> containerKuchenplanHasKuchenrezeptAlle = new BeanItemContainer<KuchenplanHasKuchenrezept>(
+			KuchenplanHasKuchenrezept.class);
 
 	public Kuchenplan getKuchenplan() {
 		return kuchenplan;
@@ -89,11 +81,20 @@ public class KuchenplanLayout extends CustomComponent {
 	// Seitenlayout erstellen
 	public KuchenplanLayout(int week, int year) {
 		kuchenplan = null;
-//		kuchenplan = Kuchenplanverwaltung.getInstance()
-//				.getKuchenplanByWeekWithItems(new Week(week, year));
+		try {
+			kuchenplan = Kuchenplanverwaltung.getInstance()
+					.getKuchenplanByWeekWithItems(new Week(week, year));
+		} catch (ConnectException e1) {
+			e1.printStackTrace();
+		} catch (DAOException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		if (kuchenplan == null) {
 			kuchenplan = new Kuchenplan(new Week(week, year));
 		}
+
 		setSizeFull();
 
 		// vertikales Layout anlegen
@@ -125,8 +126,8 @@ public class KuchenplanLayout extends CustomComponent {
 
 			Label lbTmp = new Label("<div align=center><B>" + "\r\n" + strDay
 					+ "\r\n" + strDate + "</B></div>", ContentMode.HTML);
-			 lbTmp.setHeight("152px");
-			 lbTmp.setWidth("149px");
+			lbTmp.setHeight("152px");
+			lbTmp.setWidth("149px");
 			layout.addComponent(lbTmp, 0, row);
 			layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
 		}
@@ -255,12 +256,58 @@ public class KuchenplanLayout extends CustomComponent {
 		outer.addComponent(kuchenTable);
 		outer.setComponentAlignment(kuchenTable, Alignment.MIDDLE_RIGHT);
 
+		// Füge Kuchenrezepte ein
+		if (kuchenplan != null) {
+			if (kuchenplan.getKuchenrezepte() != null) {
+				containerKuchenplanHasKuchenrezeptAlle.removeAllItems();
+				containerKuchenplanHasKuchenrezeptMo.removeAllItems();
+				containerKuchenplanHasKuchenrezeptDi.removeAllItems();
+				containerKuchenplanHasKuchenrezeptMi.removeAllItems();
+				containerKuchenplanHasKuchenrezeptDo.removeAllItems();
+				containerKuchenplanHasKuchenrezeptFr.removeAllItems();
+				containerKuchenplanHasKuchenrezeptSa.removeAllItems();
+				containerKuchenplanHasKuchenrezeptSo.removeAllItems();
+				for (KuchenplanHasKuchenrezept kc : kuchenplan
+						.getKuchenrezepte()) {
+					// in Container
+					containerKuchenplanHasKuchenrezeptAlle.addItem(kc);
+					switch (kc.getTag()) {
+					case 1:
+						containerKuchenplanHasKuchenrezeptMo.addItem(kc);
+						break;
+					case 2:
+						containerKuchenplanHasKuchenrezeptDi.addItem(kc);
+						break;
+					case 3:
+						containerKuchenplanHasKuchenrezeptMi.addItem(kc);
+						break;
+					case 4:
+						containerKuchenplanHasKuchenrezeptDo.addItem(kc);
+						break;
+					case 5:
+						containerKuchenplanHasKuchenrezeptFr.addItem(kc);
+						break;
+					case 6:
+						containerKuchenplanHasKuchenrezeptSa.addItem(kc);
+						break;
+					case 7:
+						containerKuchenplanHasKuchenrezeptSo.addItem(kc);
+						break;
+					}
+					// Tabellen aktualisieren
+					itemMoTable.markAsDirty();
+					itemDiTable.markAsDirty();
+					itemMiTable.markAsDirty();
+					itemDoTable.markAsDirty();
+					itemFrTable.markAsDirty();
+					itemSaTable.markAsDirty();
+					itemSoTable.markAsDirty();
+
+				}
+			}
+		}
+
 		// Drag&Drop Kuchenliste
-		//#########
-		containerKuchenplanHasKuchenrezeptAlle = new BeanItemContainer<KuchenplanHasKuchenrezept>(
-				KuchenplanHasKuchenrezept.class);
-		//##########
-		
 		kuchenTable.setDropHandler(new DropHandler() {
 			/**
 			 * Prueft, ob das Element verschoben werden darf.
@@ -280,8 +327,9 @@ public class KuchenplanLayout extends CustomComponent {
 						.getData("itemId");
 				Table tSource = (Table) t.getSourceComponent();
 				@SuppressWarnings("unchecked")
-				BeanItemContainer<KuchenplanHasKuchenrezept> bicSource = (BeanItemContainer<KuchenplanHasKuchenrezept>) tSource.getContainerDataSource();
-				//Listen werden erst in speichern bzw. update-Methode erstellt
+				BeanItemContainer<KuchenplanHasKuchenrezept> bicSource = (BeanItemContainer<KuchenplanHasKuchenrezept>) tSource
+						.getContainerDataSource();
+				// Listen werden erst in speichern bzw. update-Methode erstellt
 				bicSource.removeItem(selected);
 				containerKuchenplanHasKuchenrezeptAlle.removeItem(selected);
 				tSource.markAsDirty();
@@ -309,7 +357,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 1);
-//					tmpItemsMo.add(tmp);
+					// tmpItemsMo.add(tmp);
 					containerKuchenplanHasKuchenrezeptMo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -338,7 +386,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 2);
-//					tmpItemsDi.add(tmp);
+					// tmpItemsDi.add(tmp);
 					containerKuchenplanHasKuchenrezeptDi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -367,7 +415,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 3);
-//					tmpItemsMi.add(tmp);
+					// tmpItemsMi.add(tmp);
 					containerKuchenplanHasKuchenrezeptMi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -396,7 +444,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 4);
-//					tmpItemsDo.add(tmp);
+					// tmpItemsDo.add(tmp);
 					containerKuchenplanHasKuchenrezeptDo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -425,7 +473,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 5);
-//					tmpItemsFr.add(tmp);
+					// tmpItemsFr.add(tmp);
 					containerKuchenplanHasKuchenrezeptFr.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -454,7 +502,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 6);
-//					tmpItemsSa.add(tmp);
+					// tmpItemsSa.add(tmp);
 					containerKuchenplanHasKuchenrezeptSa.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -483,7 +531,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 7);
-//					tmpItemsSo.add(tmp);
+					// tmpItemsSo.add(tmp);
 					containerKuchenplanHasKuchenrezeptSo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -508,46 +556,30 @@ public class KuchenplanLayout extends CustomComponent {
 		}
 
 	}
-	
-	public void speichern() {
 
-		// Listen aus BICs erstellen
-//		tmpItemsMo = containerKuchenplanHasKuchenrezeptMo.getItemIds();
-//		tmpItemsDi = containerKuchenplanHasKuchenrezeptDi.getItemIds();
-//		tmpItemsMi = containerKuchenplanHasKuchenrezeptMi.getItemIds();
-//		tmpItemsDo = containerKuchenplanHasKuchenrezeptDo.getItemIds();
-//		tmpItemsFr = containerKuchenplanHasKuchenrezeptFr.getItemIds();
-//		tmpItemsSa = containerKuchenplanHasKuchenrezeptSa.getItemIds();
-//		tmpItemsSo = containerKuchenplanHasKuchenrezeptSo.getItemIds();
-//		System.out.println("test");
-//		
-//		tmpItems = tmpItemsMo;
-//		System.out.println(tmpItems.toString());
-//		for (KuchenplanHasKuchenrezept khk : tmpItemsDi) {
-//			System.out.println(khk.toString());
-//			tmpItems.add(khk);
-//		}
-//		
-//		System.out.println(tmpItems.toString());
-		
-		//TODO: überschreibt es immer wieder (vlt. Container Add, dann zusammen in Liste...
-//		kuchenplan.setKuchenrezepte(tmpItemsMo);
-//		kuchenplan.setKuchenrezepte(tmpItemsDi);
-//		kuchenplan.setKuchenrezepte(tmpItemsMi);
-//		kuchenplan.setKuchenrezepte(tmpItemsDo);
-//		kuchenplan.setKuchenrezepte(tmpItemsFr);
-//		kuchenplan.setKuchenrezepte(tmpItemsSa);
-//		kuchenplan.setKuchenrezepte(tmpItemsSo);
-		
-		System.out.println(containerKuchenplanHasKuchenrezeptAlle.getItemIds().toString());
-		
+	// Funktion zum Validieren und Speichern
+	public void speichern(int week, int year) {
 		tmpItems = containerKuchenplanHasKuchenrezeptAlle.getItemIds();
-		System.out.println(tmpItems.toString());
 		kuchenplan.setKuchenrezepte(tmpItems);
-		
+
+		for (KuchenplanHasKuchenrezept khk : tmpItems) {
+			if (khk.getAnzahl() >= 100000.0) {
+				showNotification("Bitte Anzahl kleiner 100.000 wählen!");
+				khk.setAnzahl(1);
+				return;
+			}
+		}
+
+		kuchenplan.setKuchenrezepte(tmpItems);
 		Kuchenplanverwaltung.getInstance().persist(kuchenplan);
-		
+		showNotification("Kuchenplan für Kalenderwoche " + week + "/" + year
+			+ " wurde gespeichert");
 	}
-	
-	//TODO: laden, update,...
+
+	// Funktion zum Anzeigen der Notification
+	private void showNotification(String text) {
+		Notification notification = new Notification(text);
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
+	}
 }
