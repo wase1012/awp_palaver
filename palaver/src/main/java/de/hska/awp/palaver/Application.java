@@ -181,6 +181,9 @@ public class Application extends UI
 	public void showDialog(String message)
 	{
 		Notification dialog = new Notification(message);
+		// Bei -1 muss man draufklicken
+//		dialog.setDelayMsec(-1);
+		dialog.setDelayMsec(1000);
 		dialog.show(Page.getCurrent());
 	}
 	
