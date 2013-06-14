@@ -3,6 +3,7 @@ package de.bistrosoft.palaver.gui.view;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
@@ -32,9 +33,19 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.bistrosoft.palaver.data.FussnoteKuchenDAO;
+import de.bistrosoft.palaver.data.KuchenrezeptDAO;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
+import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -102,7 +113,11 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	public String valueString = new String();
 
 	Kuchenrezept kuchenrezept;
+	Kuchenrezept kuchenrezeptNeu;
 
+	// TwinCol
+	private TwinColTouch fussnoten = new TwinColTouch("Fussnoten");	
+	
 	// Listen
 	List<KuchenrezeptHasArtikel> ausgArtikel = new ArrayList<KuchenrezeptHasArtikel>();
 	List<KuchenrezeptHasArtikel> artikel = new ArrayList<KuchenrezeptHasArtikel>();
@@ -135,6 +150,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		infos.setWidth("100%");
 		infos.setSpacing(true);
 
+		fussnoten.setWidth("100%");
+		fussnoten.setImmediate(true);
+		
 		this.addComponent(box);
 		box.addComponent(ueberschrift);
 		ueberschrift.setWidth("300px");
@@ -146,7 +164,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		infosLinks.setWidth("350px");
 		mitarbeiterNs.setWidth("100%");
 		box.addComponent(hlRezeptZutaten);
-		infos.addComponent(kommentar);
+		infosLinks.addComponent(kommentar);
+		infos.addComponent(fussnoten);
 
 		control.setSpacing(true);
 		box.addComponent(control);
@@ -171,7 +190,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		kommentar.setHeight("70px");
 		kommentar.setWidth("350px");
-		infos.setComponentAlignment(kommentar, Alignment.MIDDLE_LEFT);
+		//infos.setComponentAlignment(kommentar, Alignment.MIDDLE_LEFT);
 		// ValueChangeListener Kommentar
 		kommentar.addValueChangeListener(this);
 
@@ -313,9 +332,18 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	}
 
 	public void load() {
-
-		mitarbeiterNs.removeAllItems();
-
+		fussnoten.removeAllItems();
+		
+		try { mitarbeiterNs.removeAllItems();
+		List<FussnoteKuchen> fk = Fussnotekuchenverwaltung.getInstance()
+				.getAllFussnoteKuchen();
+		for (FussnoteKuchen f : fk) {
+			fussnoten.addItem(f);
+		}
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+		
 		try {
 			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
@@ -370,7 +398,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		name.setValue(kuchenrezept.getName());
 
 		mitarbeiterNs.select(kuchenrezept.getMitarbeiter());
-
+		
+		for (int i = 0; i < kuchenrezept.getFussnoteKuchen().size(); i++) {
+			fussnoten.select(kuchenrezept.getFussnoteKuchen().get(i));
+		}
 		BeanItemContainer<KuchenrezeptHasArtikel> artikelcontainer;
 		List<KuchenrezeptHasArtikel> list = new ArrayList<KuchenrezeptHasArtikel>();
 
@@ -459,7 +490,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-
+			System.out.println("rezept");
+			System.out.println(kuchenrezeptNeu);
 			@SuppressWarnings("unchecked")
 			BeanItemContainer<KuchenrezeptHasArtikel> bicArtikel = (BeanItemContainer<KuchenrezeptHasArtikel>) zutatenTable
 					.getContainerDataSource();
@@ -485,6 +517,45 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		try {
+			kuchenrezeptNeu = Kuchenrezeptverwaltung.getInstance()
+					.getKuchenrezeptByName1(nameInput);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		// Liste der Zubereitungen
+					if (fussnoten.getValue().toString() != "[]") {
+						List<String> FussnoteKuchenId = Arrays.asList(fussnoten
+								.getValue()
+								.toString()
+								.substring(1,
+										fussnoten.getValue().toString().length() - 1)
+								.split("\\s*,\\s*"));
+
+						List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
+						for (String sId : FussnoteKuchenId) {
+							FussnoteKuchen fussnotekuchen = new FussnoteKuchen();
+							try {
+								fussnotekuchen = FussnoteKuchenDAO.getInstance()
+										.getFussnoteKuchenByName(sId);
+								System.out.println(kuchenrezeptNeu);
+								KuchenrezeptHasFussnote a = new KuchenrezeptHasFussnote(
+										fussnotekuchen, kuchenrezeptNeu);
+								fussnotelist.add(a);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						for (KuchenrezeptHasFussnote i : fussnotelist) {
+							try {
+								KuchenrezeptDAO.getInstance().FussnoteKuchenAdd(i);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
 
 		Notification notification = new Notification(
 				"Rezept wurde gespeichert!");
@@ -513,7 +584,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-
+		System.out.println("tmpZutaten");
+		System.out.println(tmpZutaten);
 		// setzt Artikel
 		kuchenrezept.setArtikel(tmpZutaten);
 
@@ -522,6 +594,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					kuchenrezept);
 			Kuchenrezeptverwaltung.getInstance().deleteZutatenZuKuchenrezept(
 					kuchenrezept);
+			KuchenrezeptDAO.getInstance().FussnoteKuchenDelete(kuchenrezept);
 			Kuchenrezeptverwaltung.getInstance().saveArtikel(kuchenrezept);
 		} catch (ConnectException e) {
 			e.printStackTrace();
@@ -531,6 +604,37 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
+		
+		if (fussnoten.getValue().toString() != "[]") {
+			List<String> FussnoteKuchenId = Arrays.asList(fussnoten
+					.getValue()
+					.toString()
+					.substring(1,
+							fussnoten.getValue().toString().length() - 1)
+					.split("\\s*,\\s*"));
+
+			List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
+			for (String sId : FussnoteKuchenId) {
+				FussnoteKuchen fussnotekuchen = new FussnoteKuchen();
+				try {
+					fussnotekuchen = FussnoteKuchenDAO.getInstance()
+							.getFussnoteKuchenByName(sId);
+					System.out.println(kuchenrezept);
+					KuchenrezeptHasFussnote a = new KuchenrezeptHasFussnote(
+							fussnotekuchen, kuchenrezept);
+					fussnotelist.add(a);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			for (KuchenrezeptHasFussnote i : fussnotelist) {
+				try {
+					KuchenrezeptDAO.getInstance().FussnoteKuchenAdd(i);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}		
 		Notification notification = new Notification("Rezept wurde geändert!");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());

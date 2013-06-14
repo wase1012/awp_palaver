@@ -6,8 +6,17 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -118,9 +127,12 @@ public class KuchenrezeptDAO extends AbstractDAO {
 			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
+			kr.setFussnoteKuchen(FussnoteKuchenDAO.getInstance()
+					.getFussnoteKuchenByKuchen(id));
 			list.add(kr);
+			
 		}
-
+		
 		return list.get(0);
 	}
 
@@ -212,12 +224,29 @@ public class KuchenrezeptDAO extends AbstractDAO {
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = "1";
-
+            System.out.println(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,menge, me));
 			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
 					menge, me));
 		}
 	}
+	public void FussnoteKuchenAdd(KuchenrezeptHasFussnote kuchenHasFussnote)
+			throws ConnectException, DAOException, SQLException {
+		String INSERT_QUERY = "INSERT INTO kuchenrezept_has_fussnote (kuchenrezept_fk, fussnotekuchen_fk) VALUES"
+				+ "("
+				+ kuchenHasFussnote.getKuchen().getId()
+				+ ", "
+				+ kuchenHasFussnote.getFussnoteKuchen().getId() + ")";
+		System.out.println(INSERT_QUERY);
+		this.putManaged(INSERT_QUERY);
+	}
+	
+	public void FussnoteKuchenDelete(Kuchenrezept kuchenrezept) throws ConnectException,
+	DAOException, SQLException {
+String DELETE_QUERY = "DELETE  from kuchenrezept_has_fussnote WHERE kuchenrezept_fk = "
+		+ kuchenrezept.getId() + ";";
 
+this.putManaged(DELETE_QUERY);
+}
 	public void updateKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "UPDATE kuchenrezept SET name = '"
@@ -227,6 +256,12 @@ public class KuchenrezeptDAO extends AbstractDAO {
 				+ kuchenrezept.getErstellt() + "' WHERE id = "
 				+ kuchenrezept.getId();
 		this.putManaged(INSERT_QUERY);
+		
+//		Kuchenrezeptverwaltung.getInstance().FussnoteKuchenDelete(kuchenrezept);
+//		for (FussnoteKuchen fs : kuchenrezept.getFussnoteKuchen()) {
+//			Kuchenrezeptverwaltung.getInstance().FussnoteKuchenAdd(
+//					new KuchenrezeptHasFussnote(fs, kuchenrezept));
+//		}
 	}
 
 	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(

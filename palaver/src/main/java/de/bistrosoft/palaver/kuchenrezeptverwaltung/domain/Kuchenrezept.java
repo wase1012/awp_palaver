@@ -3,6 +3,7 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 import java.sql.Date;
 import java.util.List;
 
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 //
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
@@ -16,7 +17,7 @@ public class Kuchenrezept implements java.io.Serializable {
 	private String kommentar;
 	private Date erstellt;
 	private List<KuchenrezeptHasArtikel> artikel;
-
+	List<FussnoteKuchen> fussnotekuchen;
 	public List<KuchenrezeptHasArtikel> getArtikel() {
 		return artikel;
 	}
@@ -60,7 +61,13 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.id = id;
 
 	}
+	public List<FussnoteKuchen> getFussnoteKuchen() {
+		return fussnotekuchen;
+	}
 
+	public void setFussnoteKuchen(List<FussnoteKuchen> fussnotekuchen) {
+		this.fussnotekuchen = fussnotekuchen;
+	}
 	// public Rezept(Rezeptart rezeptart2, Geschmack geschmack2, Mitarbeiter
 	// mitarbeiter2, String string) {
 	// }
@@ -243,6 +250,10 @@ public class Kuchenrezept implements java.io.Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "" + id + "";
 	}
 
 }
