@@ -155,6 +155,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlControl.addComponents(btNeuesRezept, btVerwerfen, btSpeichern);
 
 		// Komponenten formatieren
+		vlDetailsRechts.setWidth("450px");
 		hlDetails.setWidth("525px");
 		hlDetails.setComponentAlignment(vlDetailsLinks, Alignment.TOP_LEFT);
 		hlDetails.setComponentAlignment(vlDetailsRechts, Alignment.TOP_RIGHT);
@@ -207,7 +208,6 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		nsKoch.setNullSelectionAllowed(false);
 
 		tcsFussnoten.setImmediate(true);
-		tcsFussnoten.setWidth("400");
 
 		btSpeichern.setIcon(new ThemeResource("img/save.ico"));
 		btVerwerfen.setIcon(new ThemeResource("img/cross.ico"));
