@@ -109,6 +109,8 @@ public class MenueplanDAO extends AbstractDAO {
 
 		while (setMpl.next()) {
 			menueplan = new Menueplan(setMpl.getLong(ID), week);
+			Boolean freigegeben = setMpl.getBoolean("freigegeben");
+			menueplan.setFreigegeben(freigegeben);
 		}
 
 		if (menueplan != null) {
@@ -140,6 +142,7 @@ public class MenueplanDAO extends AbstractDAO {
 				Menueart menueart = Menueartverwaltung.getInstance()
 						.getMenueartById(setMenues.getLong("menueart_fk"));
 				menue.setMenueart(menueart);
+				
 				String angezName = setMenues.getString("angezName");
 				Integer portion = setMenues.getInt("portion");
 				MenueComponent menueComp = new MenueComponent(menue, angezName,
