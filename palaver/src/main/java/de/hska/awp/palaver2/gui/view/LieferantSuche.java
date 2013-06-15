@@ -678,6 +678,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 		if (lieferant.getId() == null) {
 			try {
 				lieferant = Lieferantenverwaltung.getInstance().getLastLieferant();
+				System.out.println(lieferant);
 			} catch (Exception e) {
 				log.error(e.toString());
 			}
