@@ -171,14 +171,21 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 				shownKuchenplan.speichern(week, year);
 			}
 		});
+		
+		// FußŸnoten
+		Label lbFussnoten = new Label(
+				"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (oWe) = weizenfrei &nbsp;&nbsp; (oG) = glutenfrei &nbsp;&nbsp; (oE) = eifrei &nbsp;&nbsp; (oL) = laktosefrei <BR> (mM) = mitMandeln &nbsp;&nbsp; (mWa) = mit Walnüssen &nbsp;&nbsp; (mH) = mit Haselnüssen &nbsp;&nbsp; (mA) = mit Alkohol &nbsp;&nbsp;</div>",
+				ContentMode.HTML);
 
-				// Hinzufï¿½gen und Anordnen weiterer Komponenten
+		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		box.addComponent(btSpeichern);
 		box.addComponent(curKuchenplan);
+		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curKuchenplan, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 	}

@@ -46,14 +46,14 @@ public class KuchenplanLayout extends CustomComponent {
 	private Kuchenplan kuchenplan = null;
 
 	// Tabellen
-	private Table itemMoTable;
-	private Table itemDiTable;
-	private Table itemMiTable;
-	private Table itemDoTable;
-	private Table itemFrTable;
-	private Table itemSaTable;
-	private Table itemSoTable;
-	private FilterTable kuchenTable;
+	public Table itemMoTable;
+	public Table itemDiTable;
+	public Table itemMiTable;
+	public Table itemDoTable;
+	public Table itemFrTable;
+	public Table itemSaTable;
+	public Table itemSoTable;
+	public FilterTable kuchenTable;
 
 	// Listen
 	List<KuchenplanHasKuchenrezept> tmpItems = new ArrayList<KuchenplanHasKuchenrezept>();
@@ -81,16 +81,8 @@ public class KuchenplanLayout extends CustomComponent {
 	// Seitenlayout erstellen
 	public KuchenplanLayout(int week, int year) {
 		kuchenplan = null;
-		try {
-			kuchenplan = Kuchenplanverwaltung.getInstance()
-					.getKuchenplanByWeekWithItems(new Week(week, year));
-		} catch (ConnectException e1) {
-			e1.printStackTrace();
-		} catch (DAOException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		kuchenplan = Kuchenplanverwaltung.getInstance()
+				.getKuchenplanByWeekWithItems(new Week(week, year));
 		if (kuchenplan == null) {
 			kuchenplan = new Kuchenplan(new Week(week, year));
 		}
@@ -99,7 +91,7 @@ public class KuchenplanLayout extends CustomComponent {
 
 		// vertikales Layout anlegen
 		HorizontalLayout outer = new HorizontalLayout();
-		outer.setWidth("900px");
+		outer.setWidth("1000px");
 		setCompositionRoot(outer);
 
 		// GridLayout erstellen
@@ -134,107 +126,121 @@ public class KuchenplanLayout extends CustomComponent {
 
 		// Füge Listen für KuchenplanItems ein
 		itemMoTable = new Table();
-		itemMoTable.setWidth("400px");
+		itemMoTable.setWidth("430px");
 		itemMoTable.setHeight("150px");
 		itemMoTable.setStyleName("palaverTable2");
 		itemMoTable.setImmediate(true);
-		itemMoTable.setColumnWidth("kuchenname", 300);
+		itemMoTable.setColumnWidth("kuchenname", 210);
 		itemMoTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptMo = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemMoTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptMo);
-		itemMoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemMoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemMoTable.setEditable(true);
 
 		itemDiTable = new Table();
-		itemDiTable.setWidth("400px");
+		itemDiTable.setWidth("430px");
 		itemDiTable.setHeight("150px");
 		itemDiTable.setStyleName("palaverTable2");
 		itemDiTable.setPageLength(16);
 		itemDiTable.setImmediate(true);
-		itemDiTable.setColumnWidth("kuchenname", 300);
+		itemDiTable.setColumnWidth("kuchenname", 210);
 		itemDiTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptDi = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemDiTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptDi);
-		itemDiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemDiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemDiTable.setEditable(true);
 
 		itemMiTable = new Table();
-		itemMiTable.setWidth("400px");
+		itemMiTable.setWidth("430px");
 		itemMiTable.setHeight("150px");
 		itemMiTable.setStyleName("palaverTable2");
 		itemMiTable.setPageLength(16);
 		itemMiTable.setImmediate(true);
-		itemMiTable.setColumnWidth("kuchenname", 300);
+		itemMiTable.setColumnWidth("kuchenname", 210);
 		itemMiTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptMi = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemMiTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptMi);
-		itemMiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemMiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemMiTable.setEditable(true);
 
 		itemDoTable = new Table();
-		itemDoTable.setWidth("400px");
+		itemDoTable.setWidth("430px");
 		itemDoTable.setHeight("150px");
 		itemDoTable.setStyleName("palaverTable2");
 		itemDoTable.setPageLength(16);
 		itemDoTable.setImmediate(true);
-		itemDoTable.setColumnWidth("kuchenname", 300);
+		itemDoTable.setColumnWidth("kuchenname", 210);
 		itemDoTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptDo = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemDoTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptDo);
-		itemDoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemDoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemDoTable.setEditable(true);
 
 		itemFrTable = new Table();
-		itemFrTable.setWidth("400px");
+		itemFrTable.setWidth("430px");
 		itemFrTable.setHeight("150px");
 		itemFrTable.setStyleName("palaverTable2");
 		itemFrTable.setPageLength(16);
 		itemFrTable.setImmediate(true);
-		itemFrTable.setColumnWidth("kuchenname", 300);
+		itemFrTable.setColumnWidth("kuchenname", 210);
 		itemFrTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptFr = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemFrTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptFr);
-		itemFrTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemFrTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemFrTable.setEditable(true);
 
 		itemSaTable = new Table();
-		itemSaTable.setWidth("400px");
+		itemSaTable.setWidth("430px");
 		itemSaTable.setHeight("150px");
 		itemSaTable.setStyleName("palaverTable2");
 		itemSaTable.setPageLength(16);
 		itemSaTable.setImmediate(true);
-		itemSaTable.setColumnWidth("kuchenname", 300);
+		itemSaTable.setColumnWidth("kuchenname", 210);
 		itemSaTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptSa = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemSaTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptSa);
-		itemSaTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemSaTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemSaTable.setEditable(true);
 
 		itemSoTable = new Table();
-		itemSoTable.setWidth("400px");
+		itemSoTable.setWidth("430px");
 		itemSoTable.setHeight("150px");
 		itemSoTable.setStyleName("palaverTable2");
 		itemSoTable.setPageLength(16);
 		itemSoTable.setImmediate(true);
-		itemSoTable.setColumnWidth("kuchenname", 300);
+		itemSoTable.setColumnWidth("kuchenname", 210);
 		itemSoTable.setColumnWidth("anzahl", 70);
+		itemMoTable.setColumnWidth("fussnoten", 100);
 		containerKuchenplanHasKuchenrezeptSo = new BeanItemContainer<KuchenplanHasKuchenrezept>(
 				KuchenplanHasKuchenrezept.class);
 		itemSoTable
 				.setContainerDataSource(containerKuchenplanHasKuchenrezeptSo);
-		itemSoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl" });
+		itemSoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
+				"fussnoten" });
 		itemSoTable.setEditable(true);
 
 		layout.addComponent(itemMoTable, 1, 0);
@@ -248,7 +254,9 @@ public class KuchenplanLayout extends CustomComponent {
 		// Füge Liste mit allen Kuchen ein
 		kuchenTable = new FilterTable();
 		kuchenTable.setSizeFull();
-		kuchenTable.setWidth("250px");
+		kuchenTable.setWidth("360px");
+		kuchenTable.setColumnWidth("name", 210);
+		kuchenTable.setColumnWidth("mitarbeiter", 130);
 		kuchenTable.setStyleName("palaverTable2");
 		kuchenTable.setFilterBarVisible(true);
 		kuchenTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
@@ -544,7 +552,8 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept.class, Kuchenrezeptverwaltung.getInstance()
 							.getAllKuchenrezepte());
 			kuchenTable.setContainerDataSource(containerKuchen);
-			kuchenTable.setVisibleColumns(new Object[] { "name" });
+			kuchenTable
+					.setVisibleColumns(new Object[] { "name", "mitarbeiter" });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
@@ -573,7 +582,7 @@ public class KuchenplanLayout extends CustomComponent {
 		kuchenplan.setKuchenrezepte(tmpItems);
 		Kuchenplanverwaltung.getInstance().persist(kuchenplan);
 		showNotification("Kuchenplan für Kalenderwoche " + week + "/" + year
-			+ " wurde gespeichert");
+				+ " wurde gespeichert");
 	}
 
 	// Funktion zum Anzeigen der Notification

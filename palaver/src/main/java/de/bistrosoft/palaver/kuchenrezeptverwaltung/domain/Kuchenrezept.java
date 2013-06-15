@@ -253,7 +253,7 @@ public class Kuchenrezept implements java.io.Serializable {
 	}
 	@Override
 	public String toString() {
-		return "" + id + "";
+		return "" + id + " " + mitarbeiter;
 	}
 
 }
