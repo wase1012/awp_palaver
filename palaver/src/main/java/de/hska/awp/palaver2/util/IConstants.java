@@ -51,6 +51,7 @@ public interface IConstants
 	String		MENU_KUCHENREZEPT_ANLEGEN = "Kuchenrezept anlegen";
 	String		MENU_KUCHENREZEPT_ANZEIGEN = "Alle Kuchenrezepte anzeigen";
 	String		MENU_KUCHENPLAN_AKTUELL = "Aktueller Kuchenplan";
+	String 		MENU_KUCHENPLAN_HISTORIE = "Kuchenplan-Historie";
 	String 		MENU_FUSSNOTE = "Fussnoten";
 	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";

@@ -3,6 +3,7 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.service;
 import de.bistrosoft.palaver.data.KuchenplanDAO;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
+import de.bistrosoft.palaver.util.Week;
 
 public class Kuchenplanverwaltung extends KuchenplanDAO {
 
@@ -17,6 +18,18 @@ public class Kuchenplanverwaltung extends KuchenplanDAO {
 			instance = new Kuchenplanverwaltung();
 		}
 		return instance;
+	}
+	
+	public Kuchenplan getKuchenplanByWeekWithItems(Week week) {
+		Kuchenplan mpl = null;
+		try {
+			mpl = super.getKuchenplanByWeekWithItems(week);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return mpl;
 	}
 	
 	public void persist(Kuchenplan kuchenplan) {
