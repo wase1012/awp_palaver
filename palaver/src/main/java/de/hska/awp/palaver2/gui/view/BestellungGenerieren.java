@@ -19,6 +19,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
@@ -98,7 +99,8 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					List<ArtikelBedarf> a = null;
 					try {
 						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
-//						a = Menueplanverwaltung.getInstance().getArtikelBedarfByWeek(new Week(week, year));
+						//TODO
+//						a = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year));
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
