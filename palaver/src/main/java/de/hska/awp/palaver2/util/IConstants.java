@@ -76,7 +76,7 @@ public interface IConstants
 	String		BUTTON_DELETE = "Löschen";
 	String		BUTTON_JA = "Ja";
 	String 		BUTTON_NEIN = "Nein";
-	String		BUTTON_EMAILVERSAND = "Per Email versenden";
+	String		BUTTON_EMAILVERSAND = "Versenden";
 	String		BUTTON_DOWNLOAD = "Download";
 	String		BUTTON_BACK = "Zurück";
 	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
