@@ -40,7 +40,7 @@ public class LieferantDAO extends AbstractDAO {
 	private final static String MEHRERELIEFERTERMINE = "mehrereliefertermine";
 
 	private final static String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE + " ORDER BY lieferant.name";
-
+	private final static String GET_ALL_LIEFERANTEN_FOR_SHOW = "SELECT * FROM " + TABLE;
 	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
 
@@ -79,6 +79,29 @@ public class LieferantDAO extends AbstractDAO {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 
 		ResultSet set = getManaged(GET_ALL_LIEFERANTEN);
+
+		while (set.next()) {
+			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
+					.getString(STRASSE), set.getString(PLZ), set.getString(ORT), set.getString(EMAIL), set.getString(TELEFON), set.getString(FAX),
+					set.getString(NOTIZ), set.getBoolean(MEHRERELIEFERTERMINE)));
+		}
+
+		return list;
+	}
+	
+	/**
+	 * Die Methode getAllLieferanten liefert alle in der Datenbank befindlichen
+	 * Lieferanten zurück.
+	 * 
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+	public List<Lieferant> getAllLieferantenForShow() throws ConnectException, DAOException, SQLException {
+		List<Lieferant> list = new ArrayList<Lieferant>();
+
+		ResultSet set = getManaged(GET_ALL_LIEFERANTEN_FOR_SHOW);
 
 		while (set.next()) {
 			list.add(new Lieferant(set.getLong(ID), set.getString(NAME), set.getString(KUNDENNUMMER), set.getString(BEZEICHNUNG), set
