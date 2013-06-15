@@ -23,6 +23,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
@@ -133,42 +134,18 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 					Mail mail = Mail.getInstance();
 					Boolean ergebniss = mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
 
-					final Window dialog = new Window();
-					dialog.setClosable(false);
-					dialog.setWidth("300px");
-					dialog.setHeight("150px");
-					dialog.setModal(true);
-					dialog.center();
-					dialog.setResizable(false);
-					dialog.setStyleName("dialog-window");
-
-					Label message;
-					if (ergebniss == true)
-						message = new Label("Email wurde gesendet");
-					else
-						message = new Label("Email wurde nicht gesendet");
-					Button okButton = new Button("OK");
-					VerticalLayout dialogContent = new VerticalLayout();
-					dialogContent.setSizeFull();
-					dialogContent.setMargin(true);
-					dialog.setContent(dialogContent);
-
-					dialogContent.addComponent(message);
-					dialogContent.addComponent(okButton);
-					dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-
-					UI.getCurrent().addWindow(dialog);
-
-					okButton.addClickListener(new ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							UI.getCurrent().removeWindow(dialog);
-							if (lieferanten == false)
-								ViewHandler.getInstance().returnToDefault();
-							else
-								ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
-						}
-					});
+					
+					String message;
+					if (ergebniss == true) {
+						message = "Email wurde gesendet";
+					}	
+					else {
+						message = "Email wurde nicht gesendet";
+					}
+						
+					((Application) UI.getCurrent().getData()).showDialog(message);
+					
+					
 				} else {
 					Notification notification = new Notification("Bitte vervollständigen Sie ihre Angaben!");
 					notification.setDelayMsec(500);

@@ -85,7 +85,7 @@ public interface IConstants
 	String 		BUTTON_CLEAR_FILTER = "Filter leeren";
 	String 		BUTTON_REZEPT_ARTIKEL_ANLEGEN = "Artikel anlegen";
 	String 		BUTTON_ADD_ANSPRECHPARTNER = "Ansprechpartner hinzufügen";
-
+	String 		BUTTON_SEND = "Senden";
 	
 	// Icons fuer Knoepfe
 	String		BUTTON_DELETE_ICON = "img/delete.ico";
