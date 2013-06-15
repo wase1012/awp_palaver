@@ -33,4 +33,6 @@ ALTER TABLE `palaver`.`geschmack`
 ALTER TABLE `palaver`.`zubereitung` 
 	ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) ;
 
+	ALTER TABLE `palaver`.`regel` 
+	ADD COLUMN `ignorierbar` TINYINT(1) NULL  AFTER `aktiv` ;
 	

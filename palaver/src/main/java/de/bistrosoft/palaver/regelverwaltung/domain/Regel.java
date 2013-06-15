@@ -27,6 +27,7 @@ public class Regel {
 	String kriterien;
 	String fehlermeldung;
 	Boolean aktiv;
+	Boolean ignorierbar;
 
 	public Regel() {
 
@@ -38,6 +39,14 @@ public class Regel {
 
 	public void setAktiv(Boolean aktiv) {
 		this.aktiv = aktiv;
+	}
+	
+	public Boolean getIgnorierbar() {
+		return ignorierbar;
+	}
+
+	public void setIgnorierbar(Boolean ignorierbar) {
+		this.ignorierbar = ignorierbar;
 	}
 
 	public Long getId() {
@@ -114,7 +123,7 @@ public class Regel {
 
 	public Regel(Long id, String regeltyp, String zeilen, String spalten,
 			String operator, String kriterien, String fehlermeldung,
-			Boolean aktiv) {
+			Boolean aktiv, Boolean ignorierbar) {
 		this.id = id;
 		this.regeltyp = regeltyp;
 		this.zeilen = zeilen;
@@ -123,6 +132,7 @@ public class Regel {
 		this.kriterien = kriterien;
 		this.fehlermeldung = fehlermeldung;
 		this.aktiv = aktiv;
+		this.ignorierbar = ignorierbar;
 		this.kriterienlist = Arrays.asList(kriterien.split(", "));
 
 		// Fülle List<Integer>
@@ -588,19 +598,18 @@ public class Regel {
 		return null;
 	}
 
-	public static void speichern(String regeltyp, String zeile, String spalte,
-			String operator, String kriterium, String fehlermeldung,
-			Boolean aktiv) {
+	public static void speichern(Regel regel) {
 
-		Regel regel = new Regel();
+		Regel neueregel = new Regel();
 
-		regel.setZeile(zeile);
-		regel.setSpalte(spalte);
-		regel.setRegeltyp(regeltyp);
-		regel.setOperator(operator);
-		regel.setKriterien(kriterium);
-		regel.setFehlermeldung(fehlermeldung);
-		regel.setAktiv(aktiv);
+		neueregel.setZeile(regel.getZeile());
+		neueregel.setSpalte(regel.getSpalte());
+		neueregel.setRegeltyp(regel.getRegeltyp());
+		neueregel.setOperator(regel.getOperator());
+		neueregel.setKriterien(regel.getKriterien());
+		neueregel.setFehlermeldung(regel.getFehlermeldung());
+		neueregel.setAktiv(regel.getAktiv());
+		neueregel.setIgnorierbar(regel.getIgnorierbar());
 
 		try {
 			Regelverwaltung.getInstance().createRegel(regel);

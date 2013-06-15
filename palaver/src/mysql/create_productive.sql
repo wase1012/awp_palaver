@@ -20,6 +20,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`regel` (
   `kriterien` VARCHAR(500) ,
   `fehlermeldung` VARCHAR(500) ,
   `aktiv` BOOLEAN ,
+  `ignorierbar` TINYINT(1),
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

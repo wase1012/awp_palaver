@@ -67,7 +67,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
 	private CheckBox aktiv = new CheckBox("Aktiv");
-	private CheckBox harteRegel = new CheckBox("Ignorierbar");
+	private CheckBox ignorierRegel = new CheckBox("Ignorierbar");
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button bearbeiten = new Button(IConstants.BUTTON_SAVE);
@@ -116,7 +116,6 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		layout();
 		check();
 		ChangeListener();
-		speichern();
 
 	}
 
@@ -141,7 +140,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 		fenster.setWidth("900px");
 
-		links.setWidth("100px");
+		links.setWidth("150px");
 		links.setSpacing(true);
 
 		mitte.setWidth("300px");
@@ -157,7 +156,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		box.setComponentAlignment(mitte, Alignment.TOP_LEFT);
 
 		box2.setWidth("900px");
-		links2.setWidth("100px");
+		links2.setWidth("150px");
 		mitte2.setWidth("300px");
 		rechts2.setWidth("300px");
 		box2.addComponent(links2);
@@ -169,7 +168,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		mitte.addComponent(regeltyp);
 		mitte.addComponent(operator);
 		rechts.addComponent(fehlermeldung);
-		rechts.addComponent(harteRegel);
+		rechts.addComponent(ignorierRegel);
 		rechts.addComponent(aktiv);
 
 		box.addComponent(rechts);
@@ -325,9 +324,16 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				// Regel speichern
 
 				if (validiereEingabe()) {
-					Regel.speichern(regeltypinput, zeileninput, spalteninput,
-							operatorinput, kriterieninput, fehlermeldunginput,
-							true);
+					Regel neueRegel = new Regel();
+					neueRegel.setRegeltyp(regeltypinput);
+					neueRegel.setZeile(zeileninput);
+					neueRegel.setSpalte(spalteninput);
+					neueRegel.setOperator(operatorinput);
+					neueRegel.setKriterien(kriterieninput);
+					neueRegel.setFehlermeldung(fehlermeldunginput);
+					neueRegel.setAktiv(true);
+					neueRegel.setIgnorierbar(ignorierRegel.getValue());
+					Regel.speichern(neueRegel);
 
 					((Application) UI.getCurrent().getData())
 							.showDialog(IConstants.INFO_REGEL_SAVE);
@@ -646,6 +652,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		operator.setValue(regel.getOperator());
 		fehlermeldung.setValue(regel.getFehlermeldung());
 		aktiv.setValue(regel.getAktiv());
+		ignorierRegel.setValue(regel.getIgnorierbar());
 
 		List<String> sp = Arrays.asList(regel.getSpalte().split("\\s*,\\s*"));
 		for (String s : sp) {
@@ -674,7 +681,6 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					mitte.addComponent(kriterienText);
 					kriterienText.setValue(regel.getKriterien());
 				}
-				System.out.println("1");
 			}
 			if (regel.getRegeltyp().equals(
 					IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)){
@@ -726,7 +732,6 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					IConstants.INFO_REGEL_REGELTYP_AUFWAND)
 					|| regel.getRegeltyp().equals(
 							IConstants.INFO_REGEL_REGELTYP_MENUE)) {
-				System.out.println("5");
 				mitte.removeComponent(kriterienFussnote);
 				mitte.removeComponent(kriterienGeschmack);
 				mitte.removeComponent(kriterienMenüart);
@@ -770,6 +775,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					}
 					regel.setFehlermeldung(fehlermeldung.getValue());
 					regel.setAktiv(aktiv.getValue());
+					regel.setIgnorierbar(ignorierRegel.getValue());
 
 					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_EDIT);
 
