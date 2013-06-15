@@ -139,6 +139,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control = new HorizontalLayout();
 		control.setSpacing(true);
 		control.setSizeFull();
+		control.setMargin(true);
 
 		this.addComponent(fenster);
 
@@ -159,7 +160,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control.setComponentAlignment(verwerfen, Alignment.TOP_RIGHT);
 		control.addComponent(speichern);
 		control.setComponentAlignment(speichern, Alignment.TOP_RIGHT);
-		control.setExpandRatio(l, 7);
+		control.setExpandRatio(l, 5);
 		control.setExpandRatio(bestellenperemail, (float) 1.5);
 		control.setExpandRatio(verwerfen, 1);
 		control.setExpandRatio(speichern, 1);

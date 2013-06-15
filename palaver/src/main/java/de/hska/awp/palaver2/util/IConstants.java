@@ -205,6 +205,8 @@ public interface IConstants
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
+	String 		GEBINDE = "Gebinde";
+
 
 
 
