@@ -96,6 +96,8 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					int year = date.getValue().getYear() + 1900;
 					
 					Menueplan m = null;
+					
+					//TODO Ändern in RezeptHasArtikel
 					List<ArtikelBedarf> a = null;
 					try {
 						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
