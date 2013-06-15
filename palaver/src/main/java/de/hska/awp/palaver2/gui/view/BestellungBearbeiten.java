@@ -160,10 +160,10 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control.setComponentAlignment(verwerfen, Alignment.TOP_RIGHT);
 		control.addComponent(speichern);
 		control.setComponentAlignment(speichern, Alignment.TOP_RIGHT);
-		control.setExpandRatio(l, 5);
+		control.setExpandRatio(l, 7);
 		control.setExpandRatio(bestellenperemail, (float) 1.5);
-		control.setExpandRatio(verwerfen, 1);
-		control.setExpandRatio(speichern, 1);
+		control.setExpandRatio(verwerfen, (float) 1.5);
+		control.setExpandRatio(speichern, (float) 1.4);
 
 		bestellungTable = new Table();
 		bestellungTable.setSizeFull();
