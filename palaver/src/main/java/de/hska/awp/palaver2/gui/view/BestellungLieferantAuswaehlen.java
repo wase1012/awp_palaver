@@ -39,7 +39,7 @@ public class BestellungLieferantAuswaehlen extends VerticalLayout implements Vie
 	private HorizontalLayout box = new HorizontalLayout();
 	private VerticalLayout mitte = new VerticalLayout();
 	private Button showFilter;
-	private Button bestellen = new Button("bestellen");
+	private Button bestellen = new Button("Bestellung anlegen");
 	private Lieferant lieferant;
 	private Label headline = new Label("Alle Lieferanten mit Artikeln");
 

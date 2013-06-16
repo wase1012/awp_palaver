@@ -203,10 +203,13 @@ public interface IConstants
 	String		INFO_MENUEART_SAVE = "Menüart wurde gespeichert!";
 	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
 	
+	String 		INFO_LIEFERANT_SAVE = "Lieferant wurde gespeichert!";
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
 	String 		GEBINDE = "Gebinde";
+
+
 
 
 
