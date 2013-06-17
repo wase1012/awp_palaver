@@ -73,6 +73,7 @@ public class KuchenplanHistorie extends VerticalLayout implements View {
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
+		date.setShowISOWeekNumbers(true);
 		box.addComponent(date);
 		box.setComponentAlignment(date, Alignment.TOP_CENTER);
 		final Button btDatumsauswahl = new Button("Kuchenplan anzeigen");
