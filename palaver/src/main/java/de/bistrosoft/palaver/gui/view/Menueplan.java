@@ -4,7 +4,7 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
-import org.vaadin.addon.componentexport.java.PdfFromComponent;
+import org.vaadin.haijian.PdfExporter;
 
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
@@ -13,6 +13,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -22,6 +23,7 @@ import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
@@ -60,14 +62,20 @@ public class Menueplan extends VerticalLayout implements View {
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
 	Button btPdf = new Button("PDF");
+	private Button btDeletePlan = new Button("Gesammten Plan löschen");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 					+ strKW + "</pre>", ContentMode.HTML);
 	MenueplanGridLayout shownMenueplan = curMenueplan;
 
+
 	public Menueplan() {
 		super();
+		
+		///////////////
+		
+		/////////////
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -265,9 +273,7 @@ public class Menueplan extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				PdfFromComponent pfc = new PdfFromComponent();
-				pfc.export(hlControl);
-//				pfc.export(Menueplan.this.shownMenueplan.layout);
+				
 			}
 		});
 		
@@ -285,6 +291,14 @@ public class Menueplan extends VerticalLayout implements View {
 								+ " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+			}
+		});
+
+		btDeletePlan.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Menueplanverwaltung.getInstance().delete(shownMenueplan.getMenueplan());
 			}
 		});
 
@@ -311,6 +325,7 @@ public class Menueplan extends VerticalLayout implements View {
 		hlControl.addComponent(btEnableDelete);
 		hlControl.addComponent(btSubmitDelete);
 		btSubmitDelete.setVisible(false);
+		hlControl.addComponent(btDeletePlan);
 		hlControl.addComponent(btPdf);
 		box.addComponent(hlControl);
 		box.addComponent(curMenueplan);

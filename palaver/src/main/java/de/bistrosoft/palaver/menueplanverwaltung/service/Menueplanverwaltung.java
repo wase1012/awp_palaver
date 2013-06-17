@@ -77,6 +77,15 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		}
 
 	}
+	
+	public void delete(Menueplan menueplan) {
+		try {
+			super.deleteItemsByMenueplan(menueplan);
+			super.deleteKoecheByMenueplan(menueplan);
+		} catch (ConnectException e) {
+		} catch (DAOException e) {
+		}
+	}
 
 	public void updateMenueplan(Menueplan menueplan) {
 		

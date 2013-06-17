@@ -264,7 +264,7 @@ public class MenueplanDAO extends AbstractDAO {
 	
 	public List<KochInMenueplan> getKoecheByMenueplan(Menueplan menueplan) throws ConnectException, DAOException, SQLException{
 		List<KochInMenueplan> kim = new ArrayList<KochInMenueplan>();
-		String sql = "SELECT * FROM menueplan_has_koeche WHERE " + menueplan.getId();
+		String sql = "SELECT * FROM menueplan_has_koeche WHERE menueplan=" + menueplan.getId();
 		
 		ResultSet set = getManaged(sql);
 		
@@ -287,6 +287,7 @@ public class MenueplanDAO extends AbstractDAO {
 			throws ConnectException, DAOException {
 		String sql = "DELETE FROM menueplan_has_koeche WHERE menueplan = "
 				+ menueplan.getId();
+		System.out.println(sql);
 		putManaged(sql);
 	}
 }
