@@ -107,7 +107,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Button btSpeichern = new Button(IConstants.BUTTON_SAVE);
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
-	private Button btMenue = new Button(IConstants.BUTTON_REZEPTSAVEASMENUE);
+	private Button btMenue = new Button(IConstants.BUTTON_REZEPTMENUE);
 	private Button btArtikel = new Button(
 			IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
 

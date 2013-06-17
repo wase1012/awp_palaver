@@ -82,6 +82,7 @@ public interface IConstants
 	String		BUTTON_BACK = "Zurück";
 	String		BUTTON_ALL_ORDERS = "Alle Bestellungen";
 	String 		BUTTON_REZEPTSAVEASMENUE = "Als Menü Speichern";	
+	String 		BUTTON_REZEPTMENUE = "In Menü überführen";	
 	String		BUTTON_SELECT = "Auswählen";
 	String 		BUTTON_CLEAR_FILTER = "Filter leeren";
 	String 		BUTTON_REZEPT_ARTIKEL_ANLEGEN = "Artikel anlegen";
