@@ -363,8 +363,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 1);
+							selected, 1, fn);
 					// tmpItemsMo.add(tmp);
 					containerKuchenplanHasKuchenrezeptMo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -392,8 +393,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 2);
+							selected, 2, fn);
 					// tmpItemsDi.add(tmp);
 					containerKuchenplanHasKuchenrezeptDi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -421,8 +423,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 3);
+							selected, 3, fn);
 					// tmpItemsMi.add(tmp);
 					containerKuchenplanHasKuchenrezeptMi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -450,8 +453,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 4);
+							selected, 4, fn);
 					// tmpItemsDo.add(tmp);
 					containerKuchenplanHasKuchenrezeptDo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -479,8 +483,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 5);
+							selected, 5, fn);
 					// tmpItemsFr.add(tmp);
 					containerKuchenplanHasKuchenrezeptFr.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -508,8 +513,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 6);
+							selected, 6, fn);
 					// tmpItemsSa.add(tmp);
 					containerKuchenplanHasKuchenrezeptSa.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -537,8 +543,9 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
+					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
-							selected, 7);
+							selected, 7, fn);
 					// tmpItemsSo.add(tmp);
 					containerKuchenplanHasKuchenrezeptSo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
@@ -553,7 +560,7 @@ public class KuchenplanLayout extends CustomComponent {
 							.getAllKuchenrezepte());
 			kuchenTable.setContainerDataSource(containerKuchen);
 			kuchenTable
-					.setVisibleColumns(new Object[] { "name", "mitarbeiter" });
+					.setVisibleColumns(new Object[] { "name", "fussnoten" });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {

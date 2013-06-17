@@ -18,10 +18,11 @@ public class KuchenplanHasKuchenrezept {
 	public KuchenplanHasKuchenrezept() {
 	}
 	
-	public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag) {
+	public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag, String fn) {
 		this.kuchenrezept = a;
 		this.tag = tag;
 		this.anzahl = 1;
+		this.fussnoten = fn;
 	}
 	
 	// Konstruktor für Kuchenkomponente 

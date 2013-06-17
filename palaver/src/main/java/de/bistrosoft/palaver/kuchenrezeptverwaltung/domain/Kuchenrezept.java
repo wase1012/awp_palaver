@@ -18,6 +18,8 @@ public class Kuchenrezept implements java.io.Serializable {
 	private Date erstellt;
 	private List<KuchenrezeptHasArtikel> artikel;
 	List<FussnoteKuchen> fussnotekuchen;
+	private String fussnoten;
+	
 	public List<KuchenrezeptHasArtikel> getArtikel() {
 		return artikel;
 	}
@@ -29,7 +31,13 @@ public class Kuchenrezept implements java.io.Serializable {
 	public Kuchenrezept() {
 		super();
 	}
-
+	
+	public Kuchenrezept(String name, String fn) {
+		super();
+		this.name = name;
+		this.fussnoten = fn;
+	}
+	
 	public Kuchenrezept(Mitarbeiter mitarbeiter, String name, String kommentar) {
 		super();
 		this.mitarbeiter = mitarbeiter;
@@ -68,6 +76,15 @@ public class Kuchenrezept implements java.io.Serializable {
 	public void setFussnoteKuchen(List<FussnoteKuchen> fussnotekuchen) {
 		this.fussnotekuchen = fussnotekuchen;
 	}
+	
+	public String getFussnoten() {
+		return fussnoten;
+	}
+	
+	public void setFussnoten(String fussnoten) {
+		this.fussnoten = fussnoten;
+	}
+	
 	// public Rezept(Rezeptart rezeptart2, Geschmack geschmack2, Mitarbeiter
 	// mitarbeiter2, String string) {
 	// }
@@ -253,7 +270,7 @@ public class Kuchenrezept implements java.io.Serializable {
 	}
 	@Override
 	public String toString() {
-		return "" + id + " " + mitarbeiter;
+		return "" + id + " " + fussnoten;
 	}
 
 }

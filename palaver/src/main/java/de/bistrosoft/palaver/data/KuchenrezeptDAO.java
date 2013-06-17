@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
@@ -75,6 +76,13 @@ public class KuchenrezeptDAO extends AbstractDAO {
 			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
+			List<FussnoteKuchen> fussnoten = Fussnotekuchenverwaltung.getInstance()
+					.getFussnoteKuchenByKuchen(kr.getId());
+			String fn="";
+			for(FussnoteKuchen f: fussnoten){
+				fn = fn+" ("+f.getAbkuerzung().toString()+")";
+			}
+			kr.setFussnoten(fn);
 			list.add(kr);
 		}
 		return list;
@@ -91,6 +99,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getDate("erstellt"));
+			
 			list.add(kuchenrezept);
 
 		}
