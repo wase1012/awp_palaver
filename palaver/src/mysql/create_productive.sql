@@ -636,16 +636,8 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
-  `mitarbeiter_fk` INT NULL ,
   `erstellt` TIMESTAMP NULL ,
-  PRIMARY KEY (`id`) ,
- -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  INDEX `fk_mitarbeiter_kuchen_idx` (`mitarbeiter_fk` ASC) ,
-  CONSTRAINT `fk_mitarbeiter_kuchen`
-    FOREIGN KEY (`mitarbeiter_fk` )
-    REFERENCES `palaver`.`mitarbeiter` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------

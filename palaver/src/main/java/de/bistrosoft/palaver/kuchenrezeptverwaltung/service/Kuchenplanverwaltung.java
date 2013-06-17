@@ -25,7 +25,6 @@ public class Kuchenplanverwaltung extends KuchenplanDAO {
 		try {
 			mpl = super.getKuchenplanByWeekWithItems(week);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -36,7 +35,6 @@ public class Kuchenplanverwaltung extends KuchenplanDAO {
 		try {
 			if (kuchenplan.getId() == null) {
 				super.createKuchenplan(kuchenplan);
-				// TODO: Id anders ziehen
 				kuchenplan.setId(super.getKuchenplanByWeekWithItems(
 						kuchenplan.getWeek()).getId());
 			}

@@ -36,3 +36,7 @@ ALTER TABLE `palaver`.`zubereitung`
 	ALTER TABLE `palaver`.`regel` 
 	ADD COLUMN `ignorierbar` TINYINT(1) NULL  AFTER `aktiv` ;
 	
+ALTER TABLE `palaver`.`kuchenrezept` DROP FOREIGN KEY `fk_mitarbeiter_kuchen` ;
+ALTER TABLE `palaver`.`kuchenrezept` DROP COLUMN `mitarbeiter_fk` 
+, DROP INDEX `fk_mitarbeiter_kuchen_idx` ;
+	

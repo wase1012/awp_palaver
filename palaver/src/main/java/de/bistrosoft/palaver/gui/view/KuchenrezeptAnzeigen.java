@@ -94,8 +94,7 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 					Kuchenrezeptverwaltung.getInstance().getAllKuchenrezepte(
 							false));
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "name", "mitarbeiter",
-					"erstellt" });
+			table.setVisibleColumns(new Object[] { "name", "erstellt" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 		} catch (Exception e) {
 			e.printStackTrace();

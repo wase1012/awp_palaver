@@ -15,8 +15,6 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenre
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -25,7 +23,6 @@ import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 /**
  * @author Christine
@@ -103,9 +100,8 @@ public class KuchenplanDAO extends AbstractDAO {
 			while (setKuchen.next()) {
 				Long id = setKuchen.getLong("id");
 				String name = setKuchen.getString("name");
-				Mitarbeiter baecker = null;
 				String kommentar = null;
-				Kuchenrezept kuchenrezept = new Kuchenrezept(id, baecker, name, kommentar);
+				Kuchenrezept kuchenrezept = new Kuchenrezept(id, name, kommentar);
 				int anzahl = setKuchen.getInt("anzahl");
 				int tag = setKuchen.getInt("tag");
 				List<FussnoteKuchen> fussnoten = Fussnotekuchenverwaltung.getInstance()
