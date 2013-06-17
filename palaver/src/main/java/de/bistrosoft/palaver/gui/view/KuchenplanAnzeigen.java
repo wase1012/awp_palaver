@@ -180,13 +180,21 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		// Hinzuf�gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
+		Label lbPlatzhalter2 = new Label(" ");
+		lbPlatzhalter2.setHeight("30px");
+		Label lbPlatzhalter3 = new Label(" ");
+		lbPlatzhalter3.setHeight("30px");
+		box.addComponent(lbPlatzhalter2);
 		box.addComponent(btSpeichern);
+		box.addComponent(lbPlatzhalter3);
 		box.addComponent(curKuchenplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(curKuchenplan, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
+		box.setComponentAlignment(lbPlatzhalter2, Alignment.MIDDLE_LEFT);
+		box.setComponentAlignment(lbPlatzhalter3, Alignment.MIDDLE_LEFT);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 	}
 
