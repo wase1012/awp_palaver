@@ -59,7 +59,6 @@ public class Menueplan extends VerticalLayout implements View {
 	Button btEnableDragging = new Button("Verschieben aktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
-	Button btPdf = new Button("PDF");
 	private Button btDeletePlan = new Button("Gesammten Plan löschen");
 
 	private Label lbKW = new Label(
@@ -261,15 +260,6 @@ public class Menueplan extends VerticalLayout implements View {
 				}
 			}
 		});
-
-
-		btPdf.addClickListener(new ClickListener() {
-			// Click-Listener zum Speichern
-			@Override
-			public void buttonClick(ClickEvent event) {
-				
-			}
-		});
 		
 		btSpeichern.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
@@ -320,7 +310,6 @@ public class Menueplan extends VerticalLayout implements View {
 		hlControl.addComponent(btSubmitDelete);
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
-		hlControl.addComponent(btPdf);
 		box.addComponent(hlControl);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
