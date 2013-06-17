@@ -59,18 +59,16 @@ import de.hska.awp.palaver2.util.ViewHandler;
 public class MenueAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
-	private Label headlineAnlegen;
-	private Label headlineUpdate;
-
-	private HorizontalLayout box = new HorizontalLayout();
+	//Layouts
 	private VerticalLayout vlBox = new VerticalLayout();
-	private HorizontalLayout hlUeberschrift = new HorizontalLayout();
-	private HorizontalLayout hlDetails = new HorizontalLayout();
 	private VerticalLayout vlDetailsLinks = new VerticalLayout();
 	private VerticalLayout vlDetailsRechts = new VerticalLayout();
+	
 	private HorizontalLayout hlRezepte = new HorizontalLayout();
 	private HorizontalLayout hlControl = new HorizontalLayout();
-
+	private HorizontalLayout hlDetails = new HorizontalLayout();
+	
+	
 	private TextField tfMenuename = new TextField("Menüname");
 
 	private TwinColTouch tcsFussnoten = new TwinColTouch("Fußnoten");
@@ -97,8 +95,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	List<Fussnote> listfussnote = new ArrayList<Fussnote>();
 	Menue menue = new Menue();
 
+	private Label headlineAnlegen;
+	private Label headlineUpdate;
+	
 	public MenueAnlegen() {
 		super();
+		
+		this.setSizeFull();
+		this.setMargin(true);
 
 		tblRezepte = new FilterTable();
 		tblRezepte.setSizeFull();
@@ -119,49 +123,65 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.setCaption("Rezepte in Menü");
 
 		load();
-		this.setSizeFull();
-		this.setMargin(true);
-		this.setSpacing(true);
-
-		// Komponenten einfuegen
-		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-		box.addComponent(vlBox);
+		
+		vlBox.setWidth("1000px");
 		vlBox.setSpacing(true);
-		vlBox.addComponent(hlUeberschrift);
-		// hlUeberschrift.addComponent(ueberschriftAnlegen);
+
+		this.addComponent(vlBox);
+		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
 		headlineAnlegen = new Label("Menü anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
-
-		hlUeberschrift.addComponent(headlineAnlegen);
-		hlUeberschrift.setComponentAlignment(headlineAnlegen,
-				Alignment.MIDDLE_LEFT);
-
+		vlBox.addComponent(headlineAnlegen);
+		
 		vlBox.addComponent(hlDetails);
+		vlBox.addComponent(hlRezepte);
+		vlBox.addComponent(hlControl);
+		
 		hlDetails.addComponent(vlDetailsLinks);
+		hlDetails.addComponent(vlDetailsRechts);
+		hlDetails.setWidth("1000px");
+		hlDetails.setHeight("250px");
+		
+		vlBox.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
+			
 		vlDetailsLinks.addComponent(tfMenuename);
 		vlDetailsLinks.addComponent(nsKoch);
 		vlDetailsLinks.addComponent(nsMenueart);
 		vlDetailsLinks.addComponent(nsGeschmack);
 		vlDetailsLinks.addComponent(chbFavorit);
 		vlDetailsLinks.addComponent(chbAufwand);
-		hlDetails.addComponent(vlDetailsRechts);
+		vlDetailsLinks.setWidth("450px");
+		
 		vlDetailsRechts.addComponent(tcsFussnoten);
-		vlBox.addComponent(hlRezepte);
+		vlDetailsRechts.setWidth("500px");
+		vlDetailsRechts.setComponentAlignment(tcsFussnoten, Alignment.MIDDLE_RIGHT);
+		
+		hlRezepte.setWidth("1000px");
+		hlRezepte.setHeight("393px");
+		
+//		hlControl.setSpacing(true);
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		btNeuesRezept.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
+		btSpeichern.setEnabled(true);
+		btNeuesRezept.setEnabled(true);
+		
 		hlRezepte.addComponent(tblMenueRezepte);
 		hlRezepte.addComponent(tblRezepte);
-		vlBox.addComponent(hlControl);
-		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
-		hlControl.addComponents(btNeuesRezept, btVerwerfen, btSpeichern);
+		
+		hlControl.addComponent(btNeuesRezept);
+		hlControl.addComponent(btVerwerfen);
+		hlControl.addComponent(btSpeichern);
 
 		// Komponenten formatieren
-		vlDetailsRechts.setWidth("450px");
-		hlDetails.setWidth("525px");
-		hlDetails.setComponentAlignment(vlDetailsLinks, Alignment.TOP_LEFT);
-		hlDetails.setComponentAlignment(vlDetailsRechts, Alignment.TOP_RIGHT);
-		hlRezepte.setWidth("900px");
-		hlRezepte.setComponentAlignment(tblMenueRezepte, Alignment.TOP_LEFT);
-		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
+//		vlDetailsRechts.setWidth("450px");
+//		hlDetails.setWidth("525px");
+//		hlDetails.setComponentAlignment(vlDetailsLinks, Alignment.TOP_LEFT);
+//		hlDetails.setComponentAlignment(vlDetailsRechts, Alignment.TOP_RIGHT);
+//		hlRezepte.setWidth("900px");
+//		hlRezepte.setComponentAlignment(tblMenueRezepte, Alignment.TOP_LEFT);
+//		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
 		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
 				"mitarbeiter" });
 		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI
@@ -170,13 +190,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				"mitarbeiter" });
 
 		tcsFussnoten.setWidth("100%");
-		tfMenuename.setWidth("90%");
+		tcsFussnoten.setImmediate(true);
+		tfMenuename.setWidth("100%");
 		tfMenuename.setMaxLength(200);
 		tfMenuename.addValidator(new StringLengthValidator(
 				IConstants.INFO_MENUE_NAME, 5, 200, false));
-		nsKoch.setWidth("95%");
+		nsKoch.setWidth("100%");
 
-		nsGeschmack.setWidth("95%");
+		nsGeschmack.setWidth("100%");
 		nsGeschmack.setImmediate(true);
 		nsGeschmack.addValidator(new Validator() {
 
@@ -188,7 +209,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				}
 			}
 		});
-		nsMenueart.setWidth("95%");
+		nsMenueart.setWidth("100%");
 		nsMenueart.addValidator(new Validator() {
 
 			@Override
@@ -460,9 +481,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		headlineUpdate.setStyleName("ViewHeadline");
 
-		hlUeberschrift.replaceComponent(headlineAnlegen, headlineUpdate);
+		vlBox.replaceComponent(headlineAnlegen, headlineUpdate);
 
-		hlUeberschrift.setComponentAlignment(headlineUpdate,
+		vlBox.setComponentAlignment(headlineUpdate,
 				Alignment.MIDDLE_LEFT);
 
 		btUpdate.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
