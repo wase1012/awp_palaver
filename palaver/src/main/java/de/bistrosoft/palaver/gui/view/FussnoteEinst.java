@@ -8,6 +8,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -21,11 +23,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -66,7 +70,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		this.addComponent(vl);
 		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
-		vl.setWidth("60%");
+		vl.setWidth("25%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
 		tblFussnote = new FilterTable();
@@ -103,6 +107,16 @@ public class FussnoteEinst extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					fn = (Fussnote) event.getProperty().getValue();
+				}
+			}
+		});
+		
+		tblFussnote.addItemClickListener(new ItemClickListener() {
+
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					updateFussnote();
 				}
 			}
 		});
