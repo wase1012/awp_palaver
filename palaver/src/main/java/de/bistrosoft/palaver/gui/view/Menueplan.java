@@ -4,8 +4,6 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
-import org.vaadin.haijian.PdfExporter;
-
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -72,10 +70,6 @@ public class Menueplan extends VerticalLayout implements View {
 
 	public Menueplan() {
 		super();
-		
-		///////////////
-		
-		/////////////
 		this.setSizeFull();
 		this.setMargin(true);
 
