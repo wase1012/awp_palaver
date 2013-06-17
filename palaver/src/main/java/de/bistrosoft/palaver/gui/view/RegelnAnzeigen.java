@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.gui.view;
 
+import org.tepi.filtertable.FilterTable;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -12,7 +14,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.data.RegelDAO;
@@ -22,19 +23,19 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class RegelnAnzeigen extends VerticalLayout implements View {
 
-	HorizontalLayout box = new HorizontalLayout();
-	VerticalLayout oben = new VerticalLayout();
-	HorizontalLayout unten = new HorizontalLayout();
-
-    Button bearbeiten = new Button(IConstants.BUTTON_EDIT);
+	HorizontalLayout hlControl = new HorizontalLayout();
+	Button bearbeiten = new Button(IConstants.BUTTON_EDIT);
 	Button neu = new Button(IConstants.BUTTON_NEW);
+	Button btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 	Button loeschen = new Button(IConstants.BUTTON_DELETE);
-	Table table = new Table();
-	private Label label = new Label("Alle Regeln");
+	FilterTable table = new FilterTable();
+	private Label headline;
 
 	BeanItemContainer<Regel> container;
 
@@ -42,12 +43,14 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 
 	public RegelnAnzeigen() {
 
+//		HorizontalLayout hlControl = new HorizontalLayout();
 		this.setSizeFull();
 		this.setMargin(true);
-		this.addComponent(box);
 
-		box.setWidth("1000px");
-		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
+//		box.setWidth("1000px");
+//		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+//		oben.addComponent(hlFilter);
 
 		try {
 			container = new BeanItemContainer<Regel>(Regel.class, RegelDAO
@@ -57,17 +60,22 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		}
 
 		table.setContainerDataSource(container);
-		table.setWidth("1000px");
+		table.setSizeFull();
+//		table.setWidth("1000px");
 		table.setSelectable(true);
+		table.setFilterBarVisible(true);
+		table.setFilterGenerator(new customFilter());
+		table.setFilterDecorator(new customFilterDecorator());
+		
 		table.setVisibleColumns(new Object[] { "zeile", "spalte", "regeltyp",
 				"operator", "kriterien", "fehlermeldung", "aktiv" });
-		table.setColumnWidth("regeltyp", 70);
-		table.setColumnWidth("operator", 100);
-		table.setColumnWidth("spalte", 160);
-		table.setColumnWidth("zeile", 160);
-		table.setColumnWidth("kriterien", 100);
-		table.setColumnWidth("fehlermeldung", 277);
-		table.setColumnWidth("aktiv", 40);
+//		table.setColumnWidth("regeltyp", 70);
+//		table.setColumnWidth("operator", 100);
+//		table.setColumnWidth("spalte", 160);
+//		table.setColumnWidth("zeile", 160);
+//		table.setColumnWidth("kriterien", 100);
+//		table.setColumnWidth("fehlermeldung", 277);
+//		table.setColumnWidth("aktiv", 40);
 
 		// table.addGeneratedColumn("AKTIV", new ColumnGenerator() {
 		//
@@ -93,22 +101,27 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		//
 		// return b;
 		// }
-		// });
-		label.setStyleName("ViewHeadline");
-		oben.addComponents(label, table);
-		oben.setSpacing(true);
-		box.addComponents(oben);
+		// })
+		
+//		label.setStyleName("ViewHeadline");
+//		hlFilter.addComponent(label);
+//		hlFilter.setComponentAlignment(label, Alignment.MIDDLE_LEFT);
+//		hlFilter.addComponent(btFilterLeeren);
+//		hlFilter.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
+//		oben.addComponents(table);
+//		oben.setSpacing(true);
+//		box.addComponents(oben);
 		loeschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
 		loeschen.setEnabled(false);
-	    bearbeiten.setEnabled(false);
+		bearbeiten.setEnabled(false);
 		neu.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 		bearbeiten.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
 
-		unten.addComponents(neu, bearbeiten, loeschen);
-//		unten.addComponents(neu, loeschen);
-		oben.addComponent(unten);
-		box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
-		oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
+//		unten.addComponents(neu, bearbeiten, loeschen);
+//		// unten.addComponents(neu, loeschen);
+//		oben.addComponent(unten);
+//		box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
+//		oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
 
 		neu.addClickListener(new ClickListener() {
 
@@ -120,15 +133,14 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 		});
 
 		table.addValueChangeListener(new ValueChangeListener() {
-			
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					regel = (Regel) event.getProperty().getValue();
 					bearbeiten.setEnabled(true);
 					loeschen.setEnabled(true);
-				}
-				else {
+				} else {
 					bearbeiten.setEnabled(false);
 					loeschen.setEnabled(false);
 				}
@@ -139,23 +151,24 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 
-				 if(event.isDoubleClick()){
-					 bearbeiten.click();
-				 }
+				if (event.isDoubleClick()) {
+					bearbeiten.click();
+				}
 
 			}
 		});
 
-		 bearbeiten.addClickListener(new ClickListener() {
-		
-		 @Override
-		 public void buttonClick(ClickEvent event) {
+		bearbeiten.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
 				if (regel != null) {
-					ViewHandler.getInstance().switchView(RegelAnlegen.class, new ViewDataObject<Regel>(regel));
+					ViewHandler.getInstance().switchView(RegelAnlegen.class,
+							new ViewDataObject<Regel>(regel));
 				}
-		
-		 }
-		 });
+
+			}
+		});
 
 		loeschen.addClickListener(new ClickListener() {
 
@@ -166,7 +179,33 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 
 			}
 		});
-
+		
+		btFilterLeeren.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				table.resetFilters();
+			}
+		});
+		
+		headline = new Label("Alle Regeln");
+		headline.setStyleName("ViewHeadline");
+		this.addComponent(headline);
+		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
+		
+		this.addComponent(btFilterLeeren);
+		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
+		this.addComponent(table);
+		this.setExpandRatio(table, 1);
+		
+		this.addComponent(hlControl);
+		this.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(neu);
+		hlControl.setComponentAlignment(neu, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(bearbeiten);
+		hlControl.setComponentAlignment(bearbeiten, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(loeschen);
+		hlControl.setComponentAlignment(loeschen, Alignment.MIDDLE_RIGHT);
+		
 	}
 
 	@Override
