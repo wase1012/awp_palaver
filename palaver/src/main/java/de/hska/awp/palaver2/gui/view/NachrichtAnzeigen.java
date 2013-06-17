@@ -51,7 +51,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 	private TextArea nachrichtentext;
 	private TextArea neuernachrichtentext;
 	private ComboBox combobox = new ComboBox();
-	Button speichern = new Button(IConstants.BUTTON_SAVE);
+	Button speichern = new Button(IConstants.BUTTON_SEND);
 
 	private List<Nachricht> nl = new ArrayList<Nachricht>();
 	private Nachricht nachricht = new Nachricht();

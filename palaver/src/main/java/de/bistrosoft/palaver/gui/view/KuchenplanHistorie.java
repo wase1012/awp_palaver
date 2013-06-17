@@ -18,20 +18,24 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.KuchenplanLayout;
+import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
+/**
+ * @author Christine Hartkorn
+ * 
+ */
 @SuppressWarnings("serial")
-public class MenueplanHistorie extends VerticalLayout implements View {
+public class KuchenplanHistorie extends VerticalLayout implements View {
+
 
 	// Variablen und Komponenten
 	private VerticalLayout box = new VerticalLayout();
-	MenueplanGridLayout Menueplan = null;
+	KuchenplanLayout kuchenplan = null;
 	Label lbKW = null;
 	Label lbPlatzhalter1 = new Label();
 	Label lbPlatzhalter2 = new Label();
@@ -40,31 +44,31 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 	
 	// FußŸnoten
 	Label lbFussnoten = new Label(
-			"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
+			"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (oWe) = weizenfrei &nbsp;&nbsp; (oG) = glutenfrei &nbsp;&nbsp; (oE) = eifrei &nbsp;&nbsp; (oL) = laktosefrei <BR> (mM) = mitMandeln &nbsp;&nbsp; (mWa) = mit Walnüssen &nbsp;&nbsp; (mH) = mit Haselnüssen &nbsp;&nbsp; (mA) = mit Alkohol &nbsp;&nbsp;</div>",
 			ContentMode.HTML);
 	Label lbPlatzhalter = new Label();
 
-	public MenueplanHistorie() {
+	public KuchenplanHistorie() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
 
 		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.TOP_CENTER);
-
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		
 		// Kalender zur Datums-Auswahl
 		final PopupDateField date = new PopupDateField("Datum wählen:") {
-		    @Override
-		    protected Date handleUnparsableDateString(String dateString)
-		    throws ConversionException {
-		        // Notification bei Fehleingabe
-		    	Notification notification = new Notification(
+			@Override
+			protected Date handleUnparsableDateString(String dateString)
+					throws ConversionException {
+				// Notification bei Fehleingabe
+				Notification notification = new Notification(
 						"Falsches Datumsformat.");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
 				exception = 1;
-		        throw new ConversionException("Falsches Datumsformat");
-		    }
+				throw new ConversionException("Falsches Datumsformat");
+			}
 		};
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
@@ -72,12 +76,12 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		date.setShowISOWeekNumbers(true);
 		box.addComponent(date);
 		box.setComponentAlignment(date, Alignment.TOP_CENTER);
-		final Button btDatumsauswahl = new Button("Menüplan anzeigen");
+		final Button btDatumsauswahl = new Button("Kuchenplan anzeigen");
 		btDatumsauswahl.addClickListener(new ClickListener() {
 			// Click-Listener zur Datumsauswahl
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (exception == 0){
+				if (exception == 0) {
 					// Datum in Woche und Jahr aufteilen
 					SimpleDateFormat sdf;
 					Calendar cal;
@@ -97,8 +101,8 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 					@SuppressWarnings("deprecation")
 					int year = date.getValue().getYear() + 1900;
 					// alte Anzeigen lÃ¶schen
-					if (Menueplan != null) {
-						box.removeComponent(Menueplan);
+					if (kuchenplan != null) {
+						box.removeComponent(kuchenplan);
 						box.removeComponent(lbKW);
 						box.removeComponent(lbPlatzhalter1);
 						box.removeComponent(lbPlatzhalter2);
@@ -108,16 +112,24 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 					final int woche = curWeek.getWeek();
 					if (week < (woche + 1)) {
 						// nur gespeicherte Pläne
-						if (Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(
-								new Week(week, year)) == null) {
+						if (Kuchenplanverwaltung.getInstance()
+								.getKuchenplanByWeekWithItems(
+										new Week(week, year)) == null) {
 							Notification notification = new Notification(
-									"Kein Menüplan vorhanden.");
+									"Kein Kuchenplan vorhanden.");
 							notification.setDelayMsec(500);
 							notification.show(Page.getCurrent());
 						} else {
 							// Anzeige
-							Menueplan = new MenueplanGridLayout(week, year);
-							Menueplan.layout.setDragMode(LayoutDragMode.NONE);
+							kuchenplan = new KuchenplanLayout(week, year);
+							kuchenplan.kuchenTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.NONE);
+							kuchenplan.itemMoTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemDiTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemMiTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemDoTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemFrTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemSaTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
+							kuchenplan.itemSoTable.setDragMode(com.vaadin.ui.Table.TableDragMode.NONE);
 							String strKW = new String("Kalenderwoche: " + week
 									+ "/" + year);
 
@@ -131,13 +143,14 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 							box.setComponentAlignment(lbPlatzhalter1,
 									Alignment.TOP_CENTER);
 							box.addComponent(lbKW);
-							box.setComponentAlignment(lbKW, Alignment.TOP_CENTER);
+							box.setComponentAlignment(lbKW,
+									Alignment.TOP_CENTER);
 							lbPlatzhalter2.setHeight("30px");
 							box.addComponent(lbPlatzhalter2);
 							box.setComponentAlignment(lbPlatzhalter2,
 									Alignment.TOP_CENTER);
-							box.addComponent(Menueplan);
-							box.setComponentAlignment(Menueplan,
+							box.addComponent(kuchenplan);
+							box.setComponentAlignment(kuchenplan,
 									Alignment.MIDDLE_CENTER);
 							box.addComponent(lbFussnoten);
 							box.setComponentAlignment(lbFussnoten,
@@ -145,7 +158,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 						}
 					} else {
 						Notification notification = new Notification(
-								"Anzeige nur von älteren Menüplänen möglich.");
+								"Anzeige nur von älteren Kuchenplänen möglich.");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					}
@@ -153,17 +166,17 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 				exception = 0;
 			}
 		});
-
+				
 		lbPlatzhalter.setHeight("30px");
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.TOP_CENTER);
 		box.addComponent(btDatumsauswahl);
 		box.setComponentAlignment(btDatumsauswahl, Alignment.TOP_CENTER);
-
+		
 	}
-
+		
 	@Override
 	public void getViewParam(ViewData data) {
-	}
 
+	}
 }

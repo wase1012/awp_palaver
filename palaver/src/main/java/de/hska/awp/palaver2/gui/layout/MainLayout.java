@@ -26,6 +26,7 @@ import com.vaadin.ui.Window;
 import de.bistrosoft.palaver.gui.view.FussnoteEinst;
 import de.bistrosoft.palaver.gui.view.GeschmackEinst;
 import de.bistrosoft.palaver.gui.view.KuchenplanAnzeigen;
+import de.bistrosoft.palaver.gui.view.KuchenplanHistorie;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
@@ -162,6 +163,7 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem("Email", this);
 		einstellungItem.addItem("Nachrichten", this);
 		einstellungItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
+		einstellungItem.addItem(IConstants.MENU_KUCHENPLAN_HISTORIE, this);
 //		einstellungItem.addItem(IConstants.MENU_INFO, this);
 		this.addComponent(menu);
 		
@@ -255,6 +257,10 @@ public class MainLayout extends VerticalLayout implements Command
 		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
 		{
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+		}
+		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_HISTORIE))
+		{
+			ViewHandler.getInstance().switchView(KuchenplanHistorie.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN))
 		{

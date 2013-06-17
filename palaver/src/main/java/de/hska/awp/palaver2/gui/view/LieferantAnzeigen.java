@@ -48,8 +48,8 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 
-		showFilter = new Button(IConstants.BUTTON_SHOW_FILTER);
-		showFilter.setIcon(new ThemeResource("img/filter.ico"));
+		showFilter = new Button(IConstants.BUTTON_HIDE_FILTER);
+		showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
 
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
@@ -70,7 +70,7 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 		table = new FilterTable();
 		table.setStyleName("palaverTable");
 		table.setSizeFull();
-		table.setFilterBarVisible(false);
+		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);

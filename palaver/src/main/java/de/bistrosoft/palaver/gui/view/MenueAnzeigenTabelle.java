@@ -106,6 +106,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		this.addComponent(btAuswaehlen);
+		this.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_RIGHT);
 
 		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
@@ -128,6 +129,8 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				}
 			}
 		});
+		
+
 
 	}
 

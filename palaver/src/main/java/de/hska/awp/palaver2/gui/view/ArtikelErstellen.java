@@ -278,46 +278,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					notification = e.toString();
 				}
 				
-				final Window dialog = new Window();
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-				
-				Label message = new Label(notification);
-				
-				Button okButton = new Button("OK");
-				
-				VerticalLayout dialogContent = new VerticalLayout();
-				dialogContent.setSizeFull();
-				dialogContent.setMargin(true);
-				dialog.setContent(dialogContent);
-				
-				dialogContent.addComponent(message);
-				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-				
-				UI.getCurrent().addWindow(dialog);
-				
-				okButton.addClickListener(new ClickListener()
-				{	
-					@Override
-					public void buttonClick(ClickEvent event)
-					{
-						if (ArtikelErstellen.this.getParent() instanceof Window) {
-							Window win = (Window) ArtikelErstellen.this.getParent();
-							win.close();
-							UI.getCurrent().removeWindow(dialog);
-						}
-						else {
-							UI.getCurrent().removeWindow(dialog);
-							ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-						}
-					}
-				});
+				((Application) UI.getCurrent().getData()).showDialog(notification);
 			}
 			}
 		});

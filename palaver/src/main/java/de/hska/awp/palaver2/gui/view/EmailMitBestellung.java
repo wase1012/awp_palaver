@@ -23,6 +23,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.emailversand.Mail;
@@ -146,38 +147,7 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 						log.error(e.toString());
 					}
 				}
-				final Window dialog = new Window();
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-				
-				Label message = new Label("Email wurde gesendet");
-				
-				Button okButton = new Button("OK");
-				VerticalLayout dialogContent = new VerticalLayout();
-				dialogContent.setSizeFull();
-				dialogContent.setMargin(true);
-				dialog.setContent(dialogContent);
-				
-				dialogContent.addComponent(message);
-				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-				
-				UI.getCurrent().addWindow(dialog);
-				
-				okButton.addClickListener(new ClickListener()
-				{	
-					@Override
-					public void buttonClick(ClickEvent event)
-					{
-						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(
-								BestellungBearbeitenAuswaehlen.class);				}
-				});
+				((Application) UI.getCurrent().getData()).showDialog("Email wurde gesendet.");
 			}
 		});
 

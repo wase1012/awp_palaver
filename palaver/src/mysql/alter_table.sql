@@ -33,4 +33,10 @@ ALTER TABLE `palaver`.`geschmack`
 ALTER TABLE `palaver`.`zubereitung` 
 	ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) ;
 
+	ALTER TABLE `palaver`.`regel` 
+	ADD COLUMN `ignorierbar` TINYINT(1) NULL  AFTER `aktiv` ;
+	
+ALTER TABLE `palaver`.`kuchenrezept` DROP FOREIGN KEY `fk_mitarbeiter_kuchen` ;
+ALTER TABLE `palaver`.`kuchenrezept` DROP COLUMN `mitarbeiter_fk` 
+, DROP INDEX `fk_mitarbeiter_kuchen_idx` ;
 	

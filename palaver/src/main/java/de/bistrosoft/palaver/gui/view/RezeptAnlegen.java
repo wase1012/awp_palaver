@@ -107,7 +107,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Button btSpeichern = new Button(IConstants.BUTTON_SAVE);
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
-	private Button btMenue = new Button(IConstants.BUTTON_REZEPTSAVEASMENUE);
+	private Button btMenue = new Button(IConstants.BUTTON_REZEPTMENUE);
 	private Button btArtikel = new Button(
 			IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
 
@@ -190,13 +190,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		vlDetailsRechts.addComponent(zubereitung);
 		vlDetailsRechts.addComponent(kommentar);
-		vlDetailsRechts.setWidth("450px");
+		vlDetailsRechts.setWidth("500px");
 
-		hlZutaten.setWidth("1200px");
+		hlZutaten.setWidth("1000px");
 		hlZutaten.setHeight("393px");
 
-		hlControl.setSpacing(true);
-		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
@@ -267,7 +265,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
 		zutatenTable.setStyleName("palaverTable");
-		zutatenTable.setPageLength(16);
+//		zutatenTable.setPageLength(16);
+//		zutatenTable.setWidth("650px");
 		zutatenTable.setImmediate(true);
 //		zutatenTable.setColumnWidth("artikelname", 200);
 //		zutatenTable.setColumnWidth("menge", 100);
@@ -275,13 +274,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 //		zutatenTable.setColumnWidth("notiz", 500);
 
 		artikelTable = new FilterTable();
-		artikelTable.setSizeUndefined();
-		artikelTable.setWidth("350px");
+		artikelTable.setSizeFull();
+//		artikelTable.setSizeUndefined();
+//		artikelTable.setWidth("350px");
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		artikelTable.setSelectable(true);
-
+		
 		containerRezeptHasArtikel = new BeanItemContainer<RezeptHasArtikel>(
 				RezeptHasArtikel.class);
 		zutatenTable.setContainerDataSource(containerRezeptHasArtikel);
@@ -291,6 +291,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		hlZutaten.addComponent(zutatenTable);
 		hlZutaten.addComponent(artikelTable);
+		
+		hlZutaten.setExpandRatio(artikelTable, 3);
+		hlZutaten.setExpandRatio(zutatenTable, 7);
+		
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
 
 		artikelTable.setCaption("Artikel");
 		zutatenTable.setCaption("Zutatenliste");

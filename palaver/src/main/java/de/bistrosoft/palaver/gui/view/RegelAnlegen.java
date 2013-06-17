@@ -9,7 +9,6 @@ import com.vaadin.data.Validator;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -19,7 +18,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -62,11 +60,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	private NativeSelect operator = new NativeSelect("Operator");
 	private OptionGroup spalten = new OptionGroup("Spalten");
 	private OptionGroup zeilen = new OptionGroup("Zeilen");
-	private TwinColTouch kriterienTwin = new TwinColTouch("Kriterien");
+	private TwinColTouch kriterienFussnote = new TwinColTouch("Kriterien");
+	private TwinColTouch kriterienGeschmack = new TwinColTouch("Kriterien");
+	private TwinColTouch kriterienZubereitung = new TwinColTouch("Kriterien");
+	private TwinColTouch kriterienMenüart = new TwinColTouch("Kriterien");
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
 	private CheckBox aktiv = new CheckBox("Aktiv");
-	private CheckBox harteRegel = new CheckBox("Ignorierbar");
+	private CheckBox ignorierRegel = new CheckBox("Ignorierbar");
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button bearbeiten = new Button(IConstants.BUTTON_SAVE);
@@ -113,8 +114,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	public RegelAnlegen(Regel regel) {
 		label = new Label("Regel bearbeiten");
 		layout();
+		check();
 		ChangeListener();
-		speichern();
 
 	}
 
@@ -122,6 +123,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	public RegelAnlegen() {
 		label = new Label("Regel erstellen");
 		layout();
+		check();
 		aktiv.setValue(true);
 		ChangeListener();
 		speichern();
@@ -138,7 +140,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 		fenster.setWidth("900px");
 
-		links.setWidth("100px");
+		links.setWidth("150px");
 		links.setSpacing(true);
 
 		mitte.setWidth("300px");
@@ -154,7 +156,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		box.setComponentAlignment(mitte, Alignment.TOP_LEFT);
 
 		box2.setWidth("900px");
-		links2.setWidth("100px");
+		links2.setWidth("150px");
 		mitte2.setWidth("300px");
 		rechts2.setWidth("300px");
 		box2.addComponent(links2);
@@ -166,7 +168,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		mitte.addComponent(regeltyp);
 		mitte.addComponent(operator);
 		rechts.addComponent(fehlermeldung);
-		rechts.addComponent(harteRegel);
+		rechts.addComponent(ignorierRegel);
 		rechts.addComponent(aktiv);
 
 		box.addComponent(rechts);
@@ -245,13 +247,27 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				IConstants.INFO_REGEL_OPERATOR, 3, 500, false));
 		operator.setContainerDataSource(operatorcontainer);
 
-		kriterienTwin.setWidth("95%");
-		kriterienTwin.setImmediate(true);
-		kriterienTwin.addValidator(new Validator() {
+		kriterienFussnote.setWidth("90%");
+		kriterienFussnote.setImmediate(true);
+		kriterienFussnote.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				if (kriterienTwin.getValue().toString() == "[]") {
+				if (kriterienFussnote.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				}
+
+			}
+		});
+		
+		kriterienGeschmack.setWidth("90%");
+		kriterienGeschmack.setImmediate(true);
+		kriterienGeschmack.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (kriterienGeschmack.getValue().toString() == "[]") {
 					throw new InvalidValueException(
 							IConstants.INFO_REGEL_KRITERIEN_TWIN);
 				}
@@ -259,7 +275,34 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		kriterienText.setWidth("100%");
+		kriterienMenüart.setWidth("90%");
+		kriterienMenüart.setImmediate(true);
+		kriterienMenüart.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (kriterienMenüart.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				}
+
+			}
+		});
+		kriterienZubereitung.setWidth("90%");
+		kriterienZubereitung.setImmediate(true);
+		kriterienZubereitung.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (kriterienZubereitung.getValue().toString() == "[]") {
+					throw new InvalidValueException(
+							IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				}
+
+			}
+		});
+		
+		kriterienText.setWidth("90%");
 		kriterienText.setImmediate(true);
 		kriterienText.addValidator(new IntegerValidator(
 				IConstants.INFO_REGEL_KRITERIEN_ZAHL));
@@ -281,9 +324,16 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				// Regel speichern
 
 				if (validiereEingabe()) {
-					Regel.speichern(regeltypinput, zeileninput, spalteninput,
-							operatorinput, kriterieninput, fehlermeldunginput,
-							true);
+					Regel neueRegel = new Regel();
+					neueRegel.setRegeltyp(regeltypinput);
+					neueRegel.setZeile(zeileninput);
+					neueRegel.setSpalte(spalteninput);
+					neueRegel.setOperator(operatorinput);
+					neueRegel.setKriterien(kriterieninput);
+					neueRegel.setFehlermeldung(fehlermeldunginput);
+					neueRegel.setAktiv(true);
+					neueRegel.setIgnorierbar(ignorierRegel.getValue());
+					Regel.speichern(neueRegel);
 
 					((Application) UI.getCurrent().getData())
 							.showDialog(IConstants.INFO_REGEL_SAVE);
@@ -332,40 +382,105 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				// gesetzt
 				if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
-					mitte.removeComponent(kriterienTwin);
+					mitte.removeComponent(kriterienFussnote);
+					mitte.removeComponent(kriterienGeschmack);
+					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
-					List<String> inhalt = Arrays
-							.asList(IConstants.INFO_REGEL_OPERATOR_MAXIMAL);
-					BeanItemContainer<String> container = new BeanItemContainer<String>(
-							String.class, inhalt);
-					operator.setContainerDataSource(container);
+					operator.removeItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
+					operator.removeItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 
 					// Falls Regeltyp Zubereitung, Menüart, Geschmack oder
 					// Fußnote ist wird der Container für das Feld Operator
 					// gesetzt
-				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG
-						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART
-						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK
-						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
-
-					operator.setContainerDataSource(operatorcontainer);
-
-					// Falls bei Operator "maximale Anzahl" oder
-					// "minimale Anzahl" ausgewählt wurde wird ein Textfeld
-					// eingefügt
+				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
+							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
+						mitte.addComponent(kriterienText);
+					}
+					else{
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienZubereitung);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
+					}
+	
+				}
+				else if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
 							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
 
-						mitte.removeComponent(kriterienTwin);
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
-
-						// Andernfalls wird ein TwinCol eingefügt
-					} else {
-
-						operator.setContainerDataSource(operatorcontainer);
+					}
+					else{
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
-						mitte.addComponent(kriterienTwin);
-						check();
+						mitte.addComponent(kriterienMenüart);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
+					}
+				}
+				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
+							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
+
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
+						mitte.addComponent(kriterienText);
+					}
+					else{
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienGeschmack);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
+					}
+					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
+					}
+				}
+				else if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
+							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
+
+						mitte.removeComponent(kriterienFussnote);
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
+						mitte.addComponent(kriterienText);
+					}
+					else{
+						mitte.removeComponent(kriterienGeschmack);
+						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienZubereitung);
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienFussnote);
 					}
 				}
 			}
@@ -385,27 +500,47 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				// eingefügt
 				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
 						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
-					mitte.removeComponent(kriterienTwin);
+					mitte.removeComponent(kriterienFussnote);
+					mitte.removeComponent(kriterienGeschmack);
+					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
-					check();
 
 					// Falls beim Regeltyp Aufwand oder Menü ausgewählt wird, so
 					// wird ein Textfeld eingefügt
-				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
+				} 
+				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
-					mitte.removeComponent(kriterienTwin);
-					mitte.addComponent(kriterienText);
-
-					// Andernfalls wird ein TwinCol eingefügt
-				} else {
-					mitte.removeComponent(kriterienText);
-					mitte.addComponent(kriterienTwin);
-					check();
+					mitte.removeComponent(kriterienFussnote);
+					mitte.removeComponent(kriterienGeschmack);
+					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienZubereitung);
+					mitte.addComponent(kriterienText); 
+				}
+//					// Andernfalls wird ein TwinCol eingefügt
+				else if(operatorinput == IConstants.INFO_REGEL_OPERATOR_ERLAUBT
+						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_VERBOTEN) {
+					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
+							mitte.removeComponent(kriterienText);
+							mitte.addComponent(kriterienMenüart);
+					 }
+					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
+							mitte.removeComponent(kriterienText);
+							mitte.addComponent(kriterienFussnote);
+					 }
+					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
+							mitte.removeComponent(kriterienText);
+							mitte.addComponent(kriterienGeschmack);
+					 }
+					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
+							mitte.removeComponent(kriterienText);
+							mitte.addComponent(kriterienZubereitung);
+					 }
 				}
 			}
 		});
 
-		kriterienTwin.addValueChangeListener(new ValueChangeListener() {
+		kriterienFussnote.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
 				String valueString = String.valueOf(event.getProperty()
@@ -415,6 +550,36 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		kriterienGeschmack.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				String valueString = String.valueOf(event.getProperty()
+						.getValue());
+				valueString = valueString.replaceAll("\\[|\\]", "");
+				kriterieninput = valueString;
+			}
+		});
+		
+		kriterienMenüart.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				String valueString = String.valueOf(event.getProperty()
+						.getValue());
+				valueString = valueString.replaceAll("\\[|\\]", "");
+				kriterieninput = valueString;
+			}
+		});
+		
+		kriterienZubereitung.addValueChangeListener(new ValueChangeListener() {
+
+			public void valueChange(final ValueChangeEvent event) {
+				String valueString = String.valueOf(event.getProperty()
+						.getValue());
+				valueString = valueString.replaceAll("\\[|\\]", "");
+				kriterieninput = valueString;
+			}
+		});
+		
 		kriterienText.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -450,26 +615,22 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			List<Geschmack> g = Geschmackverwaltung.getInstance().getAllGeschmackAktiv();
 
 			// Container setzen
-			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
 				for (Zubereitung z : zb) {
-					kriterienTwin.addItem(z);
+					kriterienZubereitung.addItem(z.getBezeichnung());
 				}
-			}
-			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
 				for (Fussnote f : fn) {
-					kriterienTwin.addItem(f);
+					kriterienFussnote.addItem(f.getBezeichnung());
 				}
-			}
-			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
+		
+		
 				for (Geschmack ge : g) {
-					kriterienTwin.addItem(ge);
+					kriterienGeschmack.addItem(ge.getBezeichnung());
 				}
-			}
-			if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
+		
+		
 				for (Menueart m : ma) {
-					kriterienTwin.addItem(m);
+					kriterienMenüart.addItem(m.getBezeichnung());
 				}
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -491,6 +652,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		operator.setValue(regel.getOperator());
 		fehlermeldung.setValue(regel.getFehlermeldung());
 		aktiv.setValue(regel.getAktiv());
+		ignorierRegel.setValue(regel.getIgnorierbar());
 
 		List<String> sp = Arrays.asList(regel.getSpalte().split("\\s*,\\s*"));
 		for (String s : sp) {
@@ -500,122 +662,85 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		for (String z : zl) {
 			zeilen.select(z);
 		}
+		
+		List<String> kr = Arrays.asList(regel.getKriterien().split(
+				"\\s*,\\s*"));
 		try {
-			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
-					.getAllZubereitung();
-			List<Fussnote> fn = Fussnotenverwaltung.getInstance().getAllFussnote();
-			List<Menueart> ma = Menueartverwaltung.getInstance().getAllMenueart();
-			List<Geschmack> g = Geschmackverwaltung.getInstance().getAllGeschmackAktiv();
 
-			// List<String> kr =
-			// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
-			// System.out.println(kr);
 			if (regel.getRegeltyp().equals(
-					IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
-					|| regel.getRegeltyp().equals(
-							IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("1");
-				for (Zubereitung z : zb) {
-					kriterienTwin.addItem(z);
+					IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)) {
+				if(regel.getOperator().equals(
+							IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
+							IConstants.INFO_REGEL_OPERATOR_ERLAUBT) ) {
+					mitte.addComponent(kriterienZubereitung);
+					for (String z : kr) {
+						kriterienZubereitung.select(z);
+					}
 				}
-				mitte.removeComponent(kriterienText);
-				mitte.addComponent(kriterienTwin);
-				// List<String> kr =
-				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
-				// for(String k : kr) {
-				// kriterienTwin.select(k);
-				// }
+				else {
+					mitte.addComponent(kriterienText);
+					kriterienText.setValue(regel.getKriterien());
+				}
 			}
 			if (regel.getRegeltyp().equals(
-					IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
-					|| regel.getRegeltyp().equals(
-							IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("2");
-				// mitte.removeComponent(kriterienText);
-				mitte.addComponent(kriterienTwin);
-				for (Fussnote f : fn) {
-					kriterienTwin.addItem(f);
+					IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)){
+				if(regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+						mitte.addComponent(kriterienFussnote);
+						for (String z : kr) {
+							kriterienFussnote.select(z);
+						}
 				}
-				// List<String> kr =
-				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
-				// for(String k : kr) {
-				// System.out.println(k);
-				// kriterienTwin.select(k);
-				// }
+				else {
+					mitte.addComponent(kriterienText);
+					kriterienText.setValue(regel.getKriterien());
+				}
 			}
 			if (regel.getRegeltyp().equals(
-					IConstants.INFO_REGEL_REGELTYP_GESCHMACK)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
-					|| regel.getRegeltyp().equals(
-							IConstants.INFO_REGEL_REGELTYP_GESCHMACK)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("3");
-				mitte.removeComponent(kriterienText);
-				mitte.addComponent(kriterienTwin);
-				for (Geschmack ge : g) {
-					kriterienTwin.addItem(ge);
+					IConstants.INFO_REGEL_REGELTYP_GESCHMACK)) {
+				if(regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					mitte.addComponent(kriterienGeschmack);
+					for (String z : kr) {
+						kriterienGeschmack.select(z);
+					}
 				}
+				else {
+					mitte.addComponent(kriterienText);
+					kriterienText.setValue(regel.getKriterien());
+				}
+			}
+			if (regel.getRegeltyp().equals(
+					IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
+				if(regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					mitte.addComponent(kriterienMenüart);
+					for (String z : kr) {
+						kriterienMenüart.select(z);
+					}
+				}
+				else {
+					mitte.addComponent(kriterienText);
+					kriterienText.setValue(regel.getKriterien());
+				}
+			}
 
-				// List<String> kr =
-				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
-				// for(String k : kr) {
-				// System.out.println(k);
-				// kriterienTwin.select(k);
-				// }
-			}
-			if (regel.getRegeltyp().equals(
-					IConstants.INFO_REGEL_REGELTYP_MENUEART)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
-					|| regel.getRegeltyp().equals(
-							IConstants.INFO_REGEL_REGELTYP_MENUEART)
-					&& regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				System.out.println("4");
-				for (Menueart m : ma) {
-					kriterienTwin.addItem(m);
-				}
-				mitte.removeComponent(kriterienText);
-				mitte.addComponent(kriterienTwin);
-				// List<String> kr =
-				// Arrays.asList(regel.getKriterien().split("\\s*,\\s*"));
-				// for(String k : kr) {
-				// kriterienTwin.select(k);
-				// }
-			}
 			if (regel.getRegeltyp().equals(
 					IConstants.INFO_REGEL_REGELTYP_AUFWAND)
 					|| regel.getRegeltyp().equals(
 							IConstants.INFO_REGEL_REGELTYP_MENUE)) {
-				System.out.println("5");
-				mitte.removeComponent(kriterienTwin);
+				mitte.removeComponent(kriterienFussnote);
+				mitte.removeComponent(kriterienGeschmack);
+				mitte.removeComponent(kriterienMenüart);
+				mitte.removeComponent(kriterienZubereitung);
 				mitte.addComponent(kriterienText);
-				// kriterienText.setValue(regel.getKriterien());
+				kriterienText.setValue(regel.getKriterien());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		if (regel.getRegeltyp().equals(IConstants.INFO_REGEL_REGELTYP_AUFWAND)
-				|| regel.getRegeltyp().equals(
-						IConstants.INFO_REGEL_REGELTYP_MENUE)) {
-			kriterienText.setValue(regel.getKriterien());
-		} else {
-			List<String> kr = Arrays.asList(regel.getKriterien().split(
-					"\\s*,\\s*"));
-			for (String k : kr) {
-				System.out.println(k);
-				kriterienTwin.select(k);
-			}
 		}
 
 		bearbeiten.addClickListener(new ClickListener() {
@@ -623,8 +748,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					regel.setZeile(zeilen.getValue().toString());
-					regel.setSpalte(spalten.getValue().toString());
+					regel.setZeile(zeilen.getValue().toString().substring(1, zeilen.getValue().toString().length() - 1));
+					regel.setSpalte(spalten.getValue().toString().substring(1, spalten.getValue().toString().length() - 1));
 					regel.setRegeltyp(regeltyp.getValue().toString());
 					regel.setOperator(operator.getValue().toString());
 					if (operator.getValue().toString()
@@ -633,17 +758,26 @@ public class RegelAnlegen extends VerticalLayout implements View,
 									.getValue()
 									.toString()
 									.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-						regel.setKriterien(kriterienTwin.getValue().toString());
+						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)){
+							regel.setKriterien(kriterienFussnote.getValue().toString().substring(1, kriterienFussnote.getValue().toString().length() - 1));
+						}
+						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_GESCHMACK)){
+							regel.setKriterien(kriterienGeschmack.getValue().toString().substring(1, kriterienGeschmack.getValue().toString().length() - 1));
+						}
+						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)){
+							regel.setKriterien(kriterienMenüart.getValue().toString().substring(1, kriterienMenüart.getValue().toString().length() - 1));
+						}
+						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)){
+							regel.setKriterien(kriterienZubereitung.getValue().toString().substring(1, kriterienZubereitung.getValue().toString().length() - 1));
+						}
 					} else {
 						regel.setKriterien(kriterienText.getValue());
 					}
 					regel.setFehlermeldung(fehlermeldung.getValue());
 					regel.setAktiv(aktiv.getValue());
+					regel.setIgnorierbar(ignorierRegel.getValue());
 
-					Notification notification = new Notification(
-							IConstants.INFO_REGEL_SAVE);
-					notification.setDelayMsec(500);
-					notification.show(Page.getCurrent());
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_EDIT);
 
 					try {
 						Regelverwaltung.getInstance().updateRegel(regel);
@@ -684,8 +818,29 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				return false;
 			}
 		}
-		if (mitte.getComponent(2) == kriterienTwin) {
-			if (kriterienTwin.getValue().toString() == "[]") {
+		if (mitte.getComponent(2) == kriterienFussnote) {
+			if (kriterienFussnote.getValue().toString() == "[]") {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				return false;
+			}
+		}
+		if (mitte.getComponent(2) == kriterienGeschmack) {
+			if (kriterienGeschmack.getValue().toString() == "[]") {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				return false;
+			}
+		}
+		if (mitte.getComponent(2) == kriterienMenüart) {
+			if (kriterienMenüart.getValue().toString() == "[]") {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
+				return false;
+			}
+		}
+		if (mitte.getComponent(2) == kriterienZubereitung) {
+			if (kriterienZubereitung.getValue().toString() == "[]") {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
 				return false;

@@ -17,6 +17,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -211,30 +212,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		public void buttonClick(ClickEvent event)
 		{
 			if (validiereEingabe()) {
-				
 
-				dialog.setClosable(false);
-				dialog.setWidth("300px");
-				dialog.setHeight("150px");
-				dialog.setModal(true);
-				dialog.center();
-				dialog.setResizable(false);
-				dialog.setStyleName("dialog-window");
-			
-				Label message = new Label("Lieferant gespeichert");
-				
-				Button okButton = new Button("OK");
-			
-				VerticalLayout dialogContent = new VerticalLayout();
-				dialogContent.setSizeFull();
-				dialogContent.setMargin(true);
-				dialog.setContent(dialogContent);
-				
-				dialogContent.addComponent(message);
-				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-				
-				UI.getCurrent().addWindow(dialog);
 				lieferant.setName(name.getValue());
 				lieferant.setBezeichnung(bezeichnung.getValue());
 				lieferant.setKundennummer(kundennummer.getValue());
@@ -252,24 +230,17 @@ public class LieferantErstellen extends VerticalLayout implements View
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
-			
-				okButton.addClickListener(new ClickListener()
-				{	
-					@Override
-					public void buttonClick(ClickEvent event)
-					{
-						if (LieferantErstellen.this.getParent() instanceof Window) {
-							Window win = (Window) LieferantErstellen.this.getParent();
-							win.close();
-							UI.getCurrent().removeWindow(dialog);
-						}
-						else {
-							UI.getCurrent().removeWindow(dialog);
-							ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
-						}
-					}
-						
-				});	
+				
+				((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_SAVE);
+				
+				if (LieferantErstellen.this.getParent() instanceof Window) {
+					Window win = (Window) LieferantErstellen.this.getParent();
+					win.close();
+				}
+				else {
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+				}
 			}
 		}
 	});

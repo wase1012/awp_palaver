@@ -296,6 +296,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 					"freitag" });
 			bestellungTable.setColumnHeader("montag", "Termin 1");
 			bestellungTable.setColumnHeader("freitag", "Termin 2");
+			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
@@ -303,6 +304,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		} else {
 			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
+			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
 			datetime2.setVisible(false);
@@ -332,7 +334,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN2);
 				return false;
 			}
-			if (bestellungTable.getValue() == null) {
+			bestellData = containerBestellung.getItemIds();
+			if (bestellData.isEmpty() == true) {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
 				return false;
@@ -349,7 +352,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN1);
 				return false;
 			}
-			if (bestellungTable.getValue() == null) {
+			bestellData = containerBestellung.getItemIds();
+			if (bestellData.isEmpty() == true ) {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
 				return false;

@@ -29,8 +29,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
@@ -39,6 +41,7 @@ import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.IConstants;
@@ -136,6 +139,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control = new HorizontalLayout();
 		control.setSpacing(true);
 		control.setSizeFull();
+		control.setMargin(true);
 
 		this.addComponent(fenster);
 
@@ -158,8 +162,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control.setComponentAlignment(speichern, Alignment.TOP_RIGHT);
 		control.setExpandRatio(l, 7);
 		control.setExpandRatio(bestellenperemail, (float) 1.5);
-		control.setExpandRatio(verwerfen, 1);
-		control.setExpandRatio(speichern, 1);
+		control.setExpandRatio(verwerfen, (float) 1.5);
+		control.setExpandRatio(speichern, (float) 1.4);
 
 		bestellungTable = new Table();
 		bestellungTable.setSizeFull();
@@ -299,42 +303,45 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		speichern.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
-				bestellData = containerBestellung.getItemIds();
-				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
-
-				for (int i = 0; i < (bestellpositionen.size()); i++) {
-
-					if (bestellpositionen.get(i).getGesamt() == 0) {
-						bestellpositionen.remove(bestellpositionen.get(i));
-						i = i - 1;
+				if (validiereBestellung()) {
+				
+					bestellData = containerBestellung.getItemIds();
+					bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
+	
+					for (int i = 0; i < (bestellpositionen.size()); i++) {
+	
+						if (bestellpositionen.get(i).getGesamt() == 0) {
+							bestellpositionen.remove(bestellpositionen.get(i));
+							i = i - 1;
+						}
 					}
-				}
-
-				java.util.Date dateutil = new java.util.Date();
-				Date date = new Date(dateutil.getTime());
-				bestellung.setDatum(date);
-				dateutil = datetime.getValue();
-				Date datesql = new Date(dateutil.getTime());
-				bestellung.setLieferdatum(datesql);
-				if (bestellung.getLieferant().getMehrereliefertermine() == true) {
-					java.util.Date date1 = datetime2.getValue();
-					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum2(datesql1);
-				} else {
-					bestellung.setLieferdatum2(datesql);
-				}
-
-				bestellung.setBestellpositionen(bestellpositionen);
-				bestellung.setBestellt(bestellt.getValue());
-
-				try {
+	
+					java.util.Date dateutil = new java.util.Date();
+					Date date = new Date(dateutil.getTime());
+					bestellung.setDatum(date);
+					dateutil = datetime.getValue();
+					Date datesql = new Date(dateutil.getTime());
+					bestellung.setLieferdatum(datesql);
+					if (bestellung.getLieferant().getMehrereliefertermine() == true) {
+						java.util.Date date1 = datetime2.getValue();
+						Date datesql1 = new Date(date1.getTime());
+						bestellung.setLieferdatum2(datesql1);
+					} else {
+						bestellung.setLieferdatum2(datesql);
+					}
+	
+					bestellung.setBestellpositionen(bestellpositionen);
 					bestellung.setBestellt(bestellt.getValue());
-					Bestellverwaltung.getInstance().updateBestellung(bestellung);
-				} catch (Exception e) {
-					log.error(e.toString());
+	
+					try {
+						bestellung.setBestellt(bestellt.getValue());
+						Bestellverwaltung.getInstance().updateBestellung(bestellung);
+					} catch (Exception e) {
+						log.error(e.toString());
+					}
+	
+					ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 				}
-
-				ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
 			}
 		});
 
@@ -342,43 +349,91 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
-				bestellData = containerBestellung.getItemIds();
-				bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
-
-				for (int i = 0; i < (bestellpositionen.size()); i++) {
-
-					if (bestellpositionen.get(i).getGesamt() == 0) {
-						bestellpositionen.remove(bestellpositionen.get(i));
-						i = i - 1;
+				if (validiereBestellung()) {
+				
+					bestellData = containerBestellung.getItemIds();
+					bestellpositionen = Bestellpositionverwaltung.getInstance().getBestellpositionenMitId(bestellData);
+	
+					for (int i = 0; i < (bestellpositionen.size()); i++) {
+	
+						if (bestellpositionen.get(i).getGesamt() == 0) {
+							bestellpositionen.remove(bestellpositionen.get(i));
+							i = i - 1;
+						}
 					}
+	
+					java.util.Date dateutil = new java.util.Date();
+					Date date = new Date(dateutil.getTime());
+					bestellung.setDatum(date);
+					dateutil = datetime.getValue();
+					Date datesql = new Date(dateutil.getTime());
+					bestellung.setLieferdatum(datesql);
+					if (bestellung.getLieferant().getMehrereliefertermine() == true) {
+						java.util.Date date1 = datetime2.getValue();
+						Date datesql1 = new Date(date1.getTime());
+						bestellung.setLieferdatum2(datesql1);
+					} else {
+						bestellung.setLieferdatum2(datesql);
+					}
+	
+					bestellung.setBestellpositionen(bestellpositionen);
+					try {
+						Bestellverwaltung.getInstance().updateBestellung(bestellung);
+					} catch (Exception e) {
+						log.error(e.toString());
+					}
+	
+					ViewHandler.getInstance().switchView(EmailMitBestellung.class, new ViewDataObject<Bestellung>(bestellung));
 				}
-
-				java.util.Date dateutil = new java.util.Date();
-				Date date = new Date(dateutil.getTime());
-				bestellung.setDatum(date);
-				dateutil = datetime.getValue();
-				Date datesql = new Date(dateutil.getTime());
-				bestellung.setLieferdatum(datesql);
-				if (bestellung.getLieferant().getMehrereliefertermine() == true) {
-					java.util.Date date1 = datetime2.getValue();
-					Date datesql1 = new Date(date1.getTime());
-					bestellung.setLieferdatum2(datesql1);
-				} else {
-					bestellung.setLieferdatum2(datesql);
-				}
-
-				bestellung.setBestellpositionen(bestellpositionen);
-				try {
-					Bestellverwaltung.getInstance().updateBestellung(bestellung);
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-
-				ViewHandler.getInstance().switchView(EmailMitBestellung.class, new ViewDataObject<Bestellung>(bestellung));
 			}
 		});
 
+	}
+
+	protected boolean validiereBestellung() {
+		java.util.Date date2 = new java.util.Date();
+		Date d = new Date(date2.getTime());
+		
+		if (bestellung.getLieferant().getMehrereliefertermine() == true) {	
+
+			if (datetime.isValid() == false || d.before(datetime.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN1);
+				return false;
+			}
+			if (datetime2.isValid() == false || d.before(datetime2.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN2);
+				return false;
+			}
+			bestellData = containerBestellung.getItemIds();
+			if (bestellData.isEmpty() == true) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
+				return false;
+			}
+			else {
+				return true;
+			}
+		} 
+		else {
+
+			
+			if (datetime.isValid() == false || d.before(datetime.getValue()) == false) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_TERMIN1);
+				return false;
+			}
+			bestellData = containerBestellung.getItemIds();
+			if (bestellData.isEmpty() == true ) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
 	}
 
 	/**

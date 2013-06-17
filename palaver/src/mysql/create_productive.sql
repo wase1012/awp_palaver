@@ -20,6 +20,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`regel` (
   `kriterien` VARCHAR(500) ,
   `fehlermeldung` VARCHAR(500) ,
   `aktiv` BOOLEAN ,
+  `ignorierbar` TINYINT(1),
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -635,19 +636,46 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
-  `mitarbeiter_fk` INT NULL ,
   `erstellt` TIMESTAMP NULL ,
-  PRIMARY KEY (`id`) ,
- -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  INDEX `fk_mitarbeiter_kuchen_idx` (`mitarbeiter_fk` ASC) ,
-  CONSTRAINT `fk_mitarbeiter_kuchen`
-    FOREIGN KEY (`mitarbeiter_fk` )
-    REFERENCES `palaver`.`mitarbeiter` (`id` )
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `palaver`.`fussnotekuchen`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`fussnotekuchen` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`fussnotekuchen` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `abkuerzung` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+
+-- Table `palaver`.`kuchenrezept_has_fussnote`
+
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `palaver`.`kuchenrezept_has_fussnote` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept_has_fussnote` (
+  `kuchenrezept_fk` INT NOT NULL,
+  `fussnotekuchen_fk` INT NOT NULL ,
+  INDEX `fk_kuchenrezept_has_fussnote_kuchenrezept_idx` (`kuchenrezept_fk` ASC) ,
+  INDEX `fk_kuchenrezept_has_fussnote_fussnote_idx` (`fussnotekuchen_fk` ASC) ,
+  CONSTRAINT `fk_kuchenrezept_has_fussnote_kuchenrezept`
+    FOREIGN KEY (`kuchenrezept_fk` )
+    REFERENCES `palaver`.`kuchenrezept` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_kuchenrezept_has_fussnote_fussnote1`
+    FOREIGN KEY (`fussnotekuchen_fk` )
+    REFERENCES `palaver`.`fussnotekuchen` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `palaver`.`kuchenrezept_has_artikel`
 -- -----------------------------------------------------

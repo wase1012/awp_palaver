@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
+import java.util.List;
+
 
 public class KuchenplanHasKuchenrezept {
 
@@ -11,21 +13,24 @@ public class KuchenplanHasKuchenrezept {
 	private Kuchenrezept kuchenrezept;
 	private int tag;
 	private int anzahl;
+	private String fussnoten;
 
 	public KuchenplanHasKuchenrezept() {
 	}
 	
-	public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag) {
+	public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag, String fn) {
 		this.kuchenrezept = a;
 		this.tag = tag;
 		this.anzahl = 1;
+		this.fussnoten = fn;
 	}
 	
 	// Konstruktor für Kuchenkomponente 
-		public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag, int anzahl){
+		public KuchenplanHasKuchenrezept(Kuchenrezept a, int tag, int anzahl, String fn){
 			this.kuchenrezept = a;
 			this.tag = tag;
 			this.anzahl = anzahl;
+			this.fussnoten = fn;
 		}
 
 	public Kuchenrezept getKuchenrezept() {
@@ -56,9 +61,14 @@ public class KuchenplanHasKuchenrezept {
 		return this.kuchenrezept.getName();
 	}
 
+	public String getFussnoten() {
+		return fussnoten;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "kuchenrezept " + kuchenrezept.getId() + " "
-				+ tag + " " + anzahl + " " + kuchenrezept.getName() ;
+				+ tag + " " + anzahl + " " + kuchenrezept.getName() + " " + fussnoten ;
 	}
 }
