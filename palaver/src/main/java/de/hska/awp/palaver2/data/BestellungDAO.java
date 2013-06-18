@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
@@ -44,6 +47,9 @@ public class BestellungDAO extends AbstractDAO {
 	private final static String MONTAG = "montag";
 	private final static String GELIEFERT = "geliefert";
 
+	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
+	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
+	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
 	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private static final String GET_BESTELLPOSITIONEN_BY_BESTELLUNGID = "SELECT * FROM " + TABLE2 + " WHERE " + BESTELLUNG_FK + "= {0}";
 
@@ -387,13 +393,61 @@ public class BestellungDAO extends AbstractDAO {
 	private List<Bestellposition> getBestellpositionen(Long id) throws SQLException, ConnectException, DAOException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
-		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
-
+		ResultSet set = getMany(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
+		
 		while (set.next()) {
-			list.add(new Bestellposition(set.getLong(ID), ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
+			list.add(new Bestellposition(set.getLong(ID), getArtikelById(set.getLong(ARTIKEL_FK)),
 					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set
 							.getBoolean(GELIEFERT)));
 		}
 		return list;
+	}
+	
+	/**
+	 * Die Methode getArtikelById liefert eins Ergebniss zurück bei der Suche
+	 * nach einem Artikel in der Datenbank.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
+
+	private Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException {
+		Artikel result = null;
+
+		ResultSet set = getMany(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
+		
+		while (set.next()) {
+			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
+					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
+					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
+					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
+					set.getString("notiz"));
+		}
+		return result;
+	}
+	private Kategorie getKategorieById(Long id) throws ConnectException, DAOException, SQLException {
+		Kategorie kategorie = null;
+		
+		ResultSet set = get(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
+		
+		while (set.next()) {
+			kategorie = new Kategorie(set.getLong("id"), set.getString("name"));
+		}
+		return kategorie;
+	}
+
+	private Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {
+
+		Mengeneinheit me = null;
+		ResultSet set = get(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
+
+		while (set.next()) {
+			me = new Mengeneinheit(set.getLong("id"), set.getString("name"), set.getString("kurz"));
+		}
+
+		return me;
 	}
 }
