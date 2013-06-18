@@ -14,26 +14,27 @@ import de.hska.awp.palaver2.util.ViewData;
 
 /**
  * @author Sebastian
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class DefaultView extends VerticalLayout implements View
-{
-	public DefaultView()
-	{
+public class DefaultView extends VerticalLayout implements View {
+	public DefaultView() {
 		super();
 		this.setSizeFull();
-		
+
 		Image content = new Image(null, new ThemeResource("img/palaverschild.jpeg"));
 		this.addComponent(content);
 		this.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 	}
 
-	/* (non-Javadoc)
-	 * @see de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util.ViewData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
+	 * .ViewData)
 	 */
 	@Override
-	public void getViewParam(ViewData data)
-	{
+	public void getViewParam(ViewData data) {
 	}
 }

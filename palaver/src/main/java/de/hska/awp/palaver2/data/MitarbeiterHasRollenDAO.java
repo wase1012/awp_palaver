@@ -21,12 +21,12 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO {
 
 	private static MitarbeiterHasRollenDAO instance = null;
 
-	private final static String TABLE = "mitarbeiter_has_rollen";
-	private final static String MITARBEITER_FK = "mitarbeiter_fk";
-	private final static String ROLLEN_FK = "rollen_fk";
-	private final static String GET_ALL_MITARBEITER_HAS_ROLLEN = "SELECT * FROM mitarbeiter_has_rollen";
-	private final static String DELETE = "DELETE FROM mitarbeiter_has_rollen " + "WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0}";
-	private final static String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen "
+	private static final String TABLE = "mitarbeiter_has_rollen";
+	private static final String MITARBEITER_FK = "mitarbeiter_fk";
+	private static final String ROLLEN_FK = "rollen_fk";
+	private static final String GET_ALL_MITARBEITER_HAS_ROLLEN = "SELECT * FROM mitarbeiter_has_rollen";
+	private static final String DELETE = "DELETE FROM mitarbeiter_has_rollen " + "WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0}";
+	private static final String GET_MITARBEITER_HAS_ROLLEN_BY_MITARBEITER_AND_ROLLE = "SELECT * FROM mitarbeiter_has_rollen "
 			+ "WHERE mitarbeiter_has_rollen.mitarbeiter_fk = {0} AND mitarbeiter_has_rollen.rollen_fk = {1}";
 
 	public MitarbeiterHasRollenDAO() {
@@ -89,9 +89,9 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO {
 	 */
 	public void createMitarbeiterHasRollen(Mitarbeiter mitarbeiter, Rollen rolle) throws ConnectException, DAOException, SQLException {
 
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + MITARBEITER_FK + "," + ROLLEN_FK + ")" + "VALUES" + "('" + mitarbeiter.getId() + "','"
+		String inserq = "INSERT INTO " + TABLE + "(" + MITARBEITER_FK + "," + ROLLEN_FK + ")" + "VALUES" + "('" + mitarbeiter.getId() + "','"
 				+ rolle.getId() + "')";
-		this.putManaged(INSERTQUERY);
+		this.putManaged(inserq);
 	}
 
 	/**

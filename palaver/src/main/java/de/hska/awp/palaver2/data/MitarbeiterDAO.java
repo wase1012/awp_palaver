@@ -18,15 +18,15 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
  */
 public class MitarbeiterDAO extends AbstractDAO {
 
-	private final static String TABLE = "mitarbeiter";
-	private final static String ID = "id";
-	private final static String NAME = "name";
-	private final static String VORNAME = "vorname";
-	private final static String EMAIL = "email";
-	private final static String PASSWORT = "passwort";
-	private final static String EINTRITTSDATUM = "eintrittsdatum";
-	private final static String AUSTRITTSDATUM = "austrittsdatum";
-	private final static String BENUTZERNAME = "benutzername";
+	private static final String TABLE = "mitarbeiter";
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String VORNAME = "vorname";
+	private static final String EMAIL = "email";
+	private static final String PASSWORT = "passwort";
+	private static final String EINTRITTSDATUM = "eintrittsdatum";
+	private static final String AUSTRITTSDATUM = "austrittsdatum";
+	private static final String BENUTZERNAME = "benutzername";
 
 	private static final String GET_ALL_MITARBEITER = "SELECT * FROM mitarbeiter";
 	private static final String GET_MITARBEITER_BY_ID = "SELECT * FROM mitarbeiter WHERE id = {0}";
@@ -37,7 +37,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 	private static final String GET_MITARBEITER_BY_BENUTZERNAME = "SELECT * FROM " + TABLE + " WHERE " + BENUTZERNAME + " = '";
 
 	private static final String GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
-	private final static String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
+	private static final String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
 			+ "rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 
 	private static MitarbeiterDAO instance = null;
@@ -209,11 +209,11 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void createMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + VORNAME + "," + EMAIL + "," + PASSWORT + "," + EINTRITTSDATUM + ","
+		String inserq = "INSERT INTO " + TABLE + "(" + NAME + "," + VORNAME + "," + EMAIL + "," + PASSWORT + "," + EINTRITTSDATUM + ","
 				+ AUSTRITTSDATUM + "," + BENUTZERNAME + ")" + "VALUES" + "('" + mitarbeiter.getName() + "','" + mitarbeiter.getVorname() + "','"
 				+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort() + "','" + mitarbeiter.getEintrittsdatum() + "','"
 				+ mitarbeiter.getAustrittsdatum() + "','" + mitarbeiter.getBenutzername() + "')";
-		this.putManaged(INSERTQUERY);
+		this.putManaged(inserq);
 
 		List<Mitarbeiter> mitarbeiterlist = getAllMitarbeiter();
 
@@ -238,11 +238,11 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
-		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + mitarbeiter.getName() + "'," + VORNAME + "='" + mitarbeiter.getVorname()
+		String updateq = "UPDATE " + TABLE + " SET " + NAME + "='" + mitarbeiter.getName() + "'," + VORNAME + "='" + mitarbeiter.getVorname()
 				+ "'," + EMAIL + "='" + mitarbeiter.getEmail() + "'," + PASSWORT + "='" + mitarbeiter.getPasswort() + "'," + EINTRITTSDATUM + "='"
 				+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum() + "'," + BENUTZERNAME + "='"
 				+ mitarbeiter.getBenutzername() + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
-		this.putManaged(UPDATEQUERY);
+		this.putManaged(updateq);
 		if (mitarbeiter.getRollen() != null) {
 			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
 				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(mitarbeiter);

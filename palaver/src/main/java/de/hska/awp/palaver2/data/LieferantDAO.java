@@ -189,12 +189,12 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void createLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ + "," + ORT
+		String insertquery = "INSERT INTO " + TABLE + "(" + NAME + "," + KUNDENNUMMER + "," + BEZEICHNUNG + "," + STRASSE + "," + PLZ + "," + ORT
 				+ "," + EMAIL + "," + TELEFON + "," + FAX + "," + NOTIZ + "," + MEHRERELIEFERTERMINE + ")" + "VALUES" + "('" + lieferant.getName()
 				+ "','" + lieferant.getKundennummer() + "','" + lieferant.getBezeichnung() + "','" + lieferant.getStrasse() + "','"
 				+ lieferant.getPlz() + "','" + lieferant.getOrt() + "','" + lieferant.getEmail() + "','" + lieferant.getTelefon() + "','"
 				+ lieferant.getFax() + "','" + lieferant.getNotiz() + "','" + Util.convertBoolean(lieferant.getMehrereliefertermine()) + "')";
-		this.putManaged(INSERTQUERY);
+		this.putManaged(insertquery);
 	}
 
 	/**
@@ -206,13 +206,13 @@ public class LieferantDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void updateLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
-		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + lieferant.getName() + "'," + KUNDENNUMMER + "='"
+		String updatequery = "UPDATE " + TABLE + " SET " + NAME + "='" + lieferant.getName() + "'," + KUNDENNUMMER + "='"
 				+ lieferant.getKundennummer() + "'," + BEZEICHNUNG + "='" + lieferant.getBezeichnung() + "'," + STRASSE + "='"
 				+ lieferant.getStrasse() + "'," + PLZ + "='" + lieferant.getPlz() + "'," + ORT + "='" + lieferant.getOrt() + "'," + EMAIL + "='"
 				+ lieferant.getEmail() + "'," + TELEFON + "='" + lieferant.getTelefon() + "'," + FAX + "='" + lieferant.getFax() + "'," + NOTIZ
 				+ "='" + lieferant.getNotiz() + "'," + MEHRERELIEFERTERMINE + "='" + Util.convertBoolean(lieferant.getMehrereliefertermine())
 				+ "' WHERE " + ID + "='" + lieferant.getId() + "'";
-		this.putManaged(UPDATEQUERY);
+		this.putManaged(updatequery);
 	}
 
 	/**

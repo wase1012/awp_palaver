@@ -60,102 +60,93 @@ import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
  * @author Sebastian
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class MainLayout extends VerticalLayout implements Command
-{
-	private HorizontalLayout		header = new HorizontalLayout();
-	private static final Logger		log					= LoggerFactory.getLogger(MainLayout.class.getName());
-	
-	private MenuBar					menu = new MenuBar();
+public class MainLayout extends VerticalLayout implements Command {
+	private HorizontalLayout header = new HorizontalLayout();
+	private static final Logger log = LoggerFactory.getLogger(MainLayout.class.getName());
+
+	private MenuBar menu = new MenuBar();
+
 	@SuppressWarnings({ "deprecation", "unused" })
-	public MainLayout()
-	{
+	public MainLayout() {
 		super();
-		
+
 		this.setSizeFull();
-		
+
 		header.setWidth("100%");
 		header.setHeight("100px");
 		header.setStyleName("palaver-header");
-		
-//		Image logo = new Image(null, new ThemeResource("../img/cafe_palaver_Logo.png"));
-//		header.addComponent(logo);
-//		header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
-//		logo.addClickListener(new ClickListener()
-//		{
-//			@Override
-//			public void click(ClickEvent event)
-//			{
-//				ViewHandler.getInstance().switchView(DefaultView.class);
-//			}
-//		});
-		
-		header.addListener(new LayoutClickListener()
-		{
-			
+
+		// Image logo = new Image(null, new
+		// ThemeResource("../img/cafe_palaver_Logo.png"));
+		// header.addComponent(logo);
+		// header.setComponentAlignment(logo, Alignment.MIDDLE_RIGHT);
+		// logo.addClickListener(new ClickListener()
+		// {
+		// @Override
+		// public void click(ClickEvent event)
+		// {
+		// ViewHandler.getInstance().switchView(DefaultView.class);
+		// }
+		// });
+
+		header.addListener(new LayoutClickListener() {
+
 			@Override
-			public void layoutClick(LayoutClickEvent event)
-			{
+			public void layoutClick(LayoutClickEvent event) {
 				ViewHandler.getInstance().switchView(DefaultView.class);
 			}
 		});
-		
+
 		this.addComponent(header);
-		
+
 		menu.setWidth("100%");
 		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
 		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
 		artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
-		
+
 		MenuItem lieferantItem = menu.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
-		
+
 		MenuItem mitarbeiterItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
-		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR))
-		{
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
 			mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
 		}
 		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
-		
-		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
-				null);
+
+		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
-		MenuItem menue1Item = menu.addItem(IConstants.MENU_MENUE_HEADLINE,
-				null);
+		MenuItem menue1Item = menu.addItem(IConstants.MENU_MENUE_HEADLINE, null);
 		menue1Item.addItem(IConstants.MENU_MENUE_ANLEGEN, this);
 		menue1Item.addItem(IConstants.MENU_MENUE_SUCHEN, this);
-		
-		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE,
-				this);
-		
-		MenuItem kuchenverwaltungItem = menu.addItem(IConstants.MENU_KUCHENVERWALTUNG_HEADLINE,
-				null);
+
+		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE, this);
+
+		MenuItem kuchenverwaltungItem = menu.addItem(IConstants.MENU_KUCHENVERWALTUNG_HEADLINE, null);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANLEGEN, this);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENREZEPT_ANZEIGEN, this);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENPLAN_AKTUELL, this);
-		
+
 		MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
-		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR) || ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER))
-		{
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)
+				|| ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER)) {
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
 		}
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
-		
-		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR))
-		{
+
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
 			MenuItem regelItem = menu.addItem(IConstants.MENU_REGEL, this);
 		}
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		einstellungItem.addItem(IConstants.MENU_HEADER, this);
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
-//		einstellungItem.addItem(IConstants.MENU_ROLLEN_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_MENUEART, this);
@@ -164,186 +155,117 @@ public class MainLayout extends VerticalLayout implements Command
 		einstellungItem.addItem("Nachrichten", this);
 		einstellungItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
 		einstellungItem.addItem(IConstants.MENU_KUCHENPLAN_HISTORIE, this);
-//		einstellungItem.addItem(IConstants.MENU_INFO, this);
+		// einstellungItem.addItem(IConstants.MENU_INFO, this);
 		this.addComponent(menu);
-		
+
 		MenuItem logout = menu.addItem(IConstants.MENU_LOGOUT, this);
 		MenuItem username = menu.addItem(getUser(), null);
 		username.setEnabled(false);
-		
-//		DefaultView content = new DefaultView();
+
+		// DefaultView content = new DefaultView();
 		NachrichtAnzeigen content = new NachrichtAnzeigen();
 		this.addComponent(content);
 		this.setExpandRatio(content, 1);
-		
-//		this.addComponent(new ArtikelErstellen());
-//		this.setExpandRatio(this.getComponent(2), 1);
-		
-		if (UI.getCurrent().getSession().getBrowser().isTouchDevice())
-		{
+
+		// this.addComponent(new ArtikelErstellen());
+		// this.setExpandRatio(this.getComponent(2), 1);
+
+		if (UI.getCurrent().getSession().getBrowser().isTouchDevice()) {
 			setHeaderVisible(false);
 		}
 	}
 
 	@Override
-	public void menuSelected(MenuItem selectedItem)
-	{
-		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU))
-		{
+	public void menuSelected(MenuItem selectedItem) {
+		if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU)) {
 			ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
 			ViewHandler.getInstance().switchView(LieferantErstellen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU)) {
 			ViewHandler.getInstance().switchView(MitarbeiterErstellen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
-			
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT)) {
 			UI.getCurrent().setContent(new LoginForm());
 			UI.getCurrent().getSession().close();
 			UI.getCurrent().close();
 			log.info("**************************************************************");
 			log.info("LOGOUT");
 			log.info("**************************************************************");
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_NEW_RANDOM)) {
 			ViewHandler.getInstance().switchView(BestellungLieferantAuswaehlen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_BEARBEITEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_BEARBEITEN)) {
 			ViewHandler.getInstance().switchView(BestellungBearbeitenAuswaehlen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(RezeptAnzeigenTabelle.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU)) {
 			ViewHandler.getInstance().switchView(RezeptAnlegen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE)) {
 			ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE)) {
 			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_HISTORIE))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_HISTORIE)) {
 			ViewHandler.getInstance().switchView(KuchenplanHistorie.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN)) {
 			ViewHandler.getInstance().switchView(KuchenrezeptAnlegen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_AKTUELL))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_AKTUELL)) {
 			ViewHandler.getInstance().switchView(KuchenplanAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_FUSSNOTE)) {
 			ViewHandler.getInstance().switchView(FussnoteEinst.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_GESCHMACK)) {
 			ViewHandler.getInstance().switchView(GeschmackEinst.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENUEART))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENUEART)) {
 			ViewHandler.getInstance().switchView(MenueartEinst.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNG)) {
 			ViewHandler.getInstance().switchView(ZubereitungEinst.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENUE_ANLEGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENUE_ANLEGEN)) {
 			ViewHandler.getInstance().switchView(MenueAnlegen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_MENUE_SUCHEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_MENUE_SUCHEN)) {
 			ViewHandler.getInstance().switchView(MenueAnzeigenTabelle.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_REGEL))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_REGEL)) {
 			ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
-		}
-		else if(selectedItem.getText().equals("Email")) //Temp
+		} else if (selectedItem.getText().equals("Email")) // Temp
 		{
 			ViewHandler.getInstance().switchView(EmailOhneBestellung.class);
-		}
-		else if (selectedItem.getText().equals("Nachrichten"))
-		{
+		} else if (selectedItem.getText().equals("Nachrichten")) {
 			ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_ROLLEN_ANZEIGEN))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_ROLLEN_ANZEIGEN)) {
 			ViewHandler.getInstance().switchView(RollenAnzeigen.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_GENERATE))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_GENERATE)) {
 			ViewHandler.getInstance().switchView(BestellungGenerieren.class);
-		}
-		else if (selectedItem.getText().equals(IConstants.MENU_HEADER))
-		{
+		} else if (selectedItem.getText().equals(IConstants.MENU_HEADER)) {
 			setHeaderVisible(!this.header.isVisible());
 		}
-//		else if (selectedItem.getText().equals(IConstants.MENU_INFO))
-//		{
-//			showInfo();
-//		}
-		else 
-		{
+		// else if (selectedItem.getText().equals(IConstants.MENU_INFO))
+		// {
+		// showInfo();
+		// }
+		else {
 			ViewHandler.getInstance().returnToDefault();
 		}
 	}
-	
-	private String getUser()
-	{
+
+	private String getUser() {
 		return "Benutzer : " + ((Application) UI.getCurrent().getData()).getUser().getBenutzername();
 	}
-	
-	private void setHeaderVisible(Boolean arg0)
-	{
+
+	private void setHeaderVisible(Boolean arg0) {
 		this.header.setVisible(arg0);
 	}
-	
-	private void showInfo()
-	{
+
+	private void showInfo() {
 		final Window win = new Window();
 		win.center();
 		win.setModal(true);
@@ -352,30 +274,28 @@ public class MainLayout extends VerticalLayout implements Command
 		win.setClosable(false);
 		win.setStyleName("dialog-window");
 		win.setResizable(false);
-		
+
 		VerticalLayout content = new VerticalLayout();
 		content.setSizeFull();
 		content.setMargin(true);
 		content.setSpacing(true);
-		
+
 		Embedded logo = new Embedded(null, new ThemeResource("img/hska.png"));
 		content.addComponent(logo);
-		
+
 		Label text = new Label("PalaverApp /n (c) 2013 Hochschule Karlsruhe /n Build: 07-06-2013-18-48");
 		content.addComponent(text);
-		
+
 		Button close = new Button(IConstants.BUTTON_OK);
-		close.addClickListener(new ClickListener()
-		{
+		close.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event)
-			{
+			public void buttonClick(ClickEvent event) {
 				UI.getCurrent().removeWindow(win);
 			}
 		});
 		content.addComponent(close);
 		content.setComponentAlignment(close, Alignment.BOTTOM_RIGHT);
-		
+
 		win.setContent(content);
 		UI.getCurrent().addWindow(win);
 	}

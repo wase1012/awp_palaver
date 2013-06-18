@@ -19,12 +19,12 @@ import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
  */
 public class RollenDAO extends AbstractDAO {
 
-	private final static String TABLE = "rollen";
-	private final static String ID = "id";
-	private final static String NAME = "name";
-	private final static String GET_ALL_ROLLEN = "SELECT * FROM rollen";
-	private final static String GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
-	private final static String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
+	private static final String TABLE = "rollen";
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String GET_ALL_ROLLEN = "SELECT * FROM rollen";
+	private static final String GET_ROLLEN_BY_ID = "SELECT * FROM rollen WHERE id = {0}";
+	private static final String GET_ROLLEN_BY_MITARBEITER_ID = "SELECT rollen.id, rollen.name FROM rollen join mitarbeiter_has_rollen on "
 			+ "rollen.id = mitarbeiter_has_rollen.rollen_fk where mitarbeiter_fk = {0}";
 	private static final String GET_NACHRICHT_BY_ROLLE_ID = "SELECT * FROM nachrichten WHERE empf_rolle_fk = {0}";
 	private static final String GET_MITARBEITER_BY_ROLLEN_ID = "SELECT * FROM mitarbeiter "
@@ -194,8 +194,8 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void createRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + ")" + "VALUES" + "('" + rolle.getName() + "')";
-		this.putManaged(INSERTQUERY);
+		String insertq = "INSERT INTO " + TABLE + "(" + NAME + ")" + "VALUES" + "('" + rolle.getName() + "')";
+		this.putManaged(insertq);
 	}
 
 	/**
@@ -207,8 +207,8 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void updateRollen(Rollen rolle) throws ConnectException, DAOException, SQLException {
-		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + rolle.getName() + "' WHERE " + ID + "='" + rolle.getId() + "'";
-		this.putManaged(UPDATEQUERY);
+		String updateq = "UPDATE " + TABLE + " SET " + NAME + "='" + rolle.getName() + "' WHERE " + ID + "='" + rolle.getId() + "'";
+		this.putManaged(updateq);
 	}
 
 }
