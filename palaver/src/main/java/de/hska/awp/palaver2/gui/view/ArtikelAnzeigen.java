@@ -35,52 +35,50 @@ import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 /**
- * @author Sebastian Walz
- *	Diese Klasse gibt eine Tabelle aus, in der alle Artikel angezeigt werden. 
- *	Klick man doppelt auf einen, kommt man direkt zur UpdateForm.
+ * @author Sebastian Walz Diese Klasse gibt eine Tabelle aus, in der alle
+ *         Artikel angezeigt werden. Klick man doppelt auf einen, kommt man
+ *         direkt zur UpdateForm.
  */
 @SuppressWarnings("serial")
-public class ArtikelAnzeigen extends VerticalLayout  implements View
-{
-	private static final Logger	log	= LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
-	
-	private FilterTable			table;
-	
-	private Button				showFilter;
-	private Button				auswaehlen;
-	
-	private Label				headline;
-	
-	private HorizontalLayout	head;
-	
-	private Artikel				artikel;
-	
-	public ArtikelAnzeigen()
-	{
+public class ArtikelAnzeigen extends VerticalLayout implements View {
+	private static final Logger log = LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
+
+	private FilterTable table;
+
+	private Button showFilter;
+	private Button auswaehlen;
+
+	private Label headline;
+
+	private HorizontalLayout head;
+
+	private Artikel artikel;
+
+	public ArtikelAnzeigen() {
 		super();
-		
+
 		this.setSizeFull();
 		this.setMargin(true);
-		
+
 		showFilter = new Button(IConstants.BUTTON_HIDE_FILTER);
 		showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-		
+
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
 		auswaehlen.setEnabled(false);
-		
+
 		headline = new Label("Alle Artikel");
 		headline.setStyleName("ViewHeadline");
-		
+
 		head = new HorizontalLayout();
 		head.setWidth("100%");
-		
+
 		head.addComponent(headline);
 		head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 		head.addComponent(showFilter);
 		head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
 		head.setExpandRatio(headline, 1);
-		
+
 		table = new FilterTable();
 		table.setStyleName("palaverTable");
 		table.setSizeFull();
@@ -88,72 +86,65 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
-		
+
 		table.addValueChangeListener(new ValueChangeListener() {
-			
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					artikel = (Artikel) event.getProperty().getValue();
 					auswaehlen.setEnabled(true);
-				}
-				else {
+				} else {
 					auswaehlen.setEnabled(false);
 				}
 			}
 		});
-		
-		table.addItemClickListener(new ItemClickListener() {	
+
+		table.addItemClickListener(new ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()){
+				if (event.isDoubleClick()) {
 					auswaehlen.click();
 				}
-				
+
 			}
 		});
-		
+
 		auswaehlen.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (artikel != null) {
 					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
 				}
-			}	
+			}
 		});
-		
+
 		BeanItemContainer<Artikel> container;
-		try
-		{
+		try {
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] {"name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio", "bestellgroesse", "notiz"});
-			table.sort(new Object[] {"name"}, new boolean[] {true});
+			table.setVisibleColumns(new Object[] { "name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio",
+					"bestellgroesse", "notiz" });
+			table.sort(new Object[] { "name" }, new boolean[] { true });
 			table.setColumnHeader("bestellgroesse", "Gebinde");
 			table.setColumnWidth("kategorie", 70);
 			table.setColumnWidth("artikelnr", 60);
 			table.setColumnWidth("preis", 50);
 			table.setColumnWidth("bestellgroesse", 50);
-			
-			
-			table.setCellStyleGenerator(new CellStyleGenerator()
-			{
-				
+
+			table.setCellStyleGenerator(new CellStyleGenerator() {
+
 				@Override
-				public String getStyle(CustomTable source, Object itemId, Object propertyId)
-				{
+				public String getStyle(CustomTable source, Object itemId, Object propertyId) {
 					Artikel artikel = (Artikel) itemId;
-					if ("standard".equals(propertyId))
-					{
+					if ("standard".equals(propertyId)) {
 						return artikel.isStandard() ? "check" : "cross";
 					}
-					if ("grundbedarf".equals(propertyId))
-					{
+					if ("grundbedarf".equals(propertyId)) {
 						return artikel.isGrundbedarf() ? "check" : "cross";
 					}
-					if ("bio".equals(propertyId))
-					{
+					if ("bio".equals(propertyId)) {
 						return artikel.isBio() ? "check" : "cross";
 					}
 					return "";
@@ -162,32 +153,25 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 			table.setColumnWidth("standard", 60);
 			table.setColumnWidth("grundbedarf", 80);
 			table.setColumnWidth("bio", 30);
-		} 
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			log.error(e.toString());
-		}	
-		
+		}
+
 		this.addComponent(head);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		this.addComponent(auswaehlen);
 		this.setComponentAlignment(auswaehlen, Alignment.BOTTOM_RIGHT);
-		
-		showFilter.addClickListener(new ClickListener()
-		{
+
+		showFilter.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event)
-			{
-				if (table.isFilterBarVisible())
-				{
+			public void buttonClick(ClickEvent event) {
+				if (table.isFilterBarVisible()) {
 					table.setFilterBarVisible(false);
 					table.resetFilters();
 					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
 					showFilter.setIcon(new ThemeResource("img/filter.ico"));
-				}
-				else
-				{
+				} else {
 					table.setFilterBarVisible(true);
 					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
 					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
@@ -197,7 +181,6 @@ public class ArtikelAnzeigen extends VerticalLayout  implements View
 	}
 
 	@Override
-	public void getViewParam(ViewData data)
-	{
+	public void getViewParam(ViewData data) {
 	}
 }
