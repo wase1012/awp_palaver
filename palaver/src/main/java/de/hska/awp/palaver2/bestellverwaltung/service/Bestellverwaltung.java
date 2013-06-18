@@ -30,6 +30,9 @@ import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 /**
+ * Die Klasse ermöglicht die Verwaltung der Bestellung und stellt für die GUI
+ * Methoden bereit.
+ * 
  * @author Christian Barth
  * @author Mihail Boehm
  */
@@ -362,7 +365,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
-	//TODO input List<ArtikelBedarf> in  List<RezeptHasArtikel> ändern
+	//TODO input List<ArtikelBedarf> ???
 	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<ArtikelBedarf> ab, Week week) throws ConnectException, DAOException, SQLException, ParseException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		int leer = 0;
