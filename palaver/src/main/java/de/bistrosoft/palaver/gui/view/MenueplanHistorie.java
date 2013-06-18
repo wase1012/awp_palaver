@@ -40,7 +40,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 	
 	// FußŸnoten
 	Label lbFussnoten = new Label(
-			"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
+			"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
 			ContentMode.HTML);
 	Label lbPlatzhalter = new Label();
 
@@ -50,7 +50,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		this.setMargin(true);
 
 		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.TOP_CENTER);
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
 		// Kalender zur Datums-Auswahl
 		final PopupDateField date = new PopupDateField("Datum wählen:") {
