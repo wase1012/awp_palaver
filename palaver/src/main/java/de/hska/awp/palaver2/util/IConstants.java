@@ -165,6 +165,8 @@ public interface IConstants
 	String 		INFO_ARTIKEL_MENGENEINHEITNAME = "Bitte Namen eingeben";
 	String	 	INFO_ARTIKEL_MENGENEINHEITKURZ = "Bitte Kürzel eingeben";
 	String 		INFO_ARTIKEL_KATEGORIENAME = "Bitte Namen eingeben";
+	String 		INFO_ARTIKEL_PREIS = "Bitte Preis angeben";
+	String 		INFO_ARTIKEL_DURCHSCHNITT = "Bitte Durchschnitt angeben";
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
 	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";
