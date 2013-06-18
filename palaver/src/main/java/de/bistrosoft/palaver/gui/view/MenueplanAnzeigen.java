@@ -4,6 +4,11 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import java.util.Date;
+
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -15,12 +20,15 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
@@ -28,10 +36,11 @@ import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewHandler;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
-public class Menueplan extends VerticalLayout implements View {
+public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	// Variablen und Komponenten
 	private VerticalLayout box = new VerticalLayout();
@@ -59,15 +68,19 @@ public class Menueplan extends VerticalLayout implements View {
 	Button btEnableDragging = new Button("Verschieben aktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
-	private Button btDeletePlan = new Button("Gesammten Plan löschen");
+	Button btKopieren = new Button("Plan importieren");
+	private Button btDeletePlan = new Button("Gesamten Plan löschen");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 					+ strKW + "</pre>", ContentMode.HTML);
 	MenueplanGridLayout shownMenueplan = curMenueplan;
 
+	
+	///////////////////
+	Label lbMplWeek;
 
-	public Menueplan() {
+	public MenueplanAnzeigen() {
 		super();
 		this.setSizeFull();
 		this.setMargin(true);
@@ -199,7 +212,7 @@ public class Menueplan extends VerticalLayout implements View {
 						}
 					}
 				}
-				Menueplan.this.btEnableDelete.click();
+				MenueplanAnzeigen.this.btEnableDelete.click();
 			}
 		});
 
@@ -225,6 +238,7 @@ public class Menueplan extends VerticalLayout implements View {
 				if (btSubmitDelete.isVisible()) {
 					shownMenueplan.layout.setDragMode(LayoutDragMode.CLONE);
 					btSubmitDelete.setVisible(false);
+					btDeletePlan.setVisible(false);
 					btSpeichern.setVisible(true);
 					btFreigeben.setVisible(true);
 					btEnableDragging.setVisible(true);
@@ -232,6 +246,7 @@ public class Menueplan extends VerticalLayout implements View {
 				} else {
 					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 					btSubmitDelete.setVisible(true);
+					btDeletePlan.setVisible(true);
 					btSpeichern.setVisible(false);
 					btFreigeben.setVisible(false);
 					btEnableDragging.setVisible(false);
@@ -258,6 +273,59 @@ public class Menueplan extends VerticalLayout implements View {
 						}
 					}
 				}
+			}
+		});
+
+
+		btKopieren.addClickListener(new ClickListener() {
+			// Click-Listener zum Speichern
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Window fvj = new Window();
+				VerticalLayout vlWinBox = new VerticalLayout();
+				final PopupDateField date = new PopupDateField("Datum wählen:") {
+				    @Override
+				    protected Date handleUnparsableDateString(String dateString)
+				    throws ConversionException {
+				        // Notification bei Fehleingabe
+				    	Notification notification = new Notification(
+								"Falsches Datumsformat.");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+				        throw new ConversionException("Falsches Datumsformat");
+				    }
+				};
+				
+				date.addValueChangeListener(new ValueChangeListener() {
+					
+					@Override
+					public void valueChange(ValueChangeEvent event) {
+						Date datum = date.getValue();
+						Week selectedWeek = CalendarWeek.getWeekFromDate(datum);
+						System.out.println("Date Change");
+						lbMplWeek.setCaption(lbMplWeek.getCaption()+" ersetzen mit "+selectedWeek.getWeek()+"/"+selectedWeek.getYear());
+					}
+				});
+				date.setWidth("150px");
+				date.setDateFormat("dd.MM.yyyy");
+				date.setLenient(true);
+				date.setShowISOWeekNumbers(true);
+				vlWinBox.addComponent(date);
+				vlWinBox.setComponentAlignment(date, Alignment.TOP_CENTER);
+				Week mplWeek = shownMenueplan.getMenueplan().getWeek();
+				lbMplWeek = new Label("Menüplan "+mplWeek.getWeek()+"/"+mplWeek.getYear());
+				vlWinBox.addComponent(lbMplWeek);
+				
+				fvj.setContent(vlWinBox);
+				UI.getCurrent().addWindow(fvj);
+//				Menueplan imp = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(27,2013));
+//				Week newWeek = new Week(28, 2013);
+//				imp.setWeek(newWeek);
+//				imp.setId(null);
+//				MenueplanGridLayout mgl = new MenueplanGridLayout(imp);
+//				mgl.speichern();
+//				ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
+//				nextMenueplan = new MenueplanGridLayout(imp);
 			}
 		});
 		
@@ -310,6 +378,8 @@ public class Menueplan extends VerticalLayout implements View {
 		hlControl.addComponent(btSubmitDelete);
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
+		btDeletePlan.setVisible(false);
+		hlControl.addComponent(btKopieren);
 		box.addComponent(hlControl);
 		box.addComponent(curMenueplan);
 		box.addComponent(lbFussnoten);
@@ -326,15 +396,6 @@ public class Menueplan extends VerticalLayout implements View {
 				}
 			}
 		}
-
-		// HorizontalCarousel carousel = new HorizontalCarousel();
-		// carousel.setArrowKeysMode(ArrowKeysMode.FOCUS);
-		// carousel.setLoadMode(CarouselLoadMode.LAZY);
-		// carousel.setTransitionDuration(500);
-		// carousel.addComponent(prevMenueplan);
-		// carousel.addComponent(curMenueplan);
-		// carousel.addComponent(nextMenueplan);
-		// box.addComponent(carousel);
 	}
 
 	public static void switchMenueplan() {
