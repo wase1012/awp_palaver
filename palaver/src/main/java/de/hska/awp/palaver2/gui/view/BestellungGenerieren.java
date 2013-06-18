@@ -55,7 +55,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 		form.setHeight("200px");
 		form.setSpacing(true);
 
-		final PopupDateField date = new PopupDateField("Datum wählen:");
+		final PopupDateField date = new PopupDateField("Kalenderwoche des Menüplans auswählen:");
 		date.setWidth("150px");
 		date.setDateFormat("dd.MM.yyyy");
 		date.setLenient(true);
