@@ -69,7 +69,8 @@ public class MitarbeiterDAO extends AbstractDAO {
 		openConnection();
 		while (set.next()) {
 			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
-					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername")));
+					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), getRollenByMitarbeiterId(set
+					.getLong("id")), set.getString("benutzername")));
 		}
 		closeConnection();
 		return list;
@@ -78,7 +79,6 @@ public class MitarbeiterDAO extends AbstractDAO {
 	/**
 	 * Die Methode liefert ein Mitarbeiter anhand seiner ID zurück.
 	 * 
-	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -128,7 +128,7 @@ public class MitarbeiterDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode liefer alle Mitarbeiter anhand einer Rollen ID zurück.
+	 * Die Methode liefer einen Mitarbeiter ohne Rollen anhand seiner Id zurück.
 	 * 
 	 * @param id
 	 * @return
