@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 //	Produktiv
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
@@ -114,7 +114,8 @@ public interface IConstants
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
 	String		INFO_REZEPT_NAME_VALID = "Bitte vollständigen Namen eingeben";
 	String		INFO_REZEPT_KOCH_VALID = "Bitte vollständigen Koch wählen";
-	String		INFO_REZEPT_REZEPTART_VALID = "Bitte vollständigen Rezeptart wählen";
+	String		INFO_REZEPT_REZEPTART_VALID = "Bitte vollständige Rezeptart wählen";
+	String		INFO_REZEPT_MENUE_SAVE_WINDOW = "Funktion nicht möglich";
 
 	
 	String 		INFO_MENUE_ALS_REZEPT = "Bitte weitere Felder prüfen!";

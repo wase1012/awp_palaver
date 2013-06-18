@@ -135,14 +135,14 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		name.setMaxLength(200);
 		name.addValidator(new StringLengthValidator(
 				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
-		
+
 		zubereitung.setWidth("100%");
 		zubereitung.setImmediate(true);
 
 		mitarbeiterNs.setWidth("100%");
 		mitarbeiterNs.setImmediate(true);
 		mitarbeiterNs.setNullSelectionAllowed(false);
-		
+
 		rezeptartNs.setWidth("100%");
 		rezeptartNs.setImmediate(true);
 		rezeptartNs.setNullSelectionAllowed(false);
@@ -190,7 +190,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlDetailsLinks.setWidth("450px");
 
 		vlDetailsRechts.addComponent(zubereitung);
-		
+
 		vlDetailsRechts.setWidth("500px");
 
 		hlZutaten.setWidth("1000px");
@@ -202,10 +202,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
 
+		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btArtikel);
-		if (!(this.getParent() instanceof Window)) {
-			hlControl.addComponent(btMenue);
-		}
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
 
@@ -217,6 +215,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (RezeptAnlegen.this.getParent() instanceof Window) {
+					System.out
+							.println("Bv RezeptAnlegen.this.getParent() aus BtVerwerfen:"
+									+ RezeptAnlegen.this.getParent());
 					Window win = (Window) RezeptAnlegen.this.getParent();
 					win.close();
 				} else {
@@ -228,6 +229,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btSpeichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				System.out
+						.println("bS RezeptAnlegen.this.getParent() aus BtVerwerfen:"
+								+ RezeptAnlegen.this.getParent());
 				if (validiereEingabe()) {
 					rezeptSpeichern();
 					if (RezeptAnlegen.this.getParent() instanceof Window) {
@@ -244,13 +248,22 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btMenue.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+				System.out.println("rzArt : " + rezeptartNs.getValue());
 				if (validiereEingabe()) {
-
-					ViewHandler.getInstance().switchView(MenueAnlegen.class,
-							new ViewDataObject<Rezept>(rezeptSpeichern()));
-				} else {
-					((Application) UI.getCurrent().getData())
-							.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
+					if (!(RezeptAnlegen.this.getParent() instanceof Window)) {
+						if (rezeptartNs.getValue() != "Beilage") {
+							ViewHandler.getInstance().switchView(
+									MenueAnlegen.class,
+									new ViewDataObject<Rezept>(
+											rezeptSpeichern()));
+						} else {
+							((Application) UI.getCurrent().getData())
+									.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
+						}
+					} else {
+						((Application) UI.getCurrent().getData())
+								.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE_WINDOW));
+					}
 				}
 			}
 		});
@@ -266,23 +279,23 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
 		zutatenTable.setStyleName("palaverTable");
-//		zutatenTable.setPageLength(16);
-//		zutatenTable.setWidth("650px");
+		// zutatenTable.setPageLength(16);
+		// zutatenTable.setWidth("650px");
 		zutatenTable.setImmediate(true);
-//		zutatenTable.setColumnWidth("artikelname", 200);
-//		zutatenTable.setColumnWidth("menge", 100);
-//		zutatenTable.setColumnWidth("einheit", 90);
-//		zutatenTable.setColumnWidth("notiz", 500);
+		// zutatenTable.setColumnWidth("artikelname", 200);
+		// zutatenTable.setColumnWidth("menge", 100);
+		// zutatenTable.setColumnWidth("einheit", 90);
+		// zutatenTable.setColumnWidth("notiz", 500);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
-//		artikelTable.setSizeUndefined();
-//		artikelTable.setWidth("350px");
+		// artikelTable.setSizeUndefined();
+		// artikelTable.setWidth("350px");
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		artikelTable.setSelectable(true);
-		
+
 		containerRezeptHasArtikel = new BeanItemContainer<RezeptHasArtikel>(
 				RezeptHasArtikel.class);
 		zutatenTable.setContainerDataSource(containerRezeptHasArtikel);
@@ -292,10 +305,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		hlZutaten.addComponent(zutatenTable);
 		hlZutaten.addComponent(artikelTable);
-		
+
 		hlZutaten.setExpandRatio(artikelTable, 3);
 		hlZutaten.setExpandRatio(zutatenTable, 7);
-		
+
 		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
 
 		artikelTable.setCaption("Artikel");
@@ -366,7 +379,6 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		// Koch auf aktuellen User setzen
 		mitarbeiterNs.select(((Application) UI.getCurrent().getData())
 				.getUser());
-
 	}
 
 	private void ladeArtikel() {
@@ -727,5 +739,4 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 	}
-
 }
