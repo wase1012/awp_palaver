@@ -52,4 +52,6 @@
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 
     <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
+
+    
 </module>

@@ -113,7 +113,9 @@ public class MenueplanDAO extends AbstractDAO {
 			menueplan.setFreigegeben(freigegeben);
 		}
 
+		
 		if (menueplan != null) {
+			menueplan.setWeek(week);
 			// TODO: Köche laden
 
 			List<MenueComponent> menues = new ArrayList<MenueComponent>();
