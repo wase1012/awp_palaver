@@ -207,6 +207,9 @@ public interface IConstants
 	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
 	
 	String 		INFO_LIEFERANT_SAVE = "Lieferant wurde gespeichert!";
+	
+	String 		INFO_NACHRICHT_TEXT = "Bitte Nachricht eingeben";
+	String 		INFO_NACHRICHT_EMPF = "Bitte Empfängerrolle auswählen";
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
