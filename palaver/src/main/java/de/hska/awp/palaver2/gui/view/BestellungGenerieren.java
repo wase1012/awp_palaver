@@ -20,9 +20,9 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung;
-import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.util.View;
@@ -98,11 +98,10 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					Menueplan m = null;
 					
 					//TODO Ändern in RezeptHasArtikel
-					List<ArtikelBedarf> a = null;
+					List<RezeptHasArtikel> a = null;
 					try {
 						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
-						//TODO
-//						a = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year));
+						a = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year));
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
@@ -111,8 +110,7 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
-						//TODO != in == ändern, wenn Methode auslesen richtig geht
-						if (a != null){	
+						if (a == null){	
 							Notification notification = new Notification("Kein Kuchenbedarf vorhanden!");
 							notification.setDelayMsec(500);
 							notification.show(Page.getCurrent());
