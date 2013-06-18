@@ -61,6 +61,8 @@ public class MitarbeiterHasRollenDAO extends AbstractDAO {
 	 * Die Methode liefert alle MitarbeiterHasRollen anhand eines Mitarbeiter
 	 * und einer Rolle zurück.
 	 * 
+	 * @param mitarbeiter
+	 * @param rolle
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
