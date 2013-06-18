@@ -687,6 +687,11 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		}
 		
 		if (grundbedarf.getValue()) {
+			if (durchschnitt.getValue().isEmpty()) {
+				((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
+				return false;
+			}
 			try {
 				Integer.parseInt(durchschnitt.getValue());
 			}
