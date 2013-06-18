@@ -31,7 +31,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String KUCHENREZEPTFK = "kuchenrezept_fk";
 
 	private static KuchenrezeptDAO instance = null;
-	private final static String GET_ALL_KUCHENREZEPTS = "SELECT * FROM kuchenrezept";
+	private final static String GET_ALL_KUCHENREZEPTS = "SELECT * FROM kuchenrezept where aktiv = true";
 	private final static String GET_KUCHENREZEPT_BY_ID = "SELECT * FROM kuchenrezept WHERE id = {0}";
 	private final static String GET_KUCHENREZEPT_BY_NAME = "SELECT * FROM kuchenrezept WHERE kuchenrezept.name = {0}";
 	private final static String GET_ARTIKEL_KUCHENREZEPT_BY_ID = "Select * From artikel Join kuchenrezept_has_artikel On artikel.id = kuchenrezept_has_artikel.artikel_fk Where kuchenrezept_has_artikel.kuchenrezept_fk = {0}";
@@ -39,7 +39,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String GET_KUCHENREZEPTHASARTIKEL_BY_KUCHENREZEPT_ID = "SELECT * FROM "
 			+ KUCHENREZEPTHASARTIKEL + " WHERE " + KUCHENREZEPTFK + " = {0}";
 	private static final String GET_ALL_KUCHENREZEPT_TABELLE = "SELECT * FROM "
-			+ TABLE;
+			+ TABLE + "where aktiv = true";
 
 	Kuchenrezept kuchenrezept;
 
@@ -61,7 +61,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"),
 					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"));
+					set.getDate("erstellt"), set.getBoolean("aktiv"));
 			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
@@ -85,7 +85,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			Kuchenrezept kuchenrezept = new Kuchenrezept(set.getLong("id"),
 					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"));
+					set.getDate("erstellt"), set.getBoolean("aktiv"));
 
 			list.add(kuchenrezept);
 
@@ -115,7 +115,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"),
 					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"));
+					set.getDate("erstellt"), set.getBoolean("inaktiv"));
 			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
@@ -194,26 +194,18 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	public void createKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ KOMMENTAR + "," + ERSTELLT + ")" + " VALUES" + "('"
+				+ KOMMENTAR + "," + ERSTELLT + " inaktiv)" + " VALUES" + "('"
 				+ kuchenrezept.getName() + "','" + kuchenrezept.getKommentar()
-				+ "','" + kuchenrezept.getErstellt() + "')";
+				+ "','" + kuchenrezept.getErstellt() + "', true)";
 		this.putManaged(INSERT_QUERY);
 	}
 	
-	public void deleteKuchenrezept(Kuchenrezept kuchenrezept)
+	public void DisableKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
-		String DELETE_QUERY_KUCHENREZEPT = "DELETE  from kuchenrezept WHERE id = "
-				+ kuchenrezept.getId() + ";";
-		this.putManaged(DELETE_QUERY_KUCHENREZEPT);
-		String DELETE_QUERY_FUSSNOTEN = "DELETE  from kuchenrezept_has_fussnote WHERE kuchenrezept_fk = "
-				+ kuchenrezept.getId() + ";";
-		this.putManaged(DELETE_QUERY_FUSSNOTEN);
-		String DELETE_QUERY_ARTIKEL = "DELETE FROM kuchenrezept_has_artikel WHERE "
-				+ KUCHENREZEPTFK + "=" + kuchenrezept.getId() + ";";
-		this.putManaged(DELETE_QUERY_ARTIKEL);
-		String DELETE_QUERY_KUCHENPLAN_KUCHENREZEPT = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenrezept_fk = "
-				 + kuchenrezept.getId() + ";";
-		this.putManaged(DELETE_QUERY_KUCHENPLAN_KUCHENREZEPT);
+		String INSERT_QUERY = "UPDATE kuchenrezept SET aktiv = false  WHERE id = "
+				+ kuchenrezept.getId();
+		this.putManaged(INSERT_QUERY);
+		
 	
 	}
 
