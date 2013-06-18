@@ -239,11 +239,13 @@ public class MenueComponent extends CustomComponent{
 			fn = fn+" ("+f.getAbkuerzung().toString()+")";
 		}
 
-		Button lbText = new Button(angezName);
-		lbText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
-		lbText.setWidth("100%");
-		lbText.setHeight("80px");
-		vl.addComponent(lbText);
+		Button btText = new Button(angezName);
+		btText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+		btText.setWidth("100%");
+		btText.setHeight("80px");
+		btText.addStyleName("center-text");
+		
+		vl.addComponent(btText);
 		
 		
 		
@@ -338,7 +340,7 @@ public class MenueComponent extends CustomComponent{
 		});
 		
 		///////////////
-		lbText.addListener(new Listener() {
+		btText.addListener(new Listener() {
 			
 			@Override
 			public void componentEvent(Event event) {
@@ -382,7 +384,7 @@ public class MenueComponent extends CustomComponent{
 		hl.addComponent(ogMarkiere);
 		
 		vl.addComponent(hl);
-		vl.setComponentAlignment(lbText, Alignment.MIDDLE_CENTER);
+		vl.setComponentAlignment(btText, Alignment.MIDDLE_CENTER);
 //		vl.setComponentAlignment(hlProp, Alignment.MIDDLE_CENTER);
 		vl.setComponentAlignment(hl, Alignment.BOTTOM_CENTER);
 //		vl.setComponentAlignment(btDelete, Alignment.BOTTOM_RIGHT);

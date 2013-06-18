@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.gui.view;
 
+import java.sql.SQLException;
+
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -13,6 +15,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -20,6 +23,8 @@ import com.vaadin.ui.VerticalLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -31,18 +36,27 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 @SuppressWarnings("serial")
 public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
+	private HorizontalLayout hlControl = new HorizontalLayout();
 	private FilterTable table;
 
 	private Button btFilterLeeren;
 	private Menue menue;
 
 	private Button btAuswaehlen;
+	private Button btLoeschen;
+	private Button btNeuesMenue;
 
 	private Label headline;
 
-	public MenueAnzeigenTabelle() {
+	public MenueAnzeigenTabelle() throws ConnectException, DAOException,
+			SQLException {
 		super();
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
+		btLoeschen = new Button(IConstants.BUTTON_DELETE);
+		btLoeschen.setIcon(new ThemeResource("img/delete.ico"));
+		btNeuesMenue = new Button(IConstants.BUTTON_NEW);
+		btNeuesMenue.setIcon(new ThemeResource("img/new.ico"));
+
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -87,7 +101,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 		try {
 			container = new BeanItemContainer<Menue>(Menue.class,
-					Menueverwaltung.getInstance().getAllMenuesTabelle());
+					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "kochname",
 					"geschmack", "menueart" });
@@ -107,9 +121,11 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
-		this.addComponent(btAuswaehlen);
-		this.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_RIGHT);
-
+		this.addComponent(hlControl);
+		this.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		hlControl.addComponent(btNeuesMenue);
+		hlControl.addComponent(btLoeschen);
+		hlControl.addComponent(btAuswaehlen);
 		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -131,8 +147,40 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 				}
 			}
 		});
-		
 
+		btLoeschen.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (table.getValue() != null
+						&& table.getValue() instanceof Menue) {
+
+					Menue menueAusTb = (Menue) table.getValue();
+					try {
+						Menueverwaltung.getInstance().setMenueDisabled(
+								menueAusTb);
+					} catch (ConnectException e) {
+						e.printStackTrace();
+					} catch (DAOException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_MENUE_DELETE);
+
+					ViewHandler.getInstance().switchView(
+							MenueAnzeigenTabelle.class);
+				}
+			}
+		});
+
+		btNeuesMenue.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(MenueAnlegen.class);
+			}
+		});
 
 	}
 

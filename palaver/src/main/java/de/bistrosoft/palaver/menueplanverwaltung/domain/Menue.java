@@ -16,6 +16,7 @@ public class Menue {
 	private Geschmack geschmack;
 	private boolean aufwand;
 	private boolean favorit;
+	private Boolean aktiv;
 	private Menueart menueart;
 
 	List<Fussnote> fussnoten;
@@ -57,6 +58,17 @@ public class Menue {
 		this.kochname = koch;
 		this.menueart = menueart;
 		this.geschmack = geschmack;
+
+	}
+
+	public Menue(Long id, String name, String koch, Menueart menueart,
+			Geschmack geschmack, Boolean aktiv) {
+		this.id = id;
+		this.name = name;
+		this.kochname = koch;
+		this.menueart = menueart;
+		this.geschmack = geschmack;
+		this.aktiv = aktiv;
 
 	}
 
@@ -180,6 +192,21 @@ public class Menue {
 
 	public void setMenueart(Menueart menueart) {
 		this.menueart = menueart;
+	}
+
+	/**
+	 * @return the aktiv
+	 */
+	public boolean isAktiv() {
+		return aktiv;
+	}
+
+	/**
+	 * @param aktiv
+	 *            the aktiv to set
+	 */
+	public void setAktiv(boolean aktiv) {
+		this.aktiv = aktiv;
 	}
 
 	public boolean getAufwand() {

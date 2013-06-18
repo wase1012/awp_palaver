@@ -1,6 +1,6 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
@@ -27,6 +27,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -275,8 +277,18 @@ public class WinSelectMenue extends Window {
 	private void ladeMenues() {
 
 		// Container f�r Men�liste festlegen
-		menueContainer = new BeanItemContainer<Menue>(Menue.class,
-				Menueverwaltung.getInstance().getAllMenuesTabelle());
+		try {
+			menueContainer = new BeanItemContainer<Menue>(Menue.class,
+					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		ftMenueList.setContainerDataSource(menueContainer);
 
 		// Spalten festlegen

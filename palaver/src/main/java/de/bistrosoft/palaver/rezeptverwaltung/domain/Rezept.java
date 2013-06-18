@@ -19,6 +19,7 @@ public class Rezept implements java.io.Serializable {
 	private String name;
 	private String kommentar;
 	private Date erstellt;
+	private Boolean aktiv;
 	private List<RezeptHasArtikel> artikel;
 	private Boolean menue;
 	private List<Zubereitung> zubereitung;
@@ -56,6 +57,18 @@ public class Rezept implements java.io.Serializable {
 		this.name = name;
 		this.kommentar = kommentar;
 		this.erstellt = erstellt;
+	}
+	
+	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+			String name, String kommentar, Date erstellt, Boolean aktiv) {
+		super();
+		this.id = id;
+		this.rezeptart = rezeptart;
+		this.mitarbeiter = mitarbeiter;
+		this.name = name;
+		this.kommentar = kommentar;
+		this.erstellt = erstellt;
+		this.aktiv=aktiv;
 	}
 
 	public Rezept(Long id) {
@@ -126,6 +139,14 @@ public class Rezept implements java.io.Serializable {
 
 	public void setErstellt(Date erstellt) {
 		this.erstellt = erstellt;
+	}
+	
+	public Boolean getAktiv() {
+		return aktiv;
+	}
+
+	public void setAktiv(Boolean aktiv) {
+		this.aktiv = aktiv;
 	}
 
 	public List<RezeptHasArtikel> getArtikel() {

@@ -39,6 +39,7 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String REZEPTHASARTIKEL = "rezept_has_artikel";
 	private final static String REZEPTFK = "rezept_fk";
 	private final static String MENUE = "menue";
+	private final static String AKTIV = "aktiv";
 
 	private static RezeptDAO instance = null;
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
@@ -52,6 +53,8 @@ public class RezeptDAO extends AbstractDAO {
 			+ REZEPTHASARTIKEL + " WHERE " + REZEPTFK + " = {0}";
 	private static final String GET_ALL_REZEPT_TABELLE = "SELECT * FROM "
 			+ TABLE;
+	private static final String GET_ALL_REZEPT_TABELLE_AKTIV = "SELECT * FROM "
+			+ TABLE + " WHERE " + AKTIV + "=true";
 
 	Rezept rezept;
 
@@ -130,6 +133,28 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
+	public List<Rezept> getAllRezepteTabelleAktiv() throws ConnectException,
+			DAOException, SQLException {
+		List<Rezept> list = new ArrayList<Rezept>();
+		ResultSet set = getManaged(GET_ALL_REZEPT_TABELLE_AKTIV);
+
+		while (set.next()) {
+			Rezept rezept = new Rezept(set.getLong("id"), RezeptartDAO
+					.getInstance()
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), set.getString("kommentar"),
+					set.getDate("erstellt"), set.getBoolean("aktiv"));
+			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
+					.getZubereitungByRezept(rezept.getId());
+			rezept.setZubereitung(zubereitung);
+			list.add(rezept);
+
+		}
+		return list;
+	}
+
 	public List<Rezept> getAllRezepteM() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -183,10 +208,10 @@ public class RezeptDAO extends AbstractDAO {
 
 		while (set.next()) {
 			result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-					.getRezeptartById(set.getLong("rezeptart_fk")), MitarbeiterDAO
-					.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set.getString("name"),
-					null);
+					.getRezeptartById(set.getLong("rezeptart_fk")),
+					MitarbeiterDAO.getInstance().getMitarbeiterById(
+							set.getLong("mitarbeiter_fk")),
+					set.getString("name"), null);
 		}
 
 		return result;
@@ -238,10 +263,11 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ REZEPTART + "," + KOMMENTAR + "," + MITARBEITER + ","
-				+ ERSTELLT + ")" + " VALUES" + "('" + rezept.getName() + "',"
-				+ rezept.getRezeptart().getId() + ",'" + rezept.getKommentar()
-				+ "'," + rezept.getMitarbeiter().getId() + ",'"
-				+ rezept.getErstellt() + "')";
+				+ ERSTELLT + "," + AKTIV + ")" + " VALUES" + "('"
+				+ rezept.getName() + "'," + rezept.getRezeptart().getId()
+				+ ",'" + rezept.getKommentar() + "',"
+				+ rezept.getMitarbeiter().getId() + ",'" + rezept.getErstellt()
+				+ "',true)";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -346,5 +372,12 @@ public class RezeptDAO extends AbstractDAO {
 		String DELETE_QUERY = "DELETE FROM rezept_has_zubereitung WHERE "
 				+ REZEPTFK + "=" + rezept.getId() + ";";
 		this.putManaged(DELETE_QUERY);
+	}
+
+	public void setRezeptDisabled(Rezept rezeptAusTb) throws ConnectException,
+			DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + AKTIV
+				+ "=false WHERE id=" + rezeptAusTb.getId();
+		this.putManaged(UPDATE_QUERY);
 	}
 }

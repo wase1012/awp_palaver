@@ -161,33 +161,23 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `palaver`.`menue` ;
 
-CREATE  TABLE IF NOT EXISTS `palaver`.`menue` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NOT NULL ,
-  `koch` INT NOT NULL ,
-  `geschmack_fk` INT NULL ,
-  `menueart_fk` INT NOT NULL ,
-`aufwand` BOOLEAN NULL ,
- `favorit` BOOLEAN  NULL ,
-  PRIMARY KEY (`id`) ,
---  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  INDEX `fk_menue_mitarbeiter1_idx` (`koch` ASC) ,
-   INDEX `fk_geschmack1_idx` (`geschmack_fk` ASC) ,
-   CONSTRAINT `fk_geschmack1`
-    FOREIGN KEY (`geschmack_fk` )
-    REFERENCES `palaver`.`geschmack` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-     CONSTRAINT `fk_menue_menueart12`
-    FOREIGN KEY (`menueart_fk` )
-    REFERENCES `palaver`.`menueart` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_menue_mitarbeiter1`
-    FOREIGN KEY (`koch` )
-    REFERENCES `palaver`.`mitarbeiter` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE `menue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `koch` int(11) NOT NULL,
+  `geschmack_fk` int(11) DEFAULT NULL,
+  `menueart_fk` int(11) NOT NULL,
+  `aufwand` tinyint(1) DEFAULT NULL,
+  `favorit` tinyint(1) DEFAULT NULL,
+  `aktiv` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menue_mitarbeiter1_idx` (`koch`),
+  KEY `fk_geschmack1_idx` (`geschmack_fk`),
+  KEY `fk_menue_menueart12` (`menueart_fk`),
+  CONSTRAINT `fk_geschmack1` FOREIGN KEY (`geschmack_fk`) REFERENCES `geschmack` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menue_menueart12` FOREIGN KEY (`menueart_fk`) REFERENCES `menueart` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menue_mitarbeiter1` FOREIGN KEY (`koch`) REFERENCES `mitarbeiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 
@@ -224,27 +214,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `palaver`.`rezept` ;
 
-CREATE  TABLE IF NOT EXISTS `palaver`.`rezept` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NOT NULL ,
-  `rezeptart_fk` INT NOT NULL ,
-  `kommentar` VARCHAR(1000) NULL ,
-  `mitarbeiter_fk` INT NULL ,
-   `erstellt` TIMESTAMP NULL ,
-  PRIMARY KEY (`id`) ,
- -- UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  INDEX `fk_rezept_rezeptart1_idx` (`rezeptart_fk` ASC) ,
-  INDEX `fk_mitarbeiter_idx` (`mitarbeiter_fk` ASC) ,
-  CONSTRAINT `fk_rezept_rezeptart1`
-    FOREIGN KEY (`rezeptart_fk` )
-    REFERENCES `palaver`.`rezeptart` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-   CONSTRAINT `fk_mitarbeiter`
-    FOREIGN KEY (`mitarbeiter_fk` )
-    REFERENCES `palaver`.`mitarbeiter` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE `rezept` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `rezeptart_fk` int(11) NOT NULL,
+  `kommentar` varchar(1000) DEFAULT NULL,
+  `mitarbeiter_fk` int(11) DEFAULT NULL,
+  `erstellt` timestamp NULL DEFAULT NULL,
+  `aktiv` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_rezept_rezeptart1_idx` (`rezeptart_fk`),
+  KEY `fk_mitarbeiter_idx` (`mitarbeiter_fk`),
+  CONSTRAINT `fk_mitarbeiter` FOREIGN KEY (`mitarbeiter_fk`) REFERENCES `mitarbeiter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rezept_rezeptart1` FOREIGN KEY (`rezeptart_fk`) REFERENCES `rezeptart` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -756,3 +739,4 @@ USE `palaver` ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
