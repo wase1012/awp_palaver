@@ -170,8 +170,6 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
 					left.replaceComponent(platzhalter1, btForeWeek);
-					
-					System.out.println("1" +shownMenueplan);
 				}
 				else if (shownMenueplan == zweiteMenueplan) {
 					box.replaceComponent(shownMenueplan, dritteMenueplan);
@@ -185,8 +183,6 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
 					left.replaceComponent(platzhalter1, btForeWeek);
-					
-					System.out.println("2" +shownMenueplan);
 				}
 				else if (shownMenueplan == dritteMenueplan) {
 					box.replaceComponent(shownMenueplan, vierteMenueplan);
@@ -199,8 +195,6 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
 					lbKW = lbNextWeek;
 					right.replaceComponent(btNextWeek, platzhalter2);
-					
-					System.out.println("3" +shownMenueplan);
 				}
 			}
 
