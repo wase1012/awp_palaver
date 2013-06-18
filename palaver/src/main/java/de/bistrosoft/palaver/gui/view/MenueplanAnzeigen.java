@@ -16,7 +16,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -28,7 +27,6 @@ import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
@@ -36,7 +34,6 @@ import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewHandler;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
@@ -49,16 +46,17 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
 
-	MenueplanGridLayout curMenueplan = new MenueplanGridLayout(week + 2, year);
-	MenueplanGridLayout nextMenueplan = new MenueplanGridLayout(week + 3, year);
-	MenueplanGridLayout prevMenueplan = new MenueplanGridLayout(week + 1, year);
+	MenueplanGridLayout ersteMenueplan = new MenueplanGridLayout(week, year);
+	MenueplanGridLayout zweiteMenueplan = new MenueplanGridLayout(week + 1, year);
+	MenueplanGridLayout dritteMenueplan = new MenueplanGridLayout(week + 2, year);
+	MenueplanGridLayout vierteMenueplan = new MenueplanGridLayout(week + 3, year);
 
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	private String strKW = new String("Kalenderwoche: " + (week + 2) + "/"
+	private String strKW = new String("Kalenderwoche: " + (week + 1) + "/"
 			+ year);
 
 	HorizontalLayout hlControl = new HorizontalLayout();
@@ -74,7 +72,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 					+ strKW + "</pre>", ContentMode.HTML);
-	MenueplanGridLayout shownMenueplan = curMenueplan;
+	MenueplanGridLayout shownMenueplan = zweiteMenueplan;
 
 	
 	///////////////////
@@ -107,9 +105,21 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener f�r eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (shownMenueplan == curMenueplan) {
-					box.replaceComponent(shownMenueplan, prevMenueplan);
-					shownMenueplan = prevMenueplan;
+				if (shownMenueplan == zweiteMenueplan) {
+					box.replaceComponent(shownMenueplan, ersteMenueplan);
+					shownMenueplan = ersteMenueplan;
+					strKW = "Kalenderwoche: " + (week) + "/" + year;
+					
+					Label lbForeWeek = new Label(
+							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
+									+ strKW + "</pre>", ContentMode.HTML);
+					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
+					lbKW = lbForeWeek;
+					left.replaceComponent(btForeWeek, platzhalter1);
+				}
+				else if (shownMenueplan == dritteMenueplan) {
+					box.replaceComponent(shownMenueplan, zweiteMenueplan);
+					shownMenueplan = zweiteMenueplan;
 					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
 
 					Label lbForeWeek = new Label(
@@ -117,12 +127,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 									+ strKW + "</pre>", ContentMode.HTML);
 					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
 					lbKW = lbForeWeek;
-					left.replaceComponent(btForeWeek, platzhalter1);
+					left.replaceComponent(platzhalter1, btForeWeek);
+					right.replaceComponent(platzhalter2, btNextWeek);
 
 				}
-				if (shownMenueplan == nextMenueplan) {
-					box.replaceComponent(shownMenueplan, curMenueplan);
-					shownMenueplan = curMenueplan;
+				else if (shownMenueplan == vierteMenueplan) {
+					box.replaceComponent(shownMenueplan, dritteMenueplan);
+					shownMenueplan = dritteMenueplan;
 					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
 
 					Label lbForeWeek = new Label(
@@ -147,21 +158,24 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener f�r eine Woche später
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (shownMenueplan == curMenueplan) {
-					box.replaceComponent(shownMenueplan, nextMenueplan);
-					shownMenueplan = nextMenueplan;
-					strKW = "Kalenderwoche: " + (week + 3) + "/" + year;
+				if (shownMenueplan == ersteMenueplan) {
+					box.replaceComponent(shownMenueplan, zweiteMenueplan);
+					shownMenueplan = zweiteMenueplan;
+					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
 
 					Label lbNextWeek = new Label(
 							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 									+ strKW + "</pre>", ContentMode.HTML);
 					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
 					lbKW = lbNextWeek;
-					right.replaceComponent(btNextWeek, platzhalter2);
+					right.replaceComponent(platzhalter2, btNextWeek);
+					left.replaceComponent(platzhalter1, btForeWeek);
+					
+					System.out.println("1" +shownMenueplan);
 				}
-				if (shownMenueplan == prevMenueplan) {
-					box.replaceComponent(shownMenueplan, curMenueplan);
-					shownMenueplan = curMenueplan;
+				else if (shownMenueplan == zweiteMenueplan) {
+					box.replaceComponent(shownMenueplan, dritteMenueplan);
+					shownMenueplan = dritteMenueplan;
 					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
 
 					Label lbNextWeek = new Label(
@@ -171,6 +185,22 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
 					left.replaceComponent(platzhalter1, btForeWeek);
+					
+					System.out.println("2" +shownMenueplan);
+				}
+				else if (shownMenueplan == dritteMenueplan) {
+					box.replaceComponent(shownMenueplan, vierteMenueplan);
+					shownMenueplan = vierteMenueplan;
+					strKW = "Kalenderwoche: " + (week + 3) + "/" + year;
+
+					Label lbNextWeek = new Label(
+							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
+									+ strKW + "</pre>", ContentMode.HTML);
+					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
+					lbKW = lbNextWeek;
+					right.replaceComponent(btNextWeek, platzhalter2);
+					
+					System.out.println("3" +shownMenueplan);
 				}
 			}
 
@@ -381,10 +411,10 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		btDeletePlan.setVisible(false);
 		hlControl.addComponent(btKopieren);
 		box.addComponent(hlControl);
-		box.addComponent(curMenueplan);
+		box.addComponent(zweiteMenueplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
-		box.setComponentAlignment(curMenueplan, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(zweiteMenueplan, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 
