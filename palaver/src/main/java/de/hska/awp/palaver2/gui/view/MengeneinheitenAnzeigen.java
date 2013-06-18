@@ -148,15 +148,18 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 
 					speichern.addClickListener(new ClickListener() {
 						public void buttonClick(ClickEvent event) {
-							mengeUpdate.setName(nameUp.getValue());
-							mengeUpdate.setKurz(kurzUp.getValue());
-							try {
-								Mengeneinheitverwaltung.getInstance().updateMengeneinheit(mengeUpdate);
-							} catch (Exception e) {
-								log.error(e.toString());
+							if (validiereMengeneinheit()) {
+								
+								mengeUpdate.setName(nameUp.getValue());
+								mengeUpdate.setKurz(kurzUp.getValue());
+								try {
+									Mengeneinheitverwaltung.getInstance().updateMengeneinheit(mengeUpdate);
+								} catch (Exception e) {
+									log.error(e.toString());
+								}
+								UI.getCurrent().removeWindow(mengNeu);
+								ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 							}
-							UI.getCurrent().removeWindow(mengNeu);
-							ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
 						}
 					});
 
@@ -274,6 +277,10 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 							String notification = "Mengeneinheit gespeichert";
 							try {
 								Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
+								ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+								((Application) UI.getCurrent().getData())
+									.showDialog(notification);
+								UI.getCurrent().removeWindow(mengNeu);
 							} catch (Exception e) {
 								log.error(e.toString());
 								if (e.toString().contains("INSERT INTO mengeneinheit"))
@@ -281,37 +288,6 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 								else
 									notification = e.toString();
 							}
-							final Window dialog = new Window();
-							dialog.setClosable(false);
-							dialog.setWidth("300px");
-							dialog.setHeight("150px");
-							dialog.setModal(true);
-							dialog.center();
-							dialog.setResizable(false);
-							dialog.setStyleName("dialog-window");
-
-							Label message = new Label(notification);
-
-							Button okButton = new Button("OK");
-
-							VerticalLayout dialogContent = new VerticalLayout();
-							dialogContent.setSizeFull();
-							dialogContent.setMargin(true);
-							dialog.setContent(dialogContent);
-
-							dialogContent.addComponent(message);
-							dialogContent.addComponent(okButton);
-							dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-
-							UI.getCurrent().addWindow(dialog);
-
-							okButton.addClickListener(new ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									UI.getCurrent().removeWindow(dialog);
-									ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
-								}
-							});
 						}
 					}
 				});

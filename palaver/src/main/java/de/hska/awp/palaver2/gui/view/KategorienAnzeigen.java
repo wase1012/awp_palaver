@@ -246,6 +246,8 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							try {
 								Kategorienverwaltung.getInstance().createNewKategorie(me);
 								UI.getCurrent().removeWindow(kategNeu);
+								((Application) UI.getCurrent().getData())
+									.showDialog(notification);
 							} catch (Exception e) {
 								if (e.toString().contains("INSERT INTO kategorie"))
 									notification = "Der Name ist bereits im System vorhanden!";
@@ -253,40 +255,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 									notification = e.toString();
 								log.error(e.toString());
 							}
-							final Window dialog = new Window();
-							dialog.setClosable(false);
-							dialog.setWidth("300px");
-							dialog.setHeight("150px");
-							dialog.setModal(true);
-							dialog.center();
-							dialog.setResizable(false);
-							dialog.setStyleName("dialog-window");
-
-							Label message = new Label(notification);
-
-							Button okButton = new Button("OK");
-
-							VerticalLayout dialogContent = new VerticalLayout();
-							dialogContent.setSizeFull();
-							dialogContent.setMargin(true);
-							dialog.setContent(dialogContent);
-
-							dialogContent.addComponent(message);
-							dialogContent.addComponent(okButton);
-							dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
-
-							UI.getCurrent().addWindow(dialog);
-
-							okButton.addClickListener(new ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									UI.getCurrent().removeWindow(dialog);
-									ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-								}
-							});
-
-							ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-						} 
+						}
 					}
 				});
 			}
