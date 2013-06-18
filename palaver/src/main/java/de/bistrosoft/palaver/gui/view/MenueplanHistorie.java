@@ -50,7 +50,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 		this.setMargin(true);
 
 		this.addComponent(box);
-		this.setComponentAlignment(box, Alignment.TOP_CENTER);
+		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
 
 		// Kalender zur Datums-Auswahl
 		final PopupDateField date = new PopupDateField("Datum wählen:") {
