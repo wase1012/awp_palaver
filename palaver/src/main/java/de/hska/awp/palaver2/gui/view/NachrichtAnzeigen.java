@@ -213,7 +213,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 		Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 
-		speichern.setEnabled(false);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
@@ -224,20 +223,24 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 		speichern.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				nachricht.setNachricht(neuernachrichtentext.getValue());
-
-				nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
-
-				try {
-					nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
-					Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
-					Notification notification = new Notification("Die Nachricht wurde gesendet!");
-					notification.setDelayMsec(500);
-					notification.show(Page.getCurrent());
-				} catch (Exception e) {
-					log.error(e.toString());
+				
+				if (validiereNachricht()) {
+					
+					nachricht.setNachricht(neuernachrichtentext.getValue());
+	
+					nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
+	
+					try {
+						nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
+						Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
+						Notification notification = new Notification("Die Nachricht wurde gesendet!");
+						notification.setDelayMsec(500);
+						notification.show(Page.getCurrent());
+					} catch (Exception e) {
+						log.error(e.toString());
+					}
+					ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
 				}
-				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
 			}
 		});
 
@@ -251,6 +254,22 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 	}
 
+	private boolean validiereNachricht() {
+		if (combobox.isValid() == false) {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_NACHRICHT_EMPF);
+			return false;
+		}
+		if (neuernachrichtentext.getValue() == null || neuernachrichtentext.getValue() == "") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_NACHRICHT_TEXT);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	@Override
 	public void getViewParam(ViewData data) {
 
@@ -258,12 +277,6 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-
-		if (combobox.isValid() == false || neuernachrichtentext.isValid() == false) {
-			speichern.setEnabled(false);
-		} else {
-			speichern.setEnabled(true);
-		}
 
 	}
 }
