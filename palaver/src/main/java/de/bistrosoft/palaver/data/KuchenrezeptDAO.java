@@ -11,6 +11,9 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -20,6 +23,7 @@ import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
 public class KuchenrezeptDAO extends AbstractDAO {
 
@@ -29,6 +33,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String ERSTELLT = "erstellt";
 	private final static String KUCHENREZEPTHASARTIKEL = "kuchenrezept_has_artikel";
 	private final static String KUCHENREZEPTFK = "kuchenrezept_fk";
+	private final static String AKTIV = "aktiv";
 
 	private static KuchenrezeptDAO instance = null;
 	private final static String GET_ALL_KUCHENREZEPTS = "SELECT * FROM kuchenrezept where aktiv = true";
@@ -39,7 +44,9 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String GET_KUCHENREZEPTHASARTIKEL_BY_KUCHENREZEPT_ID = "SELECT * FROM "
 			+ KUCHENREZEPTHASARTIKEL + " WHERE " + KUCHENREZEPTFK + " = {0}";
 	private static final String GET_ALL_KUCHENREZEPT_TABELLE = "SELECT * FROM "
-			+ TABLE + "where aktiv = true";
+			+ TABLE;
+	private static final String GET_ALL_KUCHENREZEPT_TABELLE_AKTIV = "SELECT * FROM "
+			+ TABLE + " WHERE " + AKTIV + "=true";
 
 	Kuchenrezept kuchenrezept;
 
@@ -85,8 +92,23 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			Kuchenrezept kuchenrezept = new Kuchenrezept(set.getLong("id"),
 					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"), set.getBoolean("aktiv"));
+					set.getDate("erstellt"));
 
+			list.add(kuchenrezept);
+
+		}
+		return list;
+	}
+	
+	public List<Kuchenrezept> getAllKuchenrezepteTabelleAktiv() throws ConnectException,
+			DAOException, SQLException {
+		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();
+		ResultSet set = getManaged(GET_ALL_KUCHENREZEPT_TABELLE_AKTIV);
+
+		while (set.next()) {
+			Kuchenrezept kuchenrezept = new Kuchenrezept(set.getLong("id"),
+					set.getString("name"), set.getString("kommentar"),
+					set.getDate("erstellt"), set.getBoolean("aktiv"));
 			list.add(kuchenrezept);
 
 		}
@@ -115,7 +137,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			Kuchenrezept kr = new Kuchenrezept(set.getLong("id"),
 					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"), set.getBoolean("inaktiv"));
+					set.getDate("erstellt"));
 			if (ladeArtikel) {
 				kr.setArtikel(getAllArtikelByKuchenrezeptId1(kr));
 			}
@@ -194,19 +216,10 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	public void createKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ KOMMENTAR + "," + ERSTELLT + " inaktiv)" + " VALUES" + "('"
+				+ KOMMENTAR + "," + ERSTELLT + "," + AKTIV + ")" + " VALUES" + "('"
 				+ kuchenrezept.getName() + "','" + kuchenrezept.getKommentar()
 				+ "','" + kuchenrezept.getErstellt() + "', true)";
 		this.putManaged(INSERT_QUERY);
-	}
-	
-	public void DisableKuchenrezept(Kuchenrezept kuchenrezept)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "UPDATE kuchenrezept SET aktiv = false  WHERE id = "
-				+ kuchenrezept.getId();
-		this.putManaged(INSERT_QUERY);
-		
-	
 	}
 
 	public void saveArtikel(Kuchenrezept kuchenrezept) throws ConnectException,
@@ -277,5 +290,12 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		String DELETE_QUERY = "DELETE FROM kuchenrezept_has_artikel WHERE "
 				+ KUCHENREZEPTFK + "=" + rez2.getId() + ";";
 		this.putManaged(DELETE_QUERY);
+	}
+
+	public void setKuchenrezeptDisabled(Kuchenrezept kuchenrezeptAusTb) throws ConnectException,
+			DAOException, SQLException {
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + AKTIV
+				+ "=false WHERE id=" + kuchenrezeptAusTb.getId();
+		this.putManaged(UPDATE_QUERY);
 	}
 }

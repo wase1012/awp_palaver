@@ -620,6 +620,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`kuchenrezept` (
   `name` VARCHAR(200) NOT NULL ,
   `kommentar` VARCHAR(1000) NULL ,
   `erstellt` TIMESTAMP NULL ,
+  `aktiv` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

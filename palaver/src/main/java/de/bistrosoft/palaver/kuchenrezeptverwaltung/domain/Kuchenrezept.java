@@ -122,11 +122,11 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.erstellt = erstellt;
 	}
 
-	public Boolean getInaktiv() {
+	public Boolean getAktiv() {
 		return aktiv;
 	}
 
-	public void setInaktiv(Boolean aktiv) {
+	public void setAktiv(Boolean aktiv) {
 		this.aktiv = aktiv;
 	}
 //	

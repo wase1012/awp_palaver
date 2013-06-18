@@ -42,6 +42,7 @@ ALTER TABLE `palaver`.`kuchenrezept` DROP COLUMN `mitarbeiter_fk`
 
 ALTER TABLE `palaver`.`menue` ADD COLUMN `aktiv` TINYINT(1) NULL  AFTER `favorit` ;
 ALTER TABLE `palaver`.`rezept` ADD COLUMN `aktiv` TINYINT(1) NULL  AFTER `erstellt` ;
+ALTER TABLE `palaver`.`kuchenrezept` ADD COLUMN `aktiv` TINYINT(1) NULL  AFTER `erstellt` ;
 
 
 

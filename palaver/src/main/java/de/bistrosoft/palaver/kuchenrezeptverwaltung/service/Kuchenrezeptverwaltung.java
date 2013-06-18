@@ -11,6 +11,7 @@ import de.bistrosoft.palaver.data.KuchenrezeptDAO;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -88,4 +89,10 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 			throws ConnectException, DAOException, SQLException {
 		super.deleteZutatenZuKuchenrezept(kuchenrezept);
 	}
+	
+	public void setKuchenrezeptDisabled(Kuchenrezept kuchenrezeptAusTb)
+			throws ConnectException, DAOException, SQLException {
+		super.setKuchenrezeptDisabled(kuchenrezeptAusTb);
+	}
+	
 }
