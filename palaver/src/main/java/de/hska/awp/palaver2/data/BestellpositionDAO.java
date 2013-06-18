@@ -73,9 +73,9 @@ public class BestellpositionDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getBestellpositionById liefert ein Ergebniss zurÃ¼ck bei der
-	 * Suche nach einer Bestellposition in der Datenbank.
+	 * Die Methode liefert eine Bestellposition zurück.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -97,10 +97,9 @@ public class BestellpositionDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getBestellpositionenByBestellungId liefert ein Ergebniss
-	 * zurÃ¼ck bei der Suche nach einer Bestellposition anhang der BestellungId
-	 * in der Datenbank.
+	 * Die Methode liefert alle Bestellpositionen zur einer Bestellung zurück.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -121,22 +120,8 @@ public class BestellpositionDAO extends AbstractDAO {
 		return list;
 	}
 
-	public List<Bestellposition> getBpByBestellungId(Long id) throws ConnectException, DAOException, SQLException {
-		List<Bestellposition> list = new ArrayList<Bestellposition>();
-
-		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
-		openConnection();
-		while (set.next()) {
-			list.add(new Bestellposition(set.getLong(ID), ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)),
-					set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set
-							.getBoolean(GELIEFERT)));
-		}
-		closeConnection();
-		return list;
-	}
-
 	/**
-	 * Die Methode erzeugt eine BEstellposition in der Datenbank.
+	 * Die Methode erzeugt eine Bestellposition in der Datenbank.
 	 * 
 	 * @param bestellposition
 	 * @throws ConnectException
@@ -170,6 +155,15 @@ public class BestellpositionDAO extends AbstractDAO {
 		this.putManaged(UPDATEQUERY);
 	}
 
+	/**
+	 * Die Methode löscht eine Bestellposition in der Datenbank.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public void deleteBestellposition(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
@@ -179,6 +173,15 @@ public class BestellpositionDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode liefert einen Artikel zurück.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException {
 		Artikel result = null;
 
@@ -188,12 +191,21 @@ public class BestellpositionDAO extends AbstractDAO {
 			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
 					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
-					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), 
-					set.getBoolean("lebensmittel"), set.getString("notiz"));
+					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
+					set.getString("notiz"));
 		}
 		return result;
 	}
 
+	/**
+	 * Die Methode liefert einen Lieferant zurück.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Lieferant getLieferantById(Long id) throws SQLException {
 		Lieferant lieferant = null;
 		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
@@ -207,6 +219,15 @@ public class BestellpositionDAO extends AbstractDAO {
 		return lieferant;
 	}
 
+	/**
+	 * Die Methode liefert eine Kategorie zurück.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Kategorie getKategorieById(Long id) throws ConnectException, DAOException, SQLException {
 		Kategorie kategorie = null;
 		ResultSet set = get(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
@@ -216,6 +237,15 @@ public class BestellpositionDAO extends AbstractDAO {
 		return kategorie;
 	}
 
+	/**
+	 * Die Methode liefert eine Mengeneinheit zurück.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {
 
 		Mengeneinheit me = null;
@@ -228,6 +258,15 @@ public class BestellpositionDAO extends AbstractDAO {
 		return me;
 	}
 
+	/**
+	 * Die Methode liefert eine Bestellung ohne Bestellpositionen zurück.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Bestellung getBestellungByIdWithoutBP(Long id) throws ConnectException, DAOException, SQLException {
 
 		Bestellung bestellung = null;

@@ -289,8 +289,8 @@ public class WinSelectMenue extends Window {
 		final Window win = new Window("Neues Menü");
 		win.setModal(true);
 		win.setResizable(false);
-		win.setWidth("1000px");
-		win.setHeight("750px");
+		win.setWidth("1100px");
+		win.setHeight("850px");
 
 		MenueAnlegen me = new MenueAnlegen();
 		win.setContent(me);

@@ -8,6 +8,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -52,6 +53,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 
 		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
+		btFilterLeeren.setIcon(new ThemeResource("img/disable_filter.ico"));
 
 		table = new FilterTable();
 		table.setSizeFull();

@@ -8,6 +8,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -65,7 +67,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		this.addComponent(vl);
 		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
-		vl.setWidth("60%");
+		vl.setWidth("25%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
 		tblGeschmack = new FilterTable();
@@ -106,6 +108,16 @@ public class GeschmackEinst extends VerticalLayout implements View {
 			}
 		});
 
+		tblGeschmack.addItemClickListener(new ItemClickListener() {
+
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					updateGeschmack();
+				}
+			}
+		});
+		
 		BeanItemContainer<Geschmack> ctGeschmack;
 		try {
 			ctGeschmack = new BeanItemContainer<Geschmack>(Geschmack.class,

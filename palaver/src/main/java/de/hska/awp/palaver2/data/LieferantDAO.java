@@ -67,8 +67,8 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getAllLieferanten liefert alle in der Datenbank befindlichen
-	 * Lieferanten zurück.
+	 * Die Methode liefert alle in der Datenbank befindlichen Lieferanten
+	 * sortiert nach dem Namen zurück.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -88,10 +88,10 @@ public class LieferantDAO extends AbstractDAO {
 
 		return list;
 	}
-	
+
 	/**
-	 * Die Methode getAllLieferanten liefert alle in der Datenbank befindlichen
-	 * Lieferanten zurück.
+	 * Die Methode liefert alle in der Datenbank befindlichen Lieferanten
+	 * zurück.
 	 * 
 	 * @return
 	 * @throws ConnectException
@@ -113,8 +113,8 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getLieferantenByName liefert eins bis mehrere Ergebnisse
-	 * zurück bei der Suche nach einem Lieferanten in der Datenbank.
+	 * Die Methode liefert eins bis mehrere Ergebnisse zurück bei der Suche nach
+	 * einem Lieferanten in der Datenbank.
 	 * 
 	 * @param name
 	 * @return
@@ -137,8 +137,8 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getLieferantById liefert ein Ergebnisse zurück bei der Suche
-	 * nach einem Lieferant in der Datenbank.
+	 * Die Methode liefert ein Ergebnisse zurück bei der Suche nach einem
+	 * Lieferant in der Datenbank.
 	 * 
 	 * @param id
 	 * @return
@@ -161,8 +161,7 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode liefert ein Ergebnisse zurück bei der Suche nach einem
-	 * Lieferant bei ArtikelId in der Datenbank.
+	 * Die Methode liefert ein Lieferant zu einer ArtikelId zurück.
 	 * 
 	 * @param id
 	 * @return
@@ -217,7 +216,8 @@ public class LieferantDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode liefert
+	 * Die Methode liefert alle Lieferanten die mindestens einen Artikel haben
+	 * zurück.
 	 * 
 	 * @return
 	 * @throws ConnectException

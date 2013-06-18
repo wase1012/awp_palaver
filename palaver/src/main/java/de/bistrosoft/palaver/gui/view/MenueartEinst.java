@@ -8,6 +8,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -65,7 +67,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		this.addComponent(vl);
 		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
-		vl.setWidth("60%");
+		vl.setWidth("25%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
 		tblMenueart = new FilterTable();
@@ -105,6 +107,16 @@ public class MenueartEinst extends VerticalLayout implements View {
 				}
 			}
 		});
+		
+		tblMenueart.addItemClickListener(new ItemClickListener() {
+
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					updateMenueart();
+				}
+			}
+		});
 
 		BeanItemContainer<Menueart> ctMenueart;
 		try {
@@ -122,7 +134,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (tblMenueart.getValue() != null
 						&& tblMenueart.getValue() instanceof Menueart) {
-					updateZubereitung();
+					updateMenueart();
 				} else
 					((Application) UI.getCurrent().getData())
 							.showDialog(IConstants.INFO_MENUEART_SELECT);
@@ -189,7 +201,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		});
 	}
 
-	private void updateZubereitung() {
+	private void updateMenueart() {
 
 		maNeu = new Window();
 		maNeu.setClosable(false);

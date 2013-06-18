@@ -8,6 +8,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -65,7 +67,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		this.addComponent(vl);
 		this.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
-		vl.setWidth("60%");
+		vl.setWidth("25%");
 		vl.setMargin(true);
 		vl.setSpacing(true);
 		tblZubereitung = new FilterTable();
@@ -102,6 +104,16 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					zub = (Zubereitung) event.getProperty().getValue();
+				}
+			}
+		});
+		
+		tblZubereitung.addItemClickListener(new ItemClickListener() {
+
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					updateZubereitung();
 				}
 			}
 		});
