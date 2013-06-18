@@ -15,14 +15,14 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
  */
 public class KategorieDAO extends AbstractDAO {
 
-	private final static String ID = "id";
-	private final static String NAME = "name";
+	private static final String ID = "id";
+	private static final String NAME = "name";
 
 	private static KategorieDAO instance = null;
 	Kategorie kategorie;
-	private final static String TABLE = "kategorie";
-	private final static String GET_ALL_KATEGORIES = "SELECT * FROM " + TABLE;
-	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM " + TABLE
+	private static final String TABLE = "kategorie";
+	private static final String GET_ALL_KATEGORIES = "SELECT * FROM " + TABLE;
+	private static final String GET_KATEGORIE_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "= {0}";
 
 	/**
@@ -47,7 +47,7 @@ public class KategorieDAO extends AbstractDAO {
 
 	/**
 	 * Die Methode getAllKategories liefert alle in der Datenbank befindlichen
-	 * Kategorien zurÃ¼ck.
+	 * Kategorien zurück.
 	 * 
 	 * 
 	 * @author Mihail Boehm
