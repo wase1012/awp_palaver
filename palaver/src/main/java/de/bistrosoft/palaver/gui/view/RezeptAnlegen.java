@@ -179,17 +179,18 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		hlDetails.addComponent(vlDetailsLinks);
 		hlDetails.addComponent(vlDetailsRechts);
 		hlDetails.setWidth("1000px");
-		hlDetails.setHeight("285px");
+		hlDetails.setHeight("230px");
 
 		vlBox.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
 
 		vlDetailsLinks.addComponent(name);
 		vlDetailsLinks.addComponent(mitarbeiterNs);
 		vlDetailsLinks.addComponent(rezeptartNs);
+		vlDetailsLinks.addComponent(kommentar);
 		vlDetailsLinks.setWidth("450px");
 
 		vlDetailsRechts.addComponent(zubereitung);
-		vlDetailsRechts.addComponent(kommentar);
+		
 		vlDetailsRechts.setWidth("500px");
 
 		hlZutaten.setWidth("1000px");
