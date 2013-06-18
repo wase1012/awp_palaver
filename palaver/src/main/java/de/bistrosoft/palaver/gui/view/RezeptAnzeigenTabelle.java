@@ -7,6 +7,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,6 +52,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 		this.setMargin(true);
 
 		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
+		btFilterLeeren.setIcon(new ThemeResource("img/disable_filter.ico"));
 
 		table = new FilterTable();
 		table.setSizeFull();
