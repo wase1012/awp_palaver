@@ -109,8 +109,8 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
-					if (m == null) {
-						Notification notification = new Notification("Kein Menüplan vorhanden!");
+					if (m == null || m.getFreigegeben() == null || m.getFreigegeben() == false) {
+						Notification notification = new Notification("Kein Menüplan vorhanden oder noch nicht freigegeben!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
