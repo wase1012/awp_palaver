@@ -9,7 +9,9 @@ import org.vaadin.risto.stepper.IntStepper;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
@@ -182,9 +184,14 @@ public class BestellungData implements java.io.Serializable {
 		this.durchschnitt.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
-				gesamt.setValue(String.valueOf(gesammt));
-
+				try {
+					Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+					gesamt.setValue(String.valueOf(gesammt));
+				}
+				catch (Exception e){
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_INPUT_WERT);
+				}
 				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
 			}
 		});
@@ -192,9 +199,14 @@ public class BestellungData implements java.io.Serializable {
 		this.kantine.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
-				gesamt.setValue(String.valueOf(gesammt));
-
+				try {
+					Integer gesammt = Integer.parseInt(durchschnitt.getValue()) + Integer.parseInt(kantine.getValue());
+					gesamt.setValue(String.valueOf(gesammt));
+				}
+				catch (Exception e){
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_INPUT_WERT);
+				}
 				montag.setValue(Integer.parseInt(gesamt.getValue()) - freitag.getValue());
 			}
 		});
@@ -302,6 +314,7 @@ public class BestellungData implements java.io.Serializable {
 	 *            the durchschnitt to set
 	 */
 	public void setDurchschnitt(TextField durchschnitt) {
+		durchschnitt.setConverter(Integer.class);
 		this.durchschnitt = durchschnitt;
 	}
 

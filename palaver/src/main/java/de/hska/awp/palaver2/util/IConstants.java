@@ -211,10 +211,13 @@ public interface IConstants
 	
 	String 		INFO_NACHRICHT_TEXT = "Bitte Nachricht eingeben";
 	String 		INFO_NACHRICHT_EMPF = "Bitte Empfängerrolle auswählen";
+	String 		INFO_INPUT_WERT = "Bitte gültigen Wert eingeben";
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
 	String 		GEBINDE = "Gebinde";
+
+
 
 
 

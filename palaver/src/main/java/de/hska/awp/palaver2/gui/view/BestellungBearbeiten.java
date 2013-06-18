@@ -360,6 +360,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 	}
 
 	protected boolean validiereBestellung() {
+		
 		java.util.Date date2 = new java.util.Date();
 		Date d = new Date(date2.getTime());
 		
@@ -380,6 +381,14 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_BESTELLUNG_ARTIKEL);
 				return false;
+			}
+			if ( bestellData.isEmpty() == false) {
+				for (int i = 0; i < bestellData.size(); i++) {
+					if (bestellData.get(i).getDurchschnitt().isValid() == false || 
+							bestellData.get(i).getKantine().isValid() == false ) {
+						return false;
+					}
+				}
 			}
 			else {
 				return true;
@@ -403,6 +412,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				return true;
 			}
 		}
+		return true;
 	}
 
 	/**
