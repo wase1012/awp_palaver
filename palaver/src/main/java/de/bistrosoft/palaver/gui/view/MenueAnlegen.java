@@ -337,7 +337,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		// Inhalte laden
 		try {
 			ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
-					Rezeptverwaltung.getInstance().getAllRezepte());
+					Rezeptverwaltung.getInstance().getAllRezepteTabelleAktiv());
 			tblRezepte.setContainerDataSource(ctRezepte);
 
 			tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",

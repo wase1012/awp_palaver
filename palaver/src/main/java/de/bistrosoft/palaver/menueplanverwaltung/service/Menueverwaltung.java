@@ -54,4 +54,9 @@ public class Menueverwaltung extends MenueDAO {
 		super.FussnoteAdd(menueHasFussnote);
 	}
 
+	public void setMenueDisabled(Menue menueAusTb) throws ConnectException,
+			DAOException, SQLException {
+		super.setMenueDisabled(menueAusTb);
+	}
+
 }

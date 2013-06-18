@@ -217,6 +217,9 @@ public interface IConstants
 	String 		BESTELLGROESSE = "Bestellgröße";
 	String 		GEBINDE = "Gebinde";
 
+	String 		INFO_REZEPT_DELETE = "Rezept wurde gelöscht!";
+	String 		INFO_MENUE_DELETE = "Menü wurde gelöscht!";
+
 
 
 
