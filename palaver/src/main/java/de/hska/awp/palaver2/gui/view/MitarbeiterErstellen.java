@@ -323,6 +323,11 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 					.showDialog(IConstants.INFO_MITARBEITER_PASSWORT);
 			return false;
 		}
+		if (!email.getValue().isEmpty() && !email.getValue().contains("@")) {
+			((Application) UI.getCurrent().getData())
+			.showDialog(IConstants.INFO_LIFERANT_EMAIL);
+			return false;
+		}
 		else {
 			return true;
 		}
