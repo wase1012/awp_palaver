@@ -111,7 +111,6 @@ public class LieferantSuche extends VerticalLayout implements View {
 		ansprechpartner.setHeight("230px");
 
 		box.setWidth("900px");
-		box.setHeight("90%");
 		box.setSpacing(true);
 
 		links.setWidth("250px");
