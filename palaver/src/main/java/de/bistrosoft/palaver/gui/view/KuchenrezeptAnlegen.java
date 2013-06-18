@@ -23,13 +23,16 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.data.FussnoteKuchenDAO;
 import de.bistrosoft.palaver.data.KuchenrezeptDAO;
@@ -44,6 +47,7 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -93,6 +97,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	private Button btSpeichern = new Button("Speichern");
 	private Button verwerfen = new Button("Verwerfen");
 	private Button update = new Button(IConstants.BUTTON_SAVE);
+	private Button btArtikel = new Button(
+			IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
 
 	// Strings
 	private String nameInput;
@@ -135,6 +141,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		fussnoten.setWidth("100%");
 		fussnoten.setImmediate(true);
 		
+		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
+		
 		this.addComponent(box);
 		box.addComponent(ueberschrift);
 		ueberschrift.setWidth("300px");
@@ -153,6 +161,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
+		control.addComponent(btArtikel);
 		control.addComponent(verwerfen);
 		control.addComponent(btSpeichern);
 
@@ -179,6 +188,14 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				if (validiereEingabe()) {
 					speichern();
 				}
+			}
+		});
+		
+		btArtikel.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				addArtikel();
 			}
 		});
 
@@ -280,6 +297,12 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		ladeArtikel();
+
+		load();
+	}
+	
+	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
 					Artikelverwaltung.getInstance().getAllArtikel());
@@ -294,8 +317,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		load();
 	}
 
 	public void load() {
@@ -605,6 +626,28 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		}
 
 		return true;
+	}
+	
+	private void addArtikel() {
+		final Window win = new Window("Neuer Artikel");
+		win.setModal(true);
+		win.setResizable(false);
+		win.setWidth("400px");
+		win.setHeight("600px");
+
+		ArtikelErstellen ae = new ArtikelErstellen();
+		addComponent(ae);
+
+		win.setContent(ae);
+		UI.getCurrent().addWindow(win);
+		win.addCloseListener(new Window.CloseListener() {
+
+			@Override
+			public void windowClose(CloseEvent e) {
+				ladeArtikel();
+
+			}
+		});
 	}
 
 }
