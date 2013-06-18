@@ -13,9 +13,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
@@ -366,7 +364,7 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws ParseException
 	 */
 	//TODO input List<ArtikelBedarf> ???
-	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<ArtikelBedarf> ab, Week week) throws ConnectException, DAOException, SQLException, ParseException {
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<RezeptHasArtikel> ab, Week week) throws ConnectException, DAOException, SQLException, ParseException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 		int leer = 0;
 		
@@ -455,6 +453,16 @@ public class Bestellverwaltung extends BestellungDAO {
 		// 7. Liste leeren und neue Liste von Mo-Do einfügen und vorher die
 		// Mengen addieren
 		rha = null;
+		
+		// Mengen aus dem Kuchenplan hinzufügen
+		if (ab.isEmpty() == false) {
+
+			for (int i = 0; i < ab.size(); i++) {
+				rhamobisdo.add(ab.get(i));
+			}
+
+		}
+		
 		rha = mengeAddSameArtikel(rhamobisdo);
 		// 8. Wenn Artikel vorhanden in List<Bestellposition> list, dann
 		// vorhandenen verändern(Menge
@@ -568,13 +576,7 @@ public class Bestellverwaltung extends BestellungDAO {
 				} else {
 					for (int z = 0; z < list.size(); z++) {
 						if (list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())) {
-							// System.out.println("Aktuelle Menge in vorhandener Liste");
-							// System.out.println(list.get(z).getMenge());
 							list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
-							// System.out.println("Menge in NEUER Liste");
-							// System.out.println(rhalist.get(i).getMenge());
-							// System.out.println("GESAMTMENGE in Liste");
-							// System.out.println(list.get(z).getMenge());
 							vorhanden = true;
 						}
 
@@ -614,7 +616,7 @@ public class Bestellverwaltung extends BestellungDAO {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("getAllLieferantByListOfBestellposition fehlgeschlagen");
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -668,7 +670,7 @@ public class Bestellverwaltung extends BestellungDAO {
 			b.setBestellpositionen(list);
 
 		} catch (Exception e) {
-			System.out.println("generateBestellungByListOfBestellpositionAndByLieferant fehlgeschlagen");
+			e.printStackTrace();
 		}
 		return b;
 	}
