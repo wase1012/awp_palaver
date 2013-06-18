@@ -199,6 +199,23 @@ public class KuchenrezeptDAO extends AbstractDAO {
 				+ "','" + kuchenrezept.getErstellt() + "')";
 		this.putManaged(INSERT_QUERY);
 	}
+	
+	public void deleteKuchenrezept(Kuchenrezept kuchenrezept)
+			throws ConnectException, DAOException, SQLException {
+		String DELETE_QUERY_KUCHENREZEPT = "DELETE  from kuchenrezept WHERE id = "
+				+ kuchenrezept.getId() + ";";
+		this.putManaged(DELETE_QUERY_KUCHENREZEPT);
+		String DELETE_QUERY_FUSSNOTEN = "DELETE  from kuchenrezept_has_fussnote WHERE kuchenrezept_fk = "
+				+ kuchenrezept.getId() + ";";
+		this.putManaged(DELETE_QUERY_FUSSNOTEN);
+		String DELETE_QUERY_ARTIKEL = "DELETE FROM kuchenrezept_has_artikel WHERE "
+				+ KUCHENREZEPTFK + "=" + kuchenrezept.getId() + ";";
+		this.putManaged(DELETE_QUERY_ARTIKEL);
+		String DELETE_QUERY_KUCHENPLAN_KUCHENREZEPT = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenrezept_fk = "
+				 + kuchenrezept.getId() + ";";
+		this.putManaged(DELETE_QUERY_KUCHENPLAN_KUCHENREZEPT);
+	
+	}
 
 	public void saveArtikel(Kuchenrezept kuchenrezept) throws ConnectException,
 			DAOException, SQLException {
