@@ -68,9 +68,8 @@ public class RollenDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode liefert ein Rolle anhand seiner ID zurück.
+	 * Die Methode liefert ein Rolle anhand ihrer ID zurück.
 	 * 
-	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -91,7 +90,7 @@ public class RollenDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode liefert die Rollen zur einer Mitarbeiter ID zurück.
+	 * Die Methode liefert alle Rollen zur einer Mitarbeiter ID zurück.
 	 * 
 	 * @param id
 	 * @return
@@ -114,6 +113,15 @@ public class RollenDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode liefert alle Nachrichten zur einer RollenId zurück.
+	 * 
+	 * @param Long
+	 *            id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 
 		List<Nachricht> list = new ArrayList<Nachricht>();
@@ -128,6 +136,16 @@ public class RollenDAO extends AbstractDAO {
 		return list;
 	}
 
+	/**
+	 * Die Methode liefert eine Mitarbeiter ohne Rollen zurück anhand einer
+	 * RollenId.
+	 * 
+	 * @param Long
+	 *            id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
 
 		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
@@ -144,6 +162,16 @@ public class RollenDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode liefert eine Mitarbeiter in abgespeckter Form für die
+	 * Nachrichten zurück.
+	 * 
+	 * @param Long
+	 *            id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
@@ -163,7 +191,7 @@ public class RollenDAO extends AbstractDAO {
 	/**
 	 * Die Methode erzeugt eine Rolle in der Datenbank.
 	 * 
-	 * @param ansprechpartner
+	 * @param rolle
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
