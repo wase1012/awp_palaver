@@ -395,8 +395,6 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 			vorname.setEnabled(true);
 			email.setEnabled(true);
 			passwort.setEnabled(true);
-			eintrittsdatum.setEnabled(true);
-			austrittsdatum.setEnabled(true);
 			benutzername.setEnabled(true);
 			speichern.setEnabled(true);
 		}
