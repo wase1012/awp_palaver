@@ -257,6 +257,11 @@ public class LieferantErstellen extends VerticalLayout implements View
 					.showDialog(IConstants.INFO_Lieferant_NAME);
 			return false;
 		}
+		if (!email.getValue().isEmpty() && !email.getValue().contains("@")) {
+			((Application) UI.getCurrent().getData())
+			.showDialog(IConstants.INFO_LIFERANT_EMAIL);
+			return false;
+		}
 		else {
 			return true;
 		}
