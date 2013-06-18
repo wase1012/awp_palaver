@@ -116,8 +116,7 @@ public class RollenDAO extends AbstractDAO {
 	/**
 	 * Die Methode liefert alle Nachrichten zur einer RollenId zurück.
 	 * 
-	 * @param Long
-	 *            id
+	 * @param rid
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
@@ -140,8 +139,7 @@ public class RollenDAO extends AbstractDAO {
 	 * Die Methode liefert eine Mitarbeiter ohne Rollen zurück anhand einer
 	 * RollenId.
 	 * 
-	 * @param Long
-	 *            id
+	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
@@ -166,8 +164,7 @@ public class RollenDAO extends AbstractDAO {
 	 * Die Methode liefert eine Mitarbeiter in abgespeckter Form für die
 	 * Nachrichten zurück.
 	 * 
-	 * @param Long
-	 *            id
+	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException

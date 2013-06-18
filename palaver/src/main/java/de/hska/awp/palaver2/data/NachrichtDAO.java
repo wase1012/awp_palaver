@@ -11,9 +11,11 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 
 /**
+ * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Nachricht
+ * bereit.
  * 
  * @author PhilippT
- * 
+ * @author PhilippT
  */
 
 public class NachrichtDAO extends AbstractDAO {
