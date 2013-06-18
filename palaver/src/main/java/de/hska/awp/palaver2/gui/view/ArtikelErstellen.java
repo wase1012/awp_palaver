@@ -667,6 +667,36 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	}
 	
 	private Boolean validiereEingabe() {
+		
+		try {
+			Double.parseDouble(preis.getValue());
+		}
+		catch (NumberFormatException e) {
+			((Application) UI.getCurrent().getData())
+			.showDialog(IConstants.INFO_ARTIKEL_PREIS);
+			return false;
+		}
+		
+		try {
+			Integer.parseInt(bestellung.getValue());
+		}
+		catch (NumberFormatException e) {
+			((Application) UI.getCurrent().getData())
+			.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
+			return false;
+		}
+		
+		if (grundbedarf.getValue()) {
+			try {
+				Integer.parseInt(durchschnitt.getValue());
+			}
+			catch (NumberFormatException e) {
+				((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
+				return false;
+			}
+		}
+		
 		if (name.getValue().toString() == "[]") {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_ARTIKEL_NAME);

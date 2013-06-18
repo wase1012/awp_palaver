@@ -31,7 +31,7 @@ import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.Menueplan;
+import de.bistrosoft.palaver.gui.view.MenueplanAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
@@ -252,7 +252,7 @@ public class MainLayout extends VerticalLayout implements Command
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE))
 		{
-			ViewHandler.getInstance().switchView(Menueplan.class);
+			ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
 		}
 		else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE))
 		{

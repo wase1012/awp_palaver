@@ -56,7 +56,6 @@ public class Menueplanverwaltung extends MenueplanDAO {
 		try {
 			if (menueplan.getId() == null) {
 				super.createMenueplan(menueplan);
-				// TODO: Id anders ziehen
 				menueplan.setId(super.getMenueplanByWeekWithItems(
 						menueplan.getWeek()).getId());
 			}

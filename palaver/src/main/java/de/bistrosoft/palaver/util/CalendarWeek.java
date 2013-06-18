@@ -43,6 +43,14 @@ public class CalendarWeek {
 		return getDatesOfWeek(week, year);
 	}
 
+	public static Week getWeekFromDate(Date date) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		int week = cal.get(Calendar.WEEK_OF_YEAR);
+		int year = cal.get(Calendar.YEAR);
+		return new Week(week, year);
+	}
+
 	public CalendarWeek(final int weekOfYear, final int year,
 			final Locale locale) {
 		this.weekOfYear = weekOfYear;

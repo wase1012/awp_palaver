@@ -15,6 +15,7 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenre
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
@@ -58,8 +59,8 @@ public class KuchenplanDAO extends AbstractDAO {
 		return instance;
 	}
 	
-	public List<ArtikelBedarf> getKuchenartikelByWeek(Week week){
-		List<ArtikelBedarf> ab = new ArrayList<ArtikelBedarf>();
+	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week){
+		List<RezeptHasArtikel> ab = new ArrayList<RezeptHasArtikel>();
 		
 		try {
 			ResultSet set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear()));
@@ -69,7 +70,7 @@ public class KuchenplanDAO extends AbstractDAO {
 				Double menge = set.getDouble("menge");
 				Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(set.getLong("einheit"));
 			
-				ab.add(new ArtikelBedarf(art,menge,einheit,1));
+				ab.add(new RezeptHasArtikel(art,einheit,menge));
 			}
 		} catch (ConnectException e) {
 			e.printStackTrace();

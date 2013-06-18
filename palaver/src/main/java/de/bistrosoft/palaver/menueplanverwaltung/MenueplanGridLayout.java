@@ -56,12 +56,29 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year) {
-		menueplan = Menueplanverwaltung.getInstance()
+		Menueplan mpl = Menueplanverwaltung.getInstance()
 				.getMenueplanByWeekWithItems(new Week(week, year));
-
-		if (menueplan == null) {
-			menueplan = new Menueplan(new Week(week, year));
+		
+		if(mpl == null){
+			mpl = new Menueplan(new Week(week, year));
 		}
+
+		generierePlan(mpl);
+	}
+	
+	public MenueplanGridLayout(Menueplan mpl){
+		generierePlan(mpl);
+	}
+	
+	private void generierePlan(Menueplan mpl){
+		if(mpl==null){
+			return;
+		}
+		int week = mpl.getWeek().getWeek();
+		int year = mpl.getWeek().getYear();
+		
+		menueplan = mpl;
+		
 		// setCaption("Kalenderwoche: " + week +"/"+year);
 		setSizeFull();
 
@@ -267,6 +284,8 @@ public class MenueplanGridLayout extends CustomComponent {
 			}
 		}
 		menueplan.setKoeche(koeche);
+		
+//		menueplan.setWeek(week);
 
 		Menueplanverwaltung.getInstance().persist(menueplan);
 	}

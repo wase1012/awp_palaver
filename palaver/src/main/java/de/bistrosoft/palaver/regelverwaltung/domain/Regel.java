@@ -40,7 +40,7 @@ public class Regel {
 	public void setAktiv(Boolean aktiv) {
 		this.aktiv = aktiv;
 	}
-	
+
 	public Boolean getIgnorierbar() {
 		return ignorierbar;
 	}
@@ -151,7 +151,7 @@ public class Regel {
 			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_3)) {
 				zeilenlist.add(3 + topRows);
 			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_4)) {
- 				zeilenlist.add(4 + topRows);
+				zeilenlist.add(4 + topRows);
 			} else if (s.trim().equals(IConstants.INFO_REGEL_ZEILE_5)) {
 				zeilenlist.add(5 + topRows);
 			}
@@ -189,8 +189,10 @@ public class Regel {
 
 	public void check(MenueComponent mc, MenueplanGridLayout mp) {
 		if (getZeilen() != null && getSpalten() != null) {
-			if (this.getZeilen().indexOf(mc.row) >= 0|| this.getZeilen().indexOf(-1) >= 0) {
-				if (this.getSpalten().indexOf(mc.col) >= 0 || this.getSpalten().indexOf(-1) >= 0) {
+			if (this.getZeilen().indexOf(mc.row) >= 0
+					|| this.getZeilen().indexOf(-1) >= 0) {
+				if (this.getSpalten().indexOf(mc.col) >= 0
+						|| this.getSpalten().indexOf(-1) >= 0) {
 					this.findeRegel(mc, mp);
 				}
 			}
@@ -213,13 +215,13 @@ public class Regel {
 			mc.addFehlerRegel(checkAufwand(mc, mp));
 		}
 	}
-	
-//	Zubereitung Rezept
-//	Fußnote Menü
-//	Geschmack Menü 
-//	Aufwand Menü
-//	Menüart Menü
-//	Name Menü
+
+	// Zubereitung Rezept
+	// Fußnote Menü
+	// Geschmack Menü
+	// Aufwand Menü
+	// Menüart Menü
+	// Name Menü
 
 	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {
 		Menue menue = mc.getMenue();
@@ -291,8 +293,8 @@ public class Regel {
 				}
 			} else
 				return null;
-		} else if(operator.equals(IConstants.INFO_REGEL_OPERATOR_MINIMAL)) {
-			
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MINIMAL)) {
+
 		}
 		return null;
 	}
@@ -317,6 +319,50 @@ public class Regel {
 
 					} else
 						return this;
+				}
+			} else
+				return null;
+
+		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MINIMAL)) {
+			if (menue.getFussnoten() != null) {
+				int count = 0;
+				int minValue = 0;
+				try {
+					minValue = Integer.parseInt(kriterienlist.get(0));
+				} catch (NumberFormatException e) {
+					return null;
+				}
+
+				DDGridLayout grid = mp.layout;
+				for (Fussnote fs : mc.getMenue().getFussnoten()) {
+					count = 0;
+					for (int col = 0; col < grid.getColumns(); ++col) {
+						for (int row = 0; row < grid.getRows(); ++row) {
+							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist	.indexOf(-1) >= 0)	&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
+								if (grid.getComponent(col, row) instanceof MenueComponent) {
+									MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
+									if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
+										if (tmp.getFehlerRegeln() != null) {
+											if (tmp.getFehlerRegeln().indexOf(this) == -1) {
+												++count;
+												if (count < minValue) {
+													return this;
+												}
+											}
+										} else {
+											++count;
+											if (count < minValue) {
+												return this;
+											}
+										}
+									}
+								}
+								else {
+									return null;
+								}
+							}
+						}
+					}
 				}
 			} else
 				return null;
