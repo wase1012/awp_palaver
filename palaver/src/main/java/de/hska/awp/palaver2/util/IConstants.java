@@ -170,6 +170,7 @@ public interface IConstants
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
 	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";
+	String 		INFO_LIFERANT_EMAIL = "Bitte Email Adresse angeben";
 	
 	String		INFO_BESTELLUNG_LIEFERANT ="Bitte Lieferant auswählen";
 	String 		INFO_BESTELLUNG_TERMIN1 = "Bitte gültigen Termin 1 eingeben";
@@ -207,10 +208,14 @@ public interface IConstants
 	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
 	
 	String 		INFO_LIEFERANT_SAVE = "Lieferant wurde gespeichert!";
+	
+	String 		INFO_NACHRICHT_TEXT = "Bitte Nachricht eingeben";
+	String 		INFO_NACHRICHT_EMPF = "Bitte Empfängerrolle auswählen";
 
 	// Beschriftung für Tabellenüberschriften
 	String 		BESTELLGROESSE = "Bestellgröße";
 	String 		GEBINDE = "Gebinde";
+
 
 
 
