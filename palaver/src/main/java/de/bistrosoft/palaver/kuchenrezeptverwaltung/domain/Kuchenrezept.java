@@ -14,6 +14,7 @@ public class Kuchenrezept implements java.io.Serializable {
 	private List<KuchenrezeptHasArtikel> artikel;
 	List<FussnoteKuchen> fussnotekuchen;
 	private String fussnoten;
+	private Boolean aktiv;
 	
 	public List<KuchenrezeptHasArtikel> getArtikel() {
 		return artikel;
@@ -40,7 +41,25 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.name = name;
 		this.kommentar = kommentar;
 	}
+	
+	public Kuchenrezept(Long id, String name,
+			String kommentar, Boolean aktiv) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.kommentar = kommentar;
+		this.aktiv = aktiv;
+	}
 
+	public Kuchenrezept(Long id, String name,
+			String kommentar, Date erstellt, Boolean aktiv) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.kommentar = kommentar;
+		this.erstellt = erstellt;
+		this.aktiv = aktiv;
+	}
 	public Kuchenrezept(Long id, String name,
 			String kommentar, Date erstellt) {
 		super();
@@ -103,6 +122,19 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.erstellt = erstellt;
 	}
 
+	public Boolean getInaktiv() {
+		return aktiv;
+	}
+
+	public void setInaktiv(Boolean aktiv) {
+		this.aktiv = aktiv;
+	}
+//	
+	@Override
+	public String toString() {
+		return "" + id + " " + fussnoten;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,7 +142,12 @@ public class Kuchenrezept implements java.io.Serializable {
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result
 				+ ((erstellt == null) ? 0 : erstellt.hashCode());
+		result = prime * result
+				+ ((fussnotekuchen == null) ? 0 : fussnotekuchen.hashCode());
+		result = prime * result
+				+ ((fussnoten == null) ? 0 : fussnoten.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((aktiv == null) ? 0 : aktiv.hashCode());
 		result = prime * result
 				+ ((kommentar == null) ? 0 : kommentar.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -136,10 +173,25 @@ public class Kuchenrezept implements java.io.Serializable {
 				return false;
 		} else if (!erstellt.equals(other.erstellt))
 			return false;
+		if (fussnotekuchen == null) {
+			if (other.fussnotekuchen != null)
+				return false;
+		} else if (!fussnotekuchen.equals(other.fussnotekuchen))
+			return false;
+		if (fussnoten == null) {
+			if (other.fussnoten != null)
+				return false;
+		} else if (!fussnoten.equals(other.fussnoten))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (aktiv == null) {
+			if (other.aktiv != null)
+				return false;
+		} else if (!aktiv.equals(other.aktiv))
 			return false;
 		if (kommentar == null) {
 			if (other.kommentar != null)
@@ -153,9 +205,7 @@ public class Kuchenrezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "" + id + " " + fussnoten;
-	}
+
+	
 
 }
