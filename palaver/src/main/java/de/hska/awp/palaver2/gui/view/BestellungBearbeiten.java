@@ -448,7 +448,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		if (bestellung.getLieferant().getMehrereliefertermine() == true) {
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
+					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			bestellungTable.setColumnHeader("montag", "Termin 1");
@@ -458,13 +458,12 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
-			bestellungTable.setColumnWidth("kategorie", 70);
 			bestellungTable.setColumnWidth("gebinde", 70);	
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
@@ -475,7 +474,6 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
-			bestellungTable.setColumnWidth("kategorie", 70);
 			bestellungTable.setColumnWidth("gebinde", 60);			
 			datetime.setRequired(true);
 			datetime2.setVisible(false);

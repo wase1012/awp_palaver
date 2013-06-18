@@ -168,7 +168,6 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		
 		box.addComponent(lieferantLayout);
 		box.addComponent(artnr);
-		box.addComponent(bestellung);
 		
 		HorizontalLayout mengeneinheitLayout = new HorizontalLayout();
 		mengeneinheitLayout.setWidth("100%");
@@ -178,6 +177,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		mengeneinheitLayout.setComponentAlignment(addMengeneinheit, Alignment.BOTTOM_RIGHT);
 		
 		box.addComponent(mengeneinheitLayout);
+		box.addComponent(bestellung);
 		
 		HorizontalLayout kategorieLayout = new HorizontalLayout();
 		kategorieLayout.setWidth("100%");

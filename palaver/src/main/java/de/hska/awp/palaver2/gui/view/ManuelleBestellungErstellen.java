@@ -292,7 +292,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		bestellungTable.setContainerDataSource(containerBestellung);
 
 		if (lieferant.getMehrereliefertermine() == true) {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt", "montag",
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz",  "durchschnitt", "kantine", "gesamt", "montag",
 					"freitag" });
 			bestellungTable.setColumnHeader("montag", "Termin 1");
 			bestellungTable.setColumnHeader("freitag", "Termin 2");
@@ -302,7 +302,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "kategorie", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			datetime.setVisible(true);
