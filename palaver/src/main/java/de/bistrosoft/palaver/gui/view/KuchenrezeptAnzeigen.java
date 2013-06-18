@@ -8,6 +8,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -40,7 +41,7 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezepte</font></pre>",
 			ContentMode.HTML);
 
-	private Button showFilter;
+	private Button btFilterLeeren;
 	private Kuchenrezept kuchenrezept;
 
 	private Button btAuswaehlen;
@@ -53,7 +54,8 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 
-		showFilter = new Button(IConstants.BUTTON_HIDE_FILTER);
+		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
+		btFilterLeeren.setIcon(new ThemeResource("img/disable_filter.ico"));
 
 		table = new FilterTable();
 		table.setSizeFull();
@@ -101,23 +103,17 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 		}
 
 		this.addComponent(ueberschrift);
-		this.addComponent(showFilter);
-		this.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
+		this.addComponent(btFilterLeeren);
+		this.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
 		this.addComponent(btAuswaehlen);
+		this.setComponentAlignment(btAuswaehlen, Alignment.MIDDLE_RIGHT);
 
-		showFilter.addClickListener(new ClickListener() {
+		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (table.isFilterBarVisible()) {
-					table.setFilterBarVisible(false);
-					table.resetFilters();
-					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-				} else {
-					table.setFilterBarVisible(true);
-					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-				}
+				table.resetFilters();
 			}
 		});
 
