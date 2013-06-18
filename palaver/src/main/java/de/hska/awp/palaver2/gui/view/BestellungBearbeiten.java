@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -22,9 +20,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
@@ -41,7 +39,6 @@ import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.gui.layout.LoginForm;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.util.IConstants;
@@ -97,38 +94,11 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		datetime.setTextFieldEnabled(false);
 		datetime.setShowISOWeekNumbers(true);
 
-		datetime.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				java.util.Date date2 = new java.util.Date();
-				if (date2.before(datetime.getValue()) == false || datetime.getValue() == null) {
-					speichern.setEnabled(false);
-				} else {
-					speichern.setEnabled(true);
-				}
-
-			}
-		});
-
 		datetime2.setVisible(false);
 		datetime2.setImmediate(true);
 		datetime2.setResolution(Resolution.DAY);
 		datetime2.setTextFieldEnabled(false);
 		datetime2.setShowISOWeekNumbers(true);
-
-		datetime2.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				java.util.Date date2 = new java.util.Date();
-				Date d = new Date(date2.getTime());
-				if (datetime.getValue() == null || d.before(datetime.getValue()) == false || d.before(datetime2.getValue()) == false
-						|| datetime2.getValue() == null) {
-					speichern.setEnabled(false);
-				} else {
-					speichern.setEnabled(true);
-				}
-			}
-		});
 
 		fenster = new VerticalLayout();
 		fenster.setSizeFull();
@@ -147,7 +117,6 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		verwerfen = new Button(IConstants.BUTTON_DISCARD);
 		bestellenperemail = new Button(IConstants.BUTTON_EMAILVERSAND);
 		bestellenperemail.setIcon(new ThemeResource(IConstants.BUTTON_EMAILVERSAND_ICON));
-		speichern.setEnabled(false);
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
@@ -473,20 +442,6 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		} else {
 			datetime.setValue(bestellung.getLieferdatum());
 			datetime2.setValue(bestellung.getLieferdatum2());
-			datetime.addValueChangeListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(final ValueChangeEvent event) {
-					java.util.Date date2 = new java.util.Date();
-					Date d = new Date(date2.getTime());
-					if (date2.before(datetime.getValue()) == false || datetime.getValue() == null || d.before(datetime2.getValue()) == false) {
-						speichern.setEnabled(false);
-					} else {
-						speichern.setEnabled(true);
-					}
-
-				}
-			});
-
 		}
 
 		bestellungTable.setContainerDataSource(containerBestellung);
