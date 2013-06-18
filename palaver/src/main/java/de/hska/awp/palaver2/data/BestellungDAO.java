@@ -299,6 +299,15 @@ public class BestellungDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode löscht eine Bestellung in der Datenbank.
+	 * 
+	 * @param bestellung
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void deleteBestellung(Bestellung bestellung) throws ConnectException, DAOException, SQLException {
 
 		if (bestellung.getId() == null) {
@@ -326,6 +335,15 @@ public class BestellungDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode löscht eine Bestellposition in der Datenbank.
+	 * 
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	private void deleteBestellposition(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
@@ -335,6 +353,15 @@ public class BestellungDAO extends AbstractDAO {
 
 	}
 
+	/**
+	 * Die Methode liefert einen Lieferanten zurück.
+	 * 
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	private Lieferant getLieferantById(Long id) throws SQLException {
 		Lieferant lieferant = null;
 		ResultSet set = get(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
@@ -348,6 +375,15 @@ public class BestellungDAO extends AbstractDAO {
 		return lieferant;
 	}
 
+	/**
+	 * Die Methode liefert alle Bestellpositionen zur einer Bestellung zurück.
+	 * 
+	 * @param id
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	private List<Bestellposition> getBestellpositionen(Long id) throws SQLException, ConnectException, DAOException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
 
