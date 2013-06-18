@@ -27,11 +27,11 @@ public interface IConstants
 	String      MENU_MITARBEITER_NEU = "Mitarbeiter anlegen";
 	String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
-	String		MENU_BESTELLUNG_NEW_RANDOM = "Neue Bestellung anlegen";
+	String		MENU_BESTELLUNG_NEW_RANDOM = "Bestellung anlegen";
 	String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
 	String 		MENU_BESTELLUNG_BEARBEITEN = "Bestellung bearbeiten";
 	String 		MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen anzeigen";
-	String		MENU_BESTELLUNG_GENERATE = "Neue Bestellungen generieren";
+	String		MENU_BESTELLUNG_GENERATE = "Bestellungen generieren";
 	String		MENU_NACHRICHT_ANZEIGEN = "Nachrichten anzeigen";
 	String		MENU_NACHRICHT_NEU = "Nachricht erstellen";
 	String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
