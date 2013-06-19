@@ -211,32 +211,32 @@ public class MenueplanGridLayout extends CustomComponent {
 					mc.setMenueplan(this);
 					layout.addComponent(mc, mc.getCol(), mc.getRow());
 					this.pruefeRegeln(mc);
-					if (mc != null) {
-						if (mc.getFehlerRegeln() != null) {
-							for (Regel r : mc.getFehlerRegeln()) {
-								if (!r.getIgnorierbar()) {
-									ConfirmDialog
-											.show(UI.getCurrent(),
-													"Regel verletzt",
-													"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
-													"OK",
-													"Ignorieren",
-													new ConfirmDialog.Listener() {
-
-														public void onClose(
-																ConfirmDialog dialog) {
-															if (dialog.isConfirmed()) {
-																mc.remove();
-															}
-															else {
-																
-															}
-														}
-													});
-								}
-							}
-						}
-					}
+//					if (mc != null) {
+//						if (mc.getFehlerRegeln() != null) {
+//							for (Regel r : mc.getFehlerRegeln()) {
+//								if (!r.getIgnorierbar()) {
+//									ConfirmDialog
+//											.show(UI.getCurrent(),
+//													"Regel verletzt",
+//													"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
+//													"OK",
+//													"Ignorieren",
+//													new ConfirmDialog.Listener() {
+//
+//														public void onClose(
+//																ConfirmDialog dialog) {
+//															if (dialog.isConfirmed()) {
+//																mc.remove();
+//															}
+//															else {
+//																
+//															}
+//														}
+//													});
+//								}
+//							}
+//						}
+//					}
 
 				}
 			}
