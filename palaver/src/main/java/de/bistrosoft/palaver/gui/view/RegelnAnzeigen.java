@@ -12,6 +12,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -43,14 +45,8 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 
 	public RegelnAnzeigen() {
 
-//		HorizontalLayout hlControl = new HorizontalLayout();
 		this.setSizeFull();
 		this.setMargin(true);
-
-		
-//		box.setWidth("1000px");
-//		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
-//		oben.addComponent(hlFilter);
 
 		try {
 			container = new BeanItemContainer<Regel>(Regel.class, RegelDAO
@@ -61,67 +57,30 @@ public class RegelnAnzeigen extends VerticalLayout implements View {
 
 		table.setContainerDataSource(container);
 		table.setSizeFull();
-//		table.setWidth("1000px");
-		table.setSelectable(true);
+		table.setStyleName("palaverTable");
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
+		table.setSelectable(true);
 		
 		table.setVisibleColumns(new Object[] { "zeile", "spalte", "regeltyp",
 				"operator", "kriterien", "fehlermeldung", "aktiv" });
-//		table.setColumnWidth("regeltyp", 70);
-//		table.setColumnWidth("operator", 100);
-//		table.setColumnWidth("spalte", 160);
-//		table.setColumnWidth("zeile", 160);
-//		table.setColumnWidth("kriterien", 100);
-//		table.setColumnWidth("fehlermeldung", 277);
-//		table.setColumnWidth("aktiv", 40);
-
-		// table.addGeneratedColumn("AKTIV", new ColumnGenerator() {
-		//
-		// @Override
-		// public Object generateCell(Table source, Object itemId, Object
-		// columnId) {
-		// CheckBox b = new CheckBox();
-		// int s = container.size();
-		// for(int i = 1; i<s; i++) {
-		// System.out.println(container.getContainerProperty(i,
-		// "aktiv").getValue());
-		// if((Boolean) container.getContainerProperty(i, "aktiv").getValue()) {
-		// System.out.print((Boolean) container.getContainerProperty(i,
-		// "aktiv").getValue());
-		// b.setValue(true);
-		// System.out.println("TRUE");
-		// }
-		// else {
-		// System.out.println("FALSE");
-		// }
-		// }
-		//
-		//
-		// return b;
-		// }
-		// })
 		
-//		label.setStyleName("ViewHeadline");
-//		hlFilter.addComponent(label);
-//		hlFilter.setComponentAlignment(label, Alignment.MIDDLE_LEFT);
-//		hlFilter.addComponent(btFilterLeeren);
-//		hlFilter.setComponentAlignment(btFilterLeeren, Alignment.MIDDLE_RIGHT);
-//		oben.addComponents(table);
-//		oben.setSpacing(true);
-//		box.addComponents(oben);
+		table.setCellStyleGenerator(new CellStyleGenerator() {
+			@Override
+			public String getStyle(CustomTable source, Object itemId, Object propertyId) {
+				Regel regel = (Regel) itemId;
+				if ("aktiv".equals(propertyId)) {
+					return regel.getAktiv() ? "check" : "cross";
+				}
+				return "";
+			}
+		});
 		loeschen.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
 		loeschen.setEnabled(false);
 		bearbeiten.setEnabled(false);
 		neu.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 		bearbeiten.setIcon(new ThemeResource(IConstants.BUTTON_EDIT_ICON));
-
-//		unten.addComponents(neu, bearbeiten, loeschen);
-//		// unten.addComponents(neu, loeschen);
-//		oben.addComponent(unten);
-//		box.setComponentAlignment(oben, Alignment.MIDDLE_CENTER);
-//		oben.setComponentAlignment(unten, Alignment.MIDDLE_RIGHT);
 
 		neu.addClickListener(new ClickListener() {
 
