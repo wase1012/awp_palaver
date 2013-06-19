@@ -31,7 +31,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -116,6 +116,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
 					lbKW = lbForeWeek;
 					left.replaceComponent(btForeWeek, platzhalter1);
+					
+					checkRollen();
 				}
 				else if (shownMenueplan == dritteMenueplan) {
 					box.replaceComponent(shownMenueplan, zweiteMenueplan);
@@ -129,6 +131,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbForeWeek;
 					left.replaceComponent(platzhalter1, btForeWeek);
 					right.replaceComponent(platzhalter2, btNextWeek);
+					
+					checkRollen();
 
 				}
 				else if (shownMenueplan == vierteMenueplan) {
@@ -143,6 +147,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbForeWeek;
 					left.replaceComponent(platzhalter1, btForeWeek);
 					right.replaceComponent(platzhalter2, btNextWeek);
+					
+					checkRollen();
 				}
 
 			}
@@ -170,6 +176,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
 					left.replaceComponent(platzhalter1, btForeWeek);
+					
+					checkRollen();
 				}
 				else if (shownMenueplan == zweiteMenueplan) {
 					box.replaceComponent(shownMenueplan, dritteMenueplan);
@@ -183,6 +191,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
 					left.replaceComponent(platzhalter1, btForeWeek);
+					
+					checkRollen();
 				}
 				else if (shownMenueplan == dritteMenueplan) {
 					box.replaceComponent(shownMenueplan, vierteMenueplan);
@@ -195,6 +205,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
 					lbKW = lbNextWeek;
 					right.replaceComponent(btNextWeek, platzhalter2);
+					
+					checkRollen();
 				}
 			}
 
@@ -264,7 +276,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSubmitDelete.setVisible(false);
 					btDeletePlan.setVisible(false);
 					btSpeichern.setVisible(true);
-					btFreigeben.setVisible(true);
+//					btFreigeben.setVisible(true);
 					btEnableDragging.setVisible(true);
 					btEnableDelete.setCaption("Elemente löschen");
 				} else {
@@ -272,7 +284,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSubmitDelete.setVisible(true);
 					btDeletePlan.setVisible(true);
 					btSpeichern.setVisible(false);
-					btFreigeben.setVisible(false);
+//					btFreigeben.setVisible(false);
 					btEnableDragging.setVisible(false);
 					btEnableDelete.setCaption("Zurück");
 				}
@@ -395,33 +407,45 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
+		btFreigeben.setVisible(false);
 		hlControl.addComponent(btSpeichern);
 		hlControl.addComponent(btFreigeben);
 		hlControl.addComponent(btEnableDragging);
 		hlControl.addComponent(btEnableDelete);
 		hlControl.addComponent(btSubmitDelete);
+		hlControl.setSpacing(true);
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
 		btDeletePlan.setVisible(false);
 		hlControl.addComponent(btKopieren);
+		box.setSpacing(true);
 		box.addComponent(hlControl);
+		box.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
 		box.addComponent(zweiteMenueplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
 		box.setComponentAlignment(zweiteMenueplan, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
-
-		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
-		if (m.getRollen() != null) {
-			for (int i = 0; i < m.getRollen().size(); i++) {
-				if (m.getRollen().get(i).getId() == Long.valueOf("1")) {
-					btFreigeben.setVisible(true);
-				}
-			}
-		}
+		
+		checkRollen();
 	}
 
+	public void checkRollen() {
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
+			btFreigeben.setVisible(true);
+		}
+		if (!((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
+			if(shownMenueplan.getMenueplan().getFreigegeben() == null || shownMenueplan.getMenueplan().getFreigegeben() == false) {
+				btSpeichern.setVisible(true);
+			}
+			else if(shownMenueplan.getMenueplan().getFreigegeben() == true) {
+			btSpeichern.setVisible(false);
+			}
+		}
+
+	}
+	
 	public static void switchMenueplan() {
 
 	}

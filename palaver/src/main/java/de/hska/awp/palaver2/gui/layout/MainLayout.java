@@ -140,11 +140,11 @@ public class MainLayout extends VerticalLayout implements Command {
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
 		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 
-		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
-			MenuItem regelItem = menu.addItem(IConstants.MENU_REGEL, this);
-		}
 		MenuItem einstellungItem = menu.addItem(IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		einstellungItem.addItem(IConstants.MENU_HEADER, this);
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)) {
+			einstellungItem.addItem(IConstants.MENU_REGEL, this);
+		}		
 		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
