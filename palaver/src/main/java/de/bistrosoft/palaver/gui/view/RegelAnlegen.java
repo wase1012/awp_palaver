@@ -89,8 +89,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	List<String> operatorinhalt = Arrays.asList(
 			IConstants.INFO_REGEL_OPERATOR_ERLAUBT,
 			IConstants.INFO_REGEL_OPERATOR_VERBOTEN,
-			IConstants.INFO_REGEL_OPERATOR_MAXIMAL,
-			IConstants.INFO_REGEL_OPERATOR_MINIMAL);
+			IConstants.INFO_REGEL_OPERATOR_MAXIMAL);
 	List<String> regeltypinhalt = Arrays.asList(
 			IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG,
 			IConstants.INFO_REGEL_REGELTYP_FUSSNOTE,
@@ -162,7 +161,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		box2.addComponent(links2);
 		box2.addComponent(mitte2);
 		box2.addComponent(rechts2);
-		
+
 		links.addComponent(zeilen);
 		links.addComponent(spalten);
 		mitte.addComponent(regeltyp);
@@ -176,15 +175,13 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 		control.setSpacing(true);
 		control.addComponents(verwerfen, speichern);
-		
+
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
-		
-		verwerfen.addClickListener(new ClickListener()
-		{
+
+		verwerfen.addClickListener(new ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event)
-			{
+			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
 			}
 		});
@@ -260,7 +257,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 			}
 		});
-		
+
 		kriterienGeschmack.setWidth("90%");
 		kriterienGeschmack.setImmediate(true);
 		kriterienGeschmack.addValidator(new Validator() {
@@ -301,7 +298,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 			}
 		});
-		
+
 		kriterienText.setWidth("90%");
 		kriterienText.setImmediate(true);
 		kriterienText.addValidator(new IntegerValidator(
@@ -378,8 +375,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				regeltypinput = valueString;
 
 				// Falls Regeltyp Aufwand oder Menü ausgewählt wird, wird ein
-				// Textfeld eingefügt und der Container für das Feld Operator
-				// gesetzt
+				// Textfeld eingefügt und aus dem Container für Operator die
+				// Auswahlmöglichkeiten "verbotene Werte" und "muss enthalten"
+				// entfernt
 				if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienFussnote);
@@ -390,97 +388,127 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					operator.removeItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
 					operator.removeItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 
-					// Falls Regeltyp Zubereitung, Menüart, Geschmack oder
-					// Fußnote ist wird der Container für das Feld Operator
-					// gesetzt
+					// Falls Regeltyp Zubereitung ist
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
-					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
-							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
+					// falls Operator "maximale Anzahl"
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					else{
+					// Ansonsten TwinCol für Zubereitung hinufügen und alle
+					// anderen Komontenen entfernen
+					else {
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienZubereitung);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
-	
-				}
-				else if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
-					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
-							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
-
+					// Falls Regeltyp Menüart ist
+				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
+					// falls Operator "maximale Anzahl"
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					else{
+					// Ansonsten TwinCol für Menüart hinufügen und alle
+					// anderen Komontenen entfernen
+					else {
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienMenüart);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
 				}
+				// Falls Regeltyp Geschmack ist
 				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
-					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
-							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
-
+					// falls Operator "maximale Anzahl"
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
-					}
-					else{
+					} 
+					// Ansonsten TwinCol für Geschmack hinufügen und alle
+					// anderen Komontenen entfernen
+					else {
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienGeschmack);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
 					}
-					if(!operator.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
-				}
-				else if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
-					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
-							|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
-
+				} 
+				// Falls Regeltyp Fußnote ist
+				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
+					// falls Operator "maximale Anzahl"
+					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					else{
+					// Ansonsten TwinCol für Fußnote hinufügen und alle
+					// anderen Komontenen entfernen
+					else {
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenüart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienFussnote);
+					}
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
+					}
+					if (!operator
+							.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
+						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
 				}
 			}
@@ -495,11 +523,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 				operatorinput = valueString;
 
-				// Falls beim Feld Operator "maximale Anzahl" oder
-				// "minimale Anzahl" ausgewählt wird, wird ein Textfeld
+				// Falls beim Feld Operator "maximale Anzahl" ausgewählt wird, wird ein Textfeld
 				// eingefügt
-				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL
-						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_MINIMAL) {
+				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
 					mitte.removeComponent(kriterienMenüart);
@@ -508,34 +534,53 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 					// Falls beim Regeltyp Aufwand oder Menü ausgewählt wird, so
 					// wird ein Textfeld eingefügt
-				} 
-				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
+				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
 					mitte.removeComponent(kriterienMenüart);
 					mitte.removeComponent(kriterienZubereitung);
-					mitte.addComponent(kriterienText); 
+					mitte.addComponent(kriterienText);
 				}
-//					// Andernfalls wird ein TwinCol eingefügt
-				else if(operatorinput == IConstants.INFO_REGEL_OPERATOR_ERLAUBT
+				// Falls beim Operator "verbotene Werte" oder "muss enthalten" ausgewählt wird
+				else if (operatorinput == IConstants.INFO_REGEL_OPERATOR_ERLAUBT
 						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_VERBOTEN) {
-					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
-							mitte.removeComponent(kriterienText);
-							mitte.addComponent(kriterienMenüart);
-					 }
-					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
-							mitte.removeComponent(kriterienText);
-							mitte.addComponent(kriterienFussnote);
-					 }
-					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
-							mitte.removeComponent(kriterienText);
-							mitte.addComponent(kriterienGeschmack);
-					 }
-					 if(regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
-							mitte.removeComponent(kriterienText);
-							mitte.addComponent(kriterienZubereitung);
-					 }
+					// Wenn Beim Regeltyp Menüart ausgewählt wird, wird twincol für Menüart einfügt 
+					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART
+							|| regeltyp
+									.getValue()
+									.toString()
+									.equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienMenüart);
+					}
+					// Wenn beim Regeltyo Fußnote ausgewählt wird, wird twincol für Fußnote eingefügt
+					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE
+							|| regeltyp
+									.getValue()
+									.toString()
+									.equals(IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)) {
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienFussnote);
+					}
+					// Wenn beim Regeltyo Geschmack ausgewählt wird, wird twincol für Geschmack eingefügt
+					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK
+							|| regeltyp
+									.getValue()
+									.toString()
+									.equals(IConstants.INFO_REGEL_REGELTYP_GESCHMACK)) {
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienGeschmack);
+					}
+					// Wenn beim Regeltyo Zubereitung ausgewählt wird, wird twincol für Zubereitung eingefügt
+					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG
+							|| regeltyp
+									.getValue()
+									.toString()
+									.equals(IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)) {
+						mitte.removeComponent(kriterienText);
+						mitte.addComponent(kriterienZubereitung);
+					}
 				}
 			}
 		});
@@ -559,7 +604,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				kriterieninput = valueString;
 			}
 		});
-		
+
 		kriterienMenüart.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -569,7 +614,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				kriterieninput = valueString;
 			}
 		});
-		
+
 		kriterienZubereitung.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -579,7 +624,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				kriterieninput = valueString;
 			}
 		});
-		
+
 		kriterienText.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
@@ -610,27 +655,28 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			// Container
 			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
 					.getAllZubereitung();
-			List<Fussnote> fn = Fussnotenverwaltung.getInstance().getAllFussnote();
-			List<Menueart> ma = Menueartverwaltung.getInstance().getAllMenueart();
-			List<Geschmack> g = Geschmackverwaltung.getInstance().getAllGeschmackAktiv();
+			List<Fussnote> fn = Fussnotenverwaltung.getInstance()
+					.getAllFussnote();
+			List<Menueart> ma = Menueartverwaltung.getInstance()
+					.getAllMenueart();
+			List<Geschmack> g = Geschmackverwaltung.getInstance()
+					.getAllGeschmackAktiv();
 
 			// Container setzen
-				for (Zubereitung z : zb) {
-					kriterienZubereitung.addItem(z.getBezeichnung());
-				}
-				for (Fussnote f : fn) {
-					kriterienFussnote.addItem(f.getBezeichnung());
-				}
-		
-		
-				for (Geschmack ge : g) {
-					kriterienGeschmack.addItem(ge.getBezeichnung());
-				}
-		
-		
-				for (Menueart m : ma) {
-					kriterienMenüart.addItem(m.getBezeichnung());
-				}
+			for (Zubereitung z : zb) {
+				kriterienZubereitung.addItem(z.getBezeichnung());
+			}
+			for (Fussnote f : fn) {
+				kriterienFussnote.addItem(f.getBezeichnung());
+			}
+
+			for (Geschmack ge : g) {
+				kriterienGeschmack.addItem(ge.getBezeichnung());
+			}
+
+			for (Menueart m : ma) {
+				kriterienMenüart.addItem(m.getBezeichnung());
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -662,67 +708,67 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		for (String z : zl) {
 			zeilen.select(z);
 		}
-		
-		List<String> kr = Arrays.asList(regel.getKriterien().split(
-				"\\s*,\\s*"));
+
+		List<String> kr = Arrays
+				.asList(regel.getKriterien().split("\\s*,\\s*"));
 		try {
 
 			if (regel.getRegeltyp().equals(
 					IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)) {
-				if(regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
-							IConstants.INFO_REGEL_OPERATOR_ERLAUBT) ) {
+				if (regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
+						|| regel.getOperator().equals(
+								IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 					mitte.addComponent(kriterienZubereitung);
 					for (String z : kr) {
 						kriterienZubereitung.select(z);
 					}
-				}
-				else {
+				} else {
 					mitte.addComponent(kriterienText);
 					kriterienText.setValue(regel.getKriterien());
 				}
 			}
 			if (regel.getRegeltyp().equals(
-					IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)){
-				if(regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-						mitte.addComponent(kriterienFussnote);
-						for (String z : kr) {
-							kriterienFussnote.select(z);
-						}
-				}
-				else {
+					IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)) {
+				if (regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
+						|| regel.getOperator().equals(
+								IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+					mitte.addComponent(kriterienFussnote);
+					for (String z : kr) {
+						kriterienFussnote.select(z);
+					}
+				} else {
 					mitte.addComponent(kriterienText);
 					kriterienText.setValue(regel.getKriterien());
 				}
 			}
 			if (regel.getRegeltyp().equals(
 					IConstants.INFO_REGEL_REGELTYP_GESCHMACK)) {
-				if(regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+				if (regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
+						|| regel.getOperator().equals(
+								IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 					mitte.addComponent(kriterienGeschmack);
 					for (String z : kr) {
 						kriterienGeschmack.select(z);
 					}
-				}
-				else {
+				} else {
 					mitte.addComponent(kriterienText);
 					kriterienText.setValue(regel.getKriterien());
 				}
 			}
 			if (regel.getRegeltyp().equals(
 					IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
-				if(regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_VERBOTEN) ||regel.getOperator().equals(
-						IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
+				if (regel.getOperator().equals(
+						IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
+						|| regel.getOperator().equals(
+								IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 					mitte.addComponent(kriterienMenüart);
 					for (String z : kr) {
 						kriterienMenüart.select(z);
 					}
-				}
-				else {
+				} else {
 					mitte.addComponent(kriterienText);
 					kriterienText.setValue(regel.getKriterien());
 				}
@@ -748,8 +794,16 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					regel.setZeile(zeilen.getValue().toString().substring(1, zeilen.getValue().toString().length() - 1));
-					regel.setSpalte(spalten.getValue().toString().substring(1, spalten.getValue().toString().length() - 1));
+					regel.setZeile(zeilen
+							.getValue()
+							.toString()
+							.substring(1,
+									zeilen.getValue().toString().length() - 1));
+					regel.setSpalte(spalten
+							.getValue()
+							.toString()
+							.substring(1,
+									spalten.getValue().toString().length() - 1));
 					regel.setRegeltyp(regeltyp.getValue().toString());
 					regel.setOperator(operator.getValue().toString());
 					if (operator.getValue().toString()
@@ -758,17 +812,53 @@ public class RegelAnlegen extends VerticalLayout implements View,
 									.getValue()
 									.toString()
 									.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)){
-							regel.setKriterien(kriterienFussnote.getValue().toString().substring(1, kriterienFussnote.getValue().toString().length() - 1));
+						if (regeltyp
+								.getValue()
+								.toString()
+								.equals(IConstants.INFO_REGEL_REGELTYP_FUSSNOTE)) {
+							regel.setKriterien(kriterienFussnote
+									.getValue()
+									.toString()
+									.substring(
+											1,
+											kriterienFussnote.getValue()
+													.toString().length() - 1));
 						}
-						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_GESCHMACK)){
-							regel.setKriterien(kriterienGeschmack.getValue().toString().substring(1, kriterienGeschmack.getValue().toString().length() - 1));
+						if (regeltyp
+								.getValue()
+								.toString()
+								.equals(IConstants.INFO_REGEL_REGELTYP_GESCHMACK)) {
+							regel.setKriterien(kriterienGeschmack
+									.getValue()
+									.toString()
+									.substring(
+											1,
+											kriterienGeschmack.getValue()
+													.toString().length() - 1));
 						}
-						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)){
-							regel.setKriterien(kriterienMenüart.getValue().toString().substring(1, kriterienMenüart.getValue().toString().length() - 1));
+						if (regeltyp
+								.getValue()
+								.toString()
+								.equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
+							regel.setKriterien(kriterienMenüart
+									.getValue()
+									.toString()
+									.substring(
+											1,
+											kriterienMenüart.getValue()
+													.toString().length() - 1));
 						}
-						if(regeltyp.getValue().toString().equals(IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)){
-							regel.setKriterien(kriterienZubereitung.getValue().toString().substring(1, kriterienZubereitung.getValue().toString().length() - 1));
+						if (regeltyp
+								.getValue()
+								.toString()
+								.equals(IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG)) {
+							regel.setKriterien(kriterienZubereitung
+									.getValue()
+									.toString()
+									.substring(
+											1,
+											kriterienZubereitung.getValue()
+													.toString().length() - 1));
 						}
 					} else {
 						regel.setKriterien(kriterienText.getValue());
@@ -777,7 +867,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					regel.setAktiv(aktiv.getValue());
 					regel.setIgnorierbar(ignorierRegel.getValue());
 
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REGEL_EDIT);
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_REGEL_EDIT);
 
 					try {
 						Regelverwaltung.getInstance().updateRegel(regel);
