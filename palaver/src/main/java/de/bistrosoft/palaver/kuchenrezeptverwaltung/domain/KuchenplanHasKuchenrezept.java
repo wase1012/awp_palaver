@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-import java.util.List;
 
 
 public class KuchenplanHasKuchenrezept {
