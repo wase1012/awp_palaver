@@ -60,7 +60,7 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		this.setSizeFull();
 		this.setMargin(true);
 
-		showFilter = new Button(IConstants.BUTTON_HIDE_FILTER);
+		showFilter = new Button(IConstants.BUTTON_CLEAR_FILTER);
 		showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
 
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
@@ -166,16 +166,17 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		showFilter.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (table.isFilterBarVisible()) {
-					table.setFilterBarVisible(false);
-					table.resetFilters();
-					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-					showFilter.setIcon(new ThemeResource("img/filter.ico"));
-				} else {
-					table.setFilterBarVisible(true);
-					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-				}
+//				if (table.isFilterBarVisible()) {
+//					table.setFilterBarVisible(false);
+//					table.resetFilters();
+//					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
+//					showFilter.setIcon(new ThemeResource("img/filter.ico"));
+//				} else {
+//					table.setFilterBarVisible(true);
+//					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
+//					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
+//				}
+				table.resetFilters();
 			}
 		});
 	}
