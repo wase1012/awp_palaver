@@ -25,6 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.bistrosoft.palaver.menueplanverwaltung.KoecheComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
@@ -71,7 +72,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	Button btEnableDragging = new Button("Verschieben aktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
-	Button btKopieren = new Button("Plan importieren");
+	Button btImport = new Button("Plan importieren");
 	private Button btDeletePlan = new Button("Gesamten Plan löschen");
 
 	private Label lbKW = new Label(
@@ -330,7 +331,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		});
 
-		btKopieren.addClickListener(new ClickListener() {
+		btImport.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -410,6 +411,25 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				Menueplanverwaltung.getInstance().delete(
 						shownMenueplan.getMenueplan());
+				
+				//Plan leeren
+				Integer rows = shownMenueplan.layout.getRows();
+				Integer cols = shownMenueplan.layout.getColumns();
+				for (int x = 0; x < cols; ++x) {
+					for (int y = 0; y < rows; ++y) {
+						if (shownMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
+							MenueComponent mc = (MenueComponent) shownMenueplan.layout.getComponent(x, y);
+							mc.remove();
+							shownMenueplan.layout.getComponent(x, y).setEnabled(false);
+						}
+						else if (shownMenueplan.layout.getComponent(x, y) instanceof KoecheComponent){
+							KoecheComponent kc = (KoecheComponent) shownMenueplan.layout.getComponent(x, y);
+							kc.setKoch1(null);
+							kc.setKoch2(null);
+						}
+					}
+				}
+				btEnableDelete.click();
 			}
 		});
 
@@ -446,7 +466,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
 		btDeletePlan.setVisible(false);
-		hlControl.addComponent(btKopieren);
+//		hlControl.addComponent(btImport);
 		box.setSpacing(true);
 		box.addComponent(hlControl);
 		box.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
