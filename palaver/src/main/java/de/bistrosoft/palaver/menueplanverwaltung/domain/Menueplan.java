@@ -45,6 +45,9 @@ public class Menueplan {
 	}
 	
 	public Boolean getFreigegeben() {
+		if (freigegeben==null){
+			return false;
+		}
 		return freigegeben;
 	}
 
