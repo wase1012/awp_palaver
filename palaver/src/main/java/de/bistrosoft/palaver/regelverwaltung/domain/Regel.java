@@ -323,51 +323,7 @@ public class Regel {
 			} else
 				return null;
 
-		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MINIMAL)) {
-			if (menue.getFussnoten() != null) {
-				int count = 0;
-				int minValue = 0;
-				try {
-					minValue = Integer.parseInt(kriterienlist.get(0));
-				} catch (NumberFormatException e) {
-					return null;
-				}
-
-				DDGridLayout grid = mp.layout;
-				for (Fussnote fs : mc.getMenue().getFussnoten()) {
-					count = 0;
-					for (int col = 0; col < grid.getColumns(); ++col) {
-						for (int row = 0; row < grid.getRows(); ++row) {
-							if ((zeilenlist.indexOf(row) >= 0 || zeilenlist	.indexOf(-1) >= 0)	&& (spaltenlist.indexOf(col) >= 0 || spaltenlist.indexOf(-1) >= 0)) {
-								if (grid.getComponent(col, row) instanceof MenueComponent) {
-									MenueComponent tmp = (MenueComponent) grid.getComponent(col, row);
-									if (tmp.getMenue().getFussnoten().indexOf(fs) >= 0) {
-										if (tmp.getFehlerRegeln() != null) {
-											if (tmp.getFehlerRegeln().indexOf(this) == -1) {
-												++count;
-												if (count < minValue) {
-													return this;
-												}
-											}
-										} else {
-											++count;
-											if (count < minValue) {
-												return this;
-											}
-										}
-									}
-								}
-								else {
-									return null;
-								}
-							}
-						}
-					}
-				}
-			} else
-				return null;
-
-		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
+		}  else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
 			if (menue.getFussnoten() != null) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;

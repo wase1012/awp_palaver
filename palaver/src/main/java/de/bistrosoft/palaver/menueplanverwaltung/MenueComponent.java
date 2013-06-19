@@ -310,32 +310,16 @@ public class MenueComponent extends CustomComponent{
 			public void buttonClick(final ClickEvent event) {
 				
 				// Window erstellen welches abfragt, ob man das Menü wirklich aus dem Menüplan löschen will
-				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:", "Wollen Sie das Menü wirklich aus dem Plan löschen?",
-				        "Ja", "Nein", new ConfirmDialog.Listener() {
+				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:",
+						"Wollen Sie das Menü wirklich aus dem Plan löschen?",
+						"Ja", "Nein", new ConfirmDialog.Listener() {
 
-				            public void onClose(ConfirmDialog dialog) {
-				                if (dialog.isConfirmed()) {
-//				                	//finde position
-////				                    Component sourceComp = comp;
-//				                	Integer sourceRow =-1;
-//				                    Integer sourceColumn=-1;
-//				                    
-//				                    final int COLUMNS = menueGrid.getColumns();
-//				                    final int ROWS = menueGrid.getRows();
-//				                    
-//				                    for (int row = 0; row < ROWS; row++) {
-//				            	        for (int col = 0; col < COLUMNS; col++) {
-//				            	        	if(MenueComponent.this.equals(menueGrid.getComponent(col, row))) {
-//				            	        		sourceColumn=col;
-//				            	        		sourceRow=row;
-//				            	        	}
-//				            	        }
-//				                    }	
-				                	MenueComponent.this.remove();
-				                	
-				                }
-				            }			            
-				        });	
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									MenueComponent.this.remove();
+								}
+							}
+						});
 			        }
 		});
 		

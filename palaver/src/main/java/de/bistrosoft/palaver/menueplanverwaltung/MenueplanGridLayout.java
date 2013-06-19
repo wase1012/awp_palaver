@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -58,27 +60,27 @@ public class MenueplanGridLayout extends CustomComponent {
 	public MenueplanGridLayout(int week, int year) {
 		Menueplan mpl = Menueplanverwaltung.getInstance()
 				.getMenueplanByWeekWithItems(new Week(week, year));
-		
-		if(mpl == null){
+
+		if (mpl == null) {
 			mpl = new Menueplan(new Week(week, year));
 		}
 
 		generierePlan(mpl);
 	}
-	
-	public MenueplanGridLayout(Menueplan mpl){
+
+	public MenueplanGridLayout(Menueplan mpl) {
 		generierePlan(mpl);
 	}
-	
-	private void generierePlan(Menueplan mpl){
-		if(mpl==null){
+
+	private void generierePlan(Menueplan mpl) {
+		if (mpl == null) {
 			return;
 		}
 		int week = mpl.getWeek().getWeek();
 		int year = mpl.getWeek().getYear();
-		
+
 		menueplan = mpl;
-		
+
 		// setCaption("Kalenderwoche: " + week +"/"+year);
 		setSizeFull();
 
@@ -204,11 +206,38 @@ public class MenueplanGridLayout extends CustomComponent {
 		// Füge MenueItems ein
 		if (menueplan != null) {
 			if (menueplan.getMenues() != null) {
-				for (MenueComponent mc : menueplan.getMenues()) {
+				for (final MenueComponent mc : menueplan.getMenues()) {
 					mc.setMenueGrid(layout);
 					mc.setMenueplan(this);
 					layout.addComponent(mc, mc.getCol(), mc.getRow());
 					this.pruefeRegeln(mc);
+					if (mc != null) {
+						if (mc.getFehlerRegeln() != null) {
+							for (Regel r : mc.getFehlerRegeln()) {
+								if (!r.getIgnorierbar()) {
+									ConfirmDialog
+											.show(UI.getCurrent(),
+													"Regel verletzt",
+													"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
+													"OK",
+													"Ignorieren",
+													new ConfirmDialog.Listener() {
+
+														public void onClose(
+																ConfirmDialog dialog) {
+															if (dialog.isConfirmed()) {
+																mc.remove();
+															}
+															else {
+																
+															}
+														}
+													});
+								}
+							}
+						}
+					}
+
 				}
 			}
 		}
@@ -284,8 +313,8 @@ public class MenueplanGridLayout extends CustomComponent {
 			}
 		}
 		menueplan.setKoeche(koeche);
-		
-//		menueplan.setWeek(week);
+
+		// menueplan.setWeek(week);
 
 		Menueplanverwaltung.getInstance().persist(menueplan);
 	}
@@ -306,10 +335,36 @@ public class MenueplanGridLayout extends CustomComponent {
 		this.pruefeMenueRegeln();
 	}
 
-	public void addMenue(MenueComponent comp, Integer col, Integer row) {
+	public void addMenue(final MenueComponent mc, Integer col, Integer row) {
 
-		layout.addComponent(comp, col, row);
-		pruefeRegeln(comp);
+		layout.addComponent(mc, col, row);
+		pruefeRegeln(mc);
+		if (mc != null) {
+			if (mc.getFehlerRegeln() != null) {
+				for (Regel r : mc.getFehlerRegeln()) {
+					if (!r.getIgnorierbar()) {
+						ConfirmDialog
+								.show(UI.getCurrent(),
+										"Regel verletzt",
+										"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
+										"OK",
+										"Ignorieren",
+										new ConfirmDialog.Listener() {
+
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													mc.remove();
+												}
+												else {
+													
+												}
+											}
+										});
+					}
+				}
+			}
+		}
 
 	}
 

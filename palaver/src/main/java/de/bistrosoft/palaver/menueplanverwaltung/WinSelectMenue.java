@@ -274,7 +274,7 @@ public class WinSelectMenue extends Window {
 
 	private void ladeMenues() {
 
-		// Container fï¿½r Menï¿½liste festlegen
+		// Container für Menüliste festlegen
 		try {
 			menueContainer = new BeanItemContainer<Menue>(Menue.class,
 					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
