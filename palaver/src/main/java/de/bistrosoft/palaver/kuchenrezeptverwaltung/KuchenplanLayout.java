@@ -15,15 +15,14 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
@@ -32,8 +31,10 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.util.IConstants;
 
 @SuppressWarnings("serial")
 public class KuchenplanLayout extends CustomComponent {
@@ -102,7 +103,6 @@ public class KuchenplanLayout extends CustomComponent {
 		// GridLayout zu Seitenlayout hinzufÃ¼gen
 		outer.addComponent(layout);
 		outer.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-		// outer.setExpandRatio(layout, 1);
 
 		// Fülle Datumsspalte mit Wochentag und Datum
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week,
@@ -366,7 +366,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 1, fn);
-					// tmpItemsMo.add(tmp);
 					containerKuchenplanHasKuchenrezeptMo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -396,7 +395,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 2, fn);
-					// tmpItemsDi.add(tmp);
 					containerKuchenplanHasKuchenrezeptDi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -426,7 +424,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 3, fn);
-					// tmpItemsMi.add(tmp);
 					containerKuchenplanHasKuchenrezeptMi.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -456,7 +453,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 4, fn);
-					// tmpItemsDo.add(tmp);
 					containerKuchenplanHasKuchenrezeptDo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -486,7 +482,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 5, fn);
-					// tmpItemsFr.add(tmp);
 					containerKuchenplanHasKuchenrezeptFr.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -516,7 +511,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 6, fn);
-					// tmpItemsSa.add(tmp);
 					containerKuchenplanHasKuchenrezeptSa.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -546,7 +540,6 @@ public class KuchenplanLayout extends CustomComponent {
 					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 7, fn);
-					// tmpItemsSo.add(tmp);
 					containerKuchenplanHasKuchenrezeptSo.addItem(tmp);
 					containerKuchenplanHasKuchenrezeptAlle.addItem(tmp);
 				}
@@ -580,7 +573,8 @@ public class KuchenplanLayout extends CustomComponent {
 
 		for (KuchenplanHasKuchenrezept khk : tmpItems) {
 			if (khk.getAnzahl() >= 100000.0) {
-				showNotification("Bitte Anzahl kleiner 100.000 wählen!");
+				((Application) UI.getCurrent().getData())
+				.showDialog(IConstants.INFO_KUCHENPLAN_MENGE);
 				khk.setAnzahl(1);
 				return;
 			}
@@ -588,14 +582,8 @@ public class KuchenplanLayout extends CustomComponent {
 
 		kuchenplan.setKuchenrezepte(tmpItems);
 		Kuchenplanverwaltung.getInstance().persist(kuchenplan);
-		showNotification("Kuchenplan für Kalenderwoche " + week + "/" + year
+		((Application) UI.getCurrent().getData())
+		.showDialog("Kuchenplan für Kalenderwoche " + week + "/" + year
 				+ " wurde gespeichert");
-	}
-
-	// Funktion zum Anzeigen der Notification
-	private void showNotification(String text) {
-		Notification notification = new Notification(text);
-		notification.setDelayMsec(500);
-		notification.show(Page.getCurrent());
 	}
 }

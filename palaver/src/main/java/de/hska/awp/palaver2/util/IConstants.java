@@ -119,7 +119,15 @@ public interface IConstants
 
 	String		INFO_KUCHENREZEPT_NAME = "Bitte Bezeichnung eingeben!";
 	String		INFO_KUCHENREZEPT_UPDATE = "Rezept wurde geändert!";
+	String 		INFO_KUCHENREZEPT_DELETE = "Kuchenrezept wurde gelöscht!";
 
+	String		INFO_KUCHENPLAN_MENGE = "Bitte Menge kleiner 100.000 wählen!";
+	String		INFO_KUCHENPLAN_HISTORIE_DATUMSFORMAT = "Falsches Datumsformat!";
+	String		INFO_KUCHENPLAN_HISTORIE_KEINPLAN = "Kein Kuchenplan vorhanden!";
+	String		INFO_KUCHENPLAN_HISTORIE_ALT = "Anzeige nur von älteren Kuchenplänen möglich";
+	String		INFO_KUCHENPLAN_HISTORIE_KEINDATUM = "Es wurde kein Datum ausgewählt!";
+	String		INFO_MENUEPLAN_HISTORIE_KEINPLAN = "Kein Menüplan vorhanden!";
+	String		INFO_MENUEPLAN_HISTORIE_ALT = "Anzeige nur von älteren Menüplänen möglich";
 	
 	String 		INFO_MENUE_ALS_REZEPT = "Bitte weitere Felder prüfen!";
 	String 		INFO_MENUE_NAME = "Bitte Name eingeben!";
@@ -194,6 +202,7 @@ public interface IConstants
 	
 	String 		INFO_REZEPTANZEIGEN_SELECT = "Bitte Rezept auswählen!";
 	String		INFO_MENUEANZEIGEN_SELECT = "Bitte Menü auswählen!";
+	String 		INFO_KUCHENREZEPTANZEIGEN_SELECT = "Bitte Kuchenrezept auswählen!";
 	
 	String		INFO_FUSSNOTE_SELECT = "Bitte Fussnote auswählen!";
 	String		INFO_FUSSNOTE_SAVE = "Fussnote wurde gespeichert!";
@@ -225,8 +234,12 @@ public interface IConstants
 
 	String 		INFO_REZEPT_DELETE = "Rezept wurde gelöscht!";
 	String 		INFO_MENUE_DELETE = "Menü wurde gelöscht!";
-	String 		INFO_KUCHENREZEPT_DELETE = "Kuchenrezept wurde gelöscht!";
+	
+	// Fußnoten Kuchenplan 
+	String 		FUSSNOTEN_KUCHENPLAN = "<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (oWe) = weizenfrei &nbsp;&nbsp; (oG) = glutenfrei &nbsp;&nbsp; (oE) = eifrei &nbsp;&nbsp; (oL) = laktosefrei <BR> (mM) = mitMandeln &nbsp;&nbsp; (mWa) = mit Walnüssen &nbsp;&nbsp; (mH) = mit Haselnüssen &nbsp;&nbsp; (mA) = mit Alkohol &nbsp;&nbsp;</div>";
 
+	// Fußnoten Menueplan 
+	String 		FUSSNOTEN_MENUEPLAN = "<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>";
 
 
 
