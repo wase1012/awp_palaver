@@ -196,6 +196,8 @@ public interface IConstants
 	String		INFO_FUSSNOTE_SAVE = "Fussnote wurde gespeichert!";
 	String		INFO_FUSSNOTE_EDIT = "Fussnote wurde geändert!";
 	
+	String 		INFO_MENU_HINZUFUEGEN = "Bitte geben Sie bei Portion in % eine ganze Zahl an!";
+	
 	String		INFO_GESCHMACK_SELECT = "Bitte Geschmack auswählen!";
 	String		INFO_GESCHMACK_SAVE = "Geschmack wurde gespeichert!";
 	String		INFO_GESCHMACK_EDIT = "Geschmack wurde geändert!";

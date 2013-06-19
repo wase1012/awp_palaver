@@ -56,7 +56,9 @@ public class WinSelectMenue extends Window {
 	
 	List<Regel> regeln = null;
 	
+	@SuppressWarnings("unused")
 	private Integer curCol;
+	@SuppressWarnings("unused")
 	private Integer curRow;
 
 	private Component destComp;
@@ -89,7 +91,6 @@ public class WinSelectMenue extends Window {
 	}
 
 	private void setRowCcol() {
-		// TODO Auto-generated method stub
 		final int COLUMNS = menueGrid.getColumns();
 		final int ROWS = menueGrid.getRows();
 
@@ -150,10 +151,23 @@ public class WinSelectMenue extends Window {
 
 		flEditorLayout.addComponent(btSelect);
 	}
-
+	
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
+	}
+	
 	private void initOKButton() {
 		btSelect.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				if (tfPortion.getValue().isEmpty() || !isInteger(tfPortion.getValue())) {
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENU_HINZUFUEGEN);
+				}
+				else {
 				// aktuelle Column und Row ermitteln
 				Integer sourceRow = -1;
 				Integer sourceColumn = -1;
@@ -192,6 +206,7 @@ public class WinSelectMenue extends Window {
 				// Window schlieﬂen
 				subwindow.close();
 			}
+			}
 		});
 	}
 
@@ -227,23 +242,6 @@ public class WinSelectMenue extends Window {
 					chbAufwand.setEnabled(false);
 					tfPortion.setValue("100");
 					flEditorLayout.setVisible(true);
-
-					// ////////////////////
-					//TODO Regeln
-//					MenueComponent mcTmp = new MenueComponent(menue, "",
-//							menueplan, menueGrid, destRow, destCol, null, null);
-//					regeln=Regelverwaltung.getInstance().getAllAktivRegeln();
-//					System.out.println(regeln.size());
-//					for (Regel r : regeln) {
-//						r.check(mcTmp, menueplan);
-//					}
-//					System.out.println(mcTmp.getFehlerRegeln());
-//					if(mcTmp.getFehlerRegeln()!=null){
-//						ctRegeln = new BeanItemContainer<Regel>(Regel.class,mcTmp.getFehlerRegeln());
-//						ftFehler.setContainerDataSource(ctRegeln);
-//						ftFehler.setVisible(true);
-//					}
-					simuliereAdd();
 
 				}
 
@@ -318,71 +316,5 @@ public class WinSelectMenue extends Window {
 
 			}
 		});
-	}
-
-	private void simuliereAdd(){
-//		// aktuelle Column und Row ermitteln
-//		Integer sourceRow = -1;
-//		Integer sourceColumn = -1;
-//
-//		final int COLUMNS = menueGrid.getColumns();
-//		final int ROWS = menueGrid.getRows();
-//
-//		for (int row = 0; row < ROWS; row++) {
-//			for (int col = 0; col < COLUMNS; col++) {
-//				if (destComp.equals(menueGrid.getComponent(col, row))) {
-//					sourceColumn = col;
-//					sourceRow = row;
-//				}
-//			}
-//		}
-		// aktuelle Comp sichern
-//		Component old = menueplan.layout.getComponent(curCol, curRow);
-		System.out.println("old: "+ menueplan.layout);
-		System.out.println("old: "+ getParent());
-//		System.out.println("old: "+ old);
-		System.out.println("old: "+ curCol);
-		System.out.println("old: "+ curRow);
-//		
-//		menueplan.removeMenue(destComp);
-//		// neue Comp einf¸gen
-//		Integer iPortion = Integer.parseInt(tfPortion.getValue());
-//		MenueComponent menueComp = new MenueComponent(menue,
-//				tfAngezName.getValue(), menueplan, menueGrid,
-//				curRow, curCol, true, iPortion);
-//		menueplan.addMenue(menueComp, curCol, curRow);
-//		
-//		// regeln pr¸fen
-//		for (Regel r : regeln) {
-//			r.check(menueComp, menueplan);
-//		}
-//
-//		// neue Comp lˆschen
-//		//aktuelle comp einf¸gen
-//		menueGrid.replaceComponent(menueComp, old);
-
-		// Men¸bezeichnung des ausgewÔøΩhlten MenÔøΩs
-//		try {
-//			Menue menue = (Menue) ftMenueList.getValue();
-//			 Neue MenÔøΩkomponente aus ausgewÔøΩhltem MenÔøΩ erstellen
-//			 und hinzufÔøΩgen
-//			Integer iPortion = Integer.parseInt(tfPortion.getValue());
-//			MenueComponent menueComp = new MenueComponent(menue,
-//					tfAngezName.getValue(), menueplan, menueGrid,
-//					curRow, curCol, true, iPortion);
-//			menueplan.addMenue(menueComp, curCol, curRow);
-//			menueGrid.setComponentAlignment(menueComp,
-//					Alignment.MIDDLE_CENTER);
-//			for (Regel r : regeln) {
-//				r.check(menueComp, menueplan);
-//			}
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//		}
-//		
-//		
-//
 	}
 }
