@@ -3,6 +3,7 @@ package de.bistrosoft.palaver.menueplanverwaltung;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.poi.ss.formula.ptg.TblPtg;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -166,6 +167,9 @@ public class WinSelectMenue extends Window {
 			public void buttonClick(ClickEvent event) {
 				if (tfPortion.getValue().isEmpty() || !isInteger(tfPortion.getValue())) {
 					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENU_HINZUFUEGEN);
+				}
+				else if (ftMenueList.getValue()==null){
+					((Application) UI.getCurrent().getData()).showDialog("Bitte ein Menü auswählen!");
 				}
 				else {
 				// aktuelle Column und Row ermitteln

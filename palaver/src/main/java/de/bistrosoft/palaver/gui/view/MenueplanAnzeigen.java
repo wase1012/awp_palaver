@@ -66,13 +66,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	HorizontalLayout hlControl = new HorizontalLayout();
 
-	Button btEnableDelete = new Button("Elemente lÃ¶schen");
-	Button btSubmitDelete = new Button("LÃ¶schen bestÃ¤tigen");
+	Button btEnableDelete = new Button("Elemente löschen");
+	Button btSubmitDelete = new Button("Löschen bestätigen");
 	Button btEnableDragging = new Button("Verschieben aktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
 	Button btKopieren = new Button("Plan importieren");
-	private Button btDeletePlan = new Button("Gesamten Plan lÃ¶schen");
+	private Button btDeletePlan = new Button("Gesamten Plan löschen");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -106,7 +106,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		btForeWeek.addStyleName("menueplan-lastweek");
 		btForeWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fÃ¼r eine Woche vorher
+			// Click-Listener für eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownMenueplan == zweiteMenueplan) {
@@ -163,13 +163,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		});
 
-		// Pfeil zum Wechseln zur nÃ¤chsten KW und Anzeige der Wochen-Nr
+		// Pfeil zum Wechseln zur nächsten KW und Anzeige der Wochen-Nr
 		btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
 		btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
 		btNextWeek.addStyleName("menueplan-nextweek");
 		btNextWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fÃ¼r eine Woche spÃ¤ter
+			// Click-Listener für eine Woche später
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownMenueplan == ersteMenueplan) {
@@ -224,7 +224,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		});
 
-		// HinzufÃ¼gen und Anordnen der Komponenten
+		// Hinzufügen und Anordnen der Komponenten
 		left.addComponent(btForeWeek);
 		left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -296,7 +296,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSpeichern.setVisible(true);
 					// btFreigeben.setVisible(true);
 					btEnableDragging.setVisible(true);
-					btEnableDelete.setCaption("Elemente lÃ¶schen");
+					btEnableDelete.setCaption("Elemente löschen");
 				} else {
 					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 					btSubmitDelete.setVisible(true);
@@ -304,7 +304,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSpeichern.setVisible(false);
 					// btFreigeben.setVisible(false);
 					btEnableDragging.setVisible(false);
-					btEnableDelete.setCaption("ZurÃ¼ck");
+					btEnableDelete.setCaption("Zurück");
 				}
 
 				Integer rows = shownMenueplan.layout.getRows();
@@ -336,7 +336,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				Window fvj = new Window();
 				VerticalLayout vlWinBox = new VerticalLayout();
-				final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:") {
+				final PopupDateField date = new PopupDateField("Datum wählen:") {
 					@Override
 					protected Date handleUnparsableDateString(String dateString)
 							throws ConversionException {
@@ -368,7 +368,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				vlWinBox.addComponent(date);
 				vlWinBox.setComponentAlignment(date, Alignment.TOP_CENTER);
 				Week mplWeek = shownMenueplan.getMenueplan().getWeek();
-				lbMplWeek = new Label("MenÃ¼plan " + mplWeek.getWeek() + "/"
+				lbMplWeek = new Label("Menüplan " + mplWeek.getWeek() + "/"
 						+ mplWeek.getYear());
 				vlWinBox.addComponent(lbMplWeek);
 
@@ -391,13 +391,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// alle Felder durchgehen, prÃ¼fen ob menuecomponent vorhanden
+				// alle Felder durchgehen, prüfen ob menuecomponent vorhanden
 				// ist und wenn ja speichern
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
 				Notification notification = new Notification(
-						"MenÃ¼plan fÃ¼r Kalenderwoche " + week + "/" + year
+						"Menüplan für Kalenderwoche " + week + "/" + year
 								+ " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
@@ -430,10 +430,10 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		// FuÃŸnoten
 		Label lbFussnoten = new Label(
-				"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mÃ¶gl. &nbsp;&nbsp; (veg.m) = vegetarisch mÃ¶gl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mÃ¶gl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mÃ¶gl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mÃ¶gl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mÃ¶gl.</div>",
+				"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>",
 				ContentMode.HTML);
 
-		// HinzufÃ¼gen und Anordnen weiterer Komponenten
+		// Hinzufügen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		btFreigeben.setVisible(false);
