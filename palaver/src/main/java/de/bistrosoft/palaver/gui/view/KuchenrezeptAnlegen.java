@@ -11,6 +11,7 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -63,11 +64,13 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
 	// Layouts
-	private VerticalLayout box = new VerticalLayout();
-	private HorizontalLayout infos = new HorizontalLayout();
-	private VerticalLayout infosLinks = new VerticalLayout();
-	private HorizontalLayout control = new HorizontalLayout();
-	private HorizontalLayout hlRezeptZutaten = new HorizontalLayout();
+	private VerticalLayout vlBox = new VerticalLayout();
+	private VerticalLayout vlDetailsLinks = new VerticalLayout();
+	private VerticalLayout vlDetailsRechts = new VerticalLayout();
+
+	private HorizontalLayout hlDetails = new HorizontalLayout();
+	private HorizontalLayout hlZutaten = new HorizontalLayout();
+	private HorizontalLayout hlControl = new HorizontalLayout();
 
 	// Tabellen
 	private Table zutatenTable;
@@ -79,7 +82,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	private BeanItemContainer<Artikel> containerArtikel;
 	private BeanItemContainer<KuchenrezeptHasArtikel> containerKuchenrezeptHasArtikel;
 
-	// Überschriften
+	// ï¿½berschriften
 	private Label ueberschrift = new Label(
 			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept anlegen</font></pre>",
 			ContentMode.HTML);
@@ -109,8 +112,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	Kuchenrezept kuchenrezeptNeu;
 
 	// TwinCol
-	private TwinColTouch fussnoten = new TwinColTouch("Fussnoten");	
-	
+	private TwinColTouch fussnoten = new TwinColTouch("Fussnoten");
+
 	// Listen
 	List<KuchenrezeptHasArtikel> ausgArtikel = new ArrayList<KuchenrezeptHasArtikel>();
 	List<KuchenrezeptHasArtikel> artikel = new ArrayList<KuchenrezeptHasArtikel>();
@@ -128,48 +131,61 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		name.setImmediate(true);
 		name.setMaxLength(200);
 		name.setInputPrompt(nameInput);
+		name.setSizeFull();
+		name.addValidator(new StringLengthValidator(
+				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
 
+		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
-		kommentar.setMaxLength(1000);
+		kommentar.setMaxLength(5000);
 
-		box.setWidth("800px");
-		box.setSpacing(true);
-
-		infos.setWidth("100%");
-		infos.setSpacing(true);
+		vlBox.setWidth("1000px");
+		vlBox.setSpacing(true);
 
 		fussnoten.setWidth("100%");
 		fussnoten.setImmediate(true);
-		
+
 		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
-		
-		this.addComponent(box);
-		box.addComponent(ueberschrift);
+
+		this.addComponent(vlBox);
+		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
+		vlBox.addComponent(ueberschrift);
 		ueberschrift.setWidth("300px");
-		box.addComponent(infos);
-		infos.addComponent(infosLinks);
-		infosLinks.addComponent(name);
-		name.setWidth("100%");
-		infosLinks.setWidth("350px");
-		box.addComponent(hlRezeptZutaten);
-		infosLinks.addComponent(kommentar);
-		infos.addComponent(fussnoten);
 
-		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		vlBox.addComponent(hlDetails);
+		vlBox.addComponent(hlZutaten);
+		vlBox.addComponent(hlControl);
+
+		hlDetails.addComponent(vlDetailsLinks);
+		hlDetails.addComponent(vlDetailsRechts);
+		hlDetails.setWidth("1000px");
+		hlDetails.setHeight("230px");
+
+		vlBox.setComponentAlignment(ueberschrift, Alignment.MIDDLE_LEFT);
+
+		vlDetailsLinks.addComponent(name);
+		vlDetailsLinks.addComponent(kommentar);
+		vlDetailsLinks.setWidth("450px");
+
+		vlDetailsRechts.addComponent(fussnoten);
+
+		vlDetailsRechts.setWidth("500px");
+
+		hlZutaten.setWidth("1000px");
+		hlZutaten.setHeight("393px");
+
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		btSpeichern.setEnabled(true);
 
-		control.addComponent(btArtikel);
-		control.addComponent(verwerfen);
-		control.addComponent(btSpeichern);
+		hlControl.addComponent(btArtikel);
+		hlControl.addComponent(btSpeichern);
+		hlControl.addComponent(verwerfen);
+
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 		// ValueChangeListener Name
 		name.addValueChangeListener(this);
 
-		kommentar.setHeight("70px");
-		kommentar.setWidth("350px");
 		// ValueChangeListener Kommentar
 		kommentar.addValueChangeListener(this);
 
@@ -190,7 +206,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				}
 			}
 		});
-		
+
 		btArtikel.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -199,24 +215,18 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		hlRezeptZutaten.setWidth("800px");
-		hlRezeptZutaten.setHeight("393px");
-
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
-		zutatenTable.setWidth("435px");
-		zutatenTable.setStyleName("palaverTable2");
+		zutatenTable.setStyleName("palaverTable");
 		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-		zutatenTable.setColumnWidth("artikelname", 200);
-		zutatenTable.setColumnWidth("menge", 100);
-		zutatenTable.setColumnWidth("einheit", 90);
+		// zutatenTable.setColumnWidth("artikelname", 200);
+		// zutatenTable.setColumnWidth("menge", 100);
+		// zutatenTable.setColumnWidth("einheit", 90);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
-		artikelTable.setWidth("270px");
-		artikelTable.setStyleName("palaverTable2");
-
+		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 
@@ -227,15 +237,16 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				"einheit" });
 		zutatenTable.setEditable(true);
 
-		hlRezeptZutaten.addComponent(zutatenTable);
-		hlRezeptZutaten.addComponent(artikelTable);
+		hlZutaten.addComponent(zutatenTable);
+		hlZutaten.addComponent(artikelTable);
 
 		// Aufteilung im Layout
-		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
-		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
-		hlRezeptZutaten.setSpacing(true);
+		hlZutaten.setExpandRatio(zutatenTable, 7);
+		hlZutaten.setExpandRatio(artikelTable, 3);
 
-		// Überschriften
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+
+		// Ãœberschriften
 		artikelTable.setCaption("Artikel");
 		zutatenTable.setCaption("Zutatenliste");
 
@@ -301,7 +312,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		load();
 	}
-	
+
 	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
@@ -321,7 +332,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 	public void load() {
 		fussnoten.removeAllItems();
-		
+
 		try {
 			List<FussnoteKuchen> fk = Fussnotekuchenverwaltung.getInstance()
 					.getAllFussnoteKuchen();
@@ -331,7 +342,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -355,8 +366,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
 		}
 
-		control.replaceComponent(btSpeichern, update);
-		box.replaceComponent(ueberschrift, ueberschrift2);
+		hlControl.replaceComponent(btSpeichern, update);
+		vlBox.replaceComponent(ueberschrift, ueberschrift2);
 		ueberschrift2.setWidth("300px");
 
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -374,7 +385,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		 */
 
 		name.setValue(kuchenrezept.getName());
-		
+
 		for (int i = 0; i < kuchenrezept.getFussnoteKuchen().size(); i++) {
 			fussnoten.select(kuchenrezept.getFussnoteKuchen().get(i));
 		}
@@ -485,8 +496,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		try {
 			kuchenrezeptNeu = Kuchenrezeptverwaltung.getInstance()
 					.getKuchenrezeptByName1(nameInput);
@@ -494,35 +504,33 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 		// Liste der Zubereitungen
-					if (fussnoten.getValue().toString() != "[]") {
-						List<String> FussnoteKuchenId = Arrays.asList(fussnoten
-								.getValue()
-								.toString()
-								.substring(1,
-										fussnoten.getValue().toString().length() - 1)
-								.split("\\s*,\\s*"));
+		if (fussnoten.getValue().toString() != "[]") {
+			List<String> FussnoteKuchenId = Arrays.asList(fussnoten.getValue()
+					.toString()
+					.substring(1, fussnoten.getValue().toString().length() - 1)
+					.split("\\s*,\\s*"));
 
-						List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
-						for (String sId : FussnoteKuchenId) {
-							FussnoteKuchen fussnotekuchen = new FussnoteKuchen();
-							try {
-								fussnotekuchen = FussnoteKuchenDAO.getInstance()
-										.getFussnoteKuchenByName(sId);
-								KuchenrezeptHasFussnote a = new KuchenrezeptHasFussnote(
-										fussnotekuchen, kuchenrezeptNeu);
-								fussnotelist.add(a);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-						for (KuchenrezeptHasFussnote i : fussnotelist) {
-							try {
-								KuchenrezeptDAO.getInstance().FussnoteKuchenAdd(i);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					}
+			List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
+			for (String sId : FussnoteKuchenId) {
+				FussnoteKuchen fussnotekuchen = new FussnoteKuchen();
+				try {
+					fussnotekuchen = FussnoteKuchenDAO.getInstance()
+							.getFussnoteKuchenByName(sId);
+					KuchenrezeptHasFussnote a = new KuchenrezeptHasFussnote(
+							fussnotekuchen, kuchenrezeptNeu);
+					fussnotelist.add(a);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			for (KuchenrezeptHasFussnote i : fussnotelist) {
+				try {
+					KuchenrezeptDAO.getInstance().FussnoteKuchenAdd(i);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 		Notification notification = new Notification(
 				"Rezept wurde gespeichert!");
@@ -537,7 +545,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		// setzt Rezeptname
 		kuchenrezept.setName(nameInput);
 
-		// setzt Ãnderungsdatum
+		// setzt ï¿½nderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date3 = new Date(date.getTime());
 		kuchenrezept.setErstellt(date3);
@@ -563,13 +571,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
-		
 		if (fussnoten.getValue().toString() != "[]") {
-			List<String> FussnoteKuchenId = Arrays.asList(fussnoten
-					.getValue()
+			List<String> FussnoteKuchenId = Arrays.asList(fussnoten.getValue()
 					.toString()
-					.substring(1,
-							fussnoten.getValue().toString().length() - 1)
+					.substring(1, fussnoten.getValue().toString().length() - 1)
 					.split("\\s*,\\s*"));
 
 			List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
@@ -592,8 +597,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					e.printStackTrace();
 				}
 			}
-		}		
-		Notification notification = new Notification("Rezept wurde geändert!");
+		}
+		Notification notification = new Notification("Rezept wurde geÃ¤ndert!");
 		notification.setDelayMsec(500);
 		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
@@ -627,7 +632,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		return true;
 	}
-	
+
 	private void addArtikel() {
 		final Window win = new Window("Neuer Artikel");
 		win.setModal(true);

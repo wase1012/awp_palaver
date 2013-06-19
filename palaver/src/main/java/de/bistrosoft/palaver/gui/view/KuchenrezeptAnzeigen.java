@@ -11,7 +11,6 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -24,8 +23,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -48,9 +45,7 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 	
 	private FilterTable table;
 
-	private Label ueberschrift = new Label(
-			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezepte</font></pre>",
-			ContentMode.HTML);
+	private Label ueberschrift = new Label("Kuchenrezepte");
 
 	private Button btFilterLeeren;
 	private Kuchenrezept kuchenrezept;
@@ -62,6 +57,8 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 	public KuchenrezeptAnzeigen() {
 		super();
 
+		ueberschrift.setStyleName("ViewHeadline");
+		
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 		btLoeschen = new Button(IConstants.BUTTON_DELETE);
 		btLoeschen.setIcon(new ThemeResource("img/cross.ico"));
