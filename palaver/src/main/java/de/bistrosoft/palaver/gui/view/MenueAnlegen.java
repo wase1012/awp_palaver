@@ -18,6 +18,7 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -63,10 +64,16 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private VerticalLayout vlBox = new VerticalLayout();
 	private VerticalLayout vlDetailsLinks = new VerticalLayout();
 	private VerticalLayout vlDetailsRechts = new VerticalLayout();
+	private VerticalLayout vlDetailsLinksOben = new VerticalLayout();
+	private VerticalLayout vlDetailsLinksUnten = new VerticalLayout();
 	
 	private HorizontalLayout hlRezepte = new HorizontalLayout();
 	private HorizontalLayout hlControl = new HorizontalLayout();
 	private HorizontalLayout hlDetails = new HorizontalLayout();
+	
+	private Label dummy = new Label(
+			"<pre><b><font size='1' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"><br></font><b></pre>",
+			ContentMode.HTML);
 	
 	
 	private TextField tfMenuename = new TextField("Menüname");
@@ -142,14 +149,23 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		hlDetails.setWidth("1000px");
 		hlDetails.setHeight("250px");
 		
+		vlDetailsLinks.addComponent(vlDetailsLinksOben);
+		vlDetailsLinks.addComponent(vlDetailsLinksUnten);vlDetailsLinks.addComponent(vlDetailsLinksOben);
+		vlDetailsLinks.addComponent(vlDetailsLinksUnten);
+		
+		vlDetailsLinksOben.setHeight("160px");
+		
+		vlDetailsLinksUnten.setHeight("90px");
+		
 		vlBox.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
 			
-		vlDetailsLinks.addComponent(tfMenuename);
-		vlDetailsLinks.addComponent(nsKoch);
-		vlDetailsLinks.addComponent(nsMenueart);
-		vlDetailsLinks.addComponent(nsGeschmack);
-		vlDetailsLinks.addComponent(chbFavorit);
-		vlDetailsLinks.addComponent(chbAufwand);
+		vlDetailsLinksOben.addComponent(tfMenuename);
+		vlDetailsLinksOben.addComponent(nsKoch);
+		vlDetailsLinksOben.addComponent(nsMenueart);
+		vlDetailsLinksOben.addComponent(nsGeschmack);
+		vlDetailsLinksUnten.addComponent(dummy);
+		vlDetailsLinksUnten.addComponent(chbFavorit);
+		vlDetailsLinksUnten.addComponent(chbAufwand);
 		vlDetailsLinks.setWidth("450px");
 		
 		vlDetailsRechts.addComponent(tcsFussnoten);
