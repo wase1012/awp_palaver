@@ -11,25 +11,29 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Window.CloseEvent;
 
 import de.bistrosoft.palaver.data.FussnoteKuchenDAO;
 import de.bistrosoft.palaver.data.KuchenrezeptDAO;
@@ -40,7 +44,6 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussno
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.data.ConnectException;
@@ -61,23 +64,31 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
 
 	// Layouts
-	private VerticalLayout box = new VerticalLayout();
-	private HorizontalLayout infos = new HorizontalLayout();
-	private VerticalLayout infosLinks = new VerticalLayout();
-	private HorizontalLayout control = new HorizontalLayout();
-	private HorizontalLayout hlRezeptZutaten = new HorizontalLayout();
+	private VerticalLayout vlBox = new VerticalLayout();
+	private VerticalLayout vlDetailsLinks = new VerticalLayout();
+	private VerticalLayout vlDetailsRechts = new VerticalLayout();
+
+	private HorizontalLayout hlDetails = new HorizontalLayout();
+	private HorizontalLayout hlZutaten = new HorizontalLayout();
+	private HorizontalLayout hlControl = new HorizontalLayout();
 
 	// Tabellen
 	private Table zutatenTable;
 	private FilterTable artikelTable;
 
+	List<KuchenrezeptHasArtikel> tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
+
 	// BeanContainer
 	private BeanItemContainer<Artikel> containerArtikel;
 	private BeanItemContainer<KuchenrezeptHasArtikel> containerKuchenrezeptHasArtikel;
 
-	// Überschriften
-	private Label ueberschrift = new Label("Kuchenrezept anlegen");
-	private Label ueberschrift2 = new Label("Kuchenrezept bearbeiten");
+	// ï¿½berschriften
+	private Label ueberschrift = new Label(
+			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept anlegen</font></pre>",
+			ContentMode.HTML);
+	private Label ueberschrift2 = new Label(
+			"<pre><font size='4px' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Kuchenrezept bearbeiten</font></pre>",
+			ContentMode.HTML);
 
 	// Textfeld
 	private TextField name = new TextField("Bezeichnung");
@@ -96,16 +107,14 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	private String nameInput;
 	private String kommentarInput;
 	public String valueString = new String();
-	
-	// Kuchenrezepte
+
 	Kuchenrezept kuchenrezept;
 	Kuchenrezept kuchenrezeptNeu;
 
 	// TwinCol
-	private TwinColTouch fussnoten = new TwinColTouch("Fussnoten");	
-	
+	private TwinColTouch fussnoten = new TwinColTouch("Fussnoten");
+
 	// Listen
-	List<KuchenrezeptHasArtikel> tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
 	List<KuchenrezeptHasArtikel> ausgArtikel = new ArrayList<KuchenrezeptHasArtikel>();
 	List<KuchenrezeptHasArtikel> artikel = new ArrayList<KuchenrezeptHasArtikel>();
 
@@ -118,55 +127,65 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		// Komponenten
 
-		ueberschrift.setStyleName("ViewHeadline");
-		ueberschrift2.setStyleName("ViewHeadline");
-		
 		name.setWidth("100%");
 		name.setImmediate(true);
 		name.setMaxLength(200);
 		name.setInputPrompt(nameInput);
+		name.setSizeFull();
+		name.addValidator(new StringLengthValidator(
+				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
 
+		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
-		kommentar.setMaxLength(1000);
+		kommentar.setMaxLength(5000);
 
-		box.setWidth("800px");
-		box.setSpacing(true);
-
-		infos.setWidth("100%");
-		infos.setSpacing(true);
+		vlBox.setWidth("1000px");
+		vlBox.setSpacing(true);
 
 		fussnoten.setWidth("100%");
 		fussnoten.setImmediate(true);
-		
+
 		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
-		
-		this.addComponent(box);
-		box.addComponent(ueberschrift);
+
+		this.addComponent(vlBox);
+		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
+		vlBox.addComponent(ueberschrift);
 		ueberschrift.setWidth("300px");
-		box.addComponent(infos);
-		infos.addComponent(infosLinks);
-		infosLinks.addComponent(name);
-		name.setWidth("100%");
-		infosLinks.setWidth("350px");
-		box.addComponent(hlRezeptZutaten);
-		infosLinks.addComponent(kommentar);
-		infos.addComponent(fussnoten);
 
-		control.setSpacing(true);
-		box.addComponent(control);
-		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
+		vlBox.addComponent(hlDetails);
+		vlBox.addComponent(hlZutaten);
+		vlBox.addComponent(hlControl);
+
+		hlDetails.addComponent(vlDetailsLinks);
+		hlDetails.addComponent(vlDetailsRechts);
+		hlDetails.setWidth("1000px");
+		hlDetails.setHeight("230px");
+
+		vlBox.setComponentAlignment(ueberschrift, Alignment.MIDDLE_LEFT);
+
+		vlDetailsLinks.addComponent(name);
+		vlDetailsLinks.addComponent(kommentar);
+		vlDetailsLinks.setWidth("450px");
+
+		vlDetailsRechts.addComponent(fussnoten);
+
+		vlDetailsRechts.setWidth("500px");
+
+		hlZutaten.setWidth("1000px");
+		hlZutaten.setHeight("393px");
+
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		btSpeichern.setEnabled(true);
 
-		control.addComponent(btArtikel);
-		control.addComponent(verwerfen);
-		control.addComponent(btSpeichern);
+		hlControl.addComponent(btArtikel);
+		hlControl.addComponent(btSpeichern);
+		hlControl.addComponent(verwerfen);
+
+		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 
 		// ValueChangeListener Name
 		name.addValueChangeListener(this);
 
-		kommentar.setHeight("70px");
-		kommentar.setWidth("350px");
 		// ValueChangeListener Kommentar
 		kommentar.addValueChangeListener(this);
 
@@ -187,32 +206,27 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				}
 			}
 		});
-		
-		// ClickListener Neuer Artikel
+
 		btArtikel.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+
 				addArtikel();
 			}
 		});
 
-		hlRezeptZutaten.setWidth("800px");
-		hlRezeptZutaten.setHeight("393px");
-
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
-		zutatenTable.setWidth("435px");
-		zutatenTable.setStyleName("palaverTable2");
+		zutatenTable.setStyleName("palaverTable");
 		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-		zutatenTable.setColumnWidth("artikelname", 200);
-		zutatenTable.setColumnWidth("menge", 100);
-		zutatenTable.setColumnWidth("einheit", 90);
+		// zutatenTable.setColumnWidth("artikelname", 200);
+		// zutatenTable.setColumnWidth("menge", 100);
+		// zutatenTable.setColumnWidth("einheit", 90);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
-		artikelTable.setWidth("270px");
-		artikelTable.setStyleName("palaverTable2");
+		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 
@@ -223,15 +237,16 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 				"einheit" });
 		zutatenTable.setEditable(true);
 
-		hlRezeptZutaten.addComponent(zutatenTable);
-		hlRezeptZutaten.addComponent(artikelTable);
+		hlZutaten.addComponent(zutatenTable);
+		hlZutaten.addComponent(artikelTable);
 
 		// Aufteilung im Layout
-		hlRezeptZutaten.setExpandRatio(zutatenTable, 3);
-		hlRezeptZutaten.setExpandRatio(artikelTable, 2);
-		hlRezeptZutaten.setSpacing(true);
+		hlZutaten.setExpandRatio(zutatenTable, 7);
+		hlZutaten.setExpandRatio(artikelTable, 3);
 
-		// Überschriften
+		vlBox.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+
+		// Ãœberschriften
 		artikelTable.setCaption("Artikel");
 		zutatenTable.setCaption("Zutatenliste");
 
@@ -287,6 +302,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					tmpZutaten.add(tmp);
 					containerKuchenrezeptHasArtikel.addItem(tmp);
 				}
+
 				artikelTable.markAsDirty();
 				zutatenTable.markAsDirty();
 			}
@@ -296,8 +312,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 		load();
 	}
-	
-	// Methode zum Laden der Artikel
+
 	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
@@ -315,10 +330,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		}
 	}
 
-	// Methode zum Laden der Fußnoten
 	public void load() {
 		fussnoten.removeAllItems();
-		
+
 		try {
 			List<FussnoteKuchen> fk = Fussnotekuchenverwaltung.getInstance()
 					.getAllFussnoteKuchen();
@@ -328,10 +342,9 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	// Methode zum Laden der Daten zum Ansehen und Ändern
 	@Override
 	public void getViewParam(ViewData data) {
 
@@ -353,8 +366,8 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			tmpZutaten = new ArrayList<KuchenrezeptHasArtikel>();
 		}
 
-		control.replaceComponent(btSpeichern, update);
-		box.replaceComponent(ueberschrift, ueberschrift2);
+		hlControl.replaceComponent(btSpeichern, update);
+		vlBox.replaceComponent(ueberschrift, ueberschrift2);
 		ueberschrift2.setWidth("300px");
 
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
@@ -372,7 +385,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		 */
 
 		name.setValue(kuchenrezept.getName());
-		
+
 		for (int i = 0; i < kuchenrezept.getFussnoteKuchen().size(); i++) {
 			fussnoten.select(kuchenrezept.getFussnoteKuchen().get(i));
 		}
@@ -416,7 +429,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		kommentar.setValue(kuchenrezept.getKommentar());
 	}
 
-	// Methode, die Änderungen der Textfelder übernimmt
 	@Override
 	public void valueChange(ValueChangeEvent event) {
 		nameInput = name.getValue();
@@ -466,8 +478,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			kuchenrezeptNeu.setArtikel(ausgArtikel);
 
 			if (ausgArtikel.isEmpty()) {
-				((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_REZEPT_ZUTATEN);
+				Notification notification = new Notification(
+						"Bitte Zutaten eintragen");
+				notification.setDelayMsec(500);
+				notification.show(Page.getCurrent());
 				aus = "2";
 				return;
 			}
@@ -482,8 +496,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		try {
 			kuchenrezeptNeu = Kuchenrezeptverwaltung.getInstance()
 					.getKuchenrezeptByName1(nameInput);
@@ -519,9 +532,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			}
 		}
 
-		((Application) UI.getCurrent().getData())
-		.showDialog(IConstants.INFO_REZEPT_SAVE);
-		
+		Notification notification = new Notification(
+				"Rezept wurde gespeichert!");
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
 	}
 
@@ -531,7 +545,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		// setzt Rezeptname
 		kuchenrezept.setName(nameInput);
 
-		// setzt Ãnderungsdatum
+		// setzt ï¿½nderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date3 = new Date(date.getTime());
 		kuchenrezept.setErstellt(date3);
@@ -557,13 +571,10 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 			e.printStackTrace();
 		}
 
-		
 		if (fussnoten.getValue().toString() != "[]") {
-			List<String> FussnoteKuchenId = Arrays.asList(fussnoten
-					.getValue()
+			List<String> FussnoteKuchenId = Arrays.asList(fussnoten.getValue()
 					.toString()
-					.substring(1,
-							fussnoten.getValue().toString().length() - 1)
+					.substring(1, fussnoten.getValue().toString().length() - 1)
 					.split("\\s*,\\s*"));
 
 			List<KuchenrezeptHasFussnote> fussnotelist = new ArrayList<KuchenrezeptHasFussnote>();
@@ -586,38 +597,42 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 					e.printStackTrace();
 				}
 			}
-		}		
-		((Application) UI.getCurrent().getData())
-		.showDialog(IConstants.INFO_KUCHENREZEPT_UPDATE);
+		}
+		Notification notification = new Notification("Rezept wurde geÃ¤ndert!");
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
 		ViewHandler.getInstance().switchView(KuchenrezeptAnzeigen.class);
+	}
+
+	// Funktion zum Anzeigen der Notification
+	private void showNotification(String text) {
+		Notification notification = new Notification(text);
+		notification.setDelayMsec(500);
+		notification.show(Page.getCurrent());
 	}
 
 	// Funktion zur Validierung
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
-			((Application) UI.getCurrent().getData())
-			.showDialog(IConstants.INFO_KUCHENREZEPT_NAME);
+			showNotification("Bitte Bezeichnung eingeben!");
 			return false;
 		}
 		if (tmpZutaten != null || tmpZutaten.size() != 0) {
 			for (KuchenrezeptHasArtikel kha : tmpZutaten) {
 				if (kha.getMenge() >= 100000.0) {
-					((Application) UI.getCurrent().getData())
-					.showDialog(IConstants.INFO_REZEPT_MENGE);
+					showNotification(IConstants.INFO_REZEPT_MENGE);
 					return false;
 				}
 			}
 			if (tmpZutaten == null || tmpZutaten.size() == 0) {
-				((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_REZEPT_ZUTATEN);
+				showNotification(IConstants.INFO_REZEPT_ZUTATEN);
 				return false;
 			}
 		}
 
 		return true;
 	}
-	
-	// Funktion zum Hinzufügen neuer Artikel
+
 	private void addArtikel() {
 		final Window win = new Window("Neuer Artikel");
 		win.setModal(true);
