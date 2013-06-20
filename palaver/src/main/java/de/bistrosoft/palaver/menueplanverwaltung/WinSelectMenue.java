@@ -3,7 +3,6 @@ package de.bistrosoft.palaver.menueplanverwaltung;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.poi.ss.formula.ptg.TblPtg;
 import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -30,6 +29,7 @@ import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
@@ -251,9 +251,22 @@ public class WinSelectMenue extends Window {
 
 			}
 		});
-
-		ftMenueList.setFilterFieldValue("kochname", ((Application) UI
-				.getCurrent().getData()).getUser().getVorname());
+		if(destComp instanceof MenueComponent){
+			Mitarbeiter tmpMa=((MenueComponent)destComp).getMenue().getKoch();
+			System.out.println(tmpMa);
+			if(((Application) UI.getCurrent().getData()).getUser().equals(tmpMa)){
+				
+				ftMenueList.setFilterFieldValue("kochname", ((Application) UI
+						.getCurrent().getData()).getUser().getVorname());
+			}
+			
+			
+		}
+		else {
+			ftMenueList.setFilterFieldValue("kochname", ((Application) UI
+					.getCurrent().getData()).getUser().getVorname());
+			
+		}
 
 		ftMenueList.setColumnWidth("name", 200);
 		ftMenueList.setColumnWidth("kochname", 80);
