@@ -32,6 +32,7 @@ import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -140,7 +141,7 @@ public class MenueplanGridLayout extends CustomComponent {
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Pastagericht</font></pre>",
 						ContentMode.HTML),
 				new Label(
-						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Suppe / Salat</font></pre>",
+						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Suppe/Salat</font></pre>",
 						ContentMode.HTML),
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\"> \r \n     Dessert</font></pre>",
@@ -166,10 +167,9 @@ public class MenueplanGridLayout extends CustomComponent {
 					+ (date.get(Calendar.MONTH) + 1) + "."
 					+ date.get(Calendar.YEAR);
 
-			Label lbTmp = new Label("<div align=center><B>" + "\r\n" + strDay
-					+ "\r\n" + strDate + "</B></div>", ContentMode.HTML);
+			Label lbTmp = new Label(strDay+", "+ strDate);
 			lbTmp.setHeight("30px");
-			lbTmp.setWidth("149px");
+//			lbTmp.setWidth("149px");
 			layout.addComponent(lbTmp, col, 0);
 			layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
 		}
@@ -357,7 +357,16 @@ public class MenueplanGridLayout extends CustomComponent {
 													mc.remove();
 												}
 												else {
-													
+													if (!((Application) UI
+															.getCurrent().getData())
+															.userHasPersmission(Rollen.ADMINISTRATOR)) {
+														
+														mc.remove();
+														
+														((Application) UI.getCurrent().getData())
+														.showDialog("Ignorieren nur als Administrator möglich!");
+
+													}
 												}
 											}
 										});

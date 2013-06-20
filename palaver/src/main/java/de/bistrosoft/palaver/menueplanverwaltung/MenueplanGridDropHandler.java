@@ -7,7 +7,6 @@ import com.vaadin.server.Sizeable;
 import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.ui.AbsoluteLayout.ComponentPosition;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
@@ -15,7 +14,6 @@ import com.vaadin.ui.UI;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
-import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
@@ -99,6 +97,105 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 				comp.pruefeRegeln(menueplan);
 				menueplan.pruefeRegeln(comp);
 				pruefeIgnorierbar(comp);
+				
+
+				final Integer finalSourceColumn = sourceColumn;
+				final Integer finalSourceRow = sourceRow;
+				final Integer finalDestColumn = destColumn;
+				final Integer finalDestRow = destRow;
+				final Component finalDestComp = destComp;
+				final Component finalSourceComp = sourceComp;
+				
+				if (comp.getFehlerRegeln() != null) {
+					for (Regel r : comp.getFehlerRegeln()) {
+						if (!r.getIgnorierbar()) {
+							ConfirmDialog.show(UI.getCurrent(),
+									"Regel verletzt",
+									"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("
+											+ r.getFehlermeldung() + ")", "OK",
+									"Ignorieren", new ConfirmDialog.Listener() {
+
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												layout.removeComponent(finalSourceComp);
+												layout.removeComponent(finalDestComp);
+
+												layout.addComponent(
+														finalSourceComp,
+														finalSourceColumn,
+														finalSourceRow);
+												layout.addComponent(
+														finalDestComp,
+														finalDestColumn,
+														finalDestRow);
+
+												if (finalDestComp instanceof MenueComponent) {
+													MenueComponent comp = (MenueComponent) finalDestComp;
+													comp.isChanged(true);
+													comp.setCol(finalSourceColumn);
+													comp.setRow(finalSourceRow);
+													comp.pruefeRegeln(menueplan);
+													menueplan
+															.pruefeRegeln(comp);
+													pruefeIgnorierbar(comp);
+												}
+												if (finalSourceComp instanceof MenueComponent) {
+													MenueComponent comp = (MenueComponent) finalSourceComp;
+													comp.isChanged(true);
+													comp.setCol(finalDestColumn);
+													comp.setRow(finalDestRow);
+													comp.pruefeRegeln(menueplan);
+													menueplan
+															.pruefeRegeln(comp);
+												}
+											} else {
+												if (!((Application) UI
+														.getCurrent().getData())
+														.userHasPersmission(Rollen.ADMINISTRATOR)) {
+													layout.removeComponent(finalSourceComp);
+													layout.removeComponent(finalDestComp);
+
+													layout.addComponent(
+															finalSourceComp,
+															finalSourceColumn,
+															finalSourceRow);
+													layout.addComponent(
+															finalDestComp,
+															finalDestColumn,
+															finalDestRow);
+
+													if (finalDestComp instanceof MenueComponent) {
+														MenueComponent comp = (MenueComponent) finalDestComp;
+														comp.isChanged(true);
+														comp.setCol(finalSourceColumn);
+														comp.setRow(finalSourceRow);
+														comp.pruefeRegeln(menueplan);
+														menueplan
+																.pruefeRegeln(comp);
+														pruefeIgnorierbar(comp);
+													}
+													if (finalSourceComp instanceof MenueComponent) {
+														MenueComponent comp = (MenueComponent) finalSourceComp;
+														comp.isChanged(true);
+														comp.setCol(finalDestColumn);
+														comp.setRow(finalDestRow);
+														comp.pruefeRegeln(menueplan);
+														menueplan
+																.pruefeRegeln(comp);
+													}
+													
+													((Application) UI.getCurrent().getData())
+													.showDialog("Ignorieren nur als Administrator möglich!");
+
+												}
+											}
+										}
+									});
+
+						}
+					}
+
+				}
 			}
 			if (sourceComp instanceof MenueComponent) {
 				MenueComponent comp = (MenueComponent) sourceComp;

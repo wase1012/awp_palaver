@@ -9,6 +9,7 @@ import java.util.Date;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.converter.Converter.ConversionException;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -30,6 +32,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
+import de.bistrosoft.palaver.util.PrintUI;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
@@ -73,6 +76,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
 	Button btImport = new Button("Plan importieren");
+	Button btPrint = new Button("Druckansicht");
+	Button btWetter = new Button("Wetter");
 	private Button btDeletePlan = new Button("Gesamten Plan löschen");
 
 	private Label lbKW = new Label(
@@ -447,6 +452,23 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				}
 			}
 		});
+		String url="http://www.wetter.com/wetter_aktuell/wettervorhersage/7_tagesvorhersage/?id=DE0005309";
+		final BrowserWindowOpener opener =
+		        new BrowserWindowOpener(url);
+		opener.setFeatures("height=800,width=1200,resizable");
+		opener.extend(btWetter);
+		
+		btPrint.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+//				opener.extend(btPrint);
+				print();
+				
+			}
+		});
+		
+		
 
 		// FuÃŸnoten
 		Label lbFussnoten = new Label(
@@ -462,6 +484,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		hlControl.addComponent(btEnableDragging);
 		hlControl.addComponent(btEnableDelete);
 		hlControl.addComponent(btSubmitDelete);
+		hlControl.addComponent(btPrint);
+		hlControl.addComponent(btWetter);
 		hlControl.setSpacing(true);
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
@@ -478,6 +502,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 
 		checkRollen();
+		getHtmlTable();
 	}
 
 	public void checkRollen() {
@@ -496,6 +521,67 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		}
 
 	}
+	
+	public String getHtmlTable(){
+		String h = "<table border=\"1\" height=\"600\">";
+		Integer col = shownMenueplan.layout.getColumns();
+		Integer row = shownMenueplan.layout.getRows();
+		
+		for(int y=0;y<row;++y){
+			if(y!=1){
+				h+="<tr>";
+				for(int x = 0; x<col ; ++x ){
+					h+="<th align=\"center\">";
+					h+=getLabelText(x,y);
+					h+="</th>";
+				}
+				h+="</tr>";
+			}
+		}
+		h+="</table>";
+		System.out.println(h);
+		return h;
+	}
+
+	private String getLabelText(Integer x, Integer y) {
+		Component comp = shownMenueplan.layout.getComponent(x, y);
+		if(comp instanceof MenueComponent){
+			MenueComponent mc =(MenueComponent) comp;
+			return mc.getAngezeigterName();
+		}
+		else if (comp instanceof Label){
+			Label lb = (Label) comp;
+			String sLb = lb.getValue();
+			return getZeilenLabel(sLb);
+		}
+		return "dsjkl fsdkshhhhhhhhhhhhh hhhhhhhhh ffffffffffffffffffffffff";
+	}
+
+	private String getZeilenLabel(String sLb) {
+		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_1)){
+			return IConstants.INFO_REGEL_ZEILE_1;
+		}
+		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_2)){
+			return IConstants.INFO_REGEL_ZEILE_2;
+		}
+		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_3)){
+			return IConstants.INFO_REGEL_ZEILE_3;
+		}
+		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_4)){
+			return IConstants.INFO_REGEL_ZEILE_4;
+		}
+		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_5)){
+			return IConstants.INFO_REGEL_ZEILE_5;
+		}
+		if(sLb.contains("Datum")){
+			return "Datum";
+		}
+		if(sLb.contains("Köche")){
+			return "Köche";
+		}
+		return sLb;
+		
+	}
 
 	public static void switchMenueplan() {
 
@@ -504,5 +590,21 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	@Override
 	public void getViewParam(ViewData data) {
 
+	}
+	
+	public void print() {
+		final Window win = new Window();
+		win.setModal(true);
+		win.setResizable(false);
+		win.setSizeFull();
+		
+		Label lbH=new Label(
+				 getHtmlTable(),
+				ContentMode.HTML);
+		addComponent(lbH);
+		setComponentAlignment(lbH, Alignment.TOP_CENTER);
+		lbH.setSizeFull();
+		win.setContent(lbH);
+		UI.getCurrent().addWindow(win);
 	}
 }

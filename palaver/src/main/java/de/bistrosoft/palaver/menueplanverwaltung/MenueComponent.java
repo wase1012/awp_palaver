@@ -167,11 +167,9 @@ public class MenueComponent extends CustomComponent{
 	}
 	
 	public void addFehlerRegel(Regel regel) {
-		System.out.println("ADD FEHLER 1");
 		if (regel == null){
 			return;
 		}
-		System.out.println("ADD FEHLER 2");
 		
 		if(FehlerRegeln == null){
 			FehlerRegeln = new ArrayList<Regel>();
@@ -183,7 +181,6 @@ public class MenueComponent extends CustomComponent{
 		}
 		
 		FehlerRegeln.add(regel);
-		System.out.println("ADD FEHLER 3");
 		
 		btFehler.setVisible(true);
 		
