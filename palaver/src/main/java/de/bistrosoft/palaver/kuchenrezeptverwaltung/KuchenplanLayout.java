@@ -41,11 +41,17 @@ public class KuchenplanLayout extends CustomComponent {
 
 	// Konstanten
 	KuchenplanLayout instance = this;
-	private static final int ROWS = 7;
+	private static final int ROWS = 8;
 	private static final int COLUMNS = 2;
 	public GridLayout layout = null;
 	private Kuchenplan kuchenplan = null;
 
+	// Labels
+	private Label lbHeadlinePlatzhalter = new Label();
+	private Label lbHeadline = new Label(
+			"<div><B>Kuchenname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anzahl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fußnoten</B></div>",
+			ContentMode.HTML);
+	
 	// Tabellen
 	public Table itemMoTable;
 	public Table itemDiTable;
@@ -80,6 +86,7 @@ public class KuchenplanLayout extends CustomComponent {
 	}
 
 	// Seitenlayout erstellen
+	@SuppressWarnings("deprecation")
 	public KuchenplanLayout(int week, int year) {
 		kuchenplan = null;
 		kuchenplan = Kuchenplanverwaltung.getInstance()
@@ -103,12 +110,17 @@ public class KuchenplanLayout extends CustomComponent {
 		// GridLayout zu Seitenlayout hinzufÃ¼gen
 		outer.addComponent(layout);
 		outer.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+		
+		// Überschriften-Zeile
+		lbHeadlinePlatzhalter.setWidth("149px");
+		layout.addComponent(lbHeadlinePlatzhalter, 0, 0);
+		layout.addComponent(lbHeadline, 1, 0);
 
 		// Fülle Datumsspalte mit Wochentag und Datum
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week,
 				year);
-		for (int row = 0; row < ROWS; row++) {
-			GregorianCalendar date = dates.get(row);
+		for (int row = 1; row < ROWS; row++) {
+			GregorianCalendar date = dates.get(row-1);
 			String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2,
 					Locale.GERMANY);
 
@@ -118,7 +130,7 @@ public class KuchenplanLayout extends CustomComponent {
 
 			Label lbTmp = new Label("<div align=center><B>" + "\r\n" + strDay
 					+ "\r\n" + strDate + "</B></div>", ContentMode.HTML);
-			lbTmp.setHeight("122px");
+			lbTmp.setHeight("102px");
 			lbTmp.setWidth("149px");
 			layout.addComponent(lbTmp, 0, row);
 			layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
@@ -127,7 +139,7 @@ public class KuchenplanLayout extends CustomComponent {
 		// Füge Listen für KuchenplanItems ein
 		itemMoTable = new Table();
 		itemMoTable.setWidth("430px");
-		itemMoTable.setHeight("120px");
+		itemMoTable.setHeight("100px");
 		itemMoTable.setStyleName("palaverTable2");
 		itemMoTable.setImmediate(true);
 		itemMoTable.setColumnWidth("kuchenname", 210);
@@ -140,10 +152,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemMoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemMoTable.setEditable(true);
+		itemMoTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemDiTable = new Table();
 		itemDiTable.setWidth("430px");
-		itemDiTable.setHeight("120px");
+		itemDiTable.setHeight("100px");
 		itemDiTable.setStyleName("palaverTable2");
 		itemDiTable.setPageLength(16);
 		itemDiTable.setImmediate(true);
@@ -157,10 +170,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemDiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemDiTable.setEditable(true);
+		itemDiTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemMiTable = new Table();
 		itemMiTable.setWidth("430px");
-		itemMiTable.setHeight("120px");
+		itemMiTable.setHeight("100px");
 		itemMiTable.setStyleName("palaverTable2");
 		itemMiTable.setPageLength(16);
 		itemMiTable.setImmediate(true);
@@ -174,10 +188,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemMiTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemMiTable.setEditable(true);
+		itemMiTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemDoTable = new Table();
 		itemDoTable.setWidth("430px");
-		itemDoTable.setHeight("120px");
+		itemDoTable.setHeight("100px");
 		itemDoTable.setStyleName("palaverTable2");
 		itemDoTable.setPageLength(16);
 		itemDoTable.setImmediate(true);
@@ -191,10 +206,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemDoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemDoTable.setEditable(true);
+		itemDoTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemFrTable = new Table();
 		itemFrTable.setWidth("430px");
-		itemFrTable.setHeight("120px");
+		itemFrTable.setHeight("100px");
 		itemFrTable.setStyleName("palaverTable2");
 		itemFrTable.setPageLength(16);
 		itemFrTable.setImmediate(true);
@@ -208,10 +224,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemFrTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemFrTable.setEditable(true);
+		itemFrTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemSaTable = new Table();
 		itemSaTable.setWidth("430px");
-		itemSaTable.setHeight("120px");
+		itemSaTable.setHeight("100px");
 		itemSaTable.setStyleName("palaverTable2");
 		itemSaTable.setPageLength(16);
 		itemSaTable.setImmediate(true);
@@ -225,10 +242,11 @@ public class KuchenplanLayout extends CustomComponent {
 		itemSaTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemSaTable.setEditable(true);
+		itemSaTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
 		itemSoTable = new Table();
 		itemSoTable.setWidth("430px");
-		itemSoTable.setHeight("120px");
+		itemSoTable.setHeight("100px");
 		itemSoTable.setStyleName("palaverTable2");
 		itemSoTable.setPageLength(16);
 		itemSoTable.setImmediate(true);
@@ -242,19 +260,21 @@ public class KuchenplanLayout extends CustomComponent {
 		itemSoTable.setVisibleColumns(new Object[] { "kuchenname", "anzahl",
 				"fussnoten" });
 		itemSoTable.setEditable(true);
+		itemSoTable.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
 
-		layout.addComponent(itemMoTable, 1, 0);
-		layout.addComponent(itemDiTable, 1, 1);
-		layout.addComponent(itemMiTable, 1, 2);
-		layout.addComponent(itemDoTable, 1, 3);
-		layout.addComponent(itemFrTable, 1, 4);
-		layout.addComponent(itemSaTable, 1, 5);
-		layout.addComponent(itemSoTable, 1, 6);
+		layout.addComponent(itemMoTable, 1, 1);
+		layout.addComponent(itemDiTable, 1, 2);
+		layout.addComponent(itemMiTable, 1, 3);
+		layout.addComponent(itemDoTable, 1, 4);
+		layout.addComponent(itemFrTable, 1, 5);
+		layout.addComponent(itemSaTable, 1, 6);
+		layout.addComponent(itemSoTable, 1, 7);
 
 		// Füge Liste mit allen Kuchen ein
 		kuchenTable = new FilterTable();
 		kuchenTable.setSizeFull();
 		kuchenTable.setWidth("350px");
+		kuchenTable.setHeight("350px");
 		kuchenTable.setColumnWidth("name", 210);
 		kuchenTable.setColumnWidth("fussnoten", 100);
 		kuchenTable.setStyleName("palaverTable2");
