@@ -662,10 +662,11 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
 			return false;
 		}
-		if (bestellung.getValue() == null) {
+		if (bestellung.getValue() == null || Integer.parseInt(bestellung.getValue()) <= 0) {
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
-		} else {
+		} 
+		else {
 			return true;
 		}
 	}
