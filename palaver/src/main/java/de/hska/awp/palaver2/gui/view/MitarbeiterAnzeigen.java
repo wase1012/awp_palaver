@@ -19,8 +19,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -59,7 +61,6 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
-		auswaehlen.setEnabled(false);
 
 		head = new HorizontalLayout();
 		head.setWidth("100%");
@@ -84,9 +85,6 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					mitarbeiter = (Mitarbeiter) event.getProperty().getValue();
-					auswaehlen.setEnabled(true);
-				} else {
-					auswaehlen.setEnabled(false);
 				}
 			}
 		});
@@ -107,6 +105,10 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (mitarbeiter != null) {
 					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+				}
+				else {
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_MITARBEITER_AUSWAEHLEN);
 				}
 			}
 		});

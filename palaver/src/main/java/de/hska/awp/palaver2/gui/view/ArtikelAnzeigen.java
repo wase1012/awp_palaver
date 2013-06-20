@@ -22,8 +22,10 @@ import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -65,7 +67,6 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
-		auswaehlen.setEnabled(false);
 
 		headline = new Label("Alle Artikel");
 		headline.setStyleName("ViewHeadline");
@@ -93,9 +94,6 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					artikel = (Artikel) event.getProperty().getValue();
-					auswaehlen.setEnabled(true);
-				} else {
-					auswaehlen.setEnabled(false);
 				}
 			}
 		});
@@ -116,6 +114,10 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (artikel != null) {
 					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+				}
+				else {
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_ARTIKEL_AUSWAEHLEN);
 				}
 			}
 		});

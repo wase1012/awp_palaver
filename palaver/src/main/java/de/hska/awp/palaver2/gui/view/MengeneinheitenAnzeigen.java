@@ -23,11 +23,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -40,8 +42,10 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 	private static final Logger log = LoggerFactory.getLogger(MengeneinheitenAnzeigen.class.getName());
 
 	private VerticalLayout layout = new VerticalLayout();
+	private HorizontalLayout control = new HorizontalLayout();
 
 	private Button hinzufuegen = new Button(IConstants.BUTTON_ADD);
+	private Button auswaehlen = new Button(IConstants.BUTTON_SELECT);
 	private Table table;
 
 	private TextField name = new TextField("Name");
@@ -84,11 +88,12 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 				}
 			}
 		});
+		
+		auswaehlen.addClickListener(new ClickListener() {
 
-		table.addItemClickListener(new ItemClickListener() {
 			@Override
-			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick()) {
+			public void buttonClick(ClickEvent event) {
+				if (mengeUpdate != null) {
 					final Window mengNeu = new Window();
 					mengNeu.setClosable(false);
 					mengNeu.setWidth("400px");
@@ -180,14 +185,29 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 						}
 					});
 				}
+				else {
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_MENGENEINHEIT_AUSWAEHLEN);
+				}
+			}
+		});
+
+		table.addItemClickListener(new ItemClickListener() {
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				if (event.isDoubleClick()) {
+					auswaehlen.click();
+				}
 
 			}
 		});
 
+		control.addComponent(auswaehlen);
+		control.addComponent(hinzufuegen);
 		layout.addComponent(table);
 		layout.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
-		layout.addComponent(hinzufuegen);
-		layout.setComponentAlignment(hinzufuegen, Alignment.MIDDLE_RIGHT);
+		layout.addComponent(control);
+		layout.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 
 		hinzufuegen.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 

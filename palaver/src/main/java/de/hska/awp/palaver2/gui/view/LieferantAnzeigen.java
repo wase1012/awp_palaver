@@ -16,8 +16,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -53,7 +55,6 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
-		auswaehlen.setEnabled(false);
 
 		headline = new Label("Alle Lieferanten");
 		headline.setStyleName("ViewHeadline");
@@ -82,8 +83,6 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 				if (event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
 					auswaehlen.setEnabled(true);
-				} else {
-					auswaehlen.setEnabled(false);
 				}
 			}
 		});
@@ -104,6 +103,10 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if (lieferant != null) {
 					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+				}
+				else {
+					((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_LIEFERANT_AUSWAEHLEN);
 				}
 			}
 		});

@@ -9,9 +9,9 @@ public interface IConstants
 
 	// DB Verbindung
 //  Team1
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
+//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
 //	Produktiv
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
 	
@@ -179,6 +179,7 @@ public interface IConstants
 	String 		INFO_ARTIKEL_KATEGORIENAME = "Bitte Namen eingeben";
 	String 		INFO_ARTIKEL_PREIS = "Bitte Preis angeben";
 	String 		INFO_ARTIKEL_DURCHSCHNITT = "Bitte Durchschnitt angeben";
+	String 		INFO_ARTIKEL_AUSWAEHLEN = "Bitte Artikel auswählen";
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
 	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";
@@ -190,10 +191,13 @@ public interface IConstants
 	String		INFO_BESTELLUNG_ARTIKEL = "Bitte Artikel auswählen";
 	String 		INFO_BESTELLUNG_AUSWAEHLEN = "Bitte Bestellung auswählen";
 	
+	String 		INFO_KATEGORIE_AUSWAEHLEN = "Bitte Kategorie auswählen";
+	
 	String 		INFO_MITARBEITER_NAME = "Bitte Namen eingeben";
 	String		INFO_MITARBEITER_VORNAME = "Bitte Vorname eingeben";
 	String		INFO_MITARBEITER_BENUTZERNAME = "Bitte Benutzername eingeben";
 	String		INFO_MITARBEITER_PASSWORT ="Bitte Passwort eingeben";
+	String		INFO_MITARBEITER_AUSWAEHLEN = "Bitte Mitarbeiter auswählen";
 	
 	String		INFO_VALID_BEZEICHNUNG = "Bitte Bezeichnung eingeben!";
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
@@ -224,6 +228,8 @@ public interface IConstants
 	
 	String 		INFO_LIEFERANT_SAVE = "Lieferant wurde gespeichert!";
 	
+	String 		INFO_MENGENEINHEIT_AUSWAEHLEN = "Bitte Mengeneinheit auswählen";
+	
 	String 		INFO_NACHRICHT_TEXT = "Bitte Nachricht eingeben";
 	String 		INFO_NACHRICHT_EMPF = "Bitte Empfängerrolle auswählen";
 	String 		INFO_INPUT_WERT = "Bitte gültigen Wert eingeben";
@@ -240,6 +246,14 @@ public interface IConstants
 
 	// Fußnoten Menueplan 
 	String 		FUSSNOTEN_MENUEPLAN = "<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>";
+
+
+
+
+
+
+
+
 
 
 
