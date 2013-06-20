@@ -24,6 +24,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
@@ -150,6 +152,29 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				containerArtikel.addItem(selected.getBestellungArtikel());
 				artikelTable.markAsDirty();
 				bestellungTable.markAsDirty();
+			}
+		});
+		
+		artikelTable.setCellStyleGenerator(new CellStyleGenerator()
+		{
+			
+			@Override
+			public String getStyle(CustomTable source, Object itemId, Object propertyId)
+			{
+				Artikel artikel = (Artikel) itemId;
+				if ("standard".equals(propertyId))
+				{
+					return artikel.isStandard() ? "check" : "cross";
+				}
+				if ("grundbedarf".equals(propertyId))
+				{
+					return artikel.isGrundbedarf() ? "check" : "cross";
+				}
+				if ("lebensmittel".equals(propertyId))
+				{
+					return artikel.isLebensmittel() ? "check" : "cross";
+				}
+				return "";
 			}
 		});
 
