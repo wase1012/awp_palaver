@@ -238,8 +238,8 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 												if (finalDestComp instanceof MenueComponent) {
 													MenueComponent comp = (MenueComponent) finalDestComp;
 													comp.isChanged(true);
-													comp.setCol(finalSourceColumn);
-													comp.setRow(finalSourceRow);
+													comp.setCol(finalDestColumn);
+													comp.setRow(finalDestRow);
 													comp.pruefeRegeln(menueplan);
 													menueplan
 															.pruefeRegeln(comp);
@@ -248,8 +248,8 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 												if (finalSourceComp instanceof MenueComponent) {
 													MenueComponent comp = (MenueComponent) finalSourceComp;
 													comp.isChanged(true);
-													comp.setCol(finalDestColumn);
-													comp.setRow(finalDestRow);
+													comp.setCol(finalSourceColumn);
+													comp.setRow(finalSourceRow);
 													comp.pruefeRegeln(menueplan);
 													menueplan
 															.pruefeRegeln(comp);
@@ -273,8 +273,8 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 													if (finalDestComp instanceof MenueComponent) {
 														MenueComponent comp = (MenueComponent) finalDestComp;
 														comp.isChanged(true);
-														comp.setCol(finalSourceColumn);
-														comp.setRow(finalSourceRow);
+														comp.setRow(finalDestRow);
+														comp.setCol(finalDestColumn);
 														comp.pruefeRegeln(menueplan);
 														menueplan
 																.pruefeRegeln(comp);
@@ -283,8 +283,8 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 													if (finalSourceComp instanceof MenueComponent) {
 														MenueComponent comp = (MenueComponent) finalSourceComp;
 														comp.isChanged(true);
-														comp.setCol(finalDestColumn);
-														comp.setRow(finalDestRow);
+														comp.setCol(finalSourceColumn);
+														comp.setRow(finalSourceRow);
 														comp.pruefeRegeln(menueplan);
 														menueplan
 																.pruefeRegeln(comp);
