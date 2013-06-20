@@ -126,7 +126,7 @@ public class MenueplanDAO extends AbstractDAO {
 			while (setMenues.next()) {
 				Long id = setMenues.getLong("id");
 				String name = setMenues.getString("name");
-				Mitarbeiter koch = null;
+				Mitarbeiter koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong("koch"));
 				// TODO: = new Mitarbeiter(name, vorname);
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");

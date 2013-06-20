@@ -32,14 +32,12 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
-import de.bistrosoft.palaver.util.PrintUI;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewHandler;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
@@ -539,6 +537,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		}
 		h+="</table>";
+		h+= IConstants.FUSSNOTEN_MENUEPLAN;
 		System.out.println(h);
 		return h;
 	}
@@ -554,7 +553,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			String sLb = lb.getValue();
 			return getZeilenLabel(sLb);
 		}
-		return "dsjkl fsdkshhhhhhhhhhhhh hhhhhhhhh ffffffffffffffffffffffff";
+		return "";
 	}
 
 	private String getZeilenLabel(String sLb) {
