@@ -14,6 +14,7 @@ import com.vaadin.ui.themes.BaseTheme;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.KuchenplanLayout;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 
@@ -43,9 +44,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 	private Button platzhalter2 = new Button();
 	private String strKW = new String("Kalenderwoche: " + week + "/" + year);
 
-	private Label lbKW = new Label(
-			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-					+ strKW + "</pre>", ContentMode.HTML);
+	private Label lbKW = new Label(strKW);
 	KuchenplanLayout shownKuchenplan = curKuchenplan;
 
 	public KuchenplanAnzeigen() {
@@ -55,6 +54,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 
 		this.addComponent(box);
 		this.setComponentAlignment(box, Alignment.MIDDLE_CENTER);
+		lbKW.setStyleName("ViewHeadline");
 
 		platzhalter1.setStyleName(BaseTheme.BUTTON_LINK);
 		platzhalter1.setIcon(new ThemeResource("img/platzhalter.png"));
@@ -80,9 +80,8 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					shownKuchenplan = prevKuchenplan;
 					strKW = "Kalenderwoche: " + (week - 1) + "/" + year;
 
-					Label lbForeWeek = new Label(
-							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-									+ strKW + "</pre>", ContentMode.HTML);
+					Label lbForeWeek = new Label(strKW);
+					lbForeWeek.setStyleName("ViewHeadline");
 					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
 					lbKW = lbForeWeek;
 					left.replaceComponent(btForeWeek, platzhalter1);
@@ -93,9 +92,8 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					shownKuchenplan = curKuchenplan;
 					strKW = "Kalenderwoche: " + (week) + "/" + year;
 
-					Label lbForeWeek = new Label(
-							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-									+ strKW + "</pre>", ContentMode.HTML);
+					Label lbForeWeek = new Label(strKW);
+					lbForeWeek.setStyleName("ViewHeadline");
 					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
 					lbKW = lbForeWeek;
 					left.replaceComponent(platzhalter1, btForeWeek);
@@ -120,9 +118,8 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					shownKuchenplan = nextKuchenplan;
 					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
 
-					Label lbNextWeek = new Label(
-							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-									+ strKW + "</pre>", ContentMode.HTML);
+					Label lbNextWeek = new Label(strKW);
+					lbNextWeek.setStyleName("ViewHeadline");
 					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
 					lbKW = lbNextWeek;
 					right.replaceComponent(btNextWeek, platzhalter2);
@@ -132,9 +129,8 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					shownKuchenplan = curKuchenplan;
 					strKW = "Kalenderwoche: " + (week) + "/" + year;
 
-					Label lbNextWeek = new Label(
-							"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
-									+ strKW + "</pre>", ContentMode.HTML);
+					Label lbNextWeek = new Label(strKW);
+					lbNextWeek.setStyleName("ViewHeadline");
 					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
 					lbKW = lbNextWeek;
 					right.replaceComponent(platzhalter2, btNextWeek);
@@ -173,9 +169,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		});
 		
 		// FußŸnoten
-		Label lbFussnoten = new Label(
-				"<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (oWe) = weizenfrei &nbsp;&nbsp; (oG) = glutenfrei &nbsp;&nbsp; (oE) = eifrei &nbsp;&nbsp; (oL) = laktosefrei <BR> (mM) = mitMandeln &nbsp;&nbsp; (mWa) = mit Walnüssen &nbsp;&nbsp; (mH) = mit Haselnüssen &nbsp;&nbsp; (mA) = mit Alkohol &nbsp;&nbsp;</div>",
-				ContentMode.HTML);
+		Label lbFussnoten = new Label(IConstants.FUSSNOTEN_KUCHENPLAN, ContentMode.HTML);
 
 		// Hinzufï¿½gen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
