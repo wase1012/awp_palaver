@@ -267,6 +267,12 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					}
 
 					((Application) UI.getCurrent().getData()).showDialog(notification);
+					if (ArtikelErstellen.this.getParent() instanceof Window) {
+						Window win = (Window) ArtikelErstellen.this.getParent();
+						win.close();
+					} else {
+						ViewHandler.getInstance().returnToDefault();
+					}
 				}
 			}
 		});
