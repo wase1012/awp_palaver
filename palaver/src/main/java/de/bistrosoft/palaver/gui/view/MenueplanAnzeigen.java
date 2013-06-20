@@ -32,14 +32,12 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
-import de.bistrosoft.palaver.util.PrintUI;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewHandler;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 @SuppressWarnings("serial")
