@@ -631,7 +631,7 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		}
 
 		try {
-			Integer.parseInt(bestellung.getValue());
+			Double.parseDouble(bestellung.getValue());
 		} catch (NumberFormatException e) {
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
@@ -662,7 +662,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
 			return false;
 		}
-		if (bestellung.getValue() == null || Integer.parseInt(bestellung.getValue()) <= 0) {
+		if (bestellung.getValue() == null || Double.parseDouble(bestellung.getValue().toString()) < 0.1) {
+			System.out.print(bestellung.getValue().toString());
 			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
 		} 
