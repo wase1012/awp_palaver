@@ -537,6 +537,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		}
 		h+="</table>";
+		h+= IConstants.FUSSNOTEN_MENUEPLAN;
 		System.out.println(h);
 		return h;
 	}
@@ -552,7 +553,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			String sLb = lb.getValue();
 			return getZeilenLabel(sLb);
 		}
-		return "dsjkl fsdkshhhhhhhhhhhhh hhhhhhhhh ffffffffffffffffffffffff";
+		return "";
 	}
 
 	private String getZeilenLabel(String sLb) {
