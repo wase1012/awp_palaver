@@ -146,8 +146,9 @@ public class EmailMitBestellung extends VerticalLayout implements View {
 					catch (Exception e) {
 						log.error(e.toString());
 					}
+					((Application) UI.getCurrent().getData()).showDialog("Email wurde gesendet.");
 				}
-				((Application) UI.getCurrent().getData()).showDialog("Email wurde gesendet.");
+				
 			}
 		});
 

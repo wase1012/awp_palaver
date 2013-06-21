@@ -1,9 +1,9 @@
 package de.hska.awp.palaver2.gui.view;
 
 import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -21,7 +21,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.emailversand.Mail;
@@ -133,8 +133,6 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 				if (empfaenger.getValue() != "" && betreff.getValue() != "" && nachricht.getValue() != "") {
 					Mail mail = Mail.getInstance();
 					Boolean ergebniss = mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
-
-					
 					String message;
 					if (ergebniss == true) {
 						message = "Email wurde gesendet";
@@ -142,10 +140,10 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 					else {
 						message = "Email wurde nicht gesendet";
 					}
-						
+
 					((Application) UI.getCurrent().getData()).showDialog(message);
-					
-					
+
+
 				} else {
 					Notification notification = new Notification("Bitte vervollständigen Sie ihre Angaben!");
 					notification.setDelayMsec(500);
@@ -157,15 +155,18 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 		verwerfen.addClickListener(new ClickListener() {
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(ClickEvent event)  {
+				
+
 				if (lieferanten == false)
 					ViewHandler.getInstance().returnToDefault();
 				else
 					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+			
 			}
 		});
 	}
-
+	
 	@Override
 	public void getViewParam(ViewData data) {
 		lieferant = (Lieferant) ((ViewDataObject<?>) data).getData();

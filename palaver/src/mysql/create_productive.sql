@@ -730,6 +730,20 @@ CREATE TABLE IF NOT EXISTS `palaver`.`kuchenplan_has_kuchenrezepte` (
     )
 	ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `palaver`.`email`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `palaver`.`email` ;
+
+CREATE  TABLE IF NOT EXISTS `palaver`.`email` (
+  id INT NOT NULL AUTO_INCREMENT,
+  passwort VARCHAR(45) NOT NULL ,
+  schlussel VARCHAR(45) NOT NULL ,
+  pw_length INT NOT NULL,
+  descript VARCHAR(45),
+  PRIMARY KEY (id),  
+  UNIQUE INDEX `descript_UNIQUE` (`descript` ASC))
+ENGINE = InnoDB;
 
 USE `palaver` ;
 

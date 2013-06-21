@@ -18,6 +18,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+
  /**
   * @author Mihail Boehm
   */
@@ -35,6 +36,8 @@ public class MailActions
     public static void sendOhneAnhang(MailAccounts acc, String recipient, String subject,
             String text) throws AddressException, MessagingException, ConnectException
     {
+    	String a = "";
+
         // Properties über die Systemeigenschaften anlegen
         Properties properties = System.getProperties(); 
         // Server-Adresse hinzugefügen
