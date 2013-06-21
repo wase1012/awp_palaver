@@ -3,11 +3,13 @@ package de.hska.awp.palaver2.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
-
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.emailversand.MailModel;
-import de.hska.awp.palaver2.util.Util;
 
+/**
+ * 
+ * @author Mihail Boehm
+ *
+ */
 public class MailDAO extends AbstractDAO{
 
 	private static MailDAO instance = null;
@@ -27,6 +29,13 @@ public class MailDAO extends AbstractDAO{
 		return instance;
 	}
 	
+	/**
+	 * @param filter
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public MailModel getMailByEnum(String filter) throws ConnectException, DAOException, SQLException{
 		MailModel result = null;
 		ResultSet set = getManaged(GET_EMAIL_BY_ENUM + "'" + filter + "'");
@@ -40,6 +49,11 @@ public class MailDAO extends AbstractDAO{
 		return result;		
 	}
 	
+	/**
+	 * @param mail
+	 * @throws ConnectException
+	 * @throws DAOException
+	 */
 	public void setMail(MailModel mail) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(
 				PUT_EMAIL,

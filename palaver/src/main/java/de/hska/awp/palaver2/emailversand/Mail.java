@@ -1,17 +1,10 @@
 package de.hska.awp.palaver2.emailversand;
 
-import java.net.ConnectException;
 import java.security.Security;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.mail.*;
-import javax.mail.internet.AddressException;
-
 import org.apache.commons.codec.binary.Base64;
-import org.bouncycastle.jce.provider.symmetric.ARC4.Base;
-
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MailDAO;
 
 /**
@@ -69,6 +62,12 @@ public class Mail extends MailDAO {
 		return ergebnis;
 	}
 
+	/**
+	 * bekommt entschlüsseltes Passwort
+	 * @param filter
+	 * @return
+	 * @throws Exception
+	 */
 	public String Password(String filter) throws Exception {
 		mail = super.getMailByEnum(filter);
 		return Enschlusseln(mail);
@@ -115,6 +114,12 @@ public class Mail extends MailDAO {
 		 */
 	}
 
+	/**
+	 * 
+	 * @param mail
+	 * @return
+	 * @throws Exception
+	 */
 	private String Enschlusseln(MailModel mail) throws Exception {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		keyBytes = mail.getSchlussel().getBytes();
