@@ -6,7 +6,7 @@ package de.hska.awp.palaver2.emailversand;
 public enum MailAccounts
 {
     // Hier bitte die ensprechenden Attribute jeweils anpassen
-    NACHRICHT("smtp.1und1.de", 25, "bestellung@cafepalaver.de", "Cafe Palaver", "bestellung@cafepalaver.de");
+    NACHRICHT("smtp.1und1.de", 25, "bestellung@cafepalaver.de", "bestellung", "bestellung@cafepalaver.de");
      
     private String smtpHost;
     private int port;
