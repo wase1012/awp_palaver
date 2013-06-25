@@ -46,6 +46,8 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class ManuelleBestellungErstellen extends VerticalLayout implements View {
@@ -128,6 +130,8 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		artikelTable.setColumnCollapsingAllowed(true);
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
+		artikelTable.setFilterGenerator(new customFilter());
+		artikelTable.setFilterDecorator(new customFilterDecorator());
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		/**
 		 * Darg n Drop
@@ -173,6 +177,10 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				if ("lebensmittel".equals(propertyId))
 				{
 					return artikel.isLebensmittel() ? "check" : "cross";
+				}
+				if ("bio".equals(propertyId))
+				{
+					return artikel.isBio() ? "check" : "cross";
 				}
 				return "";
 			}
@@ -337,10 +345,17 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel", "bio" });
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
+		artikelTable.setColumnCollapsible("bio", true);
+		artikelTable.setColumnCollapsible("name", false);		
+		artikelTable.setColumnWidth("grundbedarf", 50);
+		artikelTable.setColumnHeader("grundbedarf", "grundb.");
+		artikelTable.setColumnWidth("standard", 50);
+		artikelTable.setColumnWidth("lebensmittel", 50);
+		artikelTable.setColumnWidth("bio", 50);
 	}
 	private Boolean validiereEingabe() {
 		
