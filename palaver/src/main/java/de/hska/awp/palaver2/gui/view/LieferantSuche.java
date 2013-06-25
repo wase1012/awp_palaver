@@ -226,6 +226,9 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				
+				ansprAdd.setEnabled(false);
+				
 				name.setEnabled(true);
 				bezeichnung.setEnabled(true);
 				kundennummer.setEnabled(true);
@@ -246,16 +249,19 @@ public class LieferantSuche extends VerticalLayout implements View {
 				mitte.addComponent(knoNeu);
 				mitte.setComponentAlignment(knoNeu, Alignment.BOTTOM_RIGHT);
 
-				verwerfen.addClickListener(new ClickListener() {
-
+				verwerfen.addClickListener(new ClickListener() {					
 					@Override
 					public void buttonClick(ClickEvent event) {
+						ansprAdd.setEnabled(true);
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					}
 				});
 
 				speichern.addClickListener(new ClickListener() {
 					public void buttonClick(ClickEvent event) {
+						
+						ansprAdd.setEnabled(true);
+						
 						lieferant.setName(name.getValue());
 						lieferant.setBezeichnung(bezeichnung.getValue());
 						lieferant.setKundennummer(kundennummer.getValue());
