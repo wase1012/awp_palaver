@@ -141,7 +141,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 				von = new Label("Von:");
 				von.setWidth("100%");
-				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getName());
+				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getBenutzername());
 
 				final Button loeschbutton = new Button();
 				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
