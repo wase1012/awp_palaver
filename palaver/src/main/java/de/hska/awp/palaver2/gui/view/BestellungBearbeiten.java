@@ -219,6 +219,10 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				{
 					return artikel.isLebensmittel() ? "check" : "cross";
 				}
+				if ("bio".equals(propertyId))
+				{
+					return artikel.isBio() ? "check" : "cross";
+				}
 				return "";
 			}
 		});
@@ -491,15 +495,17 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel", "bio" });
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
-		artikelTable.setColumnCollapsible("name", false);
+		artikelTable.setColumnCollapsible("bio", true);
+		artikelTable.setColumnCollapsible("name", false);		
 		artikelTable.setColumnWidth("grundbedarf", 50);
 		artikelTable.setColumnHeader("grundbedarf", "grundb.");
 		artikelTable.setColumnWidth("standard", 50);
 		artikelTable.setColumnWidth("lebensmittel", 50);
+		artikelTable.setColumnWidth("bio", 50);
 		
 		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";
