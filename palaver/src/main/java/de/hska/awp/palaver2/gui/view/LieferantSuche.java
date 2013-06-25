@@ -228,7 +228,6 @@ public class LieferantSuche extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				
 				ansprAdd.setEnabled(false);
-				ansprechpartner.setSelectable(false);
 				ansprechpartner.setEnabled(false);
 				
 				name.setEnabled(true);
@@ -291,7 +290,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				if (event.isDoubleClick() && ansprechpartner.isSelectable() == true) {
+				if (event.isDoubleClick() && ansprechpartner.isEnabled() == true) {
 					final Window anspr = new Window();
 					anspr.setClosable(false);
 					anspr.setWidth("400px");
