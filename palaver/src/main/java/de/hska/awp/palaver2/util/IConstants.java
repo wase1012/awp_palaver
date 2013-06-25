@@ -227,6 +227,7 @@ public interface IConstants
 	String		INFO_MENUEART_EDIT = "Menüart wurde geändert!";
 	
 	String 		INFO_LIEFERANT_SAVE = "Lieferant wurde gespeichert!";
+	String 		INFO_LIEFERANT_NOT_SAVE = "Lieferant bereits vorhanden";
 	
 	String 		INFO_MENGENEINHEIT_AUSWAEHLEN = "Bitte Mengeneinheit auswählen";
 	

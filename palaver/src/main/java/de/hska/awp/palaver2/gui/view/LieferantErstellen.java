@@ -25,6 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -227,20 +228,24 @@ public class LieferantErstellen extends VerticalLayout implements View
 				
 				try {
 					Lieferantenverwaltung.getInstance().createLieferant(lieferant);
+					((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_SAVE);
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 				} catch (Exception e) {
+					((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_NOT_SAVE);
 					log.error(e.toString());
 				}
 				
-				((Application) UI.getCurrent().getData())
-					.showDialog(IConstants.INFO_LIEFERANT_SAVE);
 				
-				if (LieferantErstellen.this.getParent() instanceof Window) {
+				
+			/*	if (LieferantErstellen.this.getParent() instanceof Window) {
 					Window win = (Window) LieferantErstellen.this.getParent();
 					win.close();
 				}
 				else {
-					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
-				}
+					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+				}*/
 			}
 		}
 	});
