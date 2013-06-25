@@ -48,8 +48,10 @@ import de.hska.awp.palaver2.util.ViewHandler;
  *         anstatt einen neuen Artikel anzulegen wird er geaendert.
  */
 @SuppressWarnings({ "serial" })
-public class ArtikelErstellen extends VerticalLayout implements View, ValueChangeListener {
-	private static final Logger log = LoggerFactory.getLogger(ArtikelErstellen.class.getName());
+public class ArtikelErstellen extends VerticalLayout implements View,
+		ValueChangeListener {
+	private static final Logger log = LoggerFactory
+			.getLogger(ArtikelErstellen.class.getName());
 
 	private VerticalLayout box = new VerticalLayout();
 	private HorizontalLayout control = new HorizontalLayout();
@@ -163,7 +165,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		lieferantLayout.addComponent(lieferant);
 		lieferantLayout.addComponent(addLieferant);
 		lieferantLayout.setExpandRatio(lieferant, 1);
-		lieferantLayout.setComponentAlignment(addLieferant, Alignment.BOTTOM_RIGHT);
+		lieferantLayout.setComponentAlignment(addLieferant,
+				Alignment.BOTTOM_RIGHT);
 
 		box.addComponent(lieferantLayout);
 		box.addComponent(artnr);
@@ -173,7 +176,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		mengeneinheitLayout.addComponent(mengeneinheit);
 		mengeneinheitLayout.addComponent(addMengeneinheit);
 		mengeneinheitLayout.setExpandRatio(mengeneinheit, 1);
-		mengeneinheitLayout.setComponentAlignment(addMengeneinheit, Alignment.BOTTOM_RIGHT);
+		mengeneinheitLayout.setComponentAlignment(addMengeneinheit,
+				Alignment.BOTTOM_RIGHT);
 
 		box.addComponent(mengeneinheitLayout);
 		box.addComponent(bestellung);
@@ -183,7 +187,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		kategorieLayout.addComponent(kategorie);
 		kategorieLayout.addComponent(addKategorie);
 		kategorieLayout.setExpandRatio(kategorie, 1);
-		kategorieLayout.setComponentAlignment(addKategorie, Alignment.BOTTOM_RIGHT);
+		kategorieLayout.setComponentAlignment(addKategorie,
+				Alignment.BOTTOM_RIGHT);
 
 		box.addComponent(kategorieLayout);
 
@@ -244,16 +249,20 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 
 					Artikel artikel = new Artikel();
 					artikel.setArtikelnr(artnr.getValue());
-					artikel.setBestellgroesse((bestellung.getValue() == "") ? 0.0 : Double.parseDouble(bestellung.getValue()));
+					artikel.setBestellgroesse((bestellung.getValue() == "") ? 0.0
+							: Double.parseDouble(bestellung.getValue()));
 					artikel.setBio(bio.getValue());
-					artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer.parseInt(durchschnitt.getValue()) : 0);
+					artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer
+							.parseInt(durchschnitt.getValue()) : 0);
 					artikel.setGrundbedarf(grundbedarf.getValue());
 					artikel.setKategorie((Kategorie) kategorie.getValue());
 					artikel.setLebensmittel(lebensmittel.getValue());
 					artikel.setLieferant((Lieferant) lieferant.getValue());
-					artikel.setMengeneinheit((Mengeneinheit) mengeneinheit.getValue());
+					artikel.setMengeneinheit((Mengeneinheit) mengeneinheit
+							.getValue());
 					artikel.setName(name.getValue());
-					artikel.setPreis((preis.getValue() == "") ? 0F : Float.parseFloat(preis.getValue().replace(',', '.')));
+					artikel.setPreis((preis.getValue() == "") ? 0F : Float
+							.parseFloat(preis.getValue().replace(',', '.')));
 					artikel.setStandard(standard.getValue());
 					artikel.setNotiz(notiz.getValue());
 
@@ -266,7 +275,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 						notification = e.toString();
 					}
 
-					((Application) UI.getCurrent().getData()).showDialog(notification);
+					((Application) UI.getCurrent().getData())
+							.showDialog(notification);
 					if (ArtikelErstellen.this.getParent() instanceof Window) {
 						Window win = (Window) ArtikelErstellen.this.getParent();
 						win.close();
@@ -306,15 +316,18 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 		kategorie.removeAllItems();
 		mengeneinheit.removeAllItems();
 		try {
-			List<Lieferant> lieferanten = Lieferantenverwaltung.getInstance().getAllLieferanten();
+			List<Lieferant> lieferanten = Lieferantenverwaltung.getInstance()
+					.getAllLieferanten();
 			for (Lieferant e : lieferanten) {
 				lieferant.addItem(e);
 			}
-			List<Kategorie> kategorien = Kategorienverwaltung.getInstance().getAllKategories();
+			List<Kategorie> kategorien = Kategorienverwaltung.getInstance()
+					.getAllKategories();
 			for (Kategorie e : kategorien) {
 				kategorie.addItem(e);
 			}
-			List<Mengeneinheit> mengen = Mengeneinheitverwaltung.getInstance().getAllMengeneinheit();
+			List<Mengeneinheit> mengen = Mengeneinheitverwaltung.getInstance()
+					.getAllMengeneinheit();
 			for (Mengeneinheit e : mengen) {
 				mengeneinheit.addItem(e);
 			}
@@ -347,16 +360,20 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 			@Override
 			public void buttonClick(ClickEvent event) {
 				artikel.setArtikelnr(artnr.getValue());
-				artikel.setBestellgroesse(Double.parseDouble(bestellung.getValue()));
+				artikel.setBestellgroesse(Double.parseDouble(bestellung
+						.getValue()));
 				artikel.setBio(bio.getValue());
-				artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer.parseInt(durchschnitt.getValue()) : 0);
+				artikel.setDurchschnitt(durchschnitt.isEnabled() ? Integer
+						.parseInt(durchschnitt.getValue()) : 0);
 				artikel.setGrundbedarf(grundbedarf.getValue());
 				artikel.setKategorie((Kategorie) kategorie.getValue());
 				artikel.setLebensmittel(lebensmittel.getValue());
 				artikel.setLieferant((Lieferant) lieferant.getValue());
-				artikel.setMengeneinheit((Mengeneinheit) mengeneinheit.getValue());
+				artikel.setMengeneinheit((Mengeneinheit) mengeneinheit
+						.getValue());
 				artikel.setName(name.getValue());
-				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',', '.')));
+				artikel.setPreis(Float.parseFloat(preis.getValue().replace(',',
+						'.')));
 				artikel.setStandard(standard.getValue());
 				artikel.setNotiz(notiz.getValue());
 
@@ -382,7 +399,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 
 				dialogContent.addComponent(message);
 				dialogContent.addComponent(okButton);
-				dialogContent.setComponentAlignment(okButton, Alignment.BOTTOM_RIGHT);
+				dialogContent.setComponentAlignment(okButton,
+						Alignment.BOTTOM_RIGHT);
 
 				UI.getCurrent().addWindow(dialog);
 
@@ -390,7 +408,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					@Override
 					public void buttonClick(ClickEvent event) {
 						UI.getCurrent().removeWindow(dialog);
-						ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+						ViewHandler.getInstance().switchView(
+								ArtikelAnzeigen.class);
 					}
 				});
 
@@ -484,15 +503,18 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					me.setKurz(mekurz.getValue());
 					String notification = "Mengeneinheit gespeichert";
 					try {
-						Mengeneinheitverwaltung.getInstance().createMengeneinheit(me);
+						Mengeneinheitverwaltung.getInstance()
+								.createMengeneinheit(me);
 						UI.getCurrent().removeWindow(win);
-						((Application) UI.getCurrent().getData()).showDialog(notification);
+						((Application) UI.getCurrent().getData())
+								.showDialog(notification);
 
 					} catch (Exception e) {
 						log.error(e.toString());
 						if (e.toString().contains("INSERT INTO mengeneinheit")) {
 							notification = "Dieser Name oder dieses Kürzel ist bereits vorhanden.";
-							((Application) UI.getCurrent().getData()).showDialog(notification);
+							((Application) UI.getCurrent().getData())
+									.showDialog(notification);
 						} else
 							notification = e.toString();
 					}
@@ -504,11 +526,13 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 
 	protected boolean validiereMengeneinheit() {
 		if (mename.isValid() == false) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEITNAME);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEITNAME);
 			return false;
 		}
 		if (mekurz.isValid() == false) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEITKURZ);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEITKURZ);
 			return false;
 		} else {
 			return true;
@@ -567,15 +591,18 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 					ka.setName(kaname.getValue());
 					String notification = "Kategorie gespeichert";
 					try {
-						Kategorienverwaltung.getInstance().createNewKategorie(ka);
+						Kategorienverwaltung.getInstance().createNewKategorie(
+								ka);
 						UI.getCurrent().removeWindow(win);
-						((Application) UI.getCurrent().getData()).showDialog(notification);
+						((Application) UI.getCurrent().getData())
+								.showDialog(notification);
 
 					} catch (Exception e) {
 						log.error(e.toString());
 						if (e.toString().contains("INSERT INTO mengeneinheit")) {
 							notification = "Dieser Name oder dieses Kürzel ist bereits vorhanden.";
-							((Application) UI.getCurrent().getData()).showDialog(notification);
+							((Application) UI.getCurrent().getData())
+									.showDialog(notification);
 						} else
 							notification = e.toString();
 					}
@@ -595,7 +622,8 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	protected boolean validiereKategorie() {
 
 		if (kaname.isValid() == false) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_KATEGORIENAME);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIENAME);
 			return false;
 		} else {
 			return true;
@@ -622,52 +650,62 @@ public class ArtikelErstellen extends VerticalLayout implements View, ValueChang
 	}
 
 	private Boolean validiereEingabe() {
+		System.out.print("hallo" + preis.getValue());
+		if (!preis.getValue().isEmpty()){
+			try {
 
-		try {
-			Double.parseDouble(preis.getValue());
-		} catch (NumberFormatException e) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_PREIS);
-			return false;
+				Double.parseDouble(preis.getValue());
+			} catch (NumberFormatException e) {
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_ARTIKEL_PREIS);
+				return false;
+			}
 		}
-
 		try {
 			Double.parseDouble(bestellung.getValue());
 		} catch (NumberFormatException e) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
 		}
 
 		if (grundbedarf.getValue()) {
 			if (durchschnitt.getValue().isEmpty()) {
-				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
 				return false;
 			}
 			try {
 				Integer.parseInt(durchschnitt.getValue());
 			} catch (NumberFormatException e) {
-				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
+				((Application) UI.getCurrent().getData())
+						.showDialog(IConstants.INFO_ARTIKEL_DURCHSCHNITT);
 				return false;
 			}
 		}
 
 		if (name.getValue().toString() == "[]") {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_NAME);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_NAME);
 			return false;
 		}
 		if (mengeneinheit.isValid() == false) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT);
 			return false;
 		}
 		if (kategorie.getValue() == null) {
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
 			return false;
 		}
-		if (bestellung.getValue() == null || Double.parseDouble(bestellung.getValue().toString()) < 0.1) {
+		if (bestellung.getValue() == null
+				|| Double.parseDouble(bestellung.getValue().toString()) < 0.1) {
 			System.out.print(bestellung.getValue().toString());
-			((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
-		} 
-		else {
+		} else {
 			return true;
 		}
 	}
