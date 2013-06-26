@@ -30,12 +30,18 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	private final static String HANDY = "handy";
 	private final static String FAX = "fax";
 	private final static String EMAIL = "email";
+	private final static String BEZEICHNUNG = "bezeichnung";
 	private final static String LIEFERANT_FK = "lieferant_fk";
-	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM " + TABLE + " ORDER BY ansprechpartner.name";
-	private static final String GET_ANSPRECHPARTNER_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
-	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_ANSPRECHPARTNER = "DELETE FROM " + TABLE + " WHERE id = {0}";
-	private static final String GET_ANSPRECHPARTNER_BY_LIEFERANT = "SELECT * FROM " + TABLE + " WHERE " + LIEFERANT_FK + "=";
+	private final static String GET_ALL_ANSPRECHPARTNER = "SELECT * FROM "
+			+ TABLE + " ORDER BY ansprechpartner.name";
+	private static final String GET_ANSPRECHPARTNER_BY_ID = "SELECT * FROM "
+			+ TABLE + " WHERE " + ID + "= {0}";
+	private static final String GET_ANSPRECHPARTNER_BY_NAME = "SELECT * FROM "
+			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
+	private static final String DELETE_ANSPRECHPARTNER = "DELETE FROM " + TABLE
+			+ " WHERE id = {0}";
+	private static final String GET_ANSPRECHPARTNER_BY_LIEFERANT = "SELECT * FROM "
+			+ TABLE + " WHERE " + LIEFERANT_FK + "=";
 
 	public AnsprechpartnerDAO() {
 		super();
@@ -60,12 +66,17 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Ansprechpartner> getAllAnsprechpartner() throws ConnectException, DAOException, SQLException {
+	public List<Ansprechpartner> getAllAnsprechpartner()
+			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 		ResultSet set = getManaged(GET_ALL_ANSPRECHPARTNER);
 		while (set.next()) {
-			list.add(new Ansprechpartner(set.getLong(ID), set.getString("name"), set.getString("telefon"), set.getString("handy"), set
-					.getString("fax"), set.getString("email"), LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk"))));
+			list.add(new Ansprechpartner(set.getLong(ID),
+					set.getString("name"), set.getString("telefon"), set
+							.getString("handy"), set.getString("fax"), set
+							.getString("email"), LieferantDAO.getInstance()
+							.getLieferantById(set.getLong("lieferant_fk")), set
+							.getString(BEZEICHNUNG)));
 		}
 		return list;
 	}
@@ -80,14 +91,19 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Ansprechpartner> getAnsprechpartnerByName(String name) throws ConnectException, DAOException, SQLException {
+	public List<Ansprechpartner> getAnsprechpartnerByName(String name)
+			throws ConnectException, DAOException, SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 
 		ResultSet set = getManaged(GET_ANSPRECHPARTNER_BY_NAME + name + "%'");
 
 		while (set.next()) {
-			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY), set.getString(FAX),
-					set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
+			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),
+					set.getString(TELEFON), set.getString(HANDY), set
+							.getString(FAX), set.getString(EMAIL), LieferantDAO
+							.getInstance().getLieferantById(
+									set.getLong(LIEFERANT_FK)), set
+							.getString(BEZEICHNUNG)));
 		}
 
 		return list;
@@ -103,14 +119,20 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Ansprechpartner getAnsprechpartnerById(Long id) throws ConnectException, DAOException, SQLException {
+	public Ansprechpartner getAnsprechpartnerById(Long id)
+			throws ConnectException, DAOException, SQLException {
 
 		Ansprechpartner ansprechpartner = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_ANSPRECHPARTNER_BY_ID, id));
+		ResultSet set = getManaged(MessageFormat.format(
+				GET_ANSPRECHPARTNER_BY_ID, id));
 
 		while (set.next()) {
-			ansprechpartner = new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY),
-					set.getString(FAX), set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK)));
+			ansprechpartner = new Ansprechpartner(set.getLong(ID),
+					set.getString(NAME), set.getString(TELEFON),
+					set.getString(HANDY), set.getString(FAX),
+					set.getString(EMAIL), LieferantDAO.getInstance()
+							.getLieferantById(set.getLong(LIEFERANT_FK)),
+					set.getString(BEZEICHNUNG));
 		}
 
 		return ansprechpartner;
@@ -124,10 +146,17 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
-		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + TELEFON + "," + HANDY + "," + FAX + "," + EMAIL + "," + LIEFERANT_FK + ")" + "VALUES"
-				+ "('" + ansprechpartner.getName() + "','" + ansprechpartner.getTelefon() + "','" + ansprechpartner.getHandy() + "','"
-				+ ansprechpartner.getFax() + "','" + ansprechpartner.getEmail() + "','" + ansprechpartner.getLieferant().getId() + "')";
+	public void createAnsprechpartner(Ansprechpartner ansprechpartner)
+			throws ConnectException, DAOException, SQLException {
+		String INSERTQUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
+				+ TELEFON + "," + HANDY + "," + FAX + "," + EMAIL + ","
+				+ LIEFERANT_FK + "," + BEZEICHNUNG + ")" + "VALUES" + "('"
+				+ ansprechpartner.getName() + "','"
+				+ ansprechpartner.getTelefon() + "','"
+				+ ansprechpartner.getHandy() + "','" + ansprechpartner.getFax()
+				+ "','" + ansprechpartner.getEmail() + "','"
+				+ ansprechpartner.getLieferant().getId() + "','"
+				+ ansprechpartner.getBezeichnung() + "')";
 		this.putManaged(INSERTQUERY);
 	}
 
@@ -139,10 +168,17 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException, SQLException {
-		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='" + ansprechpartner.getName() + "'," + TELEFON + "='"
-				+ ansprechpartner.getTelefon() + "'," + HANDY + "='" + ansprechpartner.getHandy() + "'," + FAX + "='" + ansprechpartner.getFax()
-				+ "'," + EMAIL + "='" + ansprechpartner.getEmail() + "'," + LIEFERANT_FK + "='" + ansprechpartner.getLieferant().getId() + "'" + "WHERE " + ID + "='" + ansprechpartner.getId() + "'";
+	public void updateAnsprechpartner(Ansprechpartner ansprechpartner)
+			throws ConnectException, DAOException, SQLException {
+		String UPDATEQUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
+				+ ansprechpartner.getName() + "'," + TELEFON + "='"
+				+ ansprechpartner.getTelefon() + "'," + HANDY + "='"
+				+ ansprechpartner.getHandy() + "'," + FAX + "='"
+				+ ansprechpartner.getFax() + "'," + EMAIL + "='"
+				+ ansprechpartner.getEmail() + "'," + LIEFERANT_FK + "='"
+				+ ansprechpartner.getLieferant().getId() + "',"
+				+ BEZEICHNUNG + "='" + ansprechpartner.getBezeichnung() + "'"
+				+ " WHERE " + ID + "='" + ansprechpartner.getId() + "'";
 		this.putManaged(UPDATEQUERY);
 	}
 
@@ -154,7 +190,8 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException, SQLException {
+	public void deleteAnsprechpartner(Long id) throws ConnectException,
+			DAOException, SQLException {
 
 		if (id == null) {
 			throw new NullPointerException("kein Ansprechpartner übergeben");
@@ -171,14 +208,21 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Ansprechpartner> getAnsprechpartnerByLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
+	public List<Ansprechpartner> getAnsprechpartnerByLieferant(
+			Lieferant lieferant) throws ConnectException, DAOException,
+			SQLException {
 		List<Ansprechpartner> list = new ArrayList<Ansprechpartner>();
 
-		ResultSet set = getManaged(GET_ANSPRECHPARTNER_BY_LIEFERANT + lieferant.getId());
+		ResultSet set = getManaged(GET_ANSPRECHPARTNER_BY_LIEFERANT
+				+ lieferant.getId());
 
 		while (set.next()) {
-			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME), set.getString(TELEFON), set.getString(HANDY), set.getString(FAX),
-					set.getString(EMAIL), LieferantDAO.getInstance().getLieferantById(set.getLong(LIEFERANT_FK))));
+			list.add(new Ansprechpartner(set.getLong(ID), set.getString(NAME),
+					set.getString(TELEFON), set.getString(HANDY), set
+							.getString(FAX), set.getString(EMAIL), LieferantDAO
+							.getInstance().getLieferantById(
+									set.getLong(LIEFERANT_FK)), set
+							.getString(BEZEICHNUNG)));
 		}
 
 		return list;

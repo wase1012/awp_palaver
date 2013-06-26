@@ -470,6 +470,7 @@ CREATE  TABLE IF NOT EXISTS `palaver`.`ansprechpartner` (
   `fax` VARCHAR(45) NULL ,
   `email` VARCHAR(45) NULL,
   `lieferant_fk` INT NOT NULL ,
+  `bezeichnung` VARCHAR(100) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_ansprechpartner_lieferant1_idx` (`lieferant_fk` ASC) ,
   CONSTRAINT `fk_ansprechpartner_lieferant1`

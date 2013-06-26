@@ -21,7 +21,7 @@ public class Ansprechpartner implements java.io.Serializable {
 	private String fax;
 	private String email;
 	private Lieferant lieferant;
-	 
+	private String bezeichnung;
 
 	public Ansprechpartner() {
 	}
@@ -31,13 +31,15 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Ansprechpartner(Long id, String name, String telefon, String handy, String fax, String email, Lieferant lieferant) {
+	public Ansprechpartner(Long id, String name, String telefon, String handy,
+			String fax, String email, Lieferant lieferant, String bezeichnung) {
 		this.id = id;
 		this.name = name;
 		this.telefon = telefon;
 		this.handy = handy;
 		this.fax = fax;
 		this.lieferant = lieferant;
+		this.bezeichnung = bezeichnung;
 		this.setEmail(email);
 	}
 
@@ -89,7 +91,7 @@ public class Ansprechpartner implements java.io.Serializable {
 	public void setHandy(String handy) {
 		this.handy = handy;
 	}
-
+	
 	public String getFax() {
 		if (fax == null) {
 			fax = "";
@@ -103,7 +105,8 @@ public class Ansprechpartner implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon=" + telefon + ", handy=" + handy + ", fax=" + fax + "]";
+		return "Ansprechpartner [id=" + id + ", name=" + name + ", telefon="
+				+ telefon + ", handy=" + handy + ", fax=" + fax + "]";
 	}
 
 	public String getEmail() {
@@ -114,4 +117,14 @@ public class Ansprechpartner implements java.io.Serializable {
 		this.email = email;
 	}
 
+	public String getBezeichnung() {
+		if (bezeichnung == null) {
+			bezeichnung= "";
+		}
+		return this.bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}	
 }
