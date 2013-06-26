@@ -8,6 +8,7 @@ import org.tepi.filtertable.FilterTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,7 +52,8 @@ public class WinSelectMenue extends Window {
 	private TextField tfPortion = new TextField("Portion in %");
 	private CheckBox chbAufwand = new CheckBox("Aufwand");
 	private CheckBox chbFavorit = new CheckBox("Favorit");
-	private Button btNewMenue = new Button("Neu");
+	private Button btNewMenue = new Button("Neues MenÃ¼");
+	private Button btFilterLeeren;
 	private Button btSelect = new Button(IConstants.BUTTON_SELECT);
 	private FormLayout flEditorLayout = new FormLayout();
 	
@@ -75,7 +77,7 @@ public class WinSelectMenue extends Window {
 
 	public WinSelectMenue(MenueplanGridLayout menueplan, Component destComp,
 			int destRow, int destCol) {
-		setCaption("Menü einfügen");
+		setCaption("MenÃ¼ einfÃ¼gen");
 		this.menueplan = menueplan;
 		this.menueGrid = menueplan.layout;
 		this.destComp = destComp;
@@ -110,18 +112,24 @@ public class WinSelectMenue extends Window {
 		// SplitPanel erstellen
 		// HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		HorizontalLayout hlBox = new HorizontalLayout();
+		HorizontalLayout hlControl = new HorizontalLayout();
+		
+		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
+		btFilterLeeren.setIcon(new ThemeResource("img/cross.ico"));
 
 		// splitPanel.setWidth("800px");
 		// Splitpanel die Layouts zufï¿½gen
 		hlBox.addComponent(vlLeftLayout);
-		hlBox.addComponent(flEditorLayout);
-		// Der linken Seite Tabelle hinzufügen und Layout für Suchfeld und
-		// "Neu" Button
+		vlLeftLayout.addComponent(hlControl);
+		
+		hlControl.addComponent(btNewMenue);
+		hlControl.addComponent(btFilterLeeren);
+		
 		vlLeftLayout.addComponent(ftMenueList);
-		// leftLayout.addComponent(bottomLeftLayout);
-
-		// Suchfeld und "Neu" Button hinzufï¿½gen
-		vlLeftLayout.addComponent(btNewMenue);
+		
+		hlBox.addComponent(flEditorLayout);
+		// Der linken Seite Tabelle hinzufï¿½gen und Layout fï¿½r Suchfeld und
+		// "Neu" Button
 
 		btNewMenue.addClickListener(new ClickListener() {
 			@Override
@@ -130,8 +138,16 @@ public class WinSelectMenue extends Window {
 			}
 
 		});
+		
+		btFilterLeeren.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ftMenueList.resetFilters();
+			}
+		});
 
-		// Linke Seite Höhe und Breite auf 100% setzen
+		// Linke Seite Hï¿½he und Breite auf 100% setzen
 		vlLeftLayout.setHeight("100%");
 		flEditorLayout.setHeight("100%");
 
@@ -169,7 +185,7 @@ public class WinSelectMenue extends Window {
 					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENU_HINZUFUEGEN);
 				}
 				else if (ftMenueList.getValue()==null){
-					((Application) UI.getCurrent().getData()).showDialog("Bitte ein Menü auswählen!");
+					((Application) UI.getCurrent().getData()).showDialog("Bitte ein MenÃ¼ auswÃ¤hlen!");
 				}
 				else {
 				// aktuelle Column und Row ermitteln
@@ -189,7 +205,7 @@ public class WinSelectMenue extends Window {
 				}
 				menueplan.removeMenue(destComp);
 
-				// Menübezeichnung des ausgewï¿½hlten Menï¿½s
+				// Menï¿½bezeichnung des ausgewï¿½hlten Menï¿½s
 				try {
 					Menue menue = (Menue) ftMenueList.getValue();
 					// Neue Menï¿½komponente aus ausgewï¿½hltem Menï¿½ erstellen
@@ -207,7 +223,7 @@ public class WinSelectMenue extends Window {
 					e.printStackTrace();
 				}
 
-				// Window schließen
+				// Window schlieï¿½en
 				subwindow.close();
 			}
 			}
@@ -278,7 +294,7 @@ public class WinSelectMenue extends Window {
 		ftMenueList.setFilterBarVisible(true);
 		ftMenueList.setImmediate(true);
 
-		// bei Ãndern Komponente aus Menï¿½plan selektieren
+		// bei ï¿½ndern Komponente aus Menï¿½plan selektieren
 		if (menueGrid.getComponent(destCol, destRow) instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) menueGrid.getComponent(
 					destCol, destRow);
@@ -291,7 +307,7 @@ public class WinSelectMenue extends Window {
 
 	private void ladeMenues() {
 
-		// Container für Menüliste festlegen
+		// Container fï¿½r Menï¿½liste festlegen
 		try {
 			menueContainer = new BeanItemContainer<Menue>(Menue.class,
 					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
@@ -313,7 +329,7 @@ public class WinSelectMenue extends Window {
 	}
 
 	private void addNewMenue() {
-		final Window win = new Window("Neues Menü");
+		final Window win = new Window("Neues Menï¿½");
 		win.setModal(true);
 		win.setResizable(false);
 		win.setWidth("1100px");
