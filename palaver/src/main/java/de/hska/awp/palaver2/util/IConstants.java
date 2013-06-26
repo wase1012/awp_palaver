@@ -57,7 +57,7 @@ public interface IConstants
 	String 		MENU_REZEPTART = "Rezeptarten";
 	String		MENU_MENUEART="Menüarten";
 	String 		MENU_ZUBEREITUNG = "Zubereitungen";
-	String		MENU_LOGOUT = "Logout";
+	String		MENU_LOGOUT = "Abmelden";
 	String 		MENU_MENUE_HEADLINE = "Menü";
 	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
 	String 		MENU_MENUE_SUCHEN = " Alle Menüs anzeigen";
