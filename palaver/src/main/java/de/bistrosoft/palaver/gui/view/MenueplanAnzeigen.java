@@ -597,13 +597,35 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		win.setResizable(false);
 		win.setSizeFull();
 		
+		VerticalLayout vlBox = new VerticalLayout();
+		HorizontalLayout hlControl = new HorizontalLayout();
+		VerticalLayout vlMenüplan = new VerticalLayout();
+		
 		Label lbH=new Label(
 				 getHtmlTable(),
 				ContentMode.HTML);
-		addComponent(lbH);
-		setComponentAlignment(lbH, Alignment.TOP_CENTER);
-		lbH.setSizeFull();
-		win.setContent(lbH);
+		Button btSchliessen = new Button("Schließen");
+		
+		addComponent(vlBox);
+		vlBox.addComponent(vlMenüplan);
+		vlMenüplan.addComponent(lbH);
+		vlMenüplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
+		
+		vlBox.addComponent(hlControl);
+		hlControl.addComponent(btSchliessen);
+		hlControl.setComponentAlignment(btSchliessen, Alignment.MIDDLE_RIGHT);
+		
+		btSchliessen.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				win.close();
+			}
+		});
+		
+//		addComponent(lbH);
+//		lbH.setSizeFull();
+		win.setContent(vlBox);
 		UI.getCurrent().addWindow(win);
 	}
 }
