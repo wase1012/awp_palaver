@@ -23,7 +23,7 @@ import de.hska.awp.palaver2.util.Util;
 public class ArtikelDAO extends AbstractDAO {
 	private static ArtikelDAO instance = null;
 	private final static String GET_ALL_ARTIKLES = "SELECT * FROM artikel";
-	private final static String GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM artikel where lieferant_fk = {0}";
+	private final static String GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM artikel where lieferant_fk = {0} ORDER BY artikel.name";
 	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
 	private final static String GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
 	private final static String PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`,`notiz`)VALUES({0})";
