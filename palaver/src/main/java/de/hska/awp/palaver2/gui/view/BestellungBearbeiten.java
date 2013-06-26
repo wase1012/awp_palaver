@@ -462,11 +462,11 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		if (bestellung.getLieferant().getMehrereliefertermine() == true) {
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "durchschnitt", "kantine", "gesamt", "montag", "freitag" });
+					.setVisibleColumns(new Object[] { "name", "gebinde","notiz", "durchschnitt", "kantine", "gesamt", "freitag", "montag" });
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
-			bestellungTable.setColumnHeader("montag", "Termin 1");
-			bestellungTable.setColumnHeader("freitag", "Termin 2");
+			bestellungTable.setColumnHeader("montag", "Termin 2");
+			bestellungTable.setColumnHeader("freitag", "Termin 1");
 			bestellungTable.setColumnWidth("kantine", 60);
 			bestellungTable.setColumnWidth("montag", 60);
 			bestellungTable.setColumnWidth("freitag", 60);
@@ -481,8 +481,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
-			bestellungTable.setColumnHeader("montag", "Termin 1");
-			bestellungTable.setColumnHeader("freitag", "Termin 2");
+			bestellungTable.setColumnHeader("montag", "Termin 2");
+			bestellungTable.setColumnHeader("freitag", "Termin 1");
 			bestellungTable.setColumnWidth("kantine", 60);
 			bestellungTable.setColumnWidth("montag", 60);
 			bestellungTable.setColumnWidth("freitag", 60);
