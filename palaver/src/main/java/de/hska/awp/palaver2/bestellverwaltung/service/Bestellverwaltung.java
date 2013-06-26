@@ -195,26 +195,30 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
-	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<RezeptHasArtikel> ab, Week week) throws ConnectException,
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<RezeptHasArtikel> ab, Week week, Menueplan mv, List<RezeptHasArtikel> av) throws ConnectException,
 			DAOException, SQLException, ParseException {
 		List<Bestellposition> list = new ArrayList<Bestellposition>();
-		int leer = 0;
-
-		// 1. Mengen für den Freitag auslesen col = 5 (Freitag)
 		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
+		int leer = 0;
+		
+		
+		// 1. Mengen für den Freitag auslesen col = 5 (Freitag) von der Woche davor
+		
+		if(mv != null){
+		for (int i = 0; i < mv.getMenues().size(); i++) {
+			if (mv.getMenues().get(i).col == 5) {
+				for (int j = 0; j < mv.getMenues().get(i).getMenue().getRezepte().size(); j++) {
 
-		for (int i = 0; i < mp.getMenues().size(); i++) {
-			if (mp.getMenues().get(i).col == 5) {
-				for (int j = 0; j < mp.getMenues().get(i).getMenue().getRezepte().size(); j++) {
-
-					for (int z = 0; z < mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().size(); z++) {
-						rhafreitag.add(mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().get(z));
+					for (int z = 0; z < mv.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().size(); z++) {
+						rhafreitag.add(mv.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().get(z));
 					}
 
 				}
 			}
 		}
-
+		}
+		
+		
 		// 2. Mengen für Mo bis Do auslesen, col 1-4 (Mo - Do)
 		List<RezeptHasArtikel> rhamobisdo = new ArrayList<RezeptHasArtikel>();
 
@@ -233,6 +237,14 @@ public class Bestellverwaltung extends BestellungDAO {
 		// 3. Liste aufbereiten und doppelt Artikel zusammenfügen und Menge
 		// addieren um später Rundungsfehler zu minimieren
 		List<RezeptHasArtikel> rha = null;
+		
+		if (av.isEmpty() == false) {
+
+			for (int i = 0; i < ab.size(); i++) {
+				rhafreitag.add(ab.get(i));
+			}
+
+		}
 		rha = mengeAddSameArtikel(rhafreitag);
 
 		// 4. Füge List<RezeptHasArtikel> von Menueplan (Freitag) in

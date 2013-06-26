@@ -511,7 +511,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		String text = "";
 		if (bestellung.getLieferant().getTelefon() != null) {
 
-			if (alist != null) {
+			if (alist.isEmpty()==false) {
 				for (int i = 0; i < alist.size(); i++) {
 					text = text + alist.get(i).getName() + " ";
 					if (alist.get(i).getTelefon().length() > 4) {

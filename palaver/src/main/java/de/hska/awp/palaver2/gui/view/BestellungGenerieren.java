@@ -96,31 +96,65 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					int year = date.getValue().getYear() + 1900;
 					
 					Menueplan m = null;
-					
 					List<RezeptHasArtikel> a = null;
+					Menueplan mv = null;
+					List<RezeptHasArtikel> av = null;
+					Week weekvorwoche = null;
+					if(week - 1 == 0){
+						if(year == 2016 || year == 2021 || year == 2027){
+							weekvorwoche = new Week(53 ,year -1);
+						} else {
+							weekvorwoche = new Week(52 ,year -1);
+						}
+						
+					} else {
+						weekvorwoche = new Week(week-1, year);
+					}
+						
+					System.out.println("Start: Laden der Mengen");
+					
+					//Bedarf aus der Woche davor für Freitag-Sonntag holen
+					try {
+						av = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(weekvorwoche);
+					} catch (Exception e) {
+						System.out.println("Laden des Kuchenbedarfs der Vorwoche fehltgeschlagen"+ weekvorwoche);
+						log.error(e.toString());
+					}
+					try {
+						mv = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(weekvorwoche);
+					} catch (Exception e) {
+						log.error(e.toString());
+						System.out.println("Laden des Menuebedarfs der Vorwoche fehltgeschlagen"+ weekvorwoche);
+					}
+					
+					//Bedarf aus der Woche (Mo-Do) holen für die Kuchen und die Menues
 					try {
 						a = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year));
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
-					
 					try {
 						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
+					System.out.println("Stop: Laden der Mengen");
+					System.out.println("Start: Überprüfung fängt an");
 					if (m == null || m.getFreigegeben() == null || m.getFreigegeben() == false) {
 						Notification notification = new Notification("Kein Menüplan vorhanden oder noch nicht freigegeben!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
-						if (a == null){	
+						if (a.isEmpty() == true){	
 							Notification notification = new Notification("Kein Kuchenbedarf vorhanden!");
 							notification.setDelayMsec(500);
 							notification.show(Page.getCurrent());
 						} else {
 							try {
-								Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(m, a, new Week(week, year));
+								System.out.println("Start Bestellung generieren");
+								Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(m, a, new Week(week, year), mv, av);
+//								System.out.println("View Bestellung Generieren:" + m + a + new Week(week, year)+ mv + av);
+								
 							} catch (Exception e) {
 								log.error(e.toString());
 								Notification notification = new Notification("Bestellungen konnte nicht erzeugt werden!");
