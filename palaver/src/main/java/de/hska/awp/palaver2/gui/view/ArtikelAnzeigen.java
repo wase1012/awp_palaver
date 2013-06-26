@@ -127,13 +127,15 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio",
-					"bestellgroesse", "notiz" });
+					"bestellgroesse", "mengeneinheit" , "notiz" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 			table.setColumnHeader("bestellgroesse", "Gebinde");
 			table.setColumnWidth("kategorie", 70);
 			table.setColumnWidth("artikelnr", 60);
 			table.setColumnWidth("preis", 50);
 			table.setColumnWidth("bestellgroesse", 50);
+			table.setColumnWidth("mengeneinheit", 60);
+			table.setColumnHeader("mengeneinheit", "M-Einheit");
 
 			table.setCellStyleGenerator(new CellStyleGenerator() {
 
