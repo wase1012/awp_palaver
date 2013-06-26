@@ -325,10 +325,10 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		bestellungTable.setContainerDataSource(containerBestellung);
 
 		if (lieferant.getMehrereliefertermine() == true) {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz",  "durchschnitt", "kantine", "gesamt", "montag",
-					"freitag" });
-			bestellungTable.setColumnHeader("montag", "Termin 1");
-			bestellungTable.setColumnHeader("freitag", "Termin 2");
+			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz",  "durchschnitt", "kantine", "gesamt", "freitag",
+					"montag" });
+			bestellungTable.setColumnHeader("montag", "Termin 2");
+			bestellungTable.setColumnHeader("freitag", "Termin 1");
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			datetime.setVisible(true);
 			datetime.setRequired(true);
