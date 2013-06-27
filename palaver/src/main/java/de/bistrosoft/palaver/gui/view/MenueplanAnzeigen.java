@@ -529,16 +529,16 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			if(y!=1){
 				h+="<tr>";
 				for(int x = 0; x<col ; ++x ){
-					h+="<th align=\"center\">";
-					h+=getLabelText(x,y);
-					h+="</th>";
+					if(x!=0){
+						h+="<th align=\"center\">";
+						h+=getLabelText(x,y);
+						h+="</th>";
+					}
 				}
 				h+="</tr>";
 			}
 		}
 		h+="</table>";
-		h+= IConstants.FUSSNOTEN_MENUEPLAN;
-		System.out.println(h);
 		return h;
 	}
 
@@ -599,7 +599,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		
 		VerticalLayout vlBox = new VerticalLayout();
 		HorizontalLayout hlControl = new HorizontalLayout();
-		VerticalLayout vlMenüplan = new VerticalLayout();
+		VerticalLayout vlMenueplan = new VerticalLayout();
 		
 		Label lbH=new Label(
 				 getHtmlTable(),
@@ -607,9 +607,9 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		Button btSchliessen = new Button("Schließen");
 		
 		addComponent(vlBox);
-		vlBox.addComponent(vlMenüplan);
-		vlMenüplan.addComponent(lbH);
-		vlMenüplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
+		vlBox.addComponent(vlMenueplan);
+		vlMenueplan.addComponent(lbH);
+		vlMenueplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
 		
 		vlBox.addComponent(hlControl);
 		hlControl.addComponent(btSchliessen);
