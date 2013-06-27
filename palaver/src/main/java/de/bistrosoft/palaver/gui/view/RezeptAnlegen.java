@@ -606,12 +606,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		return rezept;
 	}
 
-	// Methode zum ändern eines Rezepts
+	// Methode zum ï¿½ndern eines Rezepts
 	private void update() {
 		// setzt Rezeptname
 		rezept.setName(nameInput);
 
-		// setzt Ãnderungsdatum
+		// setzt ï¿½nderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 		rezept.setErstellt(date2);

@@ -34,13 +34,6 @@ public class Geschmackverwaltung extends GeschmackDAO {
 		return result;
 	}
 
-	public List<Geschmack> getAllGeschmackAktiv() throws ConnectException,
-			DAOException, SQLException {
-		List<Geschmack> result = null;
-		result = super.getAllGeschmackAktiv();
-		return result;
-	}
-
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Geschmack result = null;
@@ -63,16 +56,6 @@ public class Geschmackverwaltung extends GeschmackDAO {
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		super.updateGeschmack(geschmack);
-	}
-
-	public void deleteGeschmackByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteGeschmackByName(name);
-	}
-
-	public void deleteGeschmackById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteGeschmackById(id);
 	}
 
 }

@@ -9,7 +9,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 
 /**
- * 
+ * @author Jasmin Baumgartner
  * 
  */
 public class Menueartverwaltung extends MenueartDAO {
@@ -56,15 +56,5 @@ public class Menueartverwaltung extends MenueartDAO {
 	public void updateMenuetart(Menueart menueart) throws ConnectException,
 			DAOException, SQLException {
 		super.updateMenueart(menueart);
-	}
-
-	public void deleteMenueartByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteMenueartByName(name);
-	}
-
-	public void deleteMenueartById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteMenueartById(id);
 	}
 }

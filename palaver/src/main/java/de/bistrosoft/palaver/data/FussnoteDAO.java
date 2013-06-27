@@ -30,11 +30,8 @@ public class FussnoteDAO extends AbstractDAO {
 	private final static String GET_ALL_FUSSNOTE = "SELECT * FROM " + TABLE;
 	private final static String GET_FUSSNOTE_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
-	private final static String GET_FUSSNOTE_BY_NAME = "SELECT * FROM fussnote WHERE name = {0}";
-	private static final String DELETE_FUSSNOTE_BY_NAME = "DELETE FROM "
-			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_FUSSNOTE_BY_ID = "DELETE FROM " + TABLE
-			+ " WHERE id = {0}";
+	private final static String GET_FUSSNOTE_BY_NAME = "SELECT * FROM " + TABLE
+			+ " WHERE name = {0}";
 	private final static String GET_FUSSNOTE_BY_MENUE = "Select fussnote.id, fussnote.name, fussnote.abkuerzung from fussnote JOIN menue_has_fussnote On menue_has_fussnote.fussnote_fk = fussnote.id WHERE menue_has_fussnote.menue_fk = {0}";
 
 	// Konstruktor
@@ -106,9 +103,9 @@ public class FussnoteDAO extends AbstractDAO {
 	// Methode, die eine Fussnote erstellt
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name, abkuerzung) VALUES('" + fussnote.getBezeichnung()
-				+ "','" + fussnote.getAbkuerzung() + "');";
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
+				+ ABKUERZUNG + ") VALUES('" + fussnote.getBezeichnung() + "','"
+				+ fussnote.getAbkuerzung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -120,23 +117,5 @@ public class FussnoteDAO extends AbstractDAO {
 				+ fussnote.getAbkuerzung() + "'" + " WHERE " + ID + "='"
 				+ fussnote.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
-	}
-
-	// Methode, die eine Fussnote über den Name löscht
-	public void deleteFussnoteByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		if (name == null) {
-			throw new NullPointerException("keine Fussnote übergeben!");
-		}
-		putManaged(DELETE_FUSSNOTE_BY_NAME + name + "%'");
-	}
-
-	// Methode, die eine Fussnote über die ID löscht
-	public void deleteFussnoteById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		if (id == null) {
-			throw new NullPointerException("keine Fussnote übergeben!");
-		}
-		putManaged(MessageFormat.format(DELETE_FUSSNOTE_BY_ID, id));
 	}
 }

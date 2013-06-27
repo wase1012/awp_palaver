@@ -52,14 +52,4 @@ public class Fussnotekuchenverwaltung extends FussnoteKuchenDAO {
 			throws ConnectException, DAOException, SQLException {
 		super.updateFussnoteKuchen(fussnotekuchen);
 	}
-
-	public void deleteFussnoteKuchenByName(String name)
-			throws ConnectException, DAOException, SQLException {
-		super.deleteFussnoteKuchenByName(name);
-	}
-
-	public void deleteFussnoteKuchenById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteFussnoteKuchenById(id);
-	}
 }

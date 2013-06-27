@@ -58,14 +58,4 @@ public class Fussnotenverwaltung extends FussnoteDAO {
 			DAOException, SQLException {
 		super.updateFussnote(fussnote);
 	}
-
-	public void deleteFussnoteByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteFussnoteByName(name);
-	}
-
-	public void deleteFussnoteById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteFussnoteById(id);
-	}
 }

@@ -32,6 +32,8 @@ public class KuchenrezeptDAO extends AbstractDAO {
 	private final static String AKTIV = "aktiv";
 
 	private static KuchenrezeptDAO instance = null;
+	
+	//SQL-Statements
 	private final static String GET_ALL_KUCHENREZEPTS = "SELECT * FROM kuchenrezept where aktiv = true";
 	private final static String GET_KUCHENREZEPT_BY_ID = "SELECT * FROM kuchenrezept WHERE id = {0}";
 	private final static String GET_KUCHENREZEPT_BY_NAME = "SELECT * FROM kuchenrezept WHERE kuchenrezept.name = {0}";
@@ -46,10 +48,11 @@ public class KuchenrezeptDAO extends AbstractDAO {
 
 	Kuchenrezept kuchenrezept;
 
+	//Konstruktor
 	public KuchenrezeptDAO() {
 		super();
 	}
-
+	//Instanz erzeugen
 	public static KuchenrezeptDAO getInstance() {
 		if (instance == null) {
 			instance = new KuchenrezeptDAO();
@@ -57,6 +60,7 @@ public class KuchenrezeptDAO extends AbstractDAO {
 		return instance;
 	}
 
+	//Methode, die alle Kuchenrezepte in einer Liste zurückliefert
 	public List<Kuchenrezept> getAllKuchenrezepte(Boolean ladeArtikel)
 			throws ConnectException, DAOException, SQLException {
 		List<Kuchenrezept> list = new ArrayList<Kuchenrezept>();

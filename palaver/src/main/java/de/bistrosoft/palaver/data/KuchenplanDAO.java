@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
@@ -25,14 +22,17 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 
 /**
- * @author Christine
+ * @author Christine Hartkorn
  * 
  */
 public class KuchenplanDAO extends AbstractDAO {
-	private static KuchenplanDAO instance;
+
 	private final String TABLE = "kuchenplan";
 	private final String ID = "id";
 
+	private static KuchenplanDAO instance;
+
+	// SQL-Statements
 	private final String GET_KUCHENPLAN_BY_WEEK = "SELECT * FROM " + TABLE
 			+ " WHERE week = {0} AND year = {1,number,#}";
 	private final String GET_KUCHENREZEPTE_BY_KUCHENPLAN = "SELECT ku.*, khk.tag, khk.anzahl "
@@ -42,34 +42,40 @@ public class KuchenplanDAO extends AbstractDAO {
 			+ "VALUES ({0},{1},{2},{3})";
 	private final String CREATE_KUCHENPLAN = "INSERT INTO kuchenplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenplan_fk = {0}";
-	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "+ 
-							"(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "+
-								"(select id from kuchenplan where week={0} AND year= {1,number,#})) "+
-							"GROUP BY artikel_fk, einheit";
+	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "
+			+ "(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "
+			+ "(select id from kuchenplan where week={0} AND year= {1,number,#})) "
+			+ "GROUP BY artikel_fk, einheit";
 
+	// Konstruktor
 	public KuchenplanDAO() {
 		super();
 	}
 
+	// Instanz erzeugen
 	public static KuchenplanDAO getInstance() {
 		if (instance == null) {
 			instance = new KuchenplanDAO();
 		}
 		return instance;
 	}
-	
-	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week){
+
+	// Methode, die alle Kuchenartikel in einer Woche zurückliefert
+	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week) {
 		List<RezeptHasArtikel> ab = new ArrayList<RezeptHasArtikel>();
-		
+
 		try {
-			ResultSet set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear()));
-			
-			while(set.next()){
-				Artikel art = Artikelverwaltung.getInstance().getArtikelById(set.getLong("artikel_fk"));
+			ResultSet set = getManaged(MessageFormat.format(
+					GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear()));
+
+			while (set.next()) {
+				Artikel art = Artikelverwaltung.getInstance().getArtikelById(
+						set.getLong("artikel_fk"));
 				Double menge = set.getDouble("menge");
-				Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(set.getLong("einheit"));
-			
-				ab.add(new RezeptHasArtikel(art,einheit,menge));
+				Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance()
+						.getMengeneinheitById(set.getLong("einheit"));
+
+				ab.add(new RezeptHasArtikel(art, einheit, menge));
 			}
 		} catch (ConnectException e) {
 			e.printStackTrace();
@@ -78,13 +84,11 @@ public class KuchenplanDAO extends AbstractDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return ab;
 	}
 
-	
-	
-	
+	// Methode, die einen kompletten Kuchenplan einer Woche zurückliefert
 	public Kuchenplan getKuchenplanByWeekWithItems(Week week)
 			throws ConnectException, DAOException, SQLException {
 		Kuchenplan kuchenplan = null;
@@ -101,17 +105,19 @@ public class KuchenplanDAO extends AbstractDAO {
 				Long id = setKuchen.getLong("id");
 				String name = setKuchen.getString("name");
 				String kommentar = null;
-				Kuchenrezept kuchenrezept = new Kuchenrezept(id, name, kommentar);
+				Kuchenrezept kuchenrezept = new Kuchenrezept(id, name,
+						kommentar);
 				int anzahl = setKuchen.getInt("anzahl");
 				int tag = setKuchen.getInt("tag");
-				List<FussnoteKuchen> fussnoten = Fussnotekuchenverwaltung.getInstance()
-						.getFussnoteKuchenByKuchen(id);
-				String fn="";
-				for(FussnoteKuchen f: fussnoten){
-					fn = fn+" ("+f.getAbkuerzung().toString()+")";
+				List<FussnoteKuchen> fussnoten = Fussnotekuchenverwaltung
+						.getInstance().getFussnoteKuchenByKuchen(id);
+				String fn = "";
+				for (FussnoteKuchen f : fussnoten) {
+					fn = fn + " (" + f.getAbkuerzung().toString() + ")";
 				}
 				kuchenrezept.setFussnoteKuchen(fussnoten);
-				KuchenplanHasKuchenrezept kuchenComp = new KuchenplanHasKuchenrezept(kuchenrezept, tag, anzahl, fn);
+				KuchenplanHasKuchenrezept kuchenComp = new KuchenplanHasKuchenrezept(
+						kuchenrezept, tag, anzahl, fn);
 				kuchen.add(kuchenComp);
 			}
 			kuchenplan.setKuchenrezepte(kuchen);
@@ -119,20 +125,23 @@ public class KuchenplanDAO extends AbstractDAO {
 		return kuchenplan;
 	}
 
-	public void createKuchenrezepteForKuchenplan(Kuchenplan kpl, Kuchenrezept kuchenrezept,
-			String name, int tag, int anzahl) throws ConnectException,
-			DAOException {
+	// Methode, die ein Kuchenrezept in ein Kuchenplan setzt
+	public void createKuchenrezepteForKuchenplan(Kuchenplan kpl,
+			Kuchenrezept kuchenrezept, String name, int tag, int anzahl)
+			throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(CREATE_KUCHENREZEPT_FOR_KUCHENPLAN,
 				kpl.getId(), kuchenrezept.getId(), tag, anzahl));
 	}
 
-	public void createKuchenplan(Kuchenplan kuchenplan) throws ConnectException,
-			DAOException {
+	// Methode, die ein Kuchenplan erstellt
+	public void createKuchenplan(Kuchenplan kuchenplan)
+			throws ConnectException, DAOException {
 		Week week = kuchenplan.getWeek();
 		putManaged(MessageFormat.format(CREATE_KUCHENPLAN, week.getWeek(),
 				week.getYear()));
 	}
 
+	// Methode, ein Kuchenrezpt aus einem Kuchenplan löscht
 	public void deleteItemsByKuchenplan(Kuchenplan kuchenplan)
 			throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN,

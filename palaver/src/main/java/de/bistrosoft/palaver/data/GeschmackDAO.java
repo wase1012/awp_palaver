@@ -28,24 +28,21 @@ public class GeschmackDAO extends AbstractDAO {
 
 	Geschmack geschmack;
 
+	// SQL-Statements
 	private final static String GET_ALL_GESCHMACK = "SELECT * FROM " + TABLE;
-	private final static String GET_ALL_GESCHMACK_AKTIV = "SELECT * FROM "
-			+ TABLE + " WHERE inaktiv = false";
 	private final static String GET_GESCHMACK_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
 	private final static String GET_GESCHMACK_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE name = '{0}'";
-	private static final String DELETE_GESCHMACK_BY_NAME = "DELETE FROM "
-			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_GESCHMACK_BY_ID = "DELETE FROM " + TABLE
-			+ " WHERE id = {0}";
 	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
 	private static final String GET_GESCHMACK_BY_MENUE = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join menue On menue.geschmack_fk = geschmack.id WHERE menue.id = {0}";
 
+	// Konstruktor
 	public GeschmackDAO() {
 		super();
 	}
 
+	// Instanz erzeugen
 	public static GeschmackDAO getInstance() {
 		if (instance == null) {
 			instance = new GeschmackDAO();
@@ -54,6 +51,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return instance;
 	}
 
+	// Methode, die alle Geschmäcker in einer Liste zurückliefert
 	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
 		List<Geschmack> list = new ArrayList<Geschmack>();
@@ -65,6 +63,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die einen Geschmack zu einem Menü über die ID zurückliefert
 	public Geschmack getGeschmackByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE,
@@ -76,17 +75,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return geschmack;
 	}
 
-	public List<Geschmack> getAllGeschmackAktiv() throws ConnectException,
-			DAOException, SQLException {
-		List<Geschmack> list = new ArrayList<Geschmack>();
-		ResultSet set = getManaged(GET_ALL_GESCHMACK_AKTIV);
-		while (set.next()) {
-			list.add(new Geschmack(set.getLong(ID), set.getString(NAME), set
-					.getBoolean(INAKTIV)));
-		}
-		return list;
-	}
-
+	// Methode, die einen Geschmack zu einem Rezept über die ID zurückliefert
 	public Geschmack getGeschmackByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(
@@ -98,6 +87,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return geschmack;
 	}
 
+	// Methode, die einen Geschmack über die ID zurückliefert
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat
@@ -130,6 +120,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die einen Geschmack erstellt
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
@@ -138,6 +129,7 @@ public class GeschmackDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die einen Geschmack ändert
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "= '"
@@ -147,33 +139,4 @@ public class GeschmackDAO extends AbstractDAO {
 
 	}
 
-	public void updateGeschmackInaktiv(Geschmack geschmack)
-			throws ConnectException, DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + INAKTIV + " = "
-				+ true + " WHERE " + ID + " = '" + geschmack.getId() + "'";
-		this.putManaged(UPDATE_QUERY);
-	}
-
-	public void updateGeschmackAktiv(Geschmack geschmack)
-			throws ConnectException, DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + INAKTIV + " = "
-				+ false + " WHERE " + ID + " = '" + geschmack.getId() + "'";
-		this.putManaged(UPDATE_QUERY);
-	}
-
-	public void deleteGeschmackByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		if (name == null) {
-			throw new NullPointerException("keine Geschmack übergeben!");
-		}
-		putManaged(DELETE_GESCHMACK_BY_NAME + name + "%'");
-	}
-
-	public void deleteGeschmackById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		if (id == null) {
-			throw new NullPointerException("keine Geschmack übergeben!");
-		}
-		putManaged(MessageFormat.format(DELETE_GESCHMACK_BY_ID, id));
-	}
 }
