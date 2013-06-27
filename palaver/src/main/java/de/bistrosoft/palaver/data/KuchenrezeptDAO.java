@@ -11,9 +11,6 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
@@ -23,7 +20,6 @@ import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MengeneinheitDAO;
-import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
 public class KuchenrezeptDAO extends AbstractDAO {
 

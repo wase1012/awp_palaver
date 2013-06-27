@@ -30,7 +30,6 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 public class RezeptDAO extends AbstractDAO {
 
 	private final static String TABLE = "rezept";
-	private final static String ID = "id";
 	private final static String NAME = "name";
 	private final static String REZEPTART = "rezeptart_fk";
 	private final static String KOMMENTAR = "kommentar";
@@ -38,7 +37,6 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String ERSTELLT = "erstellt";
 	private final static String REZEPTHASARTIKEL = "rezept_has_artikel";
 	private final static String REZEPTFK = "rezept_fk";
-	private final static String MENUE = "menue";
 	private final static String AKTIV = "aktiv";
 
 	private static RezeptDAO instance = null;

@@ -26,6 +26,7 @@ public class FussnoteDAO extends AbstractDAO {
 
 	Fussnote fussnote;
 
+	// SQL-Statements
 	private final static String GET_ALL_FUSSNOTE = "SELECT * FROM " + TABLE;
 	private final static String GET_FUSSNOTE_BY_ID = "SELECT * FROM " + TABLE
 			+ " WHERE " + ID + "={0}";
@@ -36,10 +37,12 @@ public class FussnoteDAO extends AbstractDAO {
 			+ " WHERE id = {0}";
 	private final static String GET_FUSSNOTE_BY_MENUE = "Select fussnote.id, fussnote.name, fussnote.abkuerzung from fussnote JOIN menue_has_fussnote On menue_has_fussnote.fussnote_fk = fussnote.id WHERE menue_has_fussnote.menue_fk = {0}";
 
+	// Konstruktor
 	public FussnoteDAO() {
 		super();
 	}
 
+	// Instanz erzeugen
 	public static FussnoteDAO getInstance() {
 		if (instance == null) {
 			instance = new FussnoteDAO();
@@ -48,6 +51,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return instance;
 	}
 
+	// Methode, die alle Fussnoten in einer Liste zurückliefert
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -59,6 +63,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die alle Fussnoten zu einem Menü über die ID zurückliefert
 	public List<Fussnote> getFussnoteByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -71,6 +76,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die eine Fussnote über die ID zurückliefert
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
@@ -81,17 +87,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return fussnote;
 	}
 
-	// public List<Fussnote> getFussnoteByName(String name)
-	// throws ConnectException, DAOException, SQLException {
-	// List<Fussnote> list = new ArrayList<Fussnote>();
-	// ResultSet set = get(GET_FUSSNOTE_BY_NAME + name + "%'");
-	// while (set.next()) {
-	// list.add(new Fussnote(set.getLong(ID), set.getString(NAME), set
-	// .getString(ABKUERZUNG)));
-	// }
-	// return list;
-	// }
-
+	// Methode, die eine Fussnote über den Namen zurückliefert
 	public Fussnote getFussnoteByName(String fn) throws ConnectException,
 			DAOException, SQLException {
 		Fussnote result = null;
@@ -107,14 +103,16 @@ public class FussnoteDAO extends AbstractDAO {
 		return result;
 	}
 
+	// Methode, die eine Fussnote erstellt
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name, abkuerzung) VALUES('" + fussnote.getBezeichnung() + "','"
-				+ fussnote.getAbkuerzung() + "');";
+				+ "(name, abkuerzung) VALUES('" + fussnote.getBezeichnung()
+				+ "','" + fussnote.getAbkuerzung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die eine Fussnote ändert
 	public void updateFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
@@ -124,6 +122,7 @@ public class FussnoteDAO extends AbstractDAO {
 		this.putManaged(UPDATE_QUERY);
 	}
 
+	// Methode, die eine Fussnote über den Name löscht
 	public void deleteFussnoteByName(String name) throws ConnectException,
 			DAOException, SQLException {
 		if (name == null) {
@@ -132,6 +131,7 @@ public class FussnoteDAO extends AbstractDAO {
 		putManaged(DELETE_FUSSNOTE_BY_NAME + name + "%'");
 	}
 
+	// Methode, die eine Fussnote über die ID löscht
 	public void deleteFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		if (id == null) {

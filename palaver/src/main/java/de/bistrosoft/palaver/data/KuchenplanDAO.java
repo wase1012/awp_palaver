@@ -14,7 +14,6 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
-import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
