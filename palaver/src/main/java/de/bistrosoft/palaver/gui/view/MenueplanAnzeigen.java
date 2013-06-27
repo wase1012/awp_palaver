@@ -4,7 +4,9 @@ package de.bistrosoft.palaver.gui.view;
 //import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
 //import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -31,10 +33,16 @@ import de.bistrosoft.palaver.menueplanverwaltung.KoecheComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -49,14 +57,14 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	Week curWeek = CalendarWeek.getCurrentWeek();
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
+	
+	List<Mitarbeiter> mitarbeiter;
+	List<Regel> regeln;
 
-	MenueplanGridLayout ersteMenueplan = new MenueplanGridLayout(week, year);
-	MenueplanGridLayout zweiteMenueplan = new MenueplanGridLayout(week + 1,
-			year);
-	MenueplanGridLayout dritteMenueplan = new MenueplanGridLayout(week + 2,
-			year);
-	MenueplanGridLayout vierteMenueplan = new MenueplanGridLayout(week + 3,
-			year);
+	MenueplanGridLayout ersteMenueplan;
+	MenueplanGridLayout zweiteMenueplan;
+	MenueplanGridLayout dritteMenueplan;
+	MenueplanGridLayout vierteMenueplan;
 
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
@@ -81,13 +89,14 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
 					+ strKW + "</pre>", ContentMode.HTML);
-	MenueplanGridLayout shownMenueplan = zweiteMenueplan;
+	MenueplanGridLayout shownMenueplan;
 
 	// /////////////////
 	Label lbMplWeek;
 
 	public MenueplanAnzeigen() {
 		super();
+		ladeDaten();
 		this.setSizeFull();
 		this.setMargin(true);
 
@@ -501,6 +510,26 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		checkRollen();
 		getHtmlTable();
+	}
+
+	private void ladeDaten() {
+		try {
+			mitarbeiter = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
+
+		ersteMenueplan = new MenueplanGridLayout(week, year,mitarbeiter,regeln);
+		zweiteMenueplan = new MenueplanGridLayout(week + 1,	year,mitarbeiter,regeln);
+		dritteMenueplan = new MenueplanGridLayout(week + 2, year,mitarbeiter,regeln);
+		vierteMenueplan = new MenueplanGridLayout(week + 3,	year,mitarbeiter,regeln);
+		
+		shownMenueplan = zweiteMenueplan;
 	}
 
 	public void checkRollen() {

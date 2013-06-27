@@ -32,7 +32,9 @@ import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -47,7 +49,8 @@ public class MenueplanGridLayout extends CustomComponent {
 	public DDGridLayout layout = null;
 	private Menueplan menueplan = null;
 
-	List<Regel> regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
+	List<Regel> regeln;
+	private List<Mitarbeiter> mitarbeiter;
 
 	public Menueplan getMenueplan() {
 		return menueplan;
@@ -58,13 +61,16 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 
 	// Seitenlayout erstellen
-	public MenueplanGridLayout(int week, int year) {
-		Menueplan mpl = Menueplanverwaltung.getInstance()
+	public MenueplanGridLayout(int week, int year, List<Mitarbeiter> mitarbeiter, List<Regel> regeln) {
+		Menueplan mpl
+				=Menueplanverwaltung.getInstance()
 				.getMenueplanByWeekWithItems(new Week(week, year));
 
 		if (mpl == null) {
 			mpl = new Menueplan(new Week(week, year));
 		}
+		this.regeln=regeln;
+		this.mitarbeiter=mitarbeiter;
 
 		generierePlan(mpl);
 	}
@@ -77,6 +83,7 @@ public class MenueplanGridLayout extends CustomComponent {
 		if (mpl == null) {
 			return;
 		}
+		 
 		int week = mpl.getWeek().getWeek();
 		int year = mpl.getWeek().getYear();
 
@@ -176,7 +183,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 		// Fülle Zeile für Köche mit DropDowm-Boxen für Namen
 		for (int col = 1; col < COLUMNS; col++) {
-			KoecheComponent koeche = new KoecheComponent();
+			KoecheComponent koeche = new KoecheComponent(mitarbeiter );
 			layout.addComponent(koeche, col, 1);
 			layout.setComponentAlignment(koeche, Alignment.MIDDLE_CENTER);
 		}

@@ -24,9 +24,8 @@ public class KoecheComponent extends CustomComponent {
 	private NativeSelect nsKoch1 = new NativeSelect();
 	private NativeSelect nsKoch2 = new NativeSelect();
 
-	List<Mitarbeiter> mitarbeiter;
-
-	public KoecheComponent() {
+	
+	public KoecheComponent(List<Mitarbeiter> mitarbeiter) {
 
 		setCompositionRoot(vl);
 		vl.setSizeFull();
@@ -41,17 +40,6 @@ public class KoecheComponent extends CustomComponent {
 
 		vl.setComponentAlignment(nsKoch1, Alignment.TOP_CENTER);
 		vl.setComponentAlignment(nsKoch2, Alignment.BOTTOM_CENTER);
-
-		try {
-			mitarbeiter = Mitarbeiterverwaltung.getInstance()
-					.getAllMitarbeiter();
-		} catch (ConnectException e) {
-			e.printStackTrace();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 		for (Mitarbeiter m : mitarbeiter) {
 			nsKoch1.addItem(m);
