@@ -30,22 +30,23 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 	private VerticalLayout box = new VerticalLayout();
 
 	Week curWeek = CalendarWeek.getCurrentWeek();
-	final int week = curWeek.getWeek()  + 2;
+	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
 
-	KuchenplanLayout curKuchenplan = new KuchenplanLayout(week, year);
-	KuchenplanLayout nextKuchenplan = new KuchenplanLayout(week + 1, year);
-	KuchenplanLayout prevKuchenplan = new KuchenplanLayout(week - 1, year);
+	KuchenplanLayout ersteKuchenplan = new KuchenplanLayout(week, year);
+	KuchenplanLayout zweiteKuchenplan = new KuchenplanLayout(week + 1, year);
+	KuchenplanLayout dritteKuchenplan = new KuchenplanLayout(week + 2, year);
+	KuchenplanLayout vierteKuchenplan = new KuchenplanLayout(week + 3,year);
 
 	HorizontalLayout hlChangeWeek = new HorizontalLayout();
 	private Button btForeWeek = new Button();
 	private Button btNextWeek = new Button();
 	private Button platzhalter1 = new Button();
 	private Button platzhalter2 = new Button();
-	private String strKW = new String("Kalenderwoche: " + week + "/" + year);
+	private String strKW = new String("Kalenderwoche: " + (week + 1) + "/" + year);
 
 	private Label lbKW = new Label(strKW);
-	KuchenplanLayout shownKuchenplan = curKuchenplan;
+	KuchenplanLayout shownKuchenplan = zweiteKuchenplan;
 
 	public KuchenplanAnzeigen() {
 		super();
@@ -75,22 +76,29 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener f�r eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (shownKuchenplan == curKuchenplan) {
-					box.replaceComponent(shownKuchenplan, prevKuchenplan);
-					shownKuchenplan = prevKuchenplan;
-					strKW = "Kalenderwoche: " + (week - 1) + "/" + year;
+				if (shownKuchenplan == zweiteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, ersteKuchenplan);
+					shownKuchenplan = ersteKuchenplan;
+					strKW = "Kalenderwoche: " + (week) + "/" + year;
 
 					Label lbForeWeek = new Label(strKW);
 					lbForeWeek.setStyleName("ViewHeadline");
 					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
 					lbKW = lbForeWeek;
 					left.replaceComponent(btForeWeek, platzhalter1);
+				} else if (shownKuchenplan == dritteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, zweiteKuchenplan);
+					shownKuchenplan = zweiteKuchenplan;
+					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
 
-				}
-				if (shownKuchenplan == nextKuchenplan) {
-					box.replaceComponent(shownKuchenplan, curKuchenplan);
-					shownKuchenplan = curKuchenplan;
-					strKW = "Kalenderwoche: " + (week) + "/" + year;
+					Label lbForeWeek = new Label(strKW);
+					lbForeWeek.setStyleName("ViewHeadline");
+					hlChangeWeek.replaceComponent(lbKW, lbForeWeek);
+					lbKW = lbForeWeek;
+				} else if (shownKuchenplan == vierteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, dritteKuchenplan);
+					shownKuchenplan = dritteKuchenplan;
+					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
 
 					Label lbForeWeek = new Label(strKW);
 					lbForeWeek.setStyleName("ViewHeadline");
@@ -99,9 +107,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					left.replaceComponent(platzhalter1, btForeWeek);
 					right.replaceComponent(platzhalter2, btNextWeek);
 				}
-
 			}
-
 		});
 
 		// Pfeil zum Wechseln zur nächsten KW und Anzeige der Wochen-Nr
@@ -113,10 +119,29 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener f�r eine Woche später
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (shownKuchenplan == curKuchenplan) {
-					box.replaceComponent(shownKuchenplan, nextKuchenplan);
-					shownKuchenplan = nextKuchenplan;
-					strKW = "Kalenderwoche: " + (week + 1) + "/" + year;
+				if (shownKuchenplan == ersteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, zweiteKuchenplan);
+					shownKuchenplan = zweiteKuchenplan;
+					strKW = "Kalenderwoche: " + (week+1) + "/" + year;
+
+					Label lbNextWeek = new Label(strKW);
+					lbNextWeek.setStyleName("ViewHeadline");
+					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
+					lbKW = lbNextWeek;
+					left.replaceComponent(platzhalter1, btForeWeek);
+				} else if (shownKuchenplan == zweiteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, dritteKuchenplan);
+					shownKuchenplan = dritteKuchenplan;
+					strKW = "Kalenderwoche: " + (week + 2) + "/" + year;
+
+					Label lbNextWeek = new Label(strKW);
+					lbNextWeek.setStyleName("ViewHeadline");
+					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
+					lbKW = lbNextWeek;
+				} else if (shownKuchenplan == dritteKuchenplan) {
+					box.replaceComponent(shownKuchenplan, vierteKuchenplan);
+					shownKuchenplan = vierteKuchenplan;
+					strKW = "Kalenderwoche: " + (week + 3) + "/" + year;
 
 					Label lbNextWeek = new Label(strKW);
 					lbNextWeek.setStyleName("ViewHeadline");
@@ -124,20 +149,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 					lbKW = lbNextWeek;
 					right.replaceComponent(btNextWeek, platzhalter2);
 				}
-				if (shownKuchenplan == prevKuchenplan) {
-					box.replaceComponent(shownKuchenplan, curKuchenplan);
-					shownKuchenplan = curKuchenplan;
-					strKW = "Kalenderwoche: " + (week) + "/" + year;
-
-					Label lbNextWeek = new Label(strKW);
-					lbNextWeek.setStyleName("ViewHeadline");
-					hlChangeWeek.replaceComponent(lbKW, lbNextWeek);
-					lbKW = lbNextWeek;
-					right.replaceComponent(platzhalter2, btNextWeek);
-					left.replaceComponent(platzhalter1, btForeWeek);
-				}
 			}
-
 		});
 
 		// Hinzuf�gen und Anordnen der Komponenten
@@ -181,10 +193,10 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		box.addComponent(lbPlatzhalter2);
 		box.addComponent(btSpeichern);
 		box.addComponent(lbPlatzhalter3);
-		box.addComponent(curKuchenplan);
+		box.addComponent(zweiteKuchenplan);
 		box.addComponent(lbFussnoten);
 		box.addComponent(lbPlatzhalter);
-		box.setComponentAlignment(curKuchenplan, Alignment.MIDDLE_CENTER);
+		box.setComponentAlignment(zweiteKuchenplan, Alignment.MIDDLE_CENTER);
 		box.setComponentAlignment(lbFussnoten, Alignment.BOTTOM_CENTER);
 		box.setComponentAlignment(btSpeichern, Alignment.MIDDLE_LEFT);
 		box.setComponentAlignment(lbPlatzhalter2, Alignment.MIDDLE_LEFT);
