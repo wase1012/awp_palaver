@@ -34,13 +34,6 @@ public class Rezeptartverwaltung extends RezeptartDAO {
 		return result;
 	}
 
-	public List<Rezeptart> getGeschmackByName(String name)
-			throws ConnectException, DAOException, SQLException {
-		List<Rezeptart> result = null;
-		result = super.getRezeptartByName(name);
-		return result;
-	}
-
 	public Rezeptart getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		Rezeptart rezeptart = null;
@@ -56,15 +49,5 @@ public class Rezeptartverwaltung extends RezeptartDAO {
 	public void updateRezeptart(Rezeptart rezeptart) throws ConnectException,
 			DAOException, SQLException {
 		super.updateRezeptart(rezeptart);
-	}
-
-	public void deleteRezeptartByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteRezeptartByName(name);
-	}
-
-	public void deleteRezeptartById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteRezeptartById(id);
 	}
 }

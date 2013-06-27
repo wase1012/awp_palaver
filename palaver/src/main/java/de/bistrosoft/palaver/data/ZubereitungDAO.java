@@ -26,21 +26,20 @@ public class ZubereitungDAO extends AbstractDAO {
 
 	Zubereitung zubereitung;
 
+	// SQL-Statements
 	private final static String GET_ALL_ZUBEREITUNG = "SELECT * FROM " + TABLE;
 	private final static String GET_ZUBEREITUNG_BY_ID = "SELECT * FROM "
 			+ TABLE + " WHERE " + ID + "={0}";
 	private final static String GET_ZUBEREITUNG_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_ZUBEREITUNG_BY_NAME = "DELETE FROM "
-			+ TABLE + " WHERE " + NAME + " LIKE" + " '%";
-	private static final String DELETE_ZUBEREITUNG_BY_ID = "DELETE FROM "
-			+ TABLE + " WHERE id = {0}";
 	private static final String GET_ZUBEREITUNG_BY_REZEPT = "Select zubereitung.id, zubereitung.name From zubereitung Join rezept_has_zubereitung On zubereitung.id = rezept_has_zubereitung.zubereitung_fk WHERE rezept_has_zubereitung.rezept_fk = {0}";
 
+	// Konstruktor
 	public ZubereitungDAO() {
 		super();
 	}
 
+	// Instanz erzeugen
 	public static ZubereitungDAO getInstance() {
 		if (instance == null) {
 			instance = new ZubereitungDAO();
@@ -49,6 +48,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return instance;
 	}
 
+	// Methode, die alle Zubereitung in einer Liste zurückliefert
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
@@ -59,6 +59,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die eine Zubereitung eines Rezepts über die ID zurückliefert
 	public List<Zubereitung> getZubereitungByRezept(Long id)
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
@@ -70,6 +71,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die eine Zubereitung über die ID zurückliefert
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID,
@@ -80,6 +82,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return zubereitung;
 	}
 
+	// Methode, die eine Zubereitung über den Name zurückliefert
 	public Zubereitung getZubereitungByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
@@ -91,6 +94,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return list.get(0);
 	}
 
+	// Methode, die eine Zubereitung erstellt
 	public void createZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
@@ -98,6 +102,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die eine Zubereitung ändert
 	public void updateZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
@@ -105,21 +110,4 @@ public class ZubereitungDAO extends AbstractDAO {
 				+ zubereitung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
-
-	public void deleteZubereitungByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		if (name == null) {
-			throw new NullPointerException("keine Zubereitung übergeben!");
-		}
-		putManaged(DELETE_ZUBEREITUNG_BY_NAME + name + "%'");
-	}
-
-	public void deleteZubereitungById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		if (id == null) {
-			throw new NullPointerException("keine Zubereitung übergeben!");
-		}
-		putManaged(MessageFormat.format(DELETE_ZUBEREITUNG_BY_ID, id));
-	}
-
 }

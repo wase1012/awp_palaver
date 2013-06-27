@@ -64,14 +64,4 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 			throws ConnectException, DAOException, SQLException {
 		super.updateZubereitung(zubereitung);
 	}
-
-	public void deleteZubereitungByName(String name) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteZubereitungByName(name);
-	}
-
-	public void deleteZubereitungById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		super.deleteZubereitungById(id);
-	}
 }
