@@ -40,6 +40,8 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String AKTIV = "aktiv";
 
 	private static RezeptDAO instance = null;
+
+	// SQL-Statements
 	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
 	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1";
 	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2";
@@ -56,10 +58,12 @@ public class RezeptDAO extends AbstractDAO {
 
 	Rezept rezept;
 
+	// Konstruktor
 	public RezeptDAO() {
 		super();
 	}
 
+	// Instanz erzeugen
 	public static RezeptDAO getInstance() {
 		if (instance == null) {
 			instance = new RezeptDAO();
@@ -67,6 +71,7 @@ public class RezeptDAO extends AbstractDAO {
 		return instance;
 	}
 
+	// Methode, die alle Rezepte in einer Liste zurueckliefert
 	public List<Rezept> getAllRezepte() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -81,6 +86,8 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die alle Rezepte mit der Rezeptart Hauptgericht in einer Liste
+	// zurueckliefert
 	public List<Rezept> getAllHauptgerichte() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -95,6 +102,8 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die alle Rezepte mit der Rezeptart Beilage in einer Liste
+	// zurückliefert
 	public List<Rezept> getAllBeilagen() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -109,6 +118,7 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die alle Rezepte in einer Liste zurueckliefert
 	public List<Rezept> getAllRezepteTabelle() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -131,6 +141,8 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
+	// Methode, die alle Rezepte, welche den Status aktiv haben, in einer Liste
+	// zurueckliefert
 	public List<Rezept> getAllRezepteTabelleAktiv() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -153,23 +165,7 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
-	public List<Rezept> getAllRezepteM() throws ConnectException, DAOException,
-			SQLException {
-		List<Rezept> list = new ArrayList<Rezept>();
-		ResultSet set = getManaged(GET_ALL_REZEPTS);
-		;
-		while (set.next()) {
-			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
-					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")), set
-							.getString("name"), null
-
-			));
-		}
-		return list;
-	}
-
+	// Methode, die ein Rezept über die ID zurueckliefert
 	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
 			SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_ID, id));
@@ -185,18 +181,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
-	public Rezept getRezept1(Long id) throws ConnectException, DAOException,
-			SQLException {
-		Rezept result = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_ID, id));
-
-		while (set.next()) {
-			result = new Rezept(set.getLong("id"));
-		}
-
-		return result;
-	}
-
+	// Methode, die ein Rezept über den Name zurueckliefert
 	public Rezept getRezeptByName(String namerezept) throws ConnectException,
 			DAOException, SQLException {
 		Rezept result = null;
@@ -215,20 +200,7 @@ public class RezeptDAO extends AbstractDAO {
 		return result;
 	}
 
-	public Rezept getRezeptByName1(String name) throws ConnectException,
-			DAOException, SQLException {
-		Rezept result = null;
-
-		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_NAME,
-				"name"));
-
-		while (set.next()) {
-			result = new Rezept(set.getLong("id"));
-		}
-
-		return result;
-	}
-
+	// Methode, die alle Artikel zu einem Rezept ueber dessen ID zurueckliefert
 	public List<Rezept> getAllArtikelByRezeptId(int rezeptID)
 			throws ConnectException, DAOException, SQLException {
 		List<Rezept> rezept = new ArrayList<Rezept>();
@@ -242,6 +214,8 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
+	// Methode, die alle Artikel zu einem Rezept über dessen ID in einer Liste
+	// zurueckliefert
 	public List<RezeptHasArtikel> getAllArtikelByRezeptId1(Long rezeptID)
 			throws ConnectException, DAOException, SQLException {
 		List<RezeptHasArtikel> rha = new ArrayList<RezeptHasArtikel>();
@@ -257,6 +231,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rha;
 	}
 
+	// Methode, die ein Rezept erstellt
 	public void createRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
@@ -269,6 +244,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die eine Zubereitung zu einem Rezept speichert
 	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO rezept_has_zubereitung (rezept_fk, zubereitung_fk) VALUES"
@@ -279,6 +255,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die Artikel zu einem Rezept speichert
 	public void saveArtikel(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		List<RezeptHasArtikel> rha = rezept.getArtikel();
@@ -293,6 +270,7 @@ public class RezeptDAO extends AbstractDAO {
 		}
 	}
 
+	// Methode, die ein Rezept bearbeitet
 	public void updateRezept(Rezept rezept) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "UPDATE rezept SET name = '" + rezept.getName()
@@ -304,6 +282,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
+	// Methode, die eine Zubereitung zu einem Rezept loescht
 	public void ZubereitungenDelete(Rezept rezept1) throws ConnectException,
 			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE  from rezept_has_zubereitung WHERE rezept_fk = "
@@ -312,6 +291,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(DELETE_QUERY);
 	}
 
+	// Methode, die Rezepte zu einem Menue in einer Liste zurueckliefert
 	public List<Rezept> getRezepteByMenue(Menue menue) throws ConnectException,
 			DAOException, SQLException {
 		List<Rezept> rezepte = new ArrayList<Rezept>();
@@ -336,6 +316,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rezepte;
 	}
 
+	// Methode, welche die Artikel zu einem Rezept lädt
 	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez)
 			throws ConnectException, DAOException, SQLException {
 		List<RezeptHasArtikel> rha = new ArrayList<RezeptHasArtikel>();
@@ -358,6 +339,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rha;
 	}
 
+	// Methode, die die Zutaten zu einem Rezept loescht
 	public void deleteZutatenZuRezept(Rezept rez2) throws ConnectException,
 			DAOException, SQLException {
 		String DELETE_QUERY = "DELETE FROM rezept_has_artikel WHERE "
@@ -365,6 +347,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(DELETE_QUERY);
 	}
 
+	// Methode, die die Zubereitung zu einem Rezept loescht
 	public void deleteZubereitungZuRezept(Rezept rezept)
 			throws ConnectException, DAOException {
 		String DELETE_QUERY = "DELETE FROM rezept_has_zubereitung WHERE "
@@ -372,6 +355,7 @@ public class RezeptDAO extends AbstractDAO {
 		this.putManaged(DELETE_QUERY);
 	}
 
+	// Methode, die ein Rezept inaktiv setzt
 	public void setRezeptDisabled(Rezept rezeptAusTb) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + AKTIV

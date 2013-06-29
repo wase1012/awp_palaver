@@ -547,7 +547,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			Rezept rezeptNeu = null;
 
 			try {
-				rezeptNeu = Rezeptverwaltung.getInstance().getRezeptByName1(
+				rezeptNeu = Rezeptverwaltung.getInstance().getRezeptByName(
 						nameInput);
 			} catch (Exception e1) {
 				e1.printStackTrace();
