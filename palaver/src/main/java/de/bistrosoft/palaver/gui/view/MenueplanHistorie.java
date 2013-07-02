@@ -1,9 +1,11 @@
 package de.bistrosoft.palaver.gui.view;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.vaadin.data.util.converter.Converter.ConversionException;
@@ -19,9 +21,15 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
+import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
+import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -116,8 +124,18 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 								((Application) UI.getCurrent().getData())
 								.showDialog(IConstants.INFO_MENUEPLAN_HISTORIE_KEINPLAN);
 							} else {
+								List<Mitarbeiter> mitarbeiter=null;
+								List<Regel> regeln=null;
+								try {
+									mitarbeiter = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+									regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
+								} catch (ConnectException e) {
+								} catch (DAOException e) {
+								} catch (SQLException e) {
+								}
 								// Anzeige
-								Menueplan = new MenueplanGridLayout(week, year);
+//								Menueplan = new MenueplanGridLayout(week, year);
+								Menueplan = new MenueplanGridLayout(woche, year, mitarbeiter, regeln);
 								Menueplan.layout
 										.setDragMode(LayoutDragMode.NONE);
 								String strKW = new String("Kalenderwoche: "

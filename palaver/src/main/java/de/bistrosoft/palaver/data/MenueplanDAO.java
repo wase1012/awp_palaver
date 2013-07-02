@@ -156,6 +156,61 @@ public class MenueplanDAO extends AbstractDAO {
 		return menueplan;
 	}
 
+	public Menueplan getMenueplanForLayout(Week week)
+			throws ConnectException, DAOException, SQLException {
+		Menueplan menueplan = null;
+		ResultSet setMpl = getManaged(MessageFormat.format(
+				GET_MENUEPLAN_BY_WEEK, week.getWeek(), week.getYear()));
+		
+		while (setMpl.next()) {
+			menueplan = new Menueplan(setMpl.getLong(ID), week);
+			Boolean freigegeben = setMpl.getBoolean("freigegeben");
+			menueplan.setFreigegeben(freigegeben);
+		}
+		
+		
+		if (menueplan != null) {
+			menueplan.setWeek(week);
+			// TODO: Köche laden
+			
+			List<MenueComponent> menues = new ArrayList<MenueComponent>();
+			// TODO: Menüs laden
+			ResultSet setMenues = getManaged(MessageFormat.format(
+					GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
+			
+			while (setMenues.next()) {
+				Long id = setMenues.getLong("id");
+				String name = setMenues.getString("name");
+				Mitarbeiter koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong("koch"));
+				// TODO: = new Mitarbeiter(name, vorname);
+				Menue menue = new Menue(id, name, koch);
+				int row = setMenues.getInt("zeile");
+				int col = setMenues.getInt("spalte");
+				// Rezepte hinzufügen
+//				List<Rezept> rezepte = Rezeptverwaltung.getInstance()
+//						.getRezepteByMenue(menue);
+//				menue.setRezepte(rezepte);
+				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
+						.getFussnoteByMenue(id);
+				menue.setFussnoten(fussnoten);
+				Geschmack geschmack = Geschmackverwaltung.getInstance()
+						.getGeschmackById(setMenues.getLong("geschmack_fk"));
+				menue.setGeschmack(geschmack);
+				Menueart menueart = Menueartverwaltung.getInstance()
+						.getMenueartById(setMenues.getLong("menueart_fk"));
+				menue.setMenueart(menueart);
+				
+				String angezName = setMenues.getString("angezName");
+				Integer portion = setMenues.getInt("portion");
+				MenueComponent menueComp = new MenueComponent(menue, angezName,
+						null, null, row, col, false,portion);
+				menues.add(menueComp);
+			}
+			menueplan.setMenues(menues);
+		}
+		return menueplan;
+	}
+
 	// public Menueplan getMenueplanByWeekWithMenues(Week week) throws
 	// ConnectException, DAOException, SQLException{
 	// Menueplan menueplan = null;
