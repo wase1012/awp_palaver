@@ -63,7 +63,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	private TwinColTouch kriterienFussnote = new TwinColTouch("Kriterien");
 	private TwinColTouch kriterienGeschmack = new TwinColTouch("Kriterien");
 	private TwinColTouch kriterienZubereitung = new TwinColTouch("Kriterien");
-	private TwinColTouch kriterienMenüart = new TwinColTouch("Kriterien");
+	private TwinColTouch kriterienMenÃ¼art = new TwinColTouch("Kriterien");
 	private TextField kriterienText = new TextField("Kriterium");
 	private TextArea fehlermeldung = new TextArea("Fehlermeldung");
 	private CheckBox aktiv = new CheckBox("Aktiv");
@@ -109,7 +109,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	BeanItemContainer<String> regeltypcontainer = new BeanItemContainer<String>(
 			String.class, regeltypinhalt);
 
-	// Konstruktur der für das bearbeiten einer Regel verwendet wird
+	// Konstruktur der fÃ¼r das bearbeiten einer Regel verwendet wird
 	public RegelAnlegen(Regel regel) {
 		label = new Label("Regel bearbeiten");
 		layout();
@@ -118,7 +118,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Konstruktor der für das Anlegen einer neuen Regel verwendet wird
+	// Konstruktor der fÃ¼r das Anlegen einer neuen Regel verwendet wird
 	public RegelAnlegen() {
 		label = new Label("Regel erstellen");
 		layout();
@@ -272,13 +272,13 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		kriterienMenüart.setWidth("90%");
-		kriterienMenüart.setImmediate(true);
-		kriterienMenüart.addValidator(new Validator() {
+		kriterienMenÃ¼art.setWidth("90%");
+		kriterienMenÃ¼art.setImmediate(true);
+		kriterienMenÃ¼art.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				if (kriterienMenüart.getValue().toString() == "[]") {
+				if (kriterienMenÃ¼art.getValue().toString() == "[]") {
 					throw new InvalidValueException(
 							IConstants.INFO_REGEL_KRITERIEN_TWIN);
 				}
@@ -311,7 +311,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Clicklistener für das Speichern einer neuen Regel
+	// Clicklistener fÃ¼r das Speichern einer neuen Regel
 	private void speichern() {
 		speichern.addClickListener(new ClickListener() {
 
@@ -341,7 +341,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		});
 	}
 
-	// ChangeListener für die Felder
+	// ChangeListener fÃ¼r die Felder
 	private void ChangeListener() {
 
 		zeilen.addValueChangeListener(new ValueChangeListener() {
@@ -374,15 +374,15 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 				regeltypinput = valueString;
 
-				// Falls Regeltyp Aufwand oder Menü ausgewählt wird, wird ein
-				// Textfeld eingefügt und aus dem Container für Operator die
-				// Auswahlmöglichkeiten "verbotene Werte" und "muss enthalten"
+				// Falls Regeltyp Aufwand oder MenÃ¼ ausgewÃ¼hlt wird, wird ein
+				// Textfeld eingefÃ¼gt und aus dem Container fÃ¼r Operator die
+				// AuswahlmÃ¼glichkeiten "verbotene Werte" und "muss enthalten"
 				// entfernt
 				if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
-					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienMenÃ¼art);
 					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
 					operator.removeItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -392,24 +392,24 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfügen
+						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol für Zubereitung hinufügen und alle
+					// Ansonsten TwinCol fÃ¼r Zubereitung hinufÃ¼gen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienZubereitung);
 					}
-					// falls Container für Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					// falls Container fÃ¼r Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -418,28 +418,28 @@ public class RegelAnlegen extends VerticalLayout implements View,
 							.containsId(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
-					// Falls Regeltyp Menüart ist
+					// Falls Regeltyp MenÃ¼art ist
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfügen
+						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol für Menüart hinufügen und alle
+					// Ansonsten TwinCol fÃ¼r MenÃ¼art hinufÃ¼gen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
-						mitte.addComponent(kriterienMenüart);
+						mitte.addComponent(kriterienMenÃ¼art);
 					}
-					// falls Container für Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					// falls Container fÃ¼r Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -453,24 +453,24 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfügen
+						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					} 
-					// Ansonsten TwinCol für Geschmack hinufügen und alle
+					// Ansonsten TwinCol fÃ¼r Geschmack hinufÃ¼gen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienGeschmack);
 					}
-					// falls Container für Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					// falls Container fÃ¼r Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -480,28 +480,28 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
 				} 
-				// Falls Regeltyp Fußnote ist
+				// Falls Regeltyp FuÃ¼note ist
 				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfügen
+						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol für Fußnote hinufügen und alle
+					// Ansonsten TwinCol fÃ¼r FuÃ¼note hinufÃ¼gen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienGeschmack);
-						mitte.removeComponent(kriterienMenüart);
+						mitte.removeComponent(kriterienMenÃ¼art);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienFussnote);
 					}
-					// falls Container für Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthält, werden diese hinzugefügt
+					// falls Container fÃ¼r Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -523,38 +523,38 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 				operatorinput = valueString;
 
-				// Falls beim Feld Operator "maximale Anzahl" ausgewählt wird, wird ein Textfeld
-				// eingefügt
+				// Falls beim Feld Operator "maximale Anzahl" ausgewÃ¼hlt wird, wird ein Textfeld
+				// eingefÃ¼gt
 				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
-					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienMenÃ¼art);
 					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
 
-					// Falls beim Regeltyp Aufwand oder Menü ausgewählt wird, so
-					// wird ein Textfeld eingefügt
+					// Falls beim Regeltyp Aufwand oder MenÃ¼ ausgewÃ¼hlt wird, so
+					// wird ein Textfeld eingefÃ¼gt
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
-					mitte.removeComponent(kriterienMenüart);
+					mitte.removeComponent(kriterienMenÃ¼art);
 					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
 				}
-				// Falls beim Operator "verbotene Werte" oder "muss enthalten" ausgewählt wird
+				// Falls beim Operator "verbotene Werte" oder "muss enthalten" ausgewÃ¼hlt wird
 				else if (operatorinput == IConstants.INFO_REGEL_OPERATOR_ERLAUBT
 						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_VERBOTEN) {
-					// Wenn Beim Regeltyp Menüart ausgewählt wird, wird twincol für Menüart einfügt 
+					// Wenn Beim Regeltyp MenÃ¼art ausgewÃ¼hlt wird, wird twincol fÃ¼r MenÃ¼art einfÃ¼gt 
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART
 							|| regeltyp
 									.getValue()
 									.toString()
 									.equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
 						mitte.removeComponent(kriterienText);
-						mitte.addComponent(kriterienMenüart);
+						mitte.addComponent(kriterienMenÃ¼art);
 					}
-					// Wenn beim Regeltyo Fußnote ausgewählt wird, wird twincol für Fußnote eingefügt
+					// Wenn beim Regeltyo FuÃ¼note ausgewÃ¼hlt wird, wird twincol fÃ¼r FuÃ¼note eingefÃ¼gt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE
 							|| regeltyp
 									.getValue()
@@ -563,7 +563,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienFussnote);
 					}
-					// Wenn beim Regeltyo Geschmack ausgewählt wird, wird twincol für Geschmack eingefügt
+					// Wenn beim Regeltyo Geschmack ausgewÃ¼hlt wird, wird twincol fÃ¼r Geschmack eingefÃ¼gt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK
 							|| regeltyp
 									.getValue()
@@ -572,7 +572,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienGeschmack);
 					}
-					// Wenn beim Regeltyo Zubereitung ausgewählt wird, wird twincol für Zubereitung eingefügt
+					// Wenn beim Regeltyo Zubereitung ausgewÃ¼hlt wird, wird twincol fÃ¼r Zubereitung eingefÃ¼gt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG
 							|| regeltyp
 									.getValue()
@@ -605,7 +605,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		kriterienMenüart.addValueChangeListener(new ValueChangeListener() {
+		kriterienMenÃ¼art.addValueChangeListener(new ValueChangeListener() {
 
 			public void valueChange(final ValueChangeEvent event) {
 				String valueString = String.valueOf(event.getProperty()
@@ -647,7 +647,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Diese Methode dient dazu, die Container je nach ausgewähltem Regeltyp zu
+	// Diese Methode dient dazu, die Container je nach ausgewÃ¼hltem Regeltyp zu
 	// setzen
 	public void check() {
 		try {
@@ -660,7 +660,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			List<Menueart> ma = Menueartverwaltung.getInstance()
 					.getAllMenueart();
 			List<Geschmack> g = Geschmackverwaltung.getInstance()
-					.getAllGeschmackAktiv();
+					.getAllGeschmack();
 
 			// Container setzen
 			for (Zubereitung z : zb) {
@@ -675,7 +675,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			}
 
 			for (Menueart m : ma) {
-				kriterienMenüart.addItem(m.getBezeichnung());
+				kriterienMenÃ¼art.addItem(m.getBezeichnung());
 			}
 
 		} catch (Exception e) {
@@ -684,7 +684,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	}
 
 	// Diese Methode wird aufgerufen, sobald man eine Regel per Doppelklick
-	// auswählt
+	// auswÃ¼hlt
 	public void getViewParam(ViewData data) {
 		// Angeklickte Regel
 		regel = (Regel) ((ViewDataObject<?>) data).getData();
@@ -764,9 +764,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						IConstants.INFO_REGEL_OPERATOR_VERBOTEN)
 						|| regel.getOperator().equals(
 								IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-					mitte.addComponent(kriterienMenüart);
+					mitte.addComponent(kriterienMenÃ¼art);
 					for (String z : kr) {
-						kriterienMenüart.select(z);
+						kriterienMenÃ¼art.select(z);
 					}
 				} else {
 					mitte.addComponent(kriterienText);
@@ -780,7 +780,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 							IConstants.INFO_REGEL_REGELTYP_MENUE)) {
 				mitte.removeComponent(kriterienFussnote);
 				mitte.removeComponent(kriterienGeschmack);
-				mitte.removeComponent(kriterienMenüart);
+				mitte.removeComponent(kriterienMenÃ¼art);
 				mitte.removeComponent(kriterienZubereitung);
 				mitte.addComponent(kriterienText);
 				kriterienText.setValue(regel.getKriterien());
@@ -840,12 +840,12 @@ public class RegelAnlegen extends VerticalLayout implements View,
 								.getValue()
 								.toString()
 								.equals(IConstants.INFO_REGEL_REGELTYP_MENUEART)) {
-							regel.setKriterien(kriterienMenüart
+							regel.setKriterien(kriterienMenÃ¼art
 									.getValue()
 									.toString()
 									.substring(
 											1,
-											kriterienMenüart.getValue()
+											kriterienMenÃ¼art.getValue()
 													.toString().length() - 1));
 						}
 						if (regeltyp
@@ -923,8 +923,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				return false;
 			}
 		}
-		if (mitte.getComponent(2) == kriterienMenüart) {
-			if (kriterienMenüart.getValue().toString() == "[]") {
+		if (mitte.getComponent(2) == kriterienMenÃ¼art) {
+			if (kriterienMenÃ¼art.getValue().toString() == "[]") {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_REGEL_KRITERIEN_TWIN);
 				return false;
