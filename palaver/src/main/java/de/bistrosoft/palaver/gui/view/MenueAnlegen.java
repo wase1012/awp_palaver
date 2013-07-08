@@ -343,7 +343,25 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 			@Override
 			public void windowClose(CloseEvent e) {
-				load();
+				try {
+					ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
+							Rezeptverwaltung.getInstance().getAllRezepteForMenue());
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DAOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				tblRezepte.setContainerDataSource(ctRezepte);
+				tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+				"mitarbeiter" });
 			}
 		});
 	}
