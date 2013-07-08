@@ -1,6 +1,3 @@
-/**
- * Created by Elena W
- */
 package de.hska.awp.palaver2.gui.view;
 
 import java.io.UnsupportedEncodingException;
@@ -42,6 +39,11 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 
+/**
+ * View 
+ * @author Christian Barth
+ *
+ */
 @SuppressWarnings("serial")
 public class MitarbeiterErstellen extends VerticalLayout implements View {
 

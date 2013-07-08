@@ -36,6 +36,12 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 
+/**
+ * 
+ * @author Christine Hartkorn
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class KuchenplanLayout extends CustomComponent {
 
@@ -51,7 +57,7 @@ public class KuchenplanLayout extends CustomComponent {
 	private Label lbHeadline = new Label(
 			"<div><B>Kuchenname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anzahl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fußnoten</B></div>",
 			ContentMode.HTML);
-	
+
 	// Tabellen
 	public Table itemMoTable;
 	public Table itemDiTable;
@@ -110,7 +116,7 @@ public class KuchenplanLayout extends CustomComponent {
 		// GridLayout zu Seitenlayout hinzufÃ¼gen
 		outer.addComponent(layout);
 		outer.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-		
+
 		// Überschriften-Zeile
 		lbHeadlinePlatzhalter.setWidth("149px");
 		layout.addComponent(lbHeadlinePlatzhalter, 0, 0);
@@ -120,7 +126,7 @@ public class KuchenplanLayout extends CustomComponent {
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week,
 				year);
 		for (int row = 1; row < ROWS; row++) {
-			GregorianCalendar date = dates.get(row-1);
+			GregorianCalendar date = dates.get(row - 1);
 			String strDay = date.getDisplayName(Calendar.DAY_OF_WEEK, 2,
 					Locale.GERMANY);
 
@@ -383,7 +389,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 1, fn);
 					containerKuchenplanHasKuchenrezeptMo.addItem(tmp);
@@ -412,7 +419,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 2, fn);
 					containerKuchenplanHasKuchenrezeptDi.addItem(tmp);
@@ -441,7 +449,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 3, fn);
 					containerKuchenplanHasKuchenrezeptMi.addItem(tmp);
@@ -470,7 +479,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 4, fn);
 					containerKuchenplanHasKuchenrezeptDo.addItem(tmp);
@@ -499,7 +509,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 5, fn);
 					containerKuchenplanHasKuchenrezeptFr.addItem(tmp);
@@ -528,7 +539,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 6, fn);
 					containerKuchenplanHasKuchenrezeptSa.addItem(tmp);
@@ -557,7 +569,8 @@ public class KuchenplanLayout extends CustomComponent {
 				Transferable t = event.getTransferable();
 				if (t.getData("itemId") instanceof Kuchenrezept) {
 					Kuchenrezept selected = (Kuchenrezept) t.getData("itemId");
-					String fn = ((Kuchenrezept) t.getData("itemId")).getFussnoten();
+					String fn = ((Kuchenrezept) t.getData("itemId"))
+							.getFussnoten();
 					KuchenplanHasKuchenrezept tmp = new KuchenplanHasKuchenrezept(
 							selected, 7, fn);
 					containerKuchenplanHasKuchenrezeptSo.addItem(tmp);
@@ -572,8 +585,7 @@ public class KuchenplanLayout extends CustomComponent {
 					Kuchenrezept.class, Kuchenrezeptverwaltung.getInstance()
 							.getAllKuchenrezepte());
 			kuchenTable.setContainerDataSource(containerKuchen);
-			kuchenTable
-					.setVisibleColumns(new Object[] { "name", "fussnoten" });
+			kuchenTable.setVisibleColumns(new Object[] { "name", "fussnoten" });
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
@@ -594,7 +606,7 @@ public class KuchenplanLayout extends CustomComponent {
 		for (KuchenplanHasKuchenrezept khk : tmpItems) {
 			if (khk.getAnzahl() >= 100000.0) {
 				((Application) UI.getCurrent().getData())
-				.showDialog(IConstants.INFO_KUCHENPLAN_MENGE);
+						.showDialog(IConstants.INFO_KUCHENPLAN_MENGE);
 				khk.setAnzahl(1);
 				return;
 			}
@@ -603,7 +615,7 @@ public class KuchenplanLayout extends CustomComponent {
 		kuchenplan.setKuchenrezepte(tmpItems);
 		Kuchenplanverwaltung.getInstance().persist(kuchenplan);
 		((Application) UI.getCurrent().getData())
-		.showDialog("Kuchenplan für Kalenderwoche " + week + "/" + year
-				+ " wurde gespeichert");
+				.showDialog("Kuchenplan für Kalenderwoche " + week + "/" + year
+						+ " wurde gespeichert");
 	}
 }

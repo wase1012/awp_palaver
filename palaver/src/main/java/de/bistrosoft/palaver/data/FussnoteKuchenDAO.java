@@ -14,7 +14,7 @@ import de.hska.awp.palaver2.data.DAOException;
 
 /**
  * 
- * @author Christine Hartkorn
+ * @author Jasmin Baumgartner
  * 
  */
 
@@ -51,7 +51,7 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Fussnoten in einer Liste zurÃ¼ckliefert
+	// Methode, die alle Fussnoten in einer Liste zurückliefert
 	public List<FussnoteKuchen> getAllFussnoteKuchen() throws ConnectException,
 			DAOException, SQLException {
 		List<FussnoteKuchen> list = new ArrayList<FussnoteKuchen>();
@@ -63,7 +63,7 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die alle Fussnoten zu einem Kuchen Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die alle Fussnoten zu einem Kuchen über die ID zurückliefert
 	public List<FussnoteKuchen> getFussnoteKuchenByKuchen(Long id)
 			throws ConnectException, DAOException, SQLException {
 		List<FussnoteKuchen> list = new ArrayList<FussnoteKuchen>();
@@ -78,7 +78,7 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Fussnote Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Fussnote über die ID zurückliefert
 	public FussnoteKuchen getFussnoteKuchenById(Long id)
 			throws ConnectException, DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(
@@ -90,7 +90,7 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 		return fussnotekuchen;
 	}
 
-	// Methode, die eine Fussnote Ã¼ber den Namen zurÃ¼ckliefert
+	// Methode, die eine Fussnote über den Namen zurückliefert
 	public FussnoteKuchen getFussnoteKuchenByName(String fn)
 			throws ConnectException, DAOException, SQLException {
 		FussnoteKuchen result = null;
@@ -116,7 +116,7 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
-	// Methode, die eine Fussnote Ã¤ndert
+	// Methode, die eine Fussnote ändert
 	public void updateFussnoteKuchen(FussnoteKuchen fussnotekuchen)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"

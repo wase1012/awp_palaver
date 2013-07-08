@@ -26,7 +26,6 @@ import de.bistrosoft.palaver.data.MenueplanDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
@@ -34,10 +33,15 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
+
+/**
+ * 
+ * @author Eike Becher, Melanie Gross, Christine Hartkorn
+ * 
+ */
 
 @SuppressWarnings("serial")
 public class MenueplanGridLayout extends CustomComponent {
@@ -61,27 +65,25 @@ public class MenueplanGridLayout extends CustomComponent {
 	}
 
 	// Seitenlayout erstellen
-	public MenueplanGridLayout(int week, int year, List<Mitarbeiter> mitarbeiter, List<Regel> regeln) {
-		Menueplan mpl=null;
+	public MenueplanGridLayout(int week, int year,
+			List<Mitarbeiter> mitarbeiter, List<Regel> regeln) {
+		Menueplan mpl = null;
 		try {
-			mpl = Menueplanverwaltung.getInstance()
-			.getMenueplanForLayout(new Week(week, year));
+			mpl = Menueplanverwaltung.getInstance().getMenueplanForLayout(
+					new Week(week, year));
 		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		if (mpl == null) {
 			mpl = new Menueplan(new Week(week, year));
 		}
-		this.regeln=regeln;
-		this.mitarbeiter=mitarbeiter;
+		this.regeln = regeln;
+		this.mitarbeiter = mitarbeiter;
 
 		generierePlan(mpl);
 	}
@@ -94,7 +96,7 @@ public class MenueplanGridLayout extends CustomComponent {
 		if (mpl == null) {
 			return;
 		}
-		 
+
 		int week = mpl.getWeek().getWeek();
 		int year = mpl.getWeek().getYear();
 
@@ -185,16 +187,16 @@ public class MenueplanGridLayout extends CustomComponent {
 					+ (date.get(Calendar.MONTH) + 1) + "."
 					+ date.get(Calendar.YEAR);
 
-			Label lbTmp = new Label(strDay+", "+ strDate);
+			Label lbTmp = new Label(strDay + ", " + strDate);
 			lbTmp.setHeight("30px");
-//			lbTmp.setWidth("149px");
+			// lbTmp.setWidth("149px");
 			layout.addComponent(lbTmp, col, 0);
 			layout.setComponentAlignment(lbTmp, Alignment.MIDDLE_CENTER);
 		}
 
 		// Fülle Zeile für Köche mit DropDowm-Boxen für Namen
 		for (int col = 1; col < COLUMNS; col++) {
-			KoecheComponent koeche = new KoecheComponent(mitarbeiter );
+			KoecheComponent koeche = new KoecheComponent(mitarbeiter);
 			layout.addComponent(koeche, col, 1);
 			layout.setComponentAlignment(koeche, Alignment.MIDDLE_CENTER);
 		}
@@ -229,32 +231,32 @@ public class MenueplanGridLayout extends CustomComponent {
 					mc.setMenueplan(this);
 					layout.addComponent(mc, mc.getCol(), mc.getRow());
 					this.pruefeRegeln(mc);
-//					if (mc != null) {
-//						if (mc.getFehlerRegeln() != null) {
-//							for (Regel r : mc.getFehlerRegeln()) {
-//								if (!r.getIgnorierbar()) {
-//									ConfirmDialog
-//											.show(UI.getCurrent(),
-//													"Regel verletzt",
-//													"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
-//													"OK",
-//													"Ignorieren",
-//													new ConfirmDialog.Listener() {
-//
-//														public void onClose(
-//																ConfirmDialog dialog) {
-//															if (dialog.isConfirmed()) {
-//																mc.remove();
-//															}
-//															else {
-//																
-//															}
-//														}
-//													});
-//								}
-//							}
-//						}
-//					}
+					// if (mc != null) {
+					// if (mc.getFehlerRegeln() != null) {
+					// for (Regel r : mc.getFehlerRegeln()) {
+					// if (!r.getIgnorierbar()) {
+					// ConfirmDialog
+					// .show(UI.getCurrent(),
+					// "Regel verletzt",
+					// "Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
+					// "OK",
+					// "Ignorieren",
+					// new ConfirmDialog.Listener() {
+					//
+					// public void onClose(
+					// ConfirmDialog dialog) {
+					// if (dialog.isConfirmed()) {
+					// mc.remove();
+					// }
+					// else {
+					//
+					// }
+					// }
+					// });
+					// }
+					// }
+					// }
+					// }
 
 				}
 			}
@@ -361,33 +363,29 @@ public class MenueplanGridLayout extends CustomComponent {
 			if (mc.getFehlerRegeln() != null) {
 				for (Regel r : mc.getFehlerRegeln()) {
 					if (!r.getIgnorierbar()) {
-						ConfirmDialog
-								.show(UI.getCurrent(),
-										"Regel verletzt",
-										"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("+r.getFehlermeldung()+")",
-										"OK",
-										"Ignorieren",
-										new ConfirmDialog.Listener() {
+						ConfirmDialog.show(UI.getCurrent(), "Regel verletzt",
+								"Das Menü kann an dieser Stelle nicht eingefüht werden. Fehlermeldung: ("
+										+ r.getFehlermeldung() + ")", "OK",
+								"Ignorieren", new ConfirmDialog.Listener() {
 
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													mc.remove();
-												}
-												else {
-													if (!((Application) UI
-															.getCurrent().getData())
-															.userHasPersmission(Rollen.ADMINISTRATOR)) {
-														
-														mc.remove();
-														
-														((Application) UI.getCurrent().getData())
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											mc.remove();
+										} else {
+											if (!((Application) UI.getCurrent()
+													.getData())
+													.userHasPersmission(Rollen.ADMINISTRATOR)) {
+
+												mc.remove();
+
+												((Application) UI.getCurrent()
+														.getData())
 														.showDialog("Ignorieren nur als Administrator möglich!");
 
-													}
-												}
 											}
-										});
+										}
+									}
+								});
 					}
 				}
 			}

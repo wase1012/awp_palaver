@@ -3,11 +3,20 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 import java.util.List;
 import de.bistrosoft.palaver.util.Week;
 
+/**
+ * 
+ * @author Christine Hartkorn
+ * 
+ */
+
 public class Kuchenplan {
+	
+	// Variablen
 	private Long id;
 	private Week week;
 	private List<KuchenplanHasKuchenrezept> kuchenrezepte;
 
+	// Konstruktoren
 	public Kuchenplan(Long id, Week week) {
 		this.id = id;
 		this.week = week;
@@ -22,6 +31,7 @@ public class Kuchenplan {
 
 	}
 
+	// Getter- und Setter
 	public Long getId() {
 		return id;
 	}

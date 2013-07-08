@@ -156,9 +156,9 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getDate("erstellt"), set.getBoolean("aktiv"));
-			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
-					.getZubereitungByRezept(rezept.getId());
-			rezept.setZubereitung(zubereitung);
+//			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
+//					.getZubereitungByRezept(rezept.getId());
+//			rezept.setZubereitung(zubereitung);
 			list.add(rezept);
 
 		}

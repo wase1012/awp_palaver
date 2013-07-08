@@ -35,6 +35,12 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
+/**
+ * 
+ * @author Christine Hartkorn
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class MenueplanHistorie extends VerticalLayout implements View {
 
@@ -106,7 +112,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 						week = cal.get(Calendar.WEEK_OF_YEAR);
 						@SuppressWarnings("deprecation")
 						int year = date.getValue().getYear() + 1900;
-						// alte Anzeigen lÃ¶schen
+						// alte Anzeigen löschen
 						if (Menueplan != null) {
 							box.removeComponent(Menueplan);
 							box.removeComponent(lbKW);
@@ -134,7 +140,6 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 								} catch (SQLException e) {
 								}
 								// Anzeige
-//								Menueplan = new MenueplanGridLayout(week, year);
 								Menueplan = new MenueplanGridLayout(woche, year, mitarbeiter, regeln);
 								Menueplan.layout
 										.setDragMode(LayoutDragMode.NONE);

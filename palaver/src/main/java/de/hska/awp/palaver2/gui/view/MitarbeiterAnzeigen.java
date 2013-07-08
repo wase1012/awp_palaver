@@ -1,6 +1,3 @@
-/**
- * Created by Elena W
- */
 package de.hska.awp.palaver2.gui.view;
 
 import org.slf4j.Logger;
@@ -33,6 +30,11 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
+/**
+ * View 
+ * @author Christian Barth
+ *
+ */
 @SuppressWarnings("serial")
 public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 

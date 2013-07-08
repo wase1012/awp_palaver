@@ -166,6 +166,7 @@ public class BestellungDAO extends AbstractDAO {
 	 * Die Methode getBestellungById liefert ein Ergebnisse zurück bei der Suche
 	 * nach einer Bestellung in der Datenbank ohne Bestellpositionen.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
@@ -192,6 +193,8 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode erzeugt eine Bestellung in der Datenbank inklusive den
 	 * Bestellpositionen.
+	 * 
+	 * @author Christian Barth
 	 * 
 	 * @param bestellung
 	 * @throws ConnectException
@@ -225,6 +228,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode erzeugt eine Bestellposition in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param bestellposition
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -243,6 +247,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param bestellung
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -291,6 +296,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode aktualisiert eine Bestellung in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param bestellung
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -308,6 +314,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode löscht eine Bestellung in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param bestellung
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -344,6 +351,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode löscht eine Bestellposition in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -362,6 +370,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode liefert einen Lieferanten zurück.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -384,6 +393,7 @@ public class BestellungDAO extends AbstractDAO {
 	/**
 	 * Die Methode liefert alle Bestellpositionen zur einer Bestellung zurück.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @throws ConnectException
 	 * @throws DAOException
@@ -403,16 +413,16 @@ public class BestellungDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getArtikelById liefert eins Ergebniss zurück bei der Suche
+	 * Die Methode getArtikelById liefert eins Ergebnis zurück bei der Suche
 	 * nach einem Artikel in der Datenbank.
 	 * 
+	 * @author Christian Barth
 	 * @param id
 	 * @return
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-
 	private Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException {
 		Artikel result = null;
 
@@ -428,6 +438,17 @@ public class BestellungDAO extends AbstractDAO {
 		return result;
 	}
 
+	/**
+	 * Die Methode getKategorieById liefert eins Ergebnis zurück bei der Suche
+	 * nach einer Kategorie in der Datenbank.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Kategorie getKategorieById(Long id) throws ConnectException, DAOException, SQLException {
 		Kategorie kategorie = null;
 
@@ -439,6 +460,17 @@ public class BestellungDAO extends AbstractDAO {
 		return kategorie;
 	}
 
+	/**
+	 * Die Methode getMengeneinheitById liefert eins Ergebniss zurück bei der
+	 * Suche nach einer Mengeneinheit in der Datenbank.
+	 * 
+	 * @author Christian Barth
+	 * @param id
+	 * @return
+	 * @throws ConnectException
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	private Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {
 
 		Mengeneinheit me = null;

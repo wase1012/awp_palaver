@@ -1,5 +1,11 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.service;
 
+/**
+ * 
+ * @author Jasmin Baumgartner
+ * 
+ */
+
 import java.sql.SQLException;
 import java.util.List;
 import de.bistrosoft.palaver.data.FussnoteKuchenDAO;
