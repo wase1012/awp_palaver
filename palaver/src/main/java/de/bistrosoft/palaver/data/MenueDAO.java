@@ -9,8 +9,10 @@ import java.util.List;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -19,6 +21,7 @@ import de.hska.awp.palaver2.data.AbstractDAO;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -37,6 +40,13 @@ public class MenueDAO extends AbstractDAO {
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
 	private static final String GET_REZEPTE_BY_MENUE = "SELECT * FROM rezept JOIN menue_has_rezept ON rezept.id = menue_has_rezept.rezept_fk WHERE menue_has_rezept.menue_fk = {0}";
 
+	private static final String GET_ALL_MENUES_SCHNELL = "select m.id, m.name, m.aufwand,m.favorit, k.id, k.name, k.vorname, g.id,g.name, ma.id,ma.name "
+															+"from menue m, mitarbeiter k, geschmack g, menueart ma "
+															+"where m.geschmack_fk=g.id "
+															+"AND m.menueart_fk=ma.id "
+															+"AND m.koch=k.id" 
+															+"AND aktiv = 1";
+	
 	public MenueDAO() {
 		super();
 	}
@@ -61,6 +71,30 @@ public class MenueDAO extends AbstractDAO {
 
 		}
 
+		return list;
+	}
+
+	public List<Menue> getAllMenuesFast() throws ConnectException, DAOException,
+	SQLException {
+		List<Menue> list = new ArrayList<Menue>();
+		ResultSet set = getManaged(GET_ALL_MENUES_SCHNELL);
+		
+		while (set.next()) {
+			Menue m = new Menue();
+			m.setId(set.getLong(1));
+			m.setName(set.getString(2));
+			m.setAufwand(set.getBoolean(3));
+			m.setFavorit(set.getBoolean(4));
+			Mitarbeiter k = new Mitarbeiter();
+			k.setId(set.getLong(5));
+			k.setName(set.getString(6));
+			k.setVorname(set.getString(7));
+			m.setKoch(k);
+			m.setGeschmack(new Geschmack(set.getLong(8), set.getString(9), true));
+			m.setMenueart(new Menueart(set.getLong(10), set.getString(11)));
+			list.add(m);
+		}
+		
 		return list;
 	}
 

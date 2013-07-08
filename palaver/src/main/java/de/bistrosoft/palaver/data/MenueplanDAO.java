@@ -45,9 +45,13 @@ public class MenueplanDAO extends AbstractDAO {
 
 	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE
 			+ " WHERE week = {0} AND year = {1,number,#}";
-	private final String GET_MENUES_BY_MENUEPLAN = "SELECT men.*,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "
-			+ "FROM menue men, menueplan_has_menues mhm "
-			+ "WHERE men.id = mhm.menue AND mhm.menueplan = {0}";
+	private final String GET_MENUES_BY_MENUEPLAN = "SELECT m.id, m.name, m.aufwand,m.favorit, k.id, k.name, k.vorname,k.benutzername, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "+ 
+			"FROM menue m, menueplan_has_menues mhm, mitarbeiter k, geschmack g, menueart ma "+
+			"WHERE m.id = mhm.menue "+
+			"AND mhm.menueplan = {0} "+
+			"AND m.geschmack_fk=g.id "+
+			"AND m.menueart_fk=ma.id "+
+			"AND m.koch=k.id";
 	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion) "
 			+ "VALUES ({0},{1},{2},{3},{4},{5})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
@@ -177,27 +181,33 @@ public class MenueplanDAO extends AbstractDAO {
 			// TODO: Menüs laden
 			ResultSet setMenues = getManaged(MessageFormat.format(
 					GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
-			
+//			SELECT m.id, m.name, m.aufwand,m.favorit, k.id, k.name, k.vorname, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion 
+//			FROM menue m, menueplan_has_menues mhm, mitarbeiter k, geschmack g, menueart ma
+//			WHERE m.id = mhm.menue 
+//			AND mhm.menueplan = 4 
+//			AND m.geschmack_fk=g.id
+//			AND m.menueart_fk=ma.id
+//			AND m.koch=k.id;
 			while (setMenues.next()) {
-				Long id = setMenues.getLong("id");
-				String name = setMenues.getString("name");
-				Mitarbeiter koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong("koch"));
+				Long id = setMenues.getLong(1);
+				String name = setMenues.getString(2);
+				Mitarbeiter koch = new Mitarbeiter();
+				koch.setId(setMenues.getLong(5));
+				koch.setName(setMenues.getString(6));
+				koch.setVorname(setMenues.getString(7));
+				koch.setBenutzername(setMenues.getString(8));
 				// TODO: = new Mitarbeiter(name, vorname);
 				Menue menue = new Menue(id, name, koch);
+				menue.setAufwand(setMenues.getBoolean(3));
+				menue.setFavorit(setMenues.getBoolean(4));
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
-				// Rezepte hinzufügen
-//				List<Rezept> rezepte = Rezeptverwaltung.getInstance()
-//						.getRezepteByMenue(menue);
-//				menue.setRezepte(rezepte);
 				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
 						.getFussnoteByMenue(id);
 				menue.setFussnoten(fussnoten);
-				Geschmack geschmack = Geschmackverwaltung.getInstance()
-						.getGeschmackById(setMenues.getLong("geschmack_fk"));
+				Geschmack geschmack = new Geschmack(setMenues.getLong(9), setMenues.getString(10), true);
 				menue.setGeschmack(geschmack);
-				Menueart menueart = Menueartverwaltung.getInstance()
-						.getMenueartById(setMenues.getLong("menueart_fk"));
+				Menueart menueart = new Menueart(setMenues.getLong(11), setMenues.getString(12));
 				menue.setMenueart(menueart);
 				
 				String angezName = setMenues.getString("angezName");
