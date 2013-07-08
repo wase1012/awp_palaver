@@ -39,41 +39,49 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 @SuppressWarnings("serial")
 public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
+	//Horizontales Layout
 	private HorizontalLayout hlControl = new HorizontalLayout();
 
+	//Gesamttabelle der Rezepte
 	private FilterTable table;
 
-	private Button btFilterLeeren;
+	//Rezept zum Befüllen der Tabelle
 	private Rezept rezept;
-
+	
+	//Buttons
+	private Button btFilterLeeren;
 	private Button btAuswaehlen;
 	private Button btLoeschen;
 	private Button btNeuesRezept;
 
+	//Label
 	private Label headline;
 
 	public RezeptAnzeigenTabelle() {
 		super();
 
+		//Button beschriften über die IConstans
 		btAuswaehlen = new Button(IConstants.BUTTON_SELECT);
 		btLoeschen = new Button(IConstants.BUTTON_DELETE);
-		btLoeschen.setIcon(new ThemeResource("img/cross.ico"));
 		btNeuesRezept=new Button(IConstants.BUTTON_NEW);
-		btNeuesRezept.setIcon(new ThemeResource("img/new.ico"));
+		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 
+		//Buttons belegen mit einem Bild/Image
+		btNeuesRezept.setIcon(new ThemeResource("img/new.ico"));
+		btLoeschen.setIcon(new ThemeResource("img/cross.ico"));
+		btFilterLeeren.setIcon(new ThemeResource("img/cross.ico"));
+
+		//Setze Seite auf volle Größe
 		this.setSizeFull();
 		this.setMargin(true);
 
-		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
-		btFilterLeeren.setIcon(new ThemeResource("img/cross.ico"));
-
+		//Aufbau der Tabelle, welche die Rezepte beinhalten wird.
 		table = new FilterTable();
 		table.setSizeFull();
 		table.setFilterBarVisible(true);
 		table.setFilterGenerator(new customFilter());
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
-
 		table.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -87,6 +95,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 
 		table.addItemClickListener(new ItemClickListener() {
 
+			//Durch doppelcklick wird das Rezept geöffnet in der View RezeptAnlegen
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
@@ -96,15 +105,19 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 
+		//Container, welcher mit den Spaten die filterbar sind gefüllt wird
 		BeanItemContainer<Rezept> container;
 
 		try {
+			//Container mit den Spalten Name, Rezeptart, Mitarbeiter, Erstellt.
 			container = new BeanItemContainer<Rezept>(Rezept.class,
 					Rezeptverwaltung.getInstance().getAllRezepteTabelleAktiv());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "rezeptart",
 					"mitarbeiter", "erstellt" });
+			//Sortiert nach Rezept
 			table.sort(new Object[] { "name" }, new boolean[] { true });
+			//Setze den angemeldeten Mitarbeiter als default Filter
 			table.setFilterFieldValue("mitarbeiter", ((Application) UI
 					.getCurrent().getData()).getUser().getVorname());
 
@@ -112,6 +125,8 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			e.printStackTrace();
 		}
 
+		//Dieser Button wird benötigt, damit auf dem Tablet ein Rezept ausgewählt werden kann
+		//da auf Touch kein Doppelklick möglich
 		btAuswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if (table.getValue() != null
@@ -127,9 +142,10 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 
+		//Ab hier wird die Seite aufgebaut
+		//Überschrift
 		headline = new Label("Alle Rezepte");
 		headline.setStyleName("ViewHeadline");
-
 		this.addComponent(headline);
 		this.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
 
@@ -139,10 +155,13 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 		this.setExpandRatio(table, 1);
 		this.addComponent(hlControl);
 		this.setComponentAlignment(hlControl, Alignment.MIDDLE_RIGHT);
+		
+		//Aufbau der Buttons unter der Tabelle
 		hlControl.addComponent(btNeuesRezept);
 		hlControl.addComponent(btLoeschen);
 		hlControl.addComponent(btAuswaehlen);
 
+		//Button, der den Filter wieder leert
 		btFilterLeeren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -150,6 +169,7 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 
+		//Button für Löschen eines Rezeptes
 		btLoeschen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -177,6 +197,8 @@ public class RezeptAnzeigenTabelle extends VerticalLayout implements View {
 			}
 		});
 		
+		//Bei klick auf diesen Button wird in die View RezeptAnlegen mit der Möglichkeit
+		//ein neues Rezept anzulegen
 		btNeuesRezept.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
