@@ -250,7 +250,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 				if (validiereEingabe()) {
 					if (!(RezeptAnlegen.this.getParent() instanceof Window)) {
 						if (rezeptartNs.getValue() != "Beilage") {
-							ViewHandler.getInstance().switchView(MenueAnlegen.class,new ViewDataObject<Rezept>(rezeptSpeichern()));
+							ViewHandler.getInstance().switchView(
+									MenueAnlegen.class,
+									new ViewDataObject<Rezept>(
+											rezeptSpeichern()));
 						} else {
 							((Application) UI.getCurrent().getData())
 									.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
@@ -423,9 +426,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	@Override
 	public void getViewParam(ViewData data) {
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
-		
+
 		try {
-			rezept = Rezeptverwaltung.getInstance().getRezeptById(rezept.getId());
+			rezept = Rezeptverwaltung.getInstance().getRezeptById(
+					rezept.getId());
 		} catch (ConnectException e1) {
 		} catch (DAOException e1) {
 		} catch (SQLException e1) {
@@ -527,10 +531,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	// Funktion zum Speichern eines Rezeptes
 	public Rezept rezeptSpeichern() {
-		if(this.rezept.getId()!=null){
-			return this.rezept;
+		if (this.rezept != null) {
+			if (this.rezept.getId() != null) {
+				return this.rezept;
+			}
 		}
-		
+
 		Rezept rez = new Rezept();
 		rez.setName(nameInput);
 		java.util.Date date = new java.util.Date();
