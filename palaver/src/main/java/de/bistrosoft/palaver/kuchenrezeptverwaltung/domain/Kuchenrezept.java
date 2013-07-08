@@ -3,8 +3,15 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * 
+ * @author Christine Hartkorn, Jasmin Baumgartner
+ * 
+ */
+
 public class Kuchenrezept implements java.io.Serializable {
 
+	// Variablen
 	private static final long serialVersionUID = 7984117576450240771L;
 
 	private Long id;
@@ -15,7 +22,8 @@ public class Kuchenrezept implements java.io.Serializable {
 	List<FussnoteKuchen> fussnotekuchen;
 	private String fussnoten;
 	private Boolean aktiv;
-	
+
+	// Konstruktoren
 	public List<KuchenrezeptHasArtikel> getArtikel() {
 		return artikel;
 	}
@@ -27,23 +35,21 @@ public class Kuchenrezept implements java.io.Serializable {
 	public Kuchenrezept() {
 		super();
 	}
-	
+
 	public Kuchenrezept(String name, String fn) {
 		super();
 		this.name = name;
 		this.fussnoten = fn;
 	}
 
-	public Kuchenrezept(Long id, String name,
-			String kommentar) {
+	public Kuchenrezept(Long id, String name, String kommentar) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.kommentar = kommentar;
 	}
-	
-	public Kuchenrezept(Long id, String name,
-			String kommentar, Boolean aktiv) {
+
+	public Kuchenrezept(Long id, String name, String kommentar, Boolean aktiv) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,8 +57,8 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.aktiv = aktiv;
 	}
 
-	public Kuchenrezept(Long id, String name,
-			String kommentar, Date erstellt, Boolean aktiv) {
+	public Kuchenrezept(Long id, String name, String kommentar, Date erstellt,
+			Boolean aktiv) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -60,20 +66,22 @@ public class Kuchenrezept implements java.io.Serializable {
 		this.erstellt = erstellt;
 		this.aktiv = aktiv;
 	}
-	public Kuchenrezept(Long id, String name,
-			String kommentar, Date erstellt) {
+
+	public Kuchenrezept(Long id, String name, String kommentar, Date erstellt) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.erstellt = erstellt;
 	}
-	
+
 	public Kuchenrezept(Long id) {
 		super();
 		this.id = id;
 
 	}
+
+	// Getter und Setter
 	public List<FussnoteKuchen> getFussnoteKuchen() {
 		return fussnotekuchen;
 	}
@@ -81,15 +89,15 @@ public class Kuchenrezept implements java.io.Serializable {
 	public void setFussnoteKuchen(List<FussnoteKuchen> fussnotekuchen) {
 		this.fussnotekuchen = fussnotekuchen;
 	}
-	
+
 	public String getFussnoten() {
 		return fussnoten;
 	}
-	
+
 	public void setFussnoten(String fussnoten) {
 		this.fussnoten = fussnoten;
 	}
-	
+
 	public Long getId() {
 		return this.id;
 	}
@@ -129,12 +137,14 @@ public class Kuchenrezept implements java.io.Serializable {
 	public void setAktiv(Boolean aktiv) {
 		this.aktiv = aktiv;
 	}
-//	
+
+	// toString
 	@Override
 	public String toString() {
 		return "" + id + " " + fussnoten;
 	}
 
+	// Hash-Code
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,6 +164,7 @@ public class Kuchenrezept implements java.io.Serializable {
 		return result;
 	}
 
+	// Equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -205,7 +216,5 @@ public class Kuchenrezept implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
-	
 
 }

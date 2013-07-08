@@ -5,7 +5,11 @@ import java.util.Set;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 
-
+/**
+ * 
+ * @author Jasmin Baumgartner
+ * 
+ */
 
 public class FussnoteKuchen implements java.io.Serializable {
 

@@ -1,6 +1,10 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-// Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
+/**
+ * 
+ * @author Jasmin Baumgartner
+ * 
+ */
 
 public class KuchenrezeptHasFussnoteId implements java.io.Serializable {
 

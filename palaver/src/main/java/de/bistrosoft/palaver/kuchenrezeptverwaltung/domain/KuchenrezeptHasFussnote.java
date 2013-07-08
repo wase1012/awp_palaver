@@ -1,7 +1,10 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-
-
+/**
+ * 
+ * @author Jasmin Baumgartner
+ * 
+ */
 
 public class KuchenrezeptHasFussnote implements java.io.Serializable {
 

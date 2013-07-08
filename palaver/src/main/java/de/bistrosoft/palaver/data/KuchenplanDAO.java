@@ -22,7 +22,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 
 /**
- * @author Christine Hartkorn
+ * @author Christine Hartkorn, Eike Becher
  * 
  */
 public class KuchenplanDAO extends AbstractDAO {

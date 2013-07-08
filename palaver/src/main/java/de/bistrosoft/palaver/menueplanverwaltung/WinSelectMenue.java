@@ -34,6 +34,12 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
+/**
+ * 
+ * @author Eike Becher, Melanie Gross, Christine Hartkorn
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class WinSelectMenue extends Window {
 
@@ -52,13 +58,13 @@ public class WinSelectMenue extends Window {
 	private TextField tfPortion = new TextField("Portion in %");
 	private CheckBox chbAufwand = new CheckBox("Aufwand");
 	private CheckBox chbFavorit = new CheckBox("Favorit");
-	private Button btNewMenue = new Button("Neues MenÃ¼");
+	private Button btNewMenue = new Button("Neues Menü");
 	private Button btFilterLeeren;
 	private Button btSelect = new Button(IConstants.BUTTON_SELECT);
 	private FormLayout flEditorLayout = new FormLayout();
-	
+
 	List<Regel> regeln = null;
-	
+
 	@SuppressWarnings("unused")
 	private Integer curCol;
 	@SuppressWarnings("unused")
@@ -77,7 +83,7 @@ public class WinSelectMenue extends Window {
 
 	public WinSelectMenue(MenueplanGridLayout menueplan, Component destComp,
 			int destRow, int destCol) {
-		setCaption("MenÃ¼ einfÃ¼gen");
+		setCaption("Menü einfügen");
 		this.menueplan = menueplan;
 		this.menueGrid = menueplan.layout;
 		this.destComp = destComp;
@@ -85,7 +91,7 @@ public class WinSelectMenue extends Window {
 		this.destRow = destRow;
 
 		regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
-		
+
 		initLayout();
 		initMenueList();
 		initEditor();
@@ -105,7 +111,7 @@ public class WinSelectMenue extends Window {
 				}
 			}
 		}
-		
+
 	}
 
 	private void initLayout() {
@@ -113,22 +119,22 @@ public class WinSelectMenue extends Window {
 		// HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		HorizontalLayout hlBox = new HorizontalLayout();
 		HorizontalLayout hlControl = new HorizontalLayout();
-		
+
 		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 		btFilterLeeren.setIcon(new ThemeResource("img/cross.ico"));
 
 		// splitPanel.setWidth("800px");
-		// Splitpanel die Layouts zufï¿½gen
+		// Splitpanel die Layouts zufügen
 		hlBox.addComponent(vlLeftLayout);
 		vlLeftLayout.addComponent(hlControl);
-		
+
 		hlControl.addComponent(btNewMenue);
 		hlControl.addComponent(btFilterLeeren);
-		
+
 		vlLeftLayout.addComponent(ftMenueList);
-		
+
 		hlBox.addComponent(flEditorLayout);
-		// Der linken Seite Tabelle hinzufï¿½gen und Layout fï¿½r Suchfeld und
+		// Der linken Seite Tabelle hinzufügen und Layout für Suchfeld und
 		// "Neu" Button
 
 		btNewMenue.addClickListener(new ClickListener() {
@@ -138,16 +144,16 @@ public class WinSelectMenue extends Window {
 			}
 
 		});
-		
+
 		btFilterLeeren.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ftMenueList.resetFilters();
 			}
 		});
 
-		// Linke Seite Hï¿½he und Breite auf 100% setzen
+		// Linke Seite Höhe und Breite auf 100% setzen
 		vlLeftLayout.setHeight("100%");
 		flEditorLayout.setHeight("100%");
 
@@ -162,70 +168,73 @@ public class WinSelectMenue extends Window {
 		hlEditorChB.addComponents(chbFavorit, chbAufwand);
 		flEditorLayout.addComponents(tfAngezName, tfName, tfKoch, tfMenueart,
 				tfGeschmack, tfPortion, hlEditorChB);
-		
+
 		flEditorLayout.addComponent(ftFehler);
 		ftFehler.setVisible(false);
 
 		flEditorLayout.addComponent(btSelect);
 	}
-	
+
 	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    }
-	    return true;
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
-	
+
 	private void initOKButton() {
 		btSelect.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if (tfPortion.getValue().isEmpty() || !isInteger(tfPortion.getValue())) {
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENU_HINZUFUEGEN);
-				}
-				else if (ftMenueList.getValue()==null){
-					((Application) UI.getCurrent().getData()).showDialog("Bitte ein MenÃ¼ auswÃ¤hlen!");
-				}
-				else {
-				// aktuelle Column und Row ermitteln
-				Integer sourceRow = -1;
-				Integer sourceColumn = -1;
+				if (tfPortion.getValue().isEmpty()
+						|| !isInteger(tfPortion.getValue())) {
+					((Application) UI.getCurrent().getData())
+							.showDialog(IConstants.INFO_MENU_HINZUFUEGEN);
+				} else if (ftMenueList.getValue() == null) {
+					((Application) UI.getCurrent().getData())
+							.showDialog("Bitte ein Menü auswählen!");
+				} else {
+					// aktuelle Column und Row ermitteln
+					Integer sourceRow = -1;
+					Integer sourceColumn = -1;
 
-				final int COLUMNS = menueGrid.getColumns();
-				final int ROWS = menueGrid.getRows();
+					final int COLUMNS = menueGrid.getColumns();
+					final int ROWS = menueGrid.getRows();
 
-				for (int row = 0; row < ROWS; row++) {
-					for (int col = 0; col < COLUMNS; col++) {
-						if (destComp.equals(menueGrid.getComponent(col, row))) {
-							sourceColumn = col;
-							sourceRow = row;
+					for (int row = 0; row < ROWS; row++) {
+						for (int col = 0; col < COLUMNS; col++) {
+							if (destComp.equals(menueGrid
+									.getComponent(col, row))) {
+								sourceColumn = col;
+								sourceRow = row;
+							}
 						}
 					}
+					menueplan.removeMenue(destComp);
+
+					// Menübezeichnung des ausgewählten Menüs
+					try {
+						Menue menue = (Menue) ftMenueList.getValue();
+						// Neue Menükomponente aus ausgewähltem Menü erstellen
+						// und hinzufügen
+						Integer iPortion = Integer.parseInt(tfPortion
+								.getValue());
+						MenueComponent menueComp = new MenueComponent(menue,
+								tfAngezName.getValue(), menueplan, menueGrid,
+								sourceRow, sourceColumn, true, iPortion);
+						menueplan.addMenue(menueComp, sourceColumn, sourceRow);
+						menueGrid.setComponentAlignment(menueComp,
+								Alignment.MIDDLE_CENTER);
+
+					} catch (Exception e) {
+
+						e.printStackTrace();
+					}
+
+					// Window schließen
+					subwindow.close();
 				}
-				menueplan.removeMenue(destComp);
-
-				// Menï¿½bezeichnung des ausgewï¿½hlten Menï¿½s
-				try {
-					Menue menue = (Menue) ftMenueList.getValue();
-					// Neue Menï¿½komponente aus ausgewï¿½hltem Menï¿½ erstellen
-					// und hinzufï¿½gen
-					Integer iPortion = Integer.parseInt(tfPortion.getValue());
-					MenueComponent menueComp = new MenueComponent(menue,
-							tfAngezName.getValue(), menueplan, menueGrid,
-							sourceRow, sourceColumn, true, iPortion);
-					menueplan.addMenue(menueComp, sourceColumn, sourceRow);
-					menueGrid.setComponentAlignment(menueComp,
-							Alignment.MIDDLE_CENTER);
-
-				} catch (Exception e) {
-
-					e.printStackTrace();
-				}
-
-				// Window schlieï¿½en
-				subwindow.close();
-			}
 			}
 		});
 	}
@@ -267,21 +276,21 @@ public class WinSelectMenue extends Window {
 
 			}
 		});
-		if(destComp instanceof MenueComponent){
-			Mitarbeiter tmpMa=((MenueComponent)destComp).getMenue().getKoch();
+		if (destComp instanceof MenueComponent) {
+			Mitarbeiter tmpMa = ((MenueComponent) destComp).getMenue()
+					.getKoch();
 			System.out.println(tmpMa);
-			if(((Application) UI.getCurrent().getData()).getUser().equals(tmpMa)){
-				
+			if (((Application) UI.getCurrent().getData()).getUser().equals(
+					tmpMa)) {
+
 				ftMenueList.setFilterFieldValue("kochname", ((Application) UI
 						.getCurrent().getData()).getUser().getVorname());
 			}
-			
-			
-		}
-		else {
+
+		} else {
 			ftMenueList.setFilterFieldValue("kochname", ((Application) UI
 					.getCurrent().getData()).getUser().getVorname());
-			
+
 		}
 
 		ftMenueList.setColumnWidth("name", 200);
@@ -294,7 +303,7 @@ public class WinSelectMenue extends Window {
 		ftMenueList.setFilterBarVisible(true);
 		ftMenueList.setImmediate(true);
 
-		// bei ï¿½ndern Komponente aus Menï¿½plan selektieren
+		// bei Ändern Komponente aus Menüplan selektieren
 		if (menueGrid.getComponent(destCol, destRow) instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) menueGrid.getComponent(
 					destCol, destRow);
@@ -307,7 +316,7 @@ public class WinSelectMenue extends Window {
 
 	private void ladeMenues() {
 
-		// Container fï¿½r Menï¿½liste festlegen
+		// Container für Menüliste festlegen
 		try {
 			menueContainer = new BeanItemContainer<Menue>(Menue.class,
 					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());

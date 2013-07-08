@@ -17,17 +17,19 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 
 /**
- * @author Christine Hartkorn
+ * @author Christine Hartkorn, Jasmin Baumgartner
  * 
  */
 public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 
 	private static Kuchenrezeptverwaltung instance = null;
 
+	// Konstruktor
 	private Kuchenrezeptverwaltung() {
 		super();
 	}
 
+	// Methode, die eine Instanz der Kuchenrezeptverwaltung zurückliefert
 	public static Kuchenrezeptverwaltung getInstance() {
 		if (instance == null) {
 			instance = new Kuchenrezeptverwaltung();
@@ -35,23 +37,27 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		return instance;
 	}
 
+	// Methode, die Kuchenrezept speichert
 	public void createKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		super.createKuchenrezept(kuchenrezept);
 	}
 
+	// Methode, die Artikel zu Kuchenrezept speichert
 	public void saveArtikel(Kuchenrezept kuchenrezept) throws ConnectException,
 			DAOException, SQLException {
 		super.saveArtikel(kuchenrezept);
 	}
-	
-	public List<Kuchenrezept> getAllKuchenrezepte() throws ConnectException, DAOException,
-	SQLException {
+
+	// Methode, die alle Kuchenrezepte zurückliefert
+	public List<Kuchenrezept> getAllKuchenrezepte() throws ConnectException,
+			DAOException, SQLException {
 		List<Kuchenrezept> result = null;
 		result = super.getAllKuchenrezepte(true);
 		return result;
 	}
-	
+
+	// Methode, die alle Artikel zu einem Kuchenrezept zurückliefert
 	public List<Artikel> getAllArtikelByKuchenrezeptId()
 			throws ConnectException, DAOException, SQLException {
 		List<Artikel> result = null;
@@ -61,11 +67,13 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		return result;
 	}
 
+	// Methode, die Kuchenrezepte updatet
 	public void updateRezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		super.updateKuchenrezept(kuchenrezept);
 	}
 
+	// Methode, die alle Artikel zu einem Kuchenrezept zurückliefert
 	public List<KuchenrezeptHasArtikel> ladeArtikelFuerKuchenrezept(
 			Kuchenrezept rez) {
 		try {
@@ -77,21 +85,25 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return new ArrayList<KuchenrezeptHasArtikel>();
 	}
+
+	// Methode, die Fußnoten zum Kuchenrezept hinzufügt
 	public void FussnoteKuchenAdd(KuchenrezeptHasFussnote kuchenHasFussnote)
 			throws ConnectException, DAOException, SQLException {
 		super.FussnoteKuchenAdd(kuchenHasFussnote);
 	}
+
+	// Methode, die Artikel eines Kuchenrezeptes löscht
 	public void deleteZutatenZuKuchenrezept(Kuchenrezept kuchenrezept)
 			throws ConnectException, DAOException, SQLException {
 		super.deleteZutatenZuKuchenrezept(kuchenrezept);
 	}
-	
+
+	// Methode, die Kuchenrezept inaktiv setzt
 	public void setKuchenrezeptDisabled(Kuchenrezept kuchenrezeptAusTb)
 			throws ConnectException, DAOException, SQLException {
 		super.setKuchenrezeptDisabled(kuchenrezeptAusTb);
 	}
-	
+
 }

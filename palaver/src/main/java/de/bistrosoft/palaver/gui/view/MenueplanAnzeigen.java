@@ -48,6 +48,12 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
+/**
+ * 
+ * @author Eike Becher, Melanie Gross, Christine Hartkorn
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class MenueplanAnzeigen extends VerticalLayout implements View {
 
@@ -57,7 +63,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	Week curWeek = CalendarWeek.getCurrentWeek();
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
-	
+
 	List<Mitarbeiter> mitarbeiter;
 	List<Regel> regeln;
 
@@ -76,15 +82,15 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	HorizontalLayout hlControl = new HorizontalLayout();
 
-	Button btEnableDelete = new Button("Elemente lÃ¶schen");
-	Button btSubmitDelete = new Button("LÃ¶schen bestÃ¤tigen");
+	Button btEnableDelete = new Button("Elemente löschen");
+	Button btSubmitDelete = new Button("Löschen bestätigen");
 	Button btEnableDragging = new Button("Verschieben inaktiv");
 	Button btSpeichern = new Button("Speichern");
 	Button btFreigeben = new Button("Freigeben");
 	Button btImport = new Button("Plan importieren");
 	Button btPrint = new Button("Druckansicht");
 	Button btWetter = new Button("Wetter");
-	private Button btDeletePlan = new Button("Gesamten Plan lÃ¶schen");
+	private Button btDeletePlan = new Button("Gesamten Plan löschen");
 
 	private Label lbKW = new Label(
 			"<pre><font style=\"font-size: large\" face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">"
@@ -165,7 +171,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 					checkRollen();
 				}
-				
+
 				if (shownMenueplan.getMenueplan().getFreigegeben()) {
 					btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
 				} else {
@@ -176,13 +182,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		});
 
-		// Pfeil zum Wechseln zur nï¿½chsten KW und Anzeige der Wochen-Nr
+		// Pfeil zum Wechseln zur nächsten KW und Anzeige der Wochen-Nr
 		btNextWeek.setStyleName(BaseTheme.BUTTON_LINK);
 		btNextWeek.setIcon(new ThemeResource("img/woche_spaterklein.png"));
 		btNextWeek.addStyleName("menueplan-nextweek");
 		btNextWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fï¿½r eine Woche spÃ¤ter
+			// Click-Listener für eine Woche später
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownMenueplan == ersteMenueplan) {
@@ -237,7 +243,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		});
 
-		// Hinzufï¿½gen und Anordnen der Komponenten
+		// Hinzufügen und Anordnen der Komponenten
 		left.addComponent(btForeWeek);
 		left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -410,7 +416,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
 				int year = shownMenueplan.getMenueplan().getWeek().getYear();
 				Notification notification = new Notification(
-						"MenÃ¼plan fÃ¼r Kalenderwoche " + week + "/" + year
+						"Menüplan für Kalenderwoche " + week + "/" + year
 								+ " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
@@ -423,19 +429,21 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				Menueplanverwaltung.getInstance().delete(
 						shownMenueplan.getMenueplan());
-				
-				//Plan leeren
+
+				// Plan leeren
 				Integer rows = shownMenueplan.layout.getRows();
 				Integer cols = shownMenueplan.layout.getColumns();
 				for (int x = 0; x < cols; ++x) {
 					for (int y = 0; y < rows; ++y) {
-						if (shownMenueplan.layout.getComponent(x, y) instanceof MenueComponent){
-							MenueComponent mc = (MenueComponent) shownMenueplan.layout.getComponent(x, y);
+						if (shownMenueplan.layout.getComponent(x, y) instanceof MenueComponent) {
+							MenueComponent mc = (MenueComponent) shownMenueplan.layout
+									.getComponent(x, y);
 							mc.remove();
-							shownMenueplan.layout.getComponent(x, y).setEnabled(false);
-						}
-						else if (shownMenueplan.layout.getComponent(x, y) instanceof KoecheComponent){
-							KoecheComponent kc = (KoecheComponent) shownMenueplan.layout.getComponent(x, y);
+							shownMenueplan.layout.getComponent(x, y)
+									.setEnabled(false);
+						} else if (shownMenueplan.layout.getComponent(x, y) instanceof KoecheComponent) {
+							KoecheComponent kc = (KoecheComponent) shownMenueplan.layout
+									.getComponent(x, y);
 							kc.setKoch1(null);
 							kc.setKoch2(null);
 						}
@@ -451,7 +459,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				shownMenueplan.speichern();
 				shownMenueplan.freigeben();
-				
+
 				if (shownMenueplan.getMenueplan().getFreigegeben()) {
 					btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
 				} else {
@@ -459,30 +467,26 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				}
 			}
 		});
-		String url="http://www.wetter.com/wetter_aktuell/wettervorhersage/7_tagesvorhersage/?id=DE0005309";
-		final BrowserWindowOpener opener =
-		        new BrowserWindowOpener(url);
+		String url = "http://www.wetter.com/wetter_aktuell/wettervorhersage/7_tagesvorhersage/?id=DE0005309";
+		final BrowserWindowOpener opener = new BrowserWindowOpener(url);
 		opener.setFeatures("height=800,width=1200,resizable");
 		opener.extend(btWetter);
-		
+
 		btPrint.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				opener.extend(btPrint);
+				// opener.extend(btPrint);
 				print();
-				
+
 			}
 		});
-		
-		
 
-		// FuÃŸnoten
-		Label lbFussnoten = new Label(
-				"<div align=center>ohne GewÃ¤hr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mÃ¶gl. &nbsp;&nbsp; (veg.m) = vegetarisch mÃ¶gl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mÃ¶gl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mÃ¶gl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mÃ¶gl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mÃ¶gl.</div>",
+		// Fußnoten
+		Label lbFussnoten = new Label(IConstants.FUSSNOTEN_MENUEPLAN,
 				ContentMode.HTML);
 
-		// Hinzufï¿½gen und Anordnen weiterer Komponenten
+		// Hinzufügen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		btFreigeben.setVisible(false);
@@ -497,7 +501,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		btSubmitDelete.setVisible(false);
 		hlControl.addComponent(btDeletePlan);
 		btDeletePlan.setVisible(false);
-//		hlControl.addComponent(btImport);
+		// hlControl.addComponent(btImport);
 		box.setSpacing(true);
 		box.addComponent(hlControl);
 		box.setComponentAlignment(hlControl, Alignment.MIDDLE_CENTER);
@@ -514,7 +518,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	private void ladeDaten() {
 		try {
-			mitarbeiter = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+			mitarbeiter = Mitarbeiterverwaltung.getInstance()
+					.getAllMitarbeiter();
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {
@@ -524,11 +529,15 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		}
 		regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
 
-		ersteMenueplan = new MenueplanGridLayout(week, year,mitarbeiter,regeln);
-		zweiteMenueplan = new MenueplanGridLayout(week + 1,	year,mitarbeiter,regeln);
-		dritteMenueplan = new MenueplanGridLayout(week + 2, year,mitarbeiter,regeln);
-		vierteMenueplan = new MenueplanGridLayout(week + 3,	year,mitarbeiter,regeln);
-		
+		ersteMenueplan = new MenueplanGridLayout(week, year, mitarbeiter,
+				regeln);
+		zweiteMenueplan = new MenueplanGridLayout(week + 1, year, mitarbeiter,
+				regeln);
+		dritteMenueplan = new MenueplanGridLayout(week + 2, year, mitarbeiter,
+				regeln);
+		vierteMenueplan = new MenueplanGridLayout(week + 3, year, mitarbeiter,
+				regeln);
+
 		shownMenueplan = zweiteMenueplan;
 	}
 
@@ -548,36 +557,35 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		}
 
 	}
-	
-	public String getHtmlTable(){
+
+	public String getHtmlTable() {
 		String h = "<table border=\"1\" height=\"600\">";
 		Integer col = shownMenueplan.layout.getColumns();
 		Integer row = shownMenueplan.layout.getRows();
-		
-		for(int y=0;y<row;++y){
-			if(y!=1){
-				h+="<tr>";
-				for(int x = 0; x<col ; ++x ){
-					if(x!=0){
-						h+="<th align=\"center\">";
-						h+=getLabelText(x,y);
-						h+="</th>";
+
+		for (int y = 0; y < row; ++y) {
+			if (y != 1) {
+				h += "<tr>";
+				for (int x = 0; x < col; ++x) {
+					if (x != 0) {
+						h += "<th align=\"center\">";
+						h += getLabelText(x, y);
+						h += "</th>";
 					}
 				}
-				h+="</tr>";
+				h += "</tr>";
 			}
 		}
-		h+="</table>";
+		h += "</table>";
 		return h;
 	}
 
 	private String getLabelText(Integer x, Integer y) {
 		Component comp = shownMenueplan.layout.getComponent(x, y);
-		if(comp instanceof MenueComponent){
-			MenueComponent mc =(MenueComponent) comp;
+		if (comp instanceof MenueComponent) {
+			MenueComponent mc = (MenueComponent) comp;
 			return mc.getAngezeigterName();
-		}
-		else if (comp instanceof Label){
+		} else if (comp instanceof Label) {
 			Label lb = (Label) comp;
 			String sLb = lb.getValue();
 			return getZeilenLabel(sLb);
@@ -586,29 +594,29 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	}
 
 	private String getZeilenLabel(String sLb) {
-		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_1)){
+		if (sLb.contains(IConstants.INFO_REGEL_ZEILE_1)) {
 			return IConstants.INFO_REGEL_ZEILE_1;
 		}
-		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_2)){
+		if (sLb.contains(IConstants.INFO_REGEL_ZEILE_2)) {
 			return IConstants.INFO_REGEL_ZEILE_2;
 		}
-		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_3)){
+		if (sLb.contains(IConstants.INFO_REGEL_ZEILE_3)) {
 			return IConstants.INFO_REGEL_ZEILE_3;
 		}
-		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_4)){
+		if (sLb.contains(IConstants.INFO_REGEL_ZEILE_4)) {
 			return IConstants.INFO_REGEL_ZEILE_4;
 		}
-		if(sLb.contains(IConstants.INFO_REGEL_ZEILE_5)){
+		if (sLb.contains(IConstants.INFO_REGEL_ZEILE_5)) {
 			return IConstants.INFO_REGEL_ZEILE_5;
 		}
-		if(sLb.contains("Datum")){
+		if (sLb.contains("Datum")) {
 			return "Datum";
 		}
-		if(sLb.contains("KÃ¶che")){
-			return "KÃ¶che";
+		if (sLb.contains("Köche")) {
+			return "Köche";
 		}
 		return sLb;
-		
+
 	}
 
 	public static void switchMenueplan() {
@@ -619,41 +627,39 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	public void getViewParam(ViewData data) {
 
 	}
-	
+
 	public void print() {
 		final Window win = new Window();
 		win.setModal(true);
 		win.setResizable(false);
 		win.setSizeFull();
-		
+
 		VerticalLayout vlBox = new VerticalLayout();
 		HorizontalLayout hlControl = new HorizontalLayout();
 		VerticalLayout vlMenueplan = new VerticalLayout();
-		
-		Label lbH=new Label(
-				 getHtmlTable(),
-				ContentMode.HTML);
-		Button btSchliessen = new Button("SchlieÃŸen");
-		
+
+		Label lbH = new Label(getHtmlTable(), ContentMode.HTML);
+		Button btSchliessen = new Button("SchließŸen");
+
 		addComponent(vlBox);
 		vlBox.addComponent(vlMenueplan);
 		vlMenueplan.addComponent(lbH);
 		vlMenueplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
-		
+
 		vlBox.addComponent(hlControl);
 		hlControl.addComponent(btSchliessen);
 		hlControl.setComponentAlignment(btSchliessen, Alignment.MIDDLE_RIGHT);
-		
+
 		btSchliessen.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				win.close();
 			}
 		});
-		
-//		addComponent(lbH);
-//		lbH.setSizeFull();
+
+		// addComponent(lbH);
+		// lbH.setSizeFull();
 		win.setContent(vlBox);
 		UI.getCurrent().addWindow(win);
 	}

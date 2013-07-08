@@ -3,27 +3,23 @@ package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 
+/**
+ * 
+ * @author Christine Hartkorn
+ * 
+ */
+
 public class KuchenrezeptHasArtikel {
 
+	// Variablen
 	private Artikel artikel;
 	private double menge;
 	private Mengeneinheit mengeneinheit;
 	private Kuchenrezept kuchenrezept;
 
+	// Konstruktoren
 	public KuchenrezeptHasArtikel() {
 		super();
-	}
-
-	public Mengeneinheit getMengeneinheit() {
-		return mengeneinheit;
-	}
-
-	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
-		this.mengeneinheit = mengeneinheit;
-	}
-
-	public void setArtikel(Artikel artikel) {
-		this.artikel = artikel;
 	}
 
 	public KuchenrezeptHasArtikel(Artikel artikel, Mengeneinheit mengeneinheit,
@@ -48,10 +44,17 @@ public class KuchenrezeptHasArtikel {
 		this.kuchenrezept = null;
 	}
 
-	@Override
-	public String toString() {
-		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "
-				+ artikel.getName();
+	// Getter und Setter
+	public Mengeneinheit getMengeneinheit() {
+		return mengeneinheit;
+	}
+
+	public void setMengeneinheit(Mengeneinheit mengeneinheit) {
+		this.mengeneinheit = mengeneinheit;
+	}
+
+	public void setArtikel(Artikel artikel) {
+		this.artikel = artikel;
 	}
 
 	public double getMenge() {
@@ -88,5 +91,12 @@ public class KuchenrezeptHasArtikel {
 
 	public Artikel getArtikel() {
 		return this.artikel;
+	}
+
+	// toString
+	@Override
+	public String toString() {
+		return "artikel " + artikel.getId() + menge + mengeneinheit + "   "
+				+ artikel.getName();
 	}
 }

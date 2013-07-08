@@ -54,7 +54,7 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * @author Christine Hartkorn
+ * @author Christine Hartkorn, Jasmin Baumgartner
  * 
  */
 @SuppressWarnings("serial")
@@ -215,9 +215,6 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		zutatenTable.setStyleName("palaverTable");
 		zutatenTable.setPageLength(16);
 		zutatenTable.setImmediate(true);
-		// zutatenTable.setColumnWidth("artikelname", 200);
-		// zutatenTable.setColumnWidth("menge", 100);
-		// zutatenTable.setColumnWidth("einheit", 90);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
