@@ -53,9 +53,12 @@ public class RezeptDAO extends AbstractDAO {
 			+ REZEPTHASARTIKEL + " WHERE " + REZEPTFK + " = {0}";
 	private static final String GET_ALL_REZEPT_TABELLE = "SELECT * FROM "
 			+ TABLE;
-	private static final String GET_ALL_REZEPT_TABELLE_AKTIV = "SELECT * FROM "
-			+ TABLE + " WHERE " + AKTIV + "=true";
-	private static final String GET_ALL_REZEPT_MENUE = "select r.id rid, r.name rname, m.id mid,m.vorname mname,ra.id raid,ra.name raname "
+	private static final String GET_ALL_REZEPT_TABELLE_AKTIV = "select r.id, r.name, r.erstellt, ra.id, ra.name, m.id, m.vorname, m.name, m.benutzername "+ 
+																	"from rezept r, rezeptart ra, Mitarbeiter m "+
+																	"where r.mitarbeiter_fk=m.id "+
+																	"and r.rezeptart_fk=ra.id "+
+																	"and aktiv = 1";
+	private static final String GET_ALL_REZEPT_MENUE = "select r.id rid, r.name rname, m.id mid,m.vorname, m.name , m.benutzername ,ra.id raid,ra.name raname "
 															+"from rezept r,mitarbeiter m,rezeptart ra "
 															+"where r.mitarbeiter_fk=m.id "
 															+"AND r.rezeptart_fk=ra.id";
@@ -173,9 +176,11 @@ public class RezeptDAO extends AbstractDAO {
 				Mitarbeiter koch = new Mitarbeiter();
 				koch.setId(set.getLong(3));
 				koch.setVorname(set.getString(4));
+				koch.setName(set.getString(5));
+				koch.setBenutzername(set.getString(6));
 				rezept.setMitarbeiter(koch);
 				
-				rezept.setRezeptart(new Rezeptart(set.getLong(5), set.getString(6)));
+				rezept.setRezeptart(new Rezeptart(set.getLong(7), set.getString(8)));
 				list.add(rezept);
 			}
 			return list;
@@ -189,18 +194,20 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = getManaged(GET_ALL_REZEPT_TABELLE_AKTIV);
 
 		while (set.next()) {
-			Rezept rezept = new Rezept(set.getLong("id"), RezeptartDAO
-					.getInstance()
-					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
-							set.getLong("mitarbeiter_fk")),
-					set.getString("name"), set.getString("kommentar"),
-					set.getDate("erstellt"), set.getBoolean("aktiv"));
-			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
-					.getZubereitungByRezept(rezept.getId());
-			rezept.setZubereitung(zubereitung);
+			Rezept rezept = new Rezept();
+			rezept.setId(set.getLong(1));
+			rezept.setName(set.getString(2));
+			rezept.setErstellt(set.getDate(3));
+			rezept.setRezeptart(new Rezeptart(set.getLong(4), set.getString(5)));
+			Mitarbeiter koch = new Mitarbeiter();
+			koch.setId(set.getLong(6));
+			koch.setVorname(set.getString(7));
+			koch.setName(set.getString(8));
+			koch.setBenutzername(set.getString(9));
+			rezept.setMitarbeiter(koch);
+			
+			
 			list.add(rezept);
-
 		}
 		return list;
 	}
@@ -216,6 +223,7 @@ public class RezeptDAO extends AbstractDAO {
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"));
+			rezept.setZubereitung(Zubereitungverwaltung.getInstance().getZubereitungByRezept(set.getLong("id")));
 		}
 
 		return rezept;

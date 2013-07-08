@@ -101,7 +101,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 
 		try {
 			container = new BeanItemContainer<Menue>(Menue.class,
-					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
+					Menueverwaltung.getInstance().getAllMenuesFast());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "kochname",
 					"geschmack", "menueart" });

@@ -423,6 +423,13 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	@Override
 	public void getViewParam(ViewData data) {
 		rezept = (Rezept) ((ViewDataObject<?>) data).getData();
+		
+		try {
+			rezept = Rezeptverwaltung.getInstance().getRezeptById(rezept.getId());
+		} catch (ConnectException e1) {
+		} catch (DAOException e1) {
+		} catch (SQLException e1) {
+		}
 		if (rezept.getArtikel() != null) {
 			tmpZutaten = rezept.getArtikel();
 		} else {
