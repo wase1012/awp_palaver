@@ -9,6 +9,21 @@
 	background: #ffffff url('img/header_links_over.jpg') no-repeat left top;
 }
 
+.v-loading-indicator,
+.v-loading-indicator-delay,
+.v-loading-indicator-wait {
+   	width: 100%;
+   	height: 100%;
+   	margin: 0;
+   	background-position: 50%;
+  	background-color: gray;
+  	opacity: .8;
+  	background-repeat: no-repeat;  
+   	background-attachment: fixed;
+  	-ms-filter: alpha(opacity=80);
+  	filter: alpha(opacity=80);
+}
+
 .v-app {
 	background: #f0fff0;
 }
