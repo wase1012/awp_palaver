@@ -123,7 +123,7 @@ public class Menue {
 	}
 
 	public String getKochname() {
-		return kochname;
+		return koch.getBenutzername();
 	}
 
 	public void setKochname(String kochname) {
@@ -176,6 +176,7 @@ public class Menue {
 
 	public void setKoch(Mitarbeiter koch) {
 		this.koch = koch;
+		this.kochname = koch.getBenutzername();
 	}
 
 	public Geschmack getGeschmack() {

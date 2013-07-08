@@ -319,7 +319,7 @@ public class WinSelectMenue extends Window {
 		// Container für Menüliste festlegen
 		try {
 			menueContainer = new BeanItemContainer<Menue>(Menue.class,
-					Menueverwaltung.getInstance().getAllMenuesTabelleAktiv());
+					Menueverwaltung.getInstance().getAllMenuesFast());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
