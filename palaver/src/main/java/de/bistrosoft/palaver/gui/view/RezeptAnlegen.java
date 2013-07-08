@@ -127,6 +127,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		this.setSizeFull();
 		this.setMargin(true);
 
+		//Setzte Eigenschaften des Textfeldes Name - Bezeichnung
 		name.setWidth("100%");
 		name.setImmediate(true);
 		name.setInputPrompt(nameInput);
@@ -135,18 +136,22 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		name.addValidator(new StringLengthValidator(
 				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
 
+		//Setzte Eigenschaften des TwinCol Zubereitung
 		zubereitung.setWidth("100%");
 		zubereitung.setImmediate(true);
-
+		
+		//Setzte Eigenschaften des NativSelect mitarbeiterNS
 		mitarbeiterNs.setWidth("100%");
 		mitarbeiterNs.setImmediate(true);
 		mitarbeiterNs.setNullSelectionAllowed(false);
 
+		//Setzte Eigenschaften des NativSelect rezeptartNS
 		rezeptartNs.setWidth("100%");
 		rezeptartNs.setImmediate(true);
 		rezeptartNs.setNullSelectionAllowed(false);
 		rezeptartNs.addValidator(new Validator() {
 
+			//Validierung der Rezeptart, damit diese nicht null ist, beim abspeichern
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (rezeptartNs.getValue() == null) {
@@ -156,25 +161,33 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		//Setzte Eigenschaften des TextBox Kommentar
+		//umfasst 5000 Zeichen
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);
 		kommentar.setMaxLength(5000);
 
+		//Die Gesamtansicht
 		vlBox.setWidth("1000px");
 		vlBox.setSpacing(true);
 
 		btArtikel.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
 
+		//setzte Gesamtansicht
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
+		
+		//setzte Überschrift
 		headlineAnlegen = new Label("Rezept anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
 
+		//Setze in die Gesamtansicht die Ansichten Details, Zutaten und Control
 		vlBox.addComponent(hlDetails);
 		vlBox.addComponent(hlZutaten);
 		vlBox.addComponent(hlControl);
 
+		//Unterteile die Detailansicht in Zwei Teile
 		hlDetails.addComponent(vlDetailsLinks);
 		hlDetails.addComponent(vlDetailsRechts);
 		hlDetails.setWidth("1000px");
@@ -182,34 +195,41 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		vlBox.setComponentAlignment(headlineAnlegen, Alignment.MIDDLE_LEFT);
 
+		//Detailansicht Links beinhaltet Name, Mitabeiter, Rezeptart und Kommentar
 		vlDetailsLinks.addComponent(name);
 		vlDetailsLinks.addComponent(mitarbeiterNs);
 		vlDetailsLinks.addComponent(rezeptartNs);
 		vlDetailsLinks.addComponent(kommentar);
 		vlDetailsLinks.setWidth("450px");
 
+		//Die Detailansicht Rechts beinhaltet die Zubereitung und Größe auf 500 Pixel
 		vlDetailsRechts.addComponent(zubereitung);
-
 		vlDetailsRechts.setWidth("500px");
 
+		//Einstellungen der Größe der Zutaten
 		hlZutaten.setWidth("1000px");
 		hlZutaten.setHeight("393px");
 
+		//
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
 
+		//Setze die Buttons Menü überfphren, Artikel anlegen, Verwerfen und Speichern
 		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btArtikel);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
 
-		// ValueChangeListener
+		// ValueChangeListener zum auslesen von Name 
 		name.addValueChangeListener(this);
+		// und Kommentar
 		kommentar.addValueChangeListener(this);
 
+		//Bei Kllick auf Button Verwerfen, sollen die Felder geleert werden
+		//dafür wird die Seite neu geladen
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -225,6 +245,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		// Bei Klick auf Speichern soll das Rezept in der DB abgelegt werden.
 		btSpeichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -244,6 +265,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		//Bei Klick auf diesen Button soll ein Rezept gleich als Menü angelegt werden können
+		//Dabei wird das Rezept gepeichert und im Menü bekannt Felder gefüllt, geschiet im MenueAnlegen
 		btMenue.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -266,34 +289,30 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		//Bei Klick auf Button Artikel anlegen, wird ein Window geöffnet mit der View ArtikelErstellen
 		btArtikel.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-
 				addArtikel();
 			}
 		});
 
+		//Konfiguriere Tabelle Reztepte
 		zutatenTable = new Table();
 		zutatenTable.setSizeFull();
 		zutatenTable.setStyleName("palaverTable");
-		// zutatenTable.setPageLength(16);
-		// zutatenTable.setWidth("650px");
 		zutatenTable.setImmediate(true);
-		// zutatenTable.setColumnWidth("artikelname", 200);
-		// zutatenTable.setColumnWidth("menge", 100);
-		// zutatenTable.setColumnWidth("einheit", 90);
-		// zutatenTable.setColumnWidth("notiz", 500);
 
+		//Konfiguriere Tabelle der Artikel
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
-		// artikelTable.setSizeUndefined();
-		// artikelTable.setWidth("350px");
 		artikelTable.setStyleName("palaverTable");
 		artikelTable.setFilterBarVisible(true);
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		artikelTable.setSelectable(true);
 
+		//Container der die Tabelle für RezeptHasArtikel erstellt.
+		//Mit den Spalten ArtikelName, Menge, Einheit und Notiz
 		containerRezeptHasArtikel = new BeanItemContainer<RezeptHasArtikel>(
 				RezeptHasArtikel.class);
 		zutatenTable.setContainerDataSource(containerRezeptHasArtikel);
@@ -696,6 +715,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		}
 	}
 
+	//Validierung
 	private Boolean validiereEingabe() {
 		if (name.getValue().isEmpty()) {
 			((Application) UI.getCurrent().getData())
