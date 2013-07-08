@@ -125,7 +125,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		btForeWeek.addStyleName("menueplan-lastweek");
 		btForeWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fï¿½r eine Woche vorher
+			// Click-Listener für eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownMenueplan == zweiteMenueplan) {
@@ -410,7 +410,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// alle Felder durchgehen, prï¿½fen ob menuecomponent vorhanden
+				// alle Felder durchgehen, prüfen ob menuecomponent vorhanden
 				// ist und wenn ja speichern
 				shownMenueplan.speichern();
 				int week = shownMenueplan.getMenueplan().getWeek().getWeek();
