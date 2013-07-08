@@ -54,7 +54,7 @@ public class RezeptDAO extends AbstractDAO {
 	private static final String GET_ALL_REZEPT_TABELLE = "SELECT * FROM "
 			+ TABLE;
 	private static final String GET_ALL_REZEPT_TABELLE_AKTIV = "select r.id, r.name, r.erstellt, ra.id, ra.name, m.id, m.vorname, m.name, m.benutzername "+ 
-																	"from rezept r, rezeptart ra, Mitarbeiter m "+
+																	"from rezept r, rezeptart ra, mitarbeiter m "+
 																	"where r.mitarbeiter_fk=m.id "+
 																	"and r.rezeptart_fk=ra.id "+
 																	"and aktiv = 1";
@@ -64,7 +64,8 @@ public class RezeptDAO extends AbstractDAO {
 															+"AND r.rezeptart_fk=ra.id";
 	private static final String GET_ALL_ARTIKEL_REZEPT = "select a.id, a.name, a.notiz, me.id, me.name, me.kurz "
 															+"from artikel a, mengeneinheit me "
-															+"where a.mengeneinheit_fk=me.id";
+															+"where a.mengeneinheit_fk=me.id " +
+															"and lebensmittel=1";
 
 	Rezept rezept;
 
