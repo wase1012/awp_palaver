@@ -380,7 +380,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
-					Artikelverwaltung.getInstance().getAllArtikel());
+					Rezeptverwaltung.getInstance().getAllArtikel());
 			artikelTable.setContainerDataSource(containerArtikel);
 			artikelTable.setVisibleColumns(new Object[] { "name" });
 		} catch (IllegalArgumentException e) {

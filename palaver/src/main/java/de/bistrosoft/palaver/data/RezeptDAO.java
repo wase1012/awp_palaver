@@ -59,6 +59,9 @@ public class RezeptDAO extends AbstractDAO {
 															+"from rezept r,mitarbeiter m,rezeptart ra "
 															+"where r.mitarbeiter_fk=m.id "
 															+"AND r.rezeptart_fk=ra.id";
+	private static final String GET_ALL_ARTIKEL_REZEPT = "select a.id, a.name, a.notiz, me.id, me.name, me.kurz "
+															+"from artikel a, mengeneinheit me "
+															+"where a.mengeneinheit_fk=me.id";
 
 	Rezept rezept;
 
@@ -86,6 +89,20 @@ public class RezeptDAO extends AbstractDAO {
 					MitarbeiterDAO.getInstance().getMitarbeiterById(
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), set.getString("kommentar")));
+		}
+		return list;
+	}
+
+	public List<Artikel> getAllArtikel() throws ConnectException, DAOException,
+	SQLException {
+		List<Artikel> list = new ArrayList<Artikel>();
+		ResultSet set = getManaged(GET_ALL_ARTIKEL_REZEPT);
+		while (set.next()) {
+			Artikel a = new Artikel(set.getLong(1),set.getString(2));
+			a.setNotiz(set.getString(3));
+			Mengeneinheit me = new Mengeneinheit(set.getLong(4),set.getString(5), set.getString(6));
+			a.setMengeneinheit(me);
+			list.add(a);
 		}
 		return list;
 	}
