@@ -55,6 +55,10 @@ public class RezeptDAO extends AbstractDAO {
 			+ TABLE;
 	private static final String GET_ALL_REZEPT_TABELLE_AKTIV = "SELECT * FROM "
 			+ TABLE + " WHERE " + AKTIV + "=true";
+	private static final String GET_ALL_REZEPT_MENUE = "select r.id rid, r.name rname, m.id mid,m.vorname mname,ra.id raid,ra.name raname "
+															+"from rezept r,mitarbeiter m,rezeptart ra "
+															+"where r.mitarbeiter_fk=m.id "
+															+"AND r.rezeptart_fk=ra.id";
 
 	Rezept rezept;
 
@@ -136,10 +140,29 @@ public class RezeptDAO extends AbstractDAO {
 					.getZubereitungByRezept(rezept.getId());
 			rezept.setZubereitung(zubereitung);
 			list.add(rezept);
-
 		}
 		return list;
 	}
+	
+	// Methode, die alle Rezepte für Menü anlegen
+		public List<Rezept> getAllRezepteForMenue() throws ConnectException,
+				DAOException, SQLException {
+			List<Rezept> list = new ArrayList<Rezept>();
+			ResultSet set = getManaged(GET_ALL_REZEPT_MENUE);
+			while (set.next()) {
+				Rezept rezept = new Rezept();
+				rezept.setId(set.getLong(1));
+				rezept.setName(set.getString(2));
+				Mitarbeiter koch = new Mitarbeiter();
+				koch.setId(set.getLong(3));
+				koch.setVorname(set.getString(4));
+				rezept.setMitarbeiter(koch);
+				
+				rezept.setRezeptart(new Rezeptart(set.getLong(5), set.getString(6)));
+				list.add(rezept);
+			}
+			return list;
+		}
 
 	// Methode, die alle Rezepte, welche den Status aktiv haben, in einer Liste
 	// zurueckliefert
@@ -156,9 +179,9 @@ public class RezeptDAO extends AbstractDAO {
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getDate("erstellt"), set.getBoolean("aktiv"));
-//			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
-//					.getZubereitungByRezept(rezept.getId());
-//			rezept.setZubereitung(zubereitung);
+			List<Zubereitung> zubereitung = Zubereitungverwaltung.getInstance()
+					.getZubereitungByRezept(rezept.getId());
+			rezept.setZubereitung(zubereitung);
 			list.add(rezept);
 
 		}

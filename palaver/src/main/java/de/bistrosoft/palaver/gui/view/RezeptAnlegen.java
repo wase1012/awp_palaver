@@ -248,14 +248,10 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btMenue.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.println("rzArt : " + rezeptartNs.getValue());
 				if (validiereEingabe()) {
 					if (!(RezeptAnlegen.this.getParent() instanceof Window)) {
 						if (rezeptartNs.getValue() != "Beilage") {
-							ViewHandler.getInstance().switchView(
-									MenueAnlegen.class,
-									new ViewDataObject<Rezept>(
-											rezeptSpeichern()));
+							ViewHandler.getInstance().switchView(MenueAnlegen.class,new ViewDataObject<Rezept>(rezeptSpeichern()));
 						} else {
 							((Application) UI.getCurrent().getData())
 									.showDialog((IConstants.INFO_REZEPT_MENUE_SAVE));
@@ -525,25 +521,29 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 	// Funktion zum Speichern eines Rezeptes
 	public Rezept rezeptSpeichern() {
-		Rezept rezept = new Rezept();
-		rezept.setName(nameInput);
+		if(this.rezept.getId()!=null){
+			return this.rezept;
+		}
+		
+		Rezept rez = new Rezept();
+		rez.setName(nameInput);
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 
-		rezept.setErstellt(date2);
-		rezept.setKommentar(kommentarInput);
+		rez.setErstellt(date2);
+		rez.setKommentar(kommentarInput);
 
-		rezept.setRezeptart((Rezeptart) rezeptartNs.getValue());
+		rez.setRezeptart((Rezeptart) rezeptartNs.getValue());
 
 		try {
-			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
+			rez.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 		try {
-			Rezeptverwaltung.getInstance().createRezept(rezept);
+			Rezeptverwaltung.getInstance().createRezept(rez);
 			Rezept rezeptNeu = null;
 
 			try {
@@ -603,7 +603,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_REZEPT_SAVE);
 
-		return rezept;
+		return rez;
 	}
 
 	// Methode zum �ndern eines Rezepts
