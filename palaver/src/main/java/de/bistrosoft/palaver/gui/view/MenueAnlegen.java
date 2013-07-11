@@ -56,6 +56,11 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
+/**
+ * @author Jasmin Baumgartner, Eike Becher, Michael Marschall
+ * 
+ */
+ 
 @SuppressWarnings("serial")
 public class MenueAnlegen extends VerticalLayout implements View,
 		ValueChangeListener {
@@ -76,20 +81,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			ContentMode.HTML);
 	
 	
-	private TextField tfMenuename = new TextField("Menüname");
+	private TextField tfMenuename = new TextField("Menï¿½name");
 
-	private TwinColTouch tcsFussnoten = new TwinColTouch("Fußnoten");
+	private TwinColTouch tcsFussnoten = new TwinColTouch("Fuï¿½noten");
 
 	private NativeSelect nsKoch = new NativeSelect("Koch");
-	private NativeSelect nsMenueart = new NativeSelect("Menüart");
+	private NativeSelect nsMenueart = new NativeSelect("Menï¿½art");
 	private NativeSelect nsGeschmack = new NativeSelect("Geschmack");
 
-	private CheckBox chbFavorit = new CheckBox("Menü ist ein Favorit");
-	private CheckBox chbAufwand = new CheckBox("Menü hat hohen Aufwand");
+	private CheckBox chbFavorit = new CheckBox("Menï¿½ ist ein Favorit");
+	private CheckBox chbAufwand = new CheckBox("Menï¿½ hat hohen Aufwand");
 
 	private Button btSpeichern = new Button("Speichern");
 	private Button btVerwerfen = new Button("Verwerfen");
-	private Button btUpdate = new Button("Ändern");
+	private Button btUpdate = new Button("ï¿½ndern");
 	private Button btNeuesRezept = new Button("Neues Rezept");
 
 	private FilterTable tblMenueRezepte = new FilterTable();
@@ -127,7 +132,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.setFilterBarVisible(true);
 		tblMenueRezepte
 				.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
-		tblMenueRezepte.setCaption("Rezepte in Menü");
+		tblMenueRezepte.setCaption("Rezepte in Menï¿½");
 
 		load();
 		
@@ -136,7 +141,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
-		headlineAnlegen = new Label("Menü anlegen");
+		headlineAnlegen = new Label("Menï¿½ anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
 		
@@ -511,7 +516,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		menue.setRezepte(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
-		headlineUpdate = new Label("Menü bearbeiten");
+		headlineUpdate = new Label("Menï¿½ bearbeiten");
 
 		headlineUpdate.setStyleName("ViewHeadline");
 
