@@ -59,7 +59,7 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
- * @author Jan Lauinger
+ * @author Jan Lauinger, Michael Marschall
  * 
  */
 @SuppressWarnings("serial")
@@ -177,7 +177,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
 		
-		//setzte Überschrift
+		//setzte ï¿½berschrift
 		headlineAnlegen = new Label("Rezept anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
@@ -202,11 +202,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlDetailsLinks.addComponent(kommentar);
 		vlDetailsLinks.setWidth("450px");
 
-		//Die Detailansicht Rechts beinhaltet die Zubereitung und Größe auf 500 Pixel
+		//Die Detailansicht Rechts beinhaltet die Zubereitung und Grï¿½ï¿½e auf 500 Pixel
 		vlDetailsRechts.addComponent(zubereitung);
 		vlDetailsRechts.setWidth("500px");
 
-		//Einstellungen der Größe der Zutaten
+		//Einstellungen der Grï¿½ï¿½e der Zutaten
 		hlZutaten.setWidth("1000px");
 		hlZutaten.setHeight("393px");
 
@@ -217,7 +217,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
 
-		//Setze die Buttons Menü überfphren, Artikel anlegen, Verwerfen und Speichern
+		//Setze die Buttons Menï¿½ ï¿½berfphren, Artikel anlegen, Verwerfen und Speichern
 		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btArtikel);
 		hlControl.addComponent(btVerwerfen);
@@ -229,7 +229,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		kommentar.addValueChangeListener(this);
 
 		//Bei Kllick auf Button Verwerfen, sollen die Felder geleert werden
-		//dafür wird die Seite neu geladen
+		//dafï¿½r wird die Seite neu geladen
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -265,8 +265,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		//Bei Klick auf diesen Button soll ein Rezept gleich als Menü angelegt werden können
-		//Dabei wird das Rezept gepeichert und im Menü bekannt Felder gefüllt, geschiet im MenueAnlegen
+		//Bei Klick auf diesen Button soll ein Rezept gleich als Menï¿½ angelegt werden kï¿½nnen
+		//Dabei wird das Rezept gepeichert und im Menï¿½ bekannt Felder gefï¿½llt, geschiet im MenueAnlegen
 		btMenue.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -289,7 +289,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		//Bei Klick auf Button Artikel anlegen, wird ein Window geöffnet mit der View ArtikelErstellen
+		//Bei Klick auf Button Artikel anlegen, wird ein Window geï¿½ffnet mit der View ArtikelErstellen
 		btArtikel.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -311,7 +311,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		artikelTable.setSelectable(true);
 
-		//Container der die Tabelle für RezeptHasArtikel erstellt.
+		//Container der die Tabelle fï¿½r RezeptHasArtikel erstellt.
 		//Mit den Spalten ArtikelName, Menge, Einheit und Notiz
 		containerRezeptHasArtikel = new BeanItemContainer<RezeptHasArtikel>(
 				RezeptHasArtikel.class);
