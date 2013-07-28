@@ -67,6 +67,14 @@ public class MenueComponent extends CustomComponent {
 		this.angezeigterName = anzezeigterName;
 	}
 
+	public String getFussnoten() {
+		return fn;
+	}
+	
+	public void setFussnote(String fn) {
+		this.fn = fn;
+	}
+	
 	public List<Regel> getFehlerRegeln() {
 		return FehlerRegeln;
 	}
@@ -243,9 +251,9 @@ public class MenueComponent extends CustomComponent {
 			fn = fn + " " + f.getAbkuerzung().toString() + ",";
 		}
 		
-		fn = fn.substring(1, fn.length() - 1);
+		fn = " (" + fn.substring(1, fn.length() - 1) + ")";
 
-		Button btText = new Button(angezName + " (" + fn + ")");
+		Button btText = new Button(angezName + fn );
 		btText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
 		btText.setWidth("100%");
 		btText.setHeight("80px");

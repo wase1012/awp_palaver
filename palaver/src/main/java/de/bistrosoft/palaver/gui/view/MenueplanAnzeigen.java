@@ -590,6 +590,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		}
 		h += "</table>";
+		h+= IConstants.FUSSNOTEN_MENUEPLAN;
 		return h;
 	}
 
@@ -597,7 +598,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		Component comp = shownMenueplan.layout.getComponent(x, y);
 		if (comp instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) comp;
-			return mc.getAngezeigterName();
+			return mc.getAngezeigterName() + mc.getFussnoten();
 		} else if (comp instanceof Label) {
 			Label lb = (Label) comp;
 			String sLb = lb.getValue();
@@ -652,7 +653,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		VerticalLayout vlMenueplan = new VerticalLayout();
 
 		Label lbH = new Label(getHtmlTable(), ContentMode.HTML);
-		Button btSchliessen = new Button("Schlieߟen");
+//		Button btSchliessen = new Button("Schlieߟen");
 
 		addComponent(vlBox);
 		vlBox.addComponent(vlMenueplan);
@@ -660,16 +661,16 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		vlMenueplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
 
 		vlBox.addComponent(hlControl);
-		hlControl.addComponent(btSchliessen);
-		hlControl.setComponentAlignment(btSchliessen, Alignment.MIDDLE_RIGHT);
-
-		btSchliessen.addClickListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				win.close();
-			}
-		});
+//		hlControl.addComponent(btSchliessen);
+//		hlControl.setComponentAlignment(btSchliessen, Alignment.MIDDLE_RIGHT);
+//
+//		btSchliessen.addClickListener(new ClickListener() {
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				win.close();
+//			}
+//		});
 
 		// addComponent(lbH);
 		// lbH.setSizeFull();
