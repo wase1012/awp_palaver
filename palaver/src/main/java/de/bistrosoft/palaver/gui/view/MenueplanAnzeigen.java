@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.converter.Converter.ConversionException;
@@ -455,16 +457,27 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 		btFreigeben.addClickListener(new ClickListener() {
 
+			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				shownMenueplan.speichern();
-				shownMenueplan.freigeben();
 
-				if (shownMenueplan.getMenueplan().getFreigegeben()) {
-					btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
-				} else {
-					btFreigeben.setIcon(new ThemeResource(IConstants.ICON_NO));
-				}
+				ConfirmDialog.show(UI.getCurrent(), "Menüplan freigeben",
+						"Wenn Sie diesen Menüplan freigeben, können die Köche ihn nicht mehr bearbeiten. Wollen Sie diesen Plan wirklich freigeben?",
+						"Ja", "Nein", new ConfirmDialog.Listener() {
+
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									shownMenueplan.speichern();
+									shownMenueplan.freigeben();
+									if (shownMenueplan.getMenueplan().getFreigegeben()) {
+										btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
+									} else {
+										btFreigeben.setIcon(new ThemeResource(IConstants.ICON_NO));
+									}
+								}
+							}
+						});
+				
 			}
 		});
 		String url = "http://www.wetter.com/wetter_aktuell/wettervorhersage/7_tagesvorhersage/?id=DE0005309";
