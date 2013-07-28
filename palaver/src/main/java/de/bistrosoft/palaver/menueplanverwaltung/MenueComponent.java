@@ -240,10 +240,12 @@ public class MenueComponent extends CustomComponent {
 		}
 		fn = "";
 		for (Fussnote f : fns) {
-			fn = fn + " (" + f.getAbkuerzung().toString() + ")";
+			fn = fn + " " + f.getAbkuerzung().toString() + ",";
 		}
+		
+		fn = fn.substring(1, fn.length() - 1);
 
-		Button btText = new Button(angezName);
+		Button btText = new Button(angezName + " (" + fn + ")");
 		btText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
 		btText.setWidth("100%");
 		btText.setHeight("80px");
