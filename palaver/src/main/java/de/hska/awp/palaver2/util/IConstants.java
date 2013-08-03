@@ -11,9 +11,9 @@ public interface IConstants
 //  Team1
 //	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=awp";
 //  Team2
-	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=root";
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
 //	Produktiv
-//	String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=palaver&password=Fa48Hsd42J";
+String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -69,6 +69,7 @@ public interface IConstants
 	String		BUTTON_HIDE_FILTER = "Filter ausblenden";
 	String		BUTTON_SAVE = "Speichern";
 	String		BUTTON_SENDEN = "Senden";
+	String		BUTTON_DEAKTIVIEREN = "Deaktivieren";
 	String		BUTTON_DISCARD = "Verwerfen";
 	String		BUTTON_ADD = "Hinzufügen";
 	String		BUTTON_NEW = "Neu";
@@ -90,7 +91,7 @@ public interface IConstants
 	String 		BUTTON_SEND = "Senden";
 	
 	// Icons fuer Knoepfe
-	String		BUTTON_DELETE_ICON = "img/delete.ico";
+	String		BUTTON_DELETE_ICON = "img/Delete.ico";
 	String		BUTTON_SAVE_ICON = "img/save.ico";
 	String		BUTTON_DISCARD_ICON = "img/cross.ico";
 	String 		BUTTON_ADD_ICON = "img/add.ico";
@@ -180,6 +181,7 @@ public interface IConstants
 	String 		INFO_ARTIKEL_PREIS = "Bitte Preis angeben";
 	String 		INFO_ARTIKEL_DURCHSCHNITT = "Bitte Durchschnitt angeben";
 	String 		INFO_ARTIKEL_AUSWAEHLEN = "Bitte Artikel auswählen";
+	String 		INFO_ARTIKEL_DEAKTIVIEREN ="Artikel wurde deaktiviert";
 	
 	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
 	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";

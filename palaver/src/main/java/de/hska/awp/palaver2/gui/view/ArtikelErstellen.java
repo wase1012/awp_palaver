@@ -32,6 +32,8 @@ import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver2.data.ConnectException;
+import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -76,6 +78,7 @@ public class ArtikelErstellen extends VerticalLayout implements View,
 
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
+	private Button deaktivieren = new Button(IConstants.BUTTON_DEAKTIVIEREN);
 	private Button addLieferant = new Button(IConstants.BUTTON_NEW);
 	private Button addMengeneinheit = new Button(IConstants.BUTTON_NEW);
 	private Button addKategorie = new Button(IConstants.BUTTON_NEW);
@@ -217,11 +220,17 @@ public class ArtikelErstellen extends VerticalLayout implements View,
 		box.addComponent(control);
 		box.setComponentAlignment(control, Alignment.MIDDLE_RIGHT);
 
+		
+		deaktivieren.setVisible(false);
+		
+		
 		// speichern.setEnabled(false);
 		control.addComponent(verwerfen);
 		control.addComponent(speichern);
+		control.addComponent(deaktivieren);
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		deaktivieren.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
 
 		grundbedarf.addValueChangeListener(new ValueChangeListener() {
 			@Override
@@ -237,11 +246,26 @@ public class ArtikelErstellen extends VerticalLayout implements View,
 					Window win = (Window) ArtikelErstellen.this.getParent();
 					win.close();
 				} else {
-					ViewHandler.getInstance().returnToDefault();
+					ViewHandler.getInstance().switchView(ArtikelAnzeigen.class, new ViewDataObject<Artikel>(artikel));
 				}
 			}
 		});
 
+		
+		deaktivieren.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					Artikelverwaltung.getInstance().deaktivireArtikel(artikel);					
+					((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_ARTIKEL_DEAKTIVIEREN);
+					ViewHandler.getInstance().switchView(ArtikelAnzeigen.class, new ViewDataObject<Artikel>(artikel));
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+		});
+		
 		speichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -346,7 +370,7 @@ public class ArtikelErstellen extends VerticalLayout implements View,
 	@Override
 	public void getViewParam(ViewData data) {
 		artikel = (Artikel) ((ViewDataObject<?>) data).getData();
-
+deaktivieren.setVisible(true);
 		control.replaceComponent(speichern, update);
 
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));

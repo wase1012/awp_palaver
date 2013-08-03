@@ -213,7 +213,8 @@ public class MainLayout extends VerticalLayout implements Command {
 		} else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HEADLINE)) {
 			ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
 		} else if (selectedItem.getText().equals(IConstants.MENU_MENUPLAN_HISTORIE)) {
-			ViewHandler.getInstance().switchView(MenueplanHistorie.class);
+			ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
+			//ViewHandler.getInstance().switchView(MenueplanHistorie.class);
 		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENPLAN_HISTORIE)) {
 			ViewHandler.getInstance().switchView(KuchenplanHistorie.class);
 		} else if (selectedItem.getText().equals(IConstants.MENU_KUCHENREZEPT_ANLEGEN)) {

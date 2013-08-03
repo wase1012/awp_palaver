@@ -339,14 +339,21 @@ public class MenueplanGridLayout extends CustomComponent {
 		Menueplanverwaltung.getInstance().persist(menueplan);
 	}
 
-	public void freigeben() {
-		menueplan.setFreigegeben(true);
+	public void freigeben(boolean action) {
+		menueplan.setFreigegeben(action);
 		Menueplanverwaltung.getInstance().updateMenueplan(menueplan);
+		String text = "";
+		if (action) {
+			text = "Menüplan für Kalenderwoche "
+					+ menueplan.getWeek().getWeek() + "/"
+					+ menueplan.getWeek().getYear() + " wurde freigegeben";
+		} else {
+			text = "Freigabe des Menüplans für Kalenderwoche "
+					+ menueplan.getWeek().getWeek() + "/"
+					+ menueplan.getWeek().getYear() + " wurde deaktiviert";
 
-		((Application) UI.getCurrent().getData())
-				.showDialog("Menüplan für Kalenderwoche "
-						+ menueplan.getWeek().getWeek() + "/"
-						+ menueplan.getWeek().getYear() + " wurde freigegeben");
+		}
+		((Application) UI.getCurrent().getData()).showDialog(text);
 
 	}
 

@@ -4,6 +4,7 @@
 package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class MenueplanDAO extends AbstractDAO {
 
 	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE
 			+ " WHERE week = {0} AND year = {1,number,#}";
-	private final String GET_MENUES_BY_MENUEPLAN = "SELECT m.id, m.name, m.aufwand,m.favorit, k.id, k.name, k.vorname,k.benutzername, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "+ 
+	private final String GET_MENUES_BY_MENUEPLAN = "SELECT m.id, m.name, m.aufwand,m.favorit, k.id AS koch, k.name AS kochname, k.vorname,k.benutzername, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "+ 
 			"FROM menue m, menueplan_has_menues mhm, mitarbeiter k, geschmack g, menueart ma "+
 			"WHERE m.id = mhm.menue "+
 			"AND mhm.menueplan = {0} "+
@@ -55,7 +56,7 @@ public class MenueplanDAO extends AbstractDAO {
 	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion) "
 			+ "VALUES ({0},{1},{2},{3},{4},{5})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
-	private final String UPDATE_MENUEPLAN_FREIGEBEN = "UPDATE menueplan SET freigegeben = {0}";
+	private final String UPDATE_MENUEPLAN_FREIGEBEN = "UPDATE menueplan SET freigegeben = {0} where id = {1}";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
 	private final String GET_ARTIKEL_BEDARF = "select rha.artikel_fk, rha.menge, rha.einheit, mhm.spalte, mhm.portion from rezept_has_artikel rha, menueplan_has_menues mhm, menue_has_rezept mhr where rezept_fk IN "+
 	"(select rezept_id from menue_has_rezept where menue_id IN"+ 
@@ -126,11 +127,11 @@ public class MenueplanDAO extends AbstractDAO {
 			// TODO: Menüs laden
 			ResultSet setMenues = getManaged(MessageFormat.format(
 					GET_MENUES_BY_MENUEPLAN, menueplan.getId()));
-
+			
 			while (setMenues.next()) {
-				Long id = setMenues.getLong("id");
-				String name = setMenues.getString("name");
-				Mitarbeiter koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong("koch"));
+				Long id = setMenues.getLong(1);
+				String name = setMenues.getString(2);
+				Mitarbeiter koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong(5));
 				// TODO: = new Mitarbeiter(name, vorname);
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
@@ -143,10 +144,10 @@ public class MenueplanDAO extends AbstractDAO {
 						.getFussnoteByMenue(id);
 				menue.setFussnoten(fussnoten);
 				Geschmack geschmack = Geschmackverwaltung.getInstance()
-						.getGeschmackById(setMenues.getLong("geschmack_fk"));
+						.getGeschmackById(setMenues.getLong(9));
 				menue.setGeschmack(geschmack);
 				Menueart menueart = Menueartverwaltung.getInstance()
-						.getMenueartById(setMenues.getLong("menueart_fk"));
+						.getMenueartById(setMenues.getLong(11));
 				menue.setMenueart(menueart);
 				
 				String angezName = setMenues.getString("angezName");
@@ -305,7 +306,7 @@ public class MenueplanDAO extends AbstractDAO {
 
 	public void updateMenueplan(Menueplan menueplan) throws ConnectException, 
 			DAOException{
-		putManaged(MessageFormat.format(UPDATE_MENUEPLAN_FREIGEBEN, menueplan.getFreigegeben()));
+		putManaged(MessageFormat.format(UPDATE_MENUEPLAN_FREIGEBEN, menueplan.getFreigegeben(), menueplan.getId()));
 	}
 	
 	public void createMenueplan(Menueplan menueplan) throws ConnectException,

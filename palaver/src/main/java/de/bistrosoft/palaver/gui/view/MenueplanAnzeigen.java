@@ -455,29 +455,44 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		});
 
+		// TODO: FREIGABE
 		btFreigeben.addClickListener(new ClickListener() {
-
-			
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				ConfirmDialog.show(UI.getCurrent(), "Menüplan freigeben",
-						"Wenn Sie diesen Menüplan freigeben, können die Köche ihn nicht mehr bearbeiten. Wollen Sie diesen Plan wirklich freigeben?",
-						"Ja", "Nein", new ConfirmDialog.Listener() {
-
-							public void onClose(ConfirmDialog dialog) {
-								if (dialog.isConfirmed()) {
-									shownMenueplan.speichern();
-									shownMenueplan.freigeben();
-									if (shownMenueplan.getMenueplan().getFreigegeben()) {
+				if (shownMenueplan.getMenueplan().getFreigegeben()) {
+					shownMenueplan.freigeben(false);
+					btFreigeben.setIcon(new ThemeResource(IConstants.ICON_NO));
+					shownMenueplan.speichern();
+				} else {
+					ConfirmDialog.show(
+							UI.getCurrent(),
+							"Menüplan freigeben",
+							"Wenn Sie diesen Menüplan freigeben, können die Köche ihn nicht mehr bearbeiten. Wollen Sie diesen Plan wirklich freigeben?",
+							"Ja", "Nein", new ConfirmDialog.Listener() {
+								public void onClose(ConfirmDialog dialog) {
+									if (dialog.isConfirmed()) {
+										shownMenueplan.freigeben(true);
+										shownMenueplan.speichern();
 										btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
-									} else {
-										btFreigeben.setIcon(new ThemeResource(IConstants.ICON_NO));
 									}
 								}
-							}
-						});
-				
+							});
+				}
+
+				/*
+				 * ConfirmDialog.show(UI.getCurrent(), "Menüplan freigeben",
+				 * "Wenn Sie diesen Menüplan freigeben, können die Köche ihn nicht mehr bearbeiten. Wollen Sie diesen Plan wirklich freigeben?"
+				 * , "Ja", "Nein", new ConfirmDialog.Listener() {
+				 * 
+				 * public void onClose(ConfirmDialog dialog) { if
+				 * (dialog.isConfirmed()) { shownMenueplan.speichern(); //TODO
+				 * ÄNDERN shownMenueplan.freigeben(false); if
+				 * (shownMenueplan.getMenueplan().getFreigegeben()) {
+				 * btFreigeben.setIcon(new ThemeResource(IConstants.ICON_YES));
+				 * } else { btFreigeben.setIcon(new
+				 * ThemeResource(IConstants.ICON_NO)); } } } });
+				 */
 			}
 		});
 		String url = "http://www.wetter.com/wetter_aktuell/wettervorhersage/7_tagesvorhersage/?id=DE0005309";
@@ -590,7 +605,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			}
 		}
 		h += "</table>";
-		h+= IConstants.FUSSNOTEN_MENUEPLAN;
+		h += IConstants.FUSSNOTEN_MENUEPLAN;
 		return h;
 	}
 
@@ -653,7 +668,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		VerticalLayout vlMenueplan = new VerticalLayout();
 
 		Label lbH = new Label(getHtmlTable(), ContentMode.HTML);
-//		Button btSchliessen = new Button("SchließŸen");
+		// Button btSchliessen = new Button("SchließŸen");
 
 		addComponent(vlBox);
 		vlBox.addComponent(vlMenueplan);
@@ -661,16 +676,17 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		vlMenueplan.setComponentAlignment(lbH, Alignment.MIDDLE_CENTER);
 
 		vlBox.addComponent(hlControl);
-//		hlControl.addComponent(btSchliessen);
-//		hlControl.setComponentAlignment(btSchliessen, Alignment.MIDDLE_RIGHT);
-//
-//		btSchliessen.addClickListener(new ClickListener() {
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				win.close();
-//			}
-//		});
+		// hlControl.addComponent(btSchliessen);
+		// hlControl.setComponentAlignment(btSchliessen,
+		// Alignment.MIDDLE_RIGHT);
+		//
+		// btSchliessen.addClickListener(new ClickListener() {
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// win.close();
+		// }
+		// });
 
 		// addComponent(lbH);
 		// lbH.setSizeFull();

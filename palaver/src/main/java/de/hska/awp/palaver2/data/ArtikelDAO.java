@@ -22,17 +22,18 @@ import de.hska.awp.palaver2.util.Util;
  */
 public class ArtikelDAO extends AbstractDAO {
 	private static ArtikelDAO instance = null;
-	private final static String GET_ALL_ARTIKLES = "SELECT * FROM artikel";
-	private final static String GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM artikel where lieferant_fk = {0} ORDER BY artikel.name";
-	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
-	private final static String GET_ARTIKEL_BY_NAME = "SELECT * FROM artikel where name like ";
+	private final static String TABLE = "artikel";
+	private final static String GET_ALL_ARTIKLES_NO_DELETE = "SELECT * FROM " + TABLE + " WHERE `delete` = 0";
+	private final static String GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE + " WHERE lieferant_fk = {0} AND `delete` = 0 ORDER BY name";
+	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM " + TABLE + " WHERE id = {0}";
+	private final static String GET_ARTIKEL_BY_NAME = "SELECT * FROM" + TABLE + " WHERE name like ";
 	private final static String PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`,`notiz`)VALUES({0})";
-	private final static String GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM artikel WHERE grundbedarf=1";
-	private final static String GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM artikel WHERE standard=1";
+	private final static String GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM " + TABLE + " WHERE grundbedarf=1";
+	private final static String GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM " + TABLE + " WHERE standard=1";
 	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
 	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
-	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM artikel WHERE lebensmittel = '1'";
+	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM " + TABLE + " WHERE lebensmittel = '1'";
 	private final static String GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
 
 	public ArtikelDAO() {
@@ -61,8 +62,10 @@ public class ArtikelDAO extends AbstractDAO {
 	public List<Artikel> getAllArtikel() throws ConnectException, DAOException, SQLException {
 		List<Artikel> list = new ArrayList<Artikel>();
 
-		ResultSet set = getManaged(GET_ALL_ARTIKLES);
+		ResultSet set = getManaged(GET_ALL_ARTIKLES_NO_DELETE);
 
+		System.out.print(GET_ALL_ARTIKLES_NO_DELETE);
+		
 		openConnection();
 
 		while (set.next()) {
@@ -250,6 +253,12 @@ public class ArtikelDAO extends AbstractDAO {
 				+ "`notiz` = '" + artikel.getNotiz() + "' WHERE id = " + artikel.getId());
 
 	}
+	
+	
+	public void deaktivirenArtikel(Long id) throws ConnectException, DAOException {
+		putManaged("UPDATE artikel SET `delete` = " + 1 + " WHERE id = " + id);
+	}
+	
 
 	/**
 	 * Die Methode gibt alle Artikel zurück bei denen es sich um Lebensmittel

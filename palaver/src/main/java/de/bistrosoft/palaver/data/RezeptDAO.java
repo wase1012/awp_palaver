@@ -63,9 +63,10 @@ public class RezeptDAO extends AbstractDAO {
 															+"where r.mitarbeiter_fk=m.id "
 															+"AND r.rezeptart_fk=ra.id";
 	private static final String GET_ALL_ARTIKEL_REZEPT = "select a.id, a.name, a.notiz, me.id, me.name, me.kurz "
-															+"from artikel a, mengeneinheit me "
-															+"where a.mengeneinheit_fk=me.id " +
-															"and lebensmittel=1";
+															+ "from artikel a, mengeneinheit me "
+															+ "where a.mengeneinheit_fk=me.id "
+															+ "AND a.delete = 0 "
+															+ "and lebensmittel=1";
 
 	Rezept rezept;
 

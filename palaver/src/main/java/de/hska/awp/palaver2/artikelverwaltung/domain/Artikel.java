@@ -250,7 +250,6 @@ public class Artikel implements java.io.Serializable
 		this.notiz = notiz;
 	}
 	
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

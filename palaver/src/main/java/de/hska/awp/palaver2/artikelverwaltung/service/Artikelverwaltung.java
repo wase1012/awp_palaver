@@ -25,7 +25,7 @@ public class Artikelverwaltung extends ArtikelDAO {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Die Methode liefert alle Artikeln zurück.
 	 * 
@@ -44,7 +44,7 @@ public class Artikelverwaltung extends ArtikelDAO {
 	/**
 	 * Die Methode liefert ein Artikel anhand des Parameter id zurück.
 	 * 
-	 * @param id 
+	 * @param id
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
@@ -61,7 +61,7 @@ public class Artikelverwaltung extends ArtikelDAO {
 	/**
 	 * Die Methode liefert ein Artikel anhand des Parameter name zurück.
 	 * 
-	 * @param id 
+	 * @param id
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
@@ -74,8 +74,6 @@ public class Artikelverwaltung extends ArtikelDAO {
 		result = super.getArtikelByName(name);
 		return result;
 	}
-	
-	
 
 	/**
 	 * Die Methode liefert alle Artikel zurück die Lebensmittel sind.
@@ -91,7 +89,6 @@ public class Artikelverwaltung extends ArtikelDAO {
 		result = super.getArtikelByLebensmittel();
 		return result;
 	}
-	
 
 	/**
 	 * Die Methode erzeugt ein Artikel.
@@ -111,21 +108,26 @@ public class Artikelverwaltung extends ArtikelDAO {
 	 * @throws SQLException
 	 * @throws DAOException
 	 * @throws ConnectException
+	 *             //
 	 */
 	public void updateArtikel(Artikel artikel) throws ConnectException,
 			DAOException {
 		super.updateArtikel(artikel);
 	}
 
-	/* see Kategorienverwaltung
+	public void deaktivireArtikel(Artikel artikel) throws ConnectException,
+			DAOException {
+		super.deaktivirenArtikel(artikel.getId());
+	}
+
+	/*
+	 * see Kategorienverwaltung
 	 * 
 	 * public List<Kategorie> getAllKategorien() throws ConnectException,
-			DAOException, SQLException {
-		List<Kategorie> result = null;
-
-		result = KategorieDAO.getInstance().getAllKategories();
-
-		return result;
-	}
-	*/
+	 * DAOException, SQLException { List<Kategorie> result = null;
+	 * 
+	 * result = KategorieDAO.getInstance().getAllKategories();
+	 * 
+	 * return result; }
+	 */
 }
