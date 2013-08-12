@@ -151,4 +151,12 @@ public class Rezeptverwaltung extends RezeptDAO {
 		super.setRezeptDisabled(rezeptAusTb);
 	}
 
+	public void deaktiviereRezept(Long id, boolean action) throws ConnectException, DAOException {
+		if (action) {
+			super.deaktivierung(id, 1);
+		} else {
+			super.deaktivierung(id, 0);
+		}
+	}
+
 }

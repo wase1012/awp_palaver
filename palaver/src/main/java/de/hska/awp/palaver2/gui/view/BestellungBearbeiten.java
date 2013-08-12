@@ -55,7 +55,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 	
 	private static final Logger	log	= LoggerFactory.getLogger(LoginForm.class.getName());
 
-	private Table bestellungTable;
+	private FilterTable bestellungTable;
 
 	private FilterTable artikelTable;
 
@@ -135,10 +135,15 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		control.setExpandRatio(verwerfen, (float) 1.5);
 		control.setExpandRatio(speichern, (float) 1.4);
 
-		bestellungTable = new Table();
+		bestellungTable = new FilterTable();
 		bestellungTable.setSizeFull();
+		bestellungTable.setColumnCollapsingAllowed(true);
 		bestellungTable.setStyleName("palaverTable");
 		bestellungTable.setImmediate(true);
+		bestellungTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
+		bestellungTable.setFilterBarVisible(true);
+		bestellungTable.setFilterGenerator(new customFilter());
+		bestellungTable.setFilterDecorator(new customFilterDecorator());
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
@@ -174,7 +179,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			}
 		});
 
-		bestellungTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		bestellungTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		/**
 		 * Drag n Drop
 		 */
@@ -474,7 +479,6 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
-			//bestellungTable.setColumnWidth("kategorie", 60);
 			bestellungTable.setColumnWidth("gebinde", 60);	
 			
 			datetime.setRequired(true);

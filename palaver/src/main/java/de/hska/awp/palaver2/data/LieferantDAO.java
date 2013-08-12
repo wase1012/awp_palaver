@@ -39,13 +39,13 @@ public class LieferantDAO extends AbstractDAO {
 	private static final String NOTIZ = "notiz";
 	private static final String MEHRERELIEFERTERMINE = "mehrereliefertermine";
 
-	private static final String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE + " ORDER BY lieferant.name";
-	private static final String GET_ALL_LIEFERANTEN_FOR_SHOW = "SELECT * FROM " + TABLE;
+	private static final String GET_ALL_LIEFERANTEN = "SELECT * FROM " + TABLE + " WHERE deaktivieren = 0 ORDER BY name";
+	private static final String GET_ALL_LIEFERANTEN_FOR_SHOW = "SELECT * FROM " + TABLE  + " WHERE deaktivieren = 0";
 	private static final String GET_LIEFERANT_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 	private static final String GET_LIEFERANT_BY_NAME = "SELECT * FROM " + TABLE + " WHERE " + NAME + " LIKE" + " '%";
 
 	private static final String GET_LIEFERANTEN_BY_ARTIKEL_ID = "SELECT * FROM " + TABLE + " join " + TABLE_ARTIKEL + " on " + TABLE + "." + ID
-			+ " = " + TABLE_ARTIKEL + ".lieferant_fk" + " where " + TABLE_ARTIKEL + "." + ID + " = {0}";
+			+ " = " + TABLE_ARTIKEL + ".lieferant_fk" + " where " + TABLE_ARTIKEL + "." + ID + " = {0} AND " + TABLE + ".deaktivieren = 0";
 
 	private static final String GET_ALL_LIEFERANTEN_WITH_ARTIKEL = "SELECT Distinct lieferant.id, "
 			+ "lieferant.name, lieferant.kundennummer, lieferant.bezeichnung, lieferant.strasse, lieferant.plz, lieferant.ort, "
@@ -212,6 +212,12 @@ public class LieferantDAO extends AbstractDAO {
 				+ lieferant.getEmail() + "'," + TELEFON + "='" + lieferant.getTelefon() + "'," + FAX + "='" + lieferant.getFax() + "'," + NOTIZ
 				+ "='" + lieferant.getNotiz() + "'," + MEHRERELIEFERTERMINE + "='" + Util.convertBoolean(lieferant.getMehrereliefertermine())
 				+ "' WHERE " + ID + "='" + lieferant.getId() + "'";
+		this.putManaged(updatequery);
+	}
+	
+	
+	public void deaktivierung(Long id, int zahl)  throws ConnectException, DAOException, SQLException{
+		String updatequery = "UPDATE " + TABLE + " SET deaktivieren" + " = " +  zahl + " WHERE " + ID + "=" + id;
 		this.putManaged(updatequery);
 	}
 

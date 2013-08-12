@@ -54,7 +54,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 	private static final Logger log = LoggerFactory.getLogger(ManuelleBestellungErstellen.class.getName());
 
-	private Table bestellungTable;
+	private FilterTable bestellungTable;
 
 	private FilterTable artikelTable;
 
@@ -120,10 +120,14 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		control.addComponent(speichern);
 		control.setComponentAlignment(speichern, Alignment.TOP_RIGHT);
 
-		bestellungTable = new Table();
+		bestellungTable = new FilterTable();
 		bestellungTable.setSizeFull();
 		bestellungTable.setStyleName("palaverTable");
 		bestellungTable.setImmediate(true);
+		bestellungTable.setFilterBarVisible(true);
+		bestellungTable.setFilterGenerator(new customFilter());
+		bestellungTable.setFilterDecorator(new customFilterDecorator());
+		bestellungTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 
 		artikelTable = new FilterTable();
 		artikelTable.setSizeFull();
@@ -186,7 +190,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 			}
 		});
 
-		bestellungTable.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
+		bestellungTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		/**
 		 * Drag n Drop
 		 */
@@ -325,7 +329,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 		bestellungTable.setContainerDataSource(containerBestellung);
 
 		if (lieferant.getMehrereliefertermine() == true) {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz",  "durchschnitt", "kantine", "gesamt", "freitag",
+			bestellungTable.setVisibleColumns(new Object[] { "name", "kategorie", "gebinde", "notiz",  "durchschnitt", "kantine", "gesamt", "freitag",
 					"montag" });
 			bestellungTable.setColumnHeader("montag", "Termin 2");
 			bestellungTable.setColumnHeader("freitag", "Termin 1");
@@ -335,7 +339,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "gebinde", "notiz", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "name", "kategorie", "gebinde", "notiz", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			datetime.setVisible(true);

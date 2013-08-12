@@ -42,9 +42,9 @@ public class RezeptDAO extends AbstractDAO {
 	private static RezeptDAO instance = null;
 
 	// SQL-Statements
-	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept";
-	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1";
-	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2";
+	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept WHERE deaktivieren = 0";
+	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1 AND deaktivieren = 0";
+	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2 AND deaktivieren = 0";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
@@ -57,7 +57,8 @@ public class RezeptDAO extends AbstractDAO {
 																	"from rezept r, rezeptart ra, mitarbeiter m "+
 																	"where r.mitarbeiter_fk=m.id "+
 																	"and r.rezeptart_fk=ra.id "+
-																	"and aktiv = 1";
+																	"and aktiv = 1 " +
+																	"and r.deaktivieren = 0";
 	private static final String GET_ALL_REZEPT_MENUE = "select r.id rid, r.name rname, m.id mid,m.vorname, m.name , m.benutzername ,ra.id raid,ra.name raname "
 															+"from rezept r,mitarbeiter m,rezeptart ra "
 															+"where r.mitarbeiter_fk=m.id "
@@ -410,6 +411,12 @@ public class RezeptDAO extends AbstractDAO {
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + AKTIV
 				+ "=false WHERE id=" + rezeptAusTb.getId();
+		this.putManaged(UPDATE_QUERY);
+	}
+	
+	public void deaktivierung(Long id, int zahl) throws ConnectException, DAOException{
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET deaktivieren "
+				+ " = " + zahl + " WHERE id=" + id;
 		this.putManaged(UPDATE_QUERY);
 	}
 }

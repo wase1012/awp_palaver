@@ -118,4 +118,13 @@ public class Lieferantenverwaltung extends LieferantDAO {
 
 	}
 
+	
+	public void deaktiviereLieferant(Long id, boolean action) throws ConnectException, DAOException, SQLException{
+		if(action){
+			super.deaktivierung(id, 1);
+		} else {
+			super.deaktivierung(id, 0);
+		}
+	}
+	
 }

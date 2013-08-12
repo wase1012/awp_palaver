@@ -27,6 +27,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
@@ -66,6 +67,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 	private Button ansprAdd = new Button(IConstants.BUTTON_ADD_ANSPRECHPARTNER);
 	private Button updateB = new Button(IConstants.BUTTON_EDIT);
 	private Button speichern = new Button(IConstants.BUTTON_SAVE);
+	private Button deaktivieren = new Button(IConstants.BUTTON_DEAKTIVIEREN);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button emailSenden = new Button("Email senden");
 	private Table ansprechpartner = new Table();
@@ -147,6 +149,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		deaktivieren.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
 
 		rechts.addComponent(ansprechpartner);
 		knoepfe.addComponent(okButton);
@@ -258,6 +261,7 @@ public class LieferantSuche extends VerticalLayout implements View {
 
 				knoNeu.addComponent(verwerfen);
 				knoNeu.addComponent(speichern);
+				knoNeu.addComponent(deaktivieren);
 				mitte.addComponent(knoNeu);
 				mitte.setComponentAlignment(knoNeu, Alignment.BOTTOM_RIGHT);
 
@@ -266,6 +270,25 @@ public class LieferantSuche extends VerticalLayout implements View {
 					public void buttonClick(ClickEvent event) {
 						ansprAdd.setEnabled(true);
 						ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+					}
+				});
+				
+				
+				deaktivieren.addClickListener(new ClickListener() {					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ansprAdd.setEnabled(true);						
+						try {
+							Lieferantenverwaltung.getInstance().deaktiviereLieferant(lieferant.getId(), true);
+							
+							((Application) UI.getCurrent().getData())
+							.showDialog("Lieferant '" + lieferant.getName() + "'  wurde gelöscht");
+							
+						} catch (Exception e) {
+							log.error(e.toString());
+						}
+						
+						ViewHandler.getInstance().switchView(LieferantAnzeigen.class, new ViewDataObject<Lieferant>(lieferant));
 					}
 				});
 

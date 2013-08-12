@@ -183,7 +183,7 @@ public class Application extends UI
 		Notification dialog = new Notification(message);
 		// Bei -1 muss man draufklicken
 //		dialog.setDelayMsec(-1);
-		dialog.setDelayMsec(1000);
+		dialog.setDelayMsec(1800);
 		dialog.show(Page.getCurrent());
 	}
 	

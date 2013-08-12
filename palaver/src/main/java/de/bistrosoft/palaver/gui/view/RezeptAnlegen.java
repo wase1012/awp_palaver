@@ -51,6 +51,7 @@ import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -106,6 +107,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 	private Button btSpeichern = new Button(IConstants.BUTTON_SAVE);
 	private Button btVerwerfen = new Button(IConstants.BUTTON_DISCARD);
 	private Button btUpdate = new Button(IConstants.BUTTON_SAVE);
+	private Button btDeaktivieren = new Button(IConstants.BUTTON_DEAKTIVIEREN);
 	private Button btMenue = new Button(IConstants.BUTTON_REZEPTMENUE);
 	private Button btArtikel = new Button(
 			IConstants.BUTTON_REZEPT_ARTIKEL_ANLEGEN);
@@ -213,15 +215,18 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		//
 		btSpeichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		btVerwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
+		btDeaktivieren.setIcon(new ThemeResource(IConstants.BUTTON_DELETE_ICON));
 		btMenue.setIcon(new ThemeResource(IConstants.BUTTON_ADD_ICON));
 		btSpeichern.setEnabled(true);
 		btMenue.setEnabled(true);
-
+		btDeaktivieren.setVisible(false);
+		
 		//Setze die Buttons Menï¿½ ï¿½berfphren, Artikel anlegen, Verwerfen und Speichern
 		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btArtikel);
 		hlControl.addComponent(btVerwerfen);
 		hlControl.addComponent(btSpeichern);
+		hlControl.addComponent(btDeaktivieren);
 
 		// ValueChangeListener zum auslesen von Name 
 		name.addValueChangeListener(this);
@@ -265,6 +270,38 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
+		
+		
+		btDeaktivieren.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR) || 
+						((Application) UI.getCurrent().getData()).getUser().getId() == rezept.getMitarbeiter().getId()){					
+					try {
+						Rezeptverwaltung.getInstance().deaktiviereRezept(rezept.getId(), true);
+						
+						((Application) UI.getCurrent().getData())
+						.showDialog("Rezept '" + rezept.getName() + "'  wurde gelöscht");
+						
+						ViewHandler.getInstance().switchView(
+								RezeptAnzeigenTabelle.class,
+								new ViewDataObject<Rezept>(rezept));
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					} 				
+					
+				}
+				else{
+					((Application) UI.getCurrent().getData())
+					.showDialog("Rezept '" + rezept.getName() + "' kann nur " + rezept.getMitarbeiter().getVorname() + " oder Administrator deaktivieren");
+				}
+				
+			}
+		});
+		
+		
+		
 		//Bei Klick auf diesen Button soll ein Rezept gleich als Menï¿½ angelegt werden kï¿½nnen
 		//Dabei wird das Rezept gepeichert und im Menï¿½ bekannt Felder gefï¿½llt, geschiet im MenueAnlegen
 		btMenue.addClickListener(new ClickListener() {
@@ -449,6 +486,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		try {
 			rezept = Rezeptverwaltung.getInstance().getRezeptById(
 					rezept.getId());
+			btDeaktivieren.setVisible(true);
 		} catch (ConnectException e1) {
 		} catch (DAOException e1) {
 		} catch (SQLException e1) {
