@@ -95,10 +95,15 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 					@SuppressWarnings("deprecation")
 					int year = date.getValue().getYear() + 1900;
 					
-					Menueplan m = null;
-					List<RezeptHasArtikel> a = null;
-					Menueplan mv = null;
-					List<RezeptHasArtikel> av = null;
+					//aktuell
+					Menueplan menuplanAktuelleWoche = null;
+					List<RezeptHasArtikel> kuchenplanAktuelleWoche = null;
+					
+					//vorwoche
+					Menueplan menuplanvorWoche = null;
+					List<RezeptHasArtikel> kuchenplanVorWoche = null;
+					
+					//WOCHE
 					Week weekvorwoche = null;
 					if(week - 1 == 0){
 						if(year == 2016 || year == 2021 || year == 2027){
@@ -113,46 +118,53 @@ public class BestellungGenerieren extends VerticalLayout implements View {
 						
 					System.out.println("Start: Laden der Mengen");
 					
+					//1. Vorwoche
+					System.out.println("VORWOCHE");
 					//Bedarf aus der Woche davor für Freitag-Sonntag holen
 					try {
-						av = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(weekvorwoche);
+						kuchenplanVorWoche = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(weekvorwoche, '>', 4);						
 					} catch (Exception e) {
-						System.out.println("Laden des Kuchenbedarfs der Vorwoche fehltgeschlagen"+ weekvorwoche);
+						System.out.println("Laden des Kuchenbedarfs der Vorwoche fehltgeschlagen"+ weekvorwoche.getWeek());
 						log.error(e.toString());
 					}
 					try {
-						mv = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(weekvorwoche);
+						menuplanvorWoche = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(weekvorwoche);
 					} catch (Exception e) {
 						log.error(e.toString());
-						System.out.println("Laden des Menuebedarfs der Vorwoche fehltgeschlagen"+ weekvorwoche);
 					}
 					
+					
+					//2. Aktuell
+					System.out.println("AKTUELLEWOCHE");
 					//Bedarf aus der Woche (Mo-Do) holen für die Kuchen und die Menues
 					try {
-						a = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year));
+						kuchenplanAktuelleWoche = Kuchenplanverwaltung.getInstance().getKuchenartikelByWeek(new Week(week, year), '<', 5);
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
 					try {
-						m = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
+						menuplanAktuelleWoche = Menueplanverwaltung.getInstance().getMenueplanByWeekWithItems(new Week(week, year));
 					} catch (Exception e) {
 						log.error(e.toString());
 					}
+					
+					
 					System.out.println("Stop: Laden der Mengen");
 					System.out.println("Start: Überprüfung fängt an");
-					if (m == null || m.getFreigegeben() == null || m.getFreigegeben() == false) {
+					if (menuplanAktuelleWoche == null || menuplanAktuelleWoche.getFreigegeben() == null || menuplanAktuelleWoche.getFreigegeben() == false) {
 						Notification notification = new Notification("Kein Menüplan vorhanden oder noch nicht freigegeben!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());
 					} else {
-						if (a.isEmpty() == true){	
+						if (kuchenplanAktuelleWoche.isEmpty() == true){	
 							Notification notification = new Notification("Kein Kuchenbedarf vorhanden!");
 							notification.setDelayMsec(500);
 							notification.show(Page.getCurrent());
 						} else {
 							try {
-								System.out.println("Start Bestellung generieren");
-								Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(m, a, new Week(week, year), mv, av);
+								System.out.println("Start Bestellung generieren----------------------------");
+								Bestellverwaltung.getInstance().generateAllBestellungenByMenueplanAndGrundbedarf(menuplanAktuelleWoche, kuchenplanAktuelleWoche, 
+										new Week(week, year), menuplanvorWoche, kuchenplanVorWoche);
 //								System.out.println("View Bestellung Generieren:" + m + a + new Week(week, year)+ mv + av);
 								
 							} catch (Exception e) {

@@ -42,10 +42,31 @@ public class KuchenplanDAO extends AbstractDAO {
 			+ "VALUES ({0},{1},{2},{3})";
 	private final String CREATE_KUCHENPLAN = "INSERT INTO kuchenplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN = "DELETE FROM kuchenplan_has_kuchenrezepte WHERE kuchenplan_fk = {0}";
-	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "
-			+ "(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "
-			+ "(select id from kuchenplan where week={0} AND year= {1,number,#})) "
+//	private final String GET_ARTIKEL_BY_WEEK = "select artikel_fk, sum(menge) menge, einheit from kuchenrezept_has_artikel WHERE kuchenrezept_fk IN "
+//			+ "(select kuchenrezept_fk from kuchenplan_has_kuchenrezepte where kuchenplan_fk = "
+//			+ "(select id from kuchenplan where week= {0} AND year= {1,number,#})) "
+//			+ "GROUP BY artikel_fk, einheit";
+	
+	
+	private final String GET_ARTIKEL_BY_WEEK = "SELECT artikel_fk, sum(menge*anzahl) menge, einheit "
+			+"FROM palaver.kuchenplan_has_kuchenrezepte khk " 
+			+"JOIN palaver.kuchenplan kp " 
+			+"ON khk.kuchenplan_fk = kp.id "
+			+"JOIN palaver.kuchenrezept_has_artikel kha "
+			+"ON kha.kuchenrezept_fk = khk.kuchenrezept_fk "
+			+"WHERE week = {0} AND kp.year = {1,number,#} "
+			+"AND tag {2} {3} " //   < OR > TAG
 			+ "GROUP BY artikel_fk, einheit";
+			
+ 
+
+
+
+
+
+
+
+	
 
 	// Konstruktor
 	public KuchenplanDAO() {
@@ -61,12 +82,12 @@ public class KuchenplanDAO extends AbstractDAO {
 	}
 
 	// Methode, die alle Kuchenartikel in einer Woche zurückliefert
-	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week) {
+	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week, char zeichen, int tag) {
 		List<RezeptHasArtikel> ab = new ArrayList<RezeptHasArtikel>();
 
 		try {
 			ResultSet set = getManaged(MessageFormat.format(
-					GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear()));
+					GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear(), zeichen, tag));
 
 			while (set.next()) {
 				Artikel art = Artikelverwaltung.getInstance().getArtikelById(

@@ -54,7 +54,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * 
 	 * @auhtor Christian Barth
 	 */
-	public void createBestellung(Bestellung bestellung) throws ConnectException, DAOException, SQLException, ParseException {
+	public void createBestellung(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException, ParseException {
 		super.createBestellung(bestellung);
 	}
 
@@ -63,7 +64,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * 
 	 * @auhtor Christian Barth
 	 */
-	public void updateBestellung(Bestellung bestellung) throws ConnectException, DAOException, SQLException, ParseException {
+	public void updateBestellung(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException, ParseException {
 		super.updateBestellung(bestellung);
 	}
 
@@ -73,7 +75,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * 
 	 * @author Christian Barth
 	 */
-	public void updateBestellungOhneBP(Bestellung bestellung) throws ConnectException, DAOException, SQLException {
+	public void updateBestellungOhneBP(Bestellung bestellung)
+			throws ConnectException, DAOException, SQLException {
 		super.updateBestellungOhneBP(bestellung);
 	}
 
@@ -85,7 +88,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws ConnectException
 	 * @return List<Bestellung>
 	 */
-	public List<Bestellung> getAllBestellungen() throws ConnectException, DAOException, SQLException {
+	public List<Bestellung> getAllBestellungen() throws ConnectException,
+			DAOException, SQLException {
 
 		List<Bestellung> result = null;
 
@@ -106,7 +110,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * 
 	 * @return Bestellungen
 	 */
-	public List<Bestellung> getAllBestellungenNotOrdered() throws ConnectException, DAOException, SQLException {
+	public List<Bestellung> getAllBestellungenNotOrdered()
+			throws ConnectException, DAOException, SQLException {
 
 		List<Bestellung> result = null;
 
@@ -124,7 +129,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws ConnectException
 	 * @return
 	 */
-	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException, DAOException, SQLException {
+	public List<Bestellung> getBestellungenLTWeeks() throws ConnectException,
+			DAOException, SQLException {
 
 		List<Bestellung> result = null;
 
@@ -143,7 +149,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * 
 	 * @return Bestellung
 	 */
-	public Bestellung getBestellungById(Long id) throws ConnectException, DAOException, SQLException {
+	public Bestellung getBestellungById(Long id) throws ConnectException,
+			DAOException, SQLException {
 		Bestellung bestellung = super.getBestellungById(id);
 		return bestellung;
 	}
@@ -157,7 +164,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
+	public List<Artikel> getAllArtikelByLieferant(Lieferant lieferant)
+			throws ConnectException, DAOException, SQLException {
 		List<Artikel> list = null;
 		ArtikelDAO adao = ArtikelDAO.getInstance();
 		adao.getAllArtikelByLieferantId(lieferant.getId());
@@ -176,7 +184,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException, DAOException, SQLException {
+	public List<Lieferant> getLieferantenWithArtikel() throws ConnectException,
+			DAOException, SQLException {
 		List<Lieferant> list = null;
 		list = LieferantDAO.getInstance().getLieferantenWithArtikel();
 
@@ -195,183 +204,221 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
-	public void generateAllBestellungenByMenueplanAndGrundbedarf(Menueplan mp, List<RezeptHasArtikel> ab, Week week, Menueplan mv, List<RezeptHasArtikel> av) throws ConnectException,
+	public void generateAllBestellungenByMenueplanAndGrundbedarf(
+			Menueplan menuplanAktuelleWoche,
+			List<RezeptHasArtikel> kuchenplanAktuelleWoche, Week week,
+			Menueplan menuplanvorWoche,
+			List<RezeptHasArtikel> kuchenplanVorWoche) throws ConnectException,
 			DAOException, SQLException, ParseException {
-		List<Bestellposition> list = new ArrayList<Bestellposition>();
-		List<RezeptHasArtikel> rhafreitag = new ArrayList<RezeptHasArtikel>();
+		List<Bestellposition> bestellPosition_list = new ArrayList<Bestellposition>();
 		int leer = 0;
-		
-		
-		// 1. Mengen für den Freitag auslesen col = 5 (Freitag) von der Woche davor
-		
-		if(mv != null){
-		for (int i = 0; i < mv.getMenues().size(); i++) {
-			if (mv.getMenues().get(i).col == 5) {
-				for (int j = 0; j < mv.getMenues().get(i).getMenue().getRezepte().size(); j++) {
 
-					for (int z = 0; z < mv.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().size(); z++) {
-						rhafreitag.add(mv.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().get(z));
+		System.out.println("-----------KUCHEN---------------");
+		for (RezeptHasArtikel rrr : kuchenplanAktuelleWoche) {
+			System.out.println("KUCHENplanAktuelleWoche "
+					+ rrr.getArtikelname() + " " + rrr.getMenge() + " menge: "
+					+ rrr.getMenge());
+		}
+		for (RezeptHasArtikel rrr : kuchenplanVorWoche) {
+			System.out.println("KUCHENplanVorWoche " + rrr.getArtikelname()
+					+ " " + rrr.getMenge());
+		}
+		System.out.println("----------------------------");
+		System.out.println(" ");
+		// 1. Mengen für den Freitag auslesen col = 5 (Freitag) von der Woche
+		// davor
+		System.out.println("----------MENU----------------");
+		List<RezeptHasArtikel> rhaFreitagVorWocheMenu = new ArrayList<RezeptHasArtikel>();
+		if (menuplanvorWoche != null) {
+			for (int i = 0; i < menuplanvorWoche.getMenues().size(); i++) {
+				if (menuplanvorWoche.getMenues().get(i).col == 5) {
+					for (int j = 0; j < menuplanvorWoche.getMenues().get(i)
+							.getMenue().getRezepte().size(); j++) {
+						for (int z = 0; z < menuplanvorWoche.getMenues().get(i)
+								.getMenue().getRezepte().get(j).getArtikel()
+								.size(); z++) {
+							rhaFreitagVorWocheMenu.add(menuplanvorWoche
+									.getMenues().get(i).getMenue().getRezepte()
+									.get(j).getArtikel().get(z));
+
+							System.out
+									.println("Mengen für den Freitag auslesen col = 5 (Freitag) von der Woche: "
+											+ menuplanvorWoche.getMenues()
+													.get(i).getMenue()
+													.getRezepte().get(j)
+													.getArtikel().get(z));
+						}
+
 					}
-
 				}
 			}
 		}
-		}
-		
-		
+
 		// 2. Mengen für Mo bis Do auslesen, col 1-4 (Mo - Do)
-		List<RezeptHasArtikel> rhamobisdo = new ArrayList<RezeptHasArtikel>();
+		List<RezeptHasArtikel> rhaAktuelleWocheMenuMonDon = new ArrayList<RezeptHasArtikel>();
 
-		for (int i = 0; i < mp.getMenues().size(); i++) {
-			if (mp.getMenues().get(i).col < 5) {
-				for (int j = 0; j < mp.getMenues().get(i).getMenue().getRezepte().size(); j++) {
+		for (int i = 0; i < menuplanAktuelleWoche.getMenues().size(); i++) {
+			if (menuplanAktuelleWoche.getMenues().get(i).col < 5) {
+				for (int j = 0; j < menuplanAktuelleWoche.getMenues().get(i)
+						.getMenue().getRezepte().size(); j++) {
 
-					for (int z = 0; z < mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().size(); z++) {
-						rhamobisdo.add(mp.getMenues().get(i).getMenue().getRezepte().get(j).getArtikel().get(z));
+					for (int z = 0; z < menuplanAktuelleWoche.getMenues()
+							.get(i).getMenue().getRezepte().get(j).getArtikel()
+							.size(); z++) {
+						rhaAktuelleWocheMenuMonDon.add(menuplanAktuelleWoche
+								.getMenues().get(i).getMenue().getRezepte()
+								.get(j).getArtikel().get(z));
+
+						System.out
+								.println("Mengen für Mo bis Do auslesen, col 1-4 (Mo - Do): "
+										+ menuplanAktuelleWoche.getMenues()
+												.get(i).getMenue().getRezepte()
+												.get(j).getArtikel().get(z));
 					}
 
 				}
 			}
 		}
+
+		/*
+		 * SELECT a.name, rha.menge FROM palaver.rezept r JOIN
+		 * palaver.rezept_has_artikel rha on r.id = rha.rezept_fk JOIN
+		 * palaver.artikel a on rha.artikel_fk = a.id Where r.name = 'Lasagne'
+		 */
 
 		// 3. Liste aufbereiten und doppelt Artikel zusammenfügen und Menge
 		// addieren um später Rundungsfehler zu minimieren
-		List<RezeptHasArtikel> rha = null;
-		
-		if (av.isEmpty() == false) {
-
-			for (int i = 0; i < ab.size(); i++) {
-				rhafreitag.add(ab.get(i));
+		List<RezeptHasArtikel> rhaDoppeltZusammen = null;
+		if (kuchenplanVorWoche.isEmpty() == false) { // wenn KuchPlanVorWoche
+														// nicht leer ist,
+														// dann...
+			for (int i = 0; i < kuchenplanVorWoche.size(); i++) {
+				rhaFreitagVorWocheMenu.add(kuchenplanVorWoche.get(i)); // hinzufügen
+																		// zu
+																		// MenuVorWoche
 			}
-
 		}
-		rha = mengeAddSameArtikel(rhafreitag);
+		rhaDoppeltZusammen = mengeAddSameArtikel(rhaFreitagVorWocheMenu); // doppelte
+																			// einträge
+																			// löschen
 
 		// 4. Füge List<RezeptHasArtikel> von Menueplan (Freitag) in
 		// List<Bestellposition>
 
-		if (rha.isEmpty() == false) {
-			Bestellposition bpo = new Bestellposition();
-			bpo.setArtikel(rha.get(0).getArtikel());
-			bpo.setDurchschnitt(rha.get(0).getArtikel().getDurchschnitt());
-			bpo.setFreitag(convertMenge(rha.get(0)) + bpo.getDurchschnitt());
-			bpo.setKantine(convertMenge(rha.get(0)));
-			bpo.setGeliefert(false);
-			bpo.setMontag(leer);
-			bpo.setGesamt(bpo.getKantine() + bpo.getDurchschnitt());
-			list.add(bpo);
-
-			for (int i = 1; i < rha.size(); i++) {
+		// TODO Doppelte prüfüng kann man weg lassen
+		if (rhaDoppeltZusammen.isEmpty() == false) {
+			for (int i = 0; i < rhaDoppeltZusammen.size(); i++) {
 				Bestellposition bp = new Bestellposition();
-				bp.setArtikel(rha.get(i).getArtikel());
-				// 5. Umrechen der Menge Menge/Bestellgröße durch die Methode
-				// convertBestellmenge
-				bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
-				// 6. Setzen der Menge auf Freitag und Durchschnitt
-				// hinzuaddieren
-				bp.setFreitag(convertMenge(rha.get(i)) + bp.getDurchschnitt());
-				bp.setKantine(convertMenge(rha.get(i)));
+				bp.setArtikel(rhaDoppeltZusammen.get(i).getArtikel());
+				bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnitt());
+				bp.setFreitag(convertMenge(rhaDoppeltZusammen.get(i))); // Ohne Durchschnitt!!!
+				// + bp.getDurchschnitt());
+				bp.setKantine(bp.getFreitag());
 				bp.setGeliefert(false);
 				bp.setMontag(leer);
-				bp.setGesamt(bp.getKantine() + bp.getDurchschnitt());
-
-				boolean vorhanden = false;
-				for (int z = 0; z < list.size(); z++) {
-					if (bp.getArtikel().equals(list.get(z).getArtikel())) {
-						vorhanden = true;
-						list.get(z).setFreitag(list.get(z).getFreitag() + bp.getFreitag());
-						list.get(z).setGesamt(list.get(z).getGesamt() + bp.getFreitag() - bp.getDurchschnitt());
-						list.get(z).setKantine(list.get(z).getKantine() + bp.getKantine());
-					}
-				}
-				if (vorhanden == false) {
-					list.add(bp);
-				}
+				bp.setGesamt(bp.getKantine());
+				//bp.setGesamt(bp.getKantine() + bp.getDurchschnitt());
+				bestellPosition_list.add(bp);
 			}
 		}
 		// 7. Liste leeren und neue Liste von Mo-Do einfügen und vorher die
 		// Mengen addieren
-		rha = null;
+		rhaDoppeltZusammen = null;
 
 		// Mengen aus dem Kuchenplan hinzufügen
-		if (ab.isEmpty() == false) {
-
-			for (int i = 0; i < ab.size(); i++) {
-				rhamobisdo.add(ab.get(i));
+		if (kuchenplanAktuelleWoche.isEmpty() == false) {
+			for (int i = 0; i < kuchenplanAktuelleWoche.size(); i++) {
+				rhaAktuelleWocheMenuMonDon.add(kuchenplanAktuelleWoche.get(i));
 			}
-
 		}
 
-		rha = mengeAddSameArtikel(rhamobisdo);
+		rhaDoppeltZusammen = mengeAddSameArtikel(rhaAktuelleWocheMenuMonDon);
 		// 8. Wenn Artikel vorhanden in List<Bestellposition> list, dann
 		// vorhandenen verändern(Menge
 		// addieren), andersfalls neue Bestellposition hinzufügen
-		if (rha.isEmpty() == false) {
-			for (int i = 0; i < rha.size(); i++) {
+		if (rhaDoppeltZusammen.isEmpty() == false) {  // wenn nicht leer
+			for (int i = 0; i < rhaDoppeltZusammen.size(); i++) { //aktuelle 
 				boolean vorhanden = false;
-				for (int z = 0; z < list.size(); z++) {
-
-					if (rha.get(i).getArtikel().equals(list.get(z).getArtikel())) {
+				for (int z = 0; z < bestellPosition_list.size(); z++) {
+					if (rhaDoppeltZusammen.get(i).getArtikel().equals(bestellPosition_list.get(z).getArtikel())) {
 						vorhanden = true;
-						list.get(z).setMontag(list.get(z).getMontag() + convertMenge(rha.get(i)));
-						list.get(z).setGesamt(list.get(z).getGesamt() + convertMenge(rha.get(i)));
-						list.get(z).setKantine(list.get(z).getKantine() + convertMenge(rha.get(i)));
-
+						bestellPosition_list.get(z).setMontag( bestellPosition_list.get(z).getMontag()
+										+ convertMenge(rhaDoppeltZusammen.get(i)));
+						bestellPosition_list.get(z).setKantine(bestellPosition_list.get(z).getKantine() + 
+								bestellPosition_list.get(z).getMontag());
+						bestellPosition_list.get(z).setGesamt( bestellPosition_list.get(z).getKantine());
+						
+//						bestellPosition_list.get(z).setKantine( bestellPosition_list.get(z).getKantine()
+//								+ convertMenge(rhaDoppeltZusammen.get(i)));
+//						bestellPosition_list.get(z).setGesamt( bestellPosition_list.get(z).getGesamt()
+//										+ convertMenge(rhaDoppeltZusammen.get(i)));
 					}
 				}
 				if (vorhanden == false) {
 					Bestellposition bp = new Bestellposition();
-					bp.setArtikel(rha.get(i).getArtikel());
-					// 9. Umrechen der Menge Menge/Bestellgröße durch die
-					// Methode
-					// convertBestellmenge
-					bp.setDurchschnitt(rha.get(i).getArtikel().getDurchschnitt());
-					// 9.1 Setzen der Menge auf Freitag und Durchschnitt
-					// hinzuaddieren
+					bp.setArtikel(rhaDoppeltZusammen.get(i).getArtikel());
+					bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnitt());
 					bp.setFreitag(leer);
-					bp.setKantine(convertMenge(rha.get(i)));
+					//bp.setKantine(convertMenge(rhaDoppeltZusammen.get(i)));
 					bp.setGeliefert(false);
-					bp.setMontag(convertMenge(rha.get(i)) + bp.getDurchschnitt());
-					bp.setGesamt(bp.getKantine() + bp.getDurchschnitt());
-
-					list.add(bp);
+					bp.setMontag(convertMenge(rhaDoppeltZusammen.get(i)));
+							//+ bp.getDurchschnitt());
+					bp.setGesamt(bp.getKantine()); // + bp.getDurchschnitt()
+					bp.setKantine(bp.getMontag());
+					bestellPosition_list.add(bp);
 				}
 			}
 		}
+		
+		
+		
 		// 10. Artikel mit Grundbedarf auslesen
-		List<Artikel> alist = Artikelverwaltung.getInstance().getArtikelByGrundbedarf();
-
-		// 11. Artikel überprüfen ob schon vorhanden in List<Bestellposition>
-		// list, wenn nein hinzufügen,
-		// falls ja nichts machen, da ja der durchschnitt schon vorhanden ist
-		if (alist.isEmpty() == false) {
-			for (int i = 0; i < alist.size(); i++) {
+		List<Artikel> listArtrtikelByGrundbedarf = Artikelverwaltung.getInstance().getArtikelByGrundbedarf();
+		if (listArtrtikelByGrundbedarf.isEmpty() == false) {
+			for (int i = 0; i < listArtrtikelByGrundbedarf.size(); i++) {
 				boolean vorhanden = false;
-				for (int z = 0; z < list.size(); z++) {
-					if (alist.get(i).equals(list.get(z).getArtikel())) {
+				for (int z = 0; z < bestellPosition_list.size(); z++) {
+					if (listArtrtikelByGrundbedarf.get(i).equals(bestellPosition_list.get(z).getArtikel())) {
+						
+						if(bestellPosition_list.get(z).getKantine() < listArtrtikelByGrundbedarf.get(i).getDurchschnitt()){
+							bestellPosition_list.get(z).setDurchschnitt(
+									listArtrtikelByGrundbedarf.get(i).getDurchschnitt() - 
+									bestellPosition_list.get(z).getKantine()
+									);	
+							bestellPosition_list.get(z).setGesamt(bestellPosition_list.get(z).getKantine() + bestellPosition_list.get(z).getDurchschnitt());
+							if(bestellPosition_list.get(z).getMontag() > bestellPosition_list.get(z).getFreitag())
+								bestellPosition_list.get(z).setFreitag(bestellPosition_list.get(z).getDurchschnitt());
+							else
+								bestellPosition_list.get(z).setMontag(bestellPosition_list.get(z).getDurchschnitt());
+						
+						}
+						else{
+							bestellPosition_list.get(z).setDurchschnitt(leer);
+							bestellPosition_list.get(z).setGesamt(bestellPosition_list.get(z).getKantine());
+						}
 						vorhanden = true;
 					}
 				}
 				if (vorhanden == false) {
 					Bestellposition bp = new Bestellposition();
-					bp.setArtikel(alist.get(i));
-					bp.setDurchschnitt(alist.get(i).getDurchschnitt());
+					bp.setArtikel(listArtrtikelByGrundbedarf.get(i));
+					bp.setDurchschnitt(listArtrtikelByGrundbedarf.get(i).getDurchschnitt());
 					bp.setFreitag(bp.getDurchschnitt());
 					bp.setKantine(leer);
 					bp.setGeliefert(false);
 					bp.setMontag(leer);
 					bp.setGesamt(bp.getDurchschnitt());
-					list.add(bp);
+					bestellPosition_list.add(bp);
 				}
-
 			}
 		}
 		// 12. Bestellung erzeugen und in der Datenbank abspeichern
-		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(list);
+		List<Lieferant> lieferanten = getAllLieferantByListOfBestellposition(bestellPosition_list);
 		for (int i = 0; i < lieferanten.size(); i++) {
 
-			Bestellverwaltung.getInstance()
-					.createBestellung(generateBestellungByListOfBestellpositionAndByLieferant(lieferanten.get(i), list, week));
+			Bestellverwaltung.getInstance().createBestellung(
+					generateBestellungByListOfBestellpositionAndByLieferant(
+							lieferanten.get(i), bestellPosition_list, week));
 
 		}
 
@@ -389,8 +436,10 @@ public class Bestellverwaltung extends BestellungDAO {
 	private int convertMenge(RezeptHasArtikel rha) {
 		int bm = 0;
 		// Math.ceil wird immer auf ganze Zahl aufgerundet
-		if (rha.getArtikel().getBestellgroesse() != 0 && rha.getArtikel().getBestellgroesse() != null) {
-			bm = (int) Math.ceil(rha.getMenge() / rha.getArtikel().getBestellgroesse());
+		if (rha.getArtikel().getBestellgroesse() != 0
+				&& rha.getArtikel().getBestellgroesse() != null) {
+			bm = (int) Math.ceil(rha.getMenge()
+					/ rha.getArtikel().getBestellgroesse());
 		}
 
 		return bm;
@@ -404,18 +453,22 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @param rhalist
 	 * @return
 	 */
-	private List<RezeptHasArtikel> mengeAddSameArtikel(List<RezeptHasArtikel> rhalist) {
+	private List<RezeptHasArtikel> mengeAddSameArtikel(
+			List<RezeptHasArtikel> rhalist) {
 
 		List<RezeptHasArtikel> list = new ArrayList<RezeptHasArtikel>();
 		if (rhalist.isEmpty() == false) {
 			for (int i = 0; i < rhalist.size(); i++) {
 				boolean vorhanden = false;
-				if (i == 0) {
+				if (i == 0)
 					list.add(rhalist.get(i));
-				} else {
+				else {
 					for (int z = 0; z < list.size(); z++) {
-						if (list.get(z).getArtikel().equals(rhalist.get(i).getArtikel())) {
-							list.get(z).setMenge(list.get(z).getMenge() + rhalist.get(i).getMenge());
+						if (list.get(z).getArtikel()
+								.equals(rhalist.get(i).getArtikel())) {
+							list.get(z).setMenge(
+									list.get(z).getMenge()
+											+ rhalist.get(i).getMenge());
 							vorhanden = true;
 						}
 
@@ -438,14 +491,16 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @param bplist
 	 * @return
 	 */
-	private List<Lieferant> getAllLieferantByListOfBestellposition(List<Bestellposition> bplist) {
+	private List<Lieferant> getAllLieferantByListOfBestellposition(
+			List<Bestellposition> bplist) {
 		List<Lieferant> list = new ArrayList<Lieferant>();
 		try {
 			list.add(bplist.get(0).getArtikel().getLieferant());
 			for (int i = 1; i < bplist.size(); i++) {
 				boolean vorhanden = false;
 				for (int z = 0; z < list.size(); z++) {
-					if (bplist.get(i).getArtikel().getLieferant().equals(list.get(z))) {
+					if (bplist.get(i).getArtikel().getLieferant()
+							.equals(list.get(z))) {
 						vorhanden = true;
 					}
 
@@ -468,7 +523,8 @@ public class Bestellverwaltung extends BestellungDAO {
 	 * @param bplist
 	 * @return
 	 */
-	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(Lieferant lieferant, List<Bestellposition> bplist, Week week) {
+	private Bestellung generateBestellungByListOfBestellpositionAndByLieferant(
+			Lieferant lieferant, List<Bestellposition> bplist, Week week) {
 
 		Bestellung b = new Bestellung();
 
@@ -483,7 +539,8 @@ public class Bestellverwaltung extends BestellungDAO {
 			java.util.Date datemontag;
 			java.util.Date datefreitag;
 
-			final GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
+			final GregorianCalendar calendar = new GregorianCalendar(
+					Locale.GERMANY);
 			calendar.clear();
 			calendar.set(Calendar.YEAR, week.getYear());
 			calendar.set(Calendar.WEEK_OF_YEAR, week.getWeek());

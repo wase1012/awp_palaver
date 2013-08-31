@@ -28,7 +28,7 @@ public class ArtikelDAO extends AbstractDAO {
 	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM " + TABLE + " WHERE id = {0}";
 	private final static String GET_ARTIKEL_BY_NAME = "SELECT * FROM" + TABLE + " WHERE name like ";
 	private final static String PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`,`notiz`)VALUES({0})";
-	private final static String GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM " + TABLE + " WHERE grundbedarf=1";
+	private final static String GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM " + TABLE + " WHERE grundbedarf=1 AND `delete` = 0";
 	private final static String GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM " + TABLE + " WHERE standard=1";
 	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
