@@ -61,6 +61,7 @@ public class BestellungDAO extends AbstractDAO {
 	private static final String DELETE_BESTELLUNG = "DELETE FROM " + TABLE + " WHERE id = {0}";
 
 	private static final int TAGEZURUECK = -22;
+	private static final String SUMME = "summe";
 
 	public BestellungDAO() {
 		super();
@@ -237,10 +238,11 @@ public class BestellungDAO extends AbstractDAO {
 	 */
 	private void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException, SQLException, ParseException {
 		String insertquery = "INSERT INTO bestellposition(" + ARTIKEL_FK + "," + BESTELLUNG_FK + "," + DURCHSCHNITT + "," + KANTINE + "," + GESAMT
-				+ "," + FREITAG + "," + MONTAG + "," + GELIEFERT + ")" + "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
+				+ "," + FREITAG + "," + MONTAG + "," + GELIEFERT + "," + SUMME + ")" + "VALUES" + "('" + bestellposition.getArtikel().getId() + "','"
 				+ bestellposition.getBestellung().getId() + "','" + bestellposition.getDurchschnitt() + "','" + bestellposition.getKantine() + "','"
 				+ bestellposition.getGesamt() + "','" + bestellposition.getFreitag() + "','" + bestellposition.getMontag() + "','"
-				+ Util.convertBoolean(bestellposition.isGeliefert()) + "')";
+				+ Util.convertBoolean(bestellposition.isGeliefert()) + "','"
+				+ bestellposition.getSumme() + "')";
 		this.putMany(insertquery);
 	}
 
@@ -336,9 +338,7 @@ public class BestellungDAO extends AbstractDAO {
 		openConnection();
 		if (b.getBestellpositionen().isEmpty() == false) {
 
-			for (int i = 0; i < b.getBestellpositionen().size(); i++) {
-				deleteBestellposition(b.getBestellpositionen().get(i).getId());
-			}
+			putMany("DELETE FROM bestellposition where bestellung_fk = " + bestellung.getId());
 			putMany(MessageFormat.format(DELETE_BESTELLUNG, b.getId()));
 
 		} else {
@@ -407,7 +407,7 @@ public class BestellungDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Bestellposition(set.getLong(ID), getArtikelById(set.getLong(ARTIKEL_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE),
-					set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT)));
+					set.getInt(GESAMT), set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME)));
 		}
 		return list;
 	}
@@ -431,7 +431,7 @@ public class BestellungDAO extends AbstractDAO {
 		while (set.next()) {
 			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
-					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
+					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
 					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
 					set.getString("notiz"));
 		}

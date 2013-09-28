@@ -78,4 +78,10 @@ public class Kategorienverwaltung extends KategorieDAO {
 			DAOException, SQLException {
 		super.updateKategorie(kategorie);
 	}
+
+	public void deleteKategorie(Long id) throws ConnectException, DAOException {
+		super.deleteKategorie(id); 		
+	}
+
+	
 }

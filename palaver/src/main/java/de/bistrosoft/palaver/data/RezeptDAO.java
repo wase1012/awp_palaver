@@ -42,9 +42,9 @@ public class RezeptDAO extends AbstractDAO {
 	private static RezeptDAO instance = null;
 
 	// SQL-Statements
-	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept WHERE deaktivieren = 0";
-	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1 AND deaktivieren = 0";
-	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2 AND deaktivieren = 0";
+	private final static String GET_ALL_REZEPTS = "SELECT * FROM rezept WHERE deaktivieren = 0 OR aktiv = 1";
+	private final static String GET_ALL_HAUPTGERICHTE = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 1 AND (deaktivieren = 0 OR aktive = 1)";
+	private final static String GET_ALL_BEILAGEN = "SELECT * FROM rezept WHERE rezept.rezeptart_fk = 2 AND (deaktivieren = 0 OR aktive = 1)";
 	private final static String GET_REZEPT_BY_ID = "SELECT * FROM rezept WHERE id = {0}";
 	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private final static String GET_ARTIKEL_REZEPT_BY_ID = "Select * From artikel Join rezept_has_artikel On artikel.id = rezept_has_artikel.artikel_fk Where rezept_has_artikel.rezept_fk = {0}";
@@ -108,7 +108,7 @@ public class RezeptDAO extends AbstractDAO {
 			Artikel a = new Artikel(set.getLong(1),set.getString(2));
 			a.setNotiz(set.getString(3));
 			Mengeneinheit me = new Mengeneinheit(set.getLong(4),set.getString(5), set.getString(6));
-			a.setMengeneinheit(me);
+			a.setMengeneinheitBestellung(me);
 			list.add(a);
 		}
 		return list;
@@ -316,7 +316,7 @@ public class RezeptDAO extends AbstractDAO {
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = Long
-					.toString(a.getArtikel().getMengeneinheit().getId());
+					.toString(a.getArtikel().getMengeneinheitBestellung().getId());
 			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
 					menge, me));
 		}
@@ -411,7 +411,7 @@ public class RezeptDAO extends AbstractDAO {
 	public void setRezeptDisabled(Rezept rezeptAusTb) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + AKTIV
-				+ "=false WHERE id=" + rezeptAusTb.getId();
+				+ "=false, deaktivieren = 1 WHERE id=" + rezeptAusTb.getId();
 		this.putManaged(UPDATE_QUERY);
 	}
 	

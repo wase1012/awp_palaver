@@ -8,8 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tepi.filtertable.FilterTable;
 
+
+import com.vaadin.client.metadata.Property;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.Transferable;
+
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
+
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -23,6 +31,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
@@ -56,7 +65,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 	private static final Logger	log	= LoggerFactory.getLogger(LoginForm.class.getName());
 
 	private FilterTable bestellungTable;
-
+	private List<Artikel> artikel;
+	List<BestellungData> list;
 	private FilterTable artikelTable;
 
 	private VerticalLayout fenster;
@@ -153,6 +163,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		artikelTable.setFilterGenerator(new customFilter());
 		artikelTable.setFilterDecorator(new customFilterDecorator());
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
+		
 		/**
 		 * Darg n Drop
 		 */
@@ -223,11 +234,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				}
 				if ("lebensmittel".equals(propertyId))
 				{
-					return artikel.isLebensmittel() ? "check" : "cross";
-				}
-				if ("bio".equals(propertyId))
-				{
-					return artikel.isBio() ? "check" : "cross";
+					return artikel.isNonfood() ? "check" : "cross";
 				}
 				return "";
 			}
@@ -435,8 +442,8 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		bestellungTable.setCaption("Bestellung " + bestellung.getLieferant().getName());
 		artikelTable.setCaption("Artikel");
 
-		List<BestellungData> list = new ArrayList<BestellungData>();
-		List<Artikel> artikel = new ArrayList<Artikel>();
+		list = new ArrayList<BestellungData>();
+		artikel = new ArrayList<Artikel>();
 		try {
 			artikel = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
 		} catch (Exception e) {
@@ -469,7 +476,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		if (bestellung.getLieferant().getMehrereliefertermine() == true) {
 		
 			bestellungTable
-					.setVisibleColumns(new Object[] { "name", "kategorie", "gebinde", "notiz", "durchschnitt", "kantine", "gesamt", "freitag", "montag" });
+					.setVisibleColumns(new Object[] { "name", "kategorie", "gebinde", "summe", "notiz", "durchschnitt", "kantine", "gesamt", "freitag", "montag" });
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
 			bestellungTable.setColumnHeader("montag", "Termin 2");
@@ -479,13 +486,13 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 			bestellungTable.setColumnWidth("freitag", 60);
 			bestellungTable.setColumnWidth("gesamt", 60);
 			bestellungTable.setColumnWidth("durchschnitt", 60);
-			bestellungTable.setColumnWidth("gebinde", 60);	
+			bestellungTable.setColumnWidth("gebinde", 60);
 			
 			datetime.setRequired(true);
 			datetime2.setVisible(true);
 			datetime2.setRequired(true);
 		} else {
-			bestellungTable.setVisibleColumns(new Object[] { "name", "kategorie", "gebinde" ,"notiz", "durchschnitt", "kantine", "gesamt" });
+			bestellungTable.setVisibleColumns(new Object[] { "summe",  "name", "kategorie", "gebinde" , "summe", "notiz", "durchschnitt", "kantine", "gesamt" });
 			datetime.setCaption("Lieferdatum");
 			datetime.setVisible(true);
 			bestellungTable.setColumnHeader("durchschnitt", "Menge");
@@ -504,17 +511,15 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel", "bio" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
-		artikelTable.setColumnCollapsible("bio", true);
 		artikelTable.setColumnCollapsible("name", false);		
 		artikelTable.setColumnWidth("grundbedarf", 50);
 		artikelTable.setColumnHeader("grundbedarf", "grundb.");
 		artikelTable.setColumnWidth("standard", 50);
 		artikelTable.setColumnWidth("lebensmittel", 50);
-		artikelTable.setColumnWidth("bio", 50);
 		
 		List<Ansprechpartner> alist = Ansprechpartnerverwaltung.getInstance().getAnsprechpartnerByLieferant(bestellung.getLieferant());
 		String text = "";

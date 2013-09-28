@@ -284,8 +284,8 @@ public class MenueplanGridLayout extends CustomComponent {
 												instance, tmp, row, col);
 										UI.getCurrent().addWindow(window);
 										window.setModal(true);
-										window.setWidth("800px");
-										window.setHeight("500px");
+										window.setWidth("1050px");
+										window.setHeight("510px");
 									}
 								}
 							}
@@ -402,6 +402,9 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	public void vertauscheMenue(Component sourceComp, Component comp,
 			Integer col, Integer row) {
+		
+		((Application)UI.getCurrent().getData()).setChange(true);
+		
 		layout.removeComponent(sourceComp);
 		layout.removeComponent(comp);
 		pruefeMenueRegeln();

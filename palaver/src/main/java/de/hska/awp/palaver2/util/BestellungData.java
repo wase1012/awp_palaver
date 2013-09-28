@@ -31,6 +31,7 @@ public class BestellungData implements java.io.Serializable {
 	private String notiz;
 	private Artikel artikel;
 	private Long id;
+	private double summe;
 	private boolean geliefert;
 
 	/**
@@ -38,7 +39,7 @@ public class BestellungData implements java.io.Serializable {
 	 * @param artnr
 	 * @param menge
 	 */
-	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine, String notiz) {
+	public BestellungData(String name, String gebinde, Kategorie kategorie, Integer durchschnitt, Integer kantine, String notiz, double summe) {
 		super();
 		this.name = name;
 		this.gebinde = gebinde;
@@ -51,6 +52,7 @@ public class BestellungData implements java.io.Serializable {
 		this.freitag.setValue(durchschnitt + kantine);
 		this.montag.setValue(0);
 		this.setNotiz(notiz);
+		this.summe = summe;
 	}
 
 	@SuppressWarnings("serial")
@@ -60,7 +62,7 @@ public class BestellungData implements java.io.Serializable {
 		this.artikel = bp.getArtikel();
 		this.geliefert = bp.isGeliefert();
 		this.name = bp.getArtikelName();
-		this.gebinde = bp.getArtikel().getBestellgroesse() + " " + bp.getArtikel().getMengeneinheit().getKurz();
+		this.gebinde = bp.getArtikel().getBestellgroesse() + " " + bp.getArtikel().getMengeneinheitBestellung().getKurz();
 		this.kategorie = bp.getArtikel().getKategorie();
 		this.durchschnitt.setValue(bp.getDurchschnitt().toString());
 		this.kantine.setValue(bp.getKantine().toString());
@@ -69,7 +71,8 @@ public class BestellungData implements java.io.Serializable {
 		this.freitag.setStyleName("stepper-palaver");
 		this.freitag.setValue(bp.getFreitag());
 		this.montag.setValue(bp.getMontag());
-		this.setNotiz(this.artikel.getNotiz());
+		this.setNotiz(this.artikel.getNotiz() + " Summe: " + bp.getSumme());
+		this.summe = bp.getSumme();
 
 		this.durchschnitt.setWidth("50px");
 		this.kantine.setWidth("50px");
@@ -149,7 +152,7 @@ public class BestellungData implements java.io.Serializable {
 	public BestellungData(Artikel artikel) {
 		super();
 		this.name = artikel.getName();
-		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheit().getKurz();
+		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheitBestellung().getKurz();
 		this.kategorie = artikel.getKategorie();
 		this.durchschnitt.setValue(artikel.getDurchschnitt() + "");
 		this.kantine.setValue(0 + "");
@@ -414,4 +417,20 @@ public class BestellungData implements java.io.Serializable {
 	public void setNotiz(String notiz) {
 		this.notiz = notiz;
 	}
+
+	/**
+	 * @return the summe
+	 */
+	public double getSumme() {
+		return summe;
+	}
+
+	/**
+	 * @param summe the summe to set
+	 */
+	public void setSumme(double summe) {
+		this.summe = summe;
+	}
+	
+	
 }

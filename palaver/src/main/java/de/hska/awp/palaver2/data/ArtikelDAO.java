@@ -27,14 +27,19 @@ public class ArtikelDAO extends AbstractDAO {
 	private final static String GET_ALL_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE + " WHERE lieferant_fk = {0} AND `delete` = 0 ORDER BY name";
 	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM " + TABLE + " WHERE id = {0}";
 	private final static String GET_ARTIKEL_BY_NAME = "SELECT * FROM" + TABLE + " WHERE name like ";
-	private final static String PUT_ARTIKEL = "INSERT INTO artikel(`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`,`lieferant_fk`,`bio`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`,`lebensmittel`,`notiz`)VALUES({0})";
+	private final static String PUT_ARTIKEL = "INSERT INTO artikel(" +
+			"`artikelnr`,`name`,`bestellgroesse`,`mengeneinheit_fk`,`preis`," +
+			"`lieferant_fk`,`kategorie_fk`,`standard`,`grundbedarf`,`durchschnitt`," +
+			"`nonfood`,`notiz`,`mengeneinheit_koch`,`autoBestellung`,`fuerRezepte`)VALUES({0})";
 	private final static String GET_ARTIKEL_BY_GRUNDBEDARF = "SELECT * FROM " + TABLE + " WHERE grundbedarf=1 AND `delete` = 0";
+	private final static String GET_ARTIKEL_BY_KATEGORIE = "SELECT * FROM " + TABLE + " WHERE kategorie_fk ={0} and `delete` = 0";
 	private final static String GET_ARTIKEL_BY_STANDARDBEDARF = "SELECT * FROM " + TABLE + " WHERE standard=1";
 	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
 	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
 	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
 	private final static String GET_ARTIKEL_BY_LEBENSMITTEL = "SELECT * FROM " + TABLE + " WHERE lebensmittel = '1'";
 	private final static String GET_ALL_ARTIKLES_NAME = "SELECT id, name FROM artikel";
+	private final static String GET_COUNT_BY_KATEGORY_ID = "SELECT count(*) as count FROM " + TABLE + " WHERE kategorie_fk = {0}";
 
 	public ArtikelDAO() {
 		super();
@@ -63,18 +68,19 @@ public class ArtikelDAO extends AbstractDAO {
 		List<Artikel> list = new ArrayList<Artikel>();
 
 		ResultSet set = getManaged(GET_ALL_ARTIKLES_NO_DELETE);
-
-		System.out.print(GET_ALL_ARTIKLES_NO_DELETE);
-		
+	
 		openConnection();
 
 		while (set.next()) {
-			list.add(new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")), getKategorieById(set
-					.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-					.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
-					.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
+			list.add(new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")), 
+					set.getLong("mengeneinheit_koch"),getKategorieById(set.getLong("kategorie_fk")), 
+					getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), 
+					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
+					set.getInt("durchschnitt"), set.getString("notiz"), set.getBoolean("nonfood"),
+					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getBoolean("fuerRezepte"),  
+					set.getBoolean("autoBestellung")));
 		}
-
+		
 		closeConnection();
 		return list;
 	}
@@ -108,7 +114,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")), getKategorieById(set
 					.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-					.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
+					.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
 					.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
 		}
 		closeConnection();
@@ -134,7 +140,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
-					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
+					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
 					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
 					set.getString("notiz"));
 		}
@@ -160,7 +166,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(), KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 					LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
+							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
 							.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
 		}
 
@@ -185,7 +191,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(), KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 					LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
+							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
 							.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
 		}
 
@@ -210,7 +216,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(), KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 					LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
+							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
 							.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
 		}
 
@@ -226,15 +232,29 @@ public class ArtikelDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void createArtikel(Artikel artikel) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(
+		Long i = (long) 1;
+		System.out.println(5);
+		System.out.println(artikel.getMengeneinheitKoch().toString() + "!!!!!");
+		if(artikel.getMengeneinheitKoch() != null)
+			i = artikel.getMengeneinheitKoch().getId();
+		putManaged(MessageFormat.format(				
 				PUT_ARTIKEL,
-				"'" + artikel.getArtikelnr() + "','" + artikel.getName() + "'," + artikel.getBestellgroesse() + ","
-						+ artikel.getMengeneinheit().getId() + "," + artikel.getPreis() + "," + artikel.getLieferant().getId() + ","
-						+ Util.convertBoolean(artikel.isBio()) + "," + artikel.getKategorie().getId() + ","
-						+ Util.convertBoolean(artikel.isStandard()) + "," + Util.convertBoolean(artikel.isGrundbedarf()) + ","
-						+ artikel.getDurchschnitt() + "," + Util.convertBoolean(artikel.isLebensmittel()) + ",'" + artikel.getNotiz() + "'"));
+				"'" + artikel.getArtikelnr() + "','" 
+						+ artikel.getName() + "'," 
+						+ artikel.getBestellgroesse() + ","
+						+ artikel.getMengeneinheitBestellung().getId() + "," 
+						+ artikel.getPreis() + "," 
+						+ artikel.getLieferant().getId() + ","
+						+ artikel.getKategorie().getId() + ","
+						+ Util.convertBoolean(artikel.isStandard()) + "," 
+						+ Util.convertBoolean(artikel.isGrundbedarf()) + ","
+						+ artikel.getDurchschnitt() + "," 
+						+ Util.convertBoolean(artikel.isNonfood()) + ",'" 
+						+ artikel.getNotiz() + "',"
+						+ i + "," 
+						+ Util.convertBoolean(artikel.isAutoBestellen()) + "," 
+						+ Util.convertBoolean(artikel.isFuerRezept())));
 	}
-
 	/**
 	 * Die Methode aktualisiert einen Artikel in der Datenbank.
 	 * 
@@ -244,13 +264,27 @@ public class ArtikelDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException {
-		putManaged("UPDATE artikel SET `artikelnr` = '" + artikel.getArtikelnr() + "'," + "`name` = '" + artikel.getName() + "',"
-				+ "`bestellgroesse` = " + artikel.getBestellgroesse() + "," + "`mengeneinheit_fk` = " + artikel.getMengeneinheit().getId() + ","
-				+ "`preis` = " + artikel.getPreis() + "," + "`lieferant_fk` = " + artikel.getLieferant().getId() + "," + "`bio` = "
-				+ Util.convertBoolean(artikel.isBio()) + "," + "`kategorie_fk` = " + artikel.getKategorie().getId() + "," + "`standard` = "
-				+ Util.convertBoolean(artikel.isStandard()) + "," + "`grundbedarf` = " + Util.convertBoolean(artikel.isGrundbedarf()) + ","
-				+ "`durchschnitt` = " + artikel.getDurchschnitt() + "," + "`lebensmittel` = " + Util.convertBoolean(artikel.isLebensmittel()) + ","
-				+ "`notiz` = '" + artikel.getNotiz() + "' WHERE id = " + artikel.getId());
+		Long i = (long) 0;
+		if(artikel.getMengeneinheitKoch() != null)
+			i = artikel.getMengeneinheitKoch().getId();
+			
+		putManaged("UPDATE artikel SET " +
+				"`artikelnr` = '" + artikel.getArtikelnr() + "'," 
+				+ "`name` = '" + artikel.getName() + "',"
+				+ "`bestellgroesse` = " + artikel.getBestellgroesse() + "," 
+				+ "`mengeneinheit_fk` = " + artikel.getMengeneinheitBestellung().getId() + ","
+				+ "`mengeneinheit_koch` = " + i + ","
+				+ "`preis` = " + artikel.getPreis() + "," 
+				+ "`lieferant_fk` = " + artikel.getLieferant().getId() + "," 	
+				+ "`kategorie_fk` = " + artikel.getKategorie().getId() + "," 
+				+ "`standard` = " + Util.convertBoolean(artikel.isStandard()) + "," 
+				+ "`grundbedarf` = " + Util.convertBoolean(artikel.isGrundbedarf()) + ","
+				+ "`durchschnitt` = " + artikel.getDurchschnitt() + "," 
+				+ "`nonfood` = " + Util.convertBoolean(artikel.isNonfood()) + ","
+				+ "`autoBestellung` = " + Util.convertBoolean(artikel.isAutoBestellen()) + ","
+				+ "`FuerRezepte` = " + Util.convertBoolean(artikel.isFuerRezept()) + ","
+				+ "`notiz` = '" + artikel.getNotiz() 
+				+ "' WHERE id = " + artikel.getId());
 
 	}
 	
@@ -279,7 +313,7 @@ public class ArtikelDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(), KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
 					LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
-							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"), set.getBoolean("standard"), set
+							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
 							.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
 		}
 
@@ -318,5 +352,28 @@ public class ArtikelDAO extends AbstractDAO {
 		}
 
 		return me;
+	}
+
+	public int getCountArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {
+		ResultSet set = getManaged(MessageFormat.format(GET_COUNT_BY_KATEGORY_ID, id));
+		int count = 0;
+		while (set.next()) {
+			count = set.getInt("count");
+		}
+		return count;
+	}
+
+	public List<Artikel> getAllArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {
+		List<Artikel> list = new ArrayList<Artikel>();
+
+		ResultSet set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_KATEGORIE, id));
+		while (set.next()) {
+			list.add(new Artikel(set.getLong("id"), new Mengeneinheit(), KategorieDAO.getInstance().getKategorieById(set.getLong("kategorie_fk")),
+					LieferantDAO.getInstance().getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"), set.getString("name"), set
+							.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("standard"), set
+							.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"), set.getString("notiz")));
+		}
+
+		return list;
 	}
 }

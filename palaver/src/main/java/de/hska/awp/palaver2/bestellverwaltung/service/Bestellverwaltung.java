@@ -317,6 +317,7 @@ public class Bestellverwaltung extends BestellungDAO {
 				bp.setGeliefert(false);
 				bp.setMontag(leer);
 				bp.setGesamt(bp.getKantine());
+				bp.setSumme(rhaDoppeltZusammen.get(i).getMenge());
 				//bp.setGesamt(bp.getKantine() + bp.getDurchschnitt());
 				bestellPosition_list.add(bp);
 			}
@@ -347,6 +348,8 @@ public class Bestellverwaltung extends BestellungDAO {
 						bestellPosition_list.get(z).setKantine(bestellPosition_list.get(z).getKantine() + 
 								bestellPosition_list.get(z).getMontag());
 						bestellPosition_list.get(z).setGesamt( bestellPosition_list.get(z).getKantine());
+						bestellPosition_list.get(z).setSumme(bestellPosition_list.get(z).getSumme() + 
+								rhaDoppeltZusammen.get(i).getMenge());
 						
 //						bestellPosition_list.get(z).setKantine( bestellPosition_list.get(z).getKantine()
 //								+ convertMenge(rhaDoppeltZusammen.get(i)));
@@ -366,6 +369,7 @@ public class Bestellverwaltung extends BestellungDAO {
 					bp.setGesamt(bp.getKantine()); // + bp.getDurchschnitt()
 					bp.setKantine(bp.getMontag());
 					bestellPosition_list.add(bp);
+					bp.setSumme(rhaDoppeltZusammen.get(i).getMenge());
 				}
 			}
 		}
@@ -408,6 +412,7 @@ public class Bestellverwaltung extends BestellungDAO {
 					bp.setGeliefert(false);
 					bp.setMontag(leer);
 					bp.setGesamt(bp.getDurchschnitt());
+					bp.setSumme(0);
 					bestellPosition_list.add(bp);
 				}
 			}

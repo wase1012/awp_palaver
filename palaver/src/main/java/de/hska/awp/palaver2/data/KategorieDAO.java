@@ -122,4 +122,8 @@ public class KategorieDAO extends AbstractDAO {
 				+ kategorie.getName() + "' WHERE id=" + kategorie.getId() + "";
 		this.putManaged(UPDATE_QUERY);
 	}
+
+	public void deleteKategorie(Long id) throws ConnectException, DAOException {
+		putManaged("Delete from " + TABLE + " WHERE id = " + id);		
+	}
 }

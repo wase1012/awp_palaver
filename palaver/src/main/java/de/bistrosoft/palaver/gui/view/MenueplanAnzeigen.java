@@ -422,6 +422,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 								+ " wurde gespeichert");
 				notification.setDelayMsec(500);
 				notification.show(Page.getCurrent());
+				((Application)UI.getCurrent().getData()).setChange(false);
 			}
 		});
 

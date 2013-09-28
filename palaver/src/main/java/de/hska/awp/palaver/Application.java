@@ -183,7 +183,7 @@ public class Application extends UI
 		Notification dialog = new Notification(message);
 		// Bei -1 muss man draufklicken
 //		dialog.setDelayMsec(-1);
-		dialog.setDelayMsec(1800);
+		dialog.setDelayMsec(2000);
 		dialog.show(Page.getCurrent());
 	}
 	
@@ -222,5 +222,13 @@ public class Application extends UI
 			}
 		});
 		okButton.setClickShortcut(KeyCode.ENTER);
+	}
+	
+	private boolean m_change = false; 	
+	public boolean getCahnge(){
+		return m_change;
+	}
+	public void setChange(boolean isCahnge){
+		m_change = isCahnge;		
 	}
 }

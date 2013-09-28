@@ -386,7 +386,6 @@
 ////	bestellung.setValue(artikel.getBestellgroesse() + "");
 ////	standard.setValue(artikel.isStandard());
 ////	grundbedarf.setValue(artikel.isGrundbedarf());
-////	bio.setValue(artikel.isBio());
 ////	lebensmittel.setValue(artikel.isLebensmittel());
 ////	durchschnitt.setValue(artikel.getDurchschnitt() + "");
 //	}

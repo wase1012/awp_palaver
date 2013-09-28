@@ -48,7 +48,7 @@ public class RezeptHasArtikel {
 
 	public RezeptHasArtikel(Artikel a) {
 		this.artikel = a;
-		this.mengeneinheit = a.getMengeneinheit();
+		this.mengeneinheit = a.getMengeneinheitBestellung();
 		this.menge = 1.0;
 		this.rezept = null;
 	}

@@ -9,6 +9,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -27,6 +28,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
+import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.data.ConnectException;
 import de.hska.awp.palaver2.data.DAOException;
@@ -53,6 +55,7 @@ public class WinSelectMenue extends Window {
 	private TextField tfAngezName = new TextField("Angezeigter Name");
 	private TextField tfName = new TextField("Name");
 	private TextField tfKoch = new TextField("Koch");
+	private TextField tfFussnote = new TextField("Fußnote");
 	private TextField tfMenueart = new TextField("Menueart");
 	private TextField tfGeschmack = new TextField("Geschmack");
 	private TextField tfPortion = new TextField("Portion in %");
@@ -61,7 +64,7 @@ public class WinSelectMenue extends Window {
 	private Button btNewMenue = new Button("Neues Menü");
 	private Button btFilterLeeren;
 	private Button btSelect = new Button(IConstants.BUTTON_SELECT);
-	private FormLayout flEditorLayout = new FormLayout();
+	private VerticalLayout flEditorLayout = new VerticalLayout();
 
 	List<Regel> regeln = null;
 
@@ -84,6 +87,7 @@ public class WinSelectMenue extends Window {
 	public WinSelectMenue(MenueplanGridLayout menueplan, Component destComp,
 			int destRow, int destCol) {
 		setCaption("Menü einfügen");
+		setResizable(false);
 		this.menueplan = menueplan;
 		this.menueGrid = menueplan.layout;
 		this.destComp = destComp;
@@ -119,6 +123,8 @@ public class WinSelectMenue extends Window {
 		// HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 		HorizontalLayout hlBox = new HorizontalLayout();
 		HorizontalLayout hlControl = new HorizontalLayout();
+		hlControl.setMargin(new MarginInfo(false, true, true, false));		
+		hlBox.setMargin(new MarginInfo(true, true, true, true));
 
 		btFilterLeeren = new Button(IConstants.BUTTON_CLEAR_FILTER);
 		btFilterLeeren.setIcon(new ThemeResource("img/cross.ico"));
@@ -127,6 +133,7 @@ public class WinSelectMenue extends Window {
 		// Splitpanel die Layouts zufügen
 		hlBox.addComponent(vlLeftLayout);
 		vlLeftLayout.addComponent(hlControl);
+		hlBox.setWidth("100%");
 
 		hlControl.addComponent(btNewMenue);
 		hlControl.addComponent(btFilterLeeren);
@@ -156,7 +163,7 @@ public class WinSelectMenue extends Window {
 		// Linke Seite Höhe und Breite auf 100% setzen
 		vlLeftLayout.setHeight("100%");
 		flEditorLayout.setHeight("100%");
-
+		flEditorLayout.setWidth("100%");
 		flEditorLayout.setMargin(true);
 		flEditorLayout.setVisible(false);
 		setContent(hlBox);
@@ -166,13 +173,21 @@ public class WinSelectMenue extends Window {
 
 		HorizontalLayout hlEditorChB = new HorizontalLayout();
 		hlEditorChB.addComponents(chbFavorit, chbAufwand);
+		tfAngezName.setWidth("100%");
+		tfName.setWidth("100%");
+		tfKoch.setWidth("100%");
+		tfMenueart.setWidth("100%");
+		tfGeschmack.setWidth("100%");
+		tfPortion.setWidth("100%");
+		tfFussnote.setWidth("100%");
 		flEditorLayout.addComponents(tfAngezName, tfName, tfKoch, tfMenueart,
-				tfGeschmack, tfPortion, hlEditorChB);
-
+				tfGeschmack, tfPortion, hlEditorChB, tfFussnote);
+//TODO:
 		flEditorLayout.addComponent(ftFehler);
 		ftFehler.setVisible(false);
 
 		flEditorLayout.addComponent(btSelect);
+		flEditorLayout.setSpacing(true);
 	}
 
 	public static boolean isInteger(String s) {
@@ -255,6 +270,16 @@ public class WinSelectMenue extends Window {
 					tfName.setEnabled(false);
 					tfKoch.setValue(menue.getKochname());
 					tfKoch.setEnabled(false);
+					String a = "";
+					int b = 0;
+					for (Fussnote fn : menue.getFussnoten()) {
+						if(menue.getFussnoten().get(menue.getFussnoten().size()-1) == menue.getFussnoten().get(b)){
+							a = fn.getAbkuerzung();
+						} else {  a = a + fn.getAbkuerzung() + ", "; }
+					}
+					tfFussnote.setValue(a);
+					tfFussnote.setEnabled(true);
+					
 					if (menue.getMenueart() != null) {
 						tfMenueart.setValue(menue.getMenueart()
 								.getBezeichnung());
@@ -271,6 +296,7 @@ public class WinSelectMenue extends Window {
 					chbAufwand.setEnabled(false);
 					tfPortion.setValue("100");
 					flEditorLayout.setVisible(true);
+					
 
 				}
 
@@ -338,7 +364,7 @@ public class WinSelectMenue extends Window {
 	}
 
 	private void addNewMenue() {
-		final Window win = new Window("Neues Menï¿½");
+		final Window win = new Window("Neues Menü");
 		win.setModal(true);
 		win.setResizable(false);
 		win.setWidth("1100px");

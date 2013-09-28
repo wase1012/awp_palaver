@@ -99,6 +99,7 @@ public class Artikelverwaltung extends ArtikelDAO {
 	 */
 	public void createArtikel(Artikel artikel) throws ConnectException,
 			DAOException {
+		System.out.println(4);
 		super.createArtikel(artikel);
 	}
 
@@ -118,6 +119,14 @@ public class Artikelverwaltung extends ArtikelDAO {
 	public void deaktivireArtikel(Artikel artikel) throws ConnectException,
 			DAOException {
 		super.deaktivirenArtikel(artikel.getId());
+	}
+
+	public int getCountArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {		
+		return super.getCountArtikelnByKategorieId(id);
+	}
+
+	public List<Artikel> getAllArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {
+		return super.getAllArtikelnByKategorieId(id);
 	}
 
 	/*

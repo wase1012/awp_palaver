@@ -22,6 +22,9 @@ public class Bestellposition implements java.io.Serializable {
 	private Integer freitag;
 	private Integer montag;
 	private boolean geliefert;
+	private double summe;
+	
+	
 
 	public Bestellposition() {
 		super();
@@ -40,7 +43,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param geliefert
 	 */
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag,
-			Integer montag, boolean geliefert) {
+			Integer montag, boolean geliefert, double summe) {
 		super();
 		this.id = id;
 		this.artikel = artikel;
@@ -51,6 +54,7 @@ public class Bestellposition implements java.io.Serializable {
 		this.freitag = freitag;
 		this.montag = montag;
 		this.geliefert = geliefert;
+		this.summe = summe;
 	}
 
 	/**
@@ -65,7 +69,7 @@ public class Bestellposition implements java.io.Serializable {
 	 * @param geliefert
 	 */
 	public Bestellposition(Long id, Artikel artikel, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag,
-			boolean geliefert) {
+			boolean geliefert, double summe) {
 		this.id = id;
 		this.artikel = artikel;
 		this.durchschnitt = durchschnitt;
@@ -74,6 +78,7 @@ public class Bestellposition implements java.io.Serializable {
 		this.freitag = freitag;
 		this.montag = montag;
 		this.geliefert = geliefert;
+		this.summe = summe;
 	}
 
 	public Long getId() {
@@ -169,6 +174,14 @@ public class Bestellposition implements java.io.Serializable {
 
 	public void setGeliefert(boolean geliefert) {
 		this.geliefert = geliefert;
+	}
+
+	public double getSumme() {
+		return summe;
+	}
+
+	public void setSumme(double summe) {
+		this.summe = summe;
 	}
 
 }

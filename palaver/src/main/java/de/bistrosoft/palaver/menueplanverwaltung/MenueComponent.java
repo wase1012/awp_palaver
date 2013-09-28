@@ -24,6 +24,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
+import de.hska.awp.palaver.Application;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**
@@ -274,8 +275,8 @@ public class MenueComponent extends CustomComponent {
 						col);
 				UI.getCurrent().addWindow(window);
 				window.setModal(true);
-				window.setWidth("800px");
-				window.setHeight("500px");
+				window.setWidth("1050px");
+				window.setHeight("510px");
 			}
 		});
 		btn.setHeight("90px");
@@ -287,6 +288,9 @@ public class MenueComponent extends CustomComponent {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 
+				//TODO:1
+				((Application) UI.getCurrent().getData()).setChange(true);
+				
 				// finde position
 				// Component sourceComp = comp;
 				final int COLUMNS = menueGrid.getColumns();
@@ -304,8 +308,8 @@ public class MenueComponent extends CustomComponent {
 						MenueComponent.this, row, col);
 				UI.getCurrent().addWindow(window);
 				window.setModal(true);
-				window.setWidth("800px");
-				window.setHeight("500px");
+				window.setWidth("1050px");
+				window.setHeight("510px");
 			}
 		});
 
@@ -315,6 +319,9 @@ public class MenueComponent extends CustomComponent {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 
+				//TODO:2
+				((Application) UI.getCurrent().getData()).setChange(true);
+				
 				// Window erstellen welches abfragt, ob man das Menü wirklich
 				// aus dem Menüplan löschen will
 				ConfirmDialog.show(UI.getCurrent(), "Menü aus Plan löschen:",

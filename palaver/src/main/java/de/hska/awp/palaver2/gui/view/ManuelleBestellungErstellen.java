@@ -180,11 +180,7 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 				}
 				if ("lebensmittel".equals(propertyId))
 				{
-					return artikel.isLebensmittel() ? "check" : "cross";
-				}
-				if ("bio".equals(propertyId))
-				{
-					return artikel.isBio() ? "check" : "cross";
+					return artikel.isNonfood() ? "check" : "cross";
 				}
 				return "";
 			}
@@ -349,17 +345,15 @@ public class ManuelleBestellungErstellen extends VerticalLayout implements View 
 
 		containerArtikel = new BeanItemContainer<Artikel>(Artikel.class, artikel);
 		artikelTable.setContainerDataSource(containerArtikel);
-		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel", "bio" });
+		artikelTable.setVisibleColumns(new Object[] { "name", "grundbedarf", "standard", "lebensmittel" });
 		artikelTable.setColumnCollapsed("grundbedarf", true);
 		artikelTable.setColumnCollapsed("standard", true);
 		artikelTable.setColumnCollapsed("lebensmittel", true);
-		artikelTable.setColumnCollapsible("bio", true);
 		artikelTable.setColumnCollapsible("name", false);		
 		artikelTable.setColumnWidth("grundbedarf", 50);
 		artikelTable.setColumnHeader("grundbedarf", "grundb.");
 		artikelTable.setColumnWidth("standard", 50);
 		artikelTable.setColumnWidth("lebensmittel", 50);
-		artikelTable.setColumnWidth("bio", 50);
 	}
 	private Boolean validiereEingabe() {
 		

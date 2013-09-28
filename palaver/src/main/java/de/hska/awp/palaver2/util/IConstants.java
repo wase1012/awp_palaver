@@ -7,11 +7,13 @@ package de.hska.awp.palaver2.util;
 public interface IConstants
 {
 
-	// DB Verbindung
+// DB Verbindung
 //  Team
-//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
+String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
 //	Produktiv
-String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
+//	TEST
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/test?user=root&password=BaDAbU352M";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
@@ -169,9 +171,11 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&passw
 	String		INFO_REGEL_ZEILE_5 = "Dessert";
 	
 	String 		INFO_ARTIKEL_NAME = "Bitte Namen eingeben";
-	String		INFO_ARTIKEL_MENGENEINHEIT = "Bitte Mengeneinheit auswählen";
+	String		INFO_ARTIKEL_MENGENEINHEIT_B = "Bitte Mengeneinheit für die Bestellüng auswählen";
+	String		INFO_ARTIKEL_MENGENEINHEIT_K = "Bitte Mengeneinheit für Rezepte auswählen";
 	String		INFO_ARTIKEL_KATEGORIE = "Bitte Kategorie auswählen";
-	String		INFO_ARTIKEL_GEBINDE = "Bitte Gebinde eingeben";
+	String		INFO_ARTIKEL_GEBINDE = "Bitte Bestellgröße eingeben";
+	String		INFO_ARTIKEL_GEBINDE_K = "Bitte Gebinde für Rezepte eingeben";
 	String 		INFO_ARTIKEL_LIEFERANTNAME = "Bitte Lieferantenname eingeben";
 	String 		INFO_ARTIKEL_MENGENEINHEITNAME = "Bitte Namen eingeben";
 	String	 	INFO_ARTIKEL_MENGENEINHEITKURZ = "Bitte Kürzel eingeben";

@@ -39,7 +39,7 @@ public class KuchenrezeptHasArtikel {
 
 	public KuchenrezeptHasArtikel(Artikel a) {
 		this.artikel = a;
-		this.mengeneinheit = a.getMengeneinheit();
+		this.mengeneinheit = a.getMengeneinheitBestellung();
 		this.menge = 1.0;
 		this.kuchenrezept = null;
 	}

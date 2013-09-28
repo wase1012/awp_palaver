@@ -56,6 +56,7 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 
 	private Artikel artikel;
 
+
 	public ArtikelAnzeigen() {
 		super();
 
@@ -107,7 +108,7 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 
 			}
 		});
-
+		
 		auswaehlen.addClickListener(new ClickListener() {
 
 			@Override
@@ -126,16 +127,16 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		try {
 			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf", "bio",
-					"bestellgroesse", "mengeneinheit" , "notiz" });
+			table.setVisibleColumns(new Object[] { "name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf",
+				"bestellgroesse", "notiz" });
+			
+			
 			table.sort(new Object[] { "name" }, new boolean[] { true });
 			table.setColumnHeader("bestellgroesse", "Gebinde");
 			table.setColumnWidth("kategorie", 70);
 			table.setColumnWidth("artikelnr", 60);
 			table.setColumnWidth("preis", 50);
 			table.setColumnWidth("bestellgroesse", 50);
-			table.setColumnWidth("mengeneinheit", 60);
-			table.setColumnHeader("mengeneinheit", "M-Einheit");
 
 			table.setCellStyleGenerator(new CellStyleGenerator() {
 
@@ -148,15 +149,11 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 					if ("grundbedarf".equals(propertyId)) {
 						return artikel.isGrundbedarf() ? "check" : "cross";
 					}
-					if ("bio".equals(propertyId)) {
-						return artikel.isBio() ? "check" : "cross";
-					}
-					return "";
+							return "";
 				}
 			});
 			table.setColumnWidth("standard", 60);
 			table.setColumnWidth("grundbedarf", 80);
-			table.setColumnWidth("bio", 30);
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -170,22 +167,12 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		showFilter.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				if (table.isFilterBarVisible()) {
-//					table.setFilterBarVisible(false);
-//					table.resetFilters();
-//					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-//					showFilter.setIcon(new ThemeResource("img/filter.ico"));
-//				} else {
-//					table.setFilterBarVisible(true);
-//					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-//					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-//				}
 				table.resetFilters();
 			}
 		});
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(ViewData data) {	
 	}
 }

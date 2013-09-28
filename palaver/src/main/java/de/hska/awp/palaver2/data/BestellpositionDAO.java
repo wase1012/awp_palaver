@@ -39,6 +39,7 @@ public class BestellpositionDAO extends AbstractDAO {
 	private final static String FREITAG = "freitag";
 	private final static String MONTAG = "montag";
 	private final static String GELIEFERT = "geliefert";
+	private final static String SUMME = "summe";
 
 	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 
@@ -90,7 +91,7 @@ public class BestellpositionDAO extends AbstractDAO {
 		while (set.next()) {
 			bp = new Bestellposition(set.getLong(ID), ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)), BestellungDAO.getInstance()
 					.getBestellungById(set.getLong(BESTELLUNG_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT),
-					set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT));
+					set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME));
 		}
 
 		return bp;
@@ -114,7 +115,7 @@ public class BestellpositionDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Bestellposition(set.getLong(ID), getArtikelById(set.getLong(ARTIKEL_FK)), getBestellungByIdWithoutBP(set
 					.getLong(BESTELLUNG_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set
-					.getInt(MONTAG), set.getBoolean(GELIEFERT)));
+					.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME)));
 		}
 		closeConnection();
 		return list;
@@ -190,7 +191,7 @@ public class BestellpositionDAO extends AbstractDAO {
 		while (set.next()) {
 			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
 					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
-					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), set.getBoolean("bio"),
+					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
 					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
 					set.getString("notiz"));
 		}
